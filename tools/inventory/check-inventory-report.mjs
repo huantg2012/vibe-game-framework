@@ -64,12 +64,13 @@ try {
   await page.evaluate(()=>window.__game.scene.getScene('PurificationScene').enterRift()); await page.waitForSelector('#inventory-panel.is-prepare');
   assert.equal(await page.locator('.inventory-player-portrait').count(),0, 'Preparation uses the real scene actor, not a second portrait.');
   assert.ok(await page.evaluate(()=>window.__game.scene.isActive('PurificationScene')&&!!window.__game.scene.getScene('PurificationScene').player), 'The real purification scene and its player remain present.');
-  assert.equal(await page.locator('#inventory-panel').getAttribute('data-prepare-view'),'overview');
+  assert.equal(await page.locator('#inventory-panel').getAttribute('data-prepare-view'),'pollution');
   assert.equal(await page.locator('.inventory-item:visible').count(),0);
-  assert.equal(await page.locator('.inventory-slot').count(),4);
+  assert.equal(await page.locator('.inventory-slot:visible').count(),0);
   assert.doesNotMatch(await page.locator('#inventory-panel').innerText(),/负重/);
-  await page.locator('.inventory-prepare-edit').click();
+  await page.locator('[data-prepare-action=next]').click();
   assert.equal(await page.locator('#inventory-panel').getAttribute('data-prepare-view'),'equipment');
+  assert.equal(await page.locator('.inventory-slot').count(),4);
   await page.locator('[data-item-id="ui-q"]').click(); await page.getByRole('button',{name:'装到 工具 Q',exact:true}).click();
   await page.locator('[data-item-id="ui-f"]').click(); await page.getByRole('button',{name:'装到 工具 F',exact:true}).click();
   await page.evaluate(async()=>{

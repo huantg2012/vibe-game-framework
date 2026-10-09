@@ -9,7 +9,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 `/prepare-review.html?fixture=equipped`复用正式净化点、裂隙聚焦、备行组件和出发链；Boot前使用内存存储，不读取或改写玩家存档。DEV工具条可切`starter`（开局）、`equipped`（已有行装）、`long`（长库）、`expanded`（第三主动位）、`blocked`（无有效武器）。夹具物件是测试授予，不计自然经营证据。正式玩家入口仍为根游戏→净化点裂隙E。
 
-默认总览选污染程度，点行装/“整理行装”展开库存；整理Esc回总览，再Esc离开。鼠标踏入与Shift+Enter走正式出发，普通Enter不会出发。装置读数按需展开。开发API`__prepareReview`只提供本页状态、重置与开关，机制/UI规格归[统一库存第5节](../specs/system-field-inventory.md#5-入口备行与装备hud)，实际验证与未完成边界归[本次QA](../qa/preparation-ui-2026-10-09.md)。
+先“选择污染程度”，通过“整理行装”进入第二环节；第一环节不显示装备/装置读数，不可直接出发。第二环节单列装配，Esc回选级，再Esc离开；鼠标踏入与Shift+Enter走正式出发，普通Enter不出发。装置读数保留在净化点存续报告。开发API`__prepareReview`只提供本页状态、重置与开关，机制/UI规格归[统一库存第5节](../specs/system-field-inventory.md#5-入口备行与装备hud)，新验证归[两环节QA](../qa/preparation-flow-2026-10-09.md)。
 
 ## 当前 R100 入口（2026-10-06，I07—I09）
 

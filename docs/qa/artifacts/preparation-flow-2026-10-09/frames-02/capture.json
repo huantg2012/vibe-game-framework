@@ -1,0 +1,59 @@
+{
+  "startedAt": "2026-10-09T09:58:27.017Z",
+  "sourceBefore": [
+    {
+      "file": "src/ui/dom/inventory-panel.ts",
+      "sha256": "1432682ee6232d64a2c58c65fc6b60d40afc180ea984577b815e5633f702f702"
+    },
+    {
+      "file": "src/ui/dom/inventory-panel-styles.ts",
+      "sha256": "79c2f95d4f29a6b17e247dcefc5f4cca7a86962ea347f5e873d7be289d6718a9"
+    },
+    {
+      "file": "src/ui/inventory-presenter.ts",
+      "sha256": "5e64db453639d4ffe82c5aa7f92f5fb51016a8a23b53a239ee3b0b5b3b70e5bb"
+    },
+    {
+      "file": "src/dev/prepare-review.ts",
+      "sha256": "b80e0955c67987cc8ae9bb4ecf2396544a041a9fd0e862f958bb1d3d79aa5fb9"
+    },
+    {
+      "file": "prepare-review.html",
+      "sha256": "214702487c8ac7db47c4b6f6498b6d504867a58928b9f8baab25d0c61dff0a50"
+    }
+  ],
+  "pairs": [
+    "pollution-low",
+    "pollution-medium",
+    "pollution-severe",
+    "equipment-equipped",
+    "equipment-expanded",
+    "equipment-long"
+  ],
+  "method": "Actual isolated DEV production scene. Settle550ms. Sleep own Phaser loop, capture normal panel, hide only #inventory-panel visibility, capture same frozen world+backdrop, immediately restore visibility and wake loop. No production writes.",
+  "browser": "155.0.8059.39",
+  "sourceAfter": [
+    {
+      "file": "src/ui/dom/inventory-panel.ts",
+      "sha256": "1432682ee6232d64a2c58c65fc6b60d40afc180ea984577b815e5633f702f702"
+    },
+    {
+      "file": "src/ui/dom/inventory-panel-styles.ts",
+      "sha256": "79c2f95d4f29a6b17e247dcefc5f4cca7a86962ea347f5e873d7be289d6718a9"
+    },
+    {
+      "file": "src/ui/inventory-presenter.ts",
+      "sha256": "5e64db453639d4ffe82c5aa7f92f5fb51016a8a23b53a239ee3b0b5b3b70e5bb"
+    },
+    {
+      "file": "src/dev/prepare-review.ts",
+      "sha256": "b80e0955c67987cc8ae9bb4ecf2396544a041a9fd0e862f958bb1d3d79aa5fb9"
+    },
+    {
+      "file": "prepare-review.html",
+      "sha256": "214702487c8ac7db47c4b6f6498b6d504867a58928b9f8baab25d0c61dff0a50"
+    }
+  ],
+  "sourceUnchanged": true,
+  "finishedAt": "2026-10-09T09:58:39.903Z"
+}

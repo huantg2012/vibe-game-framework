@@ -1,0 +1,49 @@
+{
+  "baseRevision": "f9eea773",
+  "revision": "working-tree/preparation-flow-2026-10-09 after f9eea773",
+  "files": [
+    {
+      "file": "src/ui/dom/inventory-panel.ts",
+      "before": "e1f8de8f077c80df7b711fc8ce763f2cf811cb50b3da843f476abd5e6d6cc7c4",
+      "after": "1432682ee6232d64a2c58c65fc6b60d40afc180ea984577b815e5633f702f702",
+      "changed": true
+    },
+    {
+      "file": "src/ui/dom/inventory-panel-styles.ts",
+      "before": "6f83a5af3bd82f8baa9f251809b8deec00f2001d16738bbafe63054a9dff60d7",
+      "after": "79c2f95d4f29a6b17e247dcefc5f4cca7a86962ea347f5e873d7be289d6718a9",
+      "changed": true
+    },
+    {
+      "file": "src/ui/inventory-presenter.ts",
+      "before": "5e64db453639d4ffe82c5aa7f92f5fb51016a8a23b53a239ee3b0b5b3b70e5bb",
+      "after": "5e64db453639d4ffe82c5aa7f92f5fb51016a8a23b53a239ee3b0b5b3b70e5bb",
+      "changed": false
+    },
+    {
+      "file": "src/dev/prepare-review.ts",
+      "before": "b80e0955c67987cc8ae9bb4ecf2396544a041a9fd0e862f958bb1d3d79aa5fb9",
+      "after": "b80e0955c67987cc8ae9bb4ecf2396544a041a9fd0e862f958bb1d3d79aa5fb9",
+      "changed": false
+    },
+    {
+      "file": "prepare-review.html",
+      "before": "214702487c8ac7db47c4b6f6498b6d504867a58928b9f8baab25d0c61dff0a50",
+      "after": "214702487c8ac7db47c4b6f6498b6d504867a58928b9f8baab25d0c61dff0a50",
+      "changed": false
+    }
+  ],
+  "scope": "Only inventory-panel and its prepare-scoped styles changed this round; presenter and DEV isolation remain byte-identical. No generation, domain, scene or persistence changes.",
+  "limitations": "File continuity does not certify runtime behavior or extend historic RC acceptance.",
+  "unchangedParentArtifacts": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+      "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca",
+      "count": 1398
+    }
+  ]
+}

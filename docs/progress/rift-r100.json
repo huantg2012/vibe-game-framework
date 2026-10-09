@@ -44,10 +44,10 @@
   },
   "resume": {
     "iteration": "R100-I14",
-    "batch": "P49备行重构已实现并限定复验，待用户体验",
-    "nextAction": "交用户实际体验备行总览/整理行装，按反馈收口P49；整体视听与最终候选绑定仍待。",
+    "batch": "P49两环节/单列/排字已实现并限定复验，待用户复看",
+    "nextAction": "交用户从选级到配置体验新的两环节，按反馈收口P49；整体视听和最终候选绑定仍独立待验。",
     "lastCompleted": "48新增唯一run/192原档/53604守恒断言独核通过：47撤离+1真实死亡，三档各16/六材料自然覆盖；原12+优化源36连续，资本债1保留。覆盖/有限经济/恢复/出征四门已采纳，本机性能/资源/入口与clean包已验。 用户因无其他设备明确豁免较弱硬件补测；该项未测，不再阻断。",
-    "headline": "I14备行重构待复看 · 13/14轮已结 · 108世界/324等级",
+    "headline": "I14备行两环节待复看 · 13/14轮已结 · 108世界/324等级",
     "updatedDate": "2026-10-09",
     "evidenceRevision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009"
   },
@@ -9505,7 +9505,9 @@
         "R100-H-I14-WEAKER-DEVICE-WAIVER",
         "R100-E-I14-REVIEW-HANDOFF-AFTER-WAIVER",
         "R100-H-I14-PREPARE-CHANGES",
-        "R100-E-I14-PREPARE-UI"
+        "R100-E-I14-PREPARE-UI",
+        "R100-H-I14-PREPARE-FLOW",
+        "R100-E-I14-PREPARE-FLOW"
       ],
       "targetGradeCases": 324
     }
@@ -67786,6 +67788,22 @@
       "path": "docs/qa/preparation-ui-2026-10-09.md",
       "scope": "P49备行总览/整理两态已实现，8场景真实UI/三档实际出发、长库滚动/退出和内存隔离限定通过；Art实帧与构建单独记录。",
       "limitations": "用户实际复看待定，P49不关闭；DEV授予不计自然经营，旧RC不因本次局部实现自动变成新候选或发布通过。"
+    },
+    {
+      "id": "R100-H-I14-PREPARE-FLOW",
+      "kind": "human",
+      "revision": "f9eea773",
+      "path": "docs/qa/preparation-flow-2026-10-09.md",
+      "scope": "用户要求严格先选污染再配置，否决同屏摘要和双列交互，强调透明控件文字层级。",
+      "limitations": "授权新方向，不是新实现或I14终验通过。"
+    },
+    {
+      "id": "R100-E-I14-PREPARE-FLOW",
+      "kind": "runtime",
+      "revision": "working-tree-preparation-flow-20261009",
+      "path": "docs/qa/preparation-flow-2026-10-09.md",
+      "scope": "严格先选污染再单列配置，8场景含三档实际出发、真实背包交互对照、滚动/装配驻留及存储隔离通过；共享view/构建和文字实景核独立记录。",
+      "limitations": "用户复看待定，P49仍open；旧report消费后world校验失败未重验。限定UI证据不替代旧RC、自然经营或I14发布终验。"
     }
   ],
   "risks": [
@@ -68689,10 +68707,12 @@
       "revision": "51040b5a",
       "evidenceIds": [
         "R100-H-I14-PREPARE-CHANGES",
-        "R100-E-I14-PREPARE-UI"
+        "R100-E-I14-PREPARE-UI",
+        "R100-H-I14-PREPARE-FLOW",
+        "R100-E-I14-PREPARE-FLOW"
       ],
-      "note": "用户在真实备行画面明确否决布局和污染选择，要求重构级设计；原图及处理范围单独留档。",
-      "remainingRequirement": "重构已接入，限定交互/构建/实帧核完成；待用户实际复看布局与污染选择，仍open。整体视听/最终候选与发布终验继续独立。"
+      "note": "用户再次否决f9eea773同屏污染/行装、双列列表及文字层级，明确先选污染再配置、交互与净化点背包一致。",
+      "remainingRequirement": "两环节、单列一致交互与文字层级已实现并限定复验；待用户实际复看，不以内部检查代签。整体视听及最终候选/发布终验独立继续。"
     }
   ],
   "changeLog": [
@@ -68951,6 +68971,16 @@
       "date": "2026-10-09",
       "iteration": "R100-I14",
       "summary": "P49备行重构正式接入，默认污染总览、按需整理行装与次要装置读数；8个实际UI/出发场景限定通过，实帧与构建已核。源码对旧1398仅三UI文件变化，另两DEV文件；历史RC/失败保留，用户未复看前P49仍open、I14未结案。"
+    },
+    {
+      "date": "2026-10-09",
+      "kind": "human-correction",
+      "note": "P49上一版被用户再次退回：严格选污染→配置行装，单列背包一致交互，重做文字层级；本轮证据独立。"
+    },
+    {
+      "date": "2026-10-09",
+      "kind": "implementation-checkpoint",
+      "note": "P49按最新反馈接入严格两环节、catalog同款单列与局部文字主次；本轮8场景/真实背包对照/view/构建限定通过，原Tab输入失败保留，待用户复看。"
     }
   ],
   "qualityPlan": {

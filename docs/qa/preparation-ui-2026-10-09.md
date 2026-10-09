@@ -1,11 +1,13 @@
 ---
-status: IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING
+status: HISTORICAL-VERIFICATION / HUMAN-CHANGES-REQUESTED
 date: 2026-10-09
 features: [COH-F003, COH-F023, COH-F038, COH-F052]
 issue: R100-P49
 ---
 
 # 裂隙备行：污染选择与行装信息重构
+
+**后续人审：** 用户体验`f9eea773`后否决同屏污染/行装、双列物品和文字层级，要求严格先选污染再配置。下文保留旧版技术证据；当前整改见[两环节重构](preparation-flow-2026-10-09.md)。
 
 用户在实际游戏中指出“加入污染等级选择后东西多布局乱”“污染等级选择的 ui 太糙太直白”，要求重构交互和信息呈现。[原始截图](artifacts/preparation-ui-2026-10-09/user-before.png)保留。该反馈是明确整改，不是新界面验收；I14仍未结案。
 

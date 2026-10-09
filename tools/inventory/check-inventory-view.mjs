@@ -27,13 +27,13 @@ try {
     inventoryStore.subscribe(() => window.testInventory.changes++);
     openInventory({ mode: 'prepare', onClose: () => window.testInventory.closed++, onDepart: () => window.testInventory.departed++ });
   });
-  assert.equal(await page.locator('#inventory-panel').getAttribute('data-prepare-view'), 'overview');
+  assert.equal(await page.locator('#inventory-panel').getAttribute('data-prepare-view'), 'pollution');
   assert.equal(await page.locator('.inventory-item:visible').count(), 0, 'Preparation overview must not expose the entire inventory.');
   assert.equal(await page.locator('[data-departure-grade]').count(), 0, 'A legacy entry without grade choices must not invent a low-grade promise.');
   assert.match(await page.locator('.inventory-grade-legacy').innerText(), /沿用.*原有.*出行条件/);
   assert.doesNotMatch(await page.locator('.inventory-primary').innerText(), /低污染/);
-  assert.equal(await page.evaluate(() => document.activeElement.classList.contains('inventory-prepare-edit')), true);
-  await page.locator('.inventory-prepare-edit').click();
+  assert.equal(await page.evaluate(() => document.activeElement.dataset.prepareAction === 'next'), true);
+  await page.locator('[data-prepare-action=next]').click();
   assert.equal(await page.locator('#inventory-panel').getAttribute('data-prepare-view'), 'equipment');
   assert.equal(await page.locator('.inventory-item').count(), 60);
   await page.locator('[data-item-id="ui-3"]').click();

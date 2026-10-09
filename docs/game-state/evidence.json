@@ -7513,5 +7513,63 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E196",
+    "kind": "human",
+    "result": "fail",
+    "date": "2026-10-09",
+    "revision": "f9eea773",
+    "scope": "用户实玩再次否决同屏污染/行装总览与双列装配，明确先选污染等级再配置行装、复用净化点背包交互、加强透明UI文字层级。P49继续整改。",
+    "limitations": "这是明确的流程与视觉方向，不是新实现验收；上轮8/8技术范围仍是历史事实，不能覆盖后续重构。",
+    "features": [
+      "COH-F003",
+      "COH-F023",
+      "COH-F038",
+      "COH-F052"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/preparation-flow-2026-10-09.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E197",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-09",
+    "revision": "working-tree/preparation-flow-2026-10-09 after f9eea773",
+    "scope": "P49顺序备行两环节已接入，独立8/8场景通过：第一步禁止直接出发，三档经配置实际进入，4/5槽与缺武器、长库装配/返回驻留、真实净化点catalog单列交互对照、关闭恢复与页内存储隔离。共享inventory-view及最终构建通过。",
+    "limitations": "首轮7/8的真实Tab零持续输入未成功打开报告，原件保留，复验只改持时70ms且生产源未变；DEV授予不计自然经济。旧report消费后的world校验失败未重验、不算修复。用户审美待复看，P49仍open；不重签旧RC或I14整体发布。",
+    "features": [
+      "COH-F003",
+      "COH-F023",
+      "COH-F038",
+      "COH-F052"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/preparation-flow-2026-10-09.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/preparation-flow-2026-10-09/run-02/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/preparation-flow-2026-10-09/build.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/preparation-flow-2026-10-09/source-delta.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/preparation-flow-2026-10-09/art-review.md",
+        "role": "doc"
+      }
+    ]
   }
 ]

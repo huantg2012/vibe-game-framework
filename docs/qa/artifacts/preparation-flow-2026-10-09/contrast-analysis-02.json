@@ -1,0 +1,1081 @@
+{
+  "method": "QA freezes own DEV world after 550ms settling and captures matched normal/background PNGs. Background retains scene backdrop and hides only panel visibility. sRGB relative luminance contrast is evaluated at every background pixel within actual DOM text rectangles or marker rectangle; report conservative minimum. Computed foreground color and effective opacity are used; anti-alias glyph edge coverage is not treated as a different text color. Primary action uses first text rectangle (name) to exclude nested shortcut with separate color. Disabled actions are measured but excluded from active text threshold.",
+  "capture": "docs/qa/artifacts/preparation-flow-2026-10-09/frames-02/capture.json",
+  "results": [
+    {
+      "frame": "equipment-equipped",
+      "kind": "text",
+      "selector": ".inventory-primary",
+      "text": "踏入裂隙Shift+Enter",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 10.176,
+      "backgroundAtMinimum": [
+        3,
+        7,
+        6
+      ],
+      "point": [
+        775,
+        566
+      ],
+      "sampleCount": 1380,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "38f3774677baab1044a624bacc39c343494a6e72d04df6c2524cbbc570485733"
+    },
+    {
+      "frame": "equipment-equipped",
+      "kind": "text",
+      "selector": ".inventory-detail h3",
+      "text": "普通撬棍",
+      "fontSize": "18px",
+      "fontWeight": "500",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 9.245,
+      "backgroundAtMinimum": [
+        13,
+        22,
+        19
+      ],
+      "point": [
+        747,
+        324
+      ],
+      "sampleCount": 1632,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "38f3774677baab1044a624bacc39c343494a6e72d04df6c2524cbbc570485733"
+    },
+    {
+      "frame": "equipment-equipped",
+      "kind": "text",
+      "selector": ".inventory-detail>p",
+      "text": "已完成供奉。每次有效命中消耗 1 点耐久度，同次挥击只扣一次，空挥不消耗；耐久归零后损坏。伤害在区间内浮动。",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        175,
+        179,
+        173
+      ],
+      "minimumRatio": 8.726,
+      "backgroundAtMinimum": [
+        12,
+        21,
+        18
+      ],
+      "point": [
+        739,
+        400
+      ],
+      "sampleCount": 9726,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "38f3774677baab1044a624bacc39c343494a6e72d04df6c2524cbbc570485733"
+    },
+    {
+      "frame": "equipment-equipped",
+      "kind": "text",
+      "selector": ".inventory-action",
+      "text": "换到在手",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        86,
+        108,
+        80
+      ],
+      "minimumRatio": 3.324,
+      "backgroundAtMinimum": [
+        10,
+        17,
+        15
+      ],
+      "point": [
+        724,
+        495
+      ],
+      "sampleCount": 782,
+      "threshold": null,
+      "disabledStyleExcluded": true,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": null,
+      "backgroundSha256": "38f3774677baab1044a624bacc39c343494a6e72d04df6c2524cbbc570485733"
+    },
+    {
+      "frame": "equipment-equipped",
+      "kind": "text",
+      "selector": ".inventory-item.is-looking .inventory-item-name",
+      "text": "普通撬棍",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "fg": [
+        192,
+        198,
+        172
+      ],
+      "minimumRatio": 10.668,
+      "backgroundAtMinimum": [
+        12,
+        19,
+        17
+      ],
+      "point": [
+        421,
+        345
+      ],
+      "sampleCount": 765,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "38f3774677baab1044a624bacc39c343494a6e72d04df6c2524cbbc570485733"
+    },
+    {
+      "frame": "equipment-equipped",
+      "kind": "marker",
+      "selector": "inventory-item is-looking",
+      "text": "",
+      "fontSize": null,
+      "fontWeight": null,
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 6.175,
+      "backgroundAtMinimum": [
+        66,
+        50,
+        32
+      ],
+      "point": [
+        356,
+        361
+      ],
+      "sampleCount": 12,
+      "threshold": 3,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "38f3774677baab1044a624bacc39c343494a6e72d04df6c2524cbbc570485733"
+    },
+    {
+      "frame": "equipment-expanded",
+      "kind": "text",
+      "selector": ".inventory-primary",
+      "text": "踏入裂隙Shift+Enter",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 10.176,
+      "backgroundAtMinimum": [
+        3,
+        7,
+        6
+      ],
+      "point": [
+        775,
+        566
+      ],
+      "sampleCount": 1380,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "54f37a2dff8c79ddffd46fdb4c85d21ce407a0edf2b584e46952eb01eaf55b17"
+    },
+    {
+      "frame": "equipment-expanded",
+      "kind": "text",
+      "selector": ".inventory-detail h3",
+      "text": "普通撬棍",
+      "fontSize": "18px",
+      "fontWeight": "500",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 9.592,
+      "backgroundAtMinimum": [
+        10,
+        17,
+        15
+      ],
+      "point": [
+        745,
+        331
+      ],
+      "sampleCount": 1632,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "54f37a2dff8c79ddffd46fdb4c85d21ce407a0edf2b584e46952eb01eaf55b17"
+    },
+    {
+      "frame": "equipment-expanded",
+      "kind": "text",
+      "selector": ".inventory-detail>p",
+      "text": "已完成供奉。每次有效命中消耗 1 点耐久度，同次挥击只扣一次，空挥不消耗；耐久归零后损坏。伤害在区间内浮动。",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        175,
+        179,
+        173
+      ],
+      "minimumRatio": 8.857,
+      "backgroundAtMinimum": [
+        11,
+        19,
+        16
+      ],
+      "point": [
+        739,
+        400
+      ],
+      "sampleCount": 9726,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "54f37a2dff8c79ddffd46fdb4c85d21ce407a0edf2b584e46952eb01eaf55b17"
+    },
+    {
+      "frame": "equipment-expanded",
+      "kind": "text",
+      "selector": ".inventory-action",
+      "text": "换到在手",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        86,
+        108,
+        80
+      ],
+      "minimumRatio": 3.348,
+      "backgroundAtMinimum": [
+        9,
+        16,
+        14
+      ],
+      "point": [
+        724,
+        495
+      ],
+      "sampleCount": 782,
+      "threshold": null,
+      "disabledStyleExcluded": true,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": null,
+      "backgroundSha256": "54f37a2dff8c79ddffd46fdb4c85d21ce407a0edf2b584e46952eb01eaf55b17"
+    },
+    {
+      "frame": "equipment-expanded",
+      "kind": "text",
+      "selector": ".inventory-item.is-looking .inventory-item-name",
+      "text": "普通撬棍",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "fg": [
+        192,
+        198,
+        172
+      ],
+      "minimumRatio": 10.751,
+      "backgroundAtMinimum": [
+        11,
+        18,
+        16
+      ],
+      "point": [
+        421,
+        345
+      ],
+      "sampleCount": 765,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "54f37a2dff8c79ddffd46fdb4c85d21ce407a0edf2b584e46952eb01eaf55b17"
+    },
+    {
+      "frame": "equipment-expanded",
+      "kind": "marker",
+      "selector": "inventory-item is-looking",
+      "text": "",
+      "fontSize": null,
+      "fontWeight": null,
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 6.409,
+      "backgroundAtMinimum": [
+        62,
+        48,
+        30
+      ],
+      "point": [
+        356,
+        361
+      ],
+      "sampleCount": 12,
+      "threshold": 3,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "54f37a2dff8c79ddffd46fdb4c85d21ce407a0edf2b584e46952eb01eaf55b17"
+    },
+    {
+      "frame": "equipment-long",
+      "kind": "text",
+      "selector": ".inventory-primary",
+      "text": "踏入裂隙Shift+Enter",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 10.176,
+      "backgroundAtMinimum": [
+        3,
+        7,
+        6
+      ],
+      "point": [
+        775,
+        566
+      ],
+      "sampleCount": 1380,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "db1994c6ed737e561c388f9a4d5512ff11c1d97fd689e862948420af81261aec"
+    },
+    {
+      "frame": "equipment-long",
+      "kind": "text",
+      "selector": ".inventory-detail h3",
+      "text": "缺齿八音盒",
+      "fontSize": "18px",
+      "fontWeight": "500",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 9.464,
+      "backgroundAtMinimum": [
+        11,
+        19,
+        16
+      ],
+      "point": [
+        759,
+        320
+      ],
+      "sampleCount": 2016,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "db1994c6ed737e561c388f9a4d5512ff11c1d97fd689e862948420af81261aec"
+    },
+    {
+      "frame": "equipment-long",
+      "kind": "text",
+      "selector": ".inventory-detail>p",
+      "text": "抛出声诱饵持续8秒",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        175,
+        179,
+        173
+      ],
+      "minimumRatio": 8.857,
+      "backgroundAtMinimum": [
+        11,
+        19,
+        16
+      ],
+      "point": [
+        739,
+        400
+      ],
+      "sampleCount": 1649,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "db1994c6ed737e561c388f9a4d5512ff11c1d97fd689e862948420af81261aec"
+    },
+    {
+      "frame": "equipment-long",
+      "kind": "text",
+      "selector": ".inventory-action",
+      "text": "装到 工具 Q",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "fg": [
+        165,
+        178,
+        145
+      ],
+      "minimumRatio": 8.576,
+      "backgroundAtMinimum": [
+        10,
+        16,
+        14
+      ],
+      "point": [
+        736,
+        495
+      ],
+      "sampleCount": 1054,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "db1994c6ed737e561c388f9a4d5512ff11c1d97fd689e862948420af81261aec"
+    },
+    {
+      "frame": "equipment-long",
+      "kind": "text",
+      "selector": ".inventory-action",
+      "text": "装到 工具 F",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "fg": [
+        165,
+        178,
+        145
+      ],
+      "minimumRatio": 8.586,
+      "backgroundAtMinimum": [
+        9,
+        16,
+        14
+      ],
+      "point": [
+        750,
+        493
+      ],
+      "sampleCount": 1003,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "db1994c6ed737e561c388f9a4d5512ff11c1d97fd689e862948420af81261aec"
+    },
+    {
+      "frame": "equipment-long",
+      "kind": "text",
+      "selector": ".inventory-item.is-looking .inventory-item-name",
+      "text": "缺齿八音盒",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "fg": [
+        192,
+        198,
+        172
+      ],
+      "minimumRatio": 10.584,
+      "backgroundAtMinimum": [
+        18,
+        19,
+        15
+      ],
+      "point": [
+        415,
+        400
+      ],
+      "sampleCount": 952,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "db1994c6ed737e561c388f9a4d5512ff11c1d97fd689e862948420af81261aec"
+    },
+    {
+      "frame": "equipment-long",
+      "kind": "marker",
+      "selector": "inventory-item is-looking",
+      "text": "",
+      "fontSize": null,
+      "fontWeight": null,
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 9.352,
+      "backgroundAtMinimum": [
+        19,
+        19,
+        16
+      ],
+      "point": [
+        357,
+        417
+      ],
+      "sampleCount": 12,
+      "threshold": 3,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "db1994c6ed737e561c388f9a4d5512ff11c1d97fd689e862948420af81261aec"
+    },
+    {
+      "frame": "pollution-low",
+      "kind": "text",
+      "selector": ".inventory-grade-option[aria-pressed=true]",
+      "text": "低污染",
+      "fontSize": "18px",
+      "fontWeight": "500",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 7.079,
+      "backgroundAtMinimum": [
+        44,
+        44,
+        34
+      ],
+      "point": [
+        371,
+        279
+      ],
+      "sampleCount": 1224,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "2e3bdf409f706c7428f009b1199b1613a5c9259b7f8db2f7303377431f8c8080"
+    },
+    {
+      "frame": "pollution-low",
+      "kind": "text",
+      "selector": ".inventory-grade-risk",
+      "text": "污染较少，混乱增长较慢",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        175,
+        179,
+        173
+      ],
+      "minimumRatio": 9.263,
+      "backgroundAtMinimum": [
+        7,
+        12,
+        10
+      ],
+      "point": [
+        600,
+        255
+      ],
+      "sampleCount": 2108,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "2e3bdf409f706c7428f009b1199b1613a5c9259b7f8db2f7303377431f8c8080"
+    },
+    {
+      "frame": "pollution-low",
+      "kind": "text",
+      "selector": ".inventory-grade-reward",
+      "text": "深入仍需承担路程",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        179,
+        155,
+        117
+      ],
+      "minimumRatio": 7.452,
+      "backgroundAtMinimum": [
+        6,
+        10,
+        9
+      ],
+      "point": [
+        613,
+        307
+      ],
+      "sampleCount": 1440,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "2e3bdf409f706c7428f009b1199b1613a5c9259b7f8db2f7303377431f8c8080"
+    },
+    {
+      "frame": "pollution-low",
+      "kind": "text",
+      "selector": ".inventory-grade-preparation",
+      "text": "观察路线，补充行装",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        175,
+        179,
+        173
+      ],
+      "minimumRatio": 9.031,
+      "backgroundAtMinimum": [
+        10,
+        16,
+        14
+      ],
+      "point": [
+        626,
+        373
+      ],
+      "sampleCount": 1616,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "2e3bdf409f706c7428f009b1199b1613a5c9259b7f8db2f7303377431f8c8080"
+    },
+    {
+      "frame": "pollution-low",
+      "kind": "text",
+      "selector": ".inventory-primary",
+      "text": "整理行装Enter",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 10.176,
+      "backgroundAtMinimum": [
+        3,
+        7,
+        6
+      ],
+      "point": [
+        801,
+        566
+      ],
+      "sampleCount": 1380,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "2e3bdf409f706c7428f009b1199b1613a5c9259b7f8db2f7303377431f8c8080"
+    },
+    {
+      "frame": "pollution-low",
+      "kind": "marker",
+      "selector": "inventory-grade-option",
+      "text": "",
+      "fontSize": null,
+      "fontWeight": null,
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 7.095,
+      "backgroundAtMinimum": [
+        43,
+        44,
+        35
+      ],
+      "point": [
+        354,
+        269
+      ],
+      "sampleCount": 24,
+      "threshold": 3,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "2e3bdf409f706c7428f009b1199b1613a5c9259b7f8db2f7303377431f8c8080"
+    },
+    {
+      "frame": "pollution-medium",
+      "kind": "text",
+      "selector": ".inventory-grade-option[aria-pressed=true]",
+      "text": "中污染",
+      "fontSize": "18px",
+      "fontWeight": "500",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 5.837,
+      "backgroundAtMinimum": [
+        56,
+        59,
+        25
+      ],
+      "point": [
+        407,
+        321
+      ],
+      "sampleCount": 1224,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "33c9246bc6dc624fca668be4cbdef201edddee074ca1a0db72823f9ae7df0085"
+    },
+    {
+      "frame": "pollution-medium",
+      "kind": "text",
+      "selector": ".inventory-grade-risk",
+      "text": "侵蚀更广，久留代价更高",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        175,
+        179,
+        173
+      ],
+      "minimumRatio": 9.263,
+      "backgroundAtMinimum": [
+        7,
+        12,
+        10
+      ],
+      "point": [
+        573,
+        253
+      ],
+      "sampleCount": 2108,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "33c9246bc6dc624fca668be4cbdef201edddee074ca1a0db72823f9ae7df0085"
+    },
+    {
+      "frame": "pollution-medium",
+      "kind": "text",
+      "selector": ".inventory-grade-reward",
+      "text": "更多收获在较深处",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        179,
+        155,
+        117
+      ],
+      "minimumRatio": 7.452,
+      "backgroundAtMinimum": [
+        6,
+        10,
+        9
+      ],
+      "point": [
+        613,
+        307
+      ],
+      "sampleCount": 1440,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "33c9246bc6dc624fca668be4cbdef201edddee074ca1a0db72823f9ae7df0085"
+    },
+    {
+      "frame": "pollution-medium",
+      "kind": "text",
+      "selector": ".inventory-grade-preparation",
+      "text": "按行装选择绕行或穿越",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        175,
+        179,
+        173
+      ],
+      "minimumRatio": 9.031,
+      "backgroundAtMinimum": [
+        10,
+        16,
+        14
+      ],
+      "point": [
+        624,
+        371
+      ],
+      "sampleCount": 1792,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "33c9246bc6dc624fca668be4cbdef201edddee074ca1a0db72823f9ae7df0085"
+    },
+    {
+      "frame": "pollution-medium",
+      "kind": "text",
+      "selector": ".inventory-primary",
+      "text": "整理行装Enter",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 10.176,
+      "backgroundAtMinimum": [
+        3,
+        7,
+        6
+      ],
+      "point": [
+        801,
+        566
+      ],
+      "sampleCount": 1380,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "33c9246bc6dc624fca668be4cbdef201edddee074ca1a0db72823f9ae7df0085"
+    },
+    {
+      "frame": "pollution-medium",
+      "kind": "marker",
+      "selector": "inventory-grade-option",
+      "text": "",
+      "fontSize": null,
+      "fontWeight": null,
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 5.999,
+      "backgroundAtMinimum": [
+        68,
+        52,
+        33
+      ],
+      "point": [
+        357,
+        327
+      ],
+      "sampleCount": 24,
+      "threshold": 3,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "33c9246bc6dc624fca668be4cbdef201edddee074ca1a0db72823f9ae7df0085"
+    },
+    {
+      "frame": "pollution-severe",
+      "kind": "text",
+      "selector": ".inventory-grade-option[aria-pressed=true]",
+      "text": "重度污染",
+      "fontSize": "18px",
+      "fontWeight": "500",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 7.421,
+      "backgroundAtMinimum": [
+        49,
+        38,
+        25
+      ],
+      "point": [
+        370,
+        374
+      ],
+      "sampleCount": 1632,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "3df434fbda8ff8051afb4c981f01e7c2ac9e7f8145488fd2bebf613600eda53a"
+    },
+    {
+      "frame": "pollution-severe",
+      "kind": "text",
+      "selector": ".inventory-grade-risk",
+      "text": "地面与空气受侵占，混乱增长快",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        175,
+        179,
+        173
+      ],
+      "minimumRatio": 9.263,
+      "backgroundAtMinimum": [
+        7,
+        12,
+        10
+      ],
+      "point": [
+        543,
+        247
+      ],
+      "sampleCount": 2669,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "3df434fbda8ff8051afb4c981f01e7c2ac9e7f8145488fd2bebf613600eda53a"
+    },
+    {
+      "frame": "pollution-severe",
+      "kind": "text",
+      "selector": ".inventory-grade-reward",
+      "text": "更多收获在深处，入口无加成",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        179,
+        155,
+        117
+      ],
+      "minimumRatio": 7.29,
+      "backgroundAtMinimum": [
+        8,
+        14,
+        12
+      ],
+      "point": [
+        665,
+        313
+      ],
+      "sampleCount": 2336,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "3df434fbda8ff8051afb4c981f01e7c2ac9e7f8145488fd2bebf613600eda53a"
+    },
+    {
+      "frame": "pollution-severe",
+      "kind": "text",
+      "selector": ".inventory-grade-preparation",
+      "text": "备好脱身工具，留出归途",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "fg": [
+        175,
+        179,
+        173
+      ],
+      "minimumRatio": 8.977,
+      "backgroundAtMinimum": [
+        10,
+        17,
+        15
+      ],
+      "point": [
+        649,
+        367
+      ],
+      "sampleCount": 1984,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "3df434fbda8ff8051afb4c981f01e7c2ac9e7f8145488fd2bebf613600eda53a"
+    },
+    {
+      "frame": "pollution-severe",
+      "kind": "text",
+      "selector": ".inventory-primary",
+      "text": "整理行装Enter",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 10.176,
+      "backgroundAtMinimum": [
+        3,
+        7,
+        6
+      ],
+      "point": [
+        801,
+        566
+      ],
+      "sampleCount": 1380,
+      "threshold": 4.5,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "3df434fbda8ff8051afb4c981f01e7c2ac9e7f8145488fd2bebf613600eda53a"
+    },
+    {
+      "frame": "pollution-severe",
+      "kind": "marker",
+      "selector": "inventory-grade-option",
+      "text": "",
+      "fontSize": null,
+      "fontWeight": null,
+      "fg": [
+        179,
+        186,
+        174
+      ],
+      "minimumRatio": 8.179,
+      "backgroundAtMinimum": [
+        38,
+        31,
+        22
+      ],
+      "point": [
+        361,
+        385
+      ],
+      "sampleCount": 24,
+      "threshold": 3,
+      "disabledStyleExcluded": false,
+      "disabledFromHistoricalStyle": false,
+      "meetsThreshold": true,
+      "backgroundSha256": "3df434fbda8ff8051afb4c981f01e7c2ac9e7f8145488fd2bebf613600eda53a"
+    }
+  ],
+  "failures": [],
+  "checkedCount": 37
+}

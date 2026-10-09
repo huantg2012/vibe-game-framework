@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-09",
+  "sourceAuditMatchesCurrent": true,
+  "qaBoundReferencesChecked": 20,
+  "allQaReferencesMatch": true,
+  "brokenMarkdownFileLinks": [],
+  "diffCheck": "pass",
+  "progress": {
+    "command": "check",
+    "status": "active",
+    "counts": {
+      "candidates": 108,
+      "qualified": 108,
+      "production": 108,
+      "humanApproved": 0,
+      "qualifiedGradeCases": 324,
+      "productionGradeCases": 324
+    },
+    "warnings": [],
+    "iterations": 14,
+    "workflowSteps": 10,
+    "sourceSha256": "31d6f3e5e76a2edae00c02a43cc68eeede919cfca955c037e2d01da1b8d6a620"
+  },
+  "gameStateIndex": {
+    "exitCode": 0,
+    "features": 53,
+    "evidence": 197,
+    "warningsRetained": [
+      "warnings: 领域尚未核对: 语言、设置与可达性",
+      "warnings: 历史证据适用性：53 条关联实现已变化，144 条无法按版本比较；基线不改变此判断。"
+    ],
+    "staleSourceCount": 708,
+    "log": "state-index.log",
+    "baselineRefreshed": false
+  },
+  "limitations": "Structural/source checks only. Human aesthetics and I14 release remain pending; no global fingerprint baseline reset."
+}

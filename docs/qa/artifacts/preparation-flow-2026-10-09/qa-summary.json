@@ -1,0 +1,448 @@
+{
+  "purpose": "bounded-preparation-flow-qa",
+  "status": "BEHAVIOR-PASS / SCOPED-VISUAL-CHECK-PASS / HUMAN-REVIEW-PENDING",
+  "date": "2026-10-09",
+  "features": [
+    "COH-F003",
+    "COH-F023",
+    "COH-F038",
+    "COH-F052"
+  ],
+  "issue": "R100-P49",
+  "contract": "Current spec §5: pollution selection -> equipment -> departure. Prior mixed overview was rejected by the user; its internal pass is not inherited.",
+  "environment": {
+    "browser": "155.0.8059.39",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "hardwareConcurrency": 14,
+    "devicePixelRatio": 1,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "gpu": {
+      "vendor": "Google Inc. (Apple)",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)"
+    }
+  },
+  "production": [
+    {
+      "file": "src/ui/dom/inventory-panel.ts",
+      "sha256": "1432682ee6232d64a2c58c65fc6b60d40afc180ea984577b815e5633f702f702"
+    },
+    {
+      "file": "src/ui/dom/inventory-panel-styles.ts",
+      "sha256": "79c2f95d4f29a6b17e247dcefc5f4cca7a86962ea347f5e873d7be289d6718a9"
+    },
+    {
+      "file": "src/ui/inventory-presenter.ts",
+      "sha256": "5e64db453639d4ffe82c5aa7f92f5fb51016a8a23b53a239ee3b0b5b3b70e5bb"
+    },
+    {
+      "file": "src/dev/prepare-review.ts",
+      "sha256": "b80e0955c67987cc8ae9bb4ecf2396544a041a9fd0e862f958bb1d3d79aa5fb9"
+    },
+    {
+      "file": "prepare-review.html",
+      "sha256": "214702487c8ac7db47c4b6f6498b6d504867a58928b9f8baab25d0c61dff0a50"
+    },
+    {
+      "file": "src/scenes/purification-scene.ts",
+      "sha256": "f5b94d1083a7a8b37992dc76892400ad621e3cef167de906d6f42fa7adf39a5e"
+    }
+  ],
+  "productionUnchangedAcrossBothBehaviorRounds": true,
+  "productionStillMatchesCurrentFiles": true,
+  "tools": [
+    {
+      "file": "tools/inventory/check-preparation-ui.mjs",
+      "sha256": "e38fa71d75e89b329c543d72d8c37b55a385584f96f57113f4b8cb62ff708baf"
+    },
+    {
+      "file": "tools/inventory/check-inventory-view.mjs",
+      "sha256": "213c3a6c12efc791f5becaa2a3c285ef107d9de85ee2590180af45cafca9de9f"
+    },
+    {
+      "file": "tools/inventory/check-inventory-report.mjs",
+      "sha256": "2fc0f134a63419f14750aed3b28461d9c37ceb22df56d783d934602beb8329b4"
+    }
+  ],
+  "behavior": {
+    "final": {
+      "file": "docs/qa/artifacts/preparation-flow-2026-10-09/run-02/report.json",
+      "sha256": "2e1f533d6d4c0481dd29286e4a7377759f92f17032c189ef2d409eb0e319327b"
+    },
+    "testSource": {
+      "file": "docs/qa/artifacts/preparation-flow-2026-10-09/run-02/test-source.mjs",
+      "sha256": "e38fa71d75e89b329c543d72d8c37b55a385584f96f57113f4b8cb62ff708baf"
+    },
+    "status": "passed",
+    "passedCases": 8,
+    "failedCases": 0,
+    "pageErrors": 0,
+    "twoStepGate": "First step exposes grades/facts/next only; ShiftEnter consumed without advancing or departing. Next alone enters equipment even with missing weapon. Only second-step depart/ShiftEnter begins a real run. Ordinary Enter/Space and repeat never depart.",
+    "fixtures": [
+      "starter",
+      "equipped",
+      "expanded",
+      "long",
+      "blocked"
+    ],
+    "navigation": "Tab stays in visible controls; repeated next input cannot skip to departure; Esc equipment->pollution->world; explicit close exits directly; camera and actual player input restore.",
+    "equipment": "4/5 actual slots, no overlapping sibling text/slot rects, fixed reachable footer; unknown items retain public projection; real compatible slot filtering; actual equip before back/change-grade/forward remains equipped.",
+    "realCatalogueParity": {
+      "entry": "Real PurificationScene close -> physical Tab70ms -> status panel item tab; actual production catalogue, same66-item memory fixture",
+      "prepare": {
+        "geometry": [
+          {
+            "x": 354.20001220703125,
+            "y": 340.3000183105469,
+            "height": 44.399993896484375,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 384.70001220703125,
+            "height": 44.399993896484375,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 429.1000061035156,
+            "height": 44.399993896484375,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 473.5,
+            "height": 44.4000244140625,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 517.9000244140625,
+            "height": 44.39996337890625,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 562.2999877929688,
+            "height": 44.4000244140625,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 606.7000122070312,
+            "height": 44.4000244140625,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 651.1000366210938,
+            "height": 44.39996337890625,
+            "cssHeight": "48px"
+          }
+        ],
+        "steps": [
+          [
+            "Home",
+            0
+          ],
+          [
+            "ArrowDown",
+            1
+          ],
+          [
+            "ArrowRight",
+            1
+          ],
+          [
+            "ArrowLeft",
+            1
+          ],
+          [
+            "ArrowUp",
+            0
+          ],
+          [
+            "PageDown",
+            6
+          ],
+          [
+            "PageUp",
+            0
+          ],
+          [
+            "End",
+            65
+          ],
+          [
+            "Home",
+            0
+          ]
+        ],
+        "scroll": 850,
+        "selected": "WPN_5ed1093c-79ef-4d9b-90a8-609799d61fe4",
+        "count": 66
+      },
+      "catalogue": {
+        "geometry": [
+          {
+            "x": 354.20001220703125,
+            "y": 306.07501220703125,
+            "height": 44.399993896484375,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 350.4750061035156,
+            "height": 44.399993896484375,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 394.875,
+            "height": 44.399993896484375,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 439.2749938964844,
+            "height": 44.4000244140625,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 483.6750183105469,
+            "height": 44.399993896484375,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 528.0750122070312,
+            "height": 44.4000244140625,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 572.4750366210938,
+            "height": 44.39996337890625,
+            "cssHeight": "48px"
+          },
+          {
+            "x": 354.20001220703125,
+            "y": 616.875,
+            "height": 44.4000244140625,
+            "cssHeight": "48px"
+          }
+        ],
+        "steps": [
+          [
+            "Home",
+            0
+          ],
+          [
+            "ArrowDown",
+            1
+          ],
+          [
+            "ArrowRight",
+            1
+          ],
+          [
+            "ArrowLeft",
+            1
+          ],
+          [
+            "ArrowUp",
+            0
+          ],
+          [
+            "PageDown",
+            6
+          ],
+          [
+            "PageUp",
+            0
+          ],
+          [
+            "End",
+            65
+          ],
+          [
+            "Home",
+            0
+          ]
+        ],
+        "scroll": 850,
+        "selected": "WPN_5ed1093c-79ef-4d9b-90a8-609799d61fe4",
+        "count": 66
+      },
+      "preparePosition": {
+        "count": 66,
+        "first": 18,
+        "last": 22,
+        "hint": "18–22 / 66"
+      },
+      "cataloguePosition": {
+        "count": 66,
+        "first": 18,
+        "last": 21,
+        "hint": "18–21 / 66"
+      },
+      "positionConvention": "Preparation includes a visible partial final row; catalogue retains existing fully visible end-row convention. Both use single-column geometry; no two-column multiplier."
+    },
+    "memory": {
+      "wheelOnlyScroll": 850,
+      "equippedReturn": {
+        "id": "prepare-fixture-22",
+        "scroll": 1044
+      },
+      "detailReturn": {
+        "detail": 82,
+        "list": 660,
+        "selected": "prepare-fixture-1"
+      }
+    },
+    "exitFocusTrace": [
+      {
+        "wall": 2430.699999809265,
+        "sceneTime": 2417.7,
+        "focused": true,
+        "hidden": false,
+        "inputEnabled": false,
+        "camera": {
+          "zoom": 2.2,
+          "scrollX": 104,
+          "scrollY": 67
+        },
+        "tween": null
+      },
+      {
+        "wall": 2654.7999997138977,
+        "sceneTime": 2651,
+        "focused": true,
+        "hidden": false,
+        "inputEnabled": true,
+        "camera": {
+          "zoom": 1,
+          "scrollX": 0,
+          "scrollY": 0
+        },
+        "tween": null
+      }
+    ],
+    "realDepartures": [
+      {
+        "grade": "low",
+        "runId": "a6acc937-cb13-44ad-83c8-1232e06b8b89",
+        "actualGrade": "low",
+        "cycle": 1
+      },
+      {
+        "grade": "medium",
+        "runId": "563d6a11-3e1d-477f-8fa4-3d3087e53887",
+        "actualGrade": "medium",
+        "cycle": 1
+      },
+      {
+        "grade": "severe",
+        "runId": "8888a391-507c-42c8-8973-d2940a558e3b",
+        "actualGrade": "severe",
+        "cycle": 1
+      }
+    ],
+    "storage": {
+      "contexts": 8,
+      "allNativeStorageCalls": 0,
+      "sentinelKeys": [
+        "coh-save-v1",
+        "coh-save-v1:previous",
+        "qa-preparation-sentinel",
+        "coh.atmosphere.v1",
+        "coh.locale.v1"
+      ],
+      "sentinelsUnchanged": true,
+      "backend": "Boot-before inline page storage + actual SaveManager BuildLabMemoryStorage",
+      "userBrowserOrSaveUsed": false
+    }
+  },
+  "sharedView": {
+    "status": "passed",
+    "exitCode": 0,
+    "log": {
+      "file": "docs/qa/artifacts/preparation-flow-2026-10-09/checks-01/inventory-view.log",
+      "sha256": "6f70a4050d8861857106b6af779dbf26757ef45144e4fbf582faf5bb57546f49"
+    },
+    "scope": "60-item equipment actions, quota rollback, repeat Enter/ShiftEnter, no-grade compatibility two-step entry, catalogue hold-discard/offering, rift exchange/Escape/movement forwarding"
+  },
+  "firstRound": {
+    "report": {
+      "file": "docs/qa/artifacts/preparation-flow-2026-10-09/run-01/report.json",
+      "sha256": "0c77ce9c8e6117e7f47ca64c423366863add63d3a84222b3e67368624186b1d1"
+    },
+    "passedCases": 7,
+    "failedCases": 1,
+    "failure": "Long case completed preparation checks but zero-duration world Tab did not produce visible #status-panel within10s. Exact engine internal event cause was not captured. No claim of a proven engine bug.",
+    "correction": "Only hold that one physical Tab for70ms, consistent with existing scene-level test input. Production unchanged; one bounded retry.",
+    "testDiff": {
+      "file": "docs/qa/artifacts/preparation-flow-2026-10-09/qa-test-correction.diff",
+      "sha256": "ed21d8763cb6b402973590e7880f4fa76dcbdb6bdd547d422b9ca5b10be23ae7"
+    },
+    "notLost": "Original failure screenshot/state/report, including three successful real departures, retained."
+  },
+  "roundBudget": {
+    "behaviorRounds": 2,
+    "totalDeclaredFixtureCases": 16,
+    "totalRealDiagnosticDepartures": 6,
+    "furtherRuns": 0,
+    "countsExcludedFromR100NaturalJourneyDenominators": true
+  },
+  "visual": {
+    "artReport": {
+      "file": "docs/qa/artifacts/preparation-flow-2026-10-09/art-review.md",
+      "sha256": "a8b04d688bd610d593b0382c8f915756f1a7cb4aefd5f9036ded3be9429c9d9f"
+    },
+    "contrast": {
+      "file": "docs/qa/artifacts/preparation-flow-2026-10-09/contrast-analysis-02.json",
+      "sha256": "f8738e92325d73579a2ad271770d12316ac8aef045253e5d98f881ac629883ed"
+    },
+    "capture": {
+      "file": "docs/qa/artifacts/preparation-flow-2026-10-09/frames-02/capture.json",
+      "sha256": "c95f87e0220f0d403fe88c7804f4fe29825ff3666dfc7fe1e4ff9a53b059d11c"
+    },
+    "captureTool": {
+      "file": "docs/qa/artifacts/preparation-flow-2026-10-09/frames-02/capture-source.mjs",
+      "sha256": "786cd894189ae0ddcd4109a12709a1e228aefb807ba4ceb2ec91ac949ec43ab2"
+    },
+    "matchedPairs": 6,
+    "eligibleTexts": 29,
+    "minimumTextContrast": 5.837,
+    "markers": 6,
+    "minimumMarkerContrast": 5.999,
+    "disabledExcluded": 2,
+    "limit": "Specific actual settled frames and rectangles, not all future views or user aesthetics. Original frames01 retained. One visual correction of local weights/selected foreground was made before behavior runs."
+  },
+  "build": {
+    "owner": "root",
+    "receipt": {
+      "file": "docs/qa/artifacts/preparation-flow-2026-10-09/build.json",
+      "sha256": "369587a5d45d63c48b971b65fc9da3fe6bf17fb60bdf44f79ebeb1187fca2dd1"
+    },
+    "notRerunByQA": true
+  },
+  "oldReport": {
+    "status": "not-rerun",
+    "entrySelectorsUpdatedOnly": true,
+    "priorFailure": {
+      "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-05/inventory-report-failure.json",
+      "sha256": "bf411b0cd41b539f6c7b7fdde956bdb152a1b70e3323a9f8c1294990139e0836"
+    },
+    "scope": "Prior direct consumeTool returned ok inside open frame but next complete world validation paused. Legal durable gameplay-consumption path not confirmed. No current report-through-HUD-consumption/collection pass claimed."
+  },
+  "limits": [
+    "User final aesthetic/like-game/same-world approval pending.",
+    "No natural economic, cross-engine, weak-device, long-session, performance, or R100 release claim.",
+    "Feedback400ms latency not separately instrumented; actual input/state behavior plus source animation contract only.",
+    "All own browsers closed; pre-existing3027server untouched; no production code edits or commit byQA."
+  ]
+}

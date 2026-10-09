@@ -118,7 +118,6 @@ class InventoryPanel {
   private memory = new Map<string, ViewMemory>();
   private lists: Partial<Record<Lane, ListElements>> = {};
   private equipment!: HTMLDivElement;
-  private conditions!: HTMLDivElement;
   private gradePanel!: HTMLDivElement;
   private gradeSignature = '';
   private detail!: HTMLElement;
@@ -140,16 +139,14 @@ class InventoryPanel {
   private previousFocus: HTMLElement | null = null;
   private discardTimer: ReturnType<typeof setTimeout> | null = null;
   private discardControl: HTMLButtonElement | null = null;
-  private prepareView: 'overview' | 'equipment' = 'overview';
+  private prepareView: 'pollution' | 'equipment' = 'pollution';
   private prepareViewport!: HTMLDivElement;
-  private prepareOverview!: HTMLDivElement;
+  private preparePollution!: HTMLDivElement;
   private prepareEditor!: HTMLDivElement;
-  private prepareOverviewEquipment!: HTMLDivElement;
   private prepareEditorEquipment!: HTMLDivElement;
   private prepareContext!: HTMLElement;
   private prepareBack!: HTMLButtonElement;
   private prepareHelp!: HTMLElement;
-  private prepareOriginSlot: string | null = null;
   private prepareDetailScroll = 0;
 
   isOpen(): boolean { return this.panel !== null; }
@@ -163,7 +160,7 @@ class InventoryPanel {
     this.options = options;
     this.filter = 'all'; this.sort = 'kept';
     this.focusId = null; this.lane = 'main'; this.pendingScroll.clear();
-    this.prepareView = 'overview'; this.prepareOriginSlot = null; this.prepareDetailScroll = 0;
+    this.prepareView = 'pollution'; this.prepareDetailScroll = 0;
     this.picks.clear(); this.takes.clear(); this.memory.clear(); this.filters.clear();
     this.signature = ''; this.equipmentSignature = ''; this.detailSignature = ''; this.localMessage = ''; this.busy = false; this.suggestedGround = false;
     this.previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -176,7 +173,7 @@ class InventoryPanel {
     document.addEventListener('visibilitychange', this.cancelDiscardHold);
     window.addEventListener('blur', this.cancelDiscardHold);
     this.update();
-    if (options.mode === 'prepare') (this.gradePanel.querySelector<HTMLElement>('[aria-pressed="true"]') ?? this.panel?.querySelector<HTMLElement>('.inventory-prepare-edit'))?.focus({ preventScroll: true });
+    if (options.mode === 'prepare') (this.gradePanel.querySelector<HTMLElement>('[aria-pressed="true"]') ?? this.primary)?.focus({ preventScroll: true });
     else this.panel?.focus({ preventScroll: true });
   }
 
@@ -227,13 +224,11 @@ class InventoryPanel {
     const panel = element('div', `inventory-wrap ${embedded ? 'inventory-catalog' : 'game-panel crt-stack scene-menu'} is-${this.options!.mode}`); panel.id = 'inventory-panel'; panel.tabIndex = -1;
     panel.setAttribute('role', embedded ? 'region' : 'dialog'); if (!embedded) panel.setAttribute('aria-modal', 'true'); panel.setAttribute('aria-label', this.options!.mode === 'prepare' ? '备行' : embedded ? '物件' : '本趟拾获');
     const header = element('header', 'inventory-header');
-    header.append(element('h2', 'inventory-title', this.options!.mode === 'prepare' ? '备行' : '本趟拾获'));
+    header.append(element('h2', 'inventory-title', this.options!.mode === 'prepare' ? '选择污染程度' : '本趟拾获'));
     header.hidden = embedded;
     this.prepareContext = element('span', 'inventory-context', this.options!.mode === 'rift' ? '只收好这次带回的物件' : '');
     header.append(this.prepareContext);
     this.equipment = element('div', 'inventory-equipment');
-    this.conditions = element('div', 'inventory-departure-conditions');
-    this.conditions.setAttribute('aria-label', '下次踏入条件');
     this.weight = element('div', 'inventory-weight'); header.append(this.weight);
     const close = button('inventory-close', this.options!.mode === 'prepare' ? '离开备行' : 'Esc 收起', () => this.close()); close.setAttribute('aria-label', this.options!.mode === 'prepare' ? '离开备行' : '合上拾获'); header.append(close);
     this.equipment.setAttribute('aria-label', '本趟装备'); this.equipment.hidden = this.options!.mode !== 'prepare';
@@ -274,30 +269,23 @@ class InventoryPanel {
     this.prepareHelp = help;
     this.primary = button('inventory-primary', '', () => this.primaryAction());
     if (this.options!.mode === 'prepare') {
-      this.prepareBack = button('inventory-prepare-back', 'Esc 返回备行', () => this.showPrepareOverview());
+      this.prepareBack = button('inventory-prepare-back', '返回污染选择', () => this.showPreparePollution());
       this.prepareBack.hidden = true;
       bottomRow.append(this.prepareBack);
     }
     bottomRow.append(help, this.primary); bottom.append(this.message, bottomRow);
     if (this.options!.mode === 'prepare') {
       this.prepareViewport = element('div', 'inventory-prepare-viewport');
-      this.prepareOverview = element('div', 'inventory-prepare-overview');
+      this.preparePollution = element('div', 'inventory-prepare-pollution');
       this.prepareEditor = element('div', 'inventory-prepare-editor');
-      const equipmentSection = element('section', 'inventory-prepare-loadout');
-      const equipmentHeading = element('div', 'inventory-prepare-section-heading');
-      equipmentHeading.append(element('span', '', '本趟行装'), button('inventory-prepare-edit', '整理行装', () => this.showPrepareEquipment()));
-      this.prepareOverviewEquipment = element('div', 'inventory-prepare-equipment-host');
-      equipmentSection.append(equipmentHeading, this.prepareOverviewEquipment);
-      const conditions = element('details', 'inventory-prepare-conditions');
-      conditions.append(element('summary', '', '装置读数'), this.conditions);
-      this.prepareOverview.append(this.gradePanel, equipmentSection, conditions);
+      this.preparePollution.append(this.gradePanel);
       this.prepareEditorEquipment = element('div', 'inventory-prepare-equipment-host');
+      this.prepareEditorEquipment.append(this.equipment);
       this.prepareEditor.append(this.prepareEditorEquipment, filters, body);
-      this.prepareViewport.append(this.prepareOverview);
-      this.prepareOverviewEquipment.append(this.equipment);
+      this.prepareViewport.append(this.preparePollution);
       panel.append(header, this.prepareViewport, bottom);
-      panel.dataset.prepareView = 'overview';
-    } else panel.append(header, this.equipment, this.conditions, this.gradePanel, filters, this.exchangeInspect, body, bottom);
+      panel.dataset.prepareView = 'pollution';
+    } else panel.append(header, this.equipment, this.gradePanel, filters, this.exchangeInspect, body, bottom);
     panel.addEventListener('pointerdown', event => event.stopPropagation());
     panel.addEventListener('click', event => event.stopPropagation());
     panel.addEventListener('wheel', event => event.stopPropagation(), { passive: true });
@@ -338,14 +326,6 @@ class InventoryPanel {
     for (const [filter, control] of this.filters) { control.classList.toggle('is-current', filter === this.filter); control.setAttribute('aria-pressed', String(filter === this.filter)); }
     this.renderEquipment();
     this.renderDepartureGrades();
-    this.conditions.replaceChildren();
-    this.conditions.hidden = this.options?.mode !== 'prepare' || !this.snapshot.departureConditions?.length;
-    if (!this.conditions.hidden) for (const condition of this.snapshot.departureConditions ?? []) {
-      const column = element('div');
-      column.append(element('span', '', condition.label), element('strong', '', String(condition.value)));
-      if (condition.note) column.append(element('small', '', condition.note));
-      this.conditions.append(column);
-    }
     const previousIds = this.lists[this.lane]?.ids ?? [];
     const oldIndex = Math.max(0, previousIds.indexOf(this.focusId ?? ''));
     this.renderList('nearby'); this.renderList('main');
@@ -363,10 +343,11 @@ class InventoryPanel {
     this.gradePanel.hidden = this.options?.mode !== 'prepare';
     if (this.gradePanel.hidden) return;
     this.prepareContext.textContent = this.prepareView === 'equipment'
-      ? `本次 · ${grades?.options.find(option => option.id === grades.selected)?.label ?? '原有出行条件'}`
-      : '选择污染程度，带好行装';
+      ? `备行 2/2 · ${grades?.options.find(option => option.id === grades.selected)?.label ?? '原有出行条件'}`
+      : '备行 1/2';
+    const title = this.panel?.querySelector('.inventory-title');
+    if (title) title.textContent = this.prepareView === 'equipment' ? '配置行装' : '选择污染程度';
     if (!grades) {
-      this.prepareContext.textContent = this.prepareView === 'equipment' ? '本次 · 原有出行条件' : '带好行装';
       this.prepareHelp.textContent = this.prepareView === 'equipment' ? '方向键查看 · Enter 操作 · Tab 移步' : 'Tab 移步 · Esc 离开';
       this.gradePanel.replaceChildren(element('p', 'inventory-grade-legacy', '沿旧路出发 · 沿用原有出行条件'));
       return;
@@ -375,7 +356,7 @@ class InventoryPanel {
     if (signature === this.gradeSignature) return;
     const focused = document.activeElement instanceof HTMLElement ? document.activeElement.dataset.departureGrade : undefined;
     this.gradeSignature = signature;
-    this.gradePanel.replaceChildren(element('span', 'inventory-grade-heading', '污染程度'));
+    this.gradePanel.replaceChildren();
     const choices = element('div', 'inventory-grade-options');
     choices.setAttribute('role', 'group');
     choices.setAttribute('aria-label', '选择本趟污染程度');
@@ -394,7 +375,11 @@ class InventoryPanel {
     for (const control of choices.querySelectorAll<HTMLButtonElement>('button')) control.tabIndex = control.dataset.departureGrade === grades.selected ? 0 : -1;
     const facts = element('div', 'inventory-grade-facts');
     facts.setAttribute('aria-live', 'polite');
-    if (selected) facts.append(element('p', 'inventory-grade-risk', selected.risk), element('p', 'inventory-grade-reward', selected.reward), element('p', 'inventory-grade-preparation', selected.preparation));
+    if (selected) for (const [label, className, value] of [['危险', 'inventory-grade-risk', selected.risk], ['收获', 'inventory-grade-reward', selected.reward], ['行前准备', 'inventory-grade-preparation', selected.preparation]]) {
+      const group = element('div', 'inventory-grade-fact');
+      group.append(element('span', 'inventory-grade-fact-label', label), element('p', className, value));
+      facts.append(group);
+    }
     this.gradePanel.append(facts);
     if (focused) [...choices.querySelectorAll<HTMLButtonElement>('button')].find(button => button.dataset.departureGrade === focused)?.focus({ preventScroll: true });
   }
@@ -460,10 +445,9 @@ class InventoryPanel {
     const count = view.ids.length;
     if (!count) { view.position.textContent = ''; return; }
     const rowHeight = (view.list.firstElementChild as HTMLElement | null)?.offsetHeight || 52;
-    const columns = this.options?.mode === 'prepare' ? 2 : 1;
-    const start = Math.min(count, Math.floor(view.list.scrollTop / rowHeight) * columns + 1);
+    const start = Math.min(count, Math.floor(view.list.scrollTop / rowHeight) + 1);
     const visibleRows = (view.list.scrollTop + view.list.clientHeight) / rowHeight;
-    const end = Math.max(start, (columns === 2 ? Math.ceil(visibleRows) : Math.floor(visibleRows)) * columns);
+    const end = Math.max(start, this.options?.mode === 'prepare' ? Math.ceil(visibleRows) : Math.floor(visibleRows));
     view.position.textContent = `${start}–${Math.min(count, end)} / ${count}`;
   }
 
@@ -619,12 +603,19 @@ class InventoryPanel {
       this.primary.textContent = over ? `还需腾出 ${formatWeight(over)}` : `Enter 放下 ${this.picks.size} 件 · 拿取 ${this.takes.size} 件`;
       this.primary.disabled ||= over > 0 || !this.takes.size;
       this.message.textContent = this.localMessage || this.snapshot.message || (this.takes.size ? `${formatWeight(this.snapshot.weight)} − ${formatWeight(preview.removed)} + ${formatWeight(preview.added)} = ${formatWeight(preview.result)} / ${formatWeight(this.snapshot.capacity)}　·　Space 选择，Esc 保持原样` : '先选附近物件，再用 Space 选择要放下的收获');
+    } else if (this.options?.mode === 'prepare' && this.prepareView === 'pollution') {
+      this.primary.dataset.prepareAction = 'next';
+      this.primary.replaceChildren(element('span', '', '整理行装'), element('small', '', 'Enter'));
+      this.primary.setAttribute('aria-label', '整理行装');
+      this.message.textContent = '';
     } else if (this.options?.mode === 'prepare' && this.options.onDepart) {
       const grades = this.snapshot.departureGrades;
       const grade = grades?.options.find(option => option.id === grades.selected)?.label;
       const emptyTools = this.snapshot.equipment.some(slot => slot.id !== 'weapon' && !slot.locked && !slot.itemId);
       const guidance = [this.prepareView === 'equipment' ? '只装配已成熟物件' : '', emptyTools ? '空工具位不妨碍出发' : ''].filter(Boolean).join(' · ');
-      this.primary.textContent = `${grade ? `${grade} · ` : ''}踏入裂隙  Shift+Enter`; this.primary.disabled ||= this.snapshot.canDepart === false;
+      this.primary.dataset.prepareAction = 'depart';
+      this.primary.replaceChildren(element('span', '', '踏入裂隙'), element('small', '', 'Shift+Enter'));
+      this.primary.setAttribute('aria-label', `${grade ? `${grade} · ` : ''}踏入裂隙`); this.primary.disabled ||= this.snapshot.canDepart === false;
       this.message.textContent = [...new Set([this.snapshot.departReason, this.localMessage || this.snapshot.message].filter(Boolean))].join(' ') || guidance;
     } else {
       const item = this.item(this.focusId);
@@ -649,7 +640,11 @@ class InventoryPanel {
       if (this.takes.size && this.preview().result <= this.snapshot.capacity) void this.dispatch({ type: 'exchange', takeIds: [...this.takes], dropIds: [...this.picks] });
       return;
     }
-    if (this.options.mode === 'prepare' && this.options.onDepart) { this.depart(); return; }
+    if (this.options.mode === 'prepare') {
+      if (this.prepareView === 'pollution') this.showPrepareEquipment();
+      else this.depart();
+      return;
+    }
     this.itemAction();
   }
 
@@ -675,25 +670,20 @@ class InventoryPanel {
 
   private depart(): void {
     if (this.exchange) { this.localMessage = '先完成交换，或按 Esc 保持原样'; this.renderFooter(); return; }
-    if (this.options?.mode === 'prepare' && !this.busy && this.snapshot?.canDepart !== false) this.options.onDepart?.();
+    if (this.options?.mode === 'prepare' && this.prepareView === 'equipment' && !this.busy && this.snapshot?.canDepart !== false) this.options.onDepart?.();
   }
 
-  private focusPrepareOverview(): void {
-    const selector = this.prepareOriginSlot
-      ? `[data-slot-id="${this.prepareOriginSlot}"]` : '.inventory-prepare-edit';
-    (this.panel?.querySelector<HTMLElement>(selector)
-      ?? this.gradePanel.querySelector<HTMLElement>('[aria-pressed="true"]') ?? this.panel)?.focus({ preventScroll: true });
+  private focusPreparePollution(): void {
+    (this.gradePanel.querySelector<HTMLElement>('[aria-pressed="true"]') ?? this.primary)?.focus({ preventScroll: true });
   }
 
   private showPrepareEquipment(slotId?: string): void {
     if (!this.panel || this.options?.mode !== 'prepare' || this.busy) return;
-    const entering = this.prepareView === 'overview';
-    if (entering) this.prepareOriginSlot = slotId ?? null;
+    const entering = this.prepareView === 'pollution';
     this.prepareView = 'equipment'; this.panel.dataset.prepareView = 'equipment';
-    this.prepareEditorEquipment.append(this.equipment);
     this.prepareViewport.replaceChildren(this.prepareEditor);
     this.prepareBack.hidden = false;
-    this.prepareHelp.textContent = '方向键查看 · Enter 操作 · Tab 移步';
+    this.prepareHelp.textContent = '↑↓ 查看 · Enter 操作 · Esc 返回';
     if (entering) this.restore();
     this.render();
     const slot = this.snapshot?.equipment.find(value => value.id === slotId);
@@ -718,15 +708,14 @@ class InventoryPanel {
     this.renderPosition('main'); this.updateDetailOverflow();
   }
 
-  private showPrepareOverview(): void {
+  private showPreparePollution(): void {
     if (!this.panel || this.options?.mode !== 'prepare' || this.busy) return;
     this.remember(); this.prepareDetailScroll = this.detail.scrollTop;
-    this.prepareView = 'overview'; this.panel.dataset.prepareView = 'overview';
-    this.prepareOverviewEquipment.append(this.equipment);
-    this.prepareViewport.replaceChildren(this.prepareOverview);
+    this.prepareView = 'pollution'; this.panel.dataset.prepareView = 'pollution';
+    this.prepareViewport.replaceChildren(this.preparePollution);
     this.prepareBack.hidden = true;
     this.prepareHelp.textContent = '↑↓ 选污染程度 · Tab 移步 · Esc 离开';
-    this.localMessage = ''; this.renderDepartureGrades(); this.renderFooter(); this.focusPrepareOverview();
+    this.localMessage = ''; this.renderDepartureGrades(); this.renderFooter(); this.focusPreparePollution();
   }
 
   private async dispatch(action: InventoryPanelAction): Promise<void> {
@@ -776,7 +765,7 @@ class InventoryPanel {
     if (key === 'escape' || (key === 'tab' && this.options.mode === 'rift')) {
       event.preventDefault(); event.stopImmediatePropagation();
       if (!event.repeat) {
-        if (this.options.mode === 'prepare' && this.prepareView === 'equipment') this.showPrepareOverview();
+        if (this.options.mode === 'prepare' && this.prepareView === 'equipment') this.showPreparePollution();
         else if (key === 'escape' && this.exchange && (this.takes.size || this.picks.size)) {
           this.takes.clear(); this.picks.clear(); this.localMessage = '已取消本次选择，物件保持原样。再按 Esc 收起';
           this.renderSelection(); this.renderDetail(); this.renderFooter();
@@ -799,7 +788,9 @@ class InventoryPanel {
     }
     if (event.key === 'Enter' && event.shiftKey) { event.preventDefault(); event.stopImmediatePropagation(); if (!event.repeat) this.depart(); return; }
     if (this.options.mode === 'prepare' && target === this.primary && ['Enter', ' '].includes(event.key)) {
-      event.preventDefault(); event.stopImmediatePropagation(); return;
+      event.preventDefault(); event.stopImmediatePropagation();
+      if (this.prepareView === 'pollution' && !event.repeat) this.primary.click();
+      return;
     }
     if (target?.tagName === 'SUMMARY' && ['Enter', ' '].includes(event.key)) { event.stopImmediatePropagation(); return; }
     if (target instanceof HTMLSelectElement && ['ArrowUp', 'ArrowDown', 'Home', 'End', ' '].includes(event.key)) { event.stopImmediatePropagation(); return; }
@@ -812,7 +803,7 @@ class InventoryPanel {
     const handled = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', 'Enter', ' '].includes(event.key);
     if (handled) {
       event.preventDefault(); event.stopImmediatePropagation();
-      if (this.options.mode === 'prepare' && this.prepareView === 'overview') {
+      if (this.options.mode === 'prepare' && this.prepareView === 'pollution') {
         if (!event.repeat && ['Enter', ' '].includes(event.key) && target instanceof HTMLButtonElement) target.click();
         return;
       }
@@ -835,11 +826,9 @@ class InventoryPanel {
       }
       const view = this.lists[this.lane]!; if (!view.ids.length) return;
       let index = Math.max(0, view.ids.indexOf(this.focusId ?? ''));
-      const grid = this.options.mode === 'prepare';
-      if (event.key === 'ArrowUp') index -= grid ? 2 : 1;
-      if (event.key === 'ArrowDown') index += grid ? 2 : 1;
-      if (grid && event.key === 'ArrowLeft') index--;
-      if (grid && event.key === 'ArrowRight') index++;
+      if (event.key === 'ArrowUp') index--;
+      if (event.key === 'ArrowDown') index++;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') return;
       if (event.key === 'PageUp') index -= 6;
       if (event.key === 'PageDown') index += 6;
       if (event.key === 'Home') index = 0;
