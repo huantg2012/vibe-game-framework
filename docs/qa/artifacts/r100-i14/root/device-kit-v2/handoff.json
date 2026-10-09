@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-09",
+  "status": "current-handoff-v2-reference-install-menu-and-native-blur-pass",
+  "reason": "Interactive --play disables Playwright default fixed-focus emulation; frozen --run diagnostic unchanged.",
+  "release": {
+    "revision": "r100-native-v3-revision-6-internal-rc-20261008",
+    "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "manifestSha256": "c0eb8cf47563b7a611b627dc98337123aefef7fe4333310e5de40fd1d24e3d33",
+  "sourceCount": 1397,
+  "uniqueDependencies": 307,
+  "fileCount": 1519,
+  "archive": "/Users/yilungao/coh/dist/r100-i14-device-kit-v2-20261009.tar.gz",
+  "archiveSha256": "6f67b5e93576c8b3b61878b8d308f0154c8a6efdce7e996bd1a0edba554ea99a",
+  "archiveBytes": 161050791,
+  "installCommands": [
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund",
+      "exitCode": 0,
+      "observedOutput": "added 36 packages in 4s"
+    },
+    {
+      "command": "npm install --prefix .i14-runtime --ignore-scripts --no-audit --no-fund",
+      "exitCode": 0,
+      "observedOutput": "added 3 packages in 841ms"
+    }
+  ],
+  "menuAndBlur": {
+    "path": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke.json",
+    "sha256": "be61a5fb9d372cc67fb672415664fdc2956e6d27d4200d4ff10cc0459ab97af5"
+  },
+  "retainedEarlierChecks": [
+    "docs/qa/artifacts/r100-i14/root/device-kit/handoff.json",
+    "docs/qa/artifacts/r100-i14/root/device-kit/install-validation.json"
+  ],
+  "preservedSmokeFailures": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke-first-failure.json",
+      "sha256": "10ebdd6b3903c2694f173ec2138467ce0df4b11239c5c2a5ec38c47ed1ec2eaf",
+      "cause": "Smoke fixture used browser.newPage convenience context, which forbids creating the alternate tab; corrected to newContext matching --play."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke-second-failure.json",
+      "sha256": "cf4c37243e9e094198cf44227b95b2eb5ab333dc498550d48a94e8b0ec307f6d",
+      "cause": "Trusted blur correctly paused MainMenu; fixture wrongly expected automatic resume. Corrected to require held pause and explicit Enter, with no save creation."
+    }
+  ],
+  "limitations": [
+    "Same reference Mac/Chrome155 only, no genuine weaker device result.",
+    "No natural sortie or gameplay performance in this menu smoke.",
+    "Actual native blur only; document.hidden=false, not OS application focus.",
+    "Windows/Linux runtime still untested; original review-page browser denial unaffected.",
+    "Archive contains only manifest-listed frozen files, excluding installed dependencies, caches and local test outputs."
+  ]
+}

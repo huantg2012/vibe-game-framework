@@ -1,0 +1,229 @@
+{
+  "status": "three-completed-current-natural-recordings-ready-human-review-pending",
+  "clips": [
+    {
+      "id": "i14-natural-1",
+      "label": "赤壳断拱 · 低污染",
+      "scope": "第1趟 · broken-shell · 正常搜取、撤离、归来与经营。录制墙钟约 176.0 秒；原游戏本趟场内累计 87.14 秒，二者不混算。",
+      "runId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+      "world": "red-vault-fragments",
+      "grade": "low",
+      "family": "broken-shell",
+      "seed": 648373796,
+      "video": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-natural-canvas.webm",
+        "sha256": "e713805ec29524f9174c6c95a8d538d54534c01932d64c6e384483486a103f44"
+      },
+      "audio": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-natural-audio.webm",
+        "sha256": "4cde50bb0aa7db6c2fbb25d1d8b69c6643d641c1ffcf271913fa9fb5771a02ff"
+      },
+      "captureReceipt": {
+        "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+        "sha256": "e7df849a69df7cb5a55ca91b549a754dcb5d167bc4f76aa8462cbe8529cf9f15"
+      },
+      "captureReceiptJsonPath": "runs[0]",
+      "duration": {
+        "recordedWallMs": 176012.10000038147,
+        "fieldElapsedAtStartMs": 2624.6400000000003,
+        "fieldElapsedAtExtractMs": 87137.8800000006,
+        "containerDurationIndependentlyDecoded": false,
+        "note": "Executor wall duration includes recorder stop/base64-copy overhead; use native media controls for encoded presentation duration. No independent media decode performed."
+      },
+      "outcome": "extract",
+      "screenshots": [
+        {
+          "label": "恢复后的入口整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-entry-observation.png",
+          "sha256": "a096d159913b299ab27200879c7ffbf5cacec86b13233a23eef32450bc3493c7"
+        },
+        {
+          "label": "本趟最后一次搜索记录整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-search-11.png",
+          "sha256": "c9e2c4511555d62299255d1bdcd948da54c51ccb312baa0dec36028146955263"
+        },
+        {
+          "label": "本趟撤离结果整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-field-result.png",
+          "sha256": "3dc248412b8cfb5032a63ce6f53e61fba3b50448bdda5476047dbf862cfe98f6"
+        },
+        {
+          "label": "本趟归来冲击报告整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-return.png",
+          "sha256": "a4ddfe5c2506ddf5d575cb45fbfdd061e48b88b9404e1f8e183d81f604d9d828"
+        }
+      ],
+      "limitations": [
+        "首低保留原技术中断；本片从同一 run 的 sequence 8 已提交存档恢复后开始，没有换局重抽或回补消耗。",
+        "该段从恢复检查后、首次场内移动前开始，未包含准备界面与暂停／冷续过程；记录结束已回净化点并完成本趟经营。",
+        "视频含真实游戏混音，Canvas 不包含 DOM HUD、交互文字和结果面板；以下整页截图补看这些信息。",
+        "按既定自动行动策略执行，目的地来自正常随机池；不是真人输入手感测试。录像有开销，不作性能预算样本。",
+        "不改音量、增益、声源、时钟，也不注入关键提示；未实际发生的声音不补演。此处只提供原录音，未签听感。",
+        "原录制分支的 headless 焦点尝试没有真实 blur；后续另有 Chrome 155 trusted blur 专项，不能把其结果说成本片所演示。"
+      ],
+      "audibleReview": false,
+      "continuousVisualPlaybackByArt": false
+    },
+    {
+      "id": "i14-natural-2",
+      "label": "拼裂壳皮 · 中污染",
+      "scope": "第2趟 · broken-shell · 正常搜取、撤离、归来与经营。录制墙钟约 169.8 秒；原游戏本趟场内累计 82.50 秒，二者不混算。",
+      "runId": "a8993dd8-6f81-4369-8c13-456915af9f19",
+      "world": "shell-patchwork",
+      "grade": "medium",
+      "family": "broken-shell",
+      "seed": 925370804,
+      "video": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-natural-canvas.webm",
+        "sha256": "88a7c9f7b0e4c7c6741889b63f9b57390e35c4faa039576953d79ee235906423"
+      },
+      "audio": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-natural-audio.webm",
+        "sha256": "0567b0fbc97b60853e673af26c045a7c5d2841777ae67e2ac71df845be0a17b7"
+      },
+      "captureReceipt": {
+        "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+        "sha256": "e7df849a69df7cb5a55ca91b549a754dcb5d167bc4f76aa8462cbe8529cf9f15"
+      },
+      "captureReceiptJsonPath": "runs[1]",
+      "duration": {
+        "recordedWallMs": 169754.2000002861,
+        "fieldElapsedAtStartMs": 2750.6000000000026,
+        "fieldElapsedAtExtractMs": 82497.41000000038,
+        "containerDurationIndependentlyDecoded": false,
+        "note": "Executor wall duration includes recorder stop/base64-copy overhead; use native media controls for encoded presentation duration. No independent media decode performed."
+      },
+      "outcome": "extract",
+      "screenshots": [
+        {
+          "label": "恢复后的入口整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-entry-observation.png",
+          "sha256": "65c055378c3a4fcedc5b84a699744be4b26b3267b48eaa636f83ee4dca6a2615"
+        },
+        {
+          "label": "本趟最后一次搜索记录整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-search-7.png",
+          "sha256": "d03ccb6e2edf267a1f95290e55466a8bf99de8cc5101dfaa41abc9e9b8f8fd8c"
+        },
+        {
+          "label": "本趟撤离结果整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-field-result.png",
+          "sha256": "60d644c7b69675e05806b30118d9fe9498a8eb053a12785c514d87a5f9286e7c"
+        },
+        {
+          "label": "本趟归来冲击报告整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-return.png",
+          "sha256": "23f7d6641a90129f5b6e854c9794a17cbdc807a6a5e6aa2706890fd3d9abe710"
+        }
+      ],
+      "limitations": [
+        "该段从恢复检查后、首次场内移动前开始，未包含准备界面与暂停／冷续过程；记录结束已回净化点并完成本趟经营。",
+        "视频含真实游戏混音，Canvas 不包含 DOM HUD、交互文字和结果面板；以下整页截图补看这些信息。",
+        "按既定自动行动策略执行，目的地来自正常随机池；不是真人输入手感测试。录像有开销，不作性能预算样本。",
+        "不改音量、增益、声源、时钟，也不注入关键提示；未实际发生的声音不补演。此处只提供原录音，未签听感。",
+        "原录制分支的 headless 焦点尝试没有真实 blur；后续另有 Chrome 155 trusted blur 专项，不能把其结果说成本片所演示。"
+      ],
+      "audibleReview": false,
+      "continuousVisualPlaybackByArt": false
+    },
+    {
+      "id": "i14-natural-3",
+      "label": "撕底浅庭 · 重度污染",
+      "scope": "第3趟 · membrane-rim · 正常搜取、撤离、归来与经营。录制墙钟约 151.5 秒；原游戏本趟场内累计 63.25 秒，二者不混算。",
+      "runId": "eb45216c-f7a1-4a47-9af4-5ab55dada148",
+      "world": "torn-reservoir",
+      "grade": "severe",
+      "family": "membrane-rim",
+      "seed": 2103455321,
+      "video": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-natural-canvas.webm",
+        "sha256": "beb15a7227f33dee547d8537500b2df496899e7e8fa2228271c54cab58656e2e"
+      },
+      "audio": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-natural-audio.webm",
+        "sha256": "f9346087486dbb4f4d5f4243669fdd7419ecfff2511087ee05fc770cfd6c5631"
+      },
+      "captureReceipt": {
+        "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+        "sha256": "e7df849a69df7cb5a55ca91b549a754dcb5d167bc4f76aa8462cbe8529cf9f15"
+      },
+      "captureReceiptJsonPath": "runs[2]",
+      "duration": {
+        "recordedWallMs": 151460.5,
+        "fieldElapsedAtStartMs": 2786.1099999999988,
+        "fieldElapsedAtExtractMs": 63250.36000000016,
+        "containerDurationIndependentlyDecoded": false,
+        "note": "Executor wall duration includes recorder stop/base64-copy overhead; use native media controls for encoded presentation duration. No independent media decode performed."
+      },
+      "outcome": "extract",
+      "screenshots": [
+        {
+          "label": "恢复后的入口整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-entry-observation.png",
+          "sha256": "f22bcb829826f0e05cb312ecc043ea885072f6c2793d27c1c5b56faa83b8644b"
+        },
+        {
+          "label": "本趟最后一次搜索记录整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-search-8.png",
+          "sha256": "a44524aca9695b620b3a12e8ca72041d28c7a2377be2f0e7237959f22ce21f73"
+        },
+        {
+          "label": "本趟撤离结果整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-field-result.png",
+          "sha256": "3d3e96626394bd40ca5eadd95b1425adfc1f2e49cc03d567cc1823774992b94c"
+        },
+        {
+          "label": "本趟归来冲击报告整页",
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-return.png",
+          "sha256": "fc4ab32421dcbf42948b0cae362adfd994b4258ab6640eb05e5e9fc4dc15919b"
+        }
+      ],
+      "limitations": [
+        "该段从恢复检查后、首次场内移动前开始，未包含准备界面与暂停／冷续过程；记录结束已回净化点并完成本趟经营。",
+        "视频含真实游戏混音，Canvas 不包含 DOM HUD、交互文字和结果面板；以下整页截图补看这些信息。",
+        "按既定自动行动策略执行，目的地来自正常随机池；不是真人输入手感测试。录像有开销，不作性能预算样本。",
+        "不改音量、增益、声源、时钟，也不注入关键提示；未实际发生的声音不补演。此处只提供原录音，未签听感。",
+        "原录制分支的 headless 焦点尝试没有真实 blur；后续另有 Chrome 155 trusted blur 专项，不能把其结果说成本片所演示。"
+      ],
+      "audibleReview": false,
+      "continuousVisualPlaybackByArt": false
+    }
+  ],
+  "playEntry": {
+    "instructions": "正式隔离试玩：在设备包目录按说明安装依赖后，运行 node tools/qa/run-r100-i14-device.mjs --play。程序打开临时 Chrome 窗口和随机本机端口，不使用原有存档。此入口准备与真实弱设备结果分开；本页作者未运行此命令、未进行实际听感审核。",
+    "reference": {
+      "path": "docs/qa/artifacts/r100-i14/root/device-kit/README.md",
+      "sha256": "716acf468073d4a2e9d5ad33861632eec97bc118df2890e13c883cf732740ecc"
+    },
+    "url": null,
+    "verifiedRuntimeByThisAgent": false
+  },
+  "firstThreeReceipts": {
+    "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+    "sha256": "e7df849a69df7cb5a55ca91b549a754dcb5d167bc4f76aa8462cbe8529cf9f15"
+  },
+  "coverage": {
+    "worlds": 3,
+    "grades": [
+      "low",
+      "medium",
+      "severe"
+    ],
+    "families": [
+      "broken-shell",
+      "membrane-rim"
+    ],
+    "note": "Current normal recordings cover two families, not all six; historical 18 controlled mixes retain their distinct scope."
+  },
+  "laterFocusEvidence": {
+    "reference": {
+      "path": "docs/qa/artifacts/r100-i14/root/recovery-gate.json",
+      "sha256": "e0225c398a14b6aa8bb8f0d23ca3677a19d9b3c27b471f46a9b12acbd031920e"
+    },
+    "audit": {
+      "path": "docs/qa/artifacts/r100-i14/qa-focus-native-audit.json",
+      "sha256": "40714a1131d3de60b49d0d8cfdc48988de44f97f3a5f8afcffd805eb7b424fb8"
+    },
+    "scope": "Later independent Chrome155 native trusted browser blur observed and adopted by root for three grades. The original recordings did not demonstrate it; hidden=false, OS focus and cross-device claims excluded."
+  }
+}

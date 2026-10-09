@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T04:51:43.956Z",
+  "status": "finite-source-and-receipt-audit-completed",
+  "features": [
+    "COH-F052",
+    "COH-F007",
+    "COH-F039"
+  ],
+  "methodUnchangedAfterReversingQueryHoist": true,
+  "oldQuery": "world.roleAt(x,y)!=='solid'||nativeVolumeHeightAt(world.raster,x,y)<Math.max(1,ground-y)",
+  "noVisualRuleExpansion": [
+    "Original integer floor/ceil actor bounds and ground-specific key unchanged.",
+    "Original fillRect run spans, mask attachment, actor retirement and destruction unchanged.",
+    "Cache stores existing Float32 solid heights; non-solid is -Infinity; NaN keeps original role OR.",
+    "One field per immutable presentation; constructor/rollback/destroy own its lifetime.",
+    "No altered material shader, texture, authored geometry, color, fog, light, facing or sprite source in the frozen two-file delta."
+  ],
+  "consumedCodeReceipt": {
+    "assertions": 39757776,
+    "worlds": 8,
+    "families": [
+      "folded-slab",
+      "fibre-knot",
+      "broken-shell",
+      "granular-ridge",
+      "membrane-rim",
+      "gel-flow"
+    ],
+    "equalSpanPairs": 112,
+    "allAlphaDifferences": 0,
+    "allDestroyedBytes": 0,
+    "scope": "Original oracle vs optimized query plus real maskActor invoked on synthetic bounds/actor API fixtures; this audit verifies retained hashes and method, not a second execution of the 39,757,776 assertions."
+  },
+  "worldCoverage": [
+    {
+      "world": "ash-strata",
+      "family": "folded-slab",
+      "grade": "severe",
+      "seed": 20261004,
+      "roles": {
+        "solid": 74118,
+        "relief": 22020,
+        "empty": 480378
+      },
+      "poses": 14
+    },
+    {
+      "world": "crystal-fibre",
+      "family": "fibre-knot",
+      "grade": "severe",
+      "seed": 20261004,
+      "roles": {
+        "solid": 33733,
+        "relief": 9634,
+        "empty": 533149
+      },
+      "poses": 14
+    },
+    {
+      "world": "ivory-basin",
+      "family": "broken-shell",
+      "grade": "severe",
+      "seed": 20261004,
+      "roles": {
+        "solid": 111550,
+        "relief": 2199,
+        "empty": 462767
+      },
+      "poses": 14
+    },
+    {
+      "world": "cinder-ridge",
+      "family": "granular-ridge",
+      "grade": "severe",
+      "seed": 20261004,
+      "roles": {
+        "solid": 74906,
+        "relief": 72961,
+        "empty": 642153
+      },
+      "poses": 14
+    },
+    {
+      "world": "pallid-membrane",
+      "family": "membrane-rim",
+      "grade": "severe",
+      "seed": 20261004,
+      "roles": {
+        "solid": 139952,
+        "relief": 61262,
+        "empty": 588806
+      },
+      "poses": 14
+    },
+    {
+      "world": "silt-gel",
+      "family": "gel-flow",
+      "grade": "severe",
+      "seed": 20261004,
+      "roles": {
+        "solid": 169148,
+        "relief": 75824,
+        "empty": 545048
+      },
+      "poses": 14
+    },
+    {
+      "world": "hollow-wreckage",
+      "family": "broken-shell",
+      "grade": "severe",
+      "seed": 20261004,
+      "roles": {
+        "solid": 59945,
+        "relief": 93825,
+        "empty": 636250
+      },
+      "poses": 14
+    },
+    {
+      "world": "felt-wedges",
+      "family": "membrane-rim",
+      "grade": "severe",
+      "seed": 20261004,
+      "roles": {
+        "solid": 47660,
+        "relief": 0,
+        "empty": 742360
+      },
+      "poses": 14
+    }
+  ],
+  "pictureSelectionCorrection": "felt-wedges severe seed20261004 has no top-visible relief; actual relief visual opportunity is assigned to hollow-wreckage, which has93,825 sampled relief pixels.",
+  "pending": [
+    "Actual same-state normal-context browser captures and Art viewing.",
+    "No continuous-motion/four-facing/final-aesthetic conclusion from the query receipt."
+  ],
+  "references": [
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/audit-source.mjs",
+      "sha256": "827b662239499a274db57a38a2639679144cf2c54f56dbde4701872a38b3d4d8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+      "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/equivalence/report.json",
+      "sha256": "f77ace350c3ff9133e7f8d4e146995598b065a2bbcc39d6055a8a5ab3b881be0"
+    },
+    {
+      "file": "src/systems/r100-world/presentation.ts",
+      "sha256": "9471e8c94a6532832c5d4db466b829a24d3c27370f6c41712224daed50d587de"
+    },
+    {
+      "file": "src/systems/r100-world/actor-occlusion-field.ts",
+      "sha256": "9d86d9c87c3ccb202a1a81d15f1a26e64ca7ed9d8031a2e622ea8a4f6862458b"
+    },
+    {
+      "file": "tools/recovery/check-r100-actor-occlusion.ts",
+      "sha256": "7c0181b5b315cfe0b008f99be3ff4eac97bfdf2c1185b1267edb913407b8c558"
+    }
+  ]
+}

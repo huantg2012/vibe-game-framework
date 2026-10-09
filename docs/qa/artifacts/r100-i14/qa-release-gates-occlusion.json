@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T05:07:25.508Z",
+  "reviewer": "qa",
+  "disposition": "independent-three-bounded-pass-recommendations-after-explicit-render-delta",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/qa-release-gates-occlusion.mjs",
+    "sha256": "868be4a9e9c5af505588516530dc2fa2dfb12d2cffdacdfa0d591eea931de64a"
+  },
+  "release": {
+    "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+    "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+    "hash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+  },
+  "recommendations": [
+    {
+      "id": "R100-E-I14-QA-COVERAGE-OCCLUSION",
+      "purpose": "release-gate",
+      "gateId": "R100-G-COVERAGE",
+      "kind": "automated",
+      "status": "pass",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "releaseManifestHash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3",
+      "method": "Independent1398-source /108complete-payload /308dependency audit; Director-approved exact render delta and bounded new runtime validation explicitly bridge original qualification.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+          "sha256": "a89afdaa3803dc6adfbef9392ff6120397eea64093accfcde7f01064ca7cd01e"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-technical-review.json",
+          "sha256": "f11b5b6a195f6d44aab1d523cfb7720d8bb7349d4be412cd6345943b5aeaddf8"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+          "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+          "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+          "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-actor-cache-delta-recommendation.json",
+          "sha256": "f4052ed6f23698e0d79a1fed89a9eb46492501929882228401b2d1022f9082ca"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/index.json",
+          "sha256": "283022e27ed172a1f8d5ea7d26b929db73d48eec5eccc4e3aff26edbd05de281"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/actor-occlusion/package-continuity.json",
+          "sha256": "38433f4b825cb8e1206d7ffa81420378ecd746244c85226fae83539494b7a8c7"
+        }
+      ],
+      "scope": "108 worlds/324 grades carry their original bounded qualification through new dependency manifests. Only presentation query cache changed; all authored payloads exact,1396 original files unchanged,one changed+one added.",
+      "limits": [
+        "Inherited324 formal entry/cold restore and342identity checks are not new full-library executions.",
+        "Old performance74complete/1interrupted/33unstarted stays historical; current exact repair has only the preregistered four severe reference cases.",
+        "Six same-state actual PNG pairs had no visible partial occlusion; original-query tests cover edge semantics. No whole ART, human, weak-device or all-seed approval."
+      ],
+      "priorRecommendation": {
+        "path": "docs/qa/artifacts/r100-i14/qa-release-gate-recommendations.json",
+        "sha256": "f75d8624242033fa81586eff14a72eef774c3890dbd1857607af16cf743db731"
+      }
+    },
+    {
+      "id": "R100-E-I14-QA-ECONOMY-OCCLUSION",
+      "purpose": "release-gate",
+      "gateId": "R100-G-ECONOMY",
+      "kind": "source",
+      "status": "pass",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "releaseManifestHash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3",
+      "method": "Rebind the bounded closed I13 economic evidence after proving gameplay/CSV/economy/inventory are unchanged by the exact render-only delta.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+          "sha256": "a89afdaa3803dc6adfbef9392ff6120397eea64093accfcde7f01064ca7cd01e"
+        },
+        {
+          "path": "docs/qa/rift-r100-i13.md",
+          "sha256": "ad768d15d034321406c1c39bf6c6de872fa724d2439a516479df2b7aa9defa57"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i13-continuation/root/closure-disposition.json",
+          "sha256": "dde7e13244140d8ab10cf7d124a072f4012a35c37fcc4b1ac59f150ebb78cb2a"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-preparation-budget.json",
+          "sha256": "54c3bda7b72a4c63a98bd65320c687a917cc8c07cdb8795e7bc1670c9bcc7294"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+          "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+          "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-actor-cache-delta-recommendation.json",
+          "sha256": "f4052ed6f23698e0d79a1fed89a9eb46492501929882228401b2d1022f9082ca"
+        }
+      ],
+      "scope": "I13 bounded low/medium maintenance+actual growth, natural severe deep-contaminant return and subsequent ordinary affordable preparation; earned functional-effect chains with explicit ancestral replacements; B facility debt repaid from B receipts.",
+      "limits": [
+        "52 unique runs/208 financial saves/29638 existing assertions are not I14 new runs.",
+        "A alternatives cannot double-fund same boots; freeze uses ancestral stock and another Q4 severe admission fails.",
+        "Bdash0/fixed-recipe failure and full-line service margin-19 preserved.",
+        "No infinite supply, quality/deep-kindling premium, general grade profit ordering or required one-for-one item replenishment.",
+        "I14 first12/new36 are continuity regression, with no added profitability or exact-tool-refill requirement. This pass does not depend on pending trips being profitable."
+      ],
+      "priorRecommendation": {
+        "path": "docs/qa/artifacts/r100-i14/qa-release-gate-recommendations.json",
+        "sha256": "f75d8624242033fa81586eff14a72eef774c3890dbd1857607af16cf743db731"
+      }
+    },
+    {
+      "id": "R100-E-I14-QA-RECOVERY-OCCLUSION",
+      "purpose": "release-gate",
+      "gateId": "R100-G-RECOVERY",
+      "kind": "automated",
+      "status": "pass",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "releaseManifestHash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3",
+      "method": "Inherited original31/four contracts and currentChrome155 three-grade pause/trusted blur, plus independent new1398-source three-grade same-checkpoint formal cold restore. State/save/focus code unchanged; constructor allocation path newly exercised.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+          "sha256": "a89afdaa3803dc6adfbef9392ff6120397eea64093accfcde7f01064ca7cd01e"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-first-cold-audit.json",
+          "sha256": "5fec2f7aca315a9d3f15a02db03304c3db2f943eedd5b91e33fb4c7d34691d2a"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-three-lifecycle.json",
+          "sha256": "e0a204a64fc723769c7265bfab9d655790bd2127c104793277d71648e57f924d"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-focus-native-audit.json",
+          "sha256": "40714a1131d3de60b49d0d8cfdc48988de44f97f3a5f8afcffd805eb7b424fb8"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/focus/native-v2/report.json",
+          "sha256": "a28e1f5ed177610b359b45b4b2df29997788298cc3209e317ba20fec35d6d3d0"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json",
+          "sha256": "0f6eee447bdc4faef6ed19598ca974035ec74bdbea1beeef65d7ee49118af198"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-cold-continuity.json",
+          "sha256": "d8df70bc0906b1f03d46bf99811981d29454f92de52b13a2b1a21b6532acb35d"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+          "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+          "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-actor-cache-delta-recommendation.json",
+          "sha256": "f4052ed6f23698e0d79a1fed89a9eb46492501929882228401b2d1022f9082ca"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-render-entry-review.json",
+          "sha256": "6c6c3bd23109393b0d258b1b52ef19de1b8ebc2751ab6b8bf63fe39f341b54df"
+        }
+      ],
+      "scope": "The original saved low/medium/severe records cold restore on the new source with only sequence/checksum recommit and retained normal first-frame evolution. Identity/grade/pressure/reward/inventory remain exact. Earlier pause/trusted blur evidence transfers through byte-identical lifecycle logic; no claim these focus branches were rerun on1398.",
+      "limits": [
+        "First low strict byte assertion and first headed default-focus failure retained, both diagnostic-tool causes; no production change or replacement natural run.",
+        "Current first runtime frames advance16.66ms normally, with38/54/58 leaf changes explicitly retained; no exact-zero-time runtime claim.",
+        "Focus generated actual trusted blur only: document.hidden stayedfalse. Hidden-visibility and OS application focus were not newly observed.",
+        "Current Chrome155 only; no new Firefox/Safari/weak-hardware compatibility claim.",
+        "Historical31 recovery/four freeze/324 formal restore coverage is inherited through the approved exact render delta, not rerun in I14.",
+        "Does not sign perceptual audio continuity, visual quality, final user approval or completion of the48-sortie stability task.",
+        "New-source cold first-complete2695/2913/2739ms are three individual cases, not populationp95. Normal first-frame16.66–16.68ms and38/54/58 leaf deltas retained; website/base51–487ms tasks remain."
+      ],
+      "priorRecommendation": {
+        "path": "docs/qa/artifacts/r100-i14/qa-release-gate-recovery.json",
+        "sha256": "664373086d515cc55bad66db072d270baaccb27aab86098811bdeafc39f40b0d"
+      }
+    }
+  ],
+  "remaining": [
+    {
+      "gateId": "R100-G-EXPEDITION",
+      "status": "pending",
+      "reason": "Only first12 independently completed; exact old12+new36 chain must finish48 before this gate is signed."
+    },
+    {
+      "gateId": "R100-G-ART",
+      "status": "pending",
+      "reason": "Bounded render equivalence is not overall current-candidate visual/human acceptance."
+    },
+    {
+      "gateId": "R100-G-RELEASE",
+      "status": "pending",
+      "reason": "Real weaker device, actual listening/fatigue and RC-bound user final acceptance remain required."
+    }
+  ],
+  "sourceAndEvidenceBindingsVerified": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/index.json",
+      "sha256": "283022e27ed172a1f8d5ea7d26b929db73d48eec5eccc4e3aff26edbd05de281"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+      "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-actor-cache-delta-recommendation.json",
+      "sha256": "f4052ed6f23698e0d79a1fed89a9eb46492501929882228401b2d1022f9082ca"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/package-continuity.json",
+      "sha256": "38433f4b825cb8e1206d7ffa81420378ecd746244c85226fae83539494b7a8c7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/code-verification.json",
+      "sha256": "46ed39effe164a0cfc240987c4db72c50974d84c56cfc28c90579478856cbd82"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/occlusion-visual/report.json",
+      "sha256": "7293d36bf004561c995a5a3d2e2a94df29cf094e6893f8fa0f5b323a3b649282"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/occlusion-visual/manifest.json",
+      "sha256": "643376a49afc528a6517520a65ee158d356e3091264e2148ce4903c317276619"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+      "sha256": "a89afdaa3803dc6adfbef9392ff6120397eea64093accfcde7f01064ca7cd01e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-technical-review.json",
+      "sha256": "f11b5b6a195f6d44aab1d523cfb7720d8bb7349d4be412cd6345943b5aeaddf8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+      "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+    },
+    {
+      "path": "docs/qa/rift-r100-i13.md",
+      "sha256": "ad768d15d034321406c1c39bf6c6de872fa724d2439a516479df2b7aa9defa57"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/root/closure-disposition.json",
+      "sha256": "dde7e13244140d8ab10cf7d124a072f4012a35c37fcc4b1ac59f150ebb78cb2a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-preparation-budget.json",
+      "sha256": "54c3bda7b72a4c63a98bd65320c687a917cc8c07cdb8795e7bc1670c9bcc7294"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-first-cold-audit.json",
+      "sha256": "5fec2f7aca315a9d3f15a02db03304c3db2f943eedd5b91e33fb4c7d34691d2a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-three-lifecycle.json",
+      "sha256": "e0a204a64fc723769c7265bfab9d655790bd2127c104793277d71648e57f924d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-focus-native-audit.json",
+      "sha256": "40714a1131d3de60b49d0d8cfdc48988de44f97f3a5f8afcffd805eb7b424fb8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/focus/native-v2/report.json",
+      "sha256": "a28e1f5ed177610b359b45b4b2df29997788298cc3209e317ba20fec35d6d3d0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json",
+      "sha256": "0f6eee447bdc4faef6ed19598ca974035ec74bdbea1beeef65d7ee49118af198"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-cold-continuity.json",
+      "sha256": "d8df70bc0906b1f03d46bf99811981d29454f92de52b13a2b1a21b6532acb35d"
+    }
+  ],
+  "humanApproval": false,
+  "releaseApproval": false,
+  "ledgerModified": false
+}

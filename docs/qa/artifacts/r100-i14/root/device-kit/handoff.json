@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-09",
+  "scope": "Portable device handoff package construction and negative child-launch path; no real weak-device run.",
+  "sourceCount": 1397,
+  "dependencies": 307,
+  "fileCount": 1519,
+  "manifestSha256": "c77f07db96f0e15d2d518fbbe84a970c612dbb0caab63604d520ef3493c34e22",
+  "archive": "/Users/yilungao/coh/dist/r100-i14-device-kit-20261009.tar.gz",
+  "archiveSha256": "dc7383803787f5b50c090c49a5e3e468bd6dc8aa74a45bf5473657a13b79d7e3",
+  "archiveBytes": 161050568,
+  "preflight": "passed-exact-1519-file-hashes",
+  "negativeLaunch": {
+    "method": "Chrome executable set to /usr/bin/false; no browser or scene actually launched",
+    "receiptStatus": "diagnostic-has-failures",
+    "exitCode": 1,
+    "sourceVerifiedAfterRun": true,
+    "persistedLog": true
+  },
+  "limitations": [
+    "Current machine packaging and negative-path verification only; real hardware still pending.",
+    "Windows/Linux install and runtime not executed here.",
+    "Archive excludes test output and local dependency symlink; generated ignored dist output is reproducible by committed packaging tool."
+  ]
+}

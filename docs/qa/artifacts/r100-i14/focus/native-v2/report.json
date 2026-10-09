@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-09T03:55:50.467Z",
+  "freeze": {
+    "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/focus/native-v2/policy-freeze.json",
+    "sha256": "26aae27ba45e943be32eeaa7d0fecd08820bad83f948778bdaa7111ca3eb3929"
+  },
+  "status": "three-grades-native-tab-focus-pass",
+  "cases": [
+    {
+      "grade": "low",
+      "runId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+      "source": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/same-run-earned-storage.json",
+        "sha256": "affb3f428179ec2d90891d15cff5dbd2e22a19ed5fbab6276b23c47cd8121e75"
+      },
+      "currentRawSha256": "cc582300aa73a09af506d8edfb3cdbf26b810bf37e8b54bb0611a36f8d1eafbd",
+      "status": "native-tab-focus-pause-and-explicit-resume-pass",
+      "errors": [],
+      "inputs": [
+        {
+          "action": "Enter",
+          "purpose": "normal-menu-continue",
+          "at": "2026-10-09T03:56:00.246Z"
+        },
+        {
+          "action": "actual-tab-bringToFront",
+          "at": "2026-10-09T03:56:12.391Z"
+        },
+        {
+          "action": "Enter",
+          "purpose": "dismiss-real-focus-pause-overlay",
+          "at": "2026-10-09T03:56:13.730Z"
+        }
+      ],
+      "automationFocusOverride": {
+        "enabled": false,
+        "at": "2026-10-09T03:55:57.524Z"
+      },
+      "nativeLossEvents": [
+        {
+          "type": "blur",
+          "trusted": true,
+          "hidden": false,
+          "focused": false,
+          "at": 18323.5
+        }
+      ],
+      "hidden": false,
+      "focused": false,
+      "paused": true,
+      "heldWallMs": 782.5,
+      "heldDifferences": {
+        "checkpoint": [],
+        "inventory": [],
+        "rawEqual": true
+      },
+      "sourceToFirstSavedDifferences": [
+        {
+          "path": "riftCheckpoint.sequence",
+          "before": 8,
+          "after": 9
+        },
+        {
+          "path": "checkpointChecksum",
+          "before": "e9425c84",
+          "after": "bdae4cc5"
+        }
+      ],
+      "firstRuntimeDeltaMs": 23.340000000000146,
+      "endedAt": "2026-10-09T03:56:14.004Z"
+    },
+    {
+      "grade": "medium",
+      "runId": "a8993dd8-6f81-4369-8c13-456915af9f19",
+      "source": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-cold-menu-input.save.json",
+        "sha256": "786dd01572542d513f42b9d1e55236a6163b7acd314bdf73bbc973e706c2411d"
+      },
+      "currentRawSha256": "786dd01572542d513f42b9d1e55236a6163b7acd314bdf73bbc973e706c2411d",
+      "status": "native-tab-focus-pause-and-explicit-resume-pass",
+      "errors": [],
+      "inputs": [
+        {
+          "action": "Enter",
+          "purpose": "normal-menu-continue",
+          "at": "2026-10-09T03:56:20.472Z"
+        },
+        {
+          "action": "actual-tab-bringToFront",
+          "at": "2026-10-09T03:56:31.658Z"
+        },
+        {
+          "action": "Enter",
+          "purpose": "dismiss-real-focus-pause-overlay",
+          "at": "2026-10-09T03:56:32.988Z"
+        }
+      ],
+      "automationFocusOverride": {
+        "enabled": false,
+        "at": "2026-10-09T03:56:18.288Z"
+      },
+      "nativeLossEvents": [
+        {
+          "type": "blur",
+          "trusted": true,
+          "hidden": false,
+          "focused": false,
+          "at": 16000.300000190735
+        }
+      ],
+      "hidden": false,
+      "focused": false,
+      "paused": true,
+      "heldWallMs": 783.0999999046326,
+      "heldDifferences": {
+        "checkpoint": [],
+        "inventory": [],
+        "rawEqual": true
+      },
+      "sourceToFirstSavedDifferences": [
+        {
+          "path": "riftCheckpoint.sequence",
+          "before": 8,
+          "after": 9
+        },
+        {
+          "path": "checkpointChecksum",
+          "before": "0e4569be",
+          "after": "d7e85069"
+        }
+      ],
+      "firstRuntimeDeltaMs": 23.210000000000036,
+      "endedAt": "2026-10-09T03:56:33.220Z"
+    },
+    {
+      "grade": "severe",
+      "runId": "eb45216c-f7a1-4a47-9af4-5ab55dada148",
+      "source": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-cold-menu-input.save.json",
+        "sha256": "751fe72f8edeb69cf2467c982510f3715f137b6f16b1c3d8e7330520831ca544"
+      },
+      "currentRawSha256": "751fe72f8edeb69cf2467c982510f3715f137b6f16b1c3d8e7330520831ca544",
+      "status": "native-tab-focus-pause-and-explicit-resume-pass",
+      "errors": [],
+      "inputs": [
+        {
+          "action": "Enter",
+          "purpose": "normal-menu-continue",
+          "at": "2026-10-09T03:56:39.440Z"
+        },
+        {
+          "action": "actual-tab-bringToFront",
+          "at": "2026-10-09T03:56:55.136Z"
+        },
+        {
+          "action": "Enter",
+          "purpose": "dismiss-real-focus-pause-overlay",
+          "at": "2026-10-09T03:56:56.485Z"
+        }
+      ],
+      "automationFocusOverride": {
+        "enabled": false,
+        "at": "2026-10-09T03:56:37.153Z"
+      },
+      "nativeLossEvents": [
+        {
+          "type": "blur",
+          "trusted": true,
+          "hidden": false,
+          "focused": false,
+          "at": 21117.300000190735
+        }
+      ],
+      "hidden": false,
+      "focused": false,
+      "paused": true,
+      "heldWallMs": 813,
+      "heldDifferences": {
+        "checkpoint": [],
+        "inventory": [],
+        "rawEqual": true
+      },
+      "sourceToFirstSavedDifferences": [
+        {
+          "path": "riftCheckpoint.sequence",
+          "before": 8,
+          "after": 9
+        },
+        {
+          "path": "checkpointChecksum",
+          "before": "b0c60e98",
+          "after": "3f75f507"
+        }
+      ],
+      "firstRuntimeDeltaMs": 31.820000000000164,
+      "endedAt": "2026-10-09T03:56:56.716Z"
+    }
+  ],
+  "newSorties": 0,
+  "mainChainWrites": 0,
+  "syntheticEvents": 0,
+  "scope": "Headed native browser-tab focus only; historical checkpoints in isolated contexts. No OS application focus, performance, human or new departure claim.",
+  "browserVersion": "155.0.8059.39",
+  "finishedAt": "2026-10-09T03:56:56.761Z",
+  "originalCheckpointHashesStillMatch": true
+}

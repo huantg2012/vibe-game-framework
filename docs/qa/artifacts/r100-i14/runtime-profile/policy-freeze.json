@@ -1,0 +1,68 @@
+{
+  "createdAt": "2026-10-09T04:35:40.447Z",
+  "purpose": "One causal profile only; not a repeat pass attempt or a natural48 sortie.",
+  "authorization": "Root approved one hollow diagnostic after four preregistered failures, before any production decision.",
+  "tools": [
+    {
+      "path": "tools/qa/profile-r100-i14-runtime.mjs",
+      "sha256": "a69ad8831e56b77e010270d8d3bef09db453540133ae4eb5751405dd30acc5c1"
+    },
+    {
+      "path": "tools/qa/check-r100-i14-runtime-budget.mjs",
+      "sha256": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1"
+    }
+  ],
+  "sources": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-policy-freeze.json",
+      "sha256": "446262268da1fb24e54c7f12f52dfcf68204620ae472645eb1ff74974b53a064"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-reference/report.json",
+      "sha256": "642bcb002895d276db52d3c0d92b40e010d7bc13560f802d2c240fd0ef153515"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-reference/code-cause-review.json",
+      "sha256": "7862054e1c4d59094b5a4d0dcc3735d99f84000d66598d34d0cb5b1cca74fda9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    }
+  ],
+  "gameUrl": "http://127.0.0.1:3035",
+  "world": "hollow-wreckage",
+  "grade": "severe",
+  "seed": 20261004,
+  "keys": [
+    "d",
+    "w",
+    "a",
+    "s",
+    "d",
+    "s",
+    "a",
+    "w",
+    "d",
+    "w",
+    "a",
+    "s"
+  ],
+  "heldMs": 5100,
+  "changes": [
+    "Read-only synchronous duration wrappers around afterUpdate, material GL submission, texture update, stress, actor masks, audio and public frame/source reads.",
+    "CDP V8 CPU sampling at1000us; preserve full profile and raw stage durations.",
+    "Record original frame/CPU/material aggregates without granting budget qualification."
+  ],
+  "unchanged": [
+    "Normal body, visibility, enemies, damage and time; same61.2s held input.",
+    "Current power settings unchanged; no state fixtures or resource injection."
+  ],
+  "powerAtFreeze": {
+    "battery": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t57%; discharging; 3:12 remaining present: true",
+    "processInfo": {
+      "lowPowerModeEnabled": true,
+      "thermalState": 0
+    }
+  }
+}

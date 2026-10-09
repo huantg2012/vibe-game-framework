@@ -1,0 +1,3379 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T05:46:45.498Z",
+  "status": "24-unique-continuous-sample-accounting-pass",
+  "tool": {
+    "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-batches.mjs",
+    "sha256": "2fb245641155d86e4f0b0807f6c7d2d2c17c82280d9c3752496649847d85ca01"
+  },
+  "accountingTool": {
+    "file": "tools/qa/check-r100-i13-accounting.mjs",
+    "sha256": "4c8e910b3d2d009b3809224952063501bf5c437ea4df372d82e54229fb77eb20"
+  },
+  "accounting": {
+    "file": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-24-accounting.json",
+    "sha256": "4f44f2317b08ff9c3d4db4cbe8130824078797167300d1a4eb5e1edf4b88db10"
+  },
+  "completedBatches": 2,
+  "uniqueActualSorties": 24,
+  "financialSnapshots": 96,
+  "conservationAssertions": 22182,
+  "byGrade": {
+    "low": 8,
+    "medium": 8,
+    "severe": 8
+  },
+  "byFamily": {
+    "broken-shell": 4,
+    "membrane-rim": 5,
+    "gel-flow": 4,
+    "fibre-knot": 4,
+    "granular-ridge": 2,
+    "folded-slab": 5
+  },
+  "requiredFamilies": [
+    "broken-shell",
+    "fibre-knot",
+    "folded-slab",
+    "gel-flow",
+    "granular-ridge",
+    "membrane-rim"
+  ],
+  "missingFamilies": [],
+  "coverageComplete": true,
+  "requiredNaturalSorties": 48,
+  "all48Complete": false,
+  "initial": {
+    "cash": 35,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 51,
+        "maxHp": 145
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 103,
+        "maxHp": 145
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 51,
+        "maxHp": 145
+      }
+    ]
+  },
+  "terminal": {
+    "cash": 277,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 54,
+        "maxHp": 145
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 102,
+        "maxHp": 145
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 53,
+        "maxHp": 145
+      }
+    ],
+    "serviceDebt": 0,
+    "originalCapitalDebt": 0
+  },
+  "totals": {
+    "banked": 612,
+    "repair": 332,
+    "growth": 38,
+    "deaths": 1,
+    "emptyReturns": 0
+  },
+  "rows": [
+    {
+      "ordinal": 1,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "low",
+      "runId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+      "cycle": 66,
+      "recipeId": "r100-native-v3:red-vault-fragments-low",
+      "world": "red-vault-fragments",
+      "family": "broken-shell",
+      "seed": 648373796,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 35,
+        "banked": 23,
+        "repair": 9,
+        "growth": 38,
+        "after": 11
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 52,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 101,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 51,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [
+        {
+          "id": "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f",
+          "uses": 4,
+          "acquisitionScope": "earned-before-I14"
+        },
+        {
+          "id": "WPN_02b78f00-e8da-4b12-88f2-3c19938d5cdc",
+          "kind": "weapon",
+          "sourceRunId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f",
+          "uses": 75,
+          "acquisitionScope": "earned-before-I14"
+        },
+        {
+          "id": "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f",
+          "uses": 3,
+          "acquisitionScope": "earned-before-I14"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-before.save.json",
+          "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-entry.save.json",
+          "sha256": "89e8bc364658a2acbead23667dc83f0049efb6c937a481c681ea5848ffb2075a"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-returned.save.json",
+          "sha256": "0fe553e5de9a802686617f140ce9ffdca864bb48253d327f926c67cda15fbb29"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-after-preparation.save.json",
+          "sha256": "9ecb6400c762ed41e886bed50b23e95e602042b3f417b99af6df025bea563087"
+        }
+      ],
+      "originalFailurePreserved": "docs/qa/artifacts/r100-i14/continuous/batch-01/report.json"
+    },
+    {
+      "ordinal": 2,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "medium",
+      "runId": "a8993dd8-6f81-4369-8c13-456915af9f19",
+      "cycle": 67,
+      "recipeId": "r100-native-v3:shell-patchwork-medium",
+      "world": "shell-patchwork",
+      "family": "broken-shell",
+      "seed": 925370804,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 11,
+        "banked": 23,
+        "repair": 9,
+        "growth": 0,
+        "after": 25
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 103,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 54,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_024bdb71-0b90-4c03-9598-eef64646ba9b_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+          "uses": 3,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_024bdb71-0b90-4c03-9598-eef64646ba9b_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+          "uses": 3,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_2c72f65f-2704-4a62-b9e8-71dcd15bc618",
+          "kind": "weapon",
+          "sourceRunId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+          "uses": 75,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-before.save.json",
+          "sha256": "9ecb6400c762ed41e886bed50b23e95e602042b3f417b99af6df025bea563087"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-entry.save.json",
+          "sha256": "688fff48e23b1e3cd0135a98a6044747ee4609cfe3b2bcb8cd3a60bfad5c3f71"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-returned.save.json",
+          "sha256": "3e82fe5256879932fd9a32296af86714a124e05aec6dbece0d0f33838f3975f5"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-after-preparation.save.json",
+          "sha256": "bf8dac454c442fce5986c02bb52acbda0555c8296abfb3ab40dddb9999fac303"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 3,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "severe",
+      "runId": "eb45216c-f7a1-4a47-9af4-5ab55dada148",
+      "cycle": 68,
+      "recipeId": "r100-native-v3:torn-reservoir-severe",
+      "world": "torn-reservoir",
+      "family": "membrane-rim",
+      "seed": 2103455321,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-deep-2",
+          "tier": "deep",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 25,
+        "banked": 26,
+        "repair": 14,
+        "growth": 0,
+        "after": 37
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 53,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 101,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [
+        {
+          "id": "CAT_a8993dd8-6f81-4369-8c13-456915af9f19_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "a8993dd8-6f81-4369-8c13-456915af9f19",
+          "uses": 6,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-before.save.json",
+          "sha256": "bf8dac454c442fce5986c02bb52acbda0555c8296abfb3ab40dddb9999fac303"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-entry.save.json",
+          "sha256": "e33bf0d898debc424693c47592be36dda8febb3e333ae9898c0133059845a374"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-returned.save.json",
+          "sha256": "9f3fdd95a26e9d60f3f77f2756f7fade0fc8089b200c3d1a39201f350e12f958"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-after-preparation.save.json",
+          "sha256": "10781c51031f2d6c627bdff173265d0d19688007e148761ee6451f1001a63333"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 4,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "low",
+      "runId": "c96c64a5-c1fe-45f7-acad-00ef813b5657",
+      "cycle": 69,
+      "recipeId": "r100-native-v3:notched-backwater-low",
+      "world": "notched-backwater",
+      "family": "gel-flow",
+      "seed": 1829800169,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 37,
+        "banked": 30,
+        "repair": 15,
+        "growth": 0,
+        "after": 52
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 103,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 54,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_eb45216c-f7a1-4a47-9af4-5ab55dada148_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "eb45216c-f7a1-4a47-9af4-5ab55dada148",
+          "uses": 5,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_7dcaad60-2a31-430b-bba1-ddc69d3f0669",
+          "kind": "weapon",
+          "sourceRunId": "eb45216c-f7a1-4a47-9af4-5ab55dada148",
+          "uses": 75,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_eb45216c-f7a1-4a47-9af4-5ab55dada148_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "eb45216c-f7a1-4a47-9af4-5ab55dada148",
+          "uses": 7,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-before.save.json",
+          "sha256": "10781c51031f2d6c627bdff173265d0d19688007e148761ee6451f1001a63333"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-entry.save.json",
+          "sha256": "d6ce801c9db03ee2188a523986e670b2ec0ded4cd45b4ecd14732dc0261f744c"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-returned.save.json",
+          "sha256": "5460d7957f707fb6eebe59bae5aae284aa7f703abcf3fa0ce2b30456bfac8f2e"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-after-preparation.save.json",
+          "sha256": "d9a641f11c1e416d1db27eb68f22431c5e24b4ead1e07ac8f8b9150130162b13"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 5,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "medium",
+      "runId": "70ff9c69-fac3-4bd0-9d20-31fb17a1778b",
+      "cycle": 70,
+      "recipeId": "r100-native-v3:silk-catch-medium",
+      "world": "silk-catch",
+      "family": "membrane-rim",
+      "seed": 2797108435,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 52,
+        "banked": 33,
+        "repair": 8,
+        "growth": 0,
+        "after": 77
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 100,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [
+        {
+          "id": "CAT_c96c64a5-c1fe-45f7-acad-00ef813b5657_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "c96c64a5-c1fe-45f7-acad-00ef813b5657",
+          "uses": 3,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_c07fd2ee-8952-4dba-be10-634fdb7a1e87",
+          "kind": "weapon",
+          "sourceRunId": "c96c64a5-c1fe-45f7-acad-00ef813b5657",
+          "uses": 110,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-before.save.json",
+          "sha256": "d9a641f11c1e416d1db27eb68f22431c5e24b4ead1e07ac8f8b9150130162b13"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-entry.save.json",
+          "sha256": "686868d1207182b1d4ec7c71f2ae86fa1ec87c9443a7ef129e7f4ffd8bb4526d"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-returned.save.json",
+          "sha256": "4aca96488aa1dc2f3bec488585b564a5dd3202a6827619985abffb566da0e948"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-after-preparation.save.json",
+          "sha256": "14e98f7d9ec00af85bb2047caa9cf03e8a4305ca6f4fbda16a43fcca7cff8da6"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 6,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "severe",
+      "runId": "9471f4dc-16ac-477d-a989-ffcabaca3fd3",
+      "cycle": 71,
+      "recipeId": "r100-native-v3:porcelain-maw-severe",
+      "world": "porcelain-maw",
+      "family": "broken-shell",
+      "seed": 2703598165,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 77,
+        "banked": 39,
+        "repair": 17,
+        "growth": 0,
+        "after": 99
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 101,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [
+        {
+          "id": "CAT_70ff9c69-fac3-4bd0-9d20-31fb17a1778b_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "70ff9c69-fac3-4bd0-9d20-31fb17a1778b",
+          "uses": 5,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-before.save.json",
+          "sha256": "14e98f7d9ec00af85bb2047caa9cf03e8a4305ca6f4fbda16a43fcca7cff8da6"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-entry.save.json",
+          "sha256": "6fdf3b2ef29339754ace4b93b304874f55a7123f70668b18230d2f86e7d86596"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-returned.save.json",
+          "sha256": "7b874eb3ba78e4e178d55e5d07e3ffcf59b9fba7f93dc2c86bdfe17419910540"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-after-preparation.save.json",
+          "sha256": "0d81f9cf05e2cf5cbf1e2e48fc4b9ada65b1f41995e321d738795199512b8165"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 7,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "low",
+      "runId": "084274a0-6440-4d9d-999e-846a0ddfa449",
+      "cycle": 72,
+      "recipeId": "r100-native-v3:fibre-stumpfield-low",
+      "world": "fibre-stumpfield",
+      "family": "fibre-knot",
+      "seed": 2440017901,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 99,
+        "banked": 30,
+        "repair": 10,
+        "growth": 0,
+        "after": 119
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 102,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 54,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_9471f4dc-16ac-477d-a989-ffcabaca3fd3_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "9471f4dc-16ac-477d-a989-ffcabaca3fd3",
+          "uses": 4,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_661fed81-ed37-43de-94b5-45959d2a0b1b",
+          "kind": "weapon",
+          "sourceRunId": "9471f4dc-16ac-477d-a989-ffcabaca3fd3",
+          "uses": 75,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_9471f4dc-16ac-477d-a989-ffcabaca3fd3_r100-contaminant-deep-1",
+          "kind": "contaminant",
+          "sourceRunId": "9471f4dc-16ac-477d-a989-ffcabaca3fd3",
+          "uses": 3,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-before.save.json",
+          "sha256": "0d81f9cf05e2cf5cbf1e2e48fc4b9ada65b1f41995e321d738795199512b8165"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-entry.save.json",
+          "sha256": "30e2877e041e4744e40069dc85b47fe2f93e76b724b454df7e4b6e21e3f9b2bb"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-returned.save.json",
+          "sha256": "5b206181ad9176f89b589fae2b9f2f911732515f31a2b30e67a41f762509c3c3"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-after-preparation.save.json",
+          "sha256": "b666e333ad9fd45502e6fae41303ac127fa07d4574b9512e4423b0009a907241"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 8,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "medium",
+      "runId": "6ee73004-0e15-428d-99a6-901d3d6d20e9",
+      "cycle": 73,
+      "recipeId": "r100-native-v3:three-shelves-medium",
+      "world": "three-shelves",
+      "family": "broken-shell",
+      "seed": 1368663437,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 119,
+        "banked": 23,
+        "repair": 17,
+        "growth": 0,
+        "after": 125
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 103,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 54,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_084274a0-6440-4d9d-999e-846a0ddfa449_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "084274a0-6440-4d9d-999e-846a0ddfa449",
+          "uses": 3,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_110fb328-c764-4a66-ab5e-f1f80c260065",
+          "kind": "weapon",
+          "sourceRunId": "084274a0-6440-4d9d-999e-846a0ddfa449",
+          "uses": 75,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_c501c58a-c693-41bb-8b35-60f6b1045c99",
+          "kind": "weapon",
+          "sourceRunId": "084274a0-6440-4d9d-999e-846a0ddfa449",
+          "uses": 90,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-before.save.json",
+          "sha256": "b666e333ad9fd45502e6fae41303ac127fa07d4574b9512e4423b0009a907241"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-entry.save.json",
+          "sha256": "084628fff304c62d6acb167ef0890e39d7ff0a0df8a5a0f96bc75f27bc455a5b"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-returned.save.json",
+          "sha256": "73843aca71c89b66e63d65a8ea12408c3022ecccd80e84bc49c9032a7b522b04"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-after-preparation.save.json",
+          "sha256": "81624825bc49bf251bb5f47b44756c9ba66fe6e6a88b9dc5ab131453b3d08785"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 9,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "severe",
+      "runId": "ce13308f-41cb-48a8-be20-f79c14ede9a6",
+      "cycle": 74,
+      "recipeId": "r100-native-v3:cinder-ridge-severe",
+      "world": "cinder-ridge",
+      "family": "granular-ridge",
+      "seed": 424857013,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-deep-2",
+          "tier": "deep",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 125,
+        "banked": 39,
+        "repair": 10,
+        "growth": 0,
+        "after": 154
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 100,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 53,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [
+        {
+          "id": "CAT_6ee73004-0e15-428d-99a6-901d3d6d20e9_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "6ee73004-0e15-428d-99a6-901d3d6d20e9",
+          "uses": 4,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_6ee73004-0e15-428d-99a6-901d3d6d20e9_r100-contaminant-deep-1",
+          "kind": "contaminant",
+          "sourceRunId": "6ee73004-0e15-428d-99a6-901d3d6d20e9",
+          "uses": 5,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_6ee73004-0e15-428d-99a6-901d3d6d20e9_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "6ee73004-0e15-428d-99a6-901d3d6d20e9",
+          "uses": 5,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-before.save.json",
+          "sha256": "81624825bc49bf251bb5f47b44756c9ba66fe6e6a88b9dc5ab131453b3d08785"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-entry.save.json",
+          "sha256": "effa324ac8e331770da3ae2a07287dade4fd2a0bace1bb24e0ab843e3dd7959d"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-returned.save.json",
+          "sha256": "9b1f33df0673eeb3031beaebd616bb0dff5654656d16b1082d4c753f9c41ce0e"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-after-preparation.save.json",
+          "sha256": "f1f7606894bedb192a1c3ac6c06f18e8353b0cfe544aa4ef80108fe3de1b3dd1"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 10,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "low",
+      "runId": "b16163fc-04d4-4131-bcc0-c04ea1e13ef0",
+      "cycle": 75,
+      "recipeId": "r100-native-v3:silt-colonnade-low",
+      "world": "silt-colonnade",
+      "family": "granular-ridge",
+      "seed": 2890170073,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 154,
+        "banked": 6,
+        "repair": 11,
+        "growth": 0,
+        "after": 149
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 101,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [
+        {
+          "id": "CAT_ce13308f-41cb-48a8-be20-f79c14ede9a6_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "ce13308f-41cb-48a8-be20-f79c14ede9a6",
+          "uses": 3,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_8dba8fc3-5bd4-48d2-95a1-b8f44d12a2fc",
+          "kind": "weapon",
+          "sourceRunId": "ce13308f-41cb-48a8-be20-f79c14ede9a6",
+          "uses": 75,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-before.save.json",
+          "sha256": "f1f7606894bedb192a1c3ac6c06f18e8353b0cfe544aa4ef80108fe3de1b3dd1"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-entry.save.json",
+          "sha256": "c205205b191c53ff5c5207bbe6634de2d3a9f71efc1d6bc750aee5227e2e0027"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-returned.save.json",
+          "sha256": "3b6f20176bc50fd81733553e2fa8aadab4d5d8674b1488ad424f3a386d9c4b2c"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-after-preparation.save.json",
+          "sha256": "19adc465759fefe4a7119c09d6fa4ab6bba141c3a180e62685743f9b5ec197c1"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 11,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "medium",
+      "runId": "923f6764-7da4-442e-9eb1-0f4fe55f27d4",
+      "cycle": 76,
+      "recipeId": "r100-native-v3:offset-pan-medium",
+      "world": "offset-pan",
+      "family": "folded-slab",
+      "seed": 3000415151,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 149,
+        "banked": 30,
+        "repair": 17,
+        "growth": 0,
+        "after": 162
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 102,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_b16163fc-04d4-4131-bcc0-c04ea1e13ef0_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "b16163fc-04d4-4131-bcc0-c04ea1e13ef0",
+          "uses": 5,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_b16163fc-04d4-4131-bcc0-c04ea1e13ef0_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "b16163fc-04d4-4131-bcc0-c04ea1e13ef0",
+          "uses": 2,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-before.save.json",
+          "sha256": "19adc465759fefe4a7119c09d6fa4ab6bba141c3a180e62685743f9b5ec197c1"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-entry.save.json",
+          "sha256": "5435224ea5c9482e0a50a8d18be87d1a2a29740c8918db4ee104807cffee5659"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-returned.save.json",
+          "sha256": "d29df9f8be2e1028f205a92dcf25db4e18c46980024b42812e418978bf8587b4"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-after-preparation.save.json",
+          "sha256": "9f0b8c5fa3f4e7f703023c0a76938f46356156d6785232bd61017ff9131a0d1b"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 12,
+      "batch": 1,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+        "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+      },
+      "grade": "severe",
+      "runId": "45356d6d-2dfa-458d-9aa9-2903b10c658e",
+      "cycle": 77,
+      "recipeId": "r100-native-v3:flake-thicket-severe",
+      "world": "flake-thicket",
+      "family": "folded-slab",
+      "seed": 2907129441,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 162,
+        "banked": 20,
+        "repair": 10,
+        "growth": 0,
+        "after": 172
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 103,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 54,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_923f6764-7da4-442e-9eb1-0f4fe55f27d4_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "923f6764-7da4-442e-9eb1-0f4fe55f27d4",
+          "uses": 3,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_923f6764-7da4-442e-9eb1-0f4fe55f27d4_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "923f6764-7da4-442e-9eb1-0f4fe55f27d4",
+          "uses": 2,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-before.save.json",
+          "sha256": "9f0b8c5fa3f4e7f703023c0a76938f46356156d6785232bd61017ff9131a0d1b"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-entry.save.json",
+          "sha256": "c2cb939e66f15ca0bc9d4d0a2968e5cd60aa8ad2395151b1989c2ce6c6f072ca"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-returned.save.json",
+          "sha256": "4ea8ee7bbab03123f6905d4eb08e155ee3905ad249fcde49105e9b7b7e5c5bc5"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-after-preparation.save.json",
+          "sha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 13,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "low",
+      "runId": "5a7b43b7-02e8-4403-acd4-49d5cd661122",
+      "cycle": 78,
+      "recipeId": "r100-native-v3:wax-tongues-low",
+      "world": "wax-tongues",
+      "family": "gel-flow",
+      "seed": 1108208759,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 172,
+        "banked": 30,
+        "repair": 11,
+        "growth": 0,
+        "after": 191
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 54,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 103,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 51,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_45356d6d-2dfa-458d-9aa9-2903b10c658e_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "45356d6d-2dfa-458d-9aa9-2903b10c658e",
+          "uses": 4,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-before.save.json",
+          "sha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-entry.save.json",
+          "sha256": "23e3ad7089b237382610892f0437678b4a6bd3a063944517f5da1950dbaaad69"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-returned.save.json",
+          "sha256": "912e6dbc86c402c4fcf0af7f7c4059dc77e6047468b6f20093899e076df8f038"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-after-preparation.save.json",
+          "sha256": "e54804981666fde5d608a6599846dfd7381a46aaa56406b562ce809b6f56d86b"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 14,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "medium",
+      "runId": "5ba857c4-7db3-4c65-a3b4-70d04b26b097",
+      "cycle": 79,
+      "recipeId": "r100-native-v3:laminate-shell-medium",
+      "world": "laminate-shell",
+      "family": "folded-slab",
+      "seed": 2446372771,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 191,
+        "banked": 20,
+        "repair": 16,
+        "growth": 0,
+        "after": 195
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 54,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 100,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 51,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [
+        {
+          "id": "CAT_5a7b43b7-02e8-4403-acd4-49d5cd661122_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "5a7b43b7-02e8-4403-acd4-49d5cd661122",
+          "uses": 5,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_1bb2168c-6741-450f-b4c4-56c82560fe24",
+          "kind": "weapon",
+          "sourceRunId": "5a7b43b7-02e8-4403-acd4-49d5cd661122",
+          "uses": 75,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_5a7b43b7-02e8-4403-acd4-49d5cd661122_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "5a7b43b7-02e8-4403-acd4-49d5cd661122",
+          "uses": 6,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-before.save.json",
+          "sha256": "e54804981666fde5d608a6599846dfd7381a46aaa56406b562ce809b6f56d86b"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-entry.save.json",
+          "sha256": "480843b80c9460d1739718cbbbae3abc819c2aadd32bb20bedaba2e6fdae6da6"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-returned.save.json",
+          "sha256": "cab5ed7b50ceb57a651349e175b918030204d95cebcf23ca3c089d4654a0e611"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-after-preparation.save.json",
+          "sha256": "e828d52a8c77bdc3f18379c640644d05f4b65f2d8fd176d0754334b9a0faa055"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 15,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "severe",
+      "runId": "4292f35c-0f61-46d6-a27a-f3aeb327cd8b",
+      "cycle": 80,
+      "recipeId": "r100-native-v3:resin-fall-severe",
+      "world": "resin-fall",
+      "family": "gel-flow",
+      "seed": 1241265593,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 195,
+        "banked": 46,
+        "repair": 21,
+        "growth": 0,
+        "after": 220
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 54,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 101,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [
+        {
+          "id": "CAT_5ba857c4-7db3-4c65-a3b4-70d04b26b097_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "5ba857c4-7db3-4c65-a3b4-70d04b26b097",
+          "uses": 5,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_127051f0-f5ec-4b95-9e1e-c5f03065d519",
+          "kind": "weapon",
+          "sourceRunId": "5ba857c4-7db3-4c65-a3b4-70d04b26b097",
+          "uses": 75,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-before.save.json",
+          "sha256": "e828d52a8c77bdc3f18379c640644d05f4b65f2d8fd176d0754334b9a0faa055"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-entry.save.json",
+          "sha256": "a66f5d74a8dc4e9a6ae50431e10ae1982665cfea6378500ff3ec8d3674d0dbc4"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-returned.save.json",
+          "sha256": "6e23d1e753933606fbe9824e00618fefd4cd2eacade71646cf97de0d35635158"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-after-preparation.save.json",
+          "sha256": "de2e87eadf1cca6f982f58f6ea347a8b76748b6646a8d6f93ae1dc3405f5ef3d"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 16,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "low",
+      "runId": "5057d2c0-3d65-4235-a198-b14367c342e4",
+      "cycle": 81,
+      "recipeId": "r100-native-v3:felt-basin-low",
+      "world": "felt-basin",
+      "family": "membrane-rim",
+      "seed": 1669959973,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 220,
+        "banked": 23,
+        "repair": 12,
+        "growth": 0,
+        "after": 231
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 53,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 101,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [
+        {
+          "id": "CAT_4292f35c-0f61-46d6-a27a-f3aeb327cd8b_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "4292f35c-0f61-46d6-a27a-f3aeb327cd8b",
+          "uses": 6,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_0a0f9372-91fd-4348-b3cc-d54784e7edf5",
+          "kind": "weapon",
+          "sourceRunId": "4292f35c-0f61-46d6-a27a-f3aeb327cd8b",
+          "uses": 90,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-before.save.json",
+          "sha256": "de2e87eadf1cca6f982f58f6ea347a8b76748b6646a8d6f93ae1dc3405f5ef3d"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-entry.save.json",
+          "sha256": "c68d10660e4c6f99731a0bbbe5d7d7df166f79f33c2e03eb0f7c9a499222627e"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-returned.save.json",
+          "sha256": "19fe648f9bbb95e6d67fe5846751397f86aeea264b9856c68c3d6e927a2a2ab6"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-after-preparation.save.json",
+          "sha256": "136427e28df3fe20deeb85c7e5ce340ad12b58d02e3f3418257f4e54620ce9f0"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 17,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "medium",
+      "runId": "b1fddb9e-2fe6-4899-94ec-e42e4e4dba8b",
+      "cycle": 82,
+      "recipeId": "r100-native-v3:root-cistern-medium",
+      "world": "root-cistern",
+      "family": "fibre-knot",
+      "seed": 4077981017,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        }
+      ],
+      "cash": {
+        "before": 231,
+        "banked": 10,
+        "repair": 8,
+        "growth": 0,
+        "after": 233
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 52,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 103,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 51,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_5057d2c0-3d65-4235-a198-b14367c342e4_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "5057d2c0-3d65-4235-a198-b14367c342e4",
+          "uses": 2,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_5057d2c0-3d65-4235-a198-b14367c342e4_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "5057d2c0-3d65-4235-a198-b14367c342e4",
+          "uses": 8,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_bd955986-43ce-4a25-b450-385989c2e319",
+          "kind": "weapon",
+          "sourceRunId": "5057d2c0-3d65-4235-a198-b14367c342e4",
+          "uses": 75,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-before.save.json",
+          "sha256": "136427e28df3fe20deeb85c7e5ce340ad12b58d02e3f3418257f4e54620ce9f0"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-entry.save.json",
+          "sha256": "3aee32b4f2351f6ef6876ddf9a3ce76da621b3d5bda4b99e331bcc20c9de83c0"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-returned.save.json",
+          "sha256": "e7ea6aec36b94489fdd2415e2dd547671ccf350c86ba039d64b74975c4487351"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-after-preparation.save.json",
+          "sha256": "7cff6fa3999312a74d2684a81ed80d14d0b6baef567c66a4a7a2089723528626"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 18,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "severe",
+      "runId": "d72dd368-c982-467c-b977-01cb7d5d400b",
+      "cycle": 83,
+      "recipeId": "r100-native-v3:fibre-silt-severe",
+      "world": "fibre-silt",
+      "family": "fibre-knot",
+      "seed": 368547268,
+      "outcome": "death",
+      "searched": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 233,
+        "banked": 0,
+        "repair": 20,
+        "growth": 0,
+        "after": 213
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 52,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 100,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-before.save.json",
+          "sha256": "7cff6fa3999312a74d2684a81ed80d14d0b6baef567c66a4a7a2089723528626"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-entry.save.json",
+          "sha256": "8d982adbe1f32fe13bd08c53a1bfc753909e3bcef40dabc0c3020e1fb44c34f4"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-returned.save.json",
+          "sha256": "1b81263e1c8d941b73430322f9024cd7d3ac1ea504b09d0069f6dac2fb8ea677"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-after-preparation.save.json",
+          "sha256": "105ae946a31d58d67b7e9a41a4d9445efc61515304a285ab90a3c033006e5e75"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 19,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "low",
+      "runId": "a65383f2-dbcd-43d6-b83f-8be9bfbbdbf3",
+      "cycle": 84,
+      "recipeId": "r100-native-v3:curled-flats-low",
+      "world": "curled-flats",
+      "family": "membrane-rim",
+      "seed": 1728400037,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 213,
+        "banked": 30,
+        "repair": 21,
+        "growth": 0,
+        "after": 222
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 52,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 101,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-before.save.json",
+          "sha256": "105ae946a31d58d67b7e9a41a4d9445efc61515304a285ab90a3c033006e5e75"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-entry.save.json",
+          "sha256": "1a29ad01a3ab05a44971ac1a0ec96da67d6265ad9da71c385d5df04a0f6faba8"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-returned.save.json",
+          "sha256": "ca6d1a09c128c43528181ef72d6a67d9a1fe3f10bbcfba8e9b0ed58b646abdc1"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-after-preparation.save.json",
+          "sha256": "d0e353a52576c5ccf645282e5523d6f9072351e49f6b443e5b8772be9687c7dc"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 20,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "medium",
+      "runId": "2a07fb8e-feb6-4399-854f-5e0ec15dbd26",
+      "cycle": 85,
+      "recipeId": "r100-native-v3:shard-switchback-medium",
+      "world": "shard-switchback",
+      "family": "folded-slab",
+      "seed": 338624836,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 222,
+        "banked": 33,
+        "repair": 17,
+        "growth": 0,
+        "after": 238
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 52,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 102,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_a65383f2-dbcd-43d6-b83f-8be9bfbbdbf3_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "a65383f2-dbcd-43d6-b83f-8be9bfbbdbf3",
+          "uses": 5,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_a65383f2-dbcd-43d6-b83f-8be9bfbbdbf3_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "a65383f2-dbcd-43d6-b83f-8be9bfbbdbf3",
+          "uses": 5,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-before.save.json",
+          "sha256": "d0e353a52576c5ccf645282e5523d6f9072351e49f6b443e5b8772be9687c7dc"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-entry.save.json",
+          "sha256": "8e95b1a8e681d48ee49c79293578bd6f80a44302d5aa2a247ddd8bf6b2f52720"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-returned.save.json",
+          "sha256": "79ee2907e429774f76cc2713aa2d2a9db05dd04beeb593d43b2656396e6a3a2f"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-after-preparation.save.json",
+          "sha256": "dc90f2e915ce1e9f035c940850baf5bc7480e13f7ba97d9b122de8b063a2c734"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 21,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "severe",
+      "runId": "bc5fe03c-9c7a-493e-b56d-c680983132f8",
+      "cycle": 86,
+      "recipeId": "r100-native-v3:sentinel-mass-severe",
+      "world": "sentinel-mass",
+      "family": "folded-slab",
+      "seed": 2223492667,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-deep-2",
+          "tier": "deep",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 238,
+        "banked": 13,
+        "repair": 8,
+        "growth": 0,
+        "after": 243
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 54,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 101,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 51,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 1,
+      "newlyMatured": [
+        {
+          "id": "CAT_2a07fb8e-feb6-4399-854f-5e0ec15dbd26_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "2a07fb8e-feb6-4399-854f-5e0ec15dbd26",
+          "uses": 3,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_e3a6677a-0c4c-4a48-b0c3-558070b5ec4a",
+          "kind": "weapon",
+          "sourceRunId": "2a07fb8e-feb6-4399-854f-5e0ec15dbd26",
+          "uses": 75,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_2a07fb8e-feb6-4399-854f-5e0ec15dbd26_r100-contaminant-deep-1",
+          "kind": "contaminant",
+          "sourceRunId": "2a07fb8e-feb6-4399-854f-5e0ec15dbd26",
+          "uses": 4,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-before.save.json",
+          "sha256": "dc90f2e915ce1e9f035c940850baf5bc7480e13f7ba97d9b122de8b063a2c734"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-entry.save.json",
+          "sha256": "178d539b85ca188a0e13d8253b652755f7154c9e1823001954a8d9721342bd16"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-returned.save.json",
+          "sha256": "ffb13882cb182ca20e876c2e00ceafabee7a57f9d5bdd679d9058f5c314a7957"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-after-preparation.save.json",
+          "sha256": "0bb9a5e0bde98236c09f2561c0a355b62128a5e7e7f62540346c668d9095c8b6"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 22,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "low",
+      "runId": "19f95ce4-734f-481b-a7b7-82da11746d08",
+      "cycle": 87,
+      "recipeId": "r100-native-v3:gel-rafts-low",
+      "world": "gel-rafts",
+      "family": "gel-flow",
+      "seed": 3001416877,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 243,
+        "banked": 30,
+        "repair": 17,
+        "growth": 0,
+        "after": 256
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 54,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 102,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 51,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_bc5fe03c-9c7a-493e-b56d-c680983132f8_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "bc5fe03c-9c7a-493e-b56d-c680983132f8",
+          "uses": 4,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_bc5fe03c-9c7a-493e-b56d-c680983132f8_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "bc5fe03c-9c7a-493e-b56d-c680983132f8",
+          "uses": 4,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_bc5fe03c-9c7a-493e-b56d-c680983132f8_r100-contaminant-deep-2",
+          "kind": "contaminant",
+          "sourceRunId": "bc5fe03c-9c7a-493e-b56d-c680983132f8",
+          "uses": 5,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-before.save.json",
+          "sha256": "0bb9a5e0bde98236c09f2561c0a355b62128a5e7e7f62540346c668d9095c8b6"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-entry.save.json",
+          "sha256": "842a9051c3d96a5b51411db4ff11eb8aae33e259ccdf4ca380b6996dbec8cbe5"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-returned.save.json",
+          "sha256": "b445aae0d91c78ba544c56977e3bddc27bad7c379d98c32ef7a55f9645d75f69"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-after-preparation.save.json",
+          "sha256": "8f8ca6f10b4106c8809a49f144dab8c9e6209f148f3e72bf6b809f825d63c644"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 23,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "medium",
+      "runId": "c17bc005-ea98-4673-8831-f43712f84eaa",
+      "cycle": 88,
+      "recipeId": "r100-native-v3:sloughed-court-medium",
+      "world": "sloughed-court",
+      "family": "membrane-rim",
+      "seed": 2357052672,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 256,
+        "banked": 23,
+        "repair": 17,
+        "growth": 0,
+        "after": 262
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 54,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 102,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 52,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_19f95ce4-734f-481b-a7b7-82da11746d08_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "19f95ce4-734f-481b-a7b7-82da11746d08",
+          "uses": 4,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "CAT_19f95ce4-734f-481b-a7b7-82da11746d08_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "sourceRunId": "19f95ce4-734f-481b-a7b7-82da11746d08",
+          "uses": 6,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-before.save.json",
+          "sha256": "8f8ca6f10b4106c8809a49f144dab8c9e6209f148f3e72bf6b809f825d63c644"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-entry.save.json",
+          "sha256": "9e9e7db98584c967cc7971f69da3d93686d53599660595c52f417bb2ff8fd830"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-returned.save.json",
+          "sha256": "5e8f357340495c37bb0ddf94cf226917a4a657064e05c22c5b349acbbbce5474"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-after-preparation.save.json",
+          "sha256": "118e2bf838ebe43447ede17c3678125d922e5da107176b3be11ec3ddd731093e"
+        }
+      ],
+      "originalFailurePreserved": null
+    },
+    {
+      "ordinal": 24,
+      "batch": 2,
+      "sourceManifest": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "grade": "severe",
+      "runId": "c9a8277e-922f-4b34-92c8-92dbd9fd86bd",
+      "cycle": 89,
+      "recipeId": "r100-native-v3:tendon-shelves-severe",
+      "world": "tendon-shelves",
+      "family": "fibre-knot",
+      "seed": 3583157055,
+      "outcome": "extract",
+      "searched": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "kind": "kindling"
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant"
+        }
+      ],
+      "cash": {
+        "before": 262,
+        "banked": 32,
+        "repair": 17,
+        "growth": 0,
+        "after": 277
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "hp": 54,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "hp": 102,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "hp": 53,
+          "maxHp": 145
+        }
+      ],
+      "serviceDebt": 0,
+      "originalCapitalDebt": 0,
+      "newlyMatured": [
+        {
+          "id": "CAT_c17bc005-ea98-4673-8831-f43712f84eaa_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "sourceRunId": "c17bc005-ea98-4673-8831-f43712f84eaa",
+          "uses": 4,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        },
+        {
+          "id": "WPN_2543e88c-60b7-4498-84a2-9a6b0db7286d",
+          "kind": "weapon",
+          "sourceRunId": "c17bc005-ea98-4673-8831-f43712f84eaa",
+          "uses": 75,
+          "acquisitionScope": "acquired-in-I14-main-chain"
+        }
+      ],
+      "sourcePhases": [
+        {
+          "phase": "before",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-before.save.json",
+          "sha256": "118e2bf838ebe43447ede17c3678125d922e5da107176b3be11ec3ddd731093e"
+        },
+        {
+          "phase": "entrySave",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-entry.save.json",
+          "sha256": "766670284475db2373c0ce73108e9b3cf24302af66252e069c1e406293888a70"
+        },
+        {
+          "phase": "afterReturn",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-returned.save.json",
+          "sha256": "d7cfb69b828217c8be780263b9e9545da490dff151731041fdee6ef6979519a8"
+        },
+        {
+          "phase": "afterPreparation",
+          "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-after-preparation.save.json",
+          "sha256": "46c245087bad667eda67cb586c0c9db259940db6fe95f8d2fc8ec22c41f6a350"
+        }
+      ],
+      "originalFailurePreserved": null
+    }
+  ],
+  "originalFirstInterruption": {
+    "report": {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/report.json",
+      "sha256": "f012b04527e32207d7f40c83eb85cdd4bf5057fbc4f22a963a9ad7365fe90e4d"
+    },
+    "runId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+    "uniqueDeparturesRepresented": 1,
+    "failedSegmentNotExtraSortie": true
+  },
+  "sourceCount": 1398,
+  "sourceAllStillMatch": true,
+  "sourceBridge": {
+    "originTransportReview": {
+      "file": "docs/qa/artifacts/r100-i14/qa-origin-mapping-v4.json",
+      "sha256": "1d536970780f4c21e94bf8962f8c7225c951311fea5708bdc59950a00a988904"
+    },
+    "preservedPredepartureFailure": {
+      "file": "docs/qa/artifacts/r100-i14/qa-origin-bridge-first-failure.json",
+      "sha256": "998e8de5fbbbdc23c3147c664c1956ffb67972d759eabe7258d3b61333ec7a0c"
+    },
+    "predepartureFailureNaturalRuns": 0,
+    "qualification": {
+      "file": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+      "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+    },
+    "firstTwelveSource": {
+      "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    "subsequentSource": {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    "oldSourceAudit": {
+      "file": "docs/qa/artifacts/r100-i14/qa-continuous-through-12.json",
+      "sha256": "8f5cecfa469ddd071a36aa11cb7964fab8fbbb8c9877e67e92e35d3ccfc3ff20"
+    },
+    "oldUniqueRuns": 12,
+    "newUniqueRuns": 12,
+    "oldSnapshotBytesKept": true,
+    "current1398BytesMatch": true,
+    "changes": [
+      {
+        "path": "src/systems/r100-world/actor-occlusion-field.ts",
+        "before": null,
+        "after": "9d86d9c87c3ccb202a1a81d15f1a26e64ca7ed9d8031a2e622ea8a4f6862458b"
+      },
+      {
+        "path": "src/systems/r100-world/presentation.ts",
+        "before": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750",
+        "after": "9471e8c94a6532832c5d4db466b829a24d3c27370f6c41712224daed50d587de"
+      }
+    ],
+    "refusedInvalidQualifications": [
+      "unapproved",
+      "wrong-new-source",
+      "changed-first12",
+      "different-predecessor",
+      "reset-denominator",
+      "pretend-new48",
+      "continuation-denied"
+    ]
+  },
+  "limitations": [
+    "Explicit two-source chain: original12 on1397 source plus the actual following trips on1398 source. Source1397 is a historical snapshot, never asserted unchanged against current presentation.ts. No rendering diagnostic branch or v3 predeparture origin mismatch enters this count. V4 carrier mapping retains all key/value string bytes and cookies; only the origin field is mapped.",
+    "Continuous12/24/36 audits are progress, never completion of48. No new profitability, whole-supply or exact-tool-refill gate.",
+    "The unchanged I13 accounting tool retains its historical recordedDate field; this outer createdAt is the I14 execution time. The tool provides conservation; its per-report derived serviceTarget is not a new baseline. This bridge explicitly fixes51/100/51 service and51/102/51 original capital.",
+    "Each batch shares one earned lineage; these are not independent players. First low interrupted/continued segments are one departure. Headed focus and fixed performance are excluded.",
+    "Material coverage derives only actual naturally selected identities. Missing families require separately registered diagnostics, never random rerolls.",
+    "Matured items acquired before I14 are reported separately, even when previous iterations called them fresh.",
+    "Build, source hash, accounting and automated completion do not imply enjoyment, hearing, visual fatigue or final release."
+  ],
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/policy-freeze.json",
+      "sha256": "d911b4babefe449b312ea4cb08ef0dd1663cd0ecf9871052e0f4251a5df4e260"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/policy-freeze.json",
+      "sha256": "24bcb03e0717aaf59d16ff54ce8b0366593de09c36ce7cac9adc155a35bcd3cf"
+    },
+    {
+      "file": "tools/world-study/r100-i14-continuous-journey.mjs",
+      "sha256": "7ac2a052efd25158dfe6e1e53c9404efb88a13f44839b815539f16a8950dce6e"
+    },
+    {
+      "file": "tools/qa/r100-i14-lifecycle.mjs",
+      "sha256": "201857168f860e783634b34472ab893b765e1295381664b5bf5c0d0fa1c24e24"
+    },
+    {
+      "file": "tools/world-study/run-r100-i14-continuous.mjs",
+      "sha256": "07a84c18c7b22a16c97d45a18f5cbba06b5a64ffbe0fdb7b7c52977c9502948c"
+    },
+    {
+      "file": "tools/world-study/r100-i13-bounded-journey.mjs",
+      "sha256": "6855b51dd82d9ef9fcb308f0293c893f55dff2e6a6f7856db55167826dcbec10"
+    },
+    {
+      "file": "tools/world-study/r100-i13-retry-policy.mjs",
+      "sha256": "38e6bd457a2397bb00ca8a73e637b3c6bd471b36a98aeb53d91c996a8456ec33"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-policy.mjs",
+      "sha256": "4faf37eb6e1d3adf3ee39f7db91357d4713fc7eb04ac3d34dd61281abca41fa9"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/world-study/r100-frozen-server.mjs",
+      "sha256": "75bc54d4dd2ad3a1eff93069a7121288e829d055e1903420cf6b99b11a502ae7"
+    },
+    {
+      "file": "tools/qa/check-r100-i14-runtime-budget.mjs",
+      "sha256": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1"
+    },
+    {
+      "file": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "file": "tools/world-study/r100-i14-continuous-v2-journey.mjs",
+      "sha256": "67caacdce212cf6d65ba8ac88c3e43fef6fd99e2420621cbdf273d2521eac2e1"
+    },
+    {
+      "file": "tools/qa/r100-i14-lifecycle-v2.mjs",
+      "sha256": "8a2ecc10c2727a0c507a1987097da6265e9c724f70e721f92a2528493b324646"
+    },
+    {
+      "file": "tools/world-study/run-r100-i14-continuous-v2.mjs",
+      "sha256": "9da06fc1714cdca0972c94d3f0d0af4413b0974d04323abe8d54f09b71a0348d"
+    },
+    {
+      "file": "tools/world-study/run-r100-i14-continuous-v4.mjs",
+      "sha256": "04015702464cfdd62667eac9b2cf937f0472a137a8b6e88210e5d8d0449bacff"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/task-preregistration.md",
+      "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+      "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+      "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/report.json",
+      "sha256": "beb757b8eb7ec85e0f0fc3d5d5be81c90093d8cec617bab58f160ddc016ea791"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/browser-storage.json",
+      "sha256": "a7270c01da624d2c2ca3e3aa6c9eed6360d7a4321e97b950af0babf4ab0e83f3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/initial-browser-storage.json",
+      "sha256": "b74f66dba20f71f344aa3752ed663e0a630cdaf0d3c00d1a89e5901eac7dabbd"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/initial-origin-proof.json",
+      "sha256": "5b7d88e41892e5e6ab8e2eeca0e5cc030415588868c562b3c0a0f579ca0e1484"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/policy-freeze.json",
+      "sha256": "92fadc684b129b05e8668e2d39d4c0f0a5ec11164148bb309e616fbe9c180d2b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/report.json",
+      "sha256": "6d033ec04618e671ed63cecb27b1b999df9409837067932e1784358841189902"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/execution.json",
+      "sha256": "0f1db682d5d9d4af604cdfa2727469059a45ff8102a238e57161d28695950f39"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/i14/13-before.save.json",
+      "sha256": "2a0d582c6371e4e5c5d1315dd0d5c593dbf698e178cc11836544cc83277ab263"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/i14/browser-storage.json",
+      "sha256": "5b6722d995ee5ba1c8a3043a4496dfdca6acfd12a4043ba2a0aaf4b90bdcd88b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-continuous-through-12.json",
+      "sha256": "8f5cecfa469ddd071a36aa11cb7964fab8fbbb8c9877e67e92e35d3ccfc3ff20"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-actor-cache-delta-recommendation.json",
+      "sha256": "f4052ed6f23698e0d79a1fed89a9eb46492501929882228401b2d1022f9082ca"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/package-continuity.json",
+      "sha256": "38433f4b825cb8e1206d7ffa81420378ecd746244c85226fae83539494b7a8c7"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/report.json",
+      "sha256": "7293d36bf004561c995a5a3d2e2a94df29cf094e6893f8fa0f5b323a3b649282"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/manifest.json",
+      "sha256": "643376a49afc528a6517520a65ee158d356e3091264e2148ce4903c317276619"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-actor-cache-code-review.json",
+      "sha256": "bbce9ddabfad7ab630f3c067b1a31763bb78e2048a31cd26faa7d02c32884f7c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-reference-runtime-after-cache.json",
+      "sha256": "7f520d81b9366dae8a2bfc597c13e416ca0df64063a05b486b072f3fccd3bcb5"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-render-entry-review.json",
+      "sha256": "6c6c3bd23109393b0d258b1b52ef19de1b8ebc2751ab6b8bf63fe39f341b54df"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-reference-resources-after-cache.json",
+      "sha256": "d5552d35f19295e1a49e78ab861ea94335fa558f1fffaea804f7b3fa44321322"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-origin-mapping-v4.json",
+      "sha256": "1d536970780f4c21e94bf8962f8c7225c951311fea5708bdc59950a00a988904"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/2-after-preparation.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/execution.json",
+      "sha256": "930c147bbc43551b240d383c0b0ccfd0562cef44a336997d1e1de2186010ba1c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/batch-input.json",
+      "sha256": "4c391b14ef91e4deca2770cbb298ac42ede8c4d072f3a80737f3610efddc5d36"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-before.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-entry.save.json",
+      "sha256": "89e8bc364658a2acbead23667dc83f0049efb6c937a481c681ea5848ffb2075a"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-returned.save.json",
+      "sha256": "0fe553e5de9a802686617f140ce9ffdca864bb48253d327f926c67cda15fbb29"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-after-preparation.save.json",
+      "sha256": "9ecb6400c762ed41e886bed50b23e95e602042b3f417b99af6df025bea563087"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-before.save.json",
+      "sha256": "9ecb6400c762ed41e886bed50b23e95e602042b3f417b99af6df025bea563087"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-entry.save.json",
+      "sha256": "688fff48e23b1e3cd0135a98a6044747ee4609cfe3b2bcb8cd3a60bfad5c3f71"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-returned.save.json",
+      "sha256": "3e82fe5256879932fd9a32296af86714a124e05aec6dbece0d0f33838f3975f5"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-after-preparation.save.json",
+      "sha256": "bf8dac454c442fce5986c02bb52acbda0555c8296abfb3ab40dddb9999fac303"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-before.save.json",
+      "sha256": "bf8dac454c442fce5986c02bb52acbda0555c8296abfb3ab40dddb9999fac303"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-entry.save.json",
+      "sha256": "e33bf0d898debc424693c47592be36dda8febb3e333ae9898c0133059845a374"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-returned.save.json",
+      "sha256": "9f3fdd95a26e9d60f3f77f2756f7fade0fc8089b200c3d1a39201f350e12f958"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-after-preparation.save.json",
+      "sha256": "10781c51031f2d6c627bdff173265d0d19688007e148761ee6451f1001a63333"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-before.save.json",
+      "sha256": "10781c51031f2d6c627bdff173265d0d19688007e148761ee6451f1001a63333"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-entry.save.json",
+      "sha256": "d6ce801c9db03ee2188a523986e670b2ec0ded4cd45b4ecd14732dc0261f744c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-returned.save.json",
+      "sha256": "5460d7957f707fb6eebe59bae5aae284aa7f703abcf3fa0ce2b30456bfac8f2e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-after-preparation.save.json",
+      "sha256": "d9a641f11c1e416d1db27eb68f22431c5e24b4ead1e07ac8f8b9150130162b13"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-before.save.json",
+      "sha256": "d9a641f11c1e416d1db27eb68f22431c5e24b4ead1e07ac8f8b9150130162b13"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-entry.save.json",
+      "sha256": "686868d1207182b1d4ec7c71f2ae86fa1ec87c9443a7ef129e7f4ffd8bb4526d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-returned.save.json",
+      "sha256": "4aca96488aa1dc2f3bec488585b564a5dd3202a6827619985abffb566da0e948"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-after-preparation.save.json",
+      "sha256": "14e98f7d9ec00af85bb2047caa9cf03e8a4305ca6f4fbda16a43fcca7cff8da6"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-before.save.json",
+      "sha256": "14e98f7d9ec00af85bb2047caa9cf03e8a4305ca6f4fbda16a43fcca7cff8da6"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-entry.save.json",
+      "sha256": "6fdf3b2ef29339754ace4b93b304874f55a7123f70668b18230d2f86e7d86596"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-returned.save.json",
+      "sha256": "7b874eb3ba78e4e178d55e5d07e3ffcf59b9fba7f93dc2c86bdfe17419910540"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-after-preparation.save.json",
+      "sha256": "0d81f9cf05e2cf5cbf1e2e48fc4b9ada65b1f41995e321d738795199512b8165"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-before.save.json",
+      "sha256": "0d81f9cf05e2cf5cbf1e2e48fc4b9ada65b1f41995e321d738795199512b8165"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-entry.save.json",
+      "sha256": "30e2877e041e4744e40069dc85b47fe2f93e76b724b454df7e4b6e21e3f9b2bb"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-returned.save.json",
+      "sha256": "5b206181ad9176f89b589fae2b9f2f911732515f31a2b30e67a41f762509c3c3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-after-preparation.save.json",
+      "sha256": "b666e333ad9fd45502e6fae41303ac127fa07d4574b9512e4423b0009a907241"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-before.save.json",
+      "sha256": "b666e333ad9fd45502e6fae41303ac127fa07d4574b9512e4423b0009a907241"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-entry.save.json",
+      "sha256": "084628fff304c62d6acb167ef0890e39d7ff0a0df8a5a0f96bc75f27bc455a5b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-returned.save.json",
+      "sha256": "73843aca71c89b66e63d65a8ea12408c3022ecccd80e84bc49c9032a7b522b04"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-after-preparation.save.json",
+      "sha256": "81624825bc49bf251bb5f47b44756c9ba66fe6e6a88b9dc5ab131453b3d08785"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-before.save.json",
+      "sha256": "81624825bc49bf251bb5f47b44756c9ba66fe6e6a88b9dc5ab131453b3d08785"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-entry.save.json",
+      "sha256": "effa324ac8e331770da3ae2a07287dade4fd2a0bace1bb24e0ab843e3dd7959d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-returned.save.json",
+      "sha256": "9b1f33df0673eeb3031beaebd616bb0dff5654656d16b1082d4c753f9c41ce0e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-after-preparation.save.json",
+      "sha256": "f1f7606894bedb192a1c3ac6c06f18e8353b0cfe544aa4ef80108fe3de1b3dd1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-before.save.json",
+      "sha256": "f1f7606894bedb192a1c3ac6c06f18e8353b0cfe544aa4ef80108fe3de1b3dd1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-entry.save.json",
+      "sha256": "c205205b191c53ff5c5207bbe6634de2d3a9f71efc1d6bc750aee5227e2e0027"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-returned.save.json",
+      "sha256": "3b6f20176bc50fd81733553e2fa8aadab4d5d8674b1488ad424f3a386d9c4b2c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-after-preparation.save.json",
+      "sha256": "19adc465759fefe4a7119c09d6fa4ab6bba141c3a180e62685743f9b5ec197c1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-before.save.json",
+      "sha256": "19adc465759fefe4a7119c09d6fa4ab6bba141c3a180e62685743f9b5ec197c1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-entry.save.json",
+      "sha256": "5435224ea5c9482e0a50a8d18be87d1a2a29740c8918db4ee104807cffee5659"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-returned.save.json",
+      "sha256": "d29df9f8be2e1028f205a92dcf25db4e18c46980024b42812e418978bf8587b4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-after-preparation.save.json",
+      "sha256": "9f0b8c5fa3f4e7f703023c0a76938f46356156d6785232bd61017ff9131a0d1b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-before.save.json",
+      "sha256": "9f0b8c5fa3f4e7f703023c0a76938f46356156d6785232bd61017ff9131a0d1b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-entry.save.json",
+      "sha256": "c2cb939e66f15ca0bc9d4d0a2968e5cd60aa8ad2395151b1989c2ce6c6f072ca"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-returned.save.json",
+      "sha256": "4ea8ee7bbab03123f6905d4eb08e155ee3905ad249fcde49105e9b7b7e5c5bc5"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-after-preparation.save.json",
+      "sha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/report.json",
+      "sha256": "bc08c391412d52fb5121bd86edc1efcfc4dc9a2a7dce718166e02899f28825a2"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/execution.json",
+      "sha256": "af84100cd044b01b9f4efeed90932a38187599d28bb3159a3e405de99a41a99d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/batch-input.json",
+      "sha256": "64274f7e0f83dcbfe0896c335563b10554ecc203f44ecff754238368d94ea0a8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-before.save.json",
+      "sha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-entry.save.json",
+      "sha256": "23e3ad7089b237382610892f0437678b4a6bd3a063944517f5da1950dbaaad69"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-returned.save.json",
+      "sha256": "912e6dbc86c402c4fcf0af7f7c4059dc77e6047468b6f20093899e076df8f038"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-after-preparation.save.json",
+      "sha256": "e54804981666fde5d608a6599846dfd7381a46aaa56406b562ce809b6f56d86b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-before.save.json",
+      "sha256": "e54804981666fde5d608a6599846dfd7381a46aaa56406b562ce809b6f56d86b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-entry.save.json",
+      "sha256": "480843b80c9460d1739718cbbbae3abc819c2aadd32bb20bedaba2e6fdae6da6"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-returned.save.json",
+      "sha256": "cab5ed7b50ceb57a651349e175b918030204d95cebcf23ca3c089d4654a0e611"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-after-preparation.save.json",
+      "sha256": "e828d52a8c77bdc3f18379c640644d05f4b65f2d8fd176d0754334b9a0faa055"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-before.save.json",
+      "sha256": "e828d52a8c77bdc3f18379c640644d05f4b65f2d8fd176d0754334b9a0faa055"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-entry.save.json",
+      "sha256": "a66f5d74a8dc4e9a6ae50431e10ae1982665cfea6378500ff3ec8d3674d0dbc4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-returned.save.json",
+      "sha256": "6e23d1e753933606fbe9824e00618fefd4cd2eacade71646cf97de0d35635158"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-after-preparation.save.json",
+      "sha256": "de2e87eadf1cca6f982f58f6ea347a8b76748b6646a8d6f93ae1dc3405f5ef3d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-before.save.json",
+      "sha256": "de2e87eadf1cca6f982f58f6ea347a8b76748b6646a8d6f93ae1dc3405f5ef3d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-entry.save.json",
+      "sha256": "c68d10660e4c6f99731a0bbbe5d7d7df166f79f33c2e03eb0f7c9a499222627e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-returned.save.json",
+      "sha256": "19fe648f9bbb95e6d67fe5846751397f86aeea264b9856c68c3d6e927a2a2ab6"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-after-preparation.save.json",
+      "sha256": "136427e28df3fe20deeb85c7e5ce340ad12b58d02e3f3418257f4e54620ce9f0"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-before.save.json",
+      "sha256": "136427e28df3fe20deeb85c7e5ce340ad12b58d02e3f3418257f4e54620ce9f0"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-entry.save.json",
+      "sha256": "3aee32b4f2351f6ef6876ddf9a3ce76da621b3d5bda4b99e331bcc20c9de83c0"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-returned.save.json",
+      "sha256": "e7ea6aec36b94489fdd2415e2dd547671ccf350c86ba039d64b74975c4487351"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-after-preparation.save.json",
+      "sha256": "7cff6fa3999312a74d2684a81ed80d14d0b6baef567c66a4a7a2089723528626"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-before.save.json",
+      "sha256": "7cff6fa3999312a74d2684a81ed80d14d0b6baef567c66a4a7a2089723528626"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-entry.save.json",
+      "sha256": "8d982adbe1f32fe13bd08c53a1bfc753909e3bcef40dabc0c3020e1fb44c34f4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-returned.save.json",
+      "sha256": "1b81263e1c8d941b73430322f9024cd7d3ac1ea504b09d0069f6dac2fb8ea677"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-after-preparation.save.json",
+      "sha256": "105ae946a31d58d67b7e9a41a4d9445efc61515304a285ab90a3c033006e5e75"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-before.save.json",
+      "sha256": "105ae946a31d58d67b7e9a41a4d9445efc61515304a285ab90a3c033006e5e75"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-entry.save.json",
+      "sha256": "1a29ad01a3ab05a44971ac1a0ec96da67d6265ad9da71c385d5df04a0f6faba8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-returned.save.json",
+      "sha256": "ca6d1a09c128c43528181ef72d6a67d9a1fe3f10bbcfba8e9b0ed58b646abdc1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-after-preparation.save.json",
+      "sha256": "d0e353a52576c5ccf645282e5523d6f9072351e49f6b443e5b8772be9687c7dc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-before.save.json",
+      "sha256": "d0e353a52576c5ccf645282e5523d6f9072351e49f6b443e5b8772be9687c7dc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-entry.save.json",
+      "sha256": "8e95b1a8e681d48ee49c79293578bd6f80a44302d5aa2a247ddd8bf6b2f52720"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-returned.save.json",
+      "sha256": "79ee2907e429774f76cc2713aa2d2a9db05dd04beeb593d43b2656396e6a3a2f"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-after-preparation.save.json",
+      "sha256": "dc90f2e915ce1e9f035c940850baf5bc7480e13f7ba97d9b122de8b063a2c734"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-before.save.json",
+      "sha256": "dc90f2e915ce1e9f035c940850baf5bc7480e13f7ba97d9b122de8b063a2c734"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-entry.save.json",
+      "sha256": "178d539b85ca188a0e13d8253b652755f7154c9e1823001954a8d9721342bd16"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-returned.save.json",
+      "sha256": "ffb13882cb182ca20e876c2e00ceafabee7a57f9d5bdd679d9058f5c314a7957"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-after-preparation.save.json",
+      "sha256": "0bb9a5e0bde98236c09f2561c0a355b62128a5e7e7f62540346c668d9095c8b6"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-before.save.json",
+      "sha256": "0bb9a5e0bde98236c09f2561c0a355b62128a5e7e7f62540346c668d9095c8b6"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-entry.save.json",
+      "sha256": "842a9051c3d96a5b51411db4ff11eb8aae33e259ccdf4ca380b6996dbec8cbe5"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-returned.save.json",
+      "sha256": "b445aae0d91c78ba544c56977e3bddc27bad7c379d98c32ef7a55f9645d75f69"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-after-preparation.save.json",
+      "sha256": "8f8ca6f10b4106c8809a49f144dab8c9e6209f148f3e72bf6b809f825d63c644"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-before.save.json",
+      "sha256": "8f8ca6f10b4106c8809a49f144dab8c9e6209f148f3e72bf6b809f825d63c644"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-entry.save.json",
+      "sha256": "9e9e7db98584c967cc7971f69da3d93686d53599660595c52f417bb2ff8fd830"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-returned.save.json",
+      "sha256": "5e8f357340495c37bb0ddf94cf226917a4a657064e05c22c5b349acbbbce5474"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-after-preparation.save.json",
+      "sha256": "118e2bf838ebe43447ede17c3678125d922e5da107176b3be11ec3ddd731093e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-before.save.json",
+      "sha256": "118e2bf838ebe43447ede17c3678125d922e5da107176b3be11ec3ddd731093e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-entry.save.json",
+      "sha256": "766670284475db2373c0ce73108e9b3cf24302af66252e069c1e406293888a70"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-returned.save.json",
+      "sha256": "d7cfb69b828217c8be780263b9e9545da490dff151731041fdee6ef6979519a8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-after-preparation.save.json",
+      "sha256": "46c245087bad667eda67cb586c0c9db259940db6fe95f8d2fc8ec22c41f6a350"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/browser-storage.json",
+      "sha256": "781b664688f627648bc4e34aab1674939c8d82c58ffffdaf6a58b8dd4c962c20"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-24-accounting.json",
+      "sha256": "4f44f2317b08ff9c3d4db4cbe8130824078797167300d1a4eb5e1edf4b88db10"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+      "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+    }
+  ]
+}

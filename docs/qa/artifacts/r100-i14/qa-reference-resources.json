@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T04:35:00.017Z",
+  "status": "bounded-reference-owned-resources-pass",
+  "tool": {
+    "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/qa-reference-resources.mjs",
+    "sha256": "6062b5b4038bab0fa12b67615cc5f8b491a15cf75d0639b4d2f24c8954530212"
+  },
+  "release": {
+    "revision": "r100-native-v3-revision-6-internal-rc-20261008",
+    "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "sourceBinding": {
+    "continuousAudit": "docs/qa/artifacts/r100-i14/qa-continuous-through-12.json",
+    "sourceCount": 1397,
+    "allStillMatch": true
+  },
+  "host": {
+    "cpu": "Apple M4 Pro",
+    "logicalCores": 14,
+    "memoryBytes": 51539607552,
+    "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.0.1\nBuildVersion:\t\t25A362\n",
+    "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t58%; discharging; 2:49 remaining present: true\n"
+  },
+  "powerAfter": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t57%; discharging; 2:52 remaining present: true\n",
+  "measurement": {
+    "identical": 10,
+    "mixed": 6,
+    "warmupFamilies": 6,
+    "samples": 12,
+    "gcCallsPerSample": 2,
+    "totalGcCallsByFrozenCode": 24,
+    "budgetMiB": 10,
+    "maxCombinedRetainedMiB": 1.2498769760131836,
+    "stableActiveKinds": [
+      "WebGL2",
+      "Texture",
+      "Buffer",
+      "Program",
+      "Framebuffer",
+      "Renderbuffer",
+      "Shader"
+    ]
+  },
+  "rows": [
+    {
+      "label": "warmed-baseline",
+      "heapGrowthBytes": 0,
+      "backingGrowthBytes": 0,
+      "combinedRetainedGrowthBytes": 0,
+      "combinedRetainedGrowthMiB": 0,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-1",
+      "heapGrowthBytes": 478788,
+      "backingGrowthBytes": 0,
+      "combinedRetainedGrowthBytes": 478788,
+      "combinedRetainedGrowthMiB": 0.4566078186035156,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-2",
+      "heapGrowthBytes": 590080,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 590095,
+      "combinedRetainedGrowthMiB": 0.5627584457397461,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-3",
+      "heapGrowthBytes": 731716,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 731731,
+      "combinedRetainedGrowthMiB": 0.6978330612182617,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-4",
+      "heapGrowthBytes": 858700,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 858715,
+      "combinedRetainedGrowthMiB": 0.818934440612793,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-5",
+      "heapGrowthBytes": 879092,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 879107,
+      "combinedRetainedGrowthMiB": 0.8383817672729492,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-6",
+      "heapGrowthBytes": 941172,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 941187,
+      "combinedRetainedGrowthMiB": 0.8975858688354492,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-7",
+      "heapGrowthBytes": 1026244,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 1026259,
+      "combinedRetainedGrowthMiB": 0.9787168502807617,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-8",
+      "heapGrowthBytes": 1076280,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 1076295,
+      "combinedRetainedGrowthMiB": 1.0264348983764648,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-9",
+      "heapGrowthBytes": 1292112,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 1292127,
+      "combinedRetainedGrowthMiB": 1.2322683334350586,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-10",
+      "heapGrowthBytes": 1268012,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 1268027,
+      "combinedRetainedGrowthMiB": 1.209284782409668,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "after-mixed-6",
+      "heapGrowthBytes": 1310500,
+      "backingGrowthBytes": 91,
+      "combinedRetainedGrowthBytes": 1310591,
+      "combinedRetainedGrowthMiB": 1.2498769760131836,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    }
+  ],
+  "limitations": [
+    "One reference machine, six source-family warmups plus10same/6mixed diagnostics; not natural48 or all108/324 resources.",
+    "Combined budget is main-isolate used heap plus positive backing growth, not process RSS, embedder heap sum, GPU driver bytes or per-world64MiB CPU/GPU cache estimation.",
+    "Original runner checks six owned active object kinds. QA additionally finds Shader active count stable at62; created counters rise as expected and are not live retained counts.",
+    "Original runner records neither browser.version nor GPU identity; Chrome155 environment is bound by the adjacent runtime execution and fixed Chrome executable, not relabelled as an in-page resource-report measurement.",
+    "Resource budget success does not close current CPU/material timing failures, real weaker hardware, actual listening or human final acceptance."
+  ],
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/resources/policy-freeze.json",
+      "sha256": "c938d9d2b16238e87d3bfbdc95e8f60396be782e802151c05a4f0e21dc15cb69"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/resources/execution.json",
+      "sha256": "26b2c298adf0e58ab347438e70009917dcfc3d32d02db6d386b23eaee96e6e2b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/resources/runtime/report.json",
+      "sha256": "ed43ab881e9383eb1d2c64172bd1900011e487f931a3c1a2abec9610d9ca58e3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-continuous-through-12.json",
+      "sha256": "8f5cecfa469ddd071a36aa11cb7964fab8fbbb8c9877e67e92e35d3ccfc3ff20"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    {
+      "file": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/resources/frozen-runner.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    }
+  ]
+}

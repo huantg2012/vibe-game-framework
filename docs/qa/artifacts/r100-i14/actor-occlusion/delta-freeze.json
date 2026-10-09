@@ -1,0 +1,84 @@
+{
+  "createdAt": "2026-10-09T04:43:46.318575+00:00",
+  "scope": "Exact actor-mask immutable-world query cache; approved causal performance repair, no generation/gameplay/CSV/shader/visual-rule change.",
+  "oldSource": {
+    "path": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+    "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+  },
+  "newSource": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+    "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+  },
+  "oldFileCount": 1397,
+  "newFileCount": 1398,
+  "unchangedPriorFiles": 1396,
+  "delta": [
+    {
+      "path": "src/systems/r100-world/actor-occlusion-field.ts",
+      "before": null,
+      "after": "9d86d9c87c3ccb202a1a81d15f1a26e64ca7ed9d8031a2e622ea8a4f6862458b"
+    },
+    {
+      "path": "src/systems/r100-world/presentation.ts",
+      "before": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750",
+      "after": "9471e8c94a6532832c5d4db466b829a24d3c27370f6c41712224daed50d587de"
+    }
+  ],
+  "task": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/task-preregistration.md",
+    "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+  },
+  "bindings": [
+    {
+      "path": "tools/recovery/check-r100-actor-occlusion.ts",
+      "sha256": "7c0181b5b315cfe0b008f99be3ff4eac97bfdf2c1185b1267edb913407b8c558"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/equivalence/report.json",
+      "sha256": "f77ace350c3ff9133e7f8d4e146995598b065a2bbcc39d6055a8a5ab3b881be0"
+    },
+    {
+      "path": "tools/qa/profile-r100-i14-runtime.mjs",
+      "sha256": "a69ad8831e56b77e010270d8d3bef09db453540133ae4eb5751405dd30acc5c1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-profile/policy-freeze.json",
+      "sha256": "f60687a83a7a2657b629ff9ac13fa6fa886ef02a86a7b00b1f6efdba63b19313"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-profile/report.json",
+      "sha256": "a04e1ec7f0f6b638a62b16601cc3c76c32f038fc620d1b4e5d4b830237867e26"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-profile/raw-stages.json",
+      "sha256": "abe0027ba5502635aedc4a10f23dc581b7c2710273bc9c6216a2a1756cca8d0f"
+    },
+    {
+      "path": "tools/qa/check-r100-i14-runtime-budget.mjs",
+      "sha256": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-policy-freeze.json",
+      "sha256": "446262268da1fb24e54c7f12f52dfcf68204620ae472645eb1ff74974b53a064"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    }
+  ],
+  "semantics": "At every original integer mask pixel, immutable world solid heights are the unchanged source Float32 values; non-solid is-Infinity. Actor bounds/ground/key/retirement/span emission unchanged. NaN threshold retains original roleAt!=solid OR semantics.",
+  "lifetime": "Field belongs to one MasterPresentation, builds on every new/recovered scene; destroys array on constructor rollback/normal destroy; no cross-world cache. All actor/world tactical state remains uncached.",
+  "validation": {
+    "tsc": "npx tsc --noEmit exit0",
+    "equivalence": "39757776 assertions;8fixed worlds;6families;original oracle and actual maskActor output",
+    "lint": "No package lint script; syntax is not lint.",
+    "pending": [
+      "6official entry/cold restoration and >50ms task observations",
+      "4original performance samples with unchanged budgets",
+      "same lifecycle/resource specialty",
+      "bounded Art same-state visual comparison"
+    ],
+    "runtimeGameUrl": "http://127.0.0.1:3037"
+  },
+  "sourcePolicy": "3035 remains old immutable source. No continuous36 run or new RC qualification claimed until independent delta bridge approval."
+}

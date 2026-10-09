@@ -1,0 +1,201 @@
+{
+  "status": "bounded-current-still-review-complete-audio-and-continuous-playback-not-reviewed",
+  "date": "2026-10-09",
+  "reviewer": "I14 art agent",
+  "mode": "Informed expert follow-up; same planned first three completed random-destination runs, not blinded and not manually played.",
+  "candidate": {
+    "revision": "r100-native-v3-revision-6-internal-rc-20261008",
+    "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "features": [
+    "COH-F052",
+    "COH-F041",
+    "COH-F007",
+    "COH-F039",
+    "COH-F003",
+    "COH-F004"
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+    "sha256": "e7df849a69df7cb5a55ca91b549a754dcb5d167bc4f76aa8462cbe8529cf9f15"
+  },
+  "coverage": {
+    "viewedStillImages": 9,
+    "runs": 3,
+    "grades": [
+      "low",
+      "medium",
+      "severe"
+    ],
+    "families": [
+      "broken-shell",
+      "membrane-rim"
+    ],
+    "sourceStillKinds": {
+      "entry": 3,
+      "search": 3,
+      "fieldResult": 2,
+      "baseReturn": 1
+    },
+    "mediaProvided": {
+      "videoWithRealMix": 3,
+      "audioOnlyFromSameBus": 3
+    },
+    "videoContinuouslyPlayedByReviewer": false,
+    "audioActuallyHeardByReviewer": false,
+    "newInputByReviewer": false
+  },
+  "originalFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-entry-observation.png",
+      "sha256": "a096d159913b299ab27200879c7ffbf5cacec86b13233a23eef32450bc3493c7",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "ordinal": 1,
+      "viewingMethod": "Original full-page PNG viewed via view_image; no crop/edit/brightening.",
+      "observation": "正常入口视野以冷蓝细碎地面为主；小体量暖棕角色、灯照中心和外围读数分离。该取景尚未见赤壳主形，不能拿这一张签世界身份。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-entry-observation.png",
+      "sha256": "65c055378c3a4fcedc5b84a699744be4b26b3267b48eaa636f83ee4dca6a2615",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "ordinal": 2,
+      "viewingMethod": "Original full-page PNG viewed via view_image; no crop/edit/brightening.",
+      "observation": "近侧灰白碎床与前方紫红带状材料相接，比首低入口多了大尺度色带；外围生命、混乱、负重与工具余次保持原层级。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-entry-observation.png",
+      "sha256": "f22bcb829826f0e05cb312ecc043ea885072f6c2793d27c1c5b56faa83b8644b",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "ordinal": 3,
+      "viewingMethod": "Original full-page PNG viewed via view_image; no crop/edit/brightening.",
+      "observation": "前方大块蓝色浅面有长直边与截角，右上接到暗紫褶面；在这个入口角度，薄片形体先读为一块覆盖地表的色面。单帧没有显示运动或边厚。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-search-11.png",
+      "sha256": "c9e2c4511555d62299255d1bdcd948da54c51ccb312baa0dec36028146955263",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "ordinal": 1,
+      "viewingMethod": "Original full-page PNG viewed via view_image; no crop/edit/brightening.",
+      "observation": "赤色长壳的明亮顶面、暗内层与右侧弯折接头明确分开；角色位于其上方较静的浅地面，物体远大于角色。这里比入口有更明确的结构记忆。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-search-7.png",
+      "sha256": "d03ccb6e2edf267a1f95290e55466a8bf99de8cc5101dfaa41abc9e9b8f8fd8c",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "ordinal": 2,
+      "viewingMethod": "Original full-page PNG viewed via view_image; no crop/edit/brightening.",
+      "observation": "角色靠近画面右边，灯下的灰白地面与上方红带和黑绿污染形体仍分开；中央大部分留黑。右上获得提示可见，但此定点不能裁决走到地图边时的持续视野余量。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-search-8.png",
+      "sha256": "a44524aca9695b620b3a12e8ca72041d28c7a2377be2f0e7237959f22ce21f73",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "ordinal": 3,
+      "viewingMethod": "Original full-page PNG viewed via view_image; no crop/edit/brightening.",
+      "observation": "深处搜取后可见物件、青绿竖向提示及“还差1.6负重／释放E后整理”文字；右上18.6/20.0对应当前空间紧张。物件与角色未融进同一片底色；提示显示的正确机制归QA核账。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-field-result.png",
+      "sha256": "3dc248412b8cfb5032a63ce6f53e61fba3b50448bdda5476047dbf862cfe98f6",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "ordinal": 1,
+      "viewingMethod": "Original full-page PNG viewed via view_image; no crop/edit/brightening.",
+      "observation": "撤离结果居右，实际带回23、两件残渣、武器与87秒列明；左侧仍留角色和退出位置。停驻结果态的文字与场景层次可以分辨。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-field-result.png",
+      "sha256": "60d644c7b69675e05806b30118d9fe9498a8eb053a12785c514d87a5f9286e7c",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "ordinal": 2,
+      "viewingMethod": "Original full-page PNG viewed via view_image; no crop/edit/brightening.",
+      "observation": "中档撤离结果保留相同视觉语言，显示实际带回23、1残渣、峰值混乱109与82秒；未从该结果画面推断中途连续动画流畅。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-return.png",
+      "sha256": "fc4ab32421dcbf42948b0cae362adfd994b4258ab6640eb05e5e9fc4dc15919b",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "ordinal": 3,
+      "viewingMethod": "Original full-page PNG viewed via view_image; no crop/edit/brightening.",
+      "observation": "净化点归来报告叠在原场所上，损伤、供奉完成与新工具有层级；图示物件与灰绿文字保持局部焦点，场景仍在后方。此静帧不能证明场景切换声或混音连续。"
+    }
+  ],
+  "classification": {
+    "dominantLanguage": "俯视小体量硬边像素人物、材料大面与中尺度折转、范围明确的肩灯和大面积黑暗。Rift静态身份主要由彩色形体与可见局部关系组织；净化点仍采用已锁定的更高描绘精度与侧向空间。",
+    "secondaryLanguage": "外围低对比文字读数和局部交互文字；撤离及归来采用无框的场景上文字层。观察到的九帧未引入新的卡片化或通用图标系统。",
+    "imageSampling": "原整页图1440×960；原像素轮廓与连续光照共同出现。不能由静帧声称连续描边、动态采样或粒子节律已审。"
+  },
+  "quality": {
+    "identity": {
+      "verdict": "partially-established",
+      "finding": "首低后段的长红壳接合比其入口有明确地点记忆；中档碎床／紫红带与重档蓝面／暗紫褶面在当前取景不同。三世界且两主材不覆盖108身份或六族空间听感。"
+    },
+    "coherence": {
+      "verdict": "established-in-viewed-stills",
+      "finding": "人物、有限灯照、局部青绿污染与外围HUD的关系在三趟保持；当前静帧结果页和归来报告仍与场景共存。"
+    },
+    "maturity": {
+      "verdict": "one-local-expression-question-retained",
+      "finding": "红壳顶面／暗内层／转折分工清楚；重档入口蓝色浅面的直边与弱边厚需要人结合已有连续片段判断，静帧上更像地表色块。"
+    },
+    "gameplayFit": {
+      "verdict": "partially-observed",
+      "finding": "当前截图中角色、近侧物件和整理所需负重信息可辨；实际移动手感、持续危险可读性和全部边界仍未验证。"
+    },
+    "continuousFatigue": "unverified",
+    "audio": "unverified",
+    "movementFeel": "unverified"
+  },
+  "newConfirmedP0P1Defects": [],
+  "reviewQuestions": [
+    {
+      "id": "I14-ART-03",
+      "category": "local visual expression / unverified continuous reading",
+      "scope": "torn-reservoir severe, seed2103455321, 3-entry-observation.png",
+      "observation": "大蓝浅面在入口视角以长直边／截角和近均质中尺度色面呈现，边厚与撕裂关系未在该帧显出。",
+      "consequence": "局部可能先读作规则色块，削弱材料身份；不推断碰撞或通行错误。",
+      "severity": "unrated local art question; not a confirmed release-blocking regression",
+      "frequency": "one viewed entry frame",
+      "confidence": "high for this frame appearance, low for whole-route persistence",
+      "competingExplanation": "该物体是设计为可通行的低 relief 膜面，当前站位和灯照可能本就看不到撕裂边或厚缘；正常行走可能揭示这些关系。",
+      "nextObservation": "优先在已提供第3段及原入口整页中查看接近与离开时是否出现材料边厚／层间关系，再由人判断是否需整改；不为本问题新增出击或自动要求改画。"
+    }
+  ],
+  "knownLimits": [
+    "三段录像从生命周期检查后、首次移动前开始；没有录到本次暂停和冷续过程。",
+    "Canvas视频含真实混音但不含DOM；整页截图是不同时间点，不能拼成连续视频已含HUD的证据。",
+    "首低是原失败同run sequence8真实冷续，原技术失败保留。",
+    "原headless分支未触发真实blur；后续独立Chrome155 trusted browser blur已由root采纳，但不是本媒体所演示。",
+    "自动行动与录制开销已披露；这些录像不是性能抽样和真人手感测试。",
+    "媒体未在本审阅环境实际播放或听到；已有浏览器安全拒绝不绕行。"
+  ],
+  "humanApproval": false,
+  "releaseGatePass": false
+}

@@ -1,0 +1,12 @@
+{
+  "createdAt": "2026-10-09T04:46:06.905178+00:00",
+  "frozenPlan": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/runtime-policy-freeze.json",
+    "sha256": "b1960929ed44aeb9acdfd4bb2af30786529e299a13cbcd9461a21a987521e264"
+  },
+  "clarifications": {
+    "environment": "Frozen plan.environment is inherited historical baseline metadata, including74% Battery Power; not a fresh environment/power measurement. Current measurements are runtime-reference/execution.json powerBefore/powerAfter and report.environment/browserGPU.",
+    "releaseCandidate": "Plan.releaseCandidate and releaseManifest identify the parent I12 RC as provenance. They do not qualify the changed1398-file source; exact new source is plan.sourceManifest with plan.deltaFreeze. Director creates final qualified delta candidate after independent gates.",
+    "scope": "Original4world/seed/input/budgets unchanged. New source differs only by actor-occlusion-field.ts addition and presentation.ts integration, no profiler. Original3failed cases remain unchanged historical evidence."
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-09",
+  "status": "reference-machine-portable-kit-install-and-formal-menu-bootstrap-pass",
+  "scope": "Independent exported directory and freshly installed dependencies on the reference Mac only; no weak-device or gameplay pass.",
+  "kitManifestSha256": "c77f07db96f0e15d2d518fbbe84a970c612dbb0caab63604d520ef3493c34e22",
+  "initialHandoff": {
+    "path": "docs/qa/artifacts/r100-i14/root/device-kit/handoff.json",
+    "sha256": "0155b1c067715d16b466e8b06a69d0d08116f26193f7e2404d57b1007b7ef44d"
+  },
+  "commands": [
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund",
+      "exitCode": 0,
+      "observedOutput": "added 36 packages in 2s"
+    },
+    {
+      "command": "npm install --prefix .i14-runtime --ignore-scripts --no-audit --no-fund",
+      "exitCode": 0,
+      "observedOutput": "added 3 packages in 2s"
+    },
+    {
+      "command": "node tools/qa/run-r100-i14-device.mjs --preflight",
+      "exitCode": 0,
+      "observedOutput": "Source verified: 1519 files; r100-native-v3-revision-6-internal-rc-20261008"
+    }
+  ],
+  "playwrightVersion": "1.62.1",
+  "runtimeInstallLockSha256": "caa2e15b08b9b1d8db00896677ffeca08406d3753f9fe25b94ab2b5fc28420e4",
+  "smoke": {
+    "path": "docs/qa/artifacts/r100-i14/root/device-kit/install-smoke.json",
+    "sha256": "4cd28ad43a6e3ee6320bb6fdebdf8a838a73a7784d98573be35e58a998cd4137"
+  },
+  "menuScreenshot": {
+    "path": "docs/qa/artifacts/r100-i14/root/device-kit/installed-kit-menu.png",
+    "sha256": "101a248d1611d6fa18a58b5569209dcf4c6302e627cf4a6f7d473ed934d2bb51"
+  },
+  "limitations": [
+    "Same reference M4 Pro hardware only.",
+    "No departure or old save loaded; MainMenu/WebGL bootstrap is not four-scene performance or human listening.",
+    "No access to the denied review page; that render limitation remains.",
+    "Windows/Linux runtime and a genuine weaker device remain untested."
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "original": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/browser-storage.json",
+    "sha256": "a7270c01da624d2c2ca3e3aa6c9eed6360d7a4321e97b950af0babf4ab0e83f3"
+  },
+  "mapped": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/initial-browser-storage.json",
+    "sha256": "b74f66dba20f71f344aa3752ed663e0a630cdaf0d3c00d1a89e5901eac7dabbd"
+  },
+  "originDiff": [
+    {
+      "path": "origins[0].origin",
+      "before": "http://127.0.0.1:3035",
+      "after": "http://127.0.0.1:3037"
+    }
+  ],
+  "cookiesUnchanged": true,
+  "allOriginKeyValuesUnchanged": true,
+  "currentRawSha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94",
+  "origins": [
+    {
+      "before": "http://127.0.0.1:3035",
+      "after": "http://127.0.0.1:3037",
+      "keys": [
+        {
+          "name": "coh_first_growth_done",
+          "utf8Bytes": 1,
+          "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+        },
+        {
+          "name": "coh-save-v1",
+          "utf8Bytes": 102749,
+          "sha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94"
+        },
+        {
+          "name": "coh-save-v1:previous",
+          "utf8Bytes": 107693,
+          "sha256": "085fbbf200bba32c28f0de086f27ab30672af1afe94a8e57be30dedd547d21f2"
+        },
+        {
+          "name": "coh.atmosphere.v1",
+          "utf8Bytes": 2911,
+          "sha256": "5d783a9a1790704e40fbf0c06d1c0d192a883b0bb87d32698eed150a43109b4c"
+        }
+      ]
+    }
+  ],
+  "scope": "Browser-origin carrier mapping only. No save parsing/reserialization, game value mutation, backup promotion or failed-base input."
+}

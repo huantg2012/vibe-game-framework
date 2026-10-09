@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T05:09:17.403Z",
+  "status": "confirmed-test-storage-origin-mismatch-stopped-before-departure",
+  "method": "Read frozen runner origin+raw storage and complete first before record. The original earned raw save exactly equals prior terminal; rejected actual isolation is fresh basecycle0/run null, with no entry/return stages or search.",
+  "intendedOrdinal": 13,
+  "completedUniqueSortiesAdded": 0,
+  "failedFieldRunAdded": 0,
+  "originalSourceUntouched": true,
+  "sourceOrigin": "http://127.0.0.1:3035",
+  "targetOrigin": "http://127.0.0.1:3037",
+  "expected": {
+    "cycle": 77,
+    "cash": 172,
+    "runId": "45356d6d-2dfa-458d-9aa9-2903b10c658e",
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 51,
+        "maxHp": 145
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 103,
+        "maxHp": 145
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 54,
+        "maxHp": 145
+      }
+    ]
+  },
+  "actual": {
+    "cycle": 0,
+    "cash": 0,
+    "run": null,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 70,
+        "maxHp": 100
+      }
+    ]
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: I14 preserves complete preceding earned terminal save",
+  "storageOriginsAfterFailure": [
+    {
+      "origin": "http://127.0.0.1:3037",
+      "keyNames": [
+        "coh-save-v1"
+      ]
+    },
+    {
+      "origin": "http://127.0.0.1:3035",
+      "keyNames": [
+        "coh_first_growth_done",
+        "coh-save-v1",
+        "coh-save-v1:previous",
+        "coh.atmosphere.v1"
+      ]
+    }
+  ],
+  "requiredCorrection": "Freeze another wrapper; map only localStorage origin carrier to3037 while preserving every key/value and cookies. Verify current raw bytes and complete loaded before equal the earned predecessor; retain this original failure and do not count it as a replacement game run.",
+  "notClaimed": "This test harness mismatch does not establish production save loss or a failed natural game expedition.",
+  "references": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/policy-freeze.json",
+      "sha256": "92fadc684b129b05e8668e2d39d4c0f0a5ec11164148bb309e616fbe9c180d2b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/browser-storage.json",
+      "sha256": "a7270c01da624d2c2ca3e3aa6c9eed6360d7a4321e97b950af0babf4ab0e83f3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/report.json",
+      "sha256": "beb757b8eb7ec85e0f0fc3d5d5be81c90093d8cec617bab58f160ddc016ea791"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/execution.json",
+      "sha256": "0f1db682d5d9d4af604cdfa2727469059a45ff8102a238e57161d28695950f39"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/report.json",
+      "sha256": "6d033ec04618e671ed63cecb27b1b999df9409837067932e1784358841189902"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/i14/13-before.save.json",
+      "sha256": "2a0d582c6371e4e5c5d1315dd0d5c593dbf698e178cc11836544cc83277ab263"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/i14/browser-storage.json",
+      "sha256": "5b6722d995ee5ba1c8a3043a4496dfdca6acfd12a4043ba2a0aaf4b90bdcd88b"
+    }
+  ]
+}

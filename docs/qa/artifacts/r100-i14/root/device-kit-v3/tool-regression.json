@@ -1,0 +1,16 @@
+{
+  "purpose": "old-RC-portable-tool-regression-before-occlusion-fix",
+  "date": "2026-10-09",
+  "scope": "Original CLI new install reaches formal MainMenu, no existing save; occupied IPv4 default port falls back; only-page programmatic close closes browser and exits own server process within30s.",
+  "manifestSha256": "2d1480962328d89d95cfb2daa83bbbb3e6a4c0e80c794599d1e3a757548ad8f2",
+  "result": {
+    "path": "docs/qa/artifacts/r100-i14/root/device-kit-v3/cli-play-lifecycle.json",
+    "sha256": "40bb1bfe380839b7b89133b6f66b9251c04a2ea63ddc9c15e206c06f4f751793"
+  },
+  "production": "unchanged old1397 RC; source can be superseded by pending P48 optimization, this is not a new final handoff",
+  "limitations": [
+    "No real weaker hardware, Windows/Linux, hearing, native title-bar click or performance pass.",
+    "First v3 test had successful CLI close but invalid all-interfaces-port-vacancy assertion; failed test and original source retained. Existing unrelated IPv6 server untouched.",
+    "Shared Vite startup changes port allocation for both --run and --play; measurement tools and thresholds retain original SHA."
+  ]
+}

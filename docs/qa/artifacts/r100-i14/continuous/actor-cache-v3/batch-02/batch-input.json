@@ -1,0 +1,567 @@
+{
+  "plan": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/policy-freeze.json",
+    "sha256": "92fadc684b129b05e8668e2d39d4c0f0a5ec11164148bb309e616fbe9c180d2b"
+  },
+  "input": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/browser-storage.json",
+    "sha256": "a7270c01da624d2c2ca3e3aa6c9eed6360d7a4321e97b950af0babf4ab0e83f3"
+  },
+  "continuation": {
+    "id": "i14-source-bridge-v3-batch-2",
+    "sourceBranch": "I13-A23-to-I14-single-chain",
+    "sourceStorage": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/browser-storage.json",
+    "sourceStorageSha256": "a7270c01da624d2c2ca3e3aa6c9eed6360d7a4321e97b950af0babf4ab0e83f3",
+    "steps": [
+      {
+        "ordinal": 13,
+        "grade": "low",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 14,
+        "grade": "medium",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 15,
+        "grade": "severe",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 16,
+        "grade": "low",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 17,
+        "grade": "medium",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 18,
+        "grade": "severe",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 19,
+        "grade": "low",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 20,
+        "grade": "medium",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 21,
+        "grade": "severe",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 22,
+        "grade": "low",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 23,
+        "grade": "medium",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      },
+      {
+        "ordinal": 24,
+        "grade": "severe",
+        "preparation": {
+          "id": "i14-public-silence-dash-fifo",
+          "active": [
+            {
+              "family": "silence",
+              "minimumPower": 5,
+              "minimumUses": 2
+            },
+            {
+              "family": "dash",
+              "minimumPower": 48,
+              "minimumUses": 2
+            }
+          ],
+          "passive": {
+            "name": "黄铜背扣"
+          }
+        },
+        "surveyDecision": false,
+        "budget": {
+          "normalPerSlot": 1,
+          "protectNextPreparation": true,
+          "minimumPower": {
+            "survey": 128,
+            "dash": 48,
+            "suppress": 3,
+            "solidify": 2.5,
+            "silence": 5
+          },
+          "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+        }
+      }
+    ],
+    "freshItemIds": [
+      "WPN_ff7bbaa9-d411-4e37-8e69-22148848335e",
+      "CAT_ca6e3a1b-53c1-40f2-9c09-bc0ebf895327_r100-contaminant-contested-1",
+      "CAT_b7aa8a85-de4f-4413-a9ca-29d04f8c601b_r100-contaminant-contested-1",
+      "WPN_bc67d68d-9eac-49c6-aa6a-18f45f779520",
+      "CAT_5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0_r100-contaminant-contested-1",
+      "WPN_083e90ea-ea31-4ed3-ad75-53794a1d11d9",
+      "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-safe-1",
+      "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-contested-1",
+      "WPN_445d4b25-646f-4c5b-b59e-ed721590971b",
+      "WPN_3bb0f70d-1407-4ffb-a44b-ced1295931c0",
+      "CAT_c3b1b065-4154-41bd-938b-90033e8775a6_r100-contaminant-safe-1",
+      "WPN_a29da5c0-9eca-40a6-998d-94d70377034f",
+      "CAT_074b0dcb-02c8-4c24-a239-e654f963f44e_r100-contaminant-safe-1",
+      "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+      "WPN_0c1b85a7-182e-4ff3-b5ae-64a3dd4ca31a",
+      "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+      "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+      "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+      "WPN_dc953dc6-a64d-414d-af87-851540e4ef00",
+      "WPN_438813bf-f55d-40b5-8861-26093285a906",
+      "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-safe-1",
+      "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-contested-1",
+      "WPN_d20c10d8-9800-4524-8628-0d60bb958a4c",
+      "CAT_97fc69a8-59e5-4e6f-a683-b4550f685bd7_r100-contaminant-safe-1",
+      "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+      "CAT_cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3_r100-contaminant-safe-1",
+      "CAT_f6cdd44f-ef72-4bcf-871c-139f65e00495_r100-contaminant-safe-1",
+      "CAT_f123d0d1-cdc5-4152-a55d-cf8eb7a000c2_r100-contaminant-safe-1",
+      "WPN_166aa2b1-2228-4f6b-9b3b-dd7a8c6a4d58",
+      "WPN_b030f7f4-f4b7-4c5d-9271-d6996a40e438",
+      "CAT_024df695-2804-475d-a3d1-a7d29b6faa6f_r100-contaminant-safe-1",
+      "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+      "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+      "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+      "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+      "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1",
+      "WPN_02b78f00-e8da-4b12-88f2-3c19938d5cdc",
+      "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1",
+      "CAT_024bdb71-0b90-4c03-9598-eef64646ba9b_r100-contaminant-safe-1",
+      "CAT_024bdb71-0b90-4c03-9598-eef64646ba9b_r100-contaminant-contested-1",
+      "WPN_2c72f65f-2704-4a62-b9e8-71dcd15bc618",
+      "CAT_a8993dd8-6f81-4369-8c13-456915af9f19_r100-contaminant-safe-1",
+      "CAT_eb45216c-f7a1-4a47-9af4-5ab55dada148_r100-contaminant-safe-1",
+      "WPN_7dcaad60-2a31-430b-bba1-ddc69d3f0669",
+      "CAT_eb45216c-f7a1-4a47-9af4-5ab55dada148_r100-contaminant-contested-1",
+      "CAT_eb45216c-f7a1-4a47-9af4-5ab55dada148_r100-contaminant-deep-2",
+      "CAT_c96c64a5-c1fe-45f7-acad-00ef813b5657_r100-contaminant-safe-1",
+      "CAT_c96c64a5-c1fe-45f7-acad-00ef813b5657_r100-contaminant-contested-1",
+      "WPN_c07fd2ee-8952-4dba-be10-634fdb7a1e87",
+      "CAT_70ff9c69-fac3-4bd0-9d20-31fb17a1778b_r100-contaminant-safe-1",
+      "CAT_70ff9c69-fac3-4bd0-9d20-31fb17a1778b_r100-contaminant-deep-1",
+      "CAT_9471f4dc-16ac-477d-a989-ffcabaca3fd3_r100-contaminant-safe-1",
+      "WPN_661fed81-ed37-43de-94b5-45959d2a0b1b",
+      "CAT_9471f4dc-16ac-477d-a989-ffcabaca3fd3_r100-contaminant-deep-1",
+      "CAT_084274a0-6440-4d9d-999e-846a0ddfa449_r100-contaminant-safe-1",
+      "WPN_110fb328-c764-4a66-ab5e-f1f80c260065",
+      "WPN_c501c58a-c693-41bb-8b35-60f6b1045c99",
+      "CAT_6ee73004-0e15-428d-99a6-901d3d6d20e9_r100-contaminant-safe-1",
+      "CAT_6ee73004-0e15-428d-99a6-901d3d6d20e9_r100-contaminant-deep-1",
+      "CAT_6ee73004-0e15-428d-99a6-901d3d6d20e9_r100-contaminant-contested-1",
+      "CAT_ce13308f-41cb-48a8-be20-f79c14ede9a6_r100-contaminant-safe-1",
+      "CAT_ce13308f-41cb-48a8-be20-f79c14ede9a6_r100-contaminant-deep-2",
+      "WPN_8dba8fc3-5bd4-48d2-95a1-b8f44d12a2fc",
+      "CAT_b16163fc-04d4-4131-bcc0-c04ea1e13ef0_r100-contaminant-safe-1",
+      "CAT_b16163fc-04d4-4131-bcc0-c04ea1e13ef0_r100-contaminant-contested-1",
+      "CAT_923f6764-7da4-442e-9eb1-0f4fe55f27d4_r100-contaminant-safe-1",
+      "CAT_923f6764-7da4-442e-9eb1-0f4fe55f27d4_r100-contaminant-contested-1",
+      "CAT_45356d6d-2dfa-458d-9aa9-2903b10c658e_r100-contaminant-safe-1",
+      "CAT_45356d6d-2dfa-458d-9aa9-2903b10c658e_r100-contaminant-contested-1"
+    ],
+    "ancestorRunIds": [
+      "63d77e65-1889-4624-a1e8-4d7989f255cf",
+      "f3ae18d6-2c46-49e5-8d96-21cd0e0a8e3b",
+      "ca6e3a1b-53c1-40f2-9c09-bc0ebf895327",
+      "97874d5b-0c9e-4199-abfc-61491ca13f5b",
+      "b7aa8a85-de4f-4413-a9ca-29d04f8c601b",
+      "5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0",
+      "a8cbed61-55c0-4205-9356-535531bae725",
+      "c3b1b065-4154-41bd-938b-90033e8775a6",
+      "074b0dcb-02c8-4c24-a239-e654f963f44e",
+      "a6557e90-f8cd-4e91-a0fb-8d511aae077d",
+      "d1b034c1-0332-4467-817b-e4aeff5dd351",
+      "abcdad60-2750-47fc-ae26-adf20ef26c05",
+      "c494ba40-ca59-4eec-9fa4-2feddf194306",
+      "97fc69a8-59e5-4e6f-a683-b4550f685bd7",
+      "215f9d02-eca3-4427-b56a-d53a37d27e96",
+      "90bab9f2-7b2f-486a-8589-70dade82d77a",
+      "cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3",
+      "f6cdd44f-ef72-4bcf-871c-139f65e00495",
+      "f123d0d1-cdc5-4152-a55d-cf8eb7a000c2",
+      "024df695-2804-475d-a3d1-a7d29b6faa6f",
+      "2c2f1723-a1b1-40d9-914e-82a48640e411",
+      "b4582c78-5f9d-4a27-9416-164a8425fc94",
+      "608f30e3-ad10-4f07-b54f-17b7d425ca4f",
+      "024bdb71-0b90-4c03-9598-eef64646ba9b",
+      "a8993dd8-6f81-4369-8c13-456915af9f19",
+      "eb45216c-f7a1-4a47-9af4-5ab55dada148",
+      "c96c64a5-c1fe-45f7-acad-00ef813b5657",
+      "70ff9c69-fac3-4bd0-9d20-31fb17a1778b",
+      "9471f4dc-16ac-477d-a989-ffcabaca3fd3",
+      "084274a0-6440-4d9d-999e-846a0ddfa449",
+      "6ee73004-0e15-428d-99a6-901d3d6d20e9",
+      "ce13308f-41cb-48a8-be20-f79c14ede9a6",
+      "b16163fc-04d4-4131-bcc0-c04ea1e13ef0",
+      "923f6764-7da4-442e-9eb1-0f4fe55f27d4",
+      "45356d6d-2dfa-458d-9aa9-2903b10c658e"
+    ],
+    "resumeFirst": false,
+    "sourceBridge": {
+      "plan": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/policy-freeze.json",
+        "sha256": "92fadc684b129b05e8668e2d39d4c0f0a5ec11164148bb309e616fbe9c180d2b"
+      },
+      "newSource": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+        "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+      },
+      "qualifiedDelta": {
+        "file": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+        "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+      },
+      "precedingBatch": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/report.json",
+        "sha256": "beb757b8eb7ec85e0f0fc3d5d5be81c90093d8cec617bab58f160ddc016ea791"
+      },
+      "inputCurrentRawSha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94",
+      "disclosure": "Exactly12 completed natural trips on original source plus36 on exact actor-cache source. Whole earned state crosses intact; no claiming48 all on new source."
+    }
+  }
+}

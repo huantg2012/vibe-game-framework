@@ -1,0 +1,2296 @@
+{
+  "status": "passed-exact-package-delta",
+  "createdAt": "2026-10-09T04:57:40.357Z",
+  "scope": "108 complete world payloads and three grades remain exact; only the approved presentation dependency changes and one new cache dependency. This is source continuity, not new 108-world runtime or human review.",
+  "oldIndex": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+    "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+  },
+  "newIndex": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/index.json",
+    "sha256": "283022e27ed172a1f8d5ea7d26b929db73d48eec5eccc4e3aff26edbd05de281"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+    "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+  },
+  "delta": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+    "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+  },
+  "uniqueDependencies": 308,
+  "packageLockOutsideSource": {
+    "path": "package-lock.json",
+    "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+  },
+  "worlds": [
+    {
+      "worldId": "ash-strata",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/ash-strata.json",
+        "hash": "c16a5a7ed960c0ccf66955b5253428b632fc610b809d80df7a455a3fc9d3e40f"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/ash-strata.json",
+        "hash": "33ca9ad6bb09e951cfef773c46165478ca6a5b76d8fc9352fa7fa7647c5a8683"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "crystal-fibre",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/crystal-fibre.json",
+        "hash": "12f17c021db4c39e4465840f7842c512fa8b14861873a9cbe0b6fefa89c8f89b"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/crystal-fibre.json",
+        "hash": "c975afa8a1fc3bffa3303b03c3376504471e2e9dc3c947e29ab6442a4dfa4671"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "ivory-basin",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/ivory-basin.json",
+        "hash": "cf9c8cb42517da8b8933ee99318c4df065c919c46455140b0032117f94072b82"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/ivory-basin.json",
+        "hash": "1d1d6fe77fa68bd742e9920fe51fa31ed28816486f545de2a2d16b876ca7a637"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "cinder-ridge",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/cinder-ridge.json",
+        "hash": "e22e4f879897449d387d1eb01a6c19c79cabda31f2b323f71a838c7e16799a2d"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/cinder-ridge.json",
+        "hash": "60700175b3b75199e9a496f9788081e3931e72ea9239f395f1039b8f210076f4"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "pallid-membrane",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/pallid-membrane.json",
+        "hash": "64e7d03736d5de3e3130a603a739561d64b8efa539a88d224dd0c0481771c30a"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/pallid-membrane.json",
+        "hash": "c97668314a8134aab84c62f2e6f074c56519b3c77b3cd3cb238137ddb43a610f"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "silt-gel",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/silt-gel.json",
+        "hash": "bdb5e2ea6b3a9b2c1d9511928df0800c90cb0bc012b58e956af75c2226153e54"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/silt-gel.json",
+        "hash": "cba662fcf1cbae294787948048ddfb27e4c0105017318674dc6024264e305d1c"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "schist-shear",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/schist-shear.json",
+        "hash": "7fe256253ece538fcf36a51b561a5e4996d895507142a8567e30e5ab89d9e220"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/schist-shear.json",
+        "hash": "3d279dabdd590d09c94f22342c6874f40d0e1006b0a3e44041c1f9fe70e6c47e"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "splayed-fibres",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/splayed-fibres.json",
+        "hash": "17c9547cdb6e5ce77d831640ad830d1da09cb1120ace29ac1e97f8a7974df859"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/splayed-fibres.json",
+        "hash": "d45d4ffe8ede12c167f50224f40aa5acc3f42493ea7dc4311a74435735417fef"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "shell-chain",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-chain.json",
+        "hash": "824d0748b2e3dfa340395b0028c291fb04f0d469935f840ae59738c73f104ba7"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/shell-chain.json",
+        "hash": "13bcc8ff5d901683b042772c3794303079ba81c5fb01e0e5e447afe8a2ec391f"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "grain-laminate",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/grain-laminate.json",
+        "hash": "962e648cda642fbb8aade9b1226b59624c9ae82e50d34907c72fdad72565c2bd"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/grain-laminate.json",
+        "hash": "31fbf7ac690467f8fe01b216189256652d586ec1b2f524b13db73509c7dfdc04"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "tension-membrane",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/tension-membrane.json",
+        "hash": "8759f316c8ff04c486a4dee6d512a7619ffb78637fe948221c93240fa2a44d1b"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/tension-membrane.json",
+        "hash": "59dc8ff6aee0aa69388ea9edeac06da3e10a2e441eede7f5979c27e7beca64f1"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "shell-gel-delta",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-gel-delta.json",
+        "hash": "8bfcc30839231a3ea62da7e5336cd031e228964864135ea3fde689438beb5252"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/shell-gel-delta.json",
+        "hash": "bab0835b11cbc6fab1ef0535067437a1e9b9049363b1ca8408108c56d1c33341"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "pressed-dunes",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/pressed-dunes.json",
+        "hash": "4691ab26138c82d73c34d592bb0ed80fddc844e936e6fe461d01a914d85adbf7"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/pressed-dunes.json",
+        "hash": "e6bd92c94319f08927b2c1ef12581d906bd5426058b4b4677d7fa1df567cc737"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "ruptured-film",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/ruptured-film.json",
+        "hash": "afe12e4c8f350112e45163237a43ae9777996e5e0eceb4977dc28d365bf504bf"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/ruptured-film.json",
+        "hash": "3372c76129025cbb50aa2e51b51d928a00b052587b6b88a4c4d6dad4d58ffcfb"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "reversed-flow",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/reversed-flow.json",
+        "hash": "90a1de3c0a30f44ff4602c8014ca1dc557b391801f40bc43d7385d493606c5ac"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/reversed-flow.json",
+        "hash": "4b6a7b02d3910a94448d36a98f3169315c468bb5d973c5b7fe68341d1eed6970"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "laminate-shell",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/laminate-shell.json",
+        "hash": "082f8f2555855e35c62a5ed37e41f3a1ec3bc9c45660b4943389733af950de93"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/laminate-shell.json",
+        "hash": "c9ad25cc5ca2a3537eecada4751c37152cffbd470734ed194711a70181d4f1bd"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "fibre-silt",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/fibre-silt.json",
+        "hash": "cee0648a53f306f785d75f60e153376ab4cbfa5fd3823522f678f2fcb852026a"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/fibre-silt.json",
+        "hash": "9c5479b8202d0af15b4bcf567e7170ac4cf78c24e57ebd675ba04693bd5eb7ab"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "film-laminate",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/film-laminate.json",
+        "hash": "e89e17776b7f2e9aaeb12cbdb247678649b4d502c7ea1f46667b7776cfdd28fc"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/film-laminate.json",
+        "hash": "e77eb13844176ad4cdcadab6b7d6fd6b8cb170eec20b18f619568573ac82fd8e"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "gel-fibre",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/gel-fibre.json",
+        "hash": "c727557e013d7d8e0b562e893fa0bf52f9950747ac8795ca8982d80fe1898389"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/gel-fibre.json",
+        "hash": "310fd058af025344c739f179bf2969a3402d5ac72eddceea7a603d45677cbdc7"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "shell-grit",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-grit.json",
+        "hash": "1f0ddea7f080d2a7f321ecf0880a33292cfe0cac7e9d6add4562054da146c147"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/shell-grit.json",
+        "hash": "43e86969bcd060844ab63be90ad748717d2a61ced877e59dfd41a52f8ccdffaf"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "rib-vault",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/rib-vault.json",
+        "hash": "d604bb26b00c9b174833130fb0cc523a0f808c188cbf6147491fff71f1034d89"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/rib-vault.json",
+        "hash": "5254dd9b8bda7ec54f568f0fdaffbed75645ff598bd0d33eb4ad744345d9b040"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "pleated-hide",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/pleated-hide.json",
+        "hash": "c65748d5734375502848a7615b5e1367a1fc521d0278edaa61d87bb3e0ce725d"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/pleated-hide.json",
+        "hash": "e4f09cc9e673d02d153656a973a0cd118079a96137164bb1ab58a47b9ec5e1ea"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "blister-field",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/blister-field.json",
+        "hash": "3e1e23bf3d51a05c134c85fa8c60585f525253afb033e90bab9184d088c07cb6"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/blister-field.json",
+        "hash": "871ab41b999c986c9cfb38a5a2880f9078ddf54adc4534ab91ecd7c094c64059"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "wax-tongues",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/wax-tongues.json",
+        "hash": "586bde41702143203713601d0522de7051a200228c8050bf92b037de07331569"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/wax-tongues.json",
+        "hash": "efa446c002fae4b8ac04d1ddef1cfab409dff390df6e2f0995bd39ff768f233b"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "monolith-sill",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/monolith-sill.json",
+        "hash": "ac575204071e4b4a97e98784401ac538ff690b8fed28dcd741d7565a8484724c"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/monolith-sill.json",
+        "hash": "6a256b1a0063320f2284d01278e5aa851d71ec01ed50f903561423844553b950"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "bleached-court",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/bleached-court.json",
+        "hash": "3ccad75bbfb6b39e70ac82ff4b9101e4ae3a822cd04cf4d4a56eb6d2ca136dd2"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/bleached-court.json",
+        "hash": "e75d7ba8491563d629fe89192469dff135dc65e16a4d83e14b87ab411a68fa93"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "split-rib-causeway",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/split-rib-causeway.json",
+        "hash": "ea0cca559ac49a6a878fed33fdad51f5cc70d65f69f92c3baafda15110d40ca1"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/split-rib-causeway.json",
+        "hash": "d0ffbeec58b9ac59d86def2fe80823c3f6e851aec8acfeda8997e489bd990130"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "satin-fan",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/satin-fan.json",
+        "hash": "75ae5ee905871af5480921bbaba2562283bd1b274b95de1dfa9a5b4bf8a79350"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/satin-fan.json",
+        "hash": "3f913aa48eb1caa2327b8c34597bd9abf2e4d9cae0a0b4465e7f76364fc58b7c"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "chalk-steps",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/chalk-steps.json",
+        "hash": "a377f5b4780aa1d9e45e16697c2f88201916fc7aedabd6f33f0fbee25955fe49"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/chalk-steps.json",
+        "hash": "4fd52e647fa382522c651c7a56fdf9e2e0cb8fc1e19bd343bf577b5d5d5e737b"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "porcelain-maw",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/porcelain-maw.json",
+        "hash": "56e2c9d3245070dca5347680a5f8404b0e224e6cbd03137a1647701fc1f98c80"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/porcelain-maw.json",
+        "hash": "b4be48cfc21b0d6dc516a5e39b7d158378d9d3c09850a1a16bf4a7a9961f3f93"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "amber-ribs",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/amber-ribs.json",
+        "hash": "bc8c0e88dca871d351bf3387d3cfd22f526ef503e861b97014f4865dfa9f7e3d"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/amber-ribs.json",
+        "hash": "f7309bef87d516a891e21031121678bb6bcca3a701c621e64906f5fa07703f76"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "pale-sail",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/pale-sail.json",
+        "hash": "8c29708c0804fb250c51f8d5f30158ab3fb6e5dcf2b5f25089bf0e66cb1ee2e2"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/pale-sail.json",
+        "hash": "d41df73f124a499d5b22f39b5d24f4444eb156f06ff59b5d0b04cea1d5598911"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "root-cistern",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/root-cistern.json",
+        "hash": "cff1c06a005d313822ad269dbe67df15c6a6290e6e0bd9890da2dcad51a23dc1"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/root-cistern.json",
+        "hash": "fa5b8755e374d46a7419d63ddd4ecdda68074a8b9d0fae43167b5ac8580afaa4"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "scab-islands",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/scab-islands.json",
+        "hash": "aaaa6afb6b2ebea5024b46ab5dc4c56d57f885d52577178156ecfb0da3ed1a5a"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/scab-islands.json",
+        "hash": "4bd482ed2f8404e1b8441ee834780787f5da3944c76a3ed473d1b59a29b3f76d"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "foam-trenches",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/foam-trenches.json",
+        "hash": "4616e7f369e37be8b91d84e8f1858e2f07f453d3698d41b6dca6fc5ec4375068"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/foam-trenches.json",
+        "hash": "15b6bdf6a0b408eda50625a6019ceee083830c6c04bf76e0c1bccf9b3803be55"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "resin-fall",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/resin-fall.json",
+        "hash": "f21f5e04db66735b3cf1601a2f4b3ed35a14404135a4b55c6ddcaabad15bdd5c"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/resin-fall.json",
+        "hash": "8892bd4d1807739957e76864b468617dde3a967a4db98f6b3e5ebead1d3898dc"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "tendon-shelves",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/tendon-shelves.json",
+        "hash": "8345a12c8e6bb025bb95ccaae5109f70bab3f700fde391318777aebb3050865d"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/tendon-shelves.json",
+        "hash": "e2fc30c085f01f782c4fb619d05b3fa229e7fcdb148841442bb728b9eb491f21"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "felt-basin",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/felt-basin.json",
+        "hash": "6eae8c88fb66cfb45ad0a98fd97f8ad4506f9cc0000142066046fbdb3af7691a"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/felt-basin.json",
+        "hash": "5c211d522bbe567be05295dc4c23a34db1aaa5a8c0baac11df3e9eaa0e70e935"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "cork-shelves",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/cork-shelves.json",
+        "hash": "6edb5a562d8a4729b498f29a1f2de1509cce90b0caa4397546bb4cc40f7c72b4"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/cork-shelves.json",
+        "hash": "3f63afc2484ff280fea54d437de6fb0e629088c4d3bcdd08e2b1300bc748a34b"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "lacquer-court",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/lacquer-court.json",
+        "hash": "280c1107ed36b23ed7ed3ef6edcb4da19f56dd7d4eb2dd9fb6da96b79937a519"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/lacquer-court.json",
+        "hash": "ec5fc80440a30203949bbd18350c7905082f3ee8cd475328ede5eb159adb6e06"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "ribbed-delta",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/ribbed-delta.json",
+        "hash": "d1f1ab42ce4e99c295eef7f71666a641c520734242182a50efccb1e3db9b908b"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/ribbed-delta.json",
+        "hash": "b7eb405ec317da60cd2df979e2fb4309458f70b9af618f2d2904db57103fed35"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "bladder-weave",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/bladder-weave.json",
+        "hash": "3ae3af179d16cadb938a4107c32581b417e4cd9e5588c4dcb65f2fa88f4b682d"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/bladder-weave.json",
+        "hash": "65cf9019720562a07a2bb97aa69340bf7889aa7203a1cd451993853c8975b6b5"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "flake-thicket",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/flake-thicket.json",
+        "hash": "d76e15ec170cb177c20d69ea45d48291e62690fc95159b58386ce50b9708ca97"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/flake-thicket.json",
+        "hash": "1923246ffab2b4700a0760ed49cf79e539daf4eecd6d6ff07c79b2c87f31271c"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "resin-hollows",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/resin-hollows.json",
+        "hash": "c922bd9127333bf8cc59ffc5fce369ed5a56aa6c41bbd18e3d04a9358df72e33"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/resin-hollows.json",
+        "hash": "8f826b984301123f9f8534da924762034c1931cfed81dc59cd45e7d93a306f6b"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "sentinel-mass",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/sentinel-mass.json",
+        "hash": "0c9a9039b051fd4cda8b7967cd252a0c906f3e5dbfe332eecb823fc03c0452ef"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/sentinel-mass.json",
+        "hash": "e233d1e6f6711d2611c12338e6151b60d8bb46ccc9796a741c49e8a535906e30"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "stepped-bowl",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/stepped-bowl.json",
+        "hash": "ee28d47f78021fd4d46cc0806d4896c976c39e9c73d61475fb14f475636faadb"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/stepped-bowl.json",
+        "hash": "0b0fe2b9ee723e9c2d7a688c8b337a8500b7e9c09ccf1d7695b1bc7f70ab767a"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "draped-bay",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/draped-bay.json",
+        "hash": "9134372108c450139e9291b1823de5bff79f891bd22e768e80c63d41bcb144b3"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/draped-bay.json",
+        "hash": "605783f586749a17c2039b00ee21da86482a2b096449a8b337b7b3ad7bf60d14"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "ember-cushions",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/ember-cushions.json",
+        "hash": "8ec471a156c44ed51af02155e1ea831579c6b1c596c23968511a6a063612e6a2"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/ember-cushions.json",
+        "hash": "73a1f74cc2fb60ea22e6d5735403286e9fc205d2bffc064136f60899e47715d8"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "splinter-rotunda",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/splinter-rotunda.json",
+        "hash": "7f0f2b4a00cbca1229f120e7634e06bd9cd2e8154c94b95b875002979bb5a4a1"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/splinter-rotunda.json",
+        "hash": "0d1d01212b9dfa42a113780a5c77749c549407ed87fe2bcd587fd30369ad7a07"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "quilted-scars",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/quilted-scars.json",
+        "hash": "9f0585cb7faef035cb3960ed668a0f3678a9bba124054f937076d3ac95496770"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/quilted-scars.json",
+        "hash": "7a8bfb97deca335d398a0b4a7f804fafe4ee76df0473f6d5e39ba2eeb6a353a5"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "silt-colonnade",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/silt-colonnade.json",
+        "hash": "dbeebe6ca2f4ffd27f210027e47a372a7cc3c3cb033b5f7589f018240d744f71"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/silt-colonnade.json",
+        "hash": "1d384909afefaf8b75b2dd976a2e6542b235f99b0a01dffa84e60704b3f473e1"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "shell-causeway",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-causeway.json",
+        "hash": "f22fe92f19bb540a73c12398ce9d2d918323167f131028272dc6d2e721b0ce9b"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/shell-causeway.json",
+        "hash": "df08d84ff5ca49bad1eeaf36c63c5b2ee61416eea27cda736548047d0eb6ded7"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "cleft-tableland",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/cleft-tableland.json",
+        "hash": "4d31b841bfd8259c951ddb98654f76d6762ad88c321022a5e977d876f563d483"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/cleft-tableland.json",
+        "hash": "ff68dc75a3e6f030eb0aaee1f131923fba3e9246bdcdd5cfc6177ed660cecaf9"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "fallen-spines",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/fallen-spines.json",
+        "hash": "fd2cdc9607b046fc421e06299c704d3dcb08f413ef1538e33ddf39e3b7d7113e"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/fallen-spines.json",
+        "hash": "6c952a1032a1e607a1977ff4accaa97ca068aee4572688ec1201f0babe21ebb3"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "clamped-shore",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/clamped-shore.json",
+        "hash": "6eb0a787e78e09fad99bb206b416aab17bb5985937baf75ae9a38ea3198d642b"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/clamped-shore.json",
+        "hash": "c0d8f3f613d208453b13a4e44b93c3cba7ef930d64aec8a055905dc18fe20613"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "torn-reservoir",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/torn-reservoir.json",
+        "hash": "ac484253b5cf67378de302d5933d89e2740601f4a880d9bb611a9ab72ef3a6d1"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/torn-reservoir.json",
+        "hash": "d6c0a890ed541abb03c69c6b2d132bbab9a8bd116d75a3d52bc0c1990a2c693b"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "braided-seam",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/braided-seam.json",
+        "hash": "b733a8bcde62f312f628bb5ee3c5c24cb46a6b7f1f26e3df02a56827e2a78126"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/braided-seam.json",
+        "hash": "2fa1b394c0eb0d42c78dbfcb9ba05396aa1d282888e89a4c7d3eafdbcac76b91"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "scalloped-reach",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/scalloped-reach.json",
+        "hash": "4b0a8e22c220a6bff5c3dbf0de1d1dd8d070d8b3753ca09d65edb5bc415b0b63"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/scalloped-reach.json",
+        "hash": "548a250944bcec619925317c3f8ff8c24d28f4182249b84da513ce789a1f3ede"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "offset-pan",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/offset-pan.json",
+        "hash": "7907a6434e8a6bb821255e7779f0fe224c7db1e300584eab5edc58461af82c3d"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/offset-pan.json",
+        "hash": "6a0e4592b0d0fd07477f735943bd9658bdb274bd052ed9ecd76a0b2b1009b246"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "thin-delta",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/thin-delta.json",
+        "hash": "912d575a2875d3b2fb8c9432ce56f5097b7aa27f8041579d3430c44a87149713"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/thin-delta.json",
+        "hash": "22c8f1aea23fb8cbe13e2411d90076b82e4b8078f0322423c3e4322c5ab046c6"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "shard-switchback",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/shard-switchback.json",
+        "hash": "0ff103554800071f83e420921e4823ff4615108b14cd9ed9443380319d518ce9"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/shard-switchback.json",
+        "hash": "a3e04c9f2fb21fdc62d0494c1b428f86b2729caf328976fb3c78af7d0d14208c"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "hollow-wreckage",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/hollow-wreckage.json",
+        "hash": "ee9b9e0b55eac69ea1fd5f1865740cb8c5e008eee4a6e5d9c1ffef4aa25ad049"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/hollow-wreckage.json",
+        "hash": "717e1d3725d4d4c593090e0fabe9da47bade250f3705652ae4577f82d6885706"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "knotted-run",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/knotted-run.json",
+        "hash": "091ba41dc6064b90ee887a8d2c3b90f11156486ccff95e356f6d3b0265217598"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/knotted-run.json",
+        "hash": "32501eaf719426ec90e6b283aa37f677fe0805b394a81ab489054a4053684488"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "rolled-fragments",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/rolled-fragments.json",
+        "hash": "1c740886ed9bab9e4fd60ca0d08cab2e57cc8e5da3550c565f07d53ab048f79e"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/rolled-fragments.json",
+        "hash": "340a886fd7660380414771ea5e48c0c0883df3736f6276d27fb50cae98f499a3"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "fibre-choke",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/fibre-choke.json",
+        "hash": "dd97c6b85f1568831b4796d74af8c6fa78f3e909948d51ef323bc1a577d6390e"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/fibre-choke.json",
+        "hash": "267a767793f5007ba4097d261504edac4333e31c38ea0b61377c543c91032574"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "buried-lamellae",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/buried-lamellae.json",
+        "hash": "16a7c43d881d6fed6660c21b33f5177326d2b694b3fcf6a8803b21b3acda6e70"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/buried-lamellae.json",
+        "hash": "125bd504ae5661726f11a6f3343592db8d606f9a4982655316df718cba87bcb1"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "pressed-rim",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/pressed-rim.json",
+        "hash": "65b3a4b0234f01a0b0f1c144b95c71a49c76f94d25d7c9570c02ca9dab49c875"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/pressed-rim.json",
+        "hash": "69917e4284081be67c8e757e42d8fa02189b3a8e0ffd1bfc6a45ed4bf8d81768"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "wedged-hide",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/wedged-hide.json",
+        "hash": "d3111d9fe44cdfdfc35358297f97e4cc8f4bb84a80706a51f0e223f1c413c258"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/wedged-hide.json",
+        "hash": "2240436ee052182b6ed144424414e824327d94fa99ffbd0fa5f6be16d76e498a"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "quiet-spur",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/quiet-spur.json",
+        "hash": "f12cf08d124312509c8a6266f42f8efdd803b852b3cc1737d546ce1d26fbfb93"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/quiet-spur.json",
+        "hash": "fd3bd0461b2364341b5741735c6ab322d13901235f7e2babfdda7e848d6ba2ef"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "split-fall",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/split-fall.json",
+        "hash": "3fab440999ec525117b1b77466440ee7b34a55e416107bc43f8e6843767aacd1"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/split-fall.json",
+        "hash": "60068cd31f50d07a2208452781ba77e312d94b76e0481854499685db3a43abc5"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "three-shelves",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/three-shelves.json",
+        "hash": "1245860b90220fe84246e7f7fe83cfe659ad85eeea7331d153a6fe8bc8123eed"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/three-shelves.json",
+        "hash": "ae8fb01fe03778de219e1a5352195d53b2c403ff95dc1be896ecf499c49e521a"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "frayed-outwash",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/frayed-outwash.json",
+        "hash": "d791c966d3d08161789979d5a060992a4288915b7d56f8cdad538d1a2be712d4"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/frayed-outwash.json",
+        "hash": "7b244ea6b5a5a2c416324cec6608d67728059b391d7498371bc9ae9749c2a25b"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "short-fibre-mat",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/short-fibre-mat.json",
+        "hash": "f0239cac8e63e71c6f6d922fe5080b29fcf14df3540121c08c2ce93b6163569f"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/short-fibre-mat.json",
+        "hash": "58659a932a50f94743b041db5c1a604f6debc97d474528d5bcf63dddb36170fb"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "marrow-break",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/marrow-break.json",
+        "hash": "1b7c2ba4f508202fc5eccd343deefd449d003aa90e317e7f37734d824bf37ab7"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/marrow-break.json",
+        "hash": "957cc9700b534eab531cbd02b743b25277e0af596997a4c7a5faa87b45361b8f"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "felt-wedges",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/felt-wedges.json",
+        "hash": "e8c2055174b17b7378caabd6e0f0751c1e21bb7bbba49369d6c424251d879d2f"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/felt-wedges.json",
+        "hash": "60207d338f9241aa56691f1d2341792fb4aa5b933d8471b1a18cbb9b9c255ae6"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "pore-bank",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/pore-bank.json",
+        "hash": "1e1b4e56c64988909b329beddfa78c17d8809d83377f824fa5108365631b429c"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/pore-bank.json",
+        "hash": "075ba821bead69a3ea62b04c87ee7c9d769f2df7cc186336b2f324718b221a71"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "staggered-cups",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/staggered-cups.json",
+        "hash": "544727cfb685a7038f4b8289a8cbfef928133ddc5eccade7850a6aa329c416f6"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/staggered-cups.json",
+        "hash": "0bdece654bb63f61eac11f0b77a19389316b5e0bb8b3d465abe738ab9440fbc7"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "split-tows",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/split-tows.json",
+        "hash": "50ae74e3b6f3f26a963b3e39f2c964cdbb7e75621b7590be994b50a5a0cd04e7"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/split-tows.json",
+        "hash": "dbb79e5c625b285a523e6b3414babcd98b7306c68055308f20d11a619cb609c5"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "curled-flats",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/curled-flats.json",
+        "hash": "b86819ac5d5e80d8b4872109c0ced38833bdb89afd543d45c2d1ed24a847adec"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/curled-flats.json",
+        "hash": "bbece73b481c0163ac3a05f13702157693f9d7c1db97076f1409e9877edb7c91"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "pitch-forks",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/pitch-forks.json",
+        "hash": "ee48ad4a6fb9a08a158213818e0da66707ad80a6acf0f80435b793bf2ae06beb"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/pitch-forks.json",
+        "hash": "9fca5212ef672439d6d51b63e3f5889997cfe449d2106c7345eeb5d34a92e5b6"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "grain-weld",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/grain-weld.json",
+        "hash": "dd913e1be63108d6002474258b6af6e6fa130b4398d9ad76451e967cd5788496"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/grain-weld.json",
+        "hash": "8a3eeb2f402dffd337a31a2dd41d0a625524bc371662f42fdf0c6a6df6079326"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "silk-catch",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/silk-catch.json",
+        "hash": "e60abf7bd07a6c41a8426efb0e4ea4db89fe2796d94796fd1867f9e289927f26"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/silk-catch.json",
+        "hash": "e602868603cc39e82f1595cbc11d330ecbc36c8bd8ee7b0c1332f926644785a5"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "resin-sleeve",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/resin-sleeve.json",
+        "hash": "135b7e4145af947549e726015c98025ae8a3ebd4e63a78e464cd1162e16921d6"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/resin-sleeve.json",
+        "hash": "a95960b7cfd71bae6386d5aa2ea8b0cb21b883c9307c153d547210e2f1d9c247"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "shell-threads",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-threads.json",
+        "hash": "dd973d1fa1a8e53aeb309b098f2686a7710ade6a9e502b762caffd9167afe4e8"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/shell-threads.json",
+        "hash": "d75abc143975f2403510b2add506322ecedb3b0d04c3babbdfac57c3a09ed952"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "chalk-divide",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/chalk-divide.json",
+        "hash": "63366ff3dd20865df630d9d310396fdc3ea421f68e8391558d5475f882966fb4"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/chalk-divide.json",
+        "hash": "1015675a482847a619a0b2c93cfc6c66355254e5f8424af9a547ac1c6c9c6cb4"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "red-vault-fragments",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/red-vault-fragments.json",
+        "hash": "d57e34693013732bf3cbea85811577e24af77c778763bf6f5723c4b7776292bc"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/red-vault-fragments.json",
+        "hash": "1b857df85275af2a7cf9c3fe81ed5c1e3f2baa83ed0ddd3476b3acd18830744d"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "blue-fault",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/blue-fault.json",
+        "hash": "7fc74d044b178e0730ef683f84b3da25f1abb0ade6797395bbcea86fc9978072"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/blue-fault.json",
+        "hash": "1c4d72598d9a5027734f45e327a6aae692d810f30f3934faf4125b20e3d8fdbe"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "pale-pressure",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/pale-pressure.json",
+        "hash": "6ccbaebb8505fe1d80aba4a68fde591846048291fa72dd9ad0fe7010bf8c234d"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/pale-pressure.json",
+        "hash": "58a362dc7099e8b8db9e52be48815dd72090e05c1d247915ca227e6cd84dffa6"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "notched-backwater",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/notched-backwater.json",
+        "hash": "8ae6004a3df97bae22f20b46822eba3d0c3cadf5be0fd105d22fc5524265dbee"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/notched-backwater.json",
+        "hash": "820653856ad238ef76321c615aa77a06b24560ecbbcd56fa39e70d41fbca0f52"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "crossed-casings",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/crossed-casings.json",
+        "hash": "06839388888049584b89c5eccbd5749c46ad0e766b4bf88756c8f6cf737bcf6a"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/crossed-casings.json",
+        "hash": "d133e9eb2c0fb51193e183304cc1f12bf6799638490457abe9c07787c92cc6da"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "fibre-stumpfield",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/fibre-stumpfield.json",
+        "hash": "d19c9d188db2a19cf726dc12e36ec2dc68e3b860a2013cb5107765f3302842fc"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/fibre-stumpfield.json",
+        "hash": "1777108739494c0d183609d4d1c355ea0f462c581c0b4b8bf19e61edcf95124d"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "sloughed-court",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/sloughed-court.json",
+        "hash": "a23b6fd50001f9d3eae87331ed206b3c163a0b2cce2dfb2d880ad1d57116f826"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/sloughed-court.json",
+        "hash": "c29f12bd410577c81244063a0d822c21d0c1ae7c7f020233aaf06cc9f21a7d7a"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "crushed-seam",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/crushed-seam.json",
+        "hash": "6c73a5810ad7184c9c2dfe70867d20aa37d23683be10c616c4c1ca591a3ede76"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/crushed-seam.json",
+        "hash": "868a3bad3f723f8b354d6fc620f06742d7206d59a3f60699102c82f5341c3e1b"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "husk-reef",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/husk-reef.json",
+        "hash": "be5314648f582b773dbd84d283142452bf239a09edc6d418adb49eaaadf0119b"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/husk-reef.json",
+        "hash": "d207e73326d48fce5464f5f1fa095561406312222a34f8bd75402b5c89ab6fb3"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "fibre-scree",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/fibre-scree.json",
+        "hash": "d2c57fb96469ad4473857ec32f7d735bf240fd01caa616dba69f63d30ecd987b"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/fibre-scree.json",
+        "hash": "e890c88e271044b203a08edc26bae17b3e7d422c196d0c9912398f8d2c7fa7d4"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "gel-rafts",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/gel-rafts.json",
+        "hash": "3d86b15ed7e36dc5cf826251d207e26a24f6aa396a55949c3bbf44ca298729df"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/gel-rafts.json",
+        "hash": "efae560dee17f3731d0ed07df4b93004bfe2f6b6200f6380d5537024c7882157"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "double-return",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/double-return.json",
+        "hash": "22f0c97760e6e5f54217383ebb2dedb0e2e1e46d3e7e11e578e0e9c2bb2a58f7"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/double-return.json",
+        "hash": "604b3d6dba7e3402e612a5dea437d360632ebefc46e0f0e5456dadab14f912f6"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "offset-basins",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/offset-basins.json",
+        "hash": "ad3768459bbc5fb8303fdeabaa650e82407feca2f3b593b42dbc91dd6315987e"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/offset-basins.json",
+        "hash": "f450683fbb6615a3330259617bb0b80dea1a2b2bbc98d000901d348ac6632177"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "pinched-fan",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/pinched-fan.json",
+        "hash": "0a2f999f80380d12badf3c31423b0b4cac61c55a92e95bbe7ec9bcb1de0b5e3e"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/pinched-fan.json",
+        "hash": "c542cd2a9fe37fecc40513a1a0789d73aa83597d2c2b35096eb3b58b46a550eb"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "spliced-reaches",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/spliced-reaches.json",
+        "hash": "a38375e6ac5bedc1982eb3b5f60a85861eca72d9bc337920ba8b2e50afb74515"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/spliced-reaches.json",
+        "hash": "839451c09e91c0e02cde4b564f9d334c1658d55b209ab09e93f4ff0bd86a379d"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "white-scarfield",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/white-scarfield.json",
+        "hash": "4f51fef4f25bfd128cffe4083a7350e576f4418acd7c81b44200472e2f8e8937"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/white-scarfield.json",
+        "hash": "f8cc7d143e5122bf25ba4447b2b1640b0853e7696e73d82b468a9a79a3e864d7"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "black-lacuna",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/black-lacuna.json",
+        "hash": "86f77f58e0dcf1b6c7806a65edd7e00882031c4dc07ba1c07f673d549926aa31"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/black-lacuna.json",
+        "hash": "c92264f844b89ff1db822fc3b4a0636c9e3dba500ca50f5e4757a3c9a636b1af"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "ochre-folds",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/ochre-folds.json",
+        "hash": "8bf110c5de478ff0ccf38aac2220af240d79f093357e8c0443c94ba4fee1b868"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/ochre-folds.json",
+        "hash": "432f5046540b29bf505e517e2e348884e89abfb8950f33958d72397712a31f39"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "violet-marrows",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/violet-marrows.json",
+        "hash": "13c589fe4acb8ccbe4db9a59067b4ec3b859bf082ae3515bc3a6c73804e9d8b9"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/violet-marrows.json",
+        "hash": "a4eb54e9354ca2d44f7d4400a1c19d3ba539385ed23699c3ea3e41cbc321f097"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "fractured-estuary",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/fractured-estuary.json",
+        "hash": "07f59f32d3b0b96fdd40c4cf46a1171d1f7e6860633119236613a766f46bd6f8"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/fractured-estuary.json",
+        "hash": "ba501aa366e8381aea2e0a88606447c3c310daf6bb42ab68fec0c2316bd8f281"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "woven-quarters",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/woven-quarters.json",
+        "hash": "81e7fa7c4a26523c26d7c3baeddbd8e3957fc94c8f0f422a28a8f91c3dd170ae"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/woven-quarters.json",
+        "hash": "9a2a1f92492324b3289e8e996d5bda09ba975655dd33bf53d6c5d643b30ce173"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "shell-patchwork",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-patchwork.json",
+        "hash": "7aa504021771541b0fdfc5407fefafc812f82436ea0c17a56721b95c129f1a4c"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/shell-patchwork.json",
+        "hash": "2f42b6e62f2a3f923e4f6ab85580ffe53ed3dab3b2806b72acd2a37d1bba7fd1"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    },
+    {
+      "worldId": "last-shelf",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "oldManifest": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-packages/last-shelf.json",
+        "hash": "78df6814ffe2148a550b2ec096400d4979e5593a0b68b96f06626f8c6987e952"
+      },
+      "newManifest": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/last-shelf.json",
+        "hash": "69cceab1fe033865983cd9b506801e1bc6f80be1c7128137dee3e07970cd34d0"
+      },
+      "payloadEqual": true,
+      "changedDependencyPaths": [
+        "src/systems/r100-world/actor-occlusion-field.ts",
+        "src/systems/r100-world/presentation.ts"
+      ]
+    }
+  ]
+}

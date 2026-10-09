@@ -1,0 +1,39 @@
+{
+  "status": "static-check-pass-browser-render-blocked",
+  "at": "2026-10-09T04:04:50.907Z",
+  "html": "docs/qa/interactive/r100-i14-review.html",
+  "json": "docs/qa/interactive/r100-i14-review.json",
+  "shaBoundReferences": 68,
+  "inlineScriptSyntax": "pass",
+  "embeddedDataExact": true,
+  "autoplayAttributes": false,
+  "errors": [],
+  "limitations": [
+    "No browser render or audio listening occurred.",
+    "Only static paths, SHA references, JSON equivalence and script syntax checked.",
+    "I14 review browser opening was denied; human may open the local document, but agent render/media playback remains unverified."
+  ],
+  "browserAttempt": {
+    "tool": "mcp__cua_repl.js",
+    "url": "file:///Users/yilungao/coh/docs/qa/interactive/r100-i14-review.html",
+    "status": "blocked-by-browser-security-policy",
+    "reason": "The browser URL policy disallows file:; allowed protocols are http: and https:. Tool expressly prohibited workarounds/alternate surfaces for the same blocked action.",
+    "action": "Stopped browser attempt; no server/protocol/alternate-browser workaround, no rendered or playable-in-this-session claim."
+  },
+  "files": [
+    {
+      "path": "docs/qa/interactive/r100-i14-review.html",
+      "sha256": "b0a26462fb9366fa74d6e508a953d8abfca9a3bbda2fdd682248e34f0eac209b"
+    },
+    {
+      "path": "docs/qa/interactive/r100-i14-review.json",
+      "sha256": "f32aceb015cce0ca55040463cc343ac9eb3caf556531277aab6bbb003c6263b0"
+    }
+  ],
+  "additionalHistoricalMetadataChecks": 18,
+  "completedNaturalClips": 3,
+  "naturalVideoFiles": 3,
+  "naturalAudioOnlyFiles": 3,
+  "currentWholePageScreenshots": 12,
+  "receiptIdentities": "matched-first-three-extracts"
+}

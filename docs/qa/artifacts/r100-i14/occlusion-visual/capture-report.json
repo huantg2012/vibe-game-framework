@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-capture-with-failures",
+  "startedAt": "2026-10-09T04:56:38.015Z",
+  "policy": {
+    "file": "docs/qa/artifacts/r100-i14/occlusion-visual/capture-policy.json",
+    "bytes": 3074,
+    "sha256": "62b1e862a89f43ee9eaa16b7f23a2a9b906b6e5c8c769b2e5f8ec4ba8965efc7"
+  },
+  "naturalSortiesAdded": 0,
+  "performanceSample": false,
+  "cases": [
+    {
+      "world": "hollow-wreckage",
+      "grade": "severe",
+      "seed": 20261004,
+      "loadout": "bare",
+      "status": "failed",
+      "inputs": [
+        {
+          "key": "Escape",
+          "purpose": "freeze-entry"
+        }
+      ],
+      "pairs": [],
+      "misses": [],
+      "failure": "page.evaluate: Error: Combat recovery has not been enabled\n    at CombatSystem.exportRuntimeState (http://127.0.0.1:3037/src/systems/combat-system.ts:274:54)\n    at Object.state (eval at evaluate (:311:30), <anonymous>:10:59)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:22)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at fullState (/Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:82:29)\n    at pair (/Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:85:24)\n    at /Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:141:10",
+      "queryRestored": true,
+      "contextClosed": true
+    },
+    {
+      "world": "felt-wedges",
+      "grade": "severe",
+      "seed": 20261004,
+      "loadout": "bare",
+      "status": "failed",
+      "inputs": [
+        {
+          "key": "Escape",
+          "purpose": "freeze-entry"
+        }
+      ],
+      "pairs": [],
+      "misses": [],
+      "failure": "page.evaluate: Error: Combat recovery has not been enabled\n    at CombatSystem.exportRuntimeState (http://127.0.0.1:3037/src/systems/combat-system.ts:274:54)\n    at Object.state (eval at evaluate (:311:30), <anonymous>:10:59)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:22)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at fullState (/Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:82:29)\n    at pair (/Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:85:24)\n    at /Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:141:10",
+      "queryRestored": true,
+      "contextClosed": true
+    }
+  ],
+  "errors": [
+    {
+      "world": "hollow-wreckage",
+      "error": "page.evaluate: Error: Combat recovery has not been enabled\n    at CombatSystem.exportRuntimeState (http://127.0.0.1:3037/src/systems/combat-system.ts:274:54)\n    at Object.state (eval at evaluate (:311:30), <anonymous>:10:59)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:22)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at fullState (/Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:82:29)\n    at pair (/Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:85:24)\n    at /Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:141:10"
+    },
+    {
+      "world": "felt-wedges",
+      "error": "page.evaluate: Error: Combat recovery has not been enabled\n    at CombatSystem.exportRuntimeState (http://127.0.0.1:3037/src/systems/combat-system.ts:274:54)\n    at Object.state (eval at evaluate (:311:30), <anonymous>:10:59)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:22)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at fullState (/Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:82:29)\n    at pair (/Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:85:24)\n    at /Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/capture.mjs:141:10"
+    }
+  ],
+  "browser": "155.0.8059.39",
+  "browsersClosed": true,
+  "finishedAt": "2026-10-09T04:56:47.580Z",
+  "sourceFilesUnchanged": true
+}

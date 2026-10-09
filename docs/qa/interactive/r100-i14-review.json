@@ -1,0 +1,1012 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-09",
+  "generatedAt": "2026-10-09T04:02:42.548Z",
+  "status": "review-materials-prepared-actual-human-review-pending",
+  "features": [
+    "COH-F052",
+    "COH-F041",
+    "COH-F007",
+    "COH-F039"
+  ],
+  "candidate": {
+    "revision": "r100-native-v3-revision-6-internal-rc-20261008",
+    "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "sourceDisposition": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-audio-root-disposition.json",
+    "sha256": "d5c33c68f41b2c783020a7f2bdaa0de0008df130334c95cc7acfd45142951534"
+  },
+  "currentAudioOwners": [
+    {
+      "path": "src/systems/r100-world/audio.ts",
+      "sha256": "cb12387b4de1b9a2f7fc1b04880f037488951c1cecdbfa001cc778425c26071f",
+      "comparedWith": "cb12387b4de1b9a2f7fc1b04880f037488951c1cecdbfa001cc778425c26071f",
+      "unchanged": true
+    },
+    {
+      "path": "src/managers/audio-manager.ts",
+      "sha256": "0c1aa43edfdb6e8f5f8e0fc2021f8cb69102f4fb4de0437a584b8891f2f97840",
+      "comparedWith": "0c1aa43edfdb6e8f5f8e0fc2021f8cb69102f4fb4de0437a584b8891f2f97840",
+      "unchanged": true
+    },
+    {
+      "path": "src/managers/audio-catalog.ts",
+      "sha256": "016c2994a24ffd206b7e24a9f1b2e9228ed28364f6781b0b4651908ce57c8c9e",
+      "comparedWith": "016c2994a24ffd206b7e24a9f1b2e9228ed28364f6781b0b4651908ce57c8c9e",
+      "unchanged": true
+    }
+  ],
+  "sourceSounds": [
+    {
+      "key": "sfx-suspended-sea-gather",
+      "label": "聚集",
+      "mp3": {
+        "path": "public/assets/audio/sfx/system/sfx-suspended-sea-gather.mp3",
+        "sha256": "03f1e3ccbaaea9d281e8728392919ca063aff9cf3e83774ca5facb7c66107dc7"
+      },
+      "ogg": {
+        "path": "public/assets/audio/sfx/system/sfx-suspended-sea-gather.ogg",
+        "sha256": "162a724b14d1fba41fa59b214ed85fa4c2bd90f136a2e7804a0cee5cd95ec41f"
+      }
+    },
+    {
+      "key": "sfx-suspended-sea-contact",
+      "label": "接触",
+      "mp3": {
+        "path": "public/assets/audio/sfx/system/sfx-suspended-sea-contact.mp3",
+        "sha256": "d4f21057711e0ad9056d608473dbdf2583cce385d342c2a37f467cb73d4b1215"
+      },
+      "ogg": {
+        "path": "public/assets/audio/sfx/system/sfx-suspended-sea-contact.ogg",
+        "sha256": "ad91a84fbfdc9a71286d2f74a0965d882958b0abc4363f1487e06ce2d2b81c2c"
+      }
+    },
+    {
+      "key": "sfx-suspended-sea-shell-hit",
+      "label": "壳体冲击",
+      "mp3": {
+        "path": "public/assets/audio/sfx/system/sfx-suspended-sea-shell-hit.mp3",
+        "sha256": "b5a899da1cad4fbdb731bbf8811218fc3b3ec2285f735113a82fc43ea687ff0c"
+      },
+      "ogg": {
+        "path": "public/assets/audio/sfx/system/sfx-suspended-sea-shell-hit.ogg",
+        "sha256": "2f71025f5f1d2650136aeb3276812031bce8d227836d63eac31f13e50689709d"
+      }
+    },
+    {
+      "key": "sfx-suspended-sea-drain",
+      "label": "流退",
+      "mp3": {
+        "path": "public/assets/audio/sfx/system/sfx-suspended-sea-drain.mp3",
+        "sha256": "cd7c7b97bc6a0004f34cec9868ebfb6d2a046cfa90c811f944a04f129986ed64"
+      },
+      "ogg": {
+        "path": "public/assets/audio/sfx/system/sfx-suspended-sea-drain.ogg",
+        "sha256": "568ffe0c345c6c977e9ea9bebdc633f4a268195cc724b9d7e80540200e05df4c"
+      }
+    },
+    {
+      "key": "sfx-suspended-sea-fall",
+      "label": "散落",
+      "mp3": {
+        "path": "public/assets/audio/sfx/system/sfx-suspended-sea-fall.mp3",
+        "sha256": "5bc860c1f3b5c12766f7b7c6d22703a61dcab5c4415e90e32cf76dbc5f39f55c"
+      },
+      "ogg": {
+        "path": "public/assets/audio/sfx/system/sfx-suspended-sea-fall.ogg",
+        "sha256": "14fdf6900e931fd0f09f0cae0b0c4c6b83183d09067ed2e859abb0592a4c4184"
+      }
+    }
+  ],
+  "controlledMixes": {
+    "path": "docs/qa/interactive/r100-material-listening.json",
+    "sha256": "1a96225b360d84b4d0b492d2580f9b73cc02a34a30699daacca3a1e7bebf74bb",
+    "recordingReport": {
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/report.json",
+      "sha256": "d7cdac9853e6308bed54fac7ab704402cf5229d0d080c658296cb3b15f05b052"
+    },
+    "families": [
+      {
+        "family": "folded-slab",
+        "label": "层片",
+        "use": "层片挤压、开裂与松开。用于层台、断板、片层残体。",
+        "clips": [
+          {
+            "grade": "low",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-low.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-low.webm",
+            "sha256": "2136a514d0b3aedc6151f2fc73cdc9b29bb14b94c1af24f22967ab320a086ebd",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-low.json",
+            "metadataSha256": "a822e9b12890df189de6c569f82225739365b23a3b40abb23c5dc404b7127ef6",
+            "pressurePeriodSeconds": 19,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 14.064
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 14.731
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 15.397
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 16.16
+              }
+            ]
+          },
+          {
+            "grade": "medium",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-medium.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-medium.webm",
+            "sha256": "4fa2f3ab57b0451ae583efa93db76e75bea56ba2e24484267c7953deee0a45e8",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-medium.json",
+            "metadataSha256": "15d1ab86747e8c0d5aef64e1071ff987d57006ab1010cc756f79e170f3c74cc1",
+            "pressurePeriodSeconds": 16,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 11.861
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 12.405
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 12.971
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 13.605
+              }
+            ]
+          },
+          {
+            "grade": "severe",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-severe.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-severe.webm",
+            "sha256": "339e6086a8314e97335db9dcccc25cd363de485d3c75fbf5fb98121a9332cf2f",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-severe.json",
+            "metadataSha256": "54d2d00fb32fa6bce6001bf0ab52665877e1876ff42233139900baba60ece64a",
+            "pressurePeriodSeconds": 14,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 10.371
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 10.861
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 11.363
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 11.901
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "family": "fibre-knot",
+        "label": "纤维",
+        "use": "硬纤接触与受力变化。用于断束、粗纤和纤维支承。",
+        "clips": [
+          {
+            "grade": "low",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-low.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-low.webm",
+            "sha256": "b2ce45c11675b3b6a0ed8a2edc05f522ede5e4970b64c67a7715400df592cb91",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-low.json",
+            "metadataSha256": "fa7c5ec2cfdb7753bc8231d7e070a5f82cee70eb02686829feeb0a68a398b945",
+            "pressurePeriodSeconds": 22,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 16.293
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 17.061
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 17.824
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 18.704
+              }
+            ]
+          },
+          {
+            "grade": "medium",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-medium.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-medium.webm",
+            "sha256": "7a678ca0410e6f5670db4d815884c5e1752b44150c3502db22da0be05e19bade",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-medium.json",
+            "metadataSha256": "c6fb03e80ec05e66b03fd3603f4f513681a84cffb3138fdcf3d6c62a83eb7cee",
+            "pressurePeriodSeconds": 18,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 13.323
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 13.957
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 14.587
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 15.301
+              }
+            ]
+          },
+          {
+            "grade": "severe",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-severe.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-severe.webm",
+            "sha256": "62d7d074c219dc413d1d845f0b37d56a3ac7f069e936e2c357cc00e72921b648",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-severe.json",
+            "metadataSha256": "b39c83bf31fe78fd31c17d9a6394d43cd8ee747a95c513c1fbd7031cfdecb636",
+            "pressurePeriodSeconds": 16,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 11.84
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 12.411
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 12.96
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 13.611
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "family": "broken-shell",
+        "label": "厚壳",
+        "use": "厚壳接触、裂响与消退。用于壳岸、空腔与破壳。",
+        "clips": [
+          {
+            "grade": "low",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-low.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-low.webm",
+            "sha256": "a65e0286026b232480c6d5e4b1fbcf2d1ac02661c2d4dba438074082d825738d",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-low.json",
+            "metadataSha256": "f39341e21b7202036a390eb0e031a9bc952b85eb0eda18e0d7e49348b86b273e",
+            "pressurePeriodSeconds": 24,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 17.781
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 18.613
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 19.445
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 20.411
+              }
+            ]
+          },
+          {
+            "grade": "medium",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-medium.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-medium.webm",
+            "sha256": "7c9712ac7dc3f51afdf478e2043fbfeca7bd0158e341d8dc89214099dbd0087d",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-medium.json",
+            "metadataSha256": "a2b367031c7581a4ad2b22fd8840190b81aed9a506fc2ae4133d1568ca8b2556",
+            "pressurePeriodSeconds": 20,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 14.816
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 15.515
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 16.213
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 17.013
+              }
+            ]
+          },
+          {
+            "grade": "severe",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-severe.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-severe.webm",
+            "sha256": "7815645d42ee0a238d199839b5a29a30c092bb3b60a9e066b9c2ca4a801809ac",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-severe.json",
+            "metadataSha256": "1ba93a26452d27cf69f792f7672e403a5218b225749d0252f7e2d219d78fe870",
+            "pressurePeriodSeconds": 17,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 12.587
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 13.184
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 13.787
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 14.453
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "family": "granular-ridge",
+        "label": "颗粒",
+        "use": "颗粒聚集与散落。用于压粒岸、粗粒堆和颗粒断面。",
+        "clips": [
+          {
+            "grade": "low",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-low.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-low.webm",
+            "sha256": "36d5feb908f513b60deaed6a0bb6e4d6211a71d3aff41e7531804d37964e44aa",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-low.json",
+            "metadataSha256": "34ea516e0ab9776d6940e0dbf343d7059597e6519ab515268648bf2819d9ae7b",
+            "pressurePeriodSeconds": 19,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 14.075
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 14.741
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 15.408
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 16.155
+              }
+            ]
+          },
+          {
+            "grade": "medium",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-medium.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-medium.webm",
+            "sha256": "7155fba1cd1357cde6aef9e1f29586fadf8daeaa22a4a258f6a1b5cdce8ee72e",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-medium.json",
+            "metadataSha256": "738736fbaa64455b2bd53952276af561b5659cddb4e8868d8fe8cbdd4262a169",
+            "pressurePeriodSeconds": 16,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 11.856
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 12.405
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 12.971
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 13.605
+              }
+            ]
+          },
+          {
+            "grade": "severe",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-severe.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-severe.webm",
+            "sha256": "5547ea4686a70bef747a6e2815f85008427c1ac3d26b989f6b10cb976ae688b2",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-severe.json",
+            "metadataSha256": "e56e9d943e0bbfb98377d8e93d423092d41f8dd455a9cd1e61c15b5aa2eb5c4d",
+            "pressurePeriodSeconds": 14,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 10.379
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 10.853
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 11.349
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 11.915
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "family": "membrane-rim",
+        "label": "膜层",
+        "use": "较轻的接触与松开。用于薄膜、卷皮和压实膜层。",
+        "clips": [
+          {
+            "grade": "low",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-low.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-low.webm",
+            "sha256": "6936633a6219b7fb05fb6a533a1f157086b463134a6e9ddd6c27d74e745b2e75",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-low.json",
+            "metadataSha256": "47b0b326c00776c3ff6fc4bc723fd048dd3d084b8c5a2c6b4b51172b1bd6d4b5",
+            "pressurePeriodSeconds": 24,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 17.765
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 18.624
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 19.456
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 20.421
+              }
+            ]
+          },
+          {
+            "grade": "medium",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-medium.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-medium.webm",
+            "sha256": "27883a2839cd6fd76b54588a962505da762fcf72fe0f900ae0c1aa8f112340bf",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-medium.json",
+            "metadataSha256": "cb901b60eb039064157a48780d2e6d77ae1d21bf7385c897d2f48bc13f26fd93",
+            "pressurePeriodSeconds": 20,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 14.816
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 15.52
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 16.219
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 17.019
+              }
+            ]
+          },
+          {
+            "grade": "severe",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-severe.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-severe.webm",
+            "sha256": "bfcf05fbd1db6a6abfa8085e52b86fce7ba926a006602c8a8d677f35ea712b38",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-severe.json",
+            "metadataSha256": "fa341d95b5590c49bcade53944f0368b56c5d4f877de4bfdacd85046720c43a1",
+            "pressurePeriodSeconds": 17,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 12.587
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 13.179
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 13.776
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 14.453
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "family": "gel-flow",
+        "label": "凝脂",
+        "use": "较低增益的聚集与消退。用于凝固胶层、厚头与薄尾。",
+        "clips": [
+          {
+            "grade": "low",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-low.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-low.webm",
+            "sha256": "4a5d9c9a983d87532f16c390fabb949d24a24c4164d0c653afc10591acc0ecdd",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-low.json",
+            "metadataSha256": "1027fa9d71c7727bc18a9fc11a61f72343533b37b450aa465b638171b9f0f927",
+            "pressurePeriodSeconds": 22,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 16.283
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 17.051
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 17.829
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 18.715
+              }
+            ]
+          },
+          {
+            "grade": "medium",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-medium.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-medium.webm",
+            "sha256": "dcfb836ad4176542b347712dc3fb42076ed4b27d92c00c995a27e57cdd2ee3ef",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-medium.json",
+            "metadataSha256": "a322d23c179ef79491073990858e658dc2cb3c0ceee2be2574b68a418ac410c9",
+            "pressurePeriodSeconds": 18,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 13.328
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 13.947
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 14.581
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 15.317
+              }
+            ]
+          },
+          {
+            "grade": "severe",
+            "audio": "../artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-severe.webm",
+            "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-severe.webm",
+            "sha256": "e79eee25a2f319c96f6744603996b88673139dd7eb295937cf806e1bd37ab204",
+            "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-severe.json",
+            "metadataSha256": "17c8cc9c684f2bc1f9fddfa034442f82062ac903792086d7f5e703c6be0f1dd1",
+            "pressurePeriodSeconds": 16,
+            "cues": [
+              {
+                "key": "sfx-rift-enemy-alert",
+                "seconds": 11.84
+              },
+              {
+                "key": "sfx-shared-player-hurt",
+                "seconds": 12.405
+              },
+              {
+                "key": "sfx-shared-player-search-interrupt",
+                "seconds": 12.976
+              },
+              {
+                "key": "sfx-shared-chaos-threshold",
+                "seconds": 13.611
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "loopExcerpts": [
+    {
+      "key": "bgm-rift-base-drone",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/loop-repair/bgm-rift-base-drone-after.wav",
+      "sha256": "870fbc84abf5e2d75948c5e3811829404e28a146a02090724468cef2aeee3f12"
+    },
+    {
+      "key": "bgm-rift-high-chaos",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/loop-repair/bgm-rift-high-chaos-after.wav",
+      "sha256": "10d3eb9febb29ac7837ac4e8beae58790b0b8b22ea35760e070d81fed64657de"
+    },
+    {
+      "key": "bgm-rift-threat",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/loop-repair/bgm-rift-threat-after.wav",
+      "sha256": "9926281a0ec74dd690934fd9e5d3f4f0876722dc8e4ed66812b5624118ab7403"
+    },
+    {
+      "key": "amb-rift-proximity",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/loop-repair/amb-rift-proximity-after.wav",
+      "sha256": "59967b8cb6274e5e8521065e8e729f6a3ea82fbd2188fb946398e448955ffaf2"
+    },
+    {
+      "key": "amb-rift-alien-atmosphere",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/loop-repair/amb-rift-alien-atmosphere-after.wav",
+      "sha256": "5bc873721c353a7b49adf42e9a3386969c1442a06bb522fc0a4e1cd84ff63f2e"
+    },
+    {
+      "key": "sfx-rift-enemy-idle",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/loop-repair/sfx-rift-enemy-idle-after.wav",
+      "sha256": "cb4b2e0f64f2d40f9cbeb8fc61f9ab6d226ad820774065d57a3f8eb4a210c82e"
+    },
+    {
+      "key": "sfx-rift-enemy-overwriter-hum",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/loop-repair/sfx-rift-enemy-overwriter-hum-after.wav",
+      "sha256": "7ef6540052238e32fd74899872c24b527123089bd1df3727e2750461914e90cb"
+    }
+  ],
+  "gallery": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.html",
+    "sha256": "b68da40194dea28956b95b6361bd1b19cca2c7d21ea197242d347d569a53a534",
+    "summary": {
+      "worlds": 108,
+      "gradeSlots": 324,
+      "slotsWithDirectNormalFrames": 270,
+      "slotsWithoutDirectNormalFrames": 54,
+      "uniqueNormalPngs": 793,
+      "totalFrameBindings": 793,
+      "new56WorldsWithAllThreeGrades": 56,
+      "worldsWithExplicitNeighbor": 88
+    },
+    "selected": [
+      {
+        "id": "hollow-wreckage",
+        "label": "裂壳散场",
+        "family": "broken-shell",
+        "neighbors": [
+          {
+            "id": "blister-field",
+            "label": "囊壁洼地"
+          }
+        ]
+      },
+      {
+        "id": "buried-lamellae",
+        "label": "埋片砂床",
+        "family": "folded-slab",
+        "neighbors": [
+          {
+            "id": "grain-laminate",
+            "label": "颗粒层片冲积"
+          }
+        ]
+      },
+      {
+        "id": "felt-wedges",
+        "label": "毡层挤片",
+        "family": "membrane-rim",
+        "neighbors": [
+          {
+            "id": "short-fibre-mat",
+            "label": "短纤压床"
+          }
+        ]
+      },
+      {
+        "id": "white-scarfield",
+        "label": "白砂断原",
+        "family": "granular-ridge",
+        "neighbors": [
+          {
+            "id": "chalk-divide",
+            "label": "粉岸三口"
+          }
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "status": "three-completed-current-natural-recordings-ready-human-review-pending",
+    "clips": [
+      {
+        "id": "i14-natural-1",
+        "label": "赤壳断拱 · 低污染",
+        "scope": "第1趟 · broken-shell · 正常搜取、撤离、归来与经营。录制墙钟约 176.0 秒；原游戏本趟场内累计 87.14 秒，二者不混算。",
+        "runId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+        "world": "red-vault-fragments",
+        "grade": "low",
+        "family": "broken-shell",
+        "seed": 648373796,
+        "video": {
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-natural-canvas.webm",
+          "sha256": "e713805ec29524f9174c6c95a8d538d54534c01932d64c6e384483486a103f44"
+        },
+        "audio": {
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-natural-audio.webm",
+          "sha256": "4cde50bb0aa7db6c2fbb25d1d8b69c6643d641c1ffcf271913fa9fb5771a02ff"
+        },
+        "captureReceipt": {
+          "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+          "sha256": "e7df849a69df7cb5a55ca91b549a754dcb5d167bc4f76aa8462cbe8529cf9f15"
+        },
+        "captureReceiptJsonPath": "runs[0]",
+        "duration": {
+          "recordedWallMs": 176012.10000038147,
+          "fieldElapsedAtStartMs": 2624.6400000000003,
+          "fieldElapsedAtExtractMs": 87137.8800000006,
+          "containerDurationIndependentlyDecoded": false,
+          "note": "Executor wall duration includes recorder stop/base64-copy overhead; use native media controls for encoded presentation duration. No independent media decode performed."
+        },
+        "outcome": "extract",
+        "screenshots": [
+          {
+            "label": "恢复后的入口整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-entry-observation.png",
+            "sha256": "a096d159913b299ab27200879c7ffbf5cacec86b13233a23eef32450bc3493c7"
+          },
+          {
+            "label": "本趟最后一次搜索记录整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-search-11.png",
+            "sha256": "c9e2c4511555d62299255d1bdcd948da54c51ccb312baa0dec36028146955263"
+          },
+          {
+            "label": "本趟撤离结果整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-field-result.png",
+            "sha256": "3dc248412b8cfb5032a63ce6f53e61fba3b50448bdda5476047dbf862cfe98f6"
+          },
+          {
+            "label": "本趟归来冲击报告整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-return.png",
+            "sha256": "a4ddfe5c2506ddf5d575cb45fbfdd061e48b88b9404e1f8e183d81f604d9d828"
+          }
+        ],
+        "limitations": [
+          "首低保留原技术中断；本片从同一 run 的 sequence 8 已提交存档恢复后开始，没有换局重抽或回补消耗。",
+          "该段从恢复检查后、首次场内移动前开始，未包含准备界面与暂停／冷续过程；记录结束已回净化点并完成本趟经营。",
+          "视频含真实游戏混音，Canvas 不包含 DOM HUD、交互文字和结果面板；以下整页截图补看这些信息。",
+          "按既定自动行动策略执行，目的地来自正常随机池；不是真人输入手感测试。录像有开销，不作性能预算样本。",
+          "不改音量、增益、声源、时钟，也不注入关键提示；未实际发生的声音不补演。此处只提供原录音，未签听感。",
+          "原录制分支的 headless 焦点尝试没有真实 blur；后续另有 Chrome 155 trusted blur 专项，不能把其结果说成本片所演示。"
+        ],
+        "audibleReview": false,
+        "continuousVisualPlaybackByArt": false
+      },
+      {
+        "id": "i14-natural-2",
+        "label": "拼裂壳皮 · 中污染",
+        "scope": "第2趟 · broken-shell · 正常搜取、撤离、归来与经营。录制墙钟约 169.8 秒；原游戏本趟场内累计 82.50 秒，二者不混算。",
+        "runId": "a8993dd8-6f81-4369-8c13-456915af9f19",
+        "world": "shell-patchwork",
+        "grade": "medium",
+        "family": "broken-shell",
+        "seed": 925370804,
+        "video": {
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-natural-canvas.webm",
+          "sha256": "88a7c9f7b0e4c7c6741889b63f9b57390e35c4faa039576953d79ee235906423"
+        },
+        "audio": {
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-natural-audio.webm",
+          "sha256": "0567b0fbc97b60853e673af26c045a7c5d2841777ae67e2ac71df845be0a17b7"
+        },
+        "captureReceipt": {
+          "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+          "sha256": "e7df849a69df7cb5a55ca91b549a754dcb5d167bc4f76aa8462cbe8529cf9f15"
+        },
+        "captureReceiptJsonPath": "runs[1]",
+        "duration": {
+          "recordedWallMs": 169754.2000002861,
+          "fieldElapsedAtStartMs": 2750.6000000000026,
+          "fieldElapsedAtExtractMs": 82497.41000000038,
+          "containerDurationIndependentlyDecoded": false,
+          "note": "Executor wall duration includes recorder stop/base64-copy overhead; use native media controls for encoded presentation duration. No independent media decode performed."
+        },
+        "outcome": "extract",
+        "screenshots": [
+          {
+            "label": "恢复后的入口整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-entry-observation.png",
+            "sha256": "65c055378c3a4fcedc5b84a699744be4b26b3267b48eaa636f83ee4dca6a2615"
+          },
+          {
+            "label": "本趟最后一次搜索记录整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-search-7.png",
+            "sha256": "d03ccb6e2edf267a1f95290e55466a8bf99de8cc5101dfaa41abc9e9b8f8fd8c"
+          },
+          {
+            "label": "本趟撤离结果整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-field-result.png",
+            "sha256": "60d644c7b69675e05806b30118d9fe9498a8eb053a12785c514d87a5f9286e7c"
+          },
+          {
+            "label": "本趟归来冲击报告整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-return.png",
+            "sha256": "23f7d6641a90129f5b6e854c9794a17cbdc807a6a5e6aa2706890fd3d9abe710"
+          }
+        ],
+        "limitations": [
+          "该段从恢复检查后、首次场内移动前开始，未包含准备界面与暂停／冷续过程；记录结束已回净化点并完成本趟经营。",
+          "视频含真实游戏混音，Canvas 不包含 DOM HUD、交互文字和结果面板；以下整页截图补看这些信息。",
+          "按既定自动行动策略执行，目的地来自正常随机池；不是真人输入手感测试。录像有开销，不作性能预算样本。",
+          "不改音量、增益、声源、时钟，也不注入关键提示；未实际发生的声音不补演。此处只提供原录音，未签听感。",
+          "原录制分支的 headless 焦点尝试没有真实 blur；后续另有 Chrome 155 trusted blur 专项，不能把其结果说成本片所演示。"
+        ],
+        "audibleReview": false,
+        "continuousVisualPlaybackByArt": false
+      },
+      {
+        "id": "i14-natural-3",
+        "label": "撕底浅庭 · 重度污染",
+        "scope": "第3趟 · membrane-rim · 正常搜取、撤离、归来与经营。录制墙钟约 151.5 秒；原游戏本趟场内累计 63.25 秒，二者不混算。",
+        "runId": "eb45216c-f7a1-4a47-9af4-5ab55dada148",
+        "world": "torn-reservoir",
+        "grade": "severe",
+        "family": "membrane-rim",
+        "seed": 2103455321,
+        "video": {
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-natural-canvas.webm",
+          "sha256": "beb15a7227f33dee547d8537500b2df496899e7e8fa2228271c54cab58656e2e"
+        },
+        "audio": {
+          "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-natural-audio.webm",
+          "sha256": "f9346087486dbb4f4d5f4243669fdd7419ecfff2511087ee05fc770cfd6c5631"
+        },
+        "captureReceipt": {
+          "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+          "sha256": "e7df849a69df7cb5a55ca91b549a754dcb5d167bc4f76aa8462cbe8529cf9f15"
+        },
+        "captureReceiptJsonPath": "runs[2]",
+        "duration": {
+          "recordedWallMs": 151460.5,
+          "fieldElapsedAtStartMs": 2786.1099999999988,
+          "fieldElapsedAtExtractMs": 63250.36000000016,
+          "containerDurationIndependentlyDecoded": false,
+          "note": "Executor wall duration includes recorder stop/base64-copy overhead; use native media controls for encoded presentation duration. No independent media decode performed."
+        },
+        "outcome": "extract",
+        "screenshots": [
+          {
+            "label": "恢复后的入口整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-entry-observation.png",
+            "sha256": "f22bcb829826f0e05cb312ecc043ea885072f6c2793d27c1c5b56faa83b8644b"
+          },
+          {
+            "label": "本趟最后一次搜索记录整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-search-8.png",
+            "sha256": "a44524aca9695b620b3a12e8ca72041d28c7a2377be2f0e7237959f22ce21f73"
+          },
+          {
+            "label": "本趟撤离结果整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-field-result.png",
+            "sha256": "3d3e96626394bd40ca5eadd95b1425adfc1f2e49cc03d567cc1823774992b94c"
+          },
+          {
+            "label": "本趟归来冲击报告整页",
+            "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-return.png",
+            "sha256": "fc4ab32421dcbf42948b0cae362adfd994b4258ab6640eb05e5e9fc4dc15919b"
+          }
+        ],
+        "limitations": [
+          "该段从恢复检查后、首次场内移动前开始，未包含准备界面与暂停／冷续过程；记录结束已回净化点并完成本趟经营。",
+          "视频含真实游戏混音，Canvas 不包含 DOM HUD、交互文字和结果面板；以下整页截图补看这些信息。",
+          "按既定自动行动策略执行，目的地来自正常随机池；不是真人输入手感测试。录像有开销，不作性能预算样本。",
+          "不改音量、增益、声源、时钟，也不注入关键提示；未实际发生的声音不补演。此处只提供原录音，未签听感。",
+          "原录制分支的 headless 焦点尝试没有真实 blur；后续另有 Chrome 155 trusted blur 专项，不能把其结果说成本片所演示。"
+        ],
+        "audibleReview": false,
+        "continuousVisualPlaybackByArt": false
+      }
+    ],
+    "playEntry": {
+      "instructions": "正式隔离试玩：在设备包目录按说明安装依赖后，运行 node tools/qa/run-r100-i14-device.mjs --play。程序打开临时 Chrome 窗口和随机本机端口，不使用原有存档。此入口准备与真实弱设备结果分开；本页作者未运行此命令、未进行实际听感审核。",
+      "reference": {
+        "path": "docs/qa/artifacts/r100-i14/root/device-kit/README.md",
+        "sha256": "716acf468073d4a2e9d5ad33861632eec97bc118df2890e13c883cf732740ecc"
+      },
+      "url": null,
+      "verifiedRuntimeByThisAgent": false
+    },
+    "firstThreeReceipts": {
+      "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+      "sha256": "e7df849a69df7cb5a55ca91b549a754dcb5d167bc4f76aa8462cbe8529cf9f15"
+    },
+    "coverage": {
+      "worlds": 3,
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "families": [
+        "broken-shell",
+        "membrane-rim"
+      ],
+      "note": "Current normal recordings cover two families, not all six; historical 18 controlled mixes retain their distinct scope."
+    },
+    "laterFocusEvidence": {
+      "reference": {
+        "path": "docs/qa/artifacts/r100-i14/root/recovery-gate.json",
+        "sha256": "e0225c398a14b6aa8bb8f0d23ca3677a19d9b3c27b471f46a9b12acbd031920e"
+      },
+      "audit": {
+        "path": "docs/qa/artifacts/r100-i14/qa-focus-native-audit.json",
+        "sha256": "40714a1131d3de60b49d0d8cfdc48988de44f97f3a5f8afcffd805eb7b424fb8"
+      },
+      "scope": "Later independent Chrome155 native trusted browser blur observed and adopted by root for three grades. The original recordings did not demonstrate it; hidden=false, OS focus and cross-device claims excluded."
+    }
+  },
+  "humanReview": {
+    "status": "pending",
+    "listener": null,
+    "device": null,
+    "volume": null,
+    "duration": null,
+    "observations": [],
+    "finalAcceptance": null
+  },
+  "limits": [
+    "五条材料原声按文件播放；没有套用游戏增益、距离衰减或声部分配，不能据此比较游戏响度。",
+    "18份历史受控混音监听位置固定近处，threat=0.5、proximity=0.3，四种关键提示为显式注入；不冒充自然遭遇。",
+    "六种主材配方复用五条材料声源，不代表108套独立声音身份；混材不逐副材发声。",
+    "七条循环局部来自历史修复结果，数字接缝指标和播放成功都不等于人耳接缝通过。",
+    "图库保留原录制版本与来源绑定：324档入口中270档列793张正常原帧，54档明确无直接原帧；不是本轮324档新图审。",
+    "前三自然录像从各自恢复检查结束、首次场内移动前开始；canvas不含DOM HUD/菜单，整页原截图另看，自动行动及录像开销如实披露。",
+    "实际空间听感、关键提示掩蔽、反复转换、长听与连续视觉疲劳、用户整版认可均待实际体验。"
+  ],
+  "feedbackPrompts": [
+    {
+      "id": "material",
+      "label": "材料与世界身份",
+      "hint": "记住了什么形体／材质？五源、六族混音是否像相应实体；哪些太相似？"
+    },
+    {
+      "id": "space",
+      "label": "行动与空间可读",
+      "hint": "边界、翻找物、危险和退路是否清楚；具体世界、档位、片段／时间。"
+    },
+    {
+      "id": "cues",
+      "label": "重要声音",
+      "hint": "实际游戏中的敌人警觉、受击、翻找中断、污染提示是否听清；未实际遇到就写未遇到。"
+    },
+    {
+      "id": "transition",
+      "label": "循环与转换",
+      "hint": "循环、暂停／恢复、出入场景有无点击、突然截断、重叠或不合适的静默；记录实际现象。"
+    },
+    {
+      "id": "fatigue",
+      "label": "连续观感与疲劳",
+      "hint": "实际看／听／玩了多久？哪些反复运动或声音开始烦、麻木、遮挡判断；不设虚构听满时长。"
+    }
+  ]
+}

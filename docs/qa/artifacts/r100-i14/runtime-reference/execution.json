@@ -1,0 +1,59 @@
+{
+  "startedAt": "2026-10-09T04:27:07.885451+00:00",
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i14/runtime-policy-freeze.json",
+    "sha256": "446262268da1fb24e54c7f12f52dfcf68204620ae472645eb1ff74974b53a064"
+  },
+  "checks": [
+    {
+      "path": "tools/qa/check-r100-i14-runtime-budget.mjs",
+      "expected": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1",
+      "actual": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "expected": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868",
+      "actual": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "path": "package-lock.json",
+      "expected": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88",
+      "actual": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/task-preregistration.md",
+      "expected": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356",
+      "actual": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "expected": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4",
+      "actual": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "expected": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8",
+      "actual": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    }
+  ],
+  "command": [
+    "node",
+    "tools/qa/check-r100-i14-runtime-budget.mjs"
+  ],
+  "environmentOverrides": {
+    "GAME_URL": "http://127.0.0.1:3035",
+    "QA_WORLDS": "hollow-wreckage,buried-lamellae,felt-wedges,white-scarfield",
+    "QA_EXCLUSIVE_WINDOW": "1",
+    "QA_OUTPUT_DIR": "docs/qa/artifacts/r100-i14/runtime-reference"
+  },
+  "powerBefore": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t60%; discharging; 3:18 remaining present: true",
+  "status": "completed-with-failures",
+  "scope": "Four preregistered serial reference-machine performance diagnostics; separate from natural48 and actual weak-device qualification. No recording or other team browser tasks.",
+  "pid": 43620,
+  "finishedAt": "2026-10-09T04:31:37.108965+00:00",
+  "exitCode": 1,
+  "powerAfter": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t58%; discharging; 2:39 remaining present: true",
+  "reportSha256": "642bcb002895d276db52d3c0d92b40e010d7bc13560f802d2c240fd0ef153515",
+  "toolSha256After": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1",
+  "browserClosedByFinally": true
+}

@@ -1,0 +1,528 @@
+{
+  "status": "completed-diagnostic-only",
+  "startedAt": "2026-10-09T04:35:52.637Z",
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i14/runtime-profile/policy-freeze.json",
+    "sha256": "f60687a83a7a2657b629ff9ac13fa6fa886ef02a86a7b00b1f6efdba63b19313"
+  },
+  "browser": "155.0.8059.39",
+  "powerBefore": {
+    "battery": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t57%; discharging; 3:12 remaining present: true",
+    "processInfo": {
+      "lowPowerModeEnabled": true,
+      "thermalState": 0
+    }
+  },
+  "instrumentationOnly": true,
+  "budgetQualification": false,
+  "errors": [],
+  "measurements": {
+    "duration": 61364.28000000003,
+    "alive": true,
+    "start": {
+      "elapsedMs": 849.9300000000002,
+      "ended": false,
+      "player": {
+        "x": 196,
+        "y": 588
+      },
+      "hp": 100,
+      "chaos": 15.429724607999988,
+      "chaosRate": 0.5056,
+      "pollutionGrade": "severe",
+      "volumeSightMultiplier": 1,
+      "attack": {
+        "phase": "idle",
+        "cooldownRemainingMs": 0
+      },
+      "kindling": 0,
+      "search": {
+        "prompt": null,
+        "progress": null,
+        "remaining": 9
+      },
+      "enemies": [
+        {
+          "id": "ENM_INF_01",
+          "state": "patrol",
+          "position": {
+            "x": 900,
+            "y": 372.45000000000107
+          },
+          "hp": 75,
+          "detection": 0,
+          "engaged": false,
+          "visible": false
+        },
+        {
+          "id": "ENM_INF_02",
+          "state": "patrol",
+          "position": {
+            "x": 786.4999999999989,
+            "y": 132
+          },
+          "hp": 75,
+          "detection": 0,
+          "engaged": false,
+          "visible": false
+        },
+        {
+          "id": "ENM_INF_03",
+          "state": "patrol",
+          "position": {
+            "x": 919.6256313292345,
+            "y": 128.37436867076485
+          },
+          "hp": 75,
+          "detection": 0,
+          "engaged": false,
+          "visible": false
+        },
+        {
+          "id": "ENM_RWR_01",
+          "state": "patrol",
+          "position": {
+            "x": 804.4500000000011,
+            "y": 628
+          },
+          "hp": 75,
+          "detection": 0,
+          "engaged": false,
+          "visible": false
+        }
+      ],
+      "hosts": [
+        {
+          "id": "ENM_BING_01",
+          "substrate": "oil_film",
+          "position": {
+            "x": 336,
+            "y": 688
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_BING_02",
+          "substrate": "oil_film",
+          "position": {
+            "x": 176,
+            "y": 432
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_BING_03",
+          "substrate": "oil_film",
+          "position": {
+            "x": 656,
+            "y": 656
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_BING_04",
+          "substrate": "oil_film",
+          "position": {
+            "x": 464,
+            "y": 112
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_BING_05",
+          "substrate": "oil_film",
+          "position": {
+            "x": 912,
+            "y": 208
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_BING_06",
+          "substrate": "oil_film",
+          "position": {
+            "x": 144,
+            "y": 112
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_DING_01",
+          "substrate": "gas_mass",
+          "position": {
+            "x": 122.81807490909091,
+            "y": 400
+          },
+          "hazardReleased": false,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false,
+          "volume": {
+            "phase": "rest",
+            "elapsedMs": 849.9300000000002,
+            "hazardActive": false
+          }
+        },
+        {
+          "id": "ENM_DING_02",
+          "substrate": "gas_mass",
+          "position": {
+            "x": 922.8180749090909,
+            "y": 624
+          },
+          "hazardReleased": false,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false,
+          "volume": {
+            "phase": "rest",
+            "elapsedMs": 849.9300000000002,
+            "hazardActive": false
+          }
+        },
+        {
+          "id": "ENM_DING_03",
+          "substrate": "gas_mass",
+          "position": {
+            "x": 474.8180749090909,
+            "y": 688
+          },
+          "hazardReleased": false,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false,
+          "volume": {
+            "phase": "rest",
+            "elapsedMs": 849.9300000000002,
+            "hazardActive": false
+          }
+        }
+      ]
+    },
+    "end": {
+      "elapsedMs": 62214.21000000003,
+      "ended": false,
+      "player": {
+        "x": 106.00009990000001,
+        "y": 358.66962907749837
+      },
+      "hp": 70,
+      "chaos": 114.08011249646673,
+      "chaosRate": 1.135994495288889,
+      "pollutionGrade": "severe",
+      "volumeSightMultiplier": 1,
+      "attack": {
+        "phase": "idle",
+        "cooldownRemainingMs": 0
+      },
+      "kindling": 0,
+      "search": {
+        "prompt": null,
+        "progress": null,
+        "remaining": 9
+      },
+      "enemies": [
+        {
+          "id": "ENM_INF_01",
+          "state": "patrol",
+          "position": {
+            "x": 911.4607203072633,
+            "y": 393.2711096024576
+          },
+          "hp": 75,
+          "detection": 0,
+          "engaged": false,
+          "visible": false
+        },
+        {
+          "id": "ENM_INF_02",
+          "state": "chase",
+          "position": {
+            "x": 124.15629706850788,
+            "y": 220.26135070053246
+          },
+          "hp": 75,
+          "detection": 1,
+          "engaged": false,
+          "visible": false
+        },
+        {
+          "id": "ENM_INF_03",
+          "state": "patrol",
+          "position": {
+            "x": 823.6005304440928,
+            "y": 224.39946955590443
+          },
+          "hp": 75,
+          "detection": 0,
+          "engaged": false,
+          "visible": false
+        },
+        {
+          "id": "ENM_RWR_01",
+          "state": "patrol",
+          "position": {
+            "x": 926.384617154292,
+            "y": 553.0090241216828
+          },
+          "hp": 75,
+          "detection": 0,
+          "engaged": false,
+          "visible": false
+        }
+      ],
+      "hosts": [
+        {
+          "id": "ENM_BING_01",
+          "substrate": "oil_film",
+          "position": {
+            "x": 336,
+            "y": 688
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_BING_02",
+          "substrate": "oil_film",
+          "position": {
+            "x": 176,
+            "y": 432
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_BING_03",
+          "substrate": "oil_film",
+          "position": {
+            "x": 656,
+            "y": 656
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_BING_04",
+          "substrate": "oil_film",
+          "position": {
+            "x": 464,
+            "y": 112
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_BING_05",
+          "substrate": "oil_film",
+          "position": {
+            "x": 912,
+            "y": 208
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_BING_06",
+          "substrate": "oil_film",
+          "position": {
+            "x": 144,
+            "y": 112
+          },
+          "hazardReleased": true,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false
+        },
+        {
+          "id": "ENM_DING_01",
+          "substrate": "gas_mass",
+          "position": {
+            "x": 122.22897527272731,
+            "y": 400
+          },
+          "hazardReleased": false,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false,
+          "volume": {
+            "phase": "rest",
+            "elapsedMs": 62214.21000000003,
+            "hazardActive": false
+          }
+        },
+        {
+          "id": "ENM_DING_02",
+          "substrate": "gas_mass",
+          "position": {
+            "x": 922.2289752727273,
+            "y": 624
+          },
+          "hazardReleased": false,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false,
+          "volume": {
+            "phase": "rest",
+            "elapsedMs": 62214.21000000003,
+            "hazardActive": false
+          }
+        },
+        {
+          "id": "ENM_DING_03",
+          "substrate": "gas_mass",
+          "position": {
+            "x": 474.2289752727273,
+            "y": 688
+          },
+          "hazardReleased": false,
+          "suppressionRemainingMs": 0,
+          "delayRemainingMs": 0,
+          "recoveryWarning": false,
+          "volume": {
+            "phase": "rest",
+            "elapsedMs": 62214.21000000003,
+            "hazardActive": false
+          }
+        }
+      ]
+    },
+    "frames": {
+      "count": 3681,
+      "total": 61330.7000002861,
+      "p50": 16.699999809265137,
+      "p95": 18.299999713897705,
+      "p99": 18.699999809265137,
+      "max": 20.59999990463257
+    },
+    "cpu": {
+      "count": 3682,
+      "total": 22968.20001220703,
+      "p50": 6,
+      "p95": 10.199999809265137,
+      "p99": 11.600000381469727,
+      "max": 13.599999904632568
+    },
+    "materialAggregate": {
+      "count": 3682,
+      "total": 4671.800000667572,
+      "p50": 1,
+      "p95": 3.9000000953674316,
+      "p99": 5.200000286102295,
+      "max": 6.599999904632568
+    },
+    "stages": {
+      "afterUpdateTotal": {
+        "count": 3682,
+        "total": 4675.5000014305115,
+        "p50": 1,
+        "p95": 3.9000000953674316,
+        "p99": 5.200000286102295,
+        "max": 6.599999904632568
+      },
+      "materialGLSubmit": {
+        "count": 3682,
+        "total": 31.80000114440918,
+        "p50": 0,
+        "p95": 0.09999990463256836,
+        "p99": 0.10000038146972656,
+        "max": 0.19999980926513672
+      },
+      "phaserTextureUpdate": {
+        "count": 3682,
+        "total": 61.099997997283936,
+        "p50": 0,
+        "p95": 0.09999990463256836,
+        "p99": 0.10000038146972656,
+        "max": 0.20000028610229492
+      },
+      "stressGeometry": {
+        "count": 3682,
+        "total": 5.19999885559082,
+        "p50": 0,
+        "p95": 0,
+        "p99": 0.09999990463256836,
+        "max": 0.10000038146972656
+      },
+      "actorMasks": {
+        "count": 3682,
+        "total": 4499.200000762939,
+        "p50": 1,
+        "p95": 3.8999996185302734,
+        "p99": 5.199999809265137,
+        "max": 6.599999904632568
+      },
+      "materialAudio": {
+        "count": 3682,
+        "total": 9.900001525878906,
+        "p50": 0,
+        "p95": 0,
+        "p99": 0.09999990463256836,
+        "max": 0.20000028610229492
+      },
+      "readPresentationFrame": {
+        "count": 3682,
+        "total": 2.2000012397766113,
+        "p50": 0,
+        "p95": 0,
+        "p99": 0,
+        "max": 0.10000038146972656
+      },
+      "readPollutionSources": {
+        "count": 3682,
+        "total": 25.899999618530273,
+        "p50": 0,
+        "p95": 0.09999990463256836,
+        "p99": 0.10000038146972656,
+        "max": 0.10000038146972656
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-profile/raw-stages.json",
+      "sha256": "abe0027ba5502635aedc4a10f23dc581b7c2710273bc9c6216a2a1756cca8d0f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-profile/v8.cpuprofile",
+      "sha256": "5827f1aa4feef96bff0160a911bdf8c017ec1f1796016eb1f6d65ad06b7bd88d"
+    }
+  ],
+  "browsersClosed": true,
+  "finishedAt": "2026-10-09T04:37:00.461Z",
+  "powerAfter": {
+    "battery": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t57%; discharging; 3:22 remaining present: true",
+    "processInfo": {
+      "lowPowerModeEnabled": true,
+      "thermalState": 0
+    }
+  }
+}

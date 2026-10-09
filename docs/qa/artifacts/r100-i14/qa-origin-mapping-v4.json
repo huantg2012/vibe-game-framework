@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T05:10:01.393Z",
+  "status": "v4-origin-only-carrier-independently-pass-ready-for-actual-continue",
+  "tool": {
+    "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/qa-origin-mapping-v4.mjs",
+    "sha256": "94663fe97eb3790952d9d898700141c849b05540d3b5ac1f949294924c98cf18"
+  },
+  "plan": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/policy-freeze.json",
+    "sha256": "24bcb03e0717aaf59d16ff54ce8b0366593de09c36ce7cac9adc155a35bcd3cf"
+  },
+  "original": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/browser-storage.json",
+    "sha256": "a7270c01da624d2c2ca3e3aa6c9eed6360d7a4321e97b950af0babf4ab0e83f3"
+  },
+  "mapped": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/initial-browser-storage.json",
+    "sha256": "b74f66dba20f71f344aa3752ed663e0a630cdaf0d3c00d1a89e5901eac7dabbd"
+  },
+  "originDiff": [
+    {
+      "path": "origins[0].origin",
+      "before": "http://127.0.0.1:3035",
+      "after": "http://127.0.0.1:3037"
+    }
+  ],
+  "allOtherStorageFieldsExact": true,
+  "allFourKeyStringValuesExact": true,
+  "allCookiesExact": true,
+  "currentRawSha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94",
+  "wholeCurrentEqualsPriorTerminal": true,
+  "terminal": {
+    "cycle": 77,
+    "cash": 172,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 51,
+        "maxHp": 145
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 103,
+        "maxHp": 145
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 54,
+        "maxHp": 145
+      }
+    ],
+    "runId": "45356d6d-2dfa-458d-9aa9-2903b10c658e"
+  },
+  "sameFrozenJourneyAnd48Policy": true,
+  "mutatedCopiesRejected": [
+    "current-save-cash-mutation",
+    "backup-value-loss",
+    "cookie-added",
+    "ambiguous-origin"
+  ],
+  "originalFailure": {
+    "file": "docs/qa/artifacts/r100-i14/qa-origin-bridge-first-failure.json",
+    "sha256": "998e8de5fbbbdc23c3147c664c1956ffb67972d759eabe7258d3b61333ec7a0c"
+  },
+  "newNaturalSorties": 0,
+  "limitations": [
+    "This verifies the exact input carrier and frozen wrapper only. Actual Continue must still satisfy the unchanged complete-before guard; the following real13th departure is counted only after entry, once.",
+    "Original v3 origin failure remains immutable and adds zero field runs. Failed fresh base is never used as the earned input."
+  ],
+  "references": [
+    {
+      "file": "tools/world-study/r100-i14-continuous-journey.mjs",
+      "sha256": "7ac2a052efd25158dfe6e1e53c9404efb88a13f44839b815539f16a8950dce6e"
+    },
+    {
+      "file": "tools/qa/r100-i14-lifecycle.mjs",
+      "sha256": "201857168f860e783634b34472ab893b765e1295381664b5bf5c0d0fa1c24e24"
+    },
+    {
+      "file": "tools/world-study/run-r100-i14-continuous.mjs",
+      "sha256": "07a84c18c7b22a16c97d45a18f5cbba06b5a64ffbe0fdb7b7c52977c9502948c"
+    },
+    {
+      "file": "tools/world-study/r100-i13-bounded-journey.mjs",
+      "sha256": "6855b51dd82d9ef9fcb308f0293c893f55dff2e6a6f7856db55167826dcbec10"
+    },
+    {
+      "file": "tools/world-study/r100-i13-retry-policy.mjs",
+      "sha256": "38e6bd457a2397bb00ca8a73e637b3c6bd471b36a98aeb53d91c996a8456ec33"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-policy.mjs",
+      "sha256": "4faf37eb6e1d3adf3ee39f7db91357d4713fc7eb04ac3d34dd61281abca41fa9"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/world-study/r100-frozen-server.mjs",
+      "sha256": "75bc54d4dd2ad3a1eff93069a7121288e829d055e1903420cf6b99b11a502ae7"
+    },
+    {
+      "file": "tools/qa/check-r100-i14-runtime-budget.mjs",
+      "sha256": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1"
+    },
+    {
+      "file": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "file": "tools/world-study/r100-i14-continuous-v2-journey.mjs",
+      "sha256": "67caacdce212cf6d65ba8ac88c3e43fef6fd99e2420621cbdf273d2521eac2e1"
+    },
+    {
+      "file": "tools/qa/r100-i14-lifecycle-v2.mjs",
+      "sha256": "8a2ecc10c2727a0c507a1987097da6265e9c724f70e721f92a2528493b324646"
+    },
+    {
+      "file": "tools/world-study/run-r100-i14-continuous-v2.mjs",
+      "sha256": "9da06fc1714cdca0972c94d3f0d0af4413b0974d04323abe8d54f09b71a0348d"
+    },
+    {
+      "file": "tools/world-study/run-r100-i14-continuous-v4.mjs",
+      "sha256": "04015702464cfdd62667eac9b2cf937f0472a137a8b6e88210e5d8d0449bacff"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/policy-freeze.json",
+      "sha256": "92fadc684b129b05e8668e2d39d4c0f0a5ec11164148bb309e616fbe9c180d2b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/report.json",
+      "sha256": "6d033ec04618e671ed63cecb27b1b999df9409837067932e1784358841189902"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/execution.json",
+      "sha256": "0f1db682d5d9d4af604cdfa2727469059a45ff8102a238e57161d28695950f39"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/i14/13-before.save.json",
+      "sha256": "2a0d582c6371e4e5c5d1315dd0d5c593dbf698e178cc11836544cc83277ab263"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/i14/browser-storage.json",
+      "sha256": "5b6722d995ee5ba1c8a3043a4496dfdca6acfd12a4043ba2a0aaf4b90bdcd88b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/initial-browser-storage.json",
+      "sha256": "b74f66dba20f71f344aa3752ed663e0a630cdaf0d3c00d1a89e5901eac7dabbd"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/initial-origin-proof.json",
+      "sha256": "5b7d88e41892e5e6ab8e2eeca0e5cc030415588868c562b3c0a0f579ca0e1484"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/browser-storage.json",
+      "sha256": "a7270c01da624d2c2ca3e3aa6c9eed6360d7a4321e97b950af0babf4ab0e83f3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/report.json",
+      "sha256": "beb757b8eb7ec85e0f0fc3d5d5be81c90093d8cec617bab58f160ddc016ea791"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+      "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+    }
+  ]
+}

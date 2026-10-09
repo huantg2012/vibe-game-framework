@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-09T03:52:55.371Z",
+  "freeze": {
+    "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/focus/policy-freeze.json",
+    "sha256": "a7fceb24ccd4aee073213f2b40762065366deb0cb25bd52d3af34dbfc2c82145"
+  },
+  "status": "failed",
+  "cases": [
+    {
+      "grade": "low",
+      "runId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+      "source": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/same-run-earned-storage.json",
+        "sha256": "affb3f428179ec2d90891d15cff5dbd2e22a19ed5fbab6276b23c47cd8121e75"
+      },
+      "currentRawSha256": "cc582300aa73a09af506d8edfb3cdbf26b810bf37e8b54bb0611a36f8d1eafbd",
+      "status": "failed",
+      "errors": [],
+      "inputs": [
+        {
+          "action": "Enter",
+          "purpose": "normal-menu-continue",
+          "at": "2026-10-09T03:53:03.372Z"
+        },
+        {
+          "action": "actual-tab-bringToFront",
+          "at": "2026-10-09T03:53:08.856Z"
+        }
+      ],
+      "nativeLossEvents": [],
+      "hidden": false,
+      "focused": true,
+      "paused": false,
+      "heldWallMs": 825.7000002861023,
+      "heldDifferences": {
+        "checkpoint": [
+          {
+            "path": "sequence",
+            "before": 10,
+            "after": 12
+          },
+          {
+            "path": "elapsedMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.run.elapsedMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.physics.elapsedMs",
+            "before": 4.3266666666679505,
+            "after": 4.62000000000128
+          },
+          {
+            "path": "state.player.motionElapsedMs",
+            "before": 2703.660000000002,
+            "after": 3470.6200000000026
+          },
+          {
+            "path": "state.player.lastDeltaMs",
+            "before": 10,
+            "after": 8.260000000000037
+          },
+          {
+            "path": "state.ai.enemies.0.entity.position.x",
+            "before": 824.4074734036582,
+            "after": 811.5935678178663
+          },
+          {
+            "path": "state.ai.enemies.0.entity.position.y",
+            "before": 92.47608996235067,
+            "after": 102.22359341905455
+          },
+          {
+            "path": "state.ai.enemies.0.entity.bodyPosition.x",
+            "before": 814.4074734036582,
+            "after": 801.5935678178663
+          },
+          {
+            "path": "state.ai.enemies.0.entity.bodyPosition.y",
+            "before": 82.47608996235067,
+            "after": 92.22359341905455
+          },
+          {
+            "path": "state.ai.enemies.0.entity.velocity.x",
+            "before": -16.713789894509333,
+            "after": -16.713789894508587
+          },
+          {
+            "path": "state.ai.enemies.0.entity.velocity.y",
+            "before": 12.714134943526345,
+            "after": 12.714134943527327
+          },
+          {
+            "path": "state.ai.enemies.0.entity.actualVelocity.y",
+            "before": 12.714134943526004,
+            "after": 12.714134943527709
+          },
+          {
+            "path": "state.ai.enemies.0.state.facingAngle",
+            "before": 2.4912803484122263,
+            "after": 2.4912803484121677
+          },
+          {
+            "path": "state.ai.enemies.0.state.perceptionAccumMs",
+            "before": 169.47000000000008,
+            "after": 116.56000000000022
+          },
+          {
+            "path": "state.ai.enemies.0.state.position.x",
+            "before": 824.4074734036582,
+            "after": 811.5935678178663
+          },
+          {
+            "path": "state.ai.enemies.0.state.position.y",
+            "before": 92.47608996235067,
+            "after": 102.22359341905455
+          },
+          {
+            "path": "state.ai.enemies.0.state.velocity.x",
+            "before": -16.713789894509333,
+            "after": -16.713789894508587
+          },
+          {
+            "path": "state.ai.enemies.0.state.velocity.y",
+            "before": 12.714134943526345,
+            "after": 12.714134943527327
+          },
+          {
+            "path": "state.ai.enemies.1.entity.position.x",
+            "before": 572.3500000000037,
+            "after": 588.4500000000047
+          },
+          {
+            "path": "state.ai.enemies.1.entity.bodyPosition.x",
+            "before": 562.3500000000037,
+            "after": 578.4500000000047
+          },
+          {
+            "path": "state.ai.enemies.1.state.perceptionAccumMs",
+            "before": 19.939999999999962,
+            "after": 166.8700000000001
+          },
+          {
+            "path": "state.ai.enemies.1.state.position.x",
+            "before": 572.3500000000037,
+            "after": 588.4500000000047
+          },
+          {
+            "path": "state.tools.catalog.elapsedMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.tools.elapsedMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.chaos.value",
+            "before": 25.4405746439989,
+            "after": 25.56629855586322
+          },
+          {
+            "path": "state.chaos.peak",
+            "before": 25.4405746439989,
+            "after": 25.56629855586322
+          },
+          {
+            "path": "state.chaos.clockMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.trail.elapsedMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.trail.visited.0.atMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.world.hosts.hosts.0.state.hearingAccumMs",
+            "before": 67.47999999999993,
+            "after": 8.260000000000037
+          },
+          {
+            "path": "state.world.hosts.hosts.0.state.phase",
+            "before": 5.375320000000005,
+            "after": 6.909240000000004
+          },
+          {
+            "path": "state.world.hosts.hosts.1.state.hearingAccumMs",
+            "before": 67.47999999999993,
+            "after": 8.260000000000037
+          },
+          {
+            "path": "state.world.hosts.hosts.1.state.phase",
+            "before": 7.475319999999998,
+            "after": 9.009239999999998
+          },
+          {
+            "path": "state.world.hosts.hosts.2.state.core.x",
+            "before": 341.6329017017189,
+            "after": 342.48008414117646
+          },
+          {
+            "path": "state.world.hosts.hosts.2.state.hearingAccumMs",
+            "before": 67.47999999999993,
+            "after": 8.260000000000037
+          },
+          {
+            "path": "state.world.hosts.hosts.2.state.elapsedMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.world.hosts.hosts.2.state.phaseElapsedMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.world.nativePresentation.elapsedMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.world.nativePresentation.lastElapsedMs",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          },
+          {
+            "path": "state.world.nativePresentation.audio.clock",
+            "before": 2687.660000000002,
+            "after": 3454.6200000000026
+          }
+        ],
+        "inventory": [],
+        "rawEqual": false
+      },
+      "failure": "AssertionError [ERR_ASSERTION]: No trusted native tab loss; do not substitute synthetic events\n    at file:///Users/yilungao/coh/tools/qa/check-r100-i14-focus.mjs:65:4",
+      "endedAt": "2026-10-09T03:53:10.214Z"
+    }
+  ],
+  "newSorties": 0,
+  "mainChainWrites": 0,
+  "syntheticEvents": 0,
+  "scope": "Headed native browser-tab focus only; historical checkpoints in isolated contexts. No OS application focus, performance, human or new departure claim.",
+  "browserVersion": "155.0.8059.39",
+  "failure": "AssertionError [ERR_ASSERTION]: No trusted native tab loss; do not substitute synthetic events\n    at file:///Users/yilungao/coh/tools/qa/check-r100-i14-focus.mjs:65:4",
+  "finishedAt": "2026-10-09T03:53:10.807Z",
+  "originalCheckpointHashesStillMatch": true
+}

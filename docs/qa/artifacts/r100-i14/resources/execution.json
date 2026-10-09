@@ -1,0 +1,23 @@
+{
+  "startedAt": "2026-10-09T04:32:17.804Z",
+  "exclusiveWindow": "Code four-case performance closed; continuous batch2 and all root/QA browser work paused",
+  "host": {
+    "cpu": "Apple M4 Pro",
+    "logicalCores": 14,
+    "memoryBytes": 51539607552,
+    "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.0.1\nBuildVersion:\t\t25A362\n",
+    "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t58%; discharging; 2:49 remaining present: true\n"
+  },
+  "command": "GAME_URL=http://127.0.0.1:3035 QA_OUTPUT_DIR=docs/qa/artifacts/r100-i14/resources/runtime QA_REBUILDS=10 QA_MIXED_REBUILDS=6 node docs/qa/artifacts/r100-i14/resources/frozen-runner.mjs",
+  "finishedAt": "2026-10-09T04:33:50.948Z",
+  "exitCode": 0,
+  "report": {
+    "path": "docs/qa/artifacts/r100-i14/resources/runtime/report.json",
+    "sha256": "ed43ab881e9383eb1d2c64172bd1900011e487f931a3c1a2abec9610d9ca58e3",
+    "status": "passed-bounded-lifecycle"
+  },
+  "policySha256": "c938d9d2b16238e87d3bfbdc95e8f60396be782e802151c05a4f0e21dc15cb69",
+  "runnerSha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9",
+  "powerAfter": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t57%; discharging; 2:52 remaining present: true\n",
+  "browserClosed": "frozen runner finally awaited browser.close before process exit"
+}

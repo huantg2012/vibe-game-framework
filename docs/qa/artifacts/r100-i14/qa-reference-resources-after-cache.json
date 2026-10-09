@@ -1,0 +1,302 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T04:57:04.557Z",
+  "status": "bounded-reference-owned-resources-pass",
+  "tool": {
+    "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/qa-reference-resources-after-cache.mjs",
+    "sha256": "5d5ad8baa1af267e24fb2651481b6229720c131fba7832f1b8a2258c5e2c969d"
+  },
+  "parentRelease": {
+    "revision": "r100-native-v3-revision-6-internal-rc-20261008",
+    "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "delta": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+    "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+  },
+  "qualification": "New source delta resource check pending final RC binding.",
+  "sourceBinding": {
+    "entryAudit": "docs/qa/artifacts/r100-i14/render-entry/report.json",
+    "sourceCount": 1398,
+    "allStillMatch": true
+  },
+  "host": {
+    "cpu": "Apple M4 Pro",
+    "logicalCores": 14,
+    "memoryBytes": 51539607552,
+    "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.0.1\nBuildVersion:\t\t25A362\n",
+    "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t53%; discharging; 4:12 remaining present: true\n"
+  },
+  "powerAfter": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t53%; discharging; 4:12 remaining present: true\n",
+  "measurement": {
+    "identical": 10,
+    "mixed": 6,
+    "warmupFamilies": 6,
+    "samples": 12,
+    "gcCallsPerSample": 2,
+    "totalGcCallsByFrozenCode": 24,
+    "budgetMiB": 10,
+    "maxCombinedRetainedMiB": 1.3761777877807617,
+    "stableActiveKinds": [
+      "WebGL2",
+      "Texture",
+      "Buffer",
+      "Program",
+      "Framebuffer",
+      "Renderbuffer",
+      "Shader"
+    ]
+  },
+  "rows": [
+    {
+      "label": "warmed-baseline",
+      "heapGrowthBytes": 0,
+      "backingGrowthBytes": 0,
+      "combinedRetainedGrowthBytes": 0,
+      "combinedRetainedGrowthMiB": 0,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-1",
+      "heapGrowthBytes": 475616,
+      "backingGrowthBytes": 0,
+      "combinedRetainedGrowthBytes": 475616,
+      "combinedRetainedGrowthMiB": 0.453582763671875,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-2",
+      "heapGrowthBytes": 637652,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 637667,
+      "combinedRetainedGrowthMiB": 0.6081266403198242,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-3",
+      "heapGrowthBytes": 800784,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 800799,
+      "combinedRetainedGrowthMiB": 0.7637014389038086,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-4",
+      "heapGrowthBytes": 928480,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 928495,
+      "combinedRetainedGrowthMiB": 0.8854818344116211,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-5",
+      "heapGrowthBytes": 975400,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 975415,
+      "combinedRetainedGrowthMiB": 0.9302282333374023,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-6",
+      "heapGrowthBytes": 1080780,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 1080795,
+      "combinedRetainedGrowthMiB": 1.030726432800293,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-7",
+      "heapGrowthBytes": 1107132,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 1107147,
+      "combinedRetainedGrowthMiB": 1.0558576583862305,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-8",
+      "heapGrowthBytes": 1194068,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 1194083,
+      "combinedRetainedGrowthMiB": 1.1387662887573242,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-9",
+      "heapGrowthBytes": 1379692,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 1379707,
+      "combinedRetainedGrowthMiB": 1.315791130065918,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "identical-10",
+      "heapGrowthBytes": 1355356,
+      "backingGrowthBytes": 15,
+      "combinedRetainedGrowthBytes": 1355371,
+      "combinedRetainedGrowthMiB": 1.2925825119018555,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    },
+    {
+      "label": "after-mixed-6",
+      "heapGrowthBytes": 1442936,
+      "backingGrowthBytes": 91,
+      "combinedRetainedGrowthBytes": 1443027,
+      "combinedRetainedGrowthMiB": 1.3761777877807617,
+      "active": {
+        "WebGL2": 1,
+        "Texture": 384,
+        "Buffer": 11,
+        "Program": 32,
+        "Framebuffer": 69,
+        "Renderbuffer": 69,
+        "Shader": 62
+      }
+    }
+  ],
+  "limitations": [
+    "One reference machine, six source-family warmups plus10same/6mixed diagnostics; not natural48 or all108/324 resources.",
+    "Combined budget is main-isolate used heap plus positive backing growth, not process RSS, embedder heap sum, GPU driver bytes or per-world64MiB CPU/GPU cache estimation.",
+    "Original runner checks six owned active object kinds. QA additionally finds Shader active count stable at62; created counters rise as expected and are not live retained counts.",
+    "Original runner records neither browser.version nor GPU identity; Chrome155 environment is bound by the adjacent runtime execution and fixed Chrome executable, not relabelled as an in-page resource-report measurement.",
+    "Resource budget success is separate from four-case timing verification, actual weaker hardware, hearing or human acceptance; original failed CPU/material cases remain preserved."
+  ],
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/policy-freeze.json",
+      "sha256": "4d0dd8edfbdf0e3608f8a64743863959d88e53e59e40bdf2d3e8ba4a56586503"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/execution.json",
+      "sha256": "68e1bd64adea88bc499cc4cea3fc286ea5a3f5708ac5c5cee28c4ced594bf109"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/runtime/report.json",
+      "sha256": "62bb7a7a3a8e645b216e32a9fd85d383d53ab731f0ed9e5e6dc25229842460f0"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/report.json",
+      "sha256": "c1a8c7f92ca0ce6d6f23840a37ec838e266445d55a805cd604586a42bcb42efa"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+      "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/resources/runtime/report.json",
+      "sha256": "ed43ab881e9383eb1d2c64172bd1900011e487f931a3c1a2abec9610d9ca58e3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    {
+      "file": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/frozen-runner.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/resources/policy-freeze.json",
+      "sha256": "c938d9d2b16238e87d3bfbdc95e8f60396be782e802151c05a4f0e21dc15cb69"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-reference-runtime-after-cache.json",
+      "sha256": "7f520d81b9366dae8a2bfc597c13e416ca0df64063a05b486b072f3fccd3bcb5"
+    }
+  ]
+}

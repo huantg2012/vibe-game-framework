@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T05:18:29.362754+00:00",
+  "status": "static-user-handoff-links-and-current-rc-binding-checked",
+  "document": {
+    "path": "docs/qa/artifacts/r100-i14/review-handoff.md",
+    "bytes": 2703,
+    "sha256": "3714e4bd3ecece45dbfe5b259ecd74c3a2cdc114dec0fcb2a0aedb995654fb24"
+  },
+  "sources": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+      "bytes": 28359,
+      "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/handoff-clean.json",
+      "bytes": 4951,
+      "sha256": "02f9b92e4c1e7755e2080f6533eb14ede00f357806c82f37279e79c9042aa974"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/README.md",
+      "bytes": 2018,
+      "sha256": "fbb0df44465c943a1eebbe3048e92c86fbf9a3ed6d1ec861d4488a1895787feb"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+      "bytes": 4328,
+      "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+      "bytes": 55565,
+      "sha256": "e7df849a69df7cb5a55ca91b549a754dcb5d167bc4f76aa8462cbe8529cf9f15"
+    }
+  ],
+  "localLinks": [
+    {
+      "target": "release-candidate.json",
+      "exists": true
+    },
+    {
+      "target": "../../../../dist/r100-i14-device-kit-rc-clean-20261009.tar.gz",
+      "exists": true
+    },
+    {
+      "target": "root/device-kit-rc/README.md",
+      "exists": true
+    },
+    {
+      "target": "root/device-kit-rc/handoff-clean.json",
+      "exists": true
+    },
+    {
+      "target": "continuous/recovery-v2/batch-01/i14/1-natural-canvas.webm",
+      "exists": true
+    },
+    {
+      "target": "continuous/recovery-v2/batch-01/i14/2-natural-canvas.webm",
+      "exists": true
+    },
+    {
+      "target": "continuous/recovery-v2/batch-01/i14/3-natural-canvas.webm",
+      "exists": true
+    },
+    {
+      "target": "root/actor-occlusion-disposition.json",
+      "exists": true
+    },
+    {
+      "target": "../../interactive/r100-i14-review.html",
+      "exists": true
+    },
+    {
+      "target": "art-natural-media-source.json",
+      "exists": true
+    },
+    {
+      "target": "occlusion-visual/README.md",
+      "exists": true
+    }
+  ],
+  "semanticChecks": {
+    "threePendingItemsSeparate": true,
+    "oldThreeClipsPreOptimizationSourceDisclosed": true,
+    "unchangedAudioArtRenderDeltaInheritanceDisclosed": true,
+    "currentCleanKitAndPlaySpecified": true,
+    "continuous48NotClaimedComplete": true,
+    "noFixedListeningDurationOrNewMechanismDecision": true,
+    "previousReviewPageDenialPreserved": true
+  },
+  "browserLaunched": false,
+  "playbackValidated": false,
+  "audioHeard": false,
+  "weakDeviceValidated": false,
+  "humanApproval": false,
+  "scope": "Only this markdown and receipt added. Tar member/content validation belongs to separate QA; this check binds its current handoff metadata and archive byte size, not a second tar inspection."
+}

@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T04:22:13.528Z",
+  "status": "v2-device-handoff-install-and-native-blur-source-pass",
+  "tool": {
+    "file": "docs/qa/artifacts/r100-i14/qa-device-v2-review.mjs",
+    "sha256": "d13ca25fb273549500370d0f64baf945e0ae8f05064e735a3a26f24e7061492e"
+  },
+  "supersedesForDelivery": "docs/qa/artifacts/r100-i14/root/device-kit/handoff.json",
+  "preservesOldReview": "docs/qa/artifacts/r100-i14/qa-device-tool-review.json",
+  "kitManifestSha256": "c0eb8cf47563b7a611b627dc98337123aefef7fe4333310e5de40fd1d24e3d33",
+  "verifiedFiles": 1519,
+  "productionFiles": 1397,
+  "packageDependencies": 307,
+  "onlyChangedFile": "tools/qa/run-r100-i14-device.mjs",
+  "exactCodeChange": "Four lines after --play page.goto remove Playwright default focus emulation and bring the actual page to front; entire --run diagnostic branch unchanged.",
+  "archive": {
+    "sha256": "6f67b5e93576c8b3b61878b8d308f0154c8a6efdce7e996bd1a0edba554ea99a",
+    "bytes": 161050791
+  },
+  "observedMenuAndFocus": {
+    "browser": "155.0.8059.39",
+    "trustedBlur": true,
+    "hidden": false,
+    "heldPauseBeforeKey": true,
+    "explicitEnterReturnsToMenu": true,
+    "currentSave": null,
+    "pageErrors": 0,
+    "sourceUnchanged": true
+  },
+  "preservedSmokeFailures": [
+    {
+      "source": {
+        "path": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke-first-failure.json",
+        "sha256": "10ebdd6b3903c2694f173ec2138467ce0df4b11239c5c2a5ec38c47ed1ec2eaf",
+        "cause": "Smoke fixture used browser.newPage convenience context, which forbids creating the alternate tab; corrected to newContext matching --play."
+      },
+      "diagnosis": "Smoke fixture used browser.newPage convenience context, which forbids creating the alternate tab; corrected to newContext matching --play.",
+      "failure": "Error: Please use browser.newContext()\n    at _BrowserContext.newPage (/Users/yilungao/coh/dist/r100-i14-device-kit-v2-20261009/.i14-runtime/node_modules/playwright-core/lib/coreBundle.js:62018:17)\n    at file:///Users/yilungao/coh/docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke.mjs:40:42"
+    },
+    {
+      "source": {
+        "path": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke-second-failure.json",
+        "sha256": "cf4c37243e9e094198cf44227b95b2eb5ab333dc498550d48a94e8b0ec307f6d",
+        "cause": "Trusted blur correctly paused MainMenu; fixture wrongly expected automatic resume. Corrected to require held pause and explicit Enter, with no save creation."
+      },
+      "diagnosis": "Trusted blur correctly paused MainMenu; fixture wrongly expected automatic resume. Corrected to require held pause and explicit Enter, with no save creation.",
+      "failure": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(report.menu.interactive && report.menu.webgl)\n\n    at file:///Users/yilungao/coh/docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke.mjs:51:3"
+    }
+  ],
+  "limits": [
+    "Only reference Mac Chrome155, not a weaker machine or Windows/Linux qualification.",
+    "Normal MainMenu is interactive after explicit focus-overlay dismissal; this is not a natural sortie or performance sample.",
+    "Native blur observed; no visibility-hidden or OS-application focus claim.",
+    "Smoke invokes the installed kit bootstrap with the same reviewed context/CDP operations, not an end-to-end command-line --play close-window test.",
+    "Earlier /usr/bin/false child-failure evidence remains valid for unchanged --run; not repeated or relabelled as a real weak-device run.",
+    "This does not access or bypass the rejected review page and does not certify audio/fatigue/human release."
+  ],
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit/manifest.json",
+      "sha256": "c77f07db96f0e15d2d518fbbe84a970c612dbb0caab63604d520ef3493c34e22"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit-v2/manifest.json",
+      "sha256": "c0eb8cf47563b7a611b627dc98337123aefef7fe4333310e5de40fd1d24e3d33"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit-v2/handoff.json",
+      "sha256": "f7e83c8ec2aae137ea911b865f241697eb9e217ec0d3a76fee2b6c01c864b2fc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke.json",
+      "sha256": "be61a5fb9d372cc67fb672415664fdc2956e6d27d4200d4ff10cc0459ab97af5"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke-first-failure.json",
+      "sha256": "10ebdd6b3903c2694f173ec2138467ce0df4b11239c5c2a5ec38c47ed1ec2eaf"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke-second-failure.json",
+      "sha256": "cf4c37243e9e094198cf44227b95b2eb5ab333dc498550d48a94e8b0ec307f6d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke-first-failure.mjs",
+      "sha256": "3c7b3eaf7410eb6f0574ea64e57fef83a5915a24e56c46bad67accdd01a96d42"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke-second-failure.mjs",
+      "sha256": "63971d7978f652db35fcdfe3dae4d57577cbe2699aab6d06d8dd8e3ef3a095bd"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke.mjs",
+      "sha256": "39997da005c590120cb3674d3a7f0cd53cd55d3a9ea6029b1c51b9969d62ea20"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit-v2/installed-kit-menu.png",
+      "sha256": "60a28b9e2499f4035c02ce2e108d25f61a98ae695b291ab855308e98c357d83d"
+    }
+  ]
+}

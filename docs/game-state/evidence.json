@@ -7157,5 +7157,239 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E185",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-10-09",
+    "revision": "bbf69de52dc5cc5e6a0c0fd0c1b190038fb766f3",
+    "scope": "I14启动时原RC的1397源、108manifest及307依赖独立精确匹配，覆盖与有限经济两发布门按原RC范围绑定。弱设备交付包1519文件预检及故意子进程启动失败的留档路径通过，便于真实设备复验。",
+    "limitations": "来源和工具交付验证不代表新增48趟、Chrome155完整运行、真实较弱硬件、实际听感/疲劳或用户终验；历史性能74/1/33及I13有限经济边界保持，R100仍active。",
+    "features": [
+      "COH-F052"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/root/partial-release-gates.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-device-tool-review.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/root/device-kit/handoff.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E186",
+    "kind": "source",
+    "result": "pass",
+    "date": "2026-10-09",
+    "revision": "bbf69de52dc5cc5e6a0c0fd0c1b190038fb766f3",
+    "scope": "I14审阅材料有限交付：前三自然场内canvas/真实混音6WebM与12整页PNG独立SHA绑定，5原声/18历史受控混音/7循环局部保留条件。68引用与脚本静态检查通过，Art亲看9本轮原帧及6历史帧。",
+    "limitations": "未实际听音频、连续播放录像或签疲劳/审美终验；新自然片段只有厚壳/膜两主材，canvas缺DOM及恢复前段，整页截图另列。file预览受工具安全策略拒绝，未绕行或声称浏览器渲染成功；撕底浅庭浅面边厚及旧材料动态疑问留实际审看。",
+    "features": [
+      "COH-F052",
+      "COH-F041"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/interactive/r100-i14-review.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/interactive/r100-i14-review.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/art-handoff-manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/art-natural-media-source.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/art-natural-visual-review.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/art-page-static-check.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E187",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-09",
+    "revision": "bbf69de52dc5cc5e6a0c0fd0c1b190038fb766f3",
+    "scope": "I14原RC下Chrome155三档真实暂停/同run冷续及独立历史检查点的trusted浏览器blur。冷续首次完整存档仅sequence/checksum变化；暂停及blur保持完整checkpoint/inventory/raw，blur实测稳定782–813ms，回页保持暂停并以正常键显式继续。当前RC恢复门有限通过。",
+    "limitations": "首低原严格字节断言与原headed默认focus模拟失败保留；自然首帧16.66ms及38/54/58叶变化不抹零。hidden仍false，不签hidden/OS应用失焦、跨引擎或弱设备；专项不计48主链、不回写主链。旧31恢复/4冻结合同按原来源继承，无新增听感/人审通过。",
+    "features": [
+      "COH-F052",
+      "COH-F044",
+      "COH-F045"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i14/root/recovery-gate.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-release-gate-recovery.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-three-lifecycle.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-focus-native-audit.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E188",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-10-09",
+    "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+    "scope": "P48精确遮挡查询缓存整改：1396原源不变、1改1增，八世界六族39757776原式等价断言；108世界全部内容/三档payload相同、308依赖逐字核验。Director明确桥接新依赖资格，并重新绑定覆盖/有限经济/恢复三发布门。",
+    "limitations": "依赖与原式等价不冒充全108新运行或用户图审；I14连续链仍须完成旧12+新36，旧失败和弱设备/听感/终验待项保持。",
+    "features": [
+      "COH-F052",
+      "COH-F039"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-actor-cache-delta-recommendation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/equivalence/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/package-continuity.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/root/render-delta-binding.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/root/release-gates-after-cache.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E189",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-09",
+    "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+    "scope": "新源码四重档原预算复验全过，CPU p95 7.7–9.0ms/绘制统计1.7–2.5ms；三正式诊断新入场3.379–3.744s、三历史同run冷续2.695–2.913s。10同图/6混合重建12个双GC样本最大保留增长1.376MiB，受管对象计数稳定。",
+    "limitations": "原四例3fail/1pass仍在；参考M4 Pro/Chrome155且低电模式已启用，不算另一弱机。只Rift请求窗口无记录>50ms，网页/净化点51–487ms任务保留。六入口属独立诊断，其中3真实出发不计48，也无主链写入。",
+    "features": [
+      "COH-F052",
+      "COH-F044",
+      "COH-F045"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-reference-runtime-after-cache.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-render-entry-review.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-reference-resources-after-cache.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/runtime-reference/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/runtime/report.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E190",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-09",
+    "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+    "scope": "遮挡查询优化在两个固定重档六个正常灯雾/相机停点的原/新PNG、全actor条带及记录状态完全相同；Art亲看9原图，未见新增视觉差异。",
+    "limitations": "六实际停点的可见角色hidden均0，真实partial/连续进出及多可见actor未覆盖；right/up/down无left。Gym正式combat/AI完整checkpoint不可用，工具原失败保留，成功比较限定已记录状态。数值原式边界验证另列E188，无新增整体ART或人审。",
+    "features": [
+      "COH-F052",
+      "COH-F039"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i14/occlusion-visual/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/occlusion-visual/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/occlusion-visual/README.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E192",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-09",
+    "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+    "scope": "新RC可携包1398生产源/308唯一依赖/1519绑定文件；独立逐归档文件校验1520成员(含manifest)通过，无多余、缺失或SHA错误。参考Mac fresh安装/preflight和真实Chrome155正式菜单/端口顺延/关唯一页退出已过，清洁包字节相同继承。",
+    "limitations": "这是当前参考Mac交付路径检查，不是另一台弱设备、Windows/Linux、自然出击或听感/人审通过。关页为程序操作，非系统标题栏点击。原tar夹带1608 AppleDouble元数据的失败原件保留；clean tar不含它们。用户原存档未进入临时窗口。",
+    "features": [
+      "COH-F052",
+      "COH-F049"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/handoff-clean.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-device-current-rc-clean-review.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/README.md",
+        "role": "doc"
+      }
+    ]
   }
 ]

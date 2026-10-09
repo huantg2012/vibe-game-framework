@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-09",
+  "status": "planned-no-new-rendering-result",
+  "reviewer": "I14 art agent",
+  "features": [
+    "COH-F052",
+    "COH-F007",
+    "COH-F039"
+  ],
+  "purpose": "Bound the visual consequences of exact actor occlusion query caching; not a new art direction, asset, geometry, gameplay or UI change.",
+  "authorization": "Root approved only presentation.ts integration and actor-occlusion-field.ts for I14 actorMasks performance remediation; Art owns this occlusion-visual directory only.",
+  "readRules": [
+    {
+      "path": ".cursor/skills/pixel-models/SKILL.md",
+      "sha256": "54c0dc853794d9541f3eb9b12d4446e7537786e1a9f011acd776605cc298a2ed"
+    },
+    {
+      "path": ".cursor/skills/pixel-models/exemplars.md",
+      "sha256": "ea8e243a2b95f439a2821c06dbef481daad7cf92ea311cdf3f880bb549b6c4b5"
+    },
+    {
+      "path": "docs/art-direction.md",
+      "sha256": "0d35789c4a2d1b2e7a07b807576e7eeca4cf237bbaacb833c87758d95f83722b"
+    },
+    {
+      "path": "docs/art/actor-pixels.md",
+      "sha256": "85fb4bb6ab77ea36107aa911af5ad9cc7e40ae663aaf6b56104fd1db49d68ffd"
+    },
+    {
+      "path": "docs/world.md",
+      "sha256": "02f14283544d62ddd61b0e1d36519dbfe32f76db19268dc6fccca0c3aee896d3"
+    }
+  ],
+  "immutableReferences": {
+    "originalQuery": "world.roleAt(x,y)!=='solid' || nativeVolumeHeightAt(world.raster,x,y)<Math.max(1,ground-y)",
+    "sampling": "Integer world pixels, original floor/ceil actor bounds and strict less-than threshold; no dilation, erosion, antialiasing, fuzzy threshold or body shrink.",
+    "role": "Only top visible solid foreground masks; walkable relief and empty space do not mask. Physical collision, fog/LOS and live Hosts remain separate authorities.",
+    "height": "Native height sample is already Float32; preserve numeric values rather than quantizing/rounding anew.",
+    "staleCache": "World geometry is immutable for one presentation. Rebuild on a new presentation/world/restored world; do not share actor bounds/ground between actors."
+  },
+  "pixelSkillApplicability": {
+    "essenceAndShapeRange": "既有像素人物在既有三维感前景后面被遮挡；形体成立范围锁为原有玩家/敌人及世界实体。没有新增形体候选或重绘任务。",
+    "carrierAndCamera": "Rift既有俯视世界坐标，前景mask仍附原actor对象；不改变相机、32px角色体系或实际显示尺度。",
+    "canvasAndPalette": "保留当前32×32玩家及既有32×32/32×48/48×64敌人体量，精灵颜色、材质、边缘、透明像素与filter不改；没有新增色板格。",
+    "namedAnchors": [
+      {
+        "reference": "已锁Rift玩家（player-sprite-dense）",
+        "preserve": "原四向直立、面罩/背包/分腿、灯与体量；不旋转GameObject。"
+      },
+      {
+        "reference": "现行R100 hollow-wreckage 的实体前景",
+        "preserve": "保留普通实体厚度、斜边和遮挡，不把普通阴影变成吞光。"
+      },
+      {
+        "reference": "现行R100 felt-wedges 的solid/relief关系",
+        "preserve": "可走浅起伏不能裁掉角色，叠压可见role按原查询。"
+      }
+    ],
+    "worldAndGround": "正常游戏对应材料与原肩灯/雾上查看；黑底mask只作为诊断附图，不能代替场内上下文。",
+    "noDrawing": "本任务无新像素、贴图、色板、相机或in-game UI产出；新视觉类别、形体抽卡及UI重设计闸门不触发。写完逐条复核以原/新代码与实际同状态证据为准，不能仅凭计划签审。"
+  },
+  "checks": [
+    {
+      "id": "OV-01",
+      "owner": "Code/QA; Art consumes exact receipt",
+      "scope": "Pure integer query and mask coverage",
+      "cases": [
+        "Six material families from registered real-world fixtures.",
+        "At least one solid, relief, null/erosion and world-border sample; prove each category was actually sampled.",
+        "Height threshold exactly equal and immediately either side; integer/negative/out-of-raster XY; actual fractional ground values.",
+        "Declared domain for NaN/nonfinite ground: old OR keeps non-solid visible even if comparison yields NaN; preserve behavior or demonstrate these inputs are outside actual interface."
+      ],
+      "acceptance": "Zero changed visibility bits and zero old/new span or alpha differences in the reported sample domain. Report sizes, coordinates, hashes and misses, not just a boolean."
+    },
+    {
+      "id": "OV-02",
+      "owner": "Code/QA integration; Art inspects visible frames",
+      "scope": "Moving actor and changing silhouette",
+      "cases": [
+        "Normal movement parallel to/across one solid diagonal edge: near-side visible, partial occlusion, clear departure.",
+        "Same ground/position with different facing or animation bounds; bounds enlargement is still consumed.",
+        "Ground changes with equivalent bounds and different actors simultaneously on opposite sides."
+      ],
+      "acceptance": "Compare at exactly matched positions, bounds and ground. No one-frame stale strip or actor-sharing artifact relative to original query; original mask key/span generation must remain unchanged."
+    },
+    {
+      "id": "OV-03",
+      "owner": "Art limited image review from Code matched captures",
+      "scope": "Two ordinary game contexts, no extra natural sorties",
+      "selection": {
+        "worlds": [
+          "hollow-wreckage",
+          "felt-wedges"
+        ],
+        "grade": "severe",
+        "seed": 20261004,
+        "reason": "One tall curved/diagonal solid edge; one layered solid/relief surface. These belong to the already registered I14 diagnostic set."
+      },
+      "cases": [
+        "At least one visible partial actor mask at a solid edge; confirm alpha is neither all visible nor all hidden.",
+        "At least one actor over visible relief remains intact; include two actors if available in the same fixture.",
+        "Use normal shoulder light and existing fog; keep any raw alpha diagnostic separate."
+      ],
+      "captureLimit": "Reuse existing query-suite and planned runtime diagnostic snapshots. Target at most 12 old/new state pairs across both contexts; fewer are sufficient if the explicit cases are demonstrated. No need for 48 more trips or a full324 rerun.",
+      "acceptance": "Source/seed/pose/facing/ground/clock recorded, paired old/new mask results exact. Art physically views original normal frames and describes clipping borders and visible silhouette. No continuous-motion or subjective art pass inferred from stills."
+    },
+    {
+      "id": "OV-04",
+      "owner": "Code/QA lifecycle; Art verifies no visual-rule expansion",
+      "scope": "New/recovered world, actor retirement and destruction",
+      "cases": [
+        "World/presentation swap and cold restore reconstruct field; same coordinates in distinct worlds cannot reuse another world field.",
+        "Actor removed/retired or scene destroyed clears original masks with no surviving cached object masking another actor.",
+        "Live Host motion/visibility changes keep existing authority; cache must not absorb these dynamic systems."
+      ],
+      "acceptance": "Finite lifecycle records/source contract, not a new gameplay simulation; no restored-rule or cleanup semantics change."
+    }
+  ],
+  "sourceAndComparisonRules": [
+    "Baseline is actual original roleAt+nativeVolumeHeightAt expression, never new cache reimplemented as its own oracle.",
+    "Old/new source SHA and generated field inputs must be frozen in final receipts.",
+    "If whole-frame pixels differ because another animation/clock changed, do not label whole-frame equality or waive an actor-edge difference; exact mask comparison remains decisive.",
+    "Do not edit the previously frozen I14 review HTML/JSON/art-handoff or original failure evidence."
+  ],
+  "pending": [
+    "New production implementation and code/QA equivalence receipts.",
+    "Matched normal-context original frames and actual Art viewing.",
+    "Bounded final conclusion, including any scenario missing."
+  ],
+  "browserPolicy": "No browser currently started. Original file-review-page denial remains effective; no alternate route to that page. A separately authorized production-rendering regression may run only in the root-coordinated window.",
+  "humanApproval": false,
+  "releaseGatePass": false
+}

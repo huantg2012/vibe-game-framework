@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-09",
+  "reviewer": "root",
+  "status": "partial-release-gates-adopted",
+  "qaReview": {
+    "path": "docs/qa/artifacts/r100-i14/qa-release-gate-recommendations.json",
+    "sha256": "f75d8624242033fa81586eff14a72eef774c3890dbd1857607af16cf743db731"
+  },
+  "release": {
+    "revision": "r100-native-v3-revision-6-internal-rc-20261008",
+    "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "hash": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "acceptedGates": [
+    {
+      "id": "R100-E-I14-QA-COVERAGE",
+      "purpose": "release-gate",
+      "gateId": "R100-G-COVERAGE",
+      "kind": "automated",
+      "status": "pass",
+      "revision": "r100-native-v3-revision-6-internal-rc-20261008",
+      "releaseManifestHash": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8",
+      "method": "Independent current source/dependency/hash audit plus inherited qualified world/grade evidence; not a new full runtime matrix",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+          "sha256": "a89afdaa3803dc6adfbef9392ff6120397eea64093accfcde7f01064ca7cd01e"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-technical-review.json",
+          "sha256": "f11b5b6a195f6d44aab1d523cfb7720d8bb7349d4be412cd6345943b5aeaddf8"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+          "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+        }
+      ],
+      "scope": "1397 current production files unchanged;108 package manifests/307 dependencies exact; current108 qualified+production worlds/324 qualified+production grades. package-lock separately bound outside1397.",
+      "limits": [
+        "Performance74 complete/1 interrupted/33 unstarted, lifecycle10 same+18mixed/12GC and8 semantic negatives remain sampled.",
+        "No new human art acceptance, browser155 runtime or weak-device pass."
+      ]
+    },
+    {
+      "id": "R100-E-I14-QA-ECONOMY",
+      "purpose": "release-gate",
+      "gateId": "R100-G-ECONOMY",
+      "kind": "source",
+      "status": "pass",
+      "revision": "r100-native-v3-revision-6-internal-rc-20261008",
+      "releaseManifestHash": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8",
+      "method": "Independent current production continuity and exact I13 closed QA/evidence binding; inherit bounded I13 result only",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+          "sha256": "a89afdaa3803dc6adfbef9392ff6120397eea64093accfcde7f01064ca7cd01e"
+        },
+        {
+          "path": "docs/qa/rift-r100-i13.md",
+          "sha256": "ad768d15d034321406c1c39bf6c6de872fa724d2439a516479df2b7aa9defa57"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i13-continuation/root/closure-disposition.json",
+          "sha256": "dde7e13244140d8ab10cf7d124a072f4012a35c37fcc4b1ac59f150ebb78cb2a"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-preparation-budget.json",
+          "sha256": "54c3bda7b72a4c63a98bd65320c687a917cc8c07cdb8795e7bc1670c9bcc7294"
+        }
+      ],
+      "scope": "I13 bounded low/medium maintenance+actual growth, natural severe deep-contaminant return and subsequent ordinary affordable preparation; earned functional-effect chains with explicit ancestral replacements; B facility debt repaid from B receipts.",
+      "limits": [
+        "52 unique runs/208 financial saves/29638 existing assertions are not I14 new runs.",
+        "A alternatives cannot double-fund same boots; freeze uses ancestral stock and another Q4 severe admission fails.",
+        "Bdash0/fixed-recipe failure and full-line service margin-19 preserved.",
+        "No infinite supply, quality/deep-kindling premium, general grade profit ordering or required one-for-one item replenishment."
+      ]
+    }
+  ],
+  "remaining": [
+    {
+      "gateId": "R100-G-ART",
+      "status": "pending",
+      "reason": "Current-candidate normal visual/weakest/human scope pending"
+    },
+    {
+      "gateId": "R100-G-EXPEDITION",
+      "status": "pending",
+      "reason": "I14 new48 continuous and current environment complete-flow review pending"
+    },
+    {
+      "gateId": "R100-G-RECOVERY",
+      "status": "pending",
+      "reason": "New first-three actual pause/focus/cold-continue and old-contract applicability pending"
+    },
+    {
+      "gateId": "R100-G-RELEASE",
+      "status": "pending",
+      "reason": "Real weaker device, listening/fatigue, current RC user final acceptance and all remaining gates pending"
+    }
+  ],
+  "disposition": "Independent QA source/dependency and bounded I13 conclusions accepted for the current unchanged RC. No new runtime or human acceptance inferred. I14 stays active."
+}

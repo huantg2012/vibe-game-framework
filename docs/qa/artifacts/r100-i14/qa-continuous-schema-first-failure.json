@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-09T04:34:13.840Z",
+  "status": "audit-schema-assertion-failed-before-full-check",
+  "command": "node docs/qa/artifacts/r100-i14/qa-continuous-batches.mjs --through 1",
+  "exitCode": 1,
+  "assertion": {
+    "actual": "",
+    "expected": null,
+    "field": "controlledBuild"
+  },
+  "cause": "Report uses empty string for absent controlledBuild; audit incorrectly required null. Validate exact frozen runner absent representation, not production mutation.",
+  "originalScript": "docs/qa/artifacts/r100-i14/qa-continuous-batches-before-schema-fix.mjs",
+  "productionOrOriginalReportEdited": false
+}

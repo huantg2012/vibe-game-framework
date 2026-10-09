@@ -1,0 +1,327 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T03:46:50.243Z",
+  "status": "pass-limited-forensic-audit",
+  "tool": {
+    "file": "docs/qa/artifacts/r100-i14/qa-first-cold-audit.mjs",
+    "sha256": "e72432a90291ec812607e4cde3b0c89b3e8a4088bc15a32eb921b0d5c270c825"
+  },
+  "runId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+  "identity": "r100-native-v3:red-vault-fragments-low",
+  "seed": 648373796,
+  "firstAttempt": {
+    "status": "technical-assertion-failure-preserved",
+    "gameDeath": false,
+    "settled": false,
+    "extraSortie": false
+  },
+  "reload": {
+    "recursiveFullRecordDifferences": [
+      {
+        "path": "$.riftCheckpoint.sequence",
+        "before": 6,
+        "after": 8
+      },
+      {
+        "path": "$.checkpointChecksum",
+        "before": "94d20e92",
+        "after": "e9425c84"
+      }
+    ],
+    "validChecksums": {
+      "before": "94d20e92",
+      "after": "e9425c84"
+    },
+    "simulationAndInventoryUnchanged": true,
+    "explanation": "Bound production pagehide and hidden handlers force checkpoint commits; each successful commit increments sequence even while the simulation is paused. Exact event multiplicity was not separately captured, so the two specific dispatches are inferred from the production paths, not claimed as observed.",
+    "sourceLocations": [
+      "src/scenes/rift-scene.ts:2327",
+      "src/scenes/rift-scene.ts:2340",
+      "src/systems/rift-frame-commit.ts:45",
+      "src/systems/rift-frame-commit.ts:70",
+      "src/managers/save-manager.ts:104"
+    ]
+  },
+  "pause": {
+    "status": "pass-for-first-low",
+    "wallMs": 757.0999999046326,
+    "elapsedMs": 783.3000000000001,
+    "fullSnapshotDifferences": [
+      {
+        "path": "$.at",
+        "before": 11551.5,
+        "after": 12308.599999904633
+      }
+    ],
+    "checkpointInventoryAndRawExactlyEqual": true
+  },
+  "focus": {
+    "status": "pending-native-event-not-generated",
+    "nativeLossEvents": [],
+    "observations": [
+      {
+        "at": 12504,
+        "elapsedMs": 883.2600000000001,
+        "paused": false,
+        "hidden": false,
+        "focused": true,
+        "events": [
+          {
+            "type": "pageshow",
+            "trusted": true,
+            "hidden": false,
+            "focused": true,
+            "at": 2033.0999999046326
+          }
+        ]
+      },
+      {
+        "at": 13295.099999904633,
+        "elapsedMs": 1466.0400000000006,
+        "paused": false,
+        "hidden": false,
+        "focused": true,
+        "events": [
+          {
+            "type": "pageshow",
+            "trusted": true,
+            "hidden": false,
+            "focused": true,
+            "at": 2033.0999999046326
+          }
+        ]
+      },
+      {
+        "at": 14053.199999809265,
+        "elapsedMs": 2232.6700000000005,
+        "paused": false,
+        "hidden": false,
+        "focused": true,
+        "events": [
+          {
+            "type": "pageshow",
+            "trusted": true,
+            "hidden": false,
+            "focused": true,
+            "at": 2033.0999999046326
+          }
+        ]
+      }
+    ]
+  },
+  "recoveryInput": {
+    "exactStorageDeepEqual": true,
+    "originalFailedStoragePreserved": true,
+    "firstRunCount": 1,
+    "completedRecovery": "pending-separate-actual-evidence"
+  },
+  "freezes": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/policy-freeze.json",
+      "version": 1,
+      "boundReferences": 23,
+      "grades": {
+        "low": 16,
+        "medium": 16,
+        "severe": 16
+      },
+      "task": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/task-preregistration.md",
+        "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+      }
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/policy-freeze.json",
+      "version": 2,
+      "boundReferences": 33,
+      "grades": {
+        "low": 16,
+        "medium": 16,
+        "severe": 16
+      },
+      "task": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/task-preregistration.md",
+        "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+      }
+    }
+  ],
+  "scope": "No browser executed by this audit. Freeze/source and original failure diagnosis only, not completed48, recovery release gate, real focus loss, device or listening qualification.",
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/1-cold-input.save.json",
+      "sha256": "2daf4545fe60e3d2957dbeddbec32a65644b4d0b0e673c4499fe96af5e97db4b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/browser-storage.json",
+      "sha256": "affb3f428179ec2d90891d15cff5dbd2e22a19ed5fbab6276b23c47cd8121e75"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/1-pause-before.json",
+      "sha256": "1010a1ea4ea3bea9e03983c3f6651c79b70b80479b4378ffa0b2d8bb78ca61a3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/1-pause-after.json",
+      "sha256": "920b903dbd399e35ae3b268415d4dd1c4345fc8b09b3d3984b85a40c7f6d2d66"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/1-focus-before.json",
+      "sha256": "9b1f968395c2c0161448f2eabe29315072a54a84ddf98c5828d70213ed28287e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/1-focus-after.json",
+      "sha256": "691ea7414663109cf70ba658e8ff76e52b758e6d14af1dc7e39efd0593873e25"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/1-focus-held.json",
+      "sha256": "78b97628a6846f902a82feb17d25a81262ba960fe3a5d04b41f364585b8f87b3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/policy-freeze.json",
+      "sha256": "fc2be2433e4aff2204cd690441fb0fdd1c35139ced794357b36e84c1df272663"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-continuous-source-preflight.json",
+      "sha256": "99f0505013e3bc29efc70ae2c39cfbd865ab79796d16f0b8de67af0dbcafbdca"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/browser-storage.json",
+      "sha256": "d47271eedf94df8b86500ae1fcf28c4f008152222da35c0d0c5079cff4b4f3f2"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/2-after-preparation.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/report.json",
+      "sha256": "9bb670ee68ac83b681a87c722874f94dfc16007b7f34cf9ac8466b4daba04f5f"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/earned-a23-storage.json",
+      "sha256": "684d7f2e0b8567ee8b9320ec93833b5339940be01c6f1d0a77c2b6df2b299781"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/task-preregistration.md",
+      "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+    },
+    {
+      "file": "tools/world-study/r100-i14-continuous-journey.mjs",
+      "sha256": "7ac2a052efd25158dfe6e1e53c9404efb88a13f44839b815539f16a8950dce6e"
+    },
+    {
+      "file": "tools/qa/r100-i14-lifecycle.mjs",
+      "sha256": "201857168f860e783634b34472ab893b765e1295381664b5bf5c0d0fa1c24e24"
+    },
+    {
+      "file": "tools/world-study/run-r100-i14-continuous.mjs",
+      "sha256": "07a84c18c7b22a16c97d45a18f5cbba06b5a64ffbe0fdb7b7c52977c9502948c"
+    },
+    {
+      "file": "tools/world-study/r100-i13-bounded-journey.mjs",
+      "sha256": "6855b51dd82d9ef9fcb308f0293c893f55dff2e6a6f7856db55167826dcbec10"
+    },
+    {
+      "file": "tools/world-study/r100-i13-retry-policy.mjs",
+      "sha256": "38e6bd457a2397bb00ca8a73e637b3c6bd471b36a98aeb53d91c996a8456ec33"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-policy.mjs",
+      "sha256": "4faf37eb6e1d3adf3ee39f7db91357d4713fc7eb04ac3d34dd61281abca41fa9"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/world-study/r100-frozen-server.mjs",
+      "sha256": "75bc54d4dd2ad3a1eff93069a7121288e829d055e1903420cf6b99b11a502ae7"
+    },
+    {
+      "file": "tools/qa/check-r100-i14-runtime-budget.mjs",
+      "sha256": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1"
+    },
+    {
+      "file": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/policy-freeze.json",
+      "sha256": "d911b4babefe449b312ea4cb08ef0dd1663cd0ecf9871052e0f4251a5df4e260"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/same-run-earned-storage.json",
+      "sha256": "affb3f428179ec2d90891d15cff5dbd2e22a19ed5fbab6276b23c47cd8121e75"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/task-preregistration.md",
+      "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+    },
+    {
+      "file": "tools/world-study/r100-i14-continuous-v2-journey.mjs",
+      "sha256": "67caacdce212cf6d65ba8ac88c3e43fef6fd99e2420621cbdf273d2521eac2e1"
+    },
+    {
+      "file": "tools/qa/r100-i14-lifecycle-v2.mjs",
+      "sha256": "8a2ecc10c2727a0c507a1987097da6265e9c724f70e721f92a2528493b324646"
+    },
+    {
+      "file": "tools/world-study/run-r100-i14-continuous-v2.mjs",
+      "sha256": "9da06fc1714cdca0972c94d3f0d0af4413b0974d04323abe8d54f09b71a0348d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/report.json",
+      "sha256": "f012b04527e32207d7f40c83eb85cdd4bf5057fbc4f22a963a9ad7365fe90e4d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/execution.json",
+      "sha256": "c7752564b35bfc042e2c129be3e2c18dfb9859f6da4a9a1e0412c1ab279f68f2"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/1-cold-before.json",
+      "sha256": "158f07c40315b9a9c1e8755c56e4cdb0bf847f1760d790b9b7806001458d3c2f"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/journey.jsonl",
+      "sha256": "824bf40ce9a44f5d640a09cbdeb234a9f250b8a471b0f94eff3b98b268764d1d"
+    },
+    {
+      "file": "src/types/rift-checkpoint.ts",
+      "sha256": "462c70371d977239fa9c0c93bb17c6e2fe7620bd56375b346e832e300e607621"
+    },
+    {
+      "file": "src/managers/save-manager.ts",
+      "sha256": "245d98e29dcfd87f7155fe7ae046adbe925aba834d4fa7cfc9eaa0e5272dd19f"
+    },
+    {
+      "file": "src/systems/rift-frame-commit.ts",
+      "sha256": "fbcb12fbf92f750eb27546625bf20a4e20146d93e45c4d4409e422ed2497a765"
+    },
+    {
+      "file": "src/scenes/rift-scene.ts",
+      "sha256": "6f39cad6e744c5de2985a21631dbb782f62a1c0a86652a2206ef29c195eaa43b"
+    }
+  ]
+}

@@ -1,0 +1,232 @@
+{
+  "date": "2026-10-09",
+  "status": "source-continuity-pass-not-runtime",
+  "reviewer": "qa",
+  "tool": {
+    "path": "docs/qa/artifacts/r100-i14/qa-continuous-source-preflight.mjs",
+    "sha256": "f674cd6aefe7324e5128569ea1baa6d28a51e721e33ecf32c0d254d109b1e0c1"
+  },
+  "sourceReport": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/report.json",
+    "sha256": "9bb670ee68ac83b681a87c722874f94dfc16007b7f34cf9ac8466b4daba04f5f"
+  },
+  "sourceStorage": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/browser-storage.json",
+    "sha256": "d47271eedf94df8b86500ae1fcf28c4f008152222da35c0d0c5079cff4b4f3f2"
+  },
+  "sourceTerminal": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/2-after-preparation.save.json",
+    "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+  },
+  "sourceLineage": "I13 A23 actual settled terminal; I14 must continue this state without undoing costs or maturity",
+  "storageOrigin": "http://127.0.0.1:3033",
+  "currentSaveKey": "coh-save-v1",
+  "currentSaveRawSha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090",
+  "reportAfterPreparationSha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090",
+  "rawEqualsTerminalAndReport": true,
+  "cycle": 65,
+  "kindlingReserve": 35,
+  "modules": [
+    {
+      "id": "CORE",
+      "type": "CORE",
+      "hp": 51,
+      "maxHp": 145
+    },
+    {
+      "id": "STORAGE",
+      "type": "STORAGE",
+      "hp": 103,
+      "maxHp": 145
+    },
+    {
+      "id": "PURIFIER",
+      "type": "PURIFIER",
+      "hp": 51,
+      "maxHp": 145
+    }
+  ],
+  "moduleMaxHpTier": 3,
+  "growth": {
+    "schemaVersion": 2,
+    "upgrades": {
+      "growth_chaos_resist": 4,
+      "growth_kindling_affinity": 3,
+      "growth_vitality": 4,
+      "growth_sortie_slot": 1,
+      "growth_defense_slot": 3,
+      "growth_forecast_clarity": 3
+    },
+    "progression": {
+      "version": 1,
+      "impactExperienced": true,
+      "offeringCompleted": true,
+      "toolRevealed": true,
+      "crestExperienced": true
+    }
+  },
+  "inventorySha256": "3c6b9ba30ec7cb4a68cf9d051e0fe52b184e932cbe4c771162b025b1402600ab",
+  "equipment": {
+    "weaponId": "WPN_6b4c933e-e952-46aa-92c5-3aa5b8683c39",
+    "toolIds": [
+      "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+      "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+      null,
+      null
+    ],
+    "defenseIds": [
+      "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1",
+      "WPN_02b78f00-e8da-4b12-88f2-3c19938d5cdc",
+      "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1",
+      null
+    ]
+  },
+  "inventoryRun": {
+    "id": "608f30e3-ad10-4f07-b54f-17b7d425ca4f",
+    "status": "settled",
+    "carriedOutIds": [
+      "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+      "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+      "WPN_6b4c933e-e952-46aa-92c5-3aa5b8683c39"
+    ],
+    "revealedNodes": {
+      "r100-contaminant-safe-1": [
+        "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1"
+      ],
+      "r100-kindling-contested-2": [
+        "WPN_02b78f00-e8da-4b12-88f2-3c19938d5cdc"
+      ],
+      "r100-contaminant-contested-1": [
+        "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1"
+      ],
+      "r100-kindling-deep-1": [
+        "WPN_be45ebcc-9ced-4846-aaf9-5e88ca2198ae"
+      ]
+    },
+    "destroyedIds": [],
+    "catalogVersion": "contaminant-v1",
+    "lootAlgorithmVersion": 1,
+    "combatRulesVersion": 2,
+    "actionReceipts": {
+      "catalog:608f30e3-ad10-4f07-b54f-17b7d425ca4f:1": {
+        "itemId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+        "broken": false,
+        "usesLeft": 3,
+        "definitionId": "sealed_hourglass",
+        "catalogVersion": "contaminant-v1"
+      }
+    },
+    "passiveReceipts": [],
+    "dropPlan": {
+      "sourceRegions": {
+        "r100-contaminant-contested-1": {
+          "sourceTag": "density",
+          "hint": "多见改变重量的残留"
+        },
+        "r100-contaminant-safe-1": {
+          "sourceTag": "density",
+          "hint": "多见改变重量的残留"
+        },
+        "r100-kindling-contested-1": {
+          "sourceTag": "acoustic",
+          "hint": "多见会改变声音的残留"
+        },
+        "r100-kindling-contested-2": {
+          "sourceTag": "acoustic",
+          "hint": "多见会改变声音的残留"
+        },
+        "r100-kindling-deep-1": {
+          "sourceTag": "acoustic",
+          "hint": "多见会改变声音的残留"
+        },
+        "r100-kindling-safe-1": {
+          "sourceTag": "density",
+          "hint": "多见改变重量的残留"
+        }
+      },
+      "version": 1,
+      "catalogVersion": "contaminant-v1",
+      "lootAlgorithmVersion": 1,
+      "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f",
+      "runSeed": 3078293538,
+      "entries": [
+        {
+          "nodeId": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "frosted_furnace_core",
+              "appearanceId": "resin_nodule",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "lead_type_stamp",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ]
+    },
+    "outcome": "extract",
+    "returnedIds": [
+      "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1",
+      "WPN_02b78f00-e8da-4b12-88f2-3c19938d5cdc",
+      "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1"
+    ],
+    "kindlingGained": 30,
+    "baseSettled": true
+  },
+  "fixedService": {
+    "CORE": 51,
+    "STORAGE": 100,
+    "PURIFIER": 51
+  },
+  "serviceDebt": 0,
+  "originalCapital": {
+    "CORE": 51,
+    "STORAGE": 102,
+    "PURIFIER": 51
+  },
+  "originalCapitalDebt": 0,
+  "storageKeys": [
+    "coh_first_growth_done",
+    "coh-save-v1",
+    "coh-save-v1:previous",
+    "coh.atmosphere.v1"
+  ],
+  "limits": [
+    "No new I14 runtime has occurred; this validates only the exact starting state.",
+    "The previous backup is an older active save and must not replace coh-save-v1.",
+    "Storage includes presentation history and original origin; any necessary origin remap must be separately disclosed without editing save values.",
+    "Equipment and earned inventory are preserved; this is not a new heavy-preparation or profitability acceptance gate."
+  ]
+}

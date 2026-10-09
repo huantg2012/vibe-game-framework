@@ -1,0 +1,44 @@
+{
+  "startedAt": "2026-10-09T04:40:35.220Z",
+  "kit": "/Users/yilungao/coh/dist/r100-i14-device-kit-v3-20261009",
+  "status": "passed-reference-cli-only-page-close-and-port-fallback",
+  "scope": "Original exported --play CLI lifecycle on reference Mac; only-page close is programmatic. No weak-device, listening, or native title-bar interaction claim.",
+  "timeoutMs": 30000,
+  "defaultPortCondition": "test-owned-stub-occupies-5173",
+  "exit": {
+    "code": 0,
+    "signal": null
+  },
+  "timedOut": false,
+  "observation": {
+    "scope": "Original --play CLI, real Chrome, formal MainMenu, then programmatic close of its only page. No departure, no human play, no native title-bar click.",
+    "events": [
+      {
+        "type": "launched",
+        "at": "2026-10-09T04:40:36.236Z",
+        "version": "155.0.8059.39"
+      },
+      {
+        "type": "menu",
+        "at": "2026-10-09T04:40:39.172Z",
+        "url": "http://127.0.0.1:5174/",
+        "state": {
+          "interactive": true,
+          "currentSave": null,
+          "webgl": true
+        }
+      },
+      {
+        "type": "only-page-closed",
+        "at": "2026-10-09T04:40:39.177Z"
+      },
+      {
+        "type": "disconnected",
+        "at": "2026-10-09T04:40:39.236Z"
+      }
+    ]
+  },
+  "usedAlternatePort": true,
+  "ownServerProcessExited": true,
+  "finishedAt": "2026-10-09T04:40:39.497Z"
+}

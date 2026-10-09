@@ -1,0 +1,117 @@
+{
+  "status": "bounded-informed-static-review-complete-dynamic-audio-human-pending",
+  "date": "2026-10-09",
+  "reviewer": "I14 art agent",
+  "features": [
+    "COH-F052",
+    "COH-F041",
+    "COH-F007",
+    "COH-F039"
+  ],
+  "mode": "Informed expert module review; prior contract, existing source bindings and material labels known before image viewing. Not blind user testing.",
+  "candidate": {
+    "revision": "r100-native-v3-revision-6-internal-rc-20261008",
+    "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "entry": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.html",
+    "sha256": "b68da40194dea28956b95b6361bd1b19cca2c7d21ea197242d347d569a53a534"
+  },
+  "method": "Physically viewed six original 1152x768 normal-view screenshots via view_image, one severe frame each. Four predetermined I14 diagnostic worlds and two available same-grade neighbors; gallery original source/continuity limits retained. No new game run, image transformation or audio playback/listening performed.",
+  "scope": {
+    "grade": "severe only",
+    "viewedFrames": 6,
+    "uniqueWorlds": 6,
+    "directSameGradePairs": [
+      [
+        "felt-wedges",
+        "short-fibre-mat"
+      ],
+      [
+        "white-scarfield",
+        "chalk-divide"
+      ]
+    ],
+    "notViewed": [
+      {
+        "world": "blister-field",
+        "grade": "severe",
+        "reason": "Existing gallery explicitly has no direct normal frame for this grade; not silently replaced by medium or another world."
+      },
+      {
+        "world": "grain-laminate",
+        "grade": "severe",
+        "reason": "Existing gallery explicitly has no direct normal frame for this grade; not silently replaced by medium or another world."
+      }
+    ],
+    "normalGameVideo": "pending first three real runs; not yet received",
+    "audioListening": "not performed; no audibly perceived audio tool available"
+  },
+  "classification": {
+    "spaceProjection": "Top-down player and ground with broad shaded surfaces suggesting height, curved mass and intersecting planes; cone/radial limited illumination masks beyond the immediate actor. No inference about 2D/3D implementation from this appearance.",
+    "imageLanguage": "Hard stair-stepped silhouettes and discrete actor pixels sit over dense granular or striated material surfaces with continuous-looking light falloff. Broad colored masses carry composition; fine texture does not replace those masses.",
+    "formMaterials": "Curved red shell, wedged blue planes, rounded purple shoulder and pale coarse-grain surface are the visible primary forms. Green marked actors and small ordinary protagonist use a simpler pixel silhouette within the same limited light.",
+    "colorComposition": "Warm small player light is set against locally red, blue, purple or pale neutral surfaces; green/cyan intrusion is localized. Much of the frame is black. Focal readable space is usually immediately ahead of the player, with quiet text at the perimeter.",
+    "motifEmotion": "The recurring relation is a small warm-lit figure standing beside a partial mass too large for one view; local color/material changes preserve isolation and close-range uncertainty.",
+    "motionEffects": "Unverified from stills."
+  },
+  "quality": {
+    "identity": {
+      "verdict": "partly-established-in-sampled-views",
+      "finding": "Red shell versus blue layered wedge versus pale granular mass has distinct shape/color relations. The two paired comparisons show local structural differences, but all-library identity and unselected seeds remain outside this review."
+    },
+    "coherence": {
+      "verdict": "established-in-sampled-views",
+      "finding": "Small pixel actors, bounded lamp field, localized cyan/green and dark framing recur across all six without requiring the worlds to share one gray palette."
+    },
+    "maturity": {
+      "verdict": "fragile-material-specificity-unresolved",
+      "finding": "Large forms and contact light are resolved in these views. Fine dense textures on broad faces do not by themselves prove fiber/membrane material behavior; continuous movement and source-specific audio are needed to settle that impression."
+    },
+    "gameplayFit": {
+      "verdict": "partially-observed",
+      "finding": "Visible protagonist and near figures separate from the immediate ground. Collision boundaries from all approach directions, natural search readability under stress and withdrawal remain unverified."
+    },
+    "sound": "unverified",
+    "feel": "unverified",
+    "continuousFatigue": "unverified"
+  },
+  "preserve": [
+    "Distinct material colors and medium-scale shapes rather than overall gray unification.",
+    "Bounded lamp field and large forms extending beyond it.",
+    "Localized intrusion color and restrained peripheral HUD without a center overlay."
+  ],
+  "newConfirmedProductionDefects": [],
+  "reviewQuestions": [
+    {
+      "id": "I14-ART-01",
+      "category": "evidence-gap / material expression",
+      "scope": "felt-wedges and short-fibre-mat sampled severe views",
+      "observation": "Fine surface texture alone does not establish the intended material behavior in one view.",
+      "severity": "unrated pending continuous observation; no new P1 asserted",
+      "confidence": "high for still appearance, low for gameplay-wide consequence",
+      "competingExplanation": "Viewing angle, shared normal-view lamp and missing animation can make different materials appear similarly hard in one image.",
+      "nextObservation": "Use already planned/current natural materials and same-grade gallery views to ask what physical relation is remembered without relying on the name; preserve distinct wedge versus rounded-shoulder shapes. No automatic request for a reskin or a new sample quota."
+    },
+    {
+      "id": "I14-ART-02",
+      "category": "evidence-gap / boundary readability",
+      "scope": "buried-lamellae sampled near-side warm boundary",
+      "observation": "Near face and floor share warm hue; static frame and explanatory line do not prove natural approach readability.",
+      "severity": "unrated pending actual approach; no collision defect inferred",
+      "confidence": "medium",
+      "competingExplanation": "Normal parallax/motion and other lamp approach can distinguish the contact edge.",
+      "nextObservation": "Inspect ordinary approach/retreat in the existing registered diagnostic or human play before assigning a defect; no extra replay required solely by this note."
+    }
+  ],
+  "requiredHumanFacts": [
+    "Actual listening to five sources and six families by three grades with device/volume/duration noted.",
+    "Important cues in normal encounters, spatial proximity and repeated transitions.",
+    "Continuous visual experience including ordinary weak/unselected locations, not just these static severe samples.",
+    "Explicit candidate-bound user conclusion, with actual reviewed scope."
+  ],
+  "pageScope": "External review document reusing established QA listening-page language; no in-game UI, art-direction, production asset, gameplay or framework change.",
+  "humanApproval": false,
+  "releaseGatePass": false
+}

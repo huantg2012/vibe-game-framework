@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T04:45:18.386Z",
+  "status": "exact-query-delta-static-and-oracle-review-pass-runtime-pending",
+  "reviewer": "qa",
+  "sourceDelta": {
+    "priorCount": 1397,
+    "newCount": 1398,
+    "unchangedPrior": 1396,
+    "changes": [
+      "src/systems/r100-world/actor-occlusion-field.ts",
+      "src/systems/r100-world/presentation.ts"
+    ]
+  },
+  "method": "Independently read production delta and complete oracle test, compared manifest maps/changed-file hashes and every retained alpha/span digest. Did not rerun39.7million assertions.",
+  "proof": [
+    "Mask pixels remain integer floor/ceil scan positions; bounds/ground key and row/span emitter are unchanged.",
+    "Within the immutable physical world, non-solid caches -Infinity; the original max(1,ground-y) is>=1 or Infinity, so this preserves true. NaN threshold explicitly calls the original role OR condition.",
+    "Solid heights are copied from existing Float32 height data without quantization and compared with the same strict < operator; equal threshold remains occluded.",
+    "Outside physical map the original world.roleAt returns null, matching the new visible branch. Hydrated production worlds assert raster and physical map dimensions match.",
+    "No gameplay/FOV/Host/AI state is part of this cache. Each presentation owns its allocation; rollback/destroy clear it, retired actors are skipped before querying."
+  ],
+  "oracleEvidence": {
+    "assertionsReported": 39757776,
+    "worlds": 8,
+    "families": 6,
+    "matchingFullAlphaDigests": 8,
+    "matchingPoseSpanDigests": 112,
+    "nodeBuildMs": [
+      {
+        "world": "ash-strata",
+        "ms": 9.126500000000021,
+        "bytes": 2293760
+      },
+      {
+        "world": "crystal-fibre",
+        "ms": 8.166625000000067,
+        "bytes": 2293760
+      },
+      {
+        "world": "ivory-basin",
+        "ms": 6.167124999999942,
+        "bytes": 2293760
+      },
+      {
+        "world": "cinder-ridge",
+        "ms": 8.22179200000005,
+        "bytes": 3145728
+      },
+      {
+        "world": "pallid-membrane",
+        "ms": 9.743582999999944,
+        "bytes": 3145728
+      },
+      {
+        "world": "silt-gel",
+        "ms": 8.797541999999794,
+        "bytes": 3145728
+      },
+      {
+        "world": "hollow-wreckage",
+        "ms": 10.206041999999798,
+        "bytes": 3145728
+      },
+      {
+        "world": "felt-wedges",
+        "ms": 9.651582999999846,
+        "bytes": 3145728
+      }
+    ],
+    "negativeCases": "Exact/±1e-7 height threshold, finite fractional ground,NaN,Infinity,-Infinity,outside,relief,VOID,bounds expansion,multi actor,key reuse,retired/destroy/rebuild."
+  },
+  "remaining": [
+    "QA6 isolated formal entry/cold and >50ms tasks",
+    "Code original4 performance with unchanged budgets",
+    "Root bounded resources with new allocation",
+    "Art bounded actual visual comparison",
+    "Single production build receipt and explicit newRC/old12+new36 source bridge"
+  ],
+  "limits": [
+    "A pure exact-query proof and recorded oracle cases do not claim runtime budgets, no added loading stall, visual preference, audio or human acceptance.",
+    "The eight fixed severe cases cover six families and known failures; they are not108new visual reviews.",
+    "Previous source-bound gate recommendations remain tied to old RC until Director delta adoption."
+  ],
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+      "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/equivalence/report.json",
+      "sha256": "f77ace350c3ff9133e7f8d4e146995598b065a2bbcc39d6055a8a5ab3b881be0"
+    },
+    {
+      "file": "tools/recovery/check-r100-actor-occlusion.ts",
+      "sha256": "7c0181b5b315cfe0b008f99be3ff4eac97bfdf2c1185b1267edb913407b8c558"
+    },
+    {
+      "file": "src/systems/r100-world/actor-occlusion-field.ts",
+      "sha256": "9d86d9c87c3ccb202a1a81d15f1a26e64ca7ed9d8031a2e622ea8a4f6862458b"
+    },
+    {
+      "file": "src/systems/r100-world/presentation.ts",
+      "sha256": "9471e8c94a6532832c5d4db466b829a24d3c27370f6c41712224daed50d587de"
+    },
+    {
+      "file": "src/generation/world-study/r100-master-world.ts",
+      "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+    },
+    {
+      "file": "src/generation/world-study/r100-native-data.ts",
+      "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-raster.ts",
+      "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+    }
+  ]
+}

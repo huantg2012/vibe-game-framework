@@ -1,0 +1,38 @@
+{
+  "recordedAt": "2026-10-09T03:48:08.994629+00:00",
+  "scope": "I14 QA tools only; production1397 bytes unchanged",
+  "checks": [
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "evidence": "exec session50418 completed exit0; no diagnostics"
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx --import ./tools/recovery/register-css.mjs tools/recovery/check-world-generation-version.ts",
+      "exitCode": 0,
+      "evidence": "4 immutablev1 complete-paint identities,3 coldv2 reconstructions, full-body retreats/resource seats, contract/version/stream rejection passed"
+    },
+    {
+      "command": "npm run dev -- --host 127.0.0.1 --port 3036 --strictPort",
+      "startup": "Vite5.4.21 ready126ms",
+      "shutdown": "owned toolsession34892 Ctrl-C exit130 after startup; not a crash"
+    },
+    {
+      "command": "node tools/world-study/run-r100-i14-continuous.mjs --self-check",
+      "exitCode": 0,
+      "evidence": "continuous/code-self-check.json"
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/run-r100-i14-continuous-v2.mjs --self-check",
+      "exitCode": 0,
+      "evidence": "continuous/recovery-v2/code-self-check.json"
+    }
+  ],
+  "lint": {
+    "status": "unavailable",
+    "reason": "package.json defines no lint script; node --check is syntax only"
+  },
+  "existingTests": "Targeted existing generation version protection test run. Full108/324 was not repeated; existing31 recovery aggregate retained via same-source RC evidence.",
+  "originalFailure": "continuous/batch-01/execution.json retained, no replacement; expected normal pagehide sequence/checksum recommit corrected in separate v2",
+  "auditToolNote": "code-inheritance.json ran before adding device-compatible metadata aliases. Exact executed tool bytes retained in code-inheritance-tool-at-audit.mjs and hash matches original receipt. Freeze binds final tool."
+}

@@ -1,0 +1,171 @@
+{
+  "scope": "Instrumented causal diagnostic, never a budget passing recheck",
+  "sources": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-profile/report.json",
+      "sha256": "a04e1ec7f0f6b638a62b16601cc3c76c32f038fc620d1b4e5d4b830237867e26"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-profile/raw-stages.json",
+      "sha256": "abe0027ba5502635aedc4a10f23dc581b7c2710273bc9c6216a2a1756cca8d0f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-profile/v8.cpuprofile",
+      "sha256": "5827f1aa4feef96bff0160a911bdf8c017ec1f1796016eb1f6d65ad06b7bd88d"
+    }
+  ],
+  "maskFractionOfMeasuredAfterUpdate": 0.9622928027775358,
+  "topSelfCpuSamples": [
+    {
+      "function": "(idle)",
+      "url": "",
+      "line": 0,
+      "selfMs": 34463.73699999848
+    },
+    {
+      "function": "(program)",
+      "url": "",
+      "line": 0,
+      "selfMs": 2734.2630000000026
+    },
+    {
+      "function": "castRayDirection",
+      "url": "http://127.0.0.1:3035/src/utils/grid-raycast.ts",
+      "line": 17,
+      "selfMs": 2276.1170000000006
+    },
+    {
+      "function": "maskActor",
+      "url": "http://127.0.0.1:3035/src/systems/r100-world/presentation.ts",
+      "line": 195,
+      "selfMs": 1704.6879999999958
+    },
+    {
+      "function": "isOpaque",
+      "url": "http://127.0.0.1:3035/src/generation/world-study/r100-native-data.ts",
+      "line": 25,
+      "selfMs": 1547.1580000000001
+    },
+    {
+      "function": "roleAt",
+      "url": "http://127.0.0.1:3035/src/generation/world-study/r100-native-data.ts",
+      "line": 13,
+      "selfMs": 1461.9799999999993
+    },
+    {
+      "function": "fillRect",
+      "url": "",
+      "line": 0,
+      "selfMs": 1330.568
+    },
+    {
+      "function": "paintSurfaceMaterial",
+      "url": "http://127.0.0.1:3035/src/entities/form-renderers/d/paint-genome/material.ts",
+      "line": 2,
+      "selfMs": 1216.917999999998
+    },
+    {
+      "function": "matterAt",
+      "url": "http://127.0.0.1:3035/src/generation/world-study/r100-native-data.ts",
+      "line": 11,
+      "selfMs": 1107.4369999999994
+    },
+    {
+      "function": "hasLineOfSight",
+      "url": "http://127.0.0.1:3035/src/utils/grid-raycast.ts",
+      "line": 72,
+      "selfMs": 976.6519999999994
+    },
+    {
+      "function": "getUnoccludedVisibilityAt",
+      "url": "http://127.0.0.1:3035/src/systems/visibility-system.ts",
+      "line": 312,
+      "selfMs": 939.1449999999988
+    },
+    {
+      "function": "deformAlongGrowth",
+      "url": "http://127.0.0.1:3035/src/entities/form-renderers/d/paint-genome/live.ts",
+      "line": 93,
+      "selfMs": 668.8009999999988
+    },
+    {
+      "function": "paintVolumePresence",
+      "url": "http://127.0.0.1:3035/src/entities/form-renderers/d/volume-paint.ts",
+      "line": 6,
+      "selfMs": 579.5860000000006
+    },
+    {
+      "function": "drawFrame",
+      "url": "http://127.0.0.1:3035/src/ui/minimap.ts",
+      "line": 210,
+      "selfMs": 563.2670000000002
+    },
+    {
+      "function": "isLegalPaintFloor",
+      "url": "http://127.0.0.1:3035/src/systems/contamination-host-system.ts",
+      "line": 402,
+      "selfMs": 486.6499999999998
+    },
+    {
+      "function": "sampleField",
+      "url": "http://127.0.0.1:3035/src/entities/form-renderers/d/paint-genome/live.ts",
+      "line": 19,
+      "selfMs": 472.39299999999963
+    },
+    {
+      "function": "applyDangerSurface",
+      "url": "http://127.0.0.1:3035/src/entities/form-renderers/d/paint-genome/attach.ts",
+      "line": 193,
+      "selfMs": 441.2439999999996
+    },
+    {
+      "function": "isEar",
+      "url": "http://127.0.0.1:3035/.vite-cache/deps/phaser.js?v=4c53fa25",
+      "line": 55084,
+      "selfMs": 424.5249999999993
+    },
+    {
+      "function": "beadSigned",
+      "url": "http://127.0.0.1:3035/src/entities/form-renderers/d/paint-genome/live.ts",
+      "line": 56,
+      "selfMs": 397.5350000000001
+    },
+    {
+      "function": "getEffectiveRadius",
+      "url": "http://127.0.0.1:3035/src/systems/visibility-system.ts",
+      "line": 333,
+      "selfMs": 267.746
+    },
+    {
+      "function": "clip",
+      "url": "http://127.0.0.1:3035/src/entities/form-renderers/d/paint-genome/visibility.ts",
+      "line": 36,
+      "selfMs": 243.10199999999995
+    },
+    {
+      "function": "update",
+      "url": "http://127.0.0.1:3035/src/systems/trail-system.ts",
+      "line": 42,
+      "selfMs": 238.928
+    },
+    {
+      "function": "at",
+      "url": "http://127.0.0.1:3035/src/entities/form-renderers/d/paint-genome/visibility.ts",
+      "line": 23,
+      "selfMs": 223.6860000000001
+    },
+    {
+      "function": "GraphicsWebGLRenderer",
+      "url": "http://127.0.0.1:3035/.vite-cache/deps/phaser.js?v=4c53fa25",
+      "line": 30285,
+      "selfMs": 222.31099999999998
+    },
+    {
+      "function": "colorPaintField",
+      "url": "http://127.0.0.1:3035/src/entities/form-renderers/d/paint-genome/bake.ts",
+      "line": 495,
+      "selfMs": 218.1789999999999
+    }
+  ],
+  "conclusion": "Actor mask queries account for96.2% of measured material-side afterUpdate duration; optimize this exact query, not GPU shaders or thresholds. Other CPU visibility/paint work remains outside this minimal patch."
+}

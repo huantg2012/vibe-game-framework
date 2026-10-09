@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-09",
+  "status": "current-new-rc-handoff-reference-install-preflight-and-cli-pass",
+  "release": {
+    "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+    "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+    "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+  },
+  "implementationCommit": "ee46b5e98bac5ce0667be85a6dbaf8e0bc6c48c2",
+  "manifest": {
+    "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/manifest.json",
+    "sha256": "854ff70f397c3f952652dc6da9704f86245b59effabec0abdbd379b317f21b57"
+  },
+  "sourceCount": 1398,
+  "uniqueDependencies": 308,
+  "fileCount": 1519,
+  "archive": {
+    "path": "dist/r100-i14-device-kit-rc-20261009.tar.gz",
+    "sha256": "b76281f27b91e3d1d6950068c2fa6f2b9672502d2c173bb390d08d5122e4b500"
+  },
+  "archiveBytes": 161330273,
+  "exporter": {
+    "path": "tools/qa/package-r100-i14-device.mjs",
+    "sha256": "ca9e17f776fd28a9d28aecf49ed2208aa88a2ea6614f2a737f895dd499987510"
+  },
+  "runner": {
+    "path": "tools/qa/run-r100-i14-device.mjs",
+    "sha256": "dcdf8711a292003da49d0511badd09f2ef1810e208d4990cfcafb675c99e8938"
+  },
+  "runtimePolicy": {
+    "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/runtime-policy.json",
+    "sha256": "78adbd8c8f6406697fbc40f66f0fc0b5ce169759e349a0124cdfb9aa0005d16b"
+  },
+  "checks": [
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/install-game.log",
+        "sha256": "ed3488c0dad53ade8657c9fabb0a14b8fd232ce67362e4c5489d14bc4ef97686"
+      }
+    },
+    {
+      "command": "npm install --prefix .i14-runtime --ignore-scripts --no-audit --no-fund",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/install-runtime.log",
+        "sha256": "c59541a7d8bfc9987c0aa47adf2cdd2858be8b66de5abc0331d5a6484ae63ab6"
+      }
+    },
+    {
+      "command": "node tools/qa/run-r100-i14-device.mjs --preflight",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/preflight.log",
+        "sha256": "ecfb592edd6d739512d08d1aa775bf4f12969429ba4087df4fa3826a24ee1796"
+      }
+    },
+    {
+      "command": "node docs/qa/artifacts/r100-i14/root/device-kit-rc/cli-play-lifecycle.mjs /Users/yilungao/coh/dist/r100-i14-device-kit-rc-20261009",
+      "exitCode": 0,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/cli-play-lifecycle.json",
+        "sha256": "c7df3bd725cbacf755c25e39775fcd87617c5a5dd98ff6ce1eb343d93d3423d5"
+      }
+    }
+  ],
+  "historicalFocusCheck": {
+    "path": "docs/qa/artifacts/r100-i14/root/device-kit-v2/install-smoke.json",
+    "sha256": "be61a5fb9d372cc67fb672415664fdc2956e6d27d4200d4ff10cc0459ab97af5"
+  },
+  "retainedFailures": [
+    "docs/qa/artifacts/r100-i14/root/device-kit-v2/cli-play-lifecycle.json",
+    "docs/qa/artifacts/r100-i14/root/device-kit-v3/cli-play-first-failure.json"
+  ],
+  "limits": [
+    "Current kit archive was made before dependency installation, excludes caches, installed packages, result files and user saves.",
+    "Actual real Chrome155 on the same M4 Pro reference Mac; no real weaker device, other OS, listening or user acceptance.",
+    "Only-page-close was programmatic, not a native title-bar click. No natural departure during kit smoke.",
+    "Play uses native focus rather than Playwright focus emulation; previous v2 actual blur/Enter was on old source. New RC changes only renderer query implementation.",
+    "Shared Vite startup for both --run and --play changed to5173/fallback; original measurement child tools and frozen thresholds unchanged.",
+    "Current kit supersedes earlier v1/v2 archive and v3 source-directory handoffs; all previous failures and receipts remain."
+  ],
+  "humanApproval": false,
+  "releaseApproval": false
+}

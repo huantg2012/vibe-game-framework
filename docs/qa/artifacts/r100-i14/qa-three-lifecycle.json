@@ -1,0 +1,1894 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T03:56:45.842Z",
+  "status": "three-grade-pause-and-same-run-cold-state-pass",
+  "tool": {
+    "file": "docs/qa/artifacts/r100-i14/qa-three-lifecycle.mjs",
+    "sha256": "e6d5757c33af933b527cdd307b7bd31233845e9906f38fd0ae1d950f054771bf"
+  },
+  "rows": [
+    {
+      "ordinal": 1,
+      "grade": "low",
+      "runId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+      "recipeId": "r100-native-v3:red-vault-fragments-low",
+      "seed": 648373796,
+      "sourceSequence": 8,
+      "firstSavedSequence": 9,
+      "fullCommittedRecordDifferences": [
+        {
+          "path": "riftCheckpoint.sequence",
+          "before": 8,
+          "after": 9
+        },
+        {
+          "path": "checkpointChecksum",
+          "before": "e9425c84",
+          "after": "bdae4cc5"
+        }
+      ],
+      "completeSavedStateRestored": true,
+      "identityInventoryPositionExact": true,
+      "pause": {
+        "wallMs": 757.0999999046326,
+        "fullSnapshotDifferences": [
+          {
+            "path": "at",
+            "before": 11551.5,
+            "after": 12308.599999904633
+          }
+        ],
+        "checkpointInventoryRawExact": true
+      },
+      "cold": {
+        "restoreWallMs": 2930,
+        "firstRuntimeDeltaMs": 16.659999999999854,
+        "fullRuntimeLeafDifferences": [
+          {
+            "path": "run.elapsedMs",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "physics.elapsedMs",
+            "before": 7.983333333333508,
+            "after": 7.976666666666787,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "player.motionElapsedMs",
+            "before": 2390.6500000000005,
+            "after": 2407.3100000000004,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "player.lastDeltaMs",
+            "before": 15.060000000000036,
+            "after": 16.659999999999947,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "ai.enemies.0.entity.position.x",
+            "before": 829.70017353692,
+            "after": 829.4216103720115,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.entity.position.y",
+            "before": 88.4499472302341,
+            "after": 88.66184947929287,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.entity.bodyPosition.x",
+            "before": 819.70017353692,
+            "after": 819.4216103720115,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.entity.bodyPosition.y",
+            "before": 78.4499472302341,
+            "after": 78.66184947929287,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.entity.velocity.x",
+            "before": -16.713789894509503,
+            "after": -16.713789894509496,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.entity.velocity.y",
+            "before": 12.714134943526126,
+            "after": 12.714134943526135,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.state.facingAngle",
+            "before": 2.4912803484122397,
+            "after": 2.4912803484122388,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.state.perceptionAccumMs",
+            "before": 75.30000000000018,
+            "after": 91.96000000000012,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.state.position.x",
+            "before": 829.70017353692,
+            "after": 829.4216103720115,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.state.position.y",
+            "before": 88.4499472302341,
+            "after": 88.66184947929287,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.state.velocity.x",
+            "before": -16.713789894509503,
+            "after": -16.713789894509496,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.state.velocity.y",
+            "before": 12.714134943526126,
+            "after": 12.714134943526135,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.position.x",
+            "before": 565.7000000000032,
+            "after": 566.0500000000033,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.bodyPosition.x",
+            "before": 555.7000000000032,
+            "after": 556.0500000000033,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.perceptionAccumMs",
+            "before": 15.060000000000036,
+            "after": 31.719999999999985,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.position.x",
+            "before": 565.7000000000032,
+            "after": 566.0500000000033,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "tools.catalog.elapsedMs",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "tools.elapsedMs",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "chaos.value",
+            "before": 25.389264482252983,
+            "after": 25.391995472619705,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "chaos.peak",
+            "before": 25.389264482252983,
+            "after": 25.391995472619705,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "chaos.clockMs",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "trail.elapsedMs",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "trail.visited.0.atMs",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "world.hosts.hosts.0.state.hearingAccumMs",
+            "before": 75.30000000000018,
+            "after": 91.96000000000012,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.0.state.phase",
+            "before": 4.7493000000000025,
+            "after": 4.782620000000002,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.1.state.hearingAccumMs",
+            "before": 75.30000000000018,
+            "after": 91.96000000000012,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.1.state.phase",
+            "before": 6.849299999999996,
+            "after": 6.882619999999996,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.2.state.core.x",
+            "before": 339.754968,
+            "after": 339.7162142769231,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.2.state.hearingAccumMs",
+            "before": 75.30000000000018,
+            "after": 91.96000000000012,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.2.state.elapsedMs",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.2.state.phaseElapsedMs",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.nativePresentation.elapsedMs",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-presentation-clock"
+          },
+          {
+            "path": "world.nativePresentation.lastElapsedMs",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-presentation-clock"
+          },
+          {
+            "path": "world.nativePresentation.audio.clock",
+            "before": 2374.6500000000005,
+            "after": 2391.3100000000004,
+            "category": "normal-presentation-clock"
+          }
+        ],
+        "beforeInputAdditionalDeltaMs": 144.98999999999978,
+        "beforeInputAdditionalDifferences": [
+          {
+            "path": "run.elapsedMs",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          },
+          {
+            "path": "physics.elapsedMs",
+            "before": 7.976666666666787,
+            "after": 2.966666666666839
+          },
+          {
+            "path": "player.motionElapsedMs",
+            "before": 2407.3100000000004,
+            "after": 2552.3
+          },
+          {
+            "path": "player.lastDeltaMs",
+            "before": 16.659999999999947,
+            "after": 18.339999999999964
+          },
+          {
+            "path": "ai.enemies.0.entity.position.x",
+            "before": 829.4216103720115,
+            "after": 826.9145418878348
+          },
+          {
+            "path": "ai.enemies.0.entity.position.y",
+            "before": 88.66184947929287,
+            "after": 90.56896972082177
+          },
+          {
+            "path": "ai.enemies.0.entity.bodyPosition.x",
+            "before": 819.4216103720115,
+            "after": 816.9145418878348
+          },
+          {
+            "path": "ai.enemies.0.entity.bodyPosition.y",
+            "before": 78.66184947929287,
+            "after": 80.56896972082177
+          },
+          {
+            "path": "ai.enemies.0.entity.velocity.x",
+            "before": -16.713789894509496,
+            "after": -16.71378989450942
+          },
+          {
+            "path": "ai.enemies.0.entity.velocity.y",
+            "before": 12.714134943526135,
+            "after": 12.714134943526226
+          },
+          {
+            "path": "ai.enemies.0.state.facingAngle",
+            "before": 2.4912803484122388,
+            "after": 2.4912803484122334
+          },
+          {
+            "path": "ai.enemies.0.state.perceptionAccumMs",
+            "before": 91.96000000000012,
+            "after": 36.66999999999999
+          },
+          {
+            "path": "ai.enemies.0.state.position.x",
+            "before": 829.4216103720115,
+            "after": 826.9145418878348
+          },
+          {
+            "path": "ai.enemies.0.state.position.y",
+            "before": 88.66184947929287,
+            "after": 90.56896972082177
+          },
+          {
+            "path": "ai.enemies.0.state.velocity.x",
+            "before": -16.713789894509496,
+            "after": -16.71378989450942
+          },
+          {
+            "path": "ai.enemies.0.state.velocity.y",
+            "before": 12.714134943526135,
+            "after": 12.714134943526226
+          },
+          {
+            "path": "ai.enemies.1.entity.position.x",
+            "before": 566.0500000000033,
+            "after": 569.2000000000035
+          },
+          {
+            "path": "ai.enemies.1.entity.bodyPosition.x",
+            "before": 556.0500000000033,
+            "after": 559.2000000000035
+          },
+          {
+            "path": "ai.enemies.1.state.perceptionAccumMs",
+            "before": 31.719999999999985,
+            "after": 73.33999999999997
+          },
+          {
+            "path": "ai.enemies.1.state.position.x",
+            "before": 566.0500000000033,
+            "after": 569.2000000000035
+          },
+          {
+            "path": "tools.catalog.elapsedMs",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          },
+          {
+            "path": "tools.elapsedMs",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          },
+          {
+            "path": "chaos.value",
+            "before": 25.391995472619705,
+            "after": 25.415762957209793
+          },
+          {
+            "path": "chaos.peak",
+            "before": 25.391995472619705,
+            "after": 25.415762957209793
+          },
+          {
+            "path": "chaos.clockMs",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          },
+          {
+            "path": "trail.elapsedMs",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          },
+          {
+            "path": "trail.visited.0.atMs",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          },
+          {
+            "path": "world.hosts.hosts.0.state.hearingAccumMs",
+            "before": 91.96000000000012,
+            "after": 18.339999999999964
+          },
+          {
+            "path": "world.hosts.hosts.0.state.phase",
+            "before": 4.782620000000002,
+            "after": 5.072600000000003
+          },
+          {
+            "path": "world.hosts.hosts.1.state.hearingAccumMs",
+            "before": 91.96000000000012,
+            "after": 18.339999999999964
+          },
+          {
+            "path": "world.hosts.hosts.1.state.phase",
+            "before": 6.882619999999996,
+            "after": 7.1725999999999965
+          },
+          {
+            "path": "world.hosts.hosts.2.state.core.x",
+            "before": 339.7162142769231,
+            "after": 340.67414339249257
+          },
+          {
+            "path": "world.hosts.hosts.2.state.hearingAccumMs",
+            "before": 91.96000000000012,
+            "after": 18.339999999999964
+          },
+          {
+            "path": "world.hosts.hosts.2.state.elapsedMs",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          },
+          {
+            "path": "world.hosts.hosts.2.state.phaseElapsedMs",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          },
+          {
+            "path": "world.nativePresentation.elapsedMs",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          },
+          {
+            "path": "world.nativePresentation.lastElapsedMs",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          },
+          {
+            "path": "world.nativePresentation.audio.clock",
+            "before": 2391.3100000000004,
+            "after": 2536.3
+          }
+        ],
+        "longTasksObserved": []
+      },
+      "nativeFocusInOriginalHelper": "not-generated-pending-separate-headed-diagnostic"
+    },
+    {
+      "ordinal": 2,
+      "grade": "medium",
+      "runId": "a8993dd8-6f81-4369-8c13-456915af9f19",
+      "recipeId": "r100-native-v3:shell-patchwork-medium",
+      "seed": 925370804,
+      "sourceSequence": 8,
+      "firstSavedSequence": 9,
+      "fullCommittedRecordDifferences": [
+        {
+          "path": "riftCheckpoint.sequence",
+          "before": 8,
+          "after": 9
+        },
+        {
+          "path": "checkpointChecksum",
+          "before": "0e4569be",
+          "after": "d7e85069"
+        }
+      ],
+      "completeSavedStateRestored": true,
+      "identityInventoryPositionExact": true,
+      "pause": {
+        "wallMs": 761.1999998092651,
+        "fullSnapshotDifferences": [
+          {
+            "path": "at",
+            "before": 186157.90000009537,
+            "after": 186919.09999990463
+          }
+        ],
+        "checkpointInventoryRawExact": true
+      },
+      "cold": {
+        "restoreWallMs": 2903,
+        "firstRuntimeDeltaMs": 16.659999999999854,
+        "fullRuntimeLeafDifferences": [
+          {
+            "path": "run.elapsedMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "physics.elapsedMs",
+            "before": 0.6066666666687901,
+            "after": 0.6000000000020691,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "player.motionElapsedMs",
+            "before": 92359.43000000082,
+            "after": 92376.09000000083,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "player.lastDeltaMs",
+            "before": 16.530000000001746,
+            "after": 16.659999999999947,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "ai.enemies.0.state.perceptionAccumMs",
+            "before": 16.530000000001746,
+            "after": 33.19000000000169,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.state.waypointPauseMs",
+            "before": 600.5700000000014,
+            "after": 583.9100000000014,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.position.x",
+            "before": 926.3819192408728,
+            "after": 926.1344318674575,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.position.y",
+            "before": 169.6180807591241,
+            "after": 169.8655681325394,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.bodyPosition.x",
+            "before": 916.3819192408728,
+            "after": 916.1344318674575,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.bodyPosition.y",
+            "before": 159.6180807591241,
+            "after": 159.8655681325394,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.velocity.x",
+            "before": -14.849242404917188,
+            "after": -14.849242404917185,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.velocity.y",
+            "before": 14.84924240491781,
+            "after": 14.849242404917808,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.perceptionAccumMs",
+            "before": 49.599999999999994,
+            "after": 66.25999999999993,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.position.x",
+            "before": 926.3819192408728,
+            "after": 926.1344318674575,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.position.y",
+            "before": 169.6180807591241,
+            "after": 169.8655681325394,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.velocity.x",
+            "before": -14.849242404917188,
+            "after": -14.849242404917185,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.velocity.y",
+            "before": 14.84924240491781,
+            "after": 14.849242404917808,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.entity.position.x",
+            "before": 592.9736128873872,
+            "after": 593.2138649778943,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.entity.position.y",
+            "before": 122.14392115257604,
+            "after": 122.39843821095708,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.entity.bodyPosition.x",
+            "before": 582.9736128873872,
+            "after": 583.2138649778943,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.entity.bodyPosition.y",
+            "before": 112.14392115257604,
+            "after": 112.39843821095708,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.entity.velocity.x",
+            "before": 14.415125430430237,
+            "after": 14.415125430430235,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.entity.velocity.y",
+            "before": 15.271023502861999,
+            "after": 15.271023502861997,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.state.perceptionAccumMs",
+            "before": 99.47999999999594,
+            "after": 0,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.state.position.x",
+            "before": 592.9736128873872,
+            "after": 593.2138649778943,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.state.position.y",
+            "before": 122.14392115257604,
+            "after": 122.39843821095708,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.state.velocity.x",
+            "before": 14.415125430430237,
+            "after": 14.415125430430235,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.state.velocity.y",
+            "before": 15.271023502861999,
+            "after": 15.271023502861997,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "tools.catalog.elapsedMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "tools.elapsedMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "chaos.value",
+            "before": 25.689841447321676,
+            "after": 25.694376976384078,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "chaos.peak",
+            "before": 25.689841447321676,
+            "after": 25.694376976384078,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "chaos.clockMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "trail.elapsedMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "trail.visited.0.atMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "world.hosts.hosts.0.state.hearingAccumMs",
+            "before": 49.599999999999994,
+            "after": 66.25999999999993,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.0.state.phase",
+            "before": 5.067880000000005,
+            "after": 5.101200000000005,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.1.state.hearingAccumMs",
+            "before": 49.599999999999994,
+            "after": 66.25999999999993,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.1.state.phase",
+            "before": 7.1678800000000145,
+            "after": 7.201200000000014,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.2.state.hearingAccumMs",
+            "before": 49.599999999999994,
+            "after": 66.25999999999993,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.2.state.phase",
+            "before": 9.267880000000039,
+            "after": 9.301200000000039,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.3.state.hearingAccumMs",
+            "before": 49.599999999999994,
+            "after": 66.25999999999993,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.3.state.phase",
+            "before": 11.367880000000053,
+            "after": 11.401200000000053,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.4.state.core.x",
+            "before": 294.2104109851144,
+            "after": 294.3632317498477,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.4.state.hearingAccumMs",
+            "before": 49.599999999999994,
+            "after": 66.25999999999993,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.4.state.elapsedMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.4.state.phaseElapsedMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.5.state.core.x",
+            "before": 934.2104109851143,
+            "after": 934.3632317498477,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.5.state.hearingAccumMs",
+            "before": 49.599999999999994,
+            "after": 66.25999999999993,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.5.state.elapsedMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.5.state.phaseElapsedMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.nativePresentation.elapsedMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-presentation-clock"
+          },
+          {
+            "path": "world.nativePresentation.lastElapsedMs",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-presentation-clock"
+          },
+          {
+            "path": "world.nativePresentation.audio.clock",
+            "before": 2533.9400000000032,
+            "after": 2550.600000000003,
+            "category": "normal-presentation-clock"
+          }
+        ],
+        "beforeInputAdditionalDeltaMs": 66.64999999999964,
+        "beforeInputAdditionalDifferences": [
+          {
+            "path": "run.elapsedMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "physics.elapsedMs",
+            "before": 0.6000000000020691,
+            "after": 0.5833333333353963
+          },
+          {
+            "path": "player.motionElapsedMs",
+            "before": 92376.09000000083,
+            "after": 92442.74000000083
+          },
+          {
+            "path": "player.lastDeltaMs",
+            "before": 16.659999999999947,
+            "after": 16.660000000000036
+          },
+          {
+            "path": "ai.enemies.0.state.perceptionAccumMs",
+            "before": 33.19000000000169,
+            "after": 99.8400000000017
+          },
+          {
+            "path": "ai.enemies.0.state.waypointPauseMs",
+            "before": 583.9100000000014,
+            "after": 517.2600000000014
+          },
+          {
+            "path": "ai.enemies.1.entity.position.x",
+            "before": 926.1344318674575,
+            "after": 925.1444823737962
+          },
+          {
+            "path": "ai.enemies.1.entity.position.y",
+            "before": 169.8655681325394,
+            "after": 170.85551762620065
+          },
+          {
+            "path": "ai.enemies.1.entity.bodyPosition.x",
+            "before": 916.1344318674575,
+            "after": 915.1444823737962
+          },
+          {
+            "path": "ai.enemies.1.entity.bodyPosition.y",
+            "before": 159.8655681325394,
+            "after": 160.85551762620065
+          },
+          {
+            "path": "ai.enemies.1.entity.velocity.x",
+            "before": -14.849242404917185,
+            "after": -14.849242404917183
+          },
+          {
+            "path": "ai.enemies.1.entity.velocity.y",
+            "before": 14.849242404917808,
+            "after": 14.849242404917815
+          },
+          {
+            "path": "ai.enemies.1.state.facingAngle",
+            "before": 2.356194490192324,
+            "after": 2.3561944901923235
+          },
+          {
+            "path": "ai.enemies.1.state.perceptionAccumMs",
+            "before": 66.25999999999993,
+            "after": 132.9099999999999
+          },
+          {
+            "path": "ai.enemies.1.state.position.x",
+            "before": 926.1344318674575,
+            "after": 925.1444823737962
+          },
+          {
+            "path": "ai.enemies.1.state.position.y",
+            "before": 169.8655681325394,
+            "after": 170.85551762620065
+          },
+          {
+            "path": "ai.enemies.1.state.velocity.x",
+            "before": -14.849242404917185,
+            "after": -14.849242404917183
+          },
+          {
+            "path": "ai.enemies.1.state.velocity.y",
+            "before": 14.849242404917808,
+            "after": 14.849242404917815
+          },
+          {
+            "path": "ai.enemies.2.entity.position.x",
+            "before": 593.2138649778943,
+            "after": 594.174873339923
+          },
+          {
+            "path": "ai.enemies.2.entity.position.y",
+            "before": 122.39843821095708,
+            "after": 123.41650644448124
+          },
+          {
+            "path": "ai.enemies.2.entity.bodyPosition.x",
+            "before": 583.2138649778943,
+            "after": 584.174873339923
+          },
+          {
+            "path": "ai.enemies.2.entity.bodyPosition.y",
+            "before": 112.39843821095708,
+            "after": 113.41650644448124
+          },
+          {
+            "path": "ai.enemies.2.entity.velocity.x",
+            "before": 14.415125430430235,
+            "after": 14.415125430430237
+          },
+          {
+            "path": "ai.enemies.2.entity.velocity.y",
+            "before": 15.271023502861997,
+            "after": 15.271023502861995
+          },
+          {
+            "path": "ai.enemies.2.state.facingAngle",
+            "before": 0.8142217415214646,
+            "after": 0.8142217415214645
+          },
+          {
+            "path": "ai.enemies.2.state.perceptionAccumMs",
+            "before": 0,
+            "after": 66.64999999999999
+          },
+          {
+            "path": "ai.enemies.2.state.position.x",
+            "before": 593.2138649778943,
+            "after": 594.174873339923
+          },
+          {
+            "path": "ai.enemies.2.state.position.y",
+            "before": 122.39843821095708,
+            "after": 123.41650644448124
+          },
+          {
+            "path": "ai.enemies.2.state.velocity.x",
+            "before": 14.415125430430235,
+            "after": 14.415125430430237
+          },
+          {
+            "path": "ai.enemies.2.state.velocity.y",
+            "before": 15.271023502861997,
+            "after": 15.271023502861995
+          },
+          {
+            "path": "tools.catalog.elapsedMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "tools.elapsedMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "chaos.value",
+            "before": 25.694376976384078,
+            "after": 25.712521815040077
+          },
+          {
+            "path": "chaos.peak",
+            "before": 25.694376976384078,
+            "after": 25.712521815040077
+          },
+          {
+            "path": "chaos.clockMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "trail.elapsedMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "trail.visited.0.atMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "world.hosts.hosts.0.state.hearingAccumMs",
+            "before": 66.25999999999993,
+            "after": 16.660000000000036
+          },
+          {
+            "path": "world.hosts.hosts.0.state.phase",
+            "before": 5.101200000000005,
+            "after": 5.234500000000004
+          },
+          {
+            "path": "world.hosts.hosts.1.state.hearingAccumMs",
+            "before": 66.25999999999993,
+            "after": 16.660000000000036
+          },
+          {
+            "path": "world.hosts.hosts.1.state.phase",
+            "before": 7.201200000000014,
+            "after": 7.334500000000014
+          },
+          {
+            "path": "world.hosts.hosts.2.state.hearingAccumMs",
+            "before": 66.25999999999993,
+            "after": 16.660000000000036
+          },
+          {
+            "path": "world.hosts.hosts.2.state.phase",
+            "before": 9.301200000000039,
+            "after": 9.434500000000039
+          },
+          {
+            "path": "world.hosts.hosts.3.state.hearingAccumMs",
+            "before": 66.25999999999993,
+            "after": 16.660000000000036
+          },
+          {
+            "path": "world.hosts.hosts.3.state.phase",
+            "before": 11.401200000000053,
+            "after": 11.534500000000053
+          },
+          {
+            "path": "world.hosts.hosts.4.state.core.x",
+            "before": 294.3632317498477,
+            "after": 294.9489203676776
+          },
+          {
+            "path": "world.hosts.hosts.4.state.hearingAccumMs",
+            "before": 66.25999999999993,
+            "after": 16.660000000000036
+          },
+          {
+            "path": "world.hosts.hosts.4.state.elapsedMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "world.hosts.hosts.4.state.phaseElapsedMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "world.hosts.hosts.5.state.core.x",
+            "before": 934.3632317498477,
+            "after": 934.9489203676776
+          },
+          {
+            "path": "world.hosts.hosts.5.state.hearingAccumMs",
+            "before": 66.25999999999993,
+            "after": 16.660000000000036
+          },
+          {
+            "path": "world.hosts.hosts.5.state.elapsedMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "world.hosts.hosts.5.state.phaseElapsedMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "world.nativePresentation.elapsedMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "world.nativePresentation.lastElapsedMs",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          },
+          {
+            "path": "world.nativePresentation.audio.clock",
+            "before": 2550.600000000003,
+            "after": 2617.2500000000027
+          }
+        ],
+        "longTasksObserved": []
+      },
+      "nativeFocusInOriginalHelper": "not-generated-pending-separate-headed-diagnostic"
+    },
+    {
+      "ordinal": 3,
+      "grade": "severe",
+      "runId": "eb45216c-f7a1-4a47-9af4-5ab55dada148",
+      "recipeId": "r100-native-v3:torn-reservoir-severe",
+      "seed": 2103455321,
+      "sourceSequence": 8,
+      "firstSavedSequence": 9,
+      "fullCommittedRecordDifferences": [
+        {
+          "path": "riftCheckpoint.sequence",
+          "before": 8,
+          "after": 9
+        },
+        {
+          "path": "checkpointChecksum",
+          "before": "b0c60e98",
+          "after": "3f75f507"
+        }
+      ],
+      "completeSavedStateRestored": true,
+      "identityInventoryPositionExact": true,
+      "pause": {
+        "wallMs": 760.6999998092651,
+        "fullSnapshotDifferences": [
+          {
+            "path": "at",
+            "before": 179362.7000002861,
+            "after": 180123.40000009537
+          }
+        ],
+        "checkpointInventoryRawExact": true
+      },
+      "cold": {
+        "restoreWallMs": 2665,
+        "firstRuntimeDeltaMs": 16.659999999999854,
+        "fullRuntimeLeafDifferences": [
+          {
+            "path": "run.elapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "physics.elapsedMs",
+            "before": 2.7999999999998266,
+            "after": 2.7933333333331483,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "player.motionElapsedMs",
+            "before": 178075.58000002318,
+            "after": 178092.2400000232,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "player.lastDeltaMs",
+            "before": 16.180000000001748,
+            "after": 16.65999999999999,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "ai.enemies.0.state.perceptionAccumMs",
+            "before": 16.180000000001748,
+            "after": 32.84000000000174,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.0.state.waypointPauseMs",
+            "before": 601.9599999999975,
+            "after": 585.2999999999976,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.position.x",
+            "before": 845.0854581121652,
+            "after": 845.3640212770737,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.position.y",
+            "before": 106.56896972082177,
+            "after": 106.78087196988054,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.bodyPosition.x",
+            "before": 835.0854581121652,
+            "after": 835.3640212770737,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.bodyPosition.y",
+            "before": 96.56896972082177,
+            "after": 96.78087196988054,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.velocity.x",
+            "before": 16.71378989450942,
+            "after": 16.71378989450941,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.entity.velocity.y",
+            "before": 12.714134943526226,
+            "after": 12.714134943526238,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.facingAngle",
+            "before": 0.65031230517756,
+            "after": 0.6503123051775607,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.perceptionAccumMs",
+            "before": 64.72000000000116,
+            "after": 81.38000000000116,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.position.x",
+            "before": 845.0854581121652,
+            "after": 845.3640212770737,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.position.y",
+            "before": 106.56896972082177,
+            "after": 106.78087196988054,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.velocity.x",
+            "before": 16.71378989450942,
+            "after": 16.71378989450941,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.1.state.velocity.y",
+            "before": 12.714134943526226,
+            "after": 12.714134943526238,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.state.perceptionAccumMs",
+            "before": 81.38999999999942,
+            "after": 98.04999999999941,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.2.state.waypointPauseMs",
+            "before": 601.9599999999975,
+            "after": 585.2999999999976,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.3.entity.position.x",
+            "before": 318.79999999999654,
+            "after": 318.4499999999965,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.3.entity.bodyPosition.x",
+            "before": 308.79999999999654,
+            "after": 308.4499999999965,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.3.state.perceptionAccumMs",
+            "before": 32.36000000000058,
+            "after": 49.02000000000057,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "ai.enemies.3.state.position.x",
+            "before": 318.79999999999654,
+            "after": 318.4499999999965,
+            "category": "normal-ai-step"
+          },
+          {
+            "path": "tools.catalog.elapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "tools.elapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "chaos.value",
+            "before": 24.062775160832132,
+            "after": 24.06971100938253,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "chaos.peak",
+            "before": 24.062775160832132,
+            "after": 24.06971100938253,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "chaos.clockMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "trail.elapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "trail.visited.0.atMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-clock-physics-or-chaos"
+          },
+          {
+            "path": "world.hosts.hosts.0.state.hearingAccumMs",
+            "before": 32.36000000000058,
+            "after": 49.02000000000057,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.0.state.phase",
+            "before": 5.105600000000002,
+            "after": 5.1389200000000015,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.1.state.hearingAccumMs",
+            "before": 32.36000000000058,
+            "after": 49.02000000000057,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.1.state.phase",
+            "before": 7.20560000000001,
+            "after": 7.23892000000001,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.2.state.hearingAccumMs",
+            "before": 32.36000000000058,
+            "after": 49.02000000000057,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.2.state.phase",
+            "before": 9.305600000000027,
+            "after": 9.338920000000027,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.3.state.hearingAccumMs",
+            "before": 32.36000000000058,
+            "after": 49.02000000000057,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.3.state.phase",
+            "before": 11.405600000000042,
+            "after": 11.438920000000042,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.4.state.hearingAccumMs",
+            "before": 32.36000000000058,
+            "after": 49.02000000000057,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.4.state.phase",
+            "before": 13.505600000000047,
+            "after": 13.538920000000047,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.5.state.hearingAccumMs",
+            "before": 32.36000000000058,
+            "after": 49.02000000000057,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.5.state.phase",
+            "before": 15.605600000000047,
+            "after": 15.638920000000047,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.6.state.core.x",
+            "before": 119.97905451600575,
+            "after": 120.16676600547046,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.6.state.hearingAccumMs",
+            "before": 32.36000000000058,
+            "after": 49.02000000000057,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.6.state.elapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.6.state.phaseElapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.7.state.core.x",
+            "before": 919.9790545160057,
+            "after": 920.1667660054704,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.7.state.hearingAccumMs",
+            "before": 32.36000000000058,
+            "after": 49.02000000000057,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.7.state.elapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.7.state.phaseElapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.8.state.core.x",
+            "before": 471.97905451600576,
+            "after": 472.16676600547044,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.8.state.hearingAccumMs",
+            "before": 32.36000000000058,
+            "after": 49.02000000000057,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.8.state.elapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.hosts.hosts.8.state.phaseElapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-host-step"
+          },
+          {
+            "path": "world.nativePresentation.elapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-presentation-clock"
+          },
+          {
+            "path": "world.nativePresentation.lastElapsedMs",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-presentation-clock"
+          },
+          {
+            "path": "world.nativePresentation.audio.clock",
+            "before": 2552.7999999999993,
+            "after": 2569.459999999999,
+            "category": "normal-presentation-clock"
+          }
+        ],
+        "beforeInputAdditionalDeltaMs": 83.34000000000015,
+        "beforeInputAdditionalDifferences": [
+          {
+            "path": "run.elapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "physics.elapsedMs",
+            "before": 2.7933333333331483,
+            "after": 2.7999999999998124
+          },
+          {
+            "path": "player.motionElapsedMs",
+            "before": 178092.2400000232,
+            "after": 178175.58000002324
+          },
+          {
+            "path": "player.lastDeltaMs",
+            "before": 16.65999999999999,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "ai.enemies.0.state.perceptionAccumMs",
+            "before": 32.84000000000174,
+            "after": 116.18000000000174
+          },
+          {
+            "path": "ai.enemies.0.state.waypointPauseMs",
+            "before": 585.2999999999976,
+            "after": 501.95999999999754
+          },
+          {
+            "path": "ai.enemies.1.entity.position.x",
+            "before": 845.3640212770737,
+            "after": 846.7568371016163
+          },
+          {
+            "path": "ai.enemies.1.entity.position.y",
+            "before": 106.78087196988054,
+            "after": 107.84038321517437
+          },
+          {
+            "path": "ai.enemies.1.entity.bodyPosition.x",
+            "before": 835.3640212770737,
+            "after": 836.7568371016163
+          },
+          {
+            "path": "ai.enemies.1.entity.bodyPosition.y",
+            "before": 96.78087196988054,
+            "after": 97.84038321517437
+          },
+          {
+            "path": "ai.enemies.1.entity.velocity.x",
+            "before": 16.71378989450941,
+            "after": 16.713789894509368
+          },
+          {
+            "path": "ai.enemies.1.entity.velocity.y",
+            "before": 12.714134943526238,
+            "after": 12.714134943526304
+          },
+          {
+            "path": "ai.enemies.1.state.facingAngle",
+            "before": 0.6503123051775607,
+            "after": 0.6503123051775644
+          },
+          {
+            "path": "ai.enemies.1.state.perceptionAccumMs",
+            "before": 81.38000000000116,
+            "after": 164.72000000000116
+          },
+          {
+            "path": "ai.enemies.1.state.position.x",
+            "before": 845.3640212770737,
+            "after": 846.7568371016163
+          },
+          {
+            "path": "ai.enemies.1.state.position.y",
+            "before": 106.78087196988054,
+            "after": 107.84038321517437
+          },
+          {
+            "path": "ai.enemies.1.state.velocity.x",
+            "before": 16.71378989450941,
+            "after": 16.713789894509368
+          },
+          {
+            "path": "ai.enemies.1.state.velocity.y",
+            "before": 12.714134943526238,
+            "after": 12.714134943526304
+          },
+          {
+            "path": "ai.enemies.2.state.perceptionAccumMs",
+            "before": 98.04999999999941,
+            "after": 66.67999999999998
+          },
+          {
+            "path": "ai.enemies.2.state.waypointPauseMs",
+            "before": 585.2999999999976,
+            "after": 501.95999999999754
+          },
+          {
+            "path": "ai.enemies.3.entity.position.x",
+            "before": 318.4499999999965,
+            "after": 316.6999999999964
+          },
+          {
+            "path": "ai.enemies.3.entity.bodyPosition.x",
+            "before": 308.4499999999965,
+            "after": 306.6999999999964
+          },
+          {
+            "path": "ai.enemies.3.state.perceptionAccumMs",
+            "before": 49.02000000000057,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "ai.enemies.3.state.position.x",
+            "before": 318.4499999999965,
+            "after": 316.6999999999964
+          },
+          {
+            "path": "tools.catalog.elapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "tools.elapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "chaos.value",
+            "before": 24.06971100938253,
+            "after": 24.104406904832132
+          },
+          {
+            "path": "chaos.peak",
+            "before": 24.06971100938253,
+            "after": 24.104406904832132
+          },
+          {
+            "path": "chaos.clockMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "trail.elapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "trail.visited.0.atMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "world.hosts.hosts.0.state.hearingAccumMs",
+            "before": 49.02000000000057,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "world.hosts.hosts.0.state.phase",
+            "before": 5.1389200000000015,
+            "after": 5.305600000000001
+          },
+          {
+            "path": "world.hosts.hosts.1.state.hearingAccumMs",
+            "before": 49.02000000000057,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "world.hosts.hosts.1.state.phase",
+            "before": 7.23892000000001,
+            "after": 7.4056000000000095
+          },
+          {
+            "path": "world.hosts.hosts.2.state.hearingAccumMs",
+            "before": 49.02000000000057,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "world.hosts.hosts.2.state.phase",
+            "before": 9.338920000000027,
+            "after": 9.50560000000003
+          },
+          {
+            "path": "world.hosts.hosts.3.state.hearingAccumMs",
+            "before": 49.02000000000057,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "world.hosts.hosts.3.state.phase",
+            "before": 11.438920000000042,
+            "after": 11.605600000000045
+          },
+          {
+            "path": "world.hosts.hosts.4.state.hearingAccumMs",
+            "before": 49.02000000000057,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "world.hosts.hosts.4.state.phase",
+            "before": 13.538920000000047,
+            "after": 13.70560000000005
+          },
+          {
+            "path": "world.hosts.hosts.5.state.hearingAccumMs",
+            "before": 49.02000000000057,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "world.hosts.hosts.5.state.phase",
+            "before": 15.638920000000047,
+            "after": 15.80560000000005
+          },
+          {
+            "path": "world.hosts.hosts.6.state.core.x",
+            "before": 120.16676600547046,
+            "after": 121.05104694697064
+          },
+          {
+            "path": "world.hosts.hosts.6.state.hearingAccumMs",
+            "before": 49.02000000000057,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "world.hosts.hosts.6.state.elapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "world.hosts.hosts.6.state.phaseElapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "world.hosts.hosts.7.state.core.x",
+            "before": 920.1667660054704,
+            "after": 921.0510469469707
+          },
+          {
+            "path": "world.hosts.hosts.7.state.hearingAccumMs",
+            "before": 49.02000000000057,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "world.hosts.hosts.7.state.elapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "world.hosts.hosts.7.state.phaseElapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "world.hosts.hosts.8.state.core.x",
+            "before": 472.16676600547044,
+            "after": 473.05104694697064
+          },
+          {
+            "path": "world.hosts.hosts.8.state.hearingAccumMs",
+            "before": 49.02000000000057,
+            "after": 16.66999999999998
+          },
+          {
+            "path": "world.hosts.hosts.8.state.elapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "world.hosts.hosts.8.state.phaseElapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "world.nativePresentation.elapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "world.nativePresentation.lastElapsedMs",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          },
+          {
+            "path": "world.nativePresentation.audio.clock",
+            "before": 2569.459999999999,
+            "after": 2652.7999999999993
+          }
+        ],
+        "longTasksObserved": []
+      },
+      "nativeFocusInOriginalHelper": "not-generated-pending-separate-headed-diagnostic"
+    }
+  ],
+  "restoreWallMs": {
+    "samples": [
+      2930,
+      2903,
+      2665
+    ],
+    "max": 2930,
+    "allWithin5000": true,
+    "populationP95Claim": false
+  },
+  "limitations": [
+    "First low original technical interruption retained; its resumed segment is not another departure.",
+    "All committed source game data exactly persists into the first restored commit; only sequence/checksum change.",
+    "First runtime observer records a normal16.66ms frame after restore; clocks, AI movement, Host and chaos leaves are explicitly shown, not presented as a zero-time frame. Later observation lag remains separately listed.",
+    "Only three current-browser pause/restore points, supported by unchanged production source and previous broader contracts. This is not all-world new execution or a browser population p95.",
+    "Original helper generated no real focus loss. Native focus requires the separate headed fixture, and OS application focus is outside its claim.",
+    "Runtime leaf categorization and clock deltas do not certify auditory continuity or human perception."
+  ],
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/same-run-earned-storage.json",
+      "sha256": "affb3f428179ec2d90891d15cff5dbd2e22a19ed5fbab6276b23c47cd8121e75"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-resumed-first-complete.json",
+      "sha256": "d54744a4df5df0f24894d15c3c15c94ffda04e36f462f5df0b5cba8d105e92c4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-resumed-before-input.json",
+      "sha256": "1cb186b9249759ec5e8d7a92e6908c97eb8548916e990b97dd9321f231e14ba1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/1-pause-before.json",
+      "sha256": "1010a1ea4ea3bea9e03983c3f6651c79b70b80479b4378ffa0b2d8bb78ca61a3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/batch-01/i14/1-pause-after.json",
+      "sha256": "920b903dbd399e35ae3b268415d4dd1c4345fc8b09b3d3984b85a40c7f6d2d66"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-cold-menu-input.save.json",
+      "sha256": "786dd01572542d513f42b9d1e55236a6163b7acd314bdf73bbc973e706c2411d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-cold-first-complete.json",
+      "sha256": "0a4aaf03bec75e6f2a8d14573f29ace1b5c213a51f4ce25c086d30a8bcf6692f"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-cold-before-first-input.json",
+      "sha256": "4bb1cc96f0f1625580f86253179ea8d1c6cda3411aac22ae79d4cda6f7a6b689"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-pause-before.json",
+      "sha256": "748422a1ef4ad0a23390514de9bbd761abd87512004bc9c20fb9c97c5cd77c09"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-pause-after.json",
+      "sha256": "a7e6b16c2e7b4440acc6a57c3b4bced4756903c0d2da0dcd69b23f92f3af1abc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-lifecycle.json",
+      "sha256": "c086bdc4140abd05af512c1f124d6764f18b6b0caff943795b9ed9f4e468bdb5"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-cold-menu-input.save.json",
+      "sha256": "751fe72f8edeb69cf2467c982510f3715f137b6f16b1c3d8e7330520831ca544"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-cold-first-complete.json",
+      "sha256": "a53768f19d6c97806dc90a2c1d1ce8638e8d6b64c7877e17e8237275721a9b6e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-cold-before-first-input.json",
+      "sha256": "4058d38f3592e1866671aee027571b6aaa24ac7bd3e1489bd2bef25c615ed6fc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-pause-before.json",
+      "sha256": "6ddb15cf005b35dc7b75ed64c8812d5e387d345461ffd9f7750b87b3f6fbf8db"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-pause-after.json",
+      "sha256": "5c1cfb1019a143cfe7bf775ab2c658c14b69d091b42f557a0d8bb70bca7a4f36"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-lifecycle.json",
+      "sha256": "ffdad1e49cbd358813c1556f5e74eb83169abfbaae7cc7d47a150a7bdf1e0e7f"
+    }
+  ]
+}

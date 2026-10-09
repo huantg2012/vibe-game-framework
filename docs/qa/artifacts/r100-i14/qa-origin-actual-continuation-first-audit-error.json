@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T05:11:52.960Z",
+  "status": "audit-label-expectation-error-preserved",
+  "statement": "assert.equal(entry.riftCheckpoint.identity.recipeId,'wax-tongues-low')",
+  "expected": "wax-tongues-low",
+  "actual": "r100-native-v3:wax-tongues-low",
+  "exitCode": 1,
+  "entry": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-entry.save.json",
+    "sha256": "23e3ad7089b237382610892f0437678b4a6bd3a063944517f5da1950dbaaad69"
+  },
+  "resolution": "Correct the audit expected value to include the actual canonical r100-native-v3: prefix. No raw/game/controller data changed; complete before equality had already passed."
+}

@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T03:52:54.713Z",
+  "authorization": "Root explicitly approved three historical checkpoints in isolated headed diagnostic contexts to fill the missing native tab-focus evidence. These branches never update or count as48 main-chain sorties.",
+  "gameUrl": "http://127.0.0.1:3035/",
+  "headless": false,
+  "maxContexts": 1,
+  "maxCases": 3,
+  "holdMs": 700,
+  "cases": [
+    {
+      "grade": "low",
+      "source": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/same-run-earned-storage.json",
+        "sha256": "affb3f428179ec2d90891d15cff5dbd2e22a19ed5fbab6276b23c47cd8121e75"
+      },
+      "sourceKind": "storage",
+      "currentRawSha256": "cc582300aa73a09af506d8edfb3cdbf26b810bf37e8b54bb0611a36f8d1eafbd",
+      "runId": "024bdb71-0b90-4c03-9598-eef64646ba9b",
+      "sequence": 8,
+      "identity": "r100-native-v3:red-vault-fragments-low",
+      "seed": 648373796
+    },
+    {
+      "grade": "medium",
+      "source": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-cold-menu-input.save.json",
+        "sha256": "786dd01572542d513f42b9d1e55236a6163b7acd314bdf73bbc973e706c2411d"
+      },
+      "sourceKind": "raw",
+      "currentRawSha256": "786dd01572542d513f42b9d1e55236a6163b7acd314bdf73bbc973e706c2411d",
+      "runId": "a8993dd8-6f81-4369-8c13-456915af9f19",
+      "sequence": 8,
+      "identity": "r100-native-v3:shell-patchwork-medium",
+      "seed": 925370804
+    },
+    {
+      "grade": "severe",
+      "source": {
+        "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-cold-menu-input.save.json",
+        "sha256": "751fe72f8edeb69cf2467c982510f3715f137b6f16b1c3d8e7330520831ca544"
+      },
+      "sourceKind": "raw",
+      "currentRawSha256": "751fe72f8edeb69cf2467c982510f3715f137b6f16b1c3d8e7330520831ca544",
+      "runId": "eb45216c-f7a1-4a47-9af4-5ab55dada148",
+      "sequence": 8,
+      "identity": "r100-native-v3:torn-reservoir-severe",
+      "seed": 2103455321
+    }
+  ],
+  "dependencies": [
+    {
+      "file": "tools/qa/check-r100-i14-focus.mjs",
+      "sha256": "448ff9a30a47a13d0678d203028ddb0eaf0009b10ea9c6acec91a46b5e7c347c"
+    },
+    {
+      "file": "tools/qa/r100-i14-lifecycle-v2.mjs",
+      "sha256": "8a2ecc10c2727a0c507a1987097da6265e9c724f70e721f92a2528493b324646"
+    },
+    {
+      "file": "src/main.ts",
+      "sha256": "3a2e37353fd21f4b1898d775fa428142ec74e15b6b2ef4381e4d62be67dc378d"
+    },
+    {
+      "file": "src/types/rift-checkpoint.ts",
+      "sha256": "462c70371d977239fa9c0c93bb17c6e2fe7620bd56375b346e832e300e607621"
+    },
+    {
+      "file": "src/scenes/rift-scene.ts",
+      "sha256": "6f39cad6e744c5de2985a21631dbb782f62a1c0a86652a2206ef29c195eaa43b"
+    }
+  ],
+  "sourceManifest": {
+    "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+    "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+  },
+  "releaseCandidate": {
+    "file": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "task": {
+    "file": "docs/qa/artifacts/r100-i14/focus/task-preregistration.md",
+    "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+  },
+  "parentFreeze": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/policy-freeze.json",
+    "sha256": "d911b4babefe449b312ea4cb08ef0dd1663cd0ecf9871052e0f4251a5df4e260"
+  },
+  "environment": {
+    "node": "v22.14.0",
+    "chrome": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "chromeVersion": "Google Chrome 155.0.8059.39",
+    "playwrightModule": {
+      "file": "/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+      "sha256": "a0f5715ea22354f922791a9c53dc012d5d5c067ff9cc4cd35ffb7cd272071a9f"
+    }
+  },
+  "method": [
+    "Load exact actual current save bytes in a new temporary context; normal menu Enter Continue.",
+    "Read-only capture first complete frame, inventory and full saved state.",
+    "Open about:blank tab and bringToFront, requiring trusted native blur/hidden and actual game pause.",
+    "Capture complete state/inventory/raw while paused, wait at least700ms, capture and compare all fields.",
+    "Bring game tab back, observe that it remains paused; normal Enter consumes the pause-overlay action, then verify same active run and unchanged inventory/player position."
+  ],
+  "exclusions": [
+    "No synthetic event dispatch, state/clock/AI mutation, equipment or resource grant.",
+    "No new departure, movement, search, tool use, extraction or settlement.",
+    "Not OS application focus, performance sample, natural attempt or human review.",
+    "The main48 chain and all original source bytes remain untouched."
+  ]
+}

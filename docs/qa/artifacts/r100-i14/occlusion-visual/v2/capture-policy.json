@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T04:58:02.026Z",
+  "worlds": [
+    "hollow-wreckage",
+    "felt-wedges"
+  ],
+  "grade": "severe",
+  "seed": 20261004,
+  "loadout": "bare",
+  "gameUrl": "http://127.0.0.1:3037",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "maxPairsPerWorld": 3,
+  "maxTravelMsPerPose": 25000,
+  "authorization": "Root approved two worlds, at most three normal-keyboard stopping points each. Real Escape freezes simulation; only old-oracle/new-cache query is switched for mask redraw. No natural sortie count or performance qualification.",
+  "dependencies": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/capture-report.json",
+      "bytes": 4134,
+      "sha256": "df00816330da8707157abab89d5ab889941853b7cb376cd57994edffee742fa3"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/occlusion-visual/v2/capture.mjs",
+      "bytes": 18013,
+      "sha256": "f04b6d0f5730045d891c2e8ca252618e9ac1f8763bf17a375b759e17cfa2f3ff"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "bytes": 171410,
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "bytes": 171533,
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/old-presentation.ts.txt",
+      "bytes": 14434,
+      "sha256": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+      "bytes": 3913,
+      "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/equivalence/report.json",
+      "bytes": 48133,
+      "sha256": "f77ace350c3ff9133e7f8d4e146995598b065a2bbcc39d6055a8a5ab3b881be0"
+    }
+  ],
+  "selection": "Entry, nearest body-supported partial-occlusion location chosen using read-only static geometry and current opaque body texture, then nearest relief/clear departure. Actual reachable case misses retained; no teleport, invulnerability, enemy deletion, forced facing or clock manipulation.",
+  "reliefClarification": "Fixed felt-wedges severe seed20261004 has zero top-visible relief pixels; hollow-wreckage supplies the relief opportunity. No role change or fabricated relief fixture.",
+  "capture": "Gym formal RiftScene renderer, normal shoulder lamp/fog/camera. Canvas PNGs omit DOM. Raw fillRect spans and all available exported simulation state plus read-only combat/AI probe retained; Gym formal combat and AI recovery exports unavailable before/after each pair. PNG equality is separate from mask equality.",
+  "limits": [
+    "Controlled Gym map/equipment identity, full static geometry assists routing; not natural exploration.",
+    "At most six paused A/B pairs, not continuous-motion video or full four-facing/all-world review.",
+    "Multiple actor masks are compared where naturally present; offscreen masks do not prove visible art.",
+    "No audio perception, final aesthetic acceptance, weak-device or performance conclusion.",
+    "The previously denied file review page is never visited."
+  ]
+}

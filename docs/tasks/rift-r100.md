@@ -1,7 +1,7 @@
 ---
 status: ACTIVE
 created-date: 2026-10-02
-last-modified-date: 2026-10-08
+last-modified-date: 2026-10-09
 version-id: R100
 features: COH-F052 / COH-F011 / COH-F012 / COH-F013 / COH-F049 / COH-F044 / COH-F003 / COH-F004 / COH-F008 / COH-F023
 scope: Rift世界内容与生成制作链的大版本计划；不是当前已实现系统合同
@@ -12,7 +12,7 @@ authority: 用户2026-10-02明确“开工！！！！”，已启动R100
 
 **本版本终点：108个独立世界，全部覆盖低/中/重污染的324个资格单元，经过技术、美术与游戏体验审核并进入正式等级出击池；等级选择、准备、重度风险回报与整库运行/体验一同验收。** 108将“100+”落实为明确排产数；可因实际发现增加任务、拆分迭代或替换世界，不可自行缩减终点。3和6只属于前期检查点，不是可替代的大版本成果。
 
-**当前状态（2026-10-08）：** I10／I11／I12 已按用户授权的抽查范围完成内部验收并依次结案，R100 为 **12／14 轮**。108世界／324等级修订6已正式启用并绑定当前内部资格，内部RC已冻结。 既有324项正式进入／冷续、342项浏览器等价、48趟自然流程与原生成／固定过程验证已完成。按用户“不用做全量测试，抽查即可”，性能保留74个完整通过样本、1项中断、33项未开始；资源抽查10次同图＋18次混合、12个GC样本通过，8项真实语义反例通过。原失败、未测范围及各自限制完整保留。 I13已完成28趟有限实跑与独立核账，修正遗漏近处收获的验证路线；低中主链实际维护并支付33成长，但成套准备、重度后恢复与完整长期回报仍待整改，未结案；I14的真实弱设备、实际听感R100-R10和用户终验仍为已规划、未启动；R100保持active，不代签发布或新增美术人审。 详见[I10](rift-r100-i10.md)、[I11](rift-r100-i11.md)、[I12](rift-r100-i12.md)与[本轮QA](../qa/rift-r100-i10-i12.md)。
+**I14推进中（2026-10-09）：** 当前13/14轮已结。Chrome155原四例有三例超性能预算，已定位并修复角色遮挡逐帧查询；4个原重档复验、6次正式新入口/冷续及10同图/6混合资源回收通过，原失败保留。新RC绑定1398份生产源，108世界/324等级以精确渲染等价明确继承；覆盖、有限经济、恢复三发布门通过。新增连续前24趟已独核：23撤离+1真实死亡、96原档和22,182守恒断言；后24接实际末态执行。整链按原源12+优化源36分账，不能称48趟均在优化源上完成。实际较弱设备、真实听感/视觉疲劳与用户终验仍待，R100保持active。 详细原件归[I14 QA](../qa/rift-r100-i14.md)与[台账](../progress/rift-r100.json)，冻结的[I14执行合同](rift-r100-i14.md)保留开跑时输入，当前RC以台账为准。
 
 [版本看板](../reading/rift-r100.html) · [唯一进度与迭代数据](../progress/rift-r100.json) · [设计依据](../design-notes/rift-world-space.md) · [现行地图系统合同](../specs/system-map-generation.md)
 
@@ -40,7 +40,7 @@ authority: 用户2026-10-02明确“开工！！！！”，已启动R100
 
 专业审美具体标准集中在[art-direction的R100正文](../art-direction.md#rift-r100-standard)：身份与吸引力、空间、材料、色光、运动声景、行动读法、成品一致性；有独立否决权，不以量化总分或技术通过代签。净化点/首页已认可画面不代表Rift自动通过。
 
-**FATAL发布条件：** 同源三级及跨材料美术方法、重度完整出行、108/324资格、自然准备与等级净收益、冻结恢复、正式全库与用户终验六门缺一不可。唯一门清单归JSON的qualityPlan.releaseGates，结果归releaseGateResults；现在结果为空，不伪填通过。
+**FATAL发布条件：** 同源三级及跨材料美术方法、重度完整出行、108/324资格、自然准备与等级净收益、冻结恢复、正式全库与用户终验六门缺一不可。唯一门清单归JSON的qualityPlan.releaseGates，结果归releaseGateResults；I14已逐项登记待审结果，不伪填通过。
 
 ### 1.3 什么算一个世界
 
@@ -184,7 +184,7 @@ I06/I09/I13/I14分别安排集合、多趟选级、等级经济和最终体验�
 
 启动/最终授权记录使用{date,evidenceIds,note}，引用真实human证据；不能由代理自行写出用户认可。
 
-启动证据用途为`start-authority`；最终人审须为`final-acceptance`，不能挪用启动消息。发布时`version.releaseManifest:{path,hash,revision}`绑定实际RC清单及SHA-256；发布门结果引用`purpose:release-gate`、相应`gateId`且与RC revision / releaseManifestHash匹配的证据，终验也绑定该RC。当前releaseManifest已绑定修订6内部RC，所有发布门结果仍为空，最终发布及人审未通过。
+启动证据用途为`start-authority`；最终人审须为`final-acceptance`，不能挪用启动消息。发布时`version.releaseManifest:{path,hash,revision}`绑定实际RC清单及SHA-256；发布门结果引用`purpose:release-gate`、相应`gateId`且与RC revision / releaseManifestHash匹配的证据，终验也绑定该RC。当前releaseManifest已绑定修订6内部RC，I14发布门结果已登记为待审，最终发布及人审未通过。
 
 每个世界记录id、family、revision、dependencyManifest:{path,hash}、implementation、integration、三审和human状态、evidenceIds、reviewEvidence:{technical,visual,experience,human}、最近邻与差异说明、invalidated。通过项必须指向当前包revision与依赖清单hash相匹配的实际证据，不允许只写三个pass。初始规划时为空，五旧demo未直接转算合格包；当前108份资格由具名证据和抽查范围绑定。证据记录id/kind/revision/path/scope/limitations；世界审核证据还绑定worldId和dependencyHash；实际运行再补环境、包/算子/资产哈希、种子、配置和失败记录。审核/校验只能检查记录是否齐全，不能证明审美自动成立。
 

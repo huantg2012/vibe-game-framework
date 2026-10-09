@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T03:47:40.726Z",
+  "status": "pass-handoff-source-and-wrapper-review",
+  "tool": {
+    "file": "docs/qa/artifacts/r100-i14/qa-device-tool-review.mjs",
+    "sha256": "4bf4f0fda9298fa389fd4809991dc385a574673cf7c951382687c373e47f216a"
+  },
+  "manifest": {
+    "sha256": "c77f07db96f0e15d2d518fbbe84a970c612dbb0caab63604d520ef3493c34e22",
+    "checkedFileCount": 1519,
+    "productionFiles": 1397,
+    "rcDependencies": 307,
+    "allKitHashesMatch": true,
+    "archiveSha256": "dc7383803787f5b50c090c49a5e3e468bd6dc8aa74a45bf5473657a13b79d7e3",
+    "archiveBytes": 161050568
+  },
+  "staticFindings": [
+    {
+      "id": "source-binding",
+      "status": "resolved",
+      "evidence": "Packaging pins exact accepted RC, verifies1397 source/108 manifests/307 dependencies including lockfile, and every runtime freeze input/tool before copying. Current runner itself is bound by the kit manifest."
+    },
+    {
+      "id": "failure-retention",
+      "status": "resolved",
+      "evidence": "Runner persists starting/running/finished/failure/exit status, tees child stderr/stdout to runner.log, and independently checks all kit source hashes after execution. Root synthetic Chrome=false exit1 path retained; no game/browser was launched."
+    },
+    {
+      "id": "isolation",
+      "status": "static-pass",
+      "evidence": "127.0.0.1 random Vite port, private cache, fresh temporary Chrome context, no player save bundled. Source preflight before browser launch; missing identity/executable fails before a runtime receipt because no run occurred."
+    },
+    {
+      "id": "portability",
+      "status": "static-pass-real-OS-pending",
+      "evidence": "Node path/file URL conversion and platform Chrome candidates, explicit overrides; fixed runtime helper injected by path. Windows/Linux installation and rendering unexecuted."
+    }
+  ],
+  "negativeChildLaunch": {
+    "source": "root-preserved-real-wrapper-fixture",
+    "browserLaunched": false,
+    "exitCode": 1,
+    "status": "diagnostic-has-failures",
+    "persistentLog": true,
+    "finishedAt": "2026-10-09T03:43:59.223Z",
+    "sourceVerifiedAfterRun": true
+  },
+  "limitations": [
+    "Source/hash audit and code review, not hardware performance or compatibility execution.",
+    "The four fixed severe gym diagnostics are separate from48 natural sorties and cannot sign formal recovery, six-family visual/audio fatigue or final acceptance.",
+    "No weaker machine or actual listener exists in this evidence.",
+    "Preflight identity failures intentionally stop before a runtime receipt; shell failure remains the evidence for attempts that never launched."
+  ],
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit/handoff.json",
+      "sha256": "0155b1c067715d16b466e8b06a69d0d08116f26193f7e2404d57b1007b7ef44d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit/manifest.json",
+      "sha256": "c77f07db96f0e15d2d518fbbe84a970c612dbb0caab63604d520ef3493c34e22"
+    },
+    {
+      "file": "tools/qa/package-r100-i14-device.mjs",
+      "sha256": "77da52bf148ee9742ff46d22818ff6e202fe0c3e9bcf17f1f73ae42dee495869"
+    },
+    {
+      "file": "tools/qa/run-r100-i14-device.mjs",
+      "sha256": "0a8cf2c7f37e26eff7121d82dc65e22bbaa1baec84e4ed8ab8a95c1c9124d3ec"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/runtime-policy-freeze.json",
+      "sha256": "446262268da1fb24e54c7f12f52dfcf68204620ae472645eb1ff74974b53a064"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit/device-receipt.json",
+      "sha256": "7a24a30cedb2b1287a33ad63754b4b8cd4bab9446ab70163d418ef842380f713"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/root/device-kit/runner.log",
+      "sha256": "32a32c5bddff8c7db83b03595412fe637a4025eb76b2b807df5e25bce1204a15"
+    }
+  ]
+}

@@ -1,0 +1,385 @@
+{
+  "createdAt": "2026-10-09T04:34:25.494038+00:00",
+  "scope": "Read-only review after the preregistered four samples; no replay, production edit or power setting change. Observations below are after measurement, not continuously sampled during it.",
+  "sources": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/report.json",
+      "sha256": "083ade6e14e71f63057888c55067ca97dd079de7fa9ab07fbe3fc1c59ef1a6d4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-reference/report.json",
+      "sha256": "642bcb002895d276db52d3c0d92b40e010d7bc13560f802d2c240fd0ef153515"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-reference/execution.json",
+      "sha256": "9843f6278b2aff64fa2fc0bcd8e7564d13ce4137c3f7f159a56c972709c25f9c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/runtime-reference/parent-tool-diff.txt",
+      "sha256": "831b4e953871c7d88f853555950e4b9e20eecc35ba1739e55d8b0319829c03bc"
+    },
+    {
+      "path": "src/systems/r100-world/presentation.ts",
+      "sha256": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+    },
+    {
+      "path": "src/systems/r100-world/surface-renderer.ts",
+      "sha256": "978caaa8e1447d50485d6c5bb89c4970cabd3481a26cad83ce64450590d0e9dd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/user-stop-power-log-window.txt",
+      "sha256": "7699ff60e5158cfc016741510328f117e12fabeb8890b69f984984754fe49bd9"
+    }
+  ],
+  "comparison": [
+    {
+      "world": "hollow-wreckage",
+      "historical": {
+        "grade": "severe",
+        "seed": 20261004,
+        "duration": 61264.240000000034,
+        "frames": {
+          "count": 3675,
+          "p50": 16.699999809265137,
+          "p95": 17.40000009536743,
+          "p99": 17.59999990463257,
+          "max": 17.90000009536743,
+          "over50": 0
+        },
+        "cpu": {
+          "count": 3676,
+          "p50": 4.5,
+          "p95": 7.5,
+          "p99": 8.599999904632568,
+          "max": 10.399999618530273,
+          "over50": 0
+        },
+        "materialSubmit": {
+          "count": 3676,
+          "p50": 0.7000002861022949,
+          "p95": 3,
+          "p99": 3.8000001907348633,
+          "max": 4.5,
+          "over50": 0
+        }
+      },
+      "current": {
+        "grade": "severe",
+        "seed": 20261004,
+        "duration": 61464.20000000008,
+        "frames": {
+          "count": 3633,
+          "p50": 16.699999809265137,
+          "p95": 18.700000286102295,
+          "p99": 24.90000009536743,
+          "max": 40.700000286102295,
+          "over50": 0
+        },
+        "cpu": {
+          "count": 3634,
+          "p50": 7.5,
+          "p95": 15.800000190734863,
+          "p99": 21.800000190734863,
+          "max": 38.90000009536743,
+          "over50": 0
+        },
+        "materialSubmit": {
+          "count": 3634,
+          "p50": 1.3000001907348633,
+          "p95": 4.199999809265137,
+          "p99": 7.900000095367432,
+          "max": 23.799999713897705,
+          "over50": 0
+        },
+        "browserGPU": {
+          "vendor": "WebKit",
+          "renderer": "WebKit WebGL",
+          "version": "WebGL 1.0 (OpenGL ES 2.0 Chromium)",
+          "unmaskedVendor": "Google Inc. (Apple)",
+          "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+          "dpr": 1,
+          "logicalSize": {
+            "width": 960,
+            "height": 640
+          }
+        },
+        "budgetPass": false
+      },
+      "endHpOldNew": [
+        100,
+        70
+      ],
+      "endChaosOldNew": [
+        95.32895045016649,
+        114.28660419223309
+      ],
+      "heldSegmentPositionDeltaPx": [
+        1.3333333333335986,
+        7.570403184198771,
+        7.571166474221604,
+        5.8937154878791524,
+        6.720855359949284,
+        1.8711575526189108,
+        3.204824219285598,
+        3.4703499072537776,
+        5.948018387582488,
+        5.924240726065193,
+        0.0,
+        63.16977371018339
+      ]
+    },
+    {
+      "world": "buried-lamellae",
+      "historical": {
+        "grade": "severe",
+        "seed": 20261004,
+        "duration": 61264.22000000025,
+        "frames": {
+          "count": 3675,
+          "p50": 16.699999809265137,
+          "p95": 17.5,
+          "p99": 17.699999809265137,
+          "max": 17.800000190734863,
+          "over50": 0
+        },
+        "cpu": {
+          "count": 3676,
+          "p50": 4.099999904632568,
+          "p95": 7.400000095367432,
+          "p99": 8.900000095367432,
+          "max": 10.199999809265137,
+          "over50": 0
+        },
+        "materialSubmit": {
+          "count": 3676,
+          "p50": 0.7999997138977051,
+          "p95": 3,
+          "p99": 3.9000000953674316,
+          "max": 4.5,
+          "over50": 0
+        }
+      },
+      "current": {
+        "grade": "severe",
+        "seed": 20261004,
+        "duration": 61280.889999999934,
+        "frames": {
+          "count": 3676,
+          "p50": 16.699999809265137,
+          "p95": 17.699999809265137,
+          "p99": 18.5,
+          "max": 22.5,
+          "over50": 0
+        },
+        "cpu": {
+          "count": 3677,
+          "p50": 5.100000381469727,
+          "p95": 9.599999904632568,
+          "p99": 11.800000190734863,
+          "max": 16,
+          "over50": 0
+        },
+        "materialSubmit": {
+          "count": 3677,
+          "p50": 0.9000000953674316,
+          "p95": 4,
+          "p99": 5.300000190734863,
+          "max": 5.799999713897705,
+          "over50": 0
+        },
+        "browserGPU": {
+          "vendor": "WebKit",
+          "renderer": "WebKit WebGL",
+          "version": "WebGL 1.0 (OpenGL ES 2.0 Chromium)",
+          "unmaskedVendor": "Google Inc. (Apple)",
+          "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+          "dpr": 1,
+          "logicalSize": {
+            "width": 960,
+            "height": 640
+          }
+        },
+        "budgetPass": false
+      },
+      "endHpOldNew": [
+        100,
+        100
+      ],
+      "endChaosOldNew": [
+        65.63227255886154,
+        67.65123589895747
+      ],
+      "heldSegmentPositionDeltaPx": [
+        0.0014999999998508429,
+        0.4526001572537186,
+        0.9208480507241874,
+        0.2565062733172425,
+        1.076160393349312,
+        1.0771480671580207,
+        1.0761480671580586,
+        2.268494215429227,
+        0.15061180235501848,
+        1.2715574669290347e-06,
+        0.0002246812529165254,
+        0.0
+      ]
+    },
+    {
+      "world": "felt-wedges",
+      "historical": null,
+      "current": {
+        "grade": "severe",
+        "seed": 20261004,
+        "duration": 61280.87999999998,
+        "frames": {
+          "count": 3641,
+          "p50": 16.699999809265137,
+          "p95": 18.300000190734863,
+          "p99": 23.699999809265137,
+          "max": 47.5,
+          "over50": 0
+        },
+        "cpu": {
+          "count": 3642,
+          "p50": 6.5,
+          "p95": 14.099999904632568,
+          "p99": 20.299999713897705,
+          "max": 41.09999990463257,
+          "over50": 0
+        },
+        "materialSubmit": {
+          "count": 3642,
+          "p50": 1.0999999046325684,
+          "p95": 4.299999713897705,
+          "p99": 7.300000190734863,
+          "max": 10.300000190734863,
+          "over50": 0
+        },
+        "browserGPU": {
+          "vendor": "WebKit",
+          "renderer": "WebKit WebGL",
+          "version": "WebGL 1.0 (OpenGL ES 2.0 Chromium)",
+          "unmaskedVendor": "Google Inc. (Apple)",
+          "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+          "dpr": 1,
+          "logicalSize": {
+            "width": 960,
+            "height": 640
+          }
+        },
+        "budgetPass": false
+      },
+      "endHpOldNew": [
+        null,
+        100
+      ],
+      "endChaosOldNew": [
+        null,
+        79.10121886606353
+      ],
+      "heldSegmentPositionDeltaPx": null
+    },
+    {
+      "world": "white-scarfield",
+      "historical": null,
+      "current": {
+        "grade": "severe",
+        "seed": 20261004,
+        "duration": 61280.87999999988,
+        "frames": {
+          "count": 3670,
+          "p50": 16.699999809265137,
+          "p95": 17.699999809265137,
+          "p99": 18.59999990463257,
+          "max": 51.200000286102295,
+          "over50": 0.00027247956403269756
+        },
+        "cpu": {
+          "count": 3671,
+          "p50": 5,
+          "p95": 9.099999904632568,
+          "p99": 11.900000095367432,
+          "max": 28.399999618530273,
+          "over50": 0
+        },
+        "materialSubmit": {
+          "count": 3671,
+          "p50": 1,
+          "p95": 2.299999713897705,
+          "p99": 3.9000000953674316,
+          "max": 9.599999904632568,
+          "over50": 0
+        },
+        "browserGPU": {
+          "vendor": "WebKit",
+          "renderer": "WebKit WebGL",
+          "version": "WebGL 1.0 (OpenGL ES 2.0 Chromium)",
+          "unmaskedVendor": "Google Inc. (Apple)",
+          "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+          "dpr": 1,
+          "logicalSize": {
+            "width": 960,
+            "height": 640
+          }
+        },
+        "budgetPass": true
+      },
+      "endHpOldNew": [
+        null,
+        100
+      ],
+      "endChaosOldNew": [
+        null,
+        68.2355872044322
+      ],
+      "heldSegmentPositionDeltaPx": null
+    }
+  ],
+  "environmentAfterSampling": [
+    {
+      "at": "2026-10-09T04:34:25.436664+00:00",
+      "command": [
+        "pmset",
+        "-g",
+        "custom"
+      ],
+      "output": "Battery Power:\n Sleep On Power Button 1\n powermode            1\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         180\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            0\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         180\n womp                 1\n networkoversleep     0\n sleep                0\n tcpkeepalive         1\n disksleep            0"
+    },
+    {
+      "at": "2026-10-09T04:34:25.448074+00:00",
+      "command": [
+        "pmset",
+        "-g",
+        "therm"
+      ],
+      "output": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded"
+    },
+    {
+      "at": "2026-10-09T04:34:25.458589+00:00",
+      "command": [
+        "osascript",
+        "-l",
+        "JavaScript",
+        "-e",
+        "ObjC.import(\"Foundation\"); JSON.stringify({lowPowerModeEnabled:$.NSProcessInfo.processInfo.isLowPowerModeEnabled, thermalState:Number($.NSProcessInfo.processInfo.thermalState)})"
+      ],
+      "output": "{\"lowPowerModeEnabled\":true,\"thermalState\":0}"
+    }
+  ],
+  "historicalPowerEvidence": "Archived I12 budget power-log records sleep assertions and event timestamps. No measurement of power source/Low Power Mode/thermal state was located for the two historical comparison cases; historical power comparability is unknown.",
+  "facts": [
+    "Same 1397 frozen production sources, same named world/grade/seed/key sequence. Browser changed from154.0.8037.98 to155.0.8059.39.",
+    "Actual current GPU is Apple M4 Pro via ANGLE Metal, logical960x640/DPR1. The machine is a reference machine, not actual weaker hardware.",
+    "New runner adds one pre-sample GPU identity read and configurable Chrome path; per-frame hooks and thresholds are identical.",
+    "lastRenderMs in MasterPresentation.afterUpdate measures audio update, light source bookkeeping, renderer.draw, texture update, stress rendering and actor-mask work. It is a CPU-side aggregate, not pure GPU material execution time.",
+    "Both historical and current tools retain percentile aggregates, not individual frame arrays or JS call stacks, in report.json. Their current evidence cannot isolate the expensive sub-stage.",
+    "maskActor statically rebuilds CPU scan-line masks when actor bounds/ground keys change; renderer.draw issues GL uniforms/drawArrays and no explicit finish/readback. These are candidate costs, not profiled causation."
+  ],
+  "conclusions": [
+    "All four real alive/frame-budget checks passed; hollow,buried,felt CPU/material budget failures remain valid.",
+    "Low Power Mode observed true and thermalState0 after sampling are relevant environment facts, not proof that power caused the regression. No user setting was changed.",
+    "Hollow route/combat diverged despite same real held input; buried remained within2.27px at all12 endpoints and still exceeded material budget.",
+    "Do not change production based only on this aggregate. Minimal proposed next diagnostic: one frozen hollow severe seed20261004 actual-input run with CPU/sub-stage profiling, explicitly excluded from pass recheck. If production changes follow, regenerate source/RC linkage and rerun affected rendering/recovery/resource evidence; world authored content/route records can remain historical but cannot be silently relabelled new-source."
+  ],
+  "status": "cause-not-yet-isolated; current-budget-failures-retained"
+}

@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T05:11:52.964Z",
+  "status": "actual-formal-continue-exact-predecessor-and-real13th-entry-confirmed",
+  "source": {
+    "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+    "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+  },
+  "policy": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/policy-freeze.json",
+    "sha256": "24bcb03e0717aaf59d16ff54ce8b0366593de09c36ce7cac9adc155a35bcd3cf"
+  },
+  "originInputReview": {
+    "file": "docs/qa/artifacts/r100-i14/qa-origin-mapping-v4.json",
+    "sha256": "1d536970780f4c21e94bf8962f8c7225c951311fea5708bdc59950a00a988904"
+  },
+  "beforeEntireRecordEqualsPreviousPrepared": true,
+  "beforeEntireRecordEqualsMappedCurrentRaw": true,
+  "before": {
+    "cycle": 77,
+    "cash": 172,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 51,
+        "maxHp": 145
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 103,
+        "maxHp": 145
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 54,
+        "maxHp": 145
+      }
+    ],
+    "priorSettledRun": "45356d6d-2dfa-458d-9aa9-2903b10c658e"
+  },
+  "actualEntry": {
+    "cycle": 78,
+    "runId": "5a7b43b7-02e8-4403-acd4-49d5cd661122",
+    "identity": {
+      "worldId": "procedural-rift",
+      "layoutId": "procedural-rift",
+      "seed": 1108208759,
+      "recipeId": "r100-native-v3:wax-tongues-low",
+      "signature": "e40271c4",
+      "generation": {
+        "version": 3,
+        "requestedSeed": 1108208759,
+        "paintGeometryVersion": 2,
+        "profile": {
+          "id": "wax-tongues",
+          "label": "蜡舌滩",
+          "description": "蜡舌滩的原生材料与完整搜撤地段",
+          "material": "gel",
+          "surface": {
+            "substrate": "gel",
+            "coating": "gel",
+            "organization": "patches",
+            "coverage": 0.66,
+            "wear": 0.43,
+            "deposits": 0.42,
+            "scale": 0.95,
+            "relief": 0.58,
+            "contrast": 0.85,
+            "regionScale": 1.1,
+            "quietness": 0.5,
+            "formScale": 1.5,
+            "fragmentation": 0.32,
+            "accentCoverage": 0.18
+          },
+          "palette": {
+            "void": 856090,
+            "shadow": 1449000,
+            "floorDeep": 2761783,
+            "floor": 5522527,
+            "floorLight": 9139603,
+            "materialDark": 5784873,
+            "materialMid": 11702875,
+            "materialLight": 14666133,
+            "faceLight": 14262436,
+            "accentDim": 5326174,
+            "accent": 7956100,
+            "accentLight": 11444401,
+            "peak": 14476773,
+            "actorDark": 2433318,
+            "actorMid": 11702376,
+            "actorLight": 15584925,
+            "ground": 5522527,
+            "groundLight": 9139603,
+            "groundDark": 2761783,
+            "wall": 11702875,
+            "wallLight": 14666133,
+            "wallDark": 5784873
+          }
+        },
+        "appearance": {
+          "version": 1,
+          "worldId": "wax-tongues",
+          "ground": {
+            "dark": 2761783,
+            "mid": 5522527,
+            "light": 9139603
+          },
+          "solid": {
+            "dark": 5784873,
+            "mid": 11702875,
+            "light": 14666133
+          },
+          "cleaved": {
+            "dark": 6436426,
+            "mid": 11362933,
+            "light": 14262436
+          },
+          "secondary": {
+            "dark": 2635587,
+            "mid": 5928322,
+            "light": 9676208
+          },
+          "groundPattern": "flow",
+          "patternScale": 240,
+          "patternStrength": 0.42,
+          "secondaryCoverage": 0.25,
+          "textureContrast": 0.96,
+          "quietCoverage": 0.63
+        },
+        "space": {
+          "id": "open-scars",
+          "label": "疏落蚀坑",
+          "voidFraction": 0.09,
+          "crackFraction": 0.2,
+          "holeScale": 1,
+          "directionality": 0.2,
+          "clustering": 0.25
+        },
+        "contentFragmentTypeId": "frag-outdoor",
+        "nativeDefinition": {
+          "id": "wax-tongues-low",
+          "family": "gel-flow",
+          "grade": "low",
+          "label": "蜡舌滩",
+          "profile": "wax-tongues",
+          "cols": 32,
+          "rows": 24,
+          "seed": 20261002,
+          "spawn_x": 196,
+          "spawn_y": 588,
+          "exit_x": 148,
+          "exit_y": 664,
+          "search_x": 516,
+          "search_y": 580,
+          "enemy_x": 840,
+          "enemy_y": 172,
+          "axis": 0.1,
+          "light_radius": 112,
+          "emission": 0.35,
+          "motion_period": 22,
+          "ground_quietness": 0.84,
+          "ground_contrast": 0.5,
+          "ground_coverage": 0.26,
+          "ground_material_blend": 0.32,
+          "instances": [
+            {
+              "id": 1,
+              "family": "gel-flow",
+              "role": "relief",
+              "x": 445,
+              "y": 452,
+              "rotation": -0.2,
+              "length": 582,
+              "width": 308,
+              "height": 6,
+              "thickness": 2,
+              "fold": 0.1936,
+              "branches": 3,
+              "opening": 0.92,
+              "distortion": 0.49280000000000007,
+              "constructionVersion": 3,
+              "shapeProfile": "lobed-cushion"
+            },
+            {
+              "id": 2,
+              "family": "gel-flow",
+              "role": "solid",
+              "x": 549,
+              "y": 367,
+              "rotation": -0.42,
+              "length": 610,
+              "width": 330,
+              "height": 49,
+              "thickness": 12,
+              "fold": 0.6864,
+              "branches": 3,
+              "opening": 0.82,
+              "distortion": 0.6335999999999999,
+              "constructionVersion": 3,
+              "shapeProfile": "lobed-cushion"
+            },
+            {
+              "id": 3,
+              "family": "gel-flow",
+              "role": "solid",
+              "x": 826,
+              "y": 573,
+              "rotation": 2.4,
+              "length": 224,
+              "width": 166,
+              "height": 24,
+              "thickness": 8,
+              "fold": 0.4048,
+              "branches": 3,
+              "opening": 0.88,
+              "distortion": 0.44,
+              "constructionVersion": 3,
+              "shapeProfile": "lobed-cushion"
+            }
+          ],
+          "erosion": [
+            [
+              {
+                "x": 668,
+                "y": 424
+              },
+              {
+                "x": 704,
+                "y": 416
+              },
+              {
+                "x": 752,
+                "y": 440
+              },
+              {
+                "x": 744,
+                "y": 464
+              },
+              {
+                "x": 692,
+                "y": 454
+              }
+            ]
+          ]
+        },
+        "gradeDefinition": {
+          "id": "low",
+          "version": 1,
+          "label": "低污染",
+          "status": "dev-masters",
+          "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+          "paintCount": 2,
+          "paintSubstrate": "oil_film",
+          "paintContinuity": "monolith",
+          "paintCoverage": "infiltrate",
+          "volumeCount": 1,
+          "volumeSubstrate": "gas_mass",
+          "volumeCoverage": "infiltrate",
+          "volumeCols": 3,
+          "volumeRows": 3,
+          "chaosStartRate": 0.24,
+          "chaosEndRate": 0.34,
+          "chaosRampStartSeconds": 90,
+          "chaosRampEndSeconds": 210
+        },
+        "contentDefinition": {
+          "grade_id": "low",
+          "version": 2,
+          "status": "production-candidate",
+          "label": "低污染",
+          "public_risk": "污染较少，混乱增长较慢",
+          "public_preparation": "观察路线，补充行装",
+          "public_reward": "深入仍需承担路程",
+          "enemy_count": 2,
+          "kindling_safe_count": 1,
+          "kindling_contested_count": 2,
+          "kindling_deep_count": 1,
+          "kindling_safe_value": 1,
+          "kindling_contested_value": 2,
+          "kindling_deep_value": 4,
+          "contaminant_safe_count": 1,
+          "contaminant_contested_count": 1,
+          "contaminant_deep_count": 0
+        },
+        "package": {
+          "id": "r100-wax-tongues",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "fe66d60f",
+          "grade": "low"
+        }
+      },
+      "catalogVersion": "contaminant-v1",
+      "lootAlgorithmVersion": 1,
+      "combatRulesVersion": 2
+    }
+  },
+  "uniqueNaturalDepartureOrdinal": 13,
+  "priorOriginSetupFailureAddedDepartures": 0,
+  "limitations": [
+    "Entry observed, not yet a completed-return/accounting pass. The first12 and current13th still share one earned lineage.",
+    "No dynamic in-progress report SHA is bound here; these immutable before/entry/source files are the proof."
+  ],
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-after-preparation.save.json",
+      "sha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-before.save.json",
+      "sha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-entry.save.json",
+      "sha256": "23e3ad7089b237382610892f0437678b4a6bd3a063944517f5da1950dbaaad69"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/initial-browser-storage.json",
+      "sha256": "b74f66dba20f71f344aa3752ed663e0a630cdaf0d3c00d1a89e5901eac7dabbd"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-origin-actual-continuation-first-audit-error.json",
+      "sha256": "437ad231b473bb19109dd41221736e1d17a10ab776f04c77c9b5bad7f0bbc243"
+    }
+  ]
+}

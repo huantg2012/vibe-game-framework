@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-09",
+  "authorization": "Root authorizes an affected-scope repetition because ActorOcclusionField adds per-world owned CPU memory; original bounds and failure retention unchanged.",
+  "purpose": "post-occlusion-cache-retained-resource-diagnostic",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+    "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+  },
+  "tools": [
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/frozen-runner.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    }
+  ],
+  "method": {
+    "warmupWorlds": [
+      "ash-strata",
+      "crystal-fibre",
+      "ivory-basin",
+      "cinder-ridge",
+      "pallid-membrane",
+      "silt-gel"
+    ],
+    "baseline": "ash-strata/severe/20261004",
+    "identicalRebuilds": 10,
+    "mixedRebuilds": 6,
+    "mixedSelection": "first six catalog worlds, low, seeds20261004..20261009, then return baseline",
+    "retainedSamples": 12,
+    "gcCallsPerSample": 2,
+    "budgetMiB": 10,
+    "stableCounts": [
+      "WebGL2",
+      "Texture",
+      "Buffer",
+      "Program",
+      "Framebuffer",
+      "Renderbuffer"
+    ],
+    "measurement": "main-isolate heap plus positive backing growth; owned GL objects, not driver bytes/RSS",
+    "exclusiveWindow": "After optimized-source four performance cases and six entry/recovery cases, before Art browser and natural batch2."
+  },
+  "command": [
+    "node",
+    "docs/qa/artifacts/r100-i14/actor-occlusion/resources/frozen-runner.mjs"
+  ],
+  "environment": {
+    "GAME_URL": "http://127.0.0.1:3037",
+    "QA_OUTPUT_DIR": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/runtime",
+    "QA_REBUILDS": "10",
+    "QA_MIXED_REBUILDS": "6"
+  },
+  "limitations": [
+    "Diagnostic reconstructions, not natural sorties or human play.",
+    "One reference Mac; no true weaker hardware.",
+    "Not all108 worlds/324 grade memory coverage; historic10same/18mixed remain historic."
+  ],
+  "status": "frozen-not-executed",
+  "baselineRelease": {
+    "revision": "r100-native-v3-revision-6-internal-rc-20261008",
+    "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "candidateRevision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+  "delta": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+    "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+  },
+  "previousRuntime": {
+    "path": "docs/qa/artifacts/r100-i14/resources/runtime/report.json",
+    "sha256": "ed43ab881e9383eb1d2c64172bd1900011e487f931a3c1a2abec9610d9ca58e3"
+  }
+}

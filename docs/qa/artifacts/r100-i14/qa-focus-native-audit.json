@@ -1,0 +1,144 @@
+{
+  "createdAt": "2026-10-09T03:56:56.761Z",
+  "status": "three-actual-trusted-blur-full-state-checks-pass",
+  "source": "Direct independent JSON equality of captured state, not runner result alone.",
+  "rows": [
+    {
+      "grade": "low",
+      "nativeTrustedBlur": true,
+      "visibilityHidden": false,
+      "fullRecordFrozen": true,
+      "holdWallMs": 782.5,
+      "explicitResume": true
+    },
+    {
+      "grade": "medium",
+      "nativeTrustedBlur": true,
+      "visibilityHidden": false,
+      "fullRecordFrozen": true,
+      "holdWallMs": 783.0999999046326,
+      "explicitResume": true
+    },
+    {
+      "grade": "severe",
+      "nativeTrustedBlur": true,
+      "visibilityHidden": false,
+      "fullRecordFrozen": true,
+      "holdWallMs": 813.0,
+      "explicitResume": true
+    }
+  ],
+  "newSorties": 0,
+  "mainChainWrites": 0,
+  "limits": [
+    "Actual trusted blur only; document.hidden remained false. No hidden visibility event or OS application focus claim.",
+    "Default Playwright focus emulation explicitly disabled before actual tab activation; original failed default fixture retained.",
+    "Independent historical checkpoints, not additional natural attempts or main-chain continuation."
+  ],
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/policy-freeze.json",
+      "sha256": "26aae27ba45e943be32eeaa7d0fecd08820bad83f948778bdaa7111ca3eb3929"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/report.json",
+      "sha256": "a28e1f5ed177610b359b45b4b2df29997788298cc3209e317ba20fec35d6d3d0"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/low/after-normal-resume.json",
+      "sha256": "2acce06afa8222222d55580e27e9f285c8408f6152ded16f1113154452995a3a"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/low/before-tab.json",
+      "sha256": "89861e2c2e72cbabc608ea396f05a0551449ec646e735696f817998a3a3f7a0f"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/low/diagnostic-terminal-storage.json",
+      "sha256": "17b39b5a00e53840ba4b60886c6c88f981ba7d56c6c80fc8ccc036ef26e8f657"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/low/first-complete.json",
+      "sha256": "374949f9826c9263a2985e1bd5dd5db8e836296bf13f723eef367ee6c00e9617"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/low/returned-tab-before-key.json",
+      "sha256": "6e59ad264a1761cbbe063d6e78bec01c14b09ed22ef49b6a0d8d68ca07e7bc0b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/low/source-current.save.json",
+      "sha256": "cc582300aa73a09af506d8edfb3cdbf26b810bf37e8b54bb0611a36f8d1eafbd"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/low/tab-away-held.json",
+      "sha256": "943ae5359f9cf9a4d88e63d80dbb11058c3c9832996e94a4d5afbbf6b7735a36"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/low/tab-away-start.json",
+      "sha256": "a360e4f7ca7fb57cccdd3746c883783281f508389aeb2378ee934c9f485620b1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/medium/after-normal-resume.json",
+      "sha256": "a5b0d6c8578a5d0f02c57f5328dd19fd7ad8e152ce2fe9810792e4d8b8d52a5e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/medium/before-tab.json",
+      "sha256": "ab1ff85069817ceb4621ec9527b41c926664170bfadd279337399d412a59d4c9"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/medium/diagnostic-terminal-storage.json",
+      "sha256": "e3962c030d8079598f56008a6f19079187379de60be7a4788a26f5a71b745436"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/medium/first-complete.json",
+      "sha256": "f8b69549179bb69da26790e3baf7e4e1a91e7ac01f65298a64c52b0f2df704be"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/medium/returned-tab-before-key.json",
+      "sha256": "ff5e4990dc9910cb44adb7168598cb5763b8ea03fb50b8247d44c144c798e3f4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/medium/source-current.save.json",
+      "sha256": "786dd01572542d513f42b9d1e55236a6163b7acd314bdf73bbc973e706c2411d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/medium/tab-away-held.json",
+      "sha256": "08cd2efc8829ca94f0f061b8b00165511dde83200ce8002646ba943b115d024a"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/medium/tab-away-start.json",
+      "sha256": "2020848b337b828445b9c678063a2c211ebbe2c735b72ef8dc44d61ab4d74bf7"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/severe/after-normal-resume.json",
+      "sha256": "aec1fd55564bfe148ba40c8b500a7c27afc67bc61899640c5a0c052db3307c07"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/severe/before-tab.json",
+      "sha256": "7a1dc367a9b88c72b819848e2fa2f96b35d0b5bb4aa48baa7ddce75f648c3482"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/severe/diagnostic-terminal-storage.json",
+      "sha256": "bcb4a11fffc619822f1b5677d52ea03261502a3750ceb4a55702ac7f2fcc962d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/severe/first-complete.json",
+      "sha256": "bdff2fdb4a5f0d8bf0107602704cadf58ea0c6b1281dd702fbb9807536b2d93a"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/severe/returned-tab-before-key.json",
+      "sha256": "39352dc9e831a15b9f4ba7a8a57159ff9f7df2a485f0aaf59bcbd18ad96fba56"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/severe/source-current.save.json",
+      "sha256": "751fe72f8edeb69cf2467c982510f3715f137b6f16b1c3d8e7330520831ca544"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/severe/tab-away-held.json",
+      "sha256": "cf1537c68daae6cf1685b18ea31a23c441ed9e0d1ba068547f8bc76be92d9e0b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/focus/native-v2/severe/tab-away-start.json",
+      "sha256": "b29a695157c441d1c97635c96d0b944e85675c3aa30e9aab458ea2b7b3ba6ffc"
+    }
+  ]
+}

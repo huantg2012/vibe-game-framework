@@ -1,0 +1,1779 @@
+{
+  "recordedAt": "2026-10-09T03:40:19.479Z",
+  "tool": {
+    "file": "tools/world-study/run-r100-i14-continuous.mjs",
+    "sha256": "0f8afe0c80a1ea0bfd6d1a0c47151cea1fa0a420dbf8cf6f3dc60fb9bcaab23e"
+  },
+  "inheritance": {
+    "status": "exact-current-files-match-internal-rc-not-release-approval",
+    "rc": {
+      "file": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    },
+    "references": [
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+        "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+        "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-binding/plan.json",
+        "sha256": "c122e4e972f2f572f126aded1ef132dd203f87d32e9e33458fdced9b2cc5eae2"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-binding/sampled-negative-check.json",
+        "sha256": "f5e15ee6945cc917a6478a00e0f2d326fb168da8ae9d04c2c866a3a32e477dc2"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-technical-review.json",
+        "sha256": "f11b5b6a195f6d44aab1d523cfb7720d8bb7349d4be412cd6345943b5aeaddf8"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/shader-review.json",
+        "sha256": "e05b369a7406e28383f07ceddf859e33bbb8ba146f23a7dff60d91683b5d980b"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/continuous-final108/independent-experience-review.json",
+        "sha256": "a99125cad5b6d615803645e81833ff6949eef4eb488137ec0e01207f8c8bf008"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-audio-root-disposition.json",
+        "sha256": "d5c33c68f41b2c783020a7f2bdaa0de0008df130334c95cc7acfd45142951534"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-binding/ledger.after-bind.json",
+        "sha256": "e47a72ee0e421fa94f63984872ea59a18b2924a48c9508de42dce87bd2895c6d"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-binding/application.json",
+        "sha256": "01228367cdf2411c642eea986a385f63fb7d283f35714766c266874f4b52b6d6"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+        "sha256": "3cbe3cde85dcb601d51190ad349a46fc81c2902e68c89a4e773dbdf81fc2364e"
+      }
+    ],
+    "sourceManifest": {
+      "file": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    },
+    "productionFileCount": 1397,
+    "worldCount": 108,
+    "gradeQualifications": 324,
+    "dependencyManifestCount": 108,
+    "uniquePackageDependencies": [
+      {
+        "file": "package-lock.json",
+        "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+      },
+      {
+        "file": "src/art/contaminant-catalog-icons-ground.ts",
+        "sha256": "b9bf0762b83fd3b070b4ab39e4d209b7ca66a8d8c91e086be2fbbfd5cf5196ec"
+      },
+      {
+        "file": "src/art/contaminant-catalog-icons-objects.ts",
+        "sha256": "e661696c9c3861562ed056da733e9b1c5d8541c153f24dfdc41379f7c66df79e"
+      },
+      {
+        "file": "src/art/contaminant-catalog-icons-pixels.ts",
+        "sha256": "236f2feee19d92e62f59e3863a6fd75aab2a061d483e8f34e501f50229de657e"
+      },
+      {
+        "file": "src/art/contaminant-catalog-icons-secondary.ts",
+        "sha256": "f08c23209f48ee231433de5ed8529b2eb7850b36fbb464db1d10026ee753e1f5"
+      },
+      {
+        "file": "src/art/contaminant-catalog-icons-shells.ts",
+        "sha256": "91428c55e9a7d7458992d2bf188d844130f437ec71f60c6ea7019b367da4f5bf"
+      },
+      {
+        "file": "src/art/contaminant-catalog-icons-world-faces.ts",
+        "sha256": "6ae0c2ea19d3c356d7dbbeaed21332b739ced93623de456c0e38594ee95e1b70"
+      },
+      {
+        "file": "src/art/contaminant-catalog-icons.ts",
+        "sha256": "64b4fedd4a10cbaa8df949a6ecf661e00d36aa07b96b44d11d6e8dc378b15c37"
+      },
+      {
+        "file": "src/art/contaminant-icons.ts",
+        "sha256": "ef8b2c02d7ed136e6ea3aacd4ec86f784b52881f76ce437aa9482677d35b06a4"
+      },
+      {
+        "file": "src/art/crowbar-pixels.ts",
+        "sha256": "625af6d341071ffc947d021512d55951775210a55b1404a10cb742af3003b9ff"
+      },
+      {
+        "file": "src/config/constants.ts",
+        "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+      },
+      {
+        "file": "src/core/commit-effects.ts",
+        "sha256": "600a92ce42887215575fee3b23e45cd71843599d6e79ffa2dec9993ba2af904d"
+      },
+      {
+        "file": "src/core/event-bus.ts",
+        "sha256": "7a5add701fadcccf1362c98db50079f5eb862d541ae29fa3ed23cafd27224d3b"
+      },
+      {
+        "file": "src/dev/spatial-study/stage/bridge.ts",
+        "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+      },
+      {
+        "file": "src/entities/actor-motion.ts",
+        "sha256": "6d060e8fac6ab13d81e53c906e1099730d68a48502e09751c1de9b76fd63740c"
+      },
+      {
+        "file": "src/entities/contam-flakes.ts",
+        "sha256": "107a2ce007542580fc5ed9c14e3fa72fccc8df7f90d313bcbf842e0042916565"
+      },
+      {
+        "file": "src/entities/enemy-factory.ts",
+        "sha256": "577781cfeb8ff508ffe2799129de1446b400c27f949d17fc9f9990d82d65ae1d"
+      },
+      {
+        "file": "src/entities/form-renderers/d/beast-model.ts",
+        "sha256": "70e91b7b4422263dc077bc3ea53c53605ba1fbd28e91a61f09d1139ccfd3b786"
+      },
+      {
+        "file": "src/entities/form-renderers/d/bing.ts",
+        "sha256": "9e4a2a4c92cd8bf0504ff49904ee7df5ef0fc4e9de9d43f3368f954465b904d6"
+      },
+      {
+        "file": "src/entities/form-renderers/d/body-pixel-material.ts",
+        "sha256": "888105657187ea9a7c4c27a4801042355fb25f886765839b71115ef52e2915c9"
+      },
+      {
+        "file": "src/entities/form-renderers/d/ding-cloud.ts",
+        "sha256": "e60de1c114d98a9fb6406df41802472b0e2b3bdf424a651a0926db046a806ad5"
+      },
+      {
+        "file": "src/entities/form-renderers/d/ding-paint.ts",
+        "sha256": "3a9f8b0730927079248f30298d1dc9f414f10518e198cde3b37c750a1391bc54"
+      },
+      {
+        "file": "src/entities/form-renderers/d/ding-recipe.ts",
+        "sha256": "58a185c3ab36ab44630c2ea973eed9bfa274bd1f1600c3d8bb9f0435cdcb8dca"
+      },
+      {
+        "file": "src/entities/form-renderers/d/ding.ts",
+        "sha256": "1d2210cb78d904e0764bf68dde578d2195d1143e9fdf68d31ad10daaf6513751"
+      },
+      {
+        "file": "src/entities/form-renderers/d/environment-pixels.ts",
+        "sha256": "b909b584735ec5e11c498568cc91258141750d9e5ccb30e07757ea0872ed2278"
+      },
+      {
+        "file": "src/entities/form-renderers/d/fragment-ramp.ts",
+        "sha256": "45d7383b0810c75ccfad0853eabc4555812b15eb8d430a5439aff26acaf7f1b6"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/attach.ts",
+        "sha256": "8ae2d6c6fab5a1cbd2a13c588c6a8d1eb07361aae3540bd017d66135605e0581"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/bake.ts",
+        "sha256": "02a26951bc95e3b961f9b05073ec09324f41faba38ab324bbb7099b695d31ce3"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/buffer.ts",
+        "sha256": "d4ee462eadc585e6ebc7aa33f123f5ed0bd1cef5fece8b5a185544fae717042c"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/canvas.ts",
+        "sha256": "e94b756ac6cd94f6534b87e95869a9b69b25c2d5fd321ed0ab8c76024e8fff07"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/doorframe.ts",
+        "sha256": "ba907b09705f5f256d71dd6b542b1c222e02461589115a62a4bb3fedf779888d"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/fixture.ts",
+        "sha256": "386d0cfef30d78cc96ded4db20fe33f7e91abc86728a0c775e8e4712411105cb"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/gait.ts",
+        "sha256": "78385a87efa1fceacd73d949c2410e0ddafd64559837d7015d8a9fd4225eb6fc"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/insect-remnant.ts",
+        "sha256": "0aa9edb908c77c9ca988ca0363c05ca9d437d95793564893c93bee3a6480252c"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/mammal-remnant.ts",
+        "sha256": "8754458e39dee1dd90f5adea44b416e871819c912ec5dc36e889776647b7e546"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/operators.ts",
+        "sha256": "5278661218d636965d5d42ca6a729bfa45b468a5b759831827611e6a7fb53e0c"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/organic-remnant.ts",
+        "sha256": "332d3ae26d6f13bd8507e2c6afc4311cb76ddf336361dac20a3397deabc9e928"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/parts.ts",
+        "sha256": "d533b89f4fb54537aa79248b3274d867036de86ec22d57b4a41d44b745a59ddc"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/stalk-clump.ts",
+        "sha256": "c46a88dc842ebc0968c274e2c974f1250383ab5d1ee083f71cc0988078874c08"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/street-wreckage.ts",
+        "sha256": "c9b7aca2af0bd4478bbd25aae8cd6027906ec7ded407866ca6c66302cf900ad6"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/types.ts",
+        "sha256": "bcc82daef1ecaa030353a76c3e65201290437eaf4cc8177744da755b34dd1a33"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/weld.ts",
+        "sha256": "327b573b83e707ec11c527a0c257393aa9be8165b43f26d011f03ce3010cb8dd"
+      },
+      {
+        "file": "src/entities/form-renderers/d/genome/worm-remnant.ts",
+        "sha256": "4ea9201ac3ddc40411c37129ef309fcf7e11ee94a96bfb941a34645e31d1f608"
+      },
+      {
+        "file": "src/entities/form-renderers/d/growth-model.ts",
+        "sha256": "2cd3a0d218b811121d94f6b5c18497685aad1f210c4469c5df80a98f83d09840"
+      },
+      {
+        "file": "src/entities/form-renderers/d/human-model.ts",
+        "sha256": "d8bf202526f8888a8c95a65e0fcbe5cdc1871503e3b20d95ce5bc4a8247911cd"
+      },
+      {
+        "file": "src/entities/form-renderers/d/insect-model.ts",
+        "sha256": "2b370729e054efd14a5e541ec11bb8fac22f9518ee5b098931f9f288f7fb68c9"
+      },
+      {
+        "file": "src/entities/form-renderers/d/jia-cluster-mode.ts",
+        "sha256": "dd7b0ecfe40c2c23b5c0eba084eb439f419655a17e499aeff971cda059ad266e"
+      },
+      {
+        "file": "src/entities/form-renderers/d/jia-pixels.ts",
+        "sha256": "e21059a7c0dc61f6949b39b4bcba8198f0106d347f3e60e9a0ab63dee03444ca"
+      },
+      {
+        "file": "src/entities/form-renderers/d/model-animation.ts",
+        "sha256": "13e1e66bb334967774329fc6fdd33cd70da4d9664a8515dd7fdaae63b6850d1e"
+      },
+      {
+        "file": "src/entities/form-renderers/d/model-raster.ts",
+        "sha256": "a3f3465c1c93538c7b7adb71c34304491125743450d53e8c2422f93c9849e8ef"
+      },
+      {
+        "file": "src/entities/form-renderers/d/model-visual.ts",
+        "sha256": "c9579192b84af6e3e7076f8a141c975feed13a7a57aa28caef9d67ef5ab7b829"
+      },
+      {
+        "file": "src/entities/form-renderers/d/paint-genome/attach.ts",
+        "sha256": "bfb1b20047d00c28a6fdce2a2f7f90c477675d5f65f334817bb115ab21fb7d27"
+      },
+      {
+        "file": "src/entities/form-renderers/d/paint-genome/bake.ts",
+        "sha256": "2213687adf44d61292c6f62ed8a58f20cd94fca39422c59120798478f50ad551"
+      },
+      {
+        "file": "src/entities/form-renderers/d/paint-genome/legacy-presentation.ts",
+        "sha256": "970ebdf2ca3a7b24e926bbf16761ab3469da8d33a7239b4c23c28a39eff10af3"
+      },
+      {
+        "file": "src/entities/form-renderers/d/paint-genome/live.ts",
+        "sha256": "6398f95443a742887d958d583faab8964bebccbdc6a850f7a47c5f44b595e862"
+      },
+      {
+        "file": "src/entities/form-renderers/d/paint-genome/material.ts",
+        "sha256": "f2ff8ee2ac4a06fe90e091a010a5ba8a5ac252e40efe2d36bada20069eda635f"
+      },
+      {
+        "file": "src/entities/form-renderers/d/paint-genome/prepared.ts",
+        "sha256": "46ebe991b6af2f17fd889b71459d6a2f7ab01a28278b78269c59e22d0265931e"
+      },
+      {
+        "file": "src/entities/form-renderers/d/paint-genome/topology.ts",
+        "sha256": "54742eb047b7b7966b71ad81a9711fd2d51e7129ab3f6d164347cd485dc1453e"
+      },
+      {
+        "file": "src/entities/form-renderers/d/paint-genome/visibility.ts",
+        "sha256": "5377ceb044933ddfe0f4a673b19ba1ba4516b74ec2c903c8d20eda5fbd934fdf"
+      },
+      {
+        "file": "src/entities/form-renderers/d/production-models.ts",
+        "sha256": "fd6e3c67ccc4fce615eb00de103ebeca6938773fed923c524632084a0576d40d"
+      },
+      {
+        "file": "src/entities/form-renderers/d/remnant-model.ts",
+        "sha256": "6bd50aeaee8695f1c71aefd566f1a169163d9b4157b994e6bc738173118fa793"
+      },
+      {
+        "file": "src/entities/form-renderers/d/volume-material.ts",
+        "sha256": "737dab944b6a89963c194f3513126edd4f983e14598fd219eed6e1afeab36adc"
+      },
+      {
+        "file": "src/entities/form-renderers/d/volume-paint.ts",
+        "sha256": "039ffdbf1a69ac36ebe184bfc05c718426e5abb4bf6d13de44765e4e3f519852"
+      },
+      {
+        "file": "src/entities/form-renderers/d/worm-model.ts",
+        "sha256": "d90a61da3f18e508fcf7cff5d81b495a65c1659a67cdd89bb624ce4bc8db7296"
+      },
+      {
+        "file": "src/entities/form-renderers/d/yi-paint.ts",
+        "sha256": "984b0a495c45cc8a828ca88d3188876135e79e45124c5058bc2da44b15481333"
+      },
+      {
+        "file": "src/entities/form-renderers/d/yi-recipe.ts",
+        "sha256": "51f7ae87beddfccb9d732b2680f8b6ed05c1b360f041a60405e8eb8f964db688"
+      },
+      {
+        "file": "src/entities/form-renderers/d/yi.ts",
+        "sha256": "7cf8815c137febc088648264cff388f10d3739f1654dd386236f6fa311449e90"
+      },
+      {
+        "file": "src/entities/form-renderers/form-renderer.ts",
+        "sha256": "72bad9b45011398720c488001737233b8756539ce43cc8af3f81f22bb9b5b8a1"
+      },
+      {
+        "file": "src/entities/form-renderers/registry.ts",
+        "sha256": "0757de7c754ca24184402f2d3c654d8139f75284ea3f70ed493d1a639e077e39"
+      },
+      {
+        "file": "src/entities/form-renderers/scheme-d-mixed.ts",
+        "sha256": "17ad131036f7a129879557a9b557c3afdbe26bc200cf8babd20ad8f9e858f78c"
+      },
+      {
+        "file": "src/entities/hit-reaction.ts",
+        "sha256": "952ba24a3cb7b3634cb856535bde03c2c7489ddb87ad771a600de9370cf1a5f3"
+      },
+      {
+        "file": "src/entities/infiltrator-sprite.ts",
+        "sha256": "858945f8cdc77c7b3507f0cab38e7f56e42f5212d9734b7e42eb2bf6333d3980"
+      },
+      {
+        "file": "src/entities/player-lamp-aura.ts",
+        "sha256": "d4fe64e7c9300516ac426860411db4e9f9d11beff7d207239232ce02396ab3d0"
+      },
+      {
+        "file": "src/entities/player-movement-input.ts",
+        "sha256": "d8a535a02700e79ebf161f2020870091dc6e3c043d11452ee8140e317db154e3"
+      },
+      {
+        "file": "src/entities/player-sprite-dense.ts",
+        "sha256": "8f6be3b3bf11983d479f1e57ebaac55fba31a5d81ba9b0663257941f4f2a8531"
+      },
+      {
+        "file": "src/entities/player-weapon-rig.ts",
+        "sha256": "57605004e74dd99b2857abde90de61156e2b8e1f2dd393400850f181d36d7641"
+      },
+      {
+        "file": "src/entities/player.ts",
+        "sha256": "3bbd3f44a602d6e9d92da05d2b396f69db4684cb68fa86b09d62c57f2b05a049"
+      },
+      {
+        "file": "src/entities/restraint-reaction.ts",
+        "sha256": "86fde8d096e306983f75f799186b7575068ab94074a1bc19bdbbecd1a56e1b21"
+      },
+      {
+        "file": "src/entities/rewriter-sprite.ts",
+        "sha256": "25e8e0445bb4b8194901922ae29325312a4356363e6507f69d87189a3b7a483b"
+      },
+      {
+        "file": "src/generated/atmosphere-copy-data.ts",
+        "sha256": "4b35b7f08ca2ff58266897146b4c5e6343b6718c01363a10328e0ec5449d212e"
+      },
+      {
+        "file": "src/generated/build-lab-data.ts",
+        "sha256": "bdd7c9218b394e9f877207378e1b375138be8b024416f2c38334b7b704cde672"
+      },
+      {
+        "file": "src/generated/contaminant-catalog-data.ts",
+        "sha256": "3e6751994c7c064dcfdc2178297b075db55ca06a35c0ae9f2a633a9abbc1b64d"
+      },
+      {
+        "file": "src/generated/contaminant-data.ts",
+        "sha256": "dd94fa026a863ad556c4e47ce2efc5ff15ec0a5d027042e3f125c0ce9748cba1"
+      },
+      {
+        "file": "src/generated/contaminant-economy-data.ts",
+        "sha256": "637cf397a504553139700bda4b2323640794a8f8add004d9fe295c83a8d9b0d2"
+      },
+      {
+        "file": "src/generated/contaminant-quality-data.ts",
+        "sha256": "767bab485f3d95fa687e02cce79e25771085f37145f7fe91d3053a8c4ccc1057"
+      },
+      {
+        "file": "src/generated/contaminant-sources-data.ts",
+        "sha256": "f9e01340b6b4f871de9be5c17bc32a23535cc47dcab33a3888da5fdbd8b53904"
+      },
+      {
+        "file": "src/generated/contamination-body-data.ts",
+        "sha256": "a8984167dfd2ee50397a5b8ff43827911d2f5d8203e2876ef7c47435d6acaa07"
+      },
+      {
+        "file": "src/generated/contamination-capability-data.ts",
+        "sha256": "9d2e8adfade83f546849fc6e024ae5b61b186c38faba33f657e0307c1d0e0d3b"
+      },
+      {
+        "file": "src/generated/contamination-family-data.ts",
+        "sha256": "db513e4a958343a6ee744995cf430414a30411d962fdbfc39a70e7d9807b4c92"
+      },
+      {
+        "file": "src/generated/contamination-lexicon-data.ts",
+        "sha256": "487ef81032388393b937119a2f98b066cacd5c372e1b19d7f105315ecc12ada4"
+      },
+      {
+        "file": "src/generated/contamination-volume-data.ts",
+        "sha256": "5f592f2f33ce86dd932f95dc16609ee9ee18d0c56dcdf67b571006f99732aeab"
+      },
+      {
+        "file": "src/generated/enemy-data.ts",
+        "sha256": "06861b2caba24f6cac050d5110a184d251d1f7e50f051243ea22bc94989231e2"
+      },
+      {
+        "file": "src/generated/growth-route-data.ts",
+        "sha256": "342463708ec431e00ea00be8094ce937fca6a5eb300be5b4bea029440e0e6c4d"
+      },
+      {
+        "file": "src/generated/r100-world-selection.ts",
+        "sha256": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182"
+      },
+      {
+        "file": "src/generated/rift-fragment-data.ts",
+        "sha256": "59c08d8ff70701065328fff7cbec26e4b971fefe0d0c2b0ed889209ecf725f2c"
+      },
+      {
+        "file": "src/generated/rift-world-conditions-data.ts",
+        "sha256": "257fb47e344dc4ed8b9c67e2fe69362207aa3a3aaeecee750ae8dbca10fd9be4"
+      },
+      {
+        "file": "src/generated/rift-world-pool-data.ts",
+        "sha256": "f181f51e8a332b357818ce17f97e2373aaee4ef3c7c8e39e611a9c07676e5514"
+      },
+      {
+        "file": "src/generated/rift-world-space-data.ts",
+        "sha256": "310341f15599085f1130c14f3eec973cb3ad17575e1db82e715069f7dbd126b8"
+      },
+      {
+        "file": "src/generated/survival-data.ts",
+        "sha256": "487657e4967ada8c122ff66a92164f186d1f652b4c189660ac446679b5ce6d26"
+      },
+      {
+        "file": "src/generated/upgrade-data.ts",
+        "sha256": "92671875683043d5f1689ad4e22716d1c8766f3a91552bb11a52682a7322b8f6"
+      },
+      {
+        "file": "src/generated/weapon-data.ts",
+        "sha256": "25d13904e55acfa346408853b75c5eadecaec4fe43145c94c69504be251deb61"
+      },
+      {
+        "file": "src/generation/atmosphere.ts",
+        "sha256": "5069e1f84f3565b33b8c6a96c61ac1ee2d1177b123633fa37aa1ab98235f05b3"
+      },
+      {
+        "file": "src/generation/connectivity.ts",
+        "sha256": "09ce50871f059aa2293d3011e52c6031b9f6712a952032374a5016b6ffa3a790"
+      },
+      {
+        "file": "src/generation/contaminant-source-regions.ts",
+        "sha256": "1e6ad9078ff6ccd143282e8d260dabb88b5817919d49afe10605d748cbbf437c"
+      },
+      {
+        "file": "src/generation/contamination-draw.ts",
+        "sha256": "780f7aa6f2d65d63e9ca71c9bde6aec05b5e4f8b39c66256c0207e583496231d"
+      },
+      {
+        "file": "src/generation/contamination-pins.ts",
+        "sha256": "c15713531378ae833b13cd6e45417fca25867ea19dc30f7a464534a9b1b69b1b"
+      },
+      {
+        "file": "src/generation/cover.ts",
+        "sha256": "1df3e511b090dd8d99d0374e7431fd2048ac805c458b758cafbb976d2d8ba7d9"
+      },
+      {
+        "file": "src/generation/draft-pipeline.ts",
+        "sha256": "bd84d233e3afc414e8f14810b64de9594608b4a35248b259b70c22149edfc575"
+      },
+      {
+        "file": "src/generation/dual-path.ts",
+        "sha256": "3df3c42227ffe0498f4e7555d8f75c5abe7d39e219418e2c0c2a6b4ad75dd699"
+      },
+      {
+        "file": "src/generation/fragment-roll.ts",
+        "sha256": "6e1d92654bd723600ab510b8759a847bf47b50d4fd076db7a4b22858c2392ac0"
+      },
+      {
+        "file": "src/generation/legacy-r100-v2/executor.js",
+        "sha256": "bc5117ae07ff61565a1076b466ed1addf14b67691573a6acefe9fb47af1af06f"
+      },
+      {
+        "file": "src/generation/legacy-r100-v3/executor.js",
+        "sha256": "8aa337fb4687b45206db5db496bbe1a0a5269975b002cb2d1a7880c89870be78"
+      },
+      {
+        "file": "src/generation/legacy-r100-v4/executor.js",
+        "sha256": "90a5a6e4c122923c872ebaa623461b6f7217b37fc41c2c1854d2f07c049399f7"
+      },
+      {
+        "file": "src/generation/legacy-r100-v5/executor-recovery.js",
+        "sha256": "f0fbc687c80030a9a048cd897c4ddb84d0afbad78e5a9ab0b0b0a4822fea60c6"
+      },
+      {
+        "file": "src/generation/legacy-rift-generation.ts",
+        "sha256": "4d77303290a1c083941e9ad38b87d411e6fe9a9142ef745b6eb459f0a1e31b33"
+      },
+      {
+        "file": "src/generation/legacy-rift-v2/arithmetic-executor.js",
+        "sha256": "7cb7efec95c81dc35415273b31e90ba6a5847f11225848e9f32c3c7bc2c9d6d5"
+      },
+      {
+        "file": "src/generation/legacy-rift-v2/binary64-fma.ts",
+        "sha256": "a6a356d4b722ac4268e922c5fd576fcda1f3ee77457b5594538a255aa5594ed1"
+      },
+      {
+        "file": "src/generation/legacy-rift-v2/executor.js",
+        "sha256": "330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074"
+      },
+      {
+        "file": "src/generation/legacy-rift-v2/fdlibm-atan2.ts",
+        "sha256": "03f61c093cf96b72763971e1271173564cac7822863486aa5ecf49668bf8199c"
+      },
+      {
+        "file": "src/generation/masses.ts",
+        "sha256": "e1d8e88c574f04122d77490bdfeff5e70e540c4e7079e98688ab06e9384ce195"
+      },
+      {
+        "file": "src/generation/outline-mask.ts",
+        "sha256": "8b51f2038709b788580e92ae975717eb564f8bde51669978bd71c1f766d461a3"
+      },
+      {
+        "file": "src/generation/palette-quantize.ts",
+        "sha256": "bafca232fcabc5e4bb10fdaf3805636036605bc2af08f985bde3e63fefdcb04e"
+      },
+      {
+        "file": "src/generation/preview-paint.ts",
+        "sha256": "4339b007e1d9ca9cefa689fa9c2d1ada7012b351b5b8266216ce92f5410222df"
+      },
+      {
+        "file": "src/generation/recipes.ts",
+        "sha256": "4231c82c8dd3caec74b008705e55904b724609d08f8cf41f455a122b72c88f81"
+      },
+      {
+        "file": "src/generation/rift-generation-client.ts",
+        "sha256": "eadc68f5d3ed49d53fc0d251b5e316d97aba91acbf2e2a3b23aad1153eb57e1b"
+      },
+      {
+        "file": "src/generation/rift-generation-execute.ts",
+        "sha256": "73b0882b47c2b040c11f1f021125c7ce44d1f5d0be5c9785c69adbcad1c36cfc"
+      },
+      {
+        "file": "src/generation/rift-generation-identity.ts",
+        "sha256": "3dc102724053672adc37d32b7f8aa3b502a229dbbe3f5508b8149d74cc654afd"
+      },
+      {
+        "file": "src/generation/rift-generation-protocol.ts",
+        "sha256": "ee929416e408074916458f5445b3ff8f7487ad9e52ff9f1eac41e92b00acf61b"
+      },
+      {
+        "file": "src/generation/rift-generation-worker.ts",
+        "sha256": "2d38af7ac34d11b44669b2775e81ae2b092277611eb37bd61e6008af0bb40567"
+      },
+      {
+        "file": "src/generation/rift-layout.ts",
+        "sha256": "f251fb0e7f26f8f6f22d62b57d55acac98e24aa403de768c8e91f3f4be3abe4f"
+      },
+      {
+        "file": "src/generation/seed-fork.ts",
+        "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+      },
+      {
+        "file": "src/generation/silhouette.ts",
+        "sha256": "56d62e0540e19e9c723e1b0efb33dd4498cc1262615358c9e82cae13bc4718f8"
+      },
+      {
+        "file": "src/generation/static-body-access.ts",
+        "sha256": "9e88f47f5ada1daf3a3cbb01af3b76427389fe0fa6450958902dcf9ab5c90bb7"
+      },
+      {
+        "file": "src/generation/stealth-density.ts",
+        "sha256": "5d289db0f7d848e438c9bb0a7aad603550c9ebda4d3e9cbdf9d339da9bb477f8"
+      },
+      {
+        "file": "src/generation/structure-grammars.ts",
+        "sha256": "23c52627de2378e4f53788f60a91c57bf41582ada2cd500e298e0558ac676858"
+      },
+      {
+        "file": "src/generation/terrain-safe-volume-seat.ts",
+        "sha256": "7c2fc5d75240a302a41b4d25e64cf1840939c944db7ae13fec7231148b7e78fa"
+      },
+      {
+        "file": "src/generation/types.ts",
+        "sha256": "c201e0ff3894de9a5eb93fa036a1d89305b56ff41bdda56b2156bdb122001d27"
+      },
+      {
+        "file": "src/generation/wall-edge-path.ts",
+        "sha256": "a0c1f2944b266640b643bc5fd4da54c9c71de2dc2a2e7cff37a0321416baa925"
+      },
+      {
+        "file": "src/generation/wall-host-placement.ts",
+        "sha256": "37883e816361daaeb478903ba71170867a1c25f4c4443ae5a1df884e948ac800"
+      },
+      {
+        "file": "src/generation/world-study/ground-material.ts",
+        "sha256": "9ee8325004cdfb826b8fa256d3cc5a9a3a167ea6a0eda2ee7f342736854e3b06"
+      },
+      {
+        "file": "src/generation/world-study/layout.ts",
+        "sha256": "0658f1317e4deb12aa2266ab48a87a5d2bc67290c09b0e8a11875bb9a33ee23c"
+      },
+      {
+        "file": "src/generation/world-study/master-ground-field.ts",
+        "sha256": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783"
+      },
+      {
+        "file": "src/generation/world-study/material-field.ts",
+        "sha256": "f3971a905e6dcddc2d67a9393df604e412fd2c1c08686bf01e84fd19ef23bc10"
+      },
+      {
+        "file": "src/generation/world-study/material-forms.ts",
+        "sha256": "9d4a2ba692280afd5ea3aca767bb9211d74245903056584a7c3e24a8b843fe30"
+      },
+      {
+        "file": "src/generation/world-study/material-light.ts",
+        "sha256": "d9ce19155e6cd05eb71fe9a80f856df3a6084cdbeea626aa1692d4b494ff29e3"
+      },
+      {
+        "file": "src/generation/world-study/material-noise.ts",
+        "sha256": "e401a0d6289738fb030344f6d6c00027e690d778fe1faf8f280cc8754f4292d5"
+      },
+      {
+        "file": "src/generation/world-study/material-response.ts",
+        "sha256": "848e9a05681a1d298cd26014550c2ba56cd5bba181d7b2ec0089ed0326f26647"
+      },
+      {
+        "file": "src/generation/world-study/native-body-collision.ts",
+        "sha256": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-cellular.ts",
+        "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-erosion.ts",
+        "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-expansion.ts",
+        "sha256": "508b6dfaf744a63671035838c86ad36906b57be341ee26f1f1e55ed68e10d0b4"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-geometry.ts",
+        "sha256": "b9d56c768a33fc855661d37912bc28df76dfecd66fe75414a21cfc57b489e2a8"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-ground-edge.ts",
+        "sha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-ground.ts",
+        "sha256": "b20a619d0df2d0def4ed2d6cdc66bbdd7ab64450fb7d4efc1abf46ad67761c24"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-organization.ts",
+        "sha256": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-pleated-tear.ts",
+        "sha256": "a542f83a5da9b9d7b70ce35c37cfb0a09984bed56a6cec152af84c425e32eae1"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-raster.ts",
+        "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-settled-projection.ts",
+        "sha256": "c3758e2dbf0639158c17ad3d9b4998fe8d9f341129ccf000f723e0b81e84ddb6"
+      },
+      {
+        "file": "src/generation/world-study/native-volume-settled-sheet.ts",
+        "sha256": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925"
+      },
+      {
+        "file": "src/generation/world-study/open-space.ts",
+        "sha256": "19fa36a60c12e7303572d2c6526d2b00d9085169bb3d2c01d338cee7f2ffefe4"
+      },
+      {
+        "file": "src/generation/world-study/pollution-grade.ts",
+        "sha256": "6d4d009cce7cca97417fefd26137f42c297a51cbe50e9b7ad56aa1091d7483e0"
+      },
+      {
+        "file": "src/generation/world-study/production-map.ts",
+        "sha256": "d48e0bd4f26462797ec89934082b0397516d12548511f63cb2b5104fb043cf82"
+      },
+      {
+        "file": "src/generation/world-study/production-recipe.ts",
+        "sha256": "e5d461474f53c2f7450fb28aaa670558ba833bc084d18c62ff5abfd677e33a5b"
+      },
+      {
+        "file": "src/generation/world-study/profiles.ts",
+        "sha256": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d"
+      },
+      {
+        "file": "src/generation/world-study/r100-expedition.ts",
+        "sha256": "3d62896b06faccee9e902806a8bb71827c84efa2775d5a2f07d69a05a6d771b1"
+      },
+      {
+        "file": "src/generation/world-study/r100-master-world.ts",
+        "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+      },
+      {
+        "file": "src/generation/world-study/r100-native-data.ts",
+        "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0"
+      },
+      {
+        "file": "src/generation/world-study/r100-package.ts",
+        "sha256": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4"
+      },
+      {
+        "file": "src/generation/world-study/r100-patrol-windows.ts",
+        "sha256": "80bd1a32f5e528f416a3d33c28bbe7f9a20fd23c2eb7cb9674c628d145c790f2"
+      },
+      {
+        "file": "src/generation/world-study/r100-pollution.ts",
+        "sha256": "3eb662b7a0e6de61bb18c579a321eb294f3eb906e40df7f226edf12894d7a27f"
+      },
+      {
+        "file": "src/generation/world-study/r100-production-map.ts",
+        "sha256": "87509365a644732c6783c58390f37488985822b3e5f53639bb62ea2c34f82883"
+      },
+      {
+        "file": "src/generation/world-study/r100-world-appearance.ts",
+        "sha256": "71441ad19d1ef8702e737f46898abf05a7b0262de4916aede9bfddbe6fe04b59"
+      },
+      {
+        "file": "src/generation/world-study/r100-world-selection.ts",
+        "sha256": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40"
+      },
+      {
+        "file": "src/generation/world-study/raster.ts",
+        "sha256": "48f348198c1b1a0088f5b9bc6ff6fc8e21dfd2e2fb5efe9f560d0f89658c2766"
+      },
+      {
+        "file": "src/generation/world-study/region-field.ts",
+        "sha256": "03e2256d3d0cf0d80e51d9f3af7f353884162445370e63aa27c63083f40ea4b7"
+      },
+      {
+        "file": "src/generation/world-study/search-remains.ts",
+        "sha256": "03d1ba13b81af3a9a6ec8c548bc03542deb226994eed42bd96660aab7177713c"
+      },
+      {
+        "file": "src/generation/world-study/semantic-deployment.ts",
+        "sha256": "4e339e6c006c7eaafe619e5d7c0494fc878a8e3b50bb912ad72e5ed58fc979bc"
+      },
+      {
+        "file": "src/generation/world-study/shape.ts",
+        "sha256": "498f846e415e8aeec8f3a08464e2120fa45702d04a3b4cdaeb73862a94f06364"
+      },
+      {
+        "file": "src/generation/world-study/space-profile.ts",
+        "sha256": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590"
+      },
+      {
+        "file": "src/generation/world-study/space-quality.ts",
+        "sha256": "1c69fb82a366e5f57c7f92500b959d293da1d5bcb5daf768a68c2bd477893724"
+      },
+      {
+        "file": "src/generation/world-study/support.ts",
+        "sha256": "21c380b643339d80ae304ad5f9490d7c41bc11654404ac1f721e83f5e9f0bcc9"
+      },
+      {
+        "file": "src/generation/world-study/surface-field.ts",
+        "sha256": "3027349a312cc085562751dc8cb9c71b3be18f226cc3855f4ca3a40533f3db91"
+      },
+      {
+        "file": "src/generation/world-study/surface.ts",
+        "sha256": "63f6ca1e73d097f3eba75fcf330b30732efb027148632800f4947550c4947aba"
+      },
+      {
+        "file": "src/generation/world-study/types.ts",
+        "sha256": "23c4f0c6b87f0ceda4fdc3ce10fd7364e3b3adbfa652cb48aae06eb52e3d609a"
+      },
+      {
+        "file": "src/generation/world-study/world-conditions.ts",
+        "sha256": "c3f83782511fafebafbf6d6da2dbb5dc4e02a3a8a1942109e591d256d50fcccd"
+      },
+      {
+        "file": "src/generation/world-study/world-material-pigment.ts",
+        "sha256": "fd524196627d38cc804379e4e1448c2707b557c395e0748038910fb507fc028a"
+      },
+      {
+        "file": "src/generation/world-study/world-scenery.ts",
+        "sha256": "171f1b193730d9cdd87ab42ecb349d9c2fe05594201ccfc08f3d269c0a396176"
+      },
+      {
+        "file": "src/i18n/index.ts",
+        "sha256": "477c915586aaef06f136ca9991ddc5a514767a7f1dc69d6f65f38d2fe0e882ea"
+      },
+      {
+        "file": "src/i18n/locales/en.ts",
+        "sha256": "924893a4439e8b0dc342f416c4310812c47c2bee80e134526125242d15f801fb"
+      },
+      {
+        "file": "src/i18n/locales/zh-CN.ts",
+        "sha256": "7d427cf4eb337ea61646fe74f37052a7d8a0851034734a7ed5080e6eb8239e5b"
+      },
+      {
+        "file": "src/i18n/types.ts",
+        "sha256": "f94a23d2747727cffc3d3c8897ca552a1e4411776610c622ef3dbea45753d4e9"
+      },
+      {
+        "file": "src/managers/audio-catalog.ts",
+        "sha256": "016c2994a24ffd206b7e24a9f1b2e9228ed28364f6781b0b4651908ce57c8c9e"
+      },
+      {
+        "file": "src/managers/audio-manager.ts",
+        "sha256": "0c1aa43edfdb6e8f5f8e0fc2021f8cb69102f4fb4de0437a584b8891f2f97840"
+      },
+      {
+        "file": "src/managers/game-state.ts",
+        "sha256": "5b74229d7c694ee0c4af028ae480ec34438d10e7792d174c36e30cf5a718b000"
+      },
+      {
+        "file": "src/managers/rift-recovery.ts",
+        "sha256": "dbe9ac569320c6c3df6680f13c61913d2901b30da287d9e8adf185882810dfa4"
+      },
+      {
+        "file": "src/managers/save-manager.ts",
+        "sha256": "245d98e29dcfd87f7155fe7ae046adbe925aba834d4fa7cfc9eaa0e5272dd19f"
+      },
+      {
+        "file": "src/managers/session.ts",
+        "sha256": "ce4292bdd0e2bbe3e96b8527bc7943d69fa84a97d3a9040709aa6cb44dc76dbc"
+      },
+      {
+        "file": "src/narrative/atmosphere.ts",
+        "sha256": "1d7aa750663c91d875d1c2f7fa3f4836b4b74984601cec6e33aa4f5e9de9ddb7"
+      },
+      {
+        "file": "src/narrative/narration-memory.ts",
+        "sha256": "5db78fe234dceebec556f460dff1e9262088a1149c24de947c7b89fe0123963d"
+      },
+      {
+        "file": "src/scenes/rift-map-data.ts",
+        "sha256": "2e473be1b6585cdf9bacdae4774d59ef75c889484bb0db1c02d7cd257b0c28c8"
+      },
+      {
+        "file": "src/scenes/rift-scene.ts",
+        "sha256": "6f39cad6e744c5de2985a21631dbb782f62a1c0a86652a2206ef29c195eaa43b"
+      },
+      {
+        "file": "src/systems/ai/activity-state.ts",
+        "sha256": "779f02925f104a6c07f504e7f1d95215b46578cde1509ca96792e48b5a706c50"
+      },
+      {
+        "file": "src/systems/ai/ai-system.ts",
+        "sha256": "136fad657c34711e00e5a5084b1fac0d0496388bf85c40d0a3debe48230d5435"
+      },
+      {
+        "file": "src/systems/ai/behaviors.ts",
+        "sha256": "f09a058a249d00a2acbd778f5a56b55ba7c6724d34481600ae705b8cbfc5d11d"
+      },
+      {
+        "file": "src/systems/ai/contact-separation.ts",
+        "sha256": "d52ff02fdaab5b080daf45901b55445be604df26eeafa2be5caeec22a9a95fb9"
+      },
+      {
+        "file": "src/systems/ai/context.ts",
+        "sha256": "55a2121eb178931dc71e1bd57ab3d86607af801b31ba51cbacff35704c35175e"
+      },
+      {
+        "file": "src/systems/ai/index.ts",
+        "sha256": "99d8ef01a0b08850f7d034f7b85e47f8381ef774435ede06b729fd7961cd504d"
+      },
+      {
+        "file": "src/systems/ai/physical-grid.ts",
+        "sha256": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+      },
+      {
+        "file": "src/systems/ai/runtime-state.ts",
+        "sha256": "983d3130b96e56b65bd7106c90574402294b8e79933ee17605b6ec7444e79103"
+      },
+      {
+        "file": "src/systems/ai/runtime-validation.ts",
+        "sha256": "ad91ca5520fd899c0d966b71a0b39026c530e07762f65a125f5899112489a34d"
+      },
+      {
+        "file": "src/systems/ai/state-machine.ts",
+        "sha256": "41961f2c370726757f59cbe694f7fd756bec385775ceff9f2bc650c5b7c39a67"
+      },
+      {
+        "file": "src/systems/catalog-ability-runtime.ts",
+        "sha256": "2b2a7a2695529df0b636f4c7c3b451832906382fd65bedefe9671c9068bde42b"
+      },
+      {
+        "file": "src/systems/chaos-system.ts",
+        "sha256": "55d1439ec522c126d6d4b823cf4808fe545672e81b114b5ef04ff26d29a8cb43"
+      },
+      {
+        "file": "src/systems/combat-system.ts",
+        "sha256": "12a31b2644ac2eb22e56d5207744e29164d9b404e523d45032fa27493cecf529"
+      },
+      {
+        "file": "src/systems/contaminant-catalog.ts",
+        "sha256": "9ed208132afd99cc1e17eb8b9bc10a9bf1cbd59377f111f1e6776b0694e27a4f"
+      },
+      {
+        "file": "src/systems/contaminant-drop-plan.ts",
+        "sha256": "5fb13a9357f236556740914ed9b136a713e25ee341f0a4e8187129ebd4cda147"
+      },
+      {
+        "file": "src/systems/contaminant-migration.ts",
+        "sha256": "a7fdec1f562c92e6a69ff7d1f37136f42241ac98cdf6bf292658ad76a1d45415"
+      },
+      {
+        "file": "src/systems/contaminant-quality.ts",
+        "sha256": "0bcb58872bdce1edf52d126e3f3a35b34db5dd78054f9fb1952b045b6da86347"
+      },
+      {
+        "file": "src/systems/contaminant-system.ts",
+        "sha256": "d0b42b355052401b60c0ed954a55bb5d6cfc8b5bcaaa2a7f47c423ab3ca3f23c"
+      },
+      {
+        "file": "src/systems/contamination-host-live.ts",
+        "sha256": "0f5f31b67d8206568c6bb3e13fd4525a62bd4cbf969cffbe7b9eab642c6f2cd0"
+      },
+      {
+        "file": "src/systems/contamination-host-system.ts",
+        "sha256": "72a0c1ff5d14d08a5bbece1a1f3133a179ab8c6dc028fa939632350d89b40139"
+      },
+      {
+        "file": "src/systems/defense-engine.ts",
+        "sha256": "31006b129434b02e9ff6db85c643825be432af99140063c9cca6b76b4872c7de"
+      },
+      {
+        "file": "src/systems/dust-flow.ts",
+        "sha256": "21c24f13682402ec0aa3aa12826dc177e221838ffac435ea223679da9a781ad9"
+      },
+      {
+        "file": "src/systems/enemy-control-state.ts",
+        "sha256": "8ee00b93877789d4b1b4399b71c82cc07d469de8ac46ea14181cd41615635349"
+      },
+      {
+        "file": "src/systems/environment-hazard-control.ts",
+        "sha256": "9100fa155985da856d7bf042a4aecd1627c429a6594715521f161683eae1c859"
+      },
+      {
+        "file": "src/systems/equipment-lifecycle.ts",
+        "sha256": "a77cb965c0743b6fedd5167faf4dc61e05c2582b87b0d09525073d3048666a43"
+      },
+      {
+        "file": "src/systems/extraction-system.ts",
+        "sha256": "0f15190998192986f48a5325982c557352d9eabca7b959e2b628389b81d43a95"
+      },
+      {
+        "file": "src/systems/field-loot-inventory.ts",
+        "sha256": "413cbb67bbc223888ad0e1278f3bb1d8039253ac3963f2e5639c85d94de141c5"
+      },
+      {
+        "file": "src/systems/ground-depth.ts",
+        "sha256": "4c6d46ece1fce6ebc90912f5a57c3de19ca170ac25202d27ed18925ceda83d2e"
+      },
+      {
+        "file": "src/systems/growth-system.ts",
+        "sha256": "e5768f33d994218f36dc098227c20bf14213e6389734dd9999909175ed712f07"
+      },
+      {
+        "file": "src/systems/impact-system.ts",
+        "sha256": "1f9ae2b615388fefea2df478ec19d5a0f9ab0fa77ff49c74fc3595fc1b4faa29"
+      },
+      {
+        "file": "src/systems/inventory-store.ts",
+        "sha256": "b68d2daa85f4b291dcd86e52b890d865146098430ae31da73ac7dcff5e974782"
+      },
+      {
+        "file": "src/systems/kindling-yield.ts",
+        "sha256": "2213e7ee61b9954820a772835e10016bd583ff958262dc0fd25477fd0c3ade29"
+      },
+      {
+        "file": "src/systems/loot-search-presentation.ts",
+        "sha256": "bc8d7eef9fbf25b048cf9973b16af6a982cc880aa7aa55f23285b78f72230b6a"
+      },
+      {
+        "file": "src/systems/loot-search-system.ts",
+        "sha256": "6ba7c4b01c46347e75258dc6287f10ca3bd02964c58eb23203f3b5c63fb7a186"
+      },
+      {
+        "file": "src/systems/native-rift-body-recovery.ts",
+        "sha256": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+      },
+      {
+        "file": "src/systems/pathfinding.ts",
+        "sha256": "35d680b2bcd20165b79bf9e07f3286770b74e4d4d22013153f8255d9987e755a"
+      },
+      {
+        "file": "src/systems/procedural-surface.ts",
+        "sha256": "a3bdbc88d91be71799436192bec0526d6ba564459f5774203294fd0fea7edabc"
+      },
+      {
+        "file": "src/systems/r100-extraction-presentation.ts",
+        "sha256": "eb5c39aec12baf449407945fa4e9786f1595b60cd5ff9984b916c8c59abfc0dd"
+      },
+      {
+        "file": "src/systems/r100-world-presentation.ts",
+        "sha256": "f19b862e9897b6f8f44162d8c726a833da25963cb71a106b101616fb22a19a96"
+      },
+      {
+        "file": "src/systems/r100-world/audio.ts",
+        "sha256": "cb12387b4de1b9a2f7fc1b04880f037488951c1cecdbfa001cc778425c26071f"
+      },
+      {
+        "file": "src/systems/r100-world/ground.ts",
+        "sha256": "36fc10eb24d9d111619c968367e937b82693d31d775a8d07800831794aa57f0d"
+      },
+      {
+        "file": "src/systems/r100-world/organization-sampling.ts",
+        "sha256": "7a3afe8ba3cb1816fbf899bbecde20dc020d4432c9f35b7da2398c4dc3bdca3e"
+      },
+      {
+        "file": "src/systems/r100-world/painted-material.ts",
+        "sha256": "27aaed1f473c464f3872e8d48be0386d08bef41e43f8fc7f2d274656df5701ae"
+      },
+      {
+        "file": "src/systems/r100-world/prepared-gameplay.ts",
+        "sha256": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+      },
+      {
+        "file": "src/systems/r100-world/presentation-state.ts",
+        "sha256": "22ce24073f78b0286acc22d7bc4e08efcb8ef4a6012fa77aee8d8d1f363af7fa"
+      },
+      {
+        "file": "src/systems/r100-world/presentation.ts",
+        "sha256": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+      },
+      {
+        "file": "src/systems/r100-world/source-cells.ts",
+        "sha256": "bd0fcaa3e93a6e9a06916e068249d5853de519cd960a5a0ce44b001bd62735a3"
+      },
+      {
+        "file": "src/systems/r100-world/surface-bake.ts",
+        "sha256": "603d3680ed4f6b95223fa268034a2332760dc0c804f26c00337526a29a7592fa"
+      },
+      {
+        "file": "src/systems/r100-world/surface-fields.ts",
+        "sha256": "7668ee50463c178e51c26047639932b53c8faf79bb9a9c926ec8cf91434d60b1"
+      },
+      {
+        "file": "src/systems/r100-world/surface-preparation-client.ts",
+        "sha256": "864d605301d0323257cf455bd9710e9245517dd1691bdd7616cae91eba488ce0"
+      },
+      {
+        "file": "src/systems/r100-world/surface-preparation-worker.ts",
+        "sha256": "6082f9ff20ab38d5db9a877a368c5fa4cc1ebc1569f8090931296a99d65be00a"
+      },
+      {
+        "file": "src/systems/r100-world/surface-preparation.ts",
+        "sha256": "00a027404b24ea056702f642c15388bd59f127183a19739eb125e139fa4b4427"
+      },
+      {
+        "file": "src/systems/r100-world/surface-renderer.ts",
+        "sha256": "978caaa8e1447d50485d6c5bb89c4970cabd3481a26cad83ce64450590d0e9dd"
+      },
+      {
+        "file": "src/systems/rift-entry-frame-fence.ts",
+        "sha256": "59a9cfa7c541488280837a62a2aaa5eaa81dea9d6a44826be24d07fcea105d53"
+      },
+      {
+        "file": "src/systems/rift-frame-commit.ts",
+        "sha256": "fbcb12fbf92f750eb27546625bf20a4e20146d93e45c4d4409e422ed2497a765"
+      },
+      {
+        "file": "src/systems/rift-host-manifest.ts",
+        "sha256": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+      },
+      {
+        "file": "src/systems/rift-recovery-state.ts",
+        "sha256": "8cb9c3aa8d591461ef39886371fbcd302b560ae64a312116382dea671e4e081d"
+      },
+      {
+        "file": "src/systems/rift-staged-entry.ts",
+        "sha256": "3d0a94c4a339821e4bd69701fa62d6572c8fdc6cefe20795427d169c422c1aa6"
+      },
+      {
+        "file": "src/systems/run-controller.ts",
+        "sha256": "6bd34ebf3025e8b985b9ce7c35ab5425b4bbc0057432d1164245455fd90f6c6b"
+      },
+      {
+        "file": "src/systems/run-passive-receipt.ts",
+        "sha256": "635d36ff36dd11a915b01ec679f2b46cad1488d049626c26d505585db712676c"
+      },
+      {
+        "file": "src/systems/search-remains-ambient.ts",
+        "sha256": "d86a5dbeedd634000b3df49ea8bcdef2efb87a9a87327d2ceb0d42cedec6cf70"
+      },
+      {
+        "file": "src/systems/stability-tracker.ts",
+        "sha256": "3391e649a786ca5fc03ca9e5dbe2051ee51d343f14f2b545596fda99da58d74f"
+      },
+      {
+        "file": "src/systems/survival-attributes.ts",
+        "sha256": "b51c38c6652dcd010df0e7cfd0455b4df2d2b6ce893142e16b70152c8fa59fd7"
+      },
+      {
+        "file": "src/systems/tide-system.ts",
+        "sha256": "864f56cfa60a38643a565d8f1931cfcda6a8b710a4e4fba750eff8aa2d99be44"
+      },
+      {
+        "file": "src/systems/tile-grid.ts",
+        "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+      },
+      {
+        "file": "src/systems/tilemap-renderer.ts",
+        "sha256": "b13ef6abc9494c5cf450b018738b7415c10468c6cd8ec419ec544fc709bd460f"
+      },
+      {
+        "file": "src/systems/tool-body-echo.ts",
+        "sha256": "0c5d025ee923d3e8b84cb191d7a957429faff34d56689874209559858e4d9f6a"
+      },
+      {
+        "file": "src/systems/tool-ground-vfx.ts",
+        "sha256": "7fd97ac1ca7bc3a017ffefdf650b587a6393aa3078944ad01a62094412c02ae2"
+      },
+      {
+        "file": "src/systems/tool-presentation.ts",
+        "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+      },
+      {
+        "file": "src/systems/tool-runtime-extended.ts",
+        "sha256": "8ef077be370c3a610e17b6c98cccc8eeb6a2419209cae42158acf17299ff2b78"
+      },
+      {
+        "file": "src/systems/tool-system.ts",
+        "sha256": "1ce523a94660ea0f8bb15e73e6ab4b47833674af7a8bb7b33e4f860779a0044f"
+      },
+      {
+        "file": "src/systems/tool-targeting.ts",
+        "sha256": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+      },
+      {
+        "file": "src/systems/tool-vfx.ts",
+        "sha256": "dc74b394cad423a56c2caffbc684067479ed53d35dc8d89c633fba9850b7eae7"
+      },
+      {
+        "file": "src/systems/trail-system.ts",
+        "sha256": "7c60966cc374ca4ce620f550c2b6a340ff195e811b1528d5bff7d9a9dcc80244"
+      },
+      {
+        "file": "src/systems/visibility-system.ts",
+        "sha256": "b4a54956afc4a1f38457f496cb07496ac5acc53229ad627981bf638c8417df02"
+      },
+      {
+        "file": "src/systems/vision-textures.ts",
+        "sha256": "1c05f41486e4e5a8d4896d9038fc0a61238c18cdbbe2989f498dadbb2a60bef4"
+      },
+      {
+        "file": "src/systems/volume-presence.ts",
+        "sha256": "0ff791c4445dd99be74edbf5106938134198c5e64851d432ecdb6dff9e6b677f"
+      },
+      {
+        "file": "src/systems/weapon-loot.ts",
+        "sha256": "2727823c30d1776334f670566fa68fb0ed5c4693923d793ec70568b3b9d6a2bb"
+      },
+      {
+        "file": "src/systems/weapon-swing.ts",
+        "sha256": "306fec7a73eaab37fa9fe0cfdc66a5a6ce309f8778ef22e34b00e6a0c84c68e2"
+      },
+      {
+        "file": "src/systems/world-search-presentation.ts",
+        "sha256": "22dafa0bf5684bca2e0bbbeede658f81608c13c708112efd87a00d67fde8aef5"
+      },
+      {
+        "file": "src/systems/world-space-surface.ts",
+        "sha256": "56ba1df81238788921f96d63ac8cf2138822f12c3543df0c653163b2819c56ac"
+      },
+      {
+        "file": "src/types/ai-types.ts",
+        "sha256": "159e68d91e1a1f6cacd3abe63b3bfc935bf2b711340a38e648ca7711e8fac6b2"
+      },
+      {
+        "file": "src/types/events.ts",
+        "sha256": "f1898794aac8afe9f778f7788669f35a3273fb1d9c2c2065cecee0d9dd29111e"
+      },
+      {
+        "file": "src/types/game-types.ts",
+        "sha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19"
+      },
+      {
+        "file": "src/types/inventory-types.ts",
+        "sha256": "db77f7f5f4a05dc9fb3763741a91c3b90e8b28c733712b89524d7d23f702c109"
+      },
+      {
+        "file": "src/types/map-types.ts",
+        "sha256": "d9308149b3958f195749509b8e51065e671a59fdcf9c654b7575a18f07a3a00c"
+      },
+      {
+        "file": "src/types/rift-checkpoint.ts",
+        "sha256": "462c70371d977239fa9c0c93bb17c6e2fe7620bd56375b346e832e300e607621"
+      },
+      {
+        "file": "src/types/rift-world-history.ts",
+        "sha256": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80"
+      },
+      {
+        "file": "src/ui/contaminant-names.ts",
+        "sha256": "ae23e00d632df37d6f65d4fceec8212861e0385e9cacc2a098dd977211bd093e"
+      },
+      {
+        "file": "src/ui/contaminant-presentation.ts",
+        "sha256": "c3e1c492c6048030c24f5903853b24a0dbf6a9e688960375312b90f463ef3847"
+      },
+      {
+        "file": "src/ui/dom/detection-pulse.ts",
+        "sha256": "ff89e9531387a3be0f45698e69af9bf66100a2f5d8146012654d9e71c461907c"
+      },
+      {
+        "file": "src/ui/dom/encounter-narration.ts",
+        "sha256": "74a43cb391467aafb6f4fbaeaf9444e774206e43841bc590a4f17390d156b9a9"
+      },
+      {
+        "file": "src/ui/dom/inventory-panel-styles.ts",
+        "sha256": "95a9013757c5baa2d691c2d28091667a12dcfbf7df76fddfb5b89daba60b56eb"
+      },
+      {
+        "file": "src/ui/dom/inventory-panel.ts",
+        "sha256": "17e3fdad8cf9cf2018988856f4aca9cfc3cdee6b836e20350b94004e34773e7f"
+      },
+      {
+        "file": "src/ui/dom/loot-search-hud.ts",
+        "sha256": "8acfaf974b585e5dabb9eeab2ffcfc05058a079b5698fcb0d0d00efa7f2162e9"
+      },
+      {
+        "file": "src/ui/dom/panel-styles.ts",
+        "sha256": "75dfbbb3b9adeafa3e663bcc457492fcd876260564e9346323e5d5b583375a2b"
+      },
+      {
+        "file": "src/ui/dom/pause-menu.ts",
+        "sha256": "77bd58ff3affeb984cd01aeff13d4a1cdddae222fde6917696771247bae0ba2e"
+      },
+      {
+        "file": "src/ui/dom/rift-hud.ts",
+        "sha256": "3e4664ec3c342aefbb1cc2acfce3ff921f52ad5ac8c3a86f069fc5ed080213ea"
+      },
+      {
+        "file": "src/ui/dom/rift-result-panel.ts",
+        "sha256": "4081af9c58af8497d210384359ddbe0ede8c09afcffa3cf6d5ee0ff55ccbb4c6"
+      },
+      {
+        "file": "src/ui/inventory-presenter.ts",
+        "sha256": "598447af95b15e261ce758f6a1632d2d0de619156acaa93d07785eb895892e61"
+      },
+      {
+        "file": "src/ui/minimap.ts",
+        "sha256": "dfbcf020b9e92ee73e6f6ec64817f838192c95ea49a7d222c691078f6b5aeb65"
+      },
+      {
+        "file": "src/ui/side-effect-labels.ts",
+        "sha256": "15918b711ebce96274d9203f82a879ebdb94427c52a39e7532a62ffa3c0f41f2"
+      },
+      {
+        "file": "src/utils/grid-raycast.ts",
+        "sha256": "de5b5e6e47ba34e08146ff372f3a6cd733b0311979a8838d5c23954129f5bd4e"
+      },
+      {
+        "file": "src/utils/math.ts",
+        "sha256": "24f31531bd83174c96e9c41fc84b66c965aec3b016014779589f8c4e30936dad"
+      },
+      {
+        "file": "src/utils/random.ts",
+        "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
+      },
+      {
+        "file": "src/utils/worker-request.ts",
+        "sha256": "daffb6b048af03e206c50756dbfe5ecc66763e5a222a44081de66e4ef8395e87"
+      }
+    ],
+    "manifests": [
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/ash-strata.json",
+        "sha256": "c16a5a7ed960c0ccf66955b5253428b632fc610b809d80df7a455a3fc9d3e40f"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/crystal-fibre.json",
+        "sha256": "12f17c021db4c39e4465840f7842c512fa8b14861873a9cbe0b6fefa89c8f89b"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/ivory-basin.json",
+        "sha256": "cf9c8cb42517da8b8933ee99318c4df065c919c46455140b0032117f94072b82"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/cinder-ridge.json",
+        "sha256": "e22e4f879897449d387d1eb01a6c19c79cabda31f2b323f71a838c7e16799a2d"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/pallid-membrane.json",
+        "sha256": "64e7d03736d5de3e3130a603a739561d64b8efa539a88d224dd0c0481771c30a"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/silt-gel.json",
+        "sha256": "bdb5e2ea6b3a9b2c1d9511928df0800c90cb0bc012b58e956af75c2226153e54"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/schist-shear.json",
+        "sha256": "7fe256253ece538fcf36a51b561a5e4996d895507142a8567e30e5ab89d9e220"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/splayed-fibres.json",
+        "sha256": "17c9547cdb6e5ce77d831640ad830d1da09cb1120ace29ac1e97f8a7974df859"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-chain.json",
+        "sha256": "824d0748b2e3dfa340395b0028c291fb04f0d469935f840ae59738c73f104ba7"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/grain-laminate.json",
+        "sha256": "962e648cda642fbb8aade9b1226b59624c9ae82e50d34907c72fdad72565c2bd"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/tension-membrane.json",
+        "sha256": "8759f316c8ff04c486a4dee6d512a7619ffb78637fe948221c93240fa2a44d1b"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-gel-delta.json",
+        "sha256": "8bfcc30839231a3ea62da7e5336cd031e228964864135ea3fde689438beb5252"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/pressed-dunes.json",
+        "sha256": "4691ab26138c82d73c34d592bb0ed80fddc844e936e6fe461d01a914d85adbf7"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/ruptured-film.json",
+        "sha256": "afe12e4c8f350112e45163237a43ae9777996e5e0eceb4977dc28d365bf504bf"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/reversed-flow.json",
+        "sha256": "90a1de3c0a30f44ff4602c8014ca1dc557b391801f40bc43d7385d493606c5ac"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/laminate-shell.json",
+        "sha256": "082f8f2555855e35c62a5ed37e41f3a1ec3bc9c45660b4943389733af950de93"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/fibre-silt.json",
+        "sha256": "cee0648a53f306f785d75f60e153376ab4cbfa5fd3823522f678f2fcb852026a"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/film-laminate.json",
+        "sha256": "e89e17776b7f2e9aaeb12cbdb247678649b4d502c7ea1f46667b7776cfdd28fc"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/gel-fibre.json",
+        "sha256": "c727557e013d7d8e0b562e893fa0bf52f9950747ac8795ca8982d80fe1898389"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-grit.json",
+        "sha256": "1f0ddea7f080d2a7f321ecf0880a33292cfe0cac7e9d6add4562054da146c147"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/rib-vault.json",
+        "sha256": "d604bb26b00c9b174833130fb0cc523a0f808c188cbf6147491fff71f1034d89"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/pleated-hide.json",
+        "sha256": "c65748d5734375502848a7615b5e1367a1fc521d0278edaa61d87bb3e0ce725d"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/blister-field.json",
+        "sha256": "3e1e23bf3d51a05c134c85fa8c60585f525253afb033e90bab9184d088c07cb6"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/wax-tongues.json",
+        "sha256": "586bde41702143203713601d0522de7051a200228c8050bf92b037de07331569"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/monolith-sill.json",
+        "sha256": "ac575204071e4b4a97e98784401ac538ff690b8fed28dcd741d7565a8484724c"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/bleached-court.json",
+        "sha256": "3ccad75bbfb6b39e70ac82ff4b9101e4ae3a822cd04cf4d4a56eb6d2ca136dd2"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/split-rib-causeway.json",
+        "sha256": "ea0cca559ac49a6a878fed33fdad51f5cc70d65f69f92c3baafda15110d40ca1"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/satin-fan.json",
+        "sha256": "75ae5ee905871af5480921bbaba2562283bd1b274b95de1dfa9a5b4bf8a79350"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/chalk-steps.json",
+        "sha256": "a377f5b4780aa1d9e45e16697c2f88201916fc7aedabd6f33f0fbee25955fe49"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/porcelain-maw.json",
+        "sha256": "56e2c9d3245070dca5347680a5f8404b0e224e6cbd03137a1647701fc1f98c80"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/amber-ribs.json",
+        "sha256": "bc8c0e88dca871d351bf3387d3cfd22f526ef503e861b97014f4865dfa9f7e3d"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/pale-sail.json",
+        "sha256": "8c29708c0804fb250c51f8d5f30158ab3fb6e5dcf2b5f25089bf0e66cb1ee2e2"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/root-cistern.json",
+        "sha256": "cff1c06a005d313822ad269dbe67df15c6a6290e6e0bd9890da2dcad51a23dc1"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/scab-islands.json",
+        "sha256": "aaaa6afb6b2ebea5024b46ab5dc4c56d57f885d52577178156ecfb0da3ed1a5a"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/foam-trenches.json",
+        "sha256": "4616e7f369e37be8b91d84e8f1858e2f07f453d3698d41b6dca6fc5ec4375068"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/resin-fall.json",
+        "sha256": "f21f5e04db66735b3cf1601a2f4b3ed35a14404135a4b55c6ddcaabad15bdd5c"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/tendon-shelves.json",
+        "sha256": "8345a12c8e6bb025bb95ccaae5109f70bab3f700fde391318777aebb3050865d"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/felt-basin.json",
+        "sha256": "6eae8c88fb66cfb45ad0a98fd97f8ad4506f9cc0000142066046fbdb3af7691a"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/cork-shelves.json",
+        "sha256": "6edb5a562d8a4729b498f29a1f2de1509cce90b0caa4397546bb4cc40f7c72b4"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/lacquer-court.json",
+        "sha256": "280c1107ed36b23ed7ed3ef6edcb4da19f56dd7d4eb2dd9fb6da96b79937a519"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/ribbed-delta.json",
+        "sha256": "d1f1ab42ce4e99c295eef7f71666a641c520734242182a50efccb1e3db9b908b"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/bladder-weave.json",
+        "sha256": "3ae3af179d16cadb938a4107c32581b417e4cd9e5588c4dcb65f2fa88f4b682d"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/flake-thicket.json",
+        "sha256": "d76e15ec170cb177c20d69ea45d48291e62690fc95159b58386ce50b9708ca97"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/resin-hollows.json",
+        "sha256": "c922bd9127333bf8cc59ffc5fce369ed5a56aa6c41bbd18e3d04a9358df72e33"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/sentinel-mass.json",
+        "sha256": "0c9a9039b051fd4cda8b7967cd252a0c906f3e5dbfe332eecb823fc03c0452ef"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/stepped-bowl.json",
+        "sha256": "ee28d47f78021fd4d46cc0806d4896c976c39e9c73d61475fb14f475636faadb"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/draped-bay.json",
+        "sha256": "9134372108c450139e9291b1823de5bff79f891bd22e768e80c63d41bcb144b3"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/ember-cushions.json",
+        "sha256": "8ec471a156c44ed51af02155e1ea831579c6b1c596c23968511a6a063612e6a2"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/splinter-rotunda.json",
+        "sha256": "7f0f2b4a00cbca1229f120e7634e06bd9cd2e8154c94b95b875002979bb5a4a1"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/quilted-scars.json",
+        "sha256": "9f0585cb7faef035cb3960ed668a0f3678a9bba124054f937076d3ac95496770"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/silt-colonnade.json",
+        "sha256": "dbeebe6ca2f4ffd27f210027e47a372a7cc3c3cb033b5f7589f018240d744f71"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-causeway.json",
+        "sha256": "f22fe92f19bb540a73c12398ce9d2d918323167f131028272dc6d2e721b0ce9b"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/cleft-tableland.json",
+        "sha256": "4d31b841bfd8259c951ddb98654f76d6762ad88c321022a5e977d876f563d483"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/fallen-spines.json",
+        "sha256": "fd2cdc9607b046fc421e06299c704d3dcb08f413ef1538e33ddf39e3b7d7113e"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/clamped-shore.json",
+        "sha256": "6eb0a787e78e09fad99bb206b416aab17bb5985937baf75ae9a38ea3198d642b"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/torn-reservoir.json",
+        "sha256": "ac484253b5cf67378de302d5933d89e2740601f4a880d9bb611a9ab72ef3a6d1"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/braided-seam.json",
+        "sha256": "b733a8bcde62f312f628bb5ee3c5c24cb46a6b7f1f26e3df02a56827e2a78126"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/scalloped-reach.json",
+        "sha256": "4b0a8e22c220a6bff5c3dbf0de1d1dd8d070d8b3753ca09d65edb5bc415b0b63"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/offset-pan.json",
+        "sha256": "7907a6434e8a6bb821255e7779f0fe224c7db1e300584eab5edc58461af82c3d"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/thin-delta.json",
+        "sha256": "912d575a2875d3b2fb8c9432ce56f5097b7aa27f8041579d3430c44a87149713"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/shard-switchback.json",
+        "sha256": "0ff103554800071f83e420921e4823ff4615108b14cd9ed9443380319d518ce9"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/hollow-wreckage.json",
+        "sha256": "ee9b9e0b55eac69ea1fd5f1865740cb8c5e008eee4a6e5d9c1ffef4aa25ad049"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/knotted-run.json",
+        "sha256": "091ba41dc6064b90ee887a8d2c3b90f11156486ccff95e356f6d3b0265217598"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/rolled-fragments.json",
+        "sha256": "1c740886ed9bab9e4fd60ca0d08cab2e57cc8e5da3550c565f07d53ab048f79e"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/fibre-choke.json",
+        "sha256": "dd97c6b85f1568831b4796d74af8c6fa78f3e909948d51ef323bc1a577d6390e"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/buried-lamellae.json",
+        "sha256": "16a7c43d881d6fed6660c21b33f5177326d2b694b3fcf6a8803b21b3acda6e70"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/pressed-rim.json",
+        "sha256": "65b3a4b0234f01a0b0f1c144b95c71a49c76f94d25d7c9570c02ca9dab49c875"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/wedged-hide.json",
+        "sha256": "d3111d9fe44cdfdfc35358297f97e4cc8f4bb84a80706a51f0e223f1c413c258"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/quiet-spur.json",
+        "sha256": "f12cf08d124312509c8a6266f42f8efdd803b852b3cc1737d546ce1d26fbfb93"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/split-fall.json",
+        "sha256": "3fab440999ec525117b1b77466440ee7b34a55e416107bc43f8e6843767aacd1"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/three-shelves.json",
+        "sha256": "1245860b90220fe84246e7f7fe83cfe659ad85eeea7331d153a6fe8bc8123eed"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/frayed-outwash.json",
+        "sha256": "d791c966d3d08161789979d5a060992a4288915b7d56f8cdad538d1a2be712d4"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/short-fibre-mat.json",
+        "sha256": "f0239cac8e63e71c6f6d922fe5080b29fcf14df3540121c08c2ce93b6163569f"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/marrow-break.json",
+        "sha256": "1b7c2ba4f508202fc5eccd343deefd449d003aa90e317e7f37734d824bf37ab7"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/felt-wedges.json",
+        "sha256": "e8c2055174b17b7378caabd6e0f0751c1e21bb7bbba49369d6c424251d879d2f"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/pore-bank.json",
+        "sha256": "1e1b4e56c64988909b329beddfa78c17d8809d83377f824fa5108365631b429c"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/staggered-cups.json",
+        "sha256": "544727cfb685a7038f4b8289a8cbfef928133ddc5eccade7850a6aa329c416f6"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/split-tows.json",
+        "sha256": "50ae74e3b6f3f26a963b3e39f2c964cdbb7e75621b7590be994b50a5a0cd04e7"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/curled-flats.json",
+        "sha256": "b86819ac5d5e80d8b4872109c0ced38833bdb89afd543d45c2d1ed24a847adec"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/pitch-forks.json",
+        "sha256": "ee48ad4a6fb9a08a158213818e0da66707ad80a6acf0f80435b793bf2ae06beb"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/grain-weld.json",
+        "sha256": "dd913e1be63108d6002474258b6af6e6fa130b4398d9ad76451e967cd5788496"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/silk-catch.json",
+        "sha256": "e60abf7bd07a6c41a8426efb0e4ea4db89fe2796d94796fd1867f9e289927f26"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/resin-sleeve.json",
+        "sha256": "135b7e4145af947549e726015c98025ae8a3ebd4e63a78e464cd1162e16921d6"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-threads.json",
+        "sha256": "dd973d1fa1a8e53aeb309b098f2686a7710ade6a9e502b762caffd9167afe4e8"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/chalk-divide.json",
+        "sha256": "63366ff3dd20865df630d9d310396fdc3ea421f68e8391558d5475f882966fb4"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/red-vault-fragments.json",
+        "sha256": "d57e34693013732bf3cbea85811577e24af77c778763bf6f5723c4b7776292bc"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/blue-fault.json",
+        "sha256": "7fc74d044b178e0730ef683f84b3da25f1abb0ade6797395bbcea86fc9978072"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/pale-pressure.json",
+        "sha256": "6ccbaebb8505fe1d80aba4a68fde591846048291fa72dd9ad0fe7010bf8c234d"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/notched-backwater.json",
+        "sha256": "8ae6004a3df97bae22f20b46822eba3d0c3cadf5be0fd105d22fc5524265dbee"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/crossed-casings.json",
+        "sha256": "06839388888049584b89c5eccbd5749c46ad0e766b4bf88756c8f6cf737bcf6a"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/fibre-stumpfield.json",
+        "sha256": "d19c9d188db2a19cf726dc12e36ec2dc68e3b860a2013cb5107765f3302842fc"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/sloughed-court.json",
+        "sha256": "a23b6fd50001f9d3eae87331ed206b3c163a0b2cce2dfb2d880ad1d57116f826"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/crushed-seam.json",
+        "sha256": "6c73a5810ad7184c9c2dfe70867d20aa37d23683be10c616c4c1ca591a3ede76"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/husk-reef.json",
+        "sha256": "be5314648f582b773dbd84d283142452bf239a09edc6d418adb49eaaadf0119b"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/fibre-scree.json",
+        "sha256": "d2c57fb96469ad4473857ec32f7d735bf240fd01caa616dba69f63d30ecd987b"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/gel-rafts.json",
+        "sha256": "3d86b15ed7e36dc5cf826251d207e26a24f6aa396a55949c3bbf44ca298729df"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/double-return.json",
+        "sha256": "22f0c97760e6e5f54217383ebb2dedb0e2e1e46d3e7e11e578e0e9c2bb2a58f7"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/offset-basins.json",
+        "sha256": "ad3768459bbc5fb8303fdeabaa650e82407feca2f3b593b42dbc91dd6315987e"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/pinched-fan.json",
+        "sha256": "0a2f999f80380d12badf3c31423b0b4cac61c55a92e95bbe7ec9bcb1de0b5e3e"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/spliced-reaches.json",
+        "sha256": "a38375e6ac5bedc1982eb3b5f60a85861eca72d9bc337920ba8b2e50afb74515"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/white-scarfield.json",
+        "sha256": "4f51fef4f25bfd128cffe4083a7350e576f4418acd7c81b44200472e2f8e8937"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/black-lacuna.json",
+        "sha256": "86f77f58e0dcf1b6c7806a65edd7e00882031c4dc07ba1c07f673d549926aa31"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/ochre-folds.json",
+        "sha256": "8bf110c5de478ff0ccf38aac2220af240d79f093357e8c0443c94ba4fee1b868"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/violet-marrows.json",
+        "sha256": "13c589fe4acb8ccbe4db9a59067b4ec3b859bf082ae3515bc3a6c73804e9d8b9"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/fractured-estuary.json",
+        "sha256": "07f59f32d3b0b96fdd40c4cf46a1171d1f7e6860633119236613a766f46bd6f8"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/woven-quarters.json",
+        "sha256": "81e7fa7c4a26523c26d7c3baeddbd8e3957fc94c8f0f422a28a8f91c3dd170ae"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/shell-patchwork.json",
+        "sha256": "7aa504021771541b0fdfc5407fefafc812f82436ea0c17a56721b95c129f1a4c"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i10-i12/final-packages/last-shelf.json",
+        "sha256": "78df6814ffe2148a550b2ec096400d4979e5593a0b68b96f06626f8c6987e952"
+      }
+    ],
+    "priorPerformance": {
+      "complete": 74,
+      "interrupted": [
+        "felt-wedges"
+      ],
+      "unstarted": 33,
+      "materialP95At3ms": [
+        "hollow-wreckage",
+        "buried-lamellae"
+      ]
+    },
+    "limitation": "Current file identity only. Historical coverage retains its original browser and sampling scope. No actual hearing, weak-device or final approval is inferred."
+  },
+  "environment": {
+    "node": "v22.14.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "osRelease": "25.0.0",
+    "cpu": "Apple M4 Pro",
+    "logicalCores": 14,
+    "totalMemory": 51539607552,
+    "chromePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "chromeVersion": "Google Chrome 155.0.8059.39",
+    "packageLock": {
+      "file": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    "packages": {
+      "tsx": {
+        "version": "4.23.1",
+        "sha256": "116662201c06041c63de8837cf7bf6743f79a10187d0a210b377476071550a40"
+      },
+      "typescript": {
+        "version": "5.9.3",
+        "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+      },
+      "vite": {
+        "version": "5.4.21",
+        "sha256": "e9802045cdc313b6da55ec2e2dd79312074645816089d64f6021f567c10c0a03"
+      },
+      "phaser": {
+        "version": "3.90.0",
+        "sha256": "2761e48ade77d19cbe2560cbec3cc2c52a4c666fdaae7fe39d6949f7e1738993"
+      }
+    },
+    "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t74%; discharging; 4:35 remaining present: true",
+    "limitations": "One reference machine. No true weak hardware or actual listening is claimed; current Chrome WebGL renderer is separately observed in browser."
+  }
+}

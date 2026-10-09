@@ -1,0 +1,64 @@
+{
+  "createdAt": "2026-10-09T04:45:04.861803+00:00",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+    "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+  },
+  "all1398FrozenFilesMatchAfterBuild": true,
+  "commands": [
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx --import ./tools/recovery/register-css.mjs tools/recovery/check-r100-actor-occlusion.ts",
+      "exitCode": 0,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/equivalence/report.json",
+        "sha256": "f77ace350c3ff9133e7f8d4e146995598b065a2bbcc39d6055a8a5ab3b881be0"
+      }
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-master-render-contract.ts",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/render-contract.log",
+        "sha256": "8be67ea6b55a76e382c15e2885c03104e6969ba0304fee0dc867639c9e841905"
+      }
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-native-volume-visibility.ts",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/native-visibility.log",
+        "sha256": "f30f70696c1f242debeb7a938c9d0026d4ff5b14c55de2d0f7271d45349641b8"
+      }
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i14/actor-occlusion/build.log",
+        "sha256": "973bfb72c979634a399509fcbd41b8a7461f237702b99458b5b65e2234c8dbb8"
+      },
+      "warnings": "(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit."
+    },
+    {
+      "command": "npm run dev -- --host 127.0.0.1 --port 3038 --strictPort",
+      "result": "Vite5.4.21 ready154ms; owned smoke server deliberately closed viaSIGINT after readiness",
+      "exitCode": 130
+    }
+  ],
+  "lint": {
+    "packageScriptPresent": false,
+    "status": "No lint script exists; node syntax checks are not labelled lint."
+  },
+  "buildAssets": [
+    {
+      "path": "dist/assets/game-config-D2iGFhZ2.js",
+      "bytes": 7838293
+    }
+  ],
+  "distBytes": 185029389,
+  "scope": "Targeted tests only; no full108/324 rerun."
+}

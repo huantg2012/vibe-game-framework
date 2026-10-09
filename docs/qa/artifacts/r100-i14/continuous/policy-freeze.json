@@ -1,0 +1,1916 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-09T03:41:16.405Z",
+  "authorization": "Root and Design approved I14 new48 continuous sorties in four batches12, trueA23 lineage, B14 bounded public silence/dash policy; no economic qualification and no I13 recovery early-stop.",
+  "maxAttempts": 48,
+  "maxBatch": 12,
+  "maxContexts": 1,
+  "gameUrl": "http://127.0.0.1:3035/",
+  "sourceOrigin": "http://127.0.0.1:3033",
+  "mappedOrigin": "http://127.0.0.1:3035",
+  "unchangedStorageValues": true,
+  "sourceManifest": {
+    "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+    "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+  },
+  "releaseManifest": {
+    "file": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "preflight": {
+    "file": "docs/qa/artifacts/r100-i14/qa-continuous-source-preflight.json",
+    "sha256": "99f0505013e3bc29efc70ae2c39cfbd865ab79796d16f0b8de67af0dbcafbdca"
+  },
+  "initialSource": [
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/browser-storage.json",
+      "sha256": "d47271eedf94df8b86500ae1fcf28c4f008152222da35c0d0c5079cff4b4f3f2"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/2-after-preparation.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/report.json",
+      "sha256": "9bb670ee68ac83b681a87c722874f94dfc16007b7f34cf9ac8466b4daba04f5f"
+    }
+  ],
+  "input": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/earned-a23-storage.json",
+    "sha256": "684d7f2e0b8567ee8b9320ec93833b5339940be01c6f1d0a77c2b6df2b299781"
+  },
+  "taskContract": {
+    "file": "docs/qa/artifacts/r100-i14/continuous/task-preregistration.md",
+    "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+  },
+  "dependencies": [
+    {
+      "file": "tools/world-study/r100-i14-continuous-journey.mjs",
+      "sha256": "7ac2a052efd25158dfe6e1e53c9404efb88a13f44839b815539f16a8950dce6e"
+    },
+    {
+      "file": "tools/qa/r100-i14-lifecycle.mjs",
+      "sha256": "201857168f860e783634b34472ab893b765e1295381664b5bf5c0d0fa1c24e24"
+    },
+    {
+      "file": "tools/world-study/run-r100-i14-continuous.mjs",
+      "sha256": "07a84c18c7b22a16c97d45a18f5cbba06b5a64ffbe0fdb7b7c52977c9502948c"
+    },
+    {
+      "file": "tools/world-study/r100-i13-bounded-journey.mjs",
+      "sha256": "6855b51dd82d9ef9fcb308f0293c893f55dff2e6a6f7856db55167826dcbec10"
+    },
+    {
+      "file": "tools/world-study/r100-i13-retry-policy.mjs",
+      "sha256": "38e6bd457a2397bb00ca8a73e637b3c6bd471b36a98aeb53d91c996a8456ec33"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-policy.mjs",
+      "sha256": "4faf37eb6e1d3adf3ee39f7db91357d4713fc7eb04ac3d34dd61281abca41fa9"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/world-study/r100-frozen-server.mjs",
+      "sha256": "75bc54d4dd2ad3a1eff93069a7121288e829d055e1903420cf6b99b11a502ae7"
+    },
+    {
+      "file": "tools/qa/check-r100-i14-runtime-budget.mjs",
+      "sha256": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1"
+    },
+    {
+      "file": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    }
+  ],
+  "environment": {
+    "node": "v22.14.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "osRelease": "25.0.0",
+    "cpu": "Apple M4 Pro",
+    "logicalCores": 14,
+    "totalMemory": 51539607552,
+    "chromePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "chromeVersion": "Google Chrome 155.0.8059.39",
+    "packageLock": {
+      "file": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    "packages": {
+      "tsx": {
+        "version": "4.23.1",
+        "sha256": "116662201c06041c63de8837cf7bf6743f79a10187d0a210b377476071550a40"
+      },
+      "typescript": {
+        "version": "5.9.3",
+        "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+      },
+      "vite": {
+        "version": "5.4.21",
+        "sha256": "e9802045cdc313b6da55ec2e2dd79312074645816089d64f6021f567c10c0a03"
+      },
+      "phaser": {
+        "version": "3.90.0",
+        "sha256": "2761e48ade77d19cbe2560cbec3cc2c52a4c666fdaae7fe39d6949f7e1738993"
+      }
+    },
+    "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t74%; discharging; 4:41 remaining present: true",
+    "limitations": "One reference machine. No true weak hardware or actual listening is claimed; current Chrome WebGL renderer is separately observed in browser."
+  },
+  "steps": [
+    {
+      "ordinal": 1,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 2,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 3,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 4,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 5,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 6,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 7,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 8,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 9,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 10,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 11,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 12,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 13,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 14,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 15,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 16,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 17,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 18,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 19,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 20,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 21,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 22,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 23,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 24,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 25,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 26,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 27,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 28,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 29,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 30,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 31,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 32,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 33,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 34,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 35,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 36,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 37,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 38,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 39,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 40,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 41,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 42,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 43,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 44,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 45,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 46,
+      "grade": "low",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 47,
+      "grade": "medium",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    },
+    {
+      "ordinal": 48,
+      "grade": "severe",
+      "preparation": {
+        "id": "i14-public-silence-dash-fifo",
+        "active": [
+          {
+            "family": "silence",
+            "minimumPower": 5,
+            "minimumUses": 2
+          },
+          {
+            "family": "dash",
+            "minimumPower": 48,
+            "minimumUses": 2
+          }
+        ],
+        "passive": {
+          "name": "黄铜背扣"
+        }
+      },
+      "surveyDecision": false,
+      "budget": {
+        "normalPerSlot": 1,
+        "protectNextPreparation": true,
+        "minimumPower": {
+          "survey": 128,
+          "dash": 48,
+          "suppress": 3,
+          "solidify": 2.5,
+          "silence": 5
+        },
+        "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+      }
+    }
+  ],
+  "initialFreshItemIds": [
+    "WPN_ff7bbaa9-d411-4e37-8e69-22148848335e",
+    "CAT_ca6e3a1b-53c1-40f2-9c09-bc0ebf895327_r100-contaminant-contested-1",
+    "CAT_b7aa8a85-de4f-4413-a9ca-29d04f8c601b_r100-contaminant-contested-1",
+    "WPN_bc67d68d-9eac-49c6-aa6a-18f45f779520",
+    "CAT_5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0_r100-contaminant-contested-1",
+    "WPN_083e90ea-ea31-4ed3-ad75-53794a1d11d9",
+    "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-safe-1",
+    "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-contested-1",
+    "WPN_445d4b25-646f-4c5b-b59e-ed721590971b",
+    "WPN_3bb0f70d-1407-4ffb-a44b-ced1295931c0",
+    "CAT_c3b1b065-4154-41bd-938b-90033e8775a6_r100-contaminant-safe-1",
+    "WPN_a29da5c0-9eca-40a6-998d-94d70377034f",
+    "CAT_074b0dcb-02c8-4c24-a239-e654f963f44e_r100-contaminant-safe-1",
+    "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+    "WPN_0c1b85a7-182e-4ff3-b5ae-64a3dd4ca31a",
+    "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+    "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+    "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+    "WPN_dc953dc6-a64d-414d-af87-851540e4ef00",
+    "WPN_438813bf-f55d-40b5-8861-26093285a906",
+    "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-safe-1",
+    "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-contested-1",
+    "WPN_d20c10d8-9800-4524-8628-0d60bb958a4c",
+    "CAT_97fc69a8-59e5-4e6f-a683-b4550f685bd7_r100-contaminant-safe-1",
+    "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+    "CAT_cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3_r100-contaminant-safe-1",
+    "CAT_f6cdd44f-ef72-4bcf-871c-139f65e00495_r100-contaminant-safe-1",
+    "CAT_f123d0d1-cdc5-4152-a55d-cf8eb7a000c2_r100-contaminant-safe-1",
+    "WPN_166aa2b1-2228-4f6b-9b3b-dd7a8c6a4d58",
+    "WPN_b030f7f4-f4b7-4c5d-9271-d6996a40e438",
+    "CAT_024df695-2804-475d-a3d1-a7d29b6faa6f_r100-contaminant-safe-1",
+    "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+    "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+    "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+    "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+    "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1",
+    "WPN_02b78f00-e8da-4b12-88f2-3c19938d5cdc",
+    "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1"
+  ],
+  "ancestorRunIds": [
+    "63d77e65-1889-4624-a1e8-4d7989f255cf",
+    "f3ae18d6-2c46-49e5-8d96-21cd0e0a8e3b",
+    "ca6e3a1b-53c1-40f2-9c09-bc0ebf895327",
+    "97874d5b-0c9e-4199-abfc-61491ca13f5b",
+    "b7aa8a85-de4f-4413-a9ca-29d04f8c601b",
+    "5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0",
+    "a8cbed61-55c0-4205-9356-535531bae725",
+    "c3b1b065-4154-41bd-938b-90033e8775a6",
+    "074b0dcb-02c8-4c24-a239-e654f963f44e",
+    "a6557e90-f8cd-4e91-a0fb-8d511aae077d",
+    "d1b034c1-0332-4467-817b-e4aeff5dd351",
+    "abcdad60-2750-47fc-ae26-adf20ef26c05",
+    "c494ba40-ca59-4eec-9fa4-2feddf194306",
+    "97fc69a8-59e5-4e6f-a683-b4550f685bd7",
+    "215f9d02-eca3-4427-b56a-d53a37d27e96",
+    "90bab9f2-7b2f-486a-8589-70dade82d77a",
+    "cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3",
+    "f6cdd44f-ef72-4bcf-871c-139f65e00495",
+    "f123d0d1-cdc5-4152-a55d-cf8eb7a000c2",
+    "024df695-2804-475d-a3d1-a7d29b6faa6f",
+    "2c2f1723-a1b1-40d9-914e-82a48640e411",
+    "b4582c78-5f9d-4a27-9416-164a8425fc94",
+    "608f30e3-ad10-4f07-b54f-17b7d425ca4f"
+  ],
+  "lifecycle": {
+    "ordinals": [
+      1,
+      2,
+      3
+    ],
+    "phase": "After formal entry receipt, before any field movement/search/tool input.",
+    "pauseWaitMs": 700,
+    "focus": "Actual alternate blank-tab activation only, trusted native events recorded. If headless emits no loss, explicitly pending; never substitute synthetic blur.",
+    "cold": "Exact normal pause autosave, reload/menu Continue, first complete runtime capture and all field differences retained. No re-equipping or new departure."
+  },
+  "media": {
+    "ordinals": [
+      1,
+      2,
+      3
+    ],
+    "phase": "After lifecycle recovery before first field movement through actual return/management.",
+    "method": "Canvas30fps VP8 plus unmodified Phaser master Opus audio. DOM excluded; normal full-page screenshots and input logs accompany.",
+    "performanceQualification": false
+  },
+  "limitations": [
+    "Full static terrain aids body pathing; targets/threats use normal observations only. Not novice behavior or human enjoyment.",
+    "No destination override, loot selection, resource grant, stock reset or special grade eligibility. Missing tools remain empty.",
+    "Actual death, empty return, debt and inability to continue are retained. Technical interruptions stop at the original checkpoint, never rerolled.",
+    "Public same-function>=2 eligibility before earned FIFO, Q/F normal1, existing near-attack emergency. Third active empty; real same-name passive if available.",
+    "Maintain51/100/51 via real paid repairs, then original reserve-constrained growth and new earned FIFO offerings. Not a profitability or supply acceptance gate.",
+    "Each batch inherits exact preceding terminal and FIFO metadata. Independent QA checks every batch; no batch substitutes for the required48.",
+    "Six material families are observed, not forced. Any natural coverage gap remains separate from fixed diagnostic samples."
+  ]
+}

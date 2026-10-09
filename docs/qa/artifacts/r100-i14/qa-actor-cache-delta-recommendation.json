@@ -1,0 +1,967 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T05:04:28.278Z",
+  "reviewer": "qa",
+  "purpose": "render-delta-inheritance-recommendation",
+  "status": "recommend-bounded-render-delta-adoption",
+  "tool": {
+    "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/qa-actor-cache-delta-review.mjs",
+    "sha256": "e306fab0917f90cd671fa467b133310898667b783bd61d96fbd1ff63f2b0b955"
+  },
+  "parentRelease": {
+    "file": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "targetSource": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+    "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+  },
+  "releaseManifestHash": null,
+  "finalReleaseBinding": "Director must create the new RC and explicitly adopt this recommendation; null is deliberate before sealing, not a release-gate pass.",
+  "sourceDelta": {
+    "oldFiles": 1397,
+    "newFiles": 1398,
+    "unchangedPriorFiles": 1396,
+    "changes": [
+      {
+        "path": "src/systems/r100-world/actor-occlusion-field.ts",
+        "before": null,
+        "after": "9d86d9c87c3ccb202a1a81d15f1a26e64ca7ed9d8031a2e622ea8a4f6862458b"
+      },
+      {
+        "path": "src/systems/r100-world/presentation.ts",
+        "before": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750",
+        "after": "9471e8c94a6532832c5d4db466b829a24d3c27370f6c41712224daed50d587de"
+      }
+    ],
+    "allCurrentSourceBytesMatched": true,
+    "packagePayloadsExactlyEqual": 108,
+    "packageGrades": 324,
+    "uniqueDependencies": 308
+  },
+  "affectedValidation": {
+    "exactQuery": {
+      "assertionsInCodeReceipt": 39757776,
+      "realWorlds": 8,
+      "families": 6,
+      "alphaDigests": 8,
+      "actualMethodSpanPairs": 112,
+      "review": {
+        "file": "docs/qa/artifacts/r100-i14/qa-actor-cache-code-review.json",
+        "sha256": "bbce9ddabfad7ab630f3c067b1a31763bb78e2048a31cd26faa7d02c32884f7c"
+      },
+      "newIndependentRerun": false
+    },
+    "productionBuild": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "verification": {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/code-verification.json",
+        "sha256": "46ed39effe164a0cfc240987c4db72c50974d84c56cfc28c90579478856cbd82"
+      },
+      "warning": "Minified chunk >500kB remains; build is not an experience or device pass."
+    },
+    "performance": {
+      "cases": [
+        {
+          "world": "hollow-wreckage",
+          "grade": "severe",
+          "seed": 20261004,
+          "durationMs": 61297.530000000006,
+          "cpuP95": 8.399999618530273,
+          "materialP95": 2.4000000953674316,
+          "tests": {
+            "aliveFor60Seconds": true,
+            "frameP95": true,
+            "frameP99": true,
+            "frameOver50": true,
+            "cpuP95": true,
+            "materialP95": true
+          }
+        },
+        {
+          "world": "buried-lamellae",
+          "grade": "severe",
+          "seed": 20261004,
+          "durationMs": 61297.560000000034,
+          "cpuP95": 8.299999713897705,
+          "materialP95": 2.5,
+          "tests": {
+            "aliveFor60Seconds": true,
+            "frameP95": true,
+            "frameP99": true,
+            "frameOver50": true,
+            "cpuP95": true,
+            "materialP95": true
+          }
+        },
+        {
+          "world": "felt-wedges",
+          "grade": "severe",
+          "seed": 20261004,
+          "durationMs": 61280.8800000001,
+          "cpuP95": 9,
+          "materialP95": 2.3999996185302734,
+          "tests": {
+            "aliveFor60Seconds": true,
+            "frameP95": true,
+            "frameP99": true,
+            "frameOver50": true,
+            "cpuP95": true,
+            "materialP95": true
+          }
+        },
+        {
+          "world": "white-scarfield",
+          "grade": "severe",
+          "seed": 20261004,
+          "durationMs": 61280.89000000001,
+          "cpuP95": 7.699999809265137,
+          "materialP95": 1.6999998092651367,
+          "tests": {
+            "aliveFor60Seconds": true,
+            "frameP95": true,
+            "frameP99": true,
+            "frameOver50": true,
+            "cpuP95": true,
+            "materialP95": true
+          }
+        }
+      ],
+      "sameOriginalBudgets": true,
+      "originalThreeFailuresPreserved": true
+    },
+    "entry": {
+      "coldMs": [
+        2695.199999809265,
+        2912.7999997138977,
+        2739.0999999046326
+      ],
+      "newEntryMs": [
+        3378.7999997138977,
+        3414.5999999046326,
+        3744.4000000953674
+      ],
+      "denominator": {
+        "historicalCold": 3,
+        "diagnosticNewDepartures": 3,
+        "addedToNatural48": 0,
+        "mainChainWrites": 0
+      },
+      "noLongTaskInArmedRiftWindow": true,
+      "allCasesBelowIndividual5sTarget": true,
+      "notPopulationP95": true,
+      "preRiftWebsiteAndBaseLongTasksRemain": "51–487ms"
+    },
+    "resources": {
+      "identical": 10,
+      "mixed": 6,
+      "warmupFamilies": 6,
+      "samples": 12,
+      "gcCallsPerSample": 2,
+      "totalGcCallsByFrozenCode": 24,
+      "budgetMiB": 10,
+      "maxCombinedRetainedMiB": 1.3761777877807617,
+      "stableActiveKinds": [
+        "WebGL2",
+        "Texture",
+        "Buffer",
+        "Program",
+        "Framebuffer",
+        "Renderbuffer",
+        "Shader"
+      ]
+    },
+    "actualVisual": {
+      "pairs": [
+        {
+          "world": "hollow-wreckage",
+          "id": "hollow-wreckage-1-entry",
+          "report": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/capture-report.json",
+          "pngEqual": true,
+          "maskSpansEqual": true,
+          "observedStateEqual": true,
+          "coverage": {
+            "opaque": 243,
+            "hidden": 0,
+            "visible": 243,
+            "relief": 0
+          }
+        },
+        {
+          "world": "hollow-wreckage",
+          "id": "hollow-wreckage-2-departure",
+          "report": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/capture-report.json",
+          "pngEqual": true,
+          "maskSpansEqual": true,
+          "observedStateEqual": true,
+          "coverage": {
+            "opaque": 235,
+            "hidden": 0,
+            "visible": 235,
+            "relief": 10
+          }
+        },
+        {
+          "world": "felt-wedges",
+          "id": "felt-wedges-1-entry",
+          "report": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/capture-report.json",
+          "pngEqual": true,
+          "maskSpansEqual": true,
+          "observedStateEqual": true,
+          "coverage": {
+            "opaque": 243,
+            "hidden": 0,
+            "visible": 243,
+            "relief": 0
+          }
+        },
+        {
+          "world": "felt-wedges",
+          "id": "felt-wedges-2-departure",
+          "report": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/capture-report.json",
+          "pngEqual": true,
+          "maskSpansEqual": true,
+          "observedStateEqual": true,
+          "coverage": {
+            "opaque": 235,
+            "hidden": 0,
+            "visible": 235,
+            "relief": 0
+          }
+        },
+        {
+          "world": "hollow-wreckage",
+          "id": "hollow-wreckage-1-composite-partial-arrival",
+          "report": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/capture-report.json",
+          "pngEqual": true,
+          "maskSpansEqual": true,
+          "observedStateEqual": true,
+          "coverage": {
+            "opaque": 344,
+            "hidden": 0,
+            "visible": 344,
+            "relief": 0,
+            "byTexture": {
+              "player-dense-up-idle-3": {
+                "opaque": 218,
+                "hidden": 0
+              },
+              "player-aura-pool": {
+                "opaque": 8,
+                "hidden": 0
+              },
+              "player-aura-glow": {
+                "opaque": 48,
+                "hidden": 0
+              },
+              "player-aura-mote": {
+                "opaque": 5,
+                "hidden": 0
+              },
+              "crowbar-held-ordinary-standard": {
+                "opaque": 65,
+                "hidden": 0
+              }
+            }
+          }
+        },
+        {
+          "world": "felt-wedges",
+          "id": "felt-wedges-1-composite-partial-arrival",
+          "report": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/capture-report.json",
+          "pngEqual": true,
+          "maskSpansEqual": true,
+          "observedStateEqual": true,
+          "coverage": {
+            "opaque": 581,
+            "hidden": 0,
+            "visible": 581,
+            "relief": 0,
+            "byTexture": {
+              "player-dense-down-walk-3": {
+                "opaque": 228,
+                "hidden": 0
+              },
+              "player-dense-right-walk-3": {
+                "opaque": 243,
+                "hidden": 0
+              },
+              "player-aura-pool": {
+                "opaque": 24,
+                "hidden": 0
+              },
+              "player-aura-glow": {
+                "opaque": 16,
+                "hidden": 0
+              },
+              "player-aura-mote": {
+                "opaque": 5,
+                "hidden": 0
+              },
+              "crowbar-held-ordinary-standard": {
+                "opaque": 65,
+                "hidden": 0
+              }
+            }
+          }
+        }
+      ],
+      "partialObserved": false,
+      "artReview": {
+        "file": "docs/qa/artifacts/r100-i14/occlusion-visual/report.json",
+        "sha256": "7293d36bf004561c995a5a3d2e2a94df29cf094e6893f8fa0f5b323a3b649282"
+      },
+      "scope": "Six actual same-state normal-context Gym pairs; recorded observed exporters, mask spans and PNG bytes exactly match. Gym does not enable formal Combat/AI checkpoint exports. Actual partial occlusion and complete facing/continuous animation coverage were not obtained."
+    }
+  },
+  "inheritanceRecommendations": [
+    {
+      "scope": "108 world / 324 grade bounded internal qualification",
+      "recommendation": "inherit-with-explicit-new-dependency-manifests",
+      "basis": "Complete authored payloads unchanged; exact query proof/oracle and bounded actual draw, entry, resource and performance evidence cover this two-file presentation change.",
+      "notClaimed": "108 new runtime runs, new human art acceptance, all seeds or full-library performance."
+    },
+    {
+      "scope": "COVERAGE / ECONOMY / RECOVERY evidence",
+      "recommendation": "rebind-bounded-prior-evidence-after-new-RC",
+      "basis": "Generation, grades, gameplay, economy, inventory and persistence remain byte-identical. Current three-grade new-source cold restoration preserves complete saved commitments; prior focus logic remains identical.",
+      "notClaimed": "The old release-gate JSON automatically has a new release hash, or current hidden/OS-app/cross-engine/weak-device execution."
+    },
+    {
+      "scope": "I14 continuous chain",
+      "recommendation": "retain-first12-and-continue-exact-earned-state-for36",
+      "basis": "First12 stay1397-source historical runs; subsequent36 must bind1398source and a Director-approved delta. Exact predecessor storage and every adjacent prepared→before complete record remain mandatory.",
+      "notClaimed": "48 completed or48 all on the new source; diagnostic entry3/visual/performance do not enter the natural denominator."
+    },
+    {
+      "scope": "ART / RELEASE and finalAcceptance",
+      "recommendation": "remain-pending",
+      "basis": "No actual new hearing, prolonged visual fatigue, real weaker device or user RC final acceptance exists."
+    }
+  ],
+  "continuousBridgeRequirements": {
+    "oldAudit": {
+      "file": "docs/qa/artifacts/r100-i14/qa-continuous-through-12.json",
+      "sha256": "8f5cecfa469ddd071a36aa11cb7964fab8fbbb8c9877e67e92e35d3ccfc3ff20"
+    },
+    "firstTwelveReport": {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/report.json",
+      "sha256": "beb757b8eb7ec85e0f0fc3d5d5be81c90093d8cec617bab58f160ddc016ea791"
+    },
+    "precedingStorage": {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/browser-storage.json",
+      "sha256": "a7270c01da624d2c2ca3e3aa6c9eed6360d7a4321e97b950af0babf4ab0e83f3"
+    },
+    "retainedFirstTwelve": 12,
+    "newRemaining": 36,
+    "grades": "[low,medium,severe]×16 globally; four12-run batches",
+    "sameFrozenV2Journey": true,
+    "keepOriginalColdFailure": true,
+    "sourceSpecificAuditRequired": true,
+    "EXPEDITIONPassBefore48": false
+  },
+  "limits": [
+    "This is a narrowly scoped source-delta inheritance recommendation, not a new gate result or release approval.",
+    "Original3 performance failures and capture/export failures remain immutable; subsequent causal repair evidence does not change their historical outcome.",
+    "All six actual player observations have hidden0: they cannot be called demonstrated front/partial/behind coverage. Original-query full-pixel and real mask-method fixture comparisons carry the edge/partial query equivalence evidence.",
+    "Runtime percentiles are recomputed budget decisions from retained aggregate values, not recreated raw frame distributions.",
+    "Resource pass covers bounded owned GL counts and main-isolate retained memory, not driver VRAM/RSS, all108 worlds or every per-world64MiB budget.",
+    "Same reference M4 Pro / Chrome155; no second actual device or cross-engine claim.",
+    "Normal webpage/base long tasks remain; no whole-application latency claim."
+  ],
+  "references": [
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/report.json",
+      "sha256": "7293d36bf004561c995a5a3d2e2a94df29cf094e6893f8fa0f5b323a3b649282"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+      "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-actor-cache-code-review.json",
+      "sha256": "bbce9ddabfad7ab630f3c067b1a31763bb78e2048a31cd26faa7d02c32884f7c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/equivalence/report.json",
+      "sha256": "f77ace350c3ff9133e7f8d4e146995598b065a2bbcc39d6055a8a5ab3b881be0"
+    },
+    {
+      "file": "tools/recovery/check-r100-actor-occlusion.ts",
+      "sha256": "7c0181b5b315cfe0b008f99be3ff4eac97bfdf2c1185b1267edb913407b8c558"
+    },
+    {
+      "file": "src/systems/r100-world/actor-occlusion-field.ts",
+      "sha256": "9d86d9c87c3ccb202a1a81d15f1a26e64ca7ed9d8031a2e622ea8a4f6862458b"
+    },
+    {
+      "file": "src/systems/r100-world/presentation.ts",
+      "sha256": "9471e8c94a6532832c5d4db466b829a24d3c27370f6c41712224daed50d587de"
+    },
+    {
+      "file": "src/generation/world-study/r100-master-world.ts",
+      "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+    },
+    {
+      "file": "src/generation/world-study/r100-native-data.ts",
+      "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-raster.ts",
+      "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/code-verification.json",
+      "sha256": "46ed39effe164a0cfc240987c4db72c50974d84c56cfc28c90579478856cbd82"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/render-contract.log",
+      "sha256": "8be67ea6b55a76e382c15e2885c03104e6969ba0304fee0dc867639c9e841905"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/native-visibility.log",
+      "sha256": "f30f70696c1f242debeb7a938c9d0026d4ff5b14c55de2d0f7271d45349641b8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/build.log",
+      "sha256": "973bfb72c979634a399509fcbd41b8a7461f237702b99458b5b65e2234c8dbb8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-reference-runtime-after-cache.json",
+      "sha256": "7f520d81b9366dae8a2bfc597c13e416ca0df64063a05b486b072f3fccd3bcb5"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/runtime-policy-freeze.json",
+      "sha256": "b1960929ed44aeb9acdfd4bb2af30786529e299a13cbcd9461a21a987521e264"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/runtime-reference/execution.json",
+      "sha256": "d829b4b48c2f8911a0801cd033b29601d75f1673ba86d3783087694c1a2db743"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/runtime-reference/report.json",
+      "sha256": "06979c1d44d6ce276c22a5d9f7bae7fa6de3709cf660cc7a80e304aab5455fcd"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/task-preregistration.md",
+      "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    },
+    {
+      "file": "tools/qa/check-r100-i14-runtime-budget.mjs",
+      "sha256": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1"
+    },
+    {
+      "file": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/runtime-policy-freeze.json",
+      "sha256": "446262268da1fb24e54c7f12f52dfcf68204620ae472645eb1ff74974b53a064"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-render-entry-review.json",
+      "sha256": "6c6c3bd23109393b0d258b1b52ef19de1b8ebc2751ab6b8bf63fe39f341b54df"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/policy-freeze.json",
+      "sha256": "f2bd6aef007cbbeff4e513ff0d5ce8253b844df846967092e6c672a0f12c5366"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/report.json",
+      "sha256": "c1a8c7f92ca0ce6d6f23840a37ec838e266445d55a805cd604586a42bcb42efa"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/qa-render-entry.mjs",
+      "sha256": "3fef36e7c6e6e31d4ac12aa95d0d074f54f7a6025ca539a3e40eb18999053f7b"
+    },
+    {
+      "file": "tools/qa/r100-i14-lifecycle-v2.mjs",
+      "sha256": "8a2ecc10c2727a0c507a1987097da6265e9c724f70e721f92a2528493b324646"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/same-run-earned-storage.json",
+      "sha256": "affb3f428179ec2d90891d15cff5dbd2e22a19ed5fbab6276b23c47cd8121e75"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-cold-menu-input.save.json",
+      "sha256": "786dd01572542d513f42b9d1e55236a6163b7acd314bdf73bbc973e706c2411d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-cold-menu-input.save.json",
+      "sha256": "751fe72f8edeb69cf2467c982510f3715f137b6f16b1c3d8e7330520831ca544"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/browser-storage.json",
+      "sha256": "d47271eedf94df8b86500ae1fcf28c4f008152222da35c0d0c5079cff4b4f3f2"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-low/source-current.save.json",
+      "sha256": "cc582300aa73a09af506d8edfb3cdbf26b810bf37e8b54bb0611a36f8d1eafbd"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-low/first-complete.json",
+      "sha256": "36c6c91ee20de2c3dec58901113d2401b154e8fa98805358182fd8fdfa049164"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-low/after-first-frame.json",
+      "sha256": "c2eec292fdcd510f3d229fae1e7a0e87bc3ccc2577e6a58c5d63a3c1742145ff"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-low/diagnostic-terminal-storage.json",
+      "sha256": "ad2e85ce69ac8d917941153e52771787107e27f169d361a7289707803ffd9dd2"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-medium/source-current.save.json",
+      "sha256": "786dd01572542d513f42b9d1e55236a6163b7acd314bdf73bbc973e706c2411d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-medium/first-complete.json",
+      "sha256": "459ce53fae95b05b8d29b8959e527ecabc70fec8ca23b8fb2743e5c0f80ab6ed"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-medium/after-first-frame.json",
+      "sha256": "8d1af361fcb6ef80d1430c48aa9c8162e25f62943d99525a09d57b24d38294cb"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-medium/diagnostic-terminal-storage.json",
+      "sha256": "d818b62dde2be4d5d24050535fc6a2a015f408f1d9f164a5a5e0f237a998dc24"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-severe/source-current.save.json",
+      "sha256": "751fe72f8edeb69cf2467c982510f3715f137b6f16b1c3d8e7330520831ca544"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-severe/first-complete.json",
+      "sha256": "dd273d7c370c6744168c8b36bbce3f5f82278f8743274ee267a923e8e86de0c9"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-severe/after-first-frame.json",
+      "sha256": "16a6088a17575bd4e801af5a08ebc8306e73c630537c73f2e8ac03ca0f63000f"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/cold-severe/diagnostic-terminal-storage.json",
+      "sha256": "3f44949e6f83993facd7716579e1e32786fd2a5604a2b972c6953877f9ab67a3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-low/source-current.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-low/first-complete.json",
+      "sha256": "f2513470a7813436447607775be1555000f280b72df0001c14184f33f0b42336"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-low/after-first-frame.json",
+      "sha256": "3918a6b878fdb44c2b1905e4f6e038b48f867754f752223a721dd2256f463f48"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-low/diagnostic-terminal-storage.json",
+      "sha256": "bb0ba6e78dc220cbfb2200104eb0c92cfa20d290560278465c6e5c6442388d52"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-low/base-before-prepare.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-medium/source-current.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-medium/first-complete.json",
+      "sha256": "7eb9608db13ed33430f600cfc23f74200a499a080f2c0424d3d799c5a7f68bc5"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-medium/after-first-frame.json",
+      "sha256": "9c2c0be9abad833cdec27774dc7ed7f4d37da51d1e697736aa85dd5eccfdd090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-medium/diagnostic-terminal-storage.json",
+      "sha256": "8e9b630130bee3d57d8f7e46d1ff8e49d37af9c5fa5418fad75ad3bad3b10886"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-medium/base-before-prepare.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-severe/source-current.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-severe/first-complete.json",
+      "sha256": "accd9b181ea592cc6c85f01312f49e355ed4b0330a95c4139a9f769885209612"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-severe/after-first-frame.json",
+      "sha256": "ddd6319b9d502166ba3ee7a0982287ee7831d3d7dc994794c0d9cee43305e528"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-severe/diagnostic-terminal-storage.json",
+      "sha256": "b097e479ef273425a0ea3424562d05a6ad3c04e9aac9dd49dec8a40a05022453"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/render-entry/new-severe/base-before-prepare.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-reference-resources-after-cache.json",
+      "sha256": "d5552d35f19295e1a49e78ab861ea94335fa558f1fffaea804f7b3fa44321322"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/policy-freeze.json",
+      "sha256": "4d0dd8edfbdf0e3608f8a64743863959d88e53e59e40bdf2d3e8ba4a56586503"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/execution.json",
+      "sha256": "68e1bd64adea88bc499cc4cea3fc286ea5a3f5708ac5c5cee28c4ced594bf109"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/runtime/report.json",
+      "sha256": "62bb7a7a3a8e645b216e32a9fd85d383d53ab731f0ed9e5e6dc25229842460f0"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/resources/runtime/report.json",
+      "sha256": "ed43ab881e9383eb1d2c64172bd1900011e487f931a3c1a2abec9610d9ca58e3"
+    },
+    {
+      "file": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/resources/frozen-runner.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/resources/policy-freeze.json",
+      "sha256": "c938d9d2b16238e87d3bfbdc95e8f60396be782e802151c05a4f0e21dc15cb69"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/package-continuity.json",
+      "sha256": "38433f4b825cb8e1206d7ffa81420378ecd746244c85226fae83539494b7a8c7"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+      "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/index.json",
+      "sha256": "283022e27ed172a1f8d5ea7d26b929db73d48eec5eccc4e3aff26edbd05de281"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/capture-report.json",
+      "sha256": "a1e03b835c92df9864303d164aa823e9265292f1cbf4bacc54a988036b6ad03a"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/capture-policy.json",
+      "sha256": "6a1d76031de8e913964c7f6c676aef233d7f90d88191bd63ef7c14adcbe25485"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-1-entry-old.png",
+      "sha256": "7b5a444f74af3e3dbb93e7562a3ce40af4f9eb81ce5d3f25783d03082ace39b1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-1-entry-new.png",
+      "sha256": "7b5a444f74af3e3dbb93e7562a3ce40af4f9eb81ce5d3f25783d03082ace39b1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-2-departure-old.png",
+      "sha256": "73dda3330aa064bc711d2aea3ffb1b8453052b6f410c7f45382fb41f9f43f3e8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-2-departure-new.png",
+      "sha256": "73dda3330aa064bc711d2aea3ffb1b8453052b6f410c7f45382fb41f9f43f3e8"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/felt-wedges-1-entry-old.png",
+      "sha256": "1af045dbfe1bde0c30260184ec3121d0e9a694fcd271f51fb96b7cf3d3c7a246"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/felt-wedges-1-entry-new.png",
+      "sha256": "1af045dbfe1bde0c30260184ec3121d0e9a694fcd271f51fb96b7cf3d3c7a246"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/felt-wedges-2-departure-old.png",
+      "sha256": "123f5e90927dbcbc42ef26a5c48e29907f2486b39379e189c3e6079b7dabafe3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/felt-wedges-2-departure-new.png",
+      "sha256": "123f5e90927dbcbc42ef26a5c48e29907f2486b39379e189c3e6079b7dabafe3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/capture-report.json",
+      "sha256": "5cfea0e10b4e3ce5d58a476595dd6b5575d6647af04f1e64bb5f39f7c0410953"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/capture-policy.json",
+      "sha256": "51b49e0908eef262eb099ff35db2b6cb558e3c3b420a42dc3ddd0991f20cffbb"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/hollow-wreckage-1-composite-partial-arrival-old.png",
+      "sha256": "9f818953567fea61336c2c92f55f50924731d5398d40f52d6b1a6e9d72f8b93d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/hollow-wreckage-1-composite-partial-arrival-new.png",
+      "sha256": "9f818953567fea61336c2c92f55f50924731d5398d40f52d6b1a6e9d72f8b93d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/felt-wedges-1-composite-partial-arrival-old.png",
+      "sha256": "eb088334082020daea3525c13a107f959fd13f9bfc9a445d8501e0b770c06157"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/felt-wedges-1-composite-partial-arrival-new.png",
+      "sha256": "eb088334082020daea3525c13a107f959fd13f9bfc9a445d8501e0b770c06157"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-continuous-through-12.json",
+      "sha256": "8f5cecfa469ddd071a36aa11cb7964fab8fbbb8c9877e67e92e35d3ccfc3ff20"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/policy-freeze.json",
+      "sha256": "d911b4babefe449b312ea4cb08ef0dd1663cd0ecf9871052e0f4251a5df4e260"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/2-after-preparation.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/report.json",
+      "sha256": "beb757b8eb7ec85e0f0fc3d5d5be81c90093d8cec617bab58f160ddc016ea791"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/execution.json",
+      "sha256": "930c147bbc43551b240d383c0b0ccfd0562cef44a336997d1e1de2186010ba1c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/batch-input.json",
+      "sha256": "4c391b14ef91e4deca2770cbb298ac42ede8c4d072f3a80737f3610efddc5d36"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-before.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-entry.save.json",
+      "sha256": "89e8bc364658a2acbead23667dc83f0049efb6c937a481c681ea5848ffb2075a"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-returned.save.json",
+      "sha256": "0fe553e5de9a802686617f140ce9ffdca864bb48253d327f926c67cda15fbb29"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-after-preparation.save.json",
+      "sha256": "9ecb6400c762ed41e886bed50b23e95e602042b3f417b99af6df025bea563087"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-before.save.json",
+      "sha256": "9ecb6400c762ed41e886bed50b23e95e602042b3f417b99af6df025bea563087"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-entry.save.json",
+      "sha256": "688fff48e23b1e3cd0135a98a6044747ee4609cfe3b2bcb8cd3a60bfad5c3f71"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-returned.save.json",
+      "sha256": "3e82fe5256879932fd9a32296af86714a124e05aec6dbece0d0f33838f3975f5"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-after-preparation.save.json",
+      "sha256": "bf8dac454c442fce5986c02bb52acbda0555c8296abfb3ab40dddb9999fac303"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-before.save.json",
+      "sha256": "bf8dac454c442fce5986c02bb52acbda0555c8296abfb3ab40dddb9999fac303"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-entry.save.json",
+      "sha256": "e33bf0d898debc424693c47592be36dda8febb3e333ae9898c0133059845a374"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-returned.save.json",
+      "sha256": "9f3fdd95a26e9d60f3f77f2756f7fade0fc8089b200c3d1a39201f350e12f958"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-after-preparation.save.json",
+      "sha256": "10781c51031f2d6c627bdff173265d0d19688007e148761ee6451f1001a63333"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-before.save.json",
+      "sha256": "10781c51031f2d6c627bdff173265d0d19688007e148761ee6451f1001a63333"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-entry.save.json",
+      "sha256": "d6ce801c9db03ee2188a523986e670b2ec0ded4cd45b4ecd14732dc0261f744c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-returned.save.json",
+      "sha256": "5460d7957f707fb6eebe59bae5aae284aa7f703abcf3fa0ce2b30456bfac8f2e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-after-preparation.save.json",
+      "sha256": "d9a641f11c1e416d1db27eb68f22431c5e24b4ead1e07ac8f8b9150130162b13"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-before.save.json",
+      "sha256": "d9a641f11c1e416d1db27eb68f22431c5e24b4ead1e07ac8f8b9150130162b13"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-entry.save.json",
+      "sha256": "686868d1207182b1d4ec7c71f2ae86fa1ec87c9443a7ef129e7f4ffd8bb4526d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-returned.save.json",
+      "sha256": "4aca96488aa1dc2f3bec488585b564a5dd3202a6827619985abffb566da0e948"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-after-preparation.save.json",
+      "sha256": "14e98f7d9ec00af85bb2047caa9cf03e8a4305ca6f4fbda16a43fcca7cff8da6"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-before.save.json",
+      "sha256": "14e98f7d9ec00af85bb2047caa9cf03e8a4305ca6f4fbda16a43fcca7cff8da6"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-entry.save.json",
+      "sha256": "6fdf3b2ef29339754ace4b93b304874f55a7123f70668b18230d2f86e7d86596"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-returned.save.json",
+      "sha256": "7b874eb3ba78e4e178d55e5d07e3ffcf59b9fba7f93dc2c86bdfe17419910540"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-after-preparation.save.json",
+      "sha256": "0d81f9cf05e2cf5cbf1e2e48fc4b9ada65b1f41995e321d738795199512b8165"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-before.save.json",
+      "sha256": "0d81f9cf05e2cf5cbf1e2e48fc4b9ada65b1f41995e321d738795199512b8165"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-entry.save.json",
+      "sha256": "30e2877e041e4744e40069dc85b47fe2f93e76b724b454df7e4b6e21e3f9b2bb"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-returned.save.json",
+      "sha256": "5b206181ad9176f89b589fae2b9f2f911732515f31a2b30e67a41f762509c3c3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-after-preparation.save.json",
+      "sha256": "b666e333ad9fd45502e6fae41303ac127fa07d4574b9512e4423b0009a907241"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-before.save.json",
+      "sha256": "b666e333ad9fd45502e6fae41303ac127fa07d4574b9512e4423b0009a907241"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-entry.save.json",
+      "sha256": "084628fff304c62d6acb167ef0890e39d7ff0a0df8a5a0f96bc75f27bc455a5b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-returned.save.json",
+      "sha256": "73843aca71c89b66e63d65a8ea12408c3022ecccd80e84bc49c9032a7b522b04"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-after-preparation.save.json",
+      "sha256": "81624825bc49bf251bb5f47b44756c9ba66fe6e6a88b9dc5ab131453b3d08785"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-before.save.json",
+      "sha256": "81624825bc49bf251bb5f47b44756c9ba66fe6e6a88b9dc5ab131453b3d08785"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-entry.save.json",
+      "sha256": "effa324ac8e331770da3ae2a07287dade4fd2a0bace1bb24e0ab843e3dd7959d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-returned.save.json",
+      "sha256": "9b1f33df0673eeb3031beaebd616bb0dff5654656d16b1082d4c753f9c41ce0e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-after-preparation.save.json",
+      "sha256": "f1f7606894bedb192a1c3ac6c06f18e8353b0cfe544aa4ef80108fe3de1b3dd1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-before.save.json",
+      "sha256": "f1f7606894bedb192a1c3ac6c06f18e8353b0cfe544aa4ef80108fe3de1b3dd1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-entry.save.json",
+      "sha256": "c205205b191c53ff5c5207bbe6634de2d3a9f71efc1d6bc750aee5227e2e0027"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-returned.save.json",
+      "sha256": "3b6f20176bc50fd81733553e2fa8aadab4d5d8674b1488ad424f3a386d9c4b2c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-after-preparation.save.json",
+      "sha256": "19adc465759fefe4a7119c09d6fa4ab6bba141c3a180e62685743f9b5ec197c1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-before.save.json",
+      "sha256": "19adc465759fefe4a7119c09d6fa4ab6bba141c3a180e62685743f9b5ec197c1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-entry.save.json",
+      "sha256": "5435224ea5c9482e0a50a8d18be87d1a2a29740c8918db4ee104807cffee5659"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-returned.save.json",
+      "sha256": "d29df9f8be2e1028f205a92dcf25db4e18c46980024b42812e418978bf8587b4"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-after-preparation.save.json",
+      "sha256": "9f0b8c5fa3f4e7f703023c0a76938f46356156d6785232bd61017ff9131a0d1b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-before.save.json",
+      "sha256": "9f0b8c5fa3f4e7f703023c0a76938f46356156d6785232bd61017ff9131a0d1b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-entry.save.json",
+      "sha256": "c2cb939e66f15ca0bc9d4d0a2968e5cd60aa8ad2395151b1989c2ce6c6f072ca"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-returned.save.json",
+      "sha256": "4ea8ee7bbab03123f6905d4eb08e155ee3905ad249fcde49105e9b7b7e5c5bc5"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-after-preparation.save.json",
+      "sha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/browser-storage.json",
+      "sha256": "a7270c01da624d2c2ca3e3aa6c9eed6360d7a4321e97b950af0babf4ab0e83f3"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-continuous-through-12-accounting.json",
+      "sha256": "2bd430bc7ea6b67677a050c1373cdd95ffbf4ee6f1a4ce9d58aee5d103f92a0e"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-release-gate-recommendations.json",
+      "sha256": "f75d8624242033fa81586eff14a72eef774c3890dbd1857607af16cf743db731"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i14/qa-release-gate-recovery.json",
+      "sha256": "664373086d515cc55bad66db072d270baaccb27aab86098811bdeafc39f40b0d"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/qa-actor-cache-delta-review.mjs",
+      "sha256": "e306fab0917f90cd671fa467b133310898667b783bd61d96fbd1ff63f2b0b955"
+    }
+  ]
+}

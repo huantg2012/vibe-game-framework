@@ -1,0 +1,534 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T05:04:06.781208+00:00",
+  "status": "bounded-visual-equivalence-observed-with-partial-occlusion-uncovered",
+  "reviewer": "I14 Art agent",
+  "features": [
+    "COH-F052",
+    "COH-F007",
+    "COH-F039"
+  ],
+  "conclusion": "已采6处正常灯雾/相机下的暂停状态，原源遮挡oracle与新缓存查询的实际全actor fillRect条带和PNG逐对完全相同；独立亲看9张对应原PNG，未见该查询优化新增的视觉差异。实际角色部分遮挡未在这些停点出现，不能称该动态视觉子项已验。",
+  "sourceScope": {
+    "oldManifest": {
+      "file": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "bytes": 171410,
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    "newManifest": {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "bytes": 171533,
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    "delta": {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+      "bytes": 3913,
+      "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+    },
+    "sourceAudit": {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/source-audit.json",
+      "bytes": 5168,
+      "sha256": "f16f108ad70b0c13a2768cca0a015c1092aaeefce393f654cc74d45dc6452a3b"
+    },
+    "interpretation": "新源3037中的同一个正常RiftScene，真实Escape暂停后只替换遮挡query为旧源原式/新缓存并重绘既有mask。不是两次不同时间的整游戏截图假装同状态；旧式逐字来源副本与两源manifest均绑定。"
+  },
+  "numericSupport": {
+    "codeReceipt": {
+      "file": "docs/qa/artifacts/r100-i14/actor-occlusion/equivalence/report.json",
+      "bytes": 48133,
+      "sha256": "f77ace350c3ff9133e7f8d4e146995598b065a2bbcc39d6055a8a5ab3b881be0"
+    },
+    "assertions": 39757776,
+    "worlds": 8,
+    "families": 6,
+    "actualMaskMethodFixtureSpanPairs": 112,
+    "reportedAlphaDifferences": 0,
+    "artIndependence": "Art复核收据指纹、所有alpha/span摘要相等，并验证逆转query hoist后整maskActor与旧源去空白相同；未声称第二次运行39757776断言。"
+  },
+  "actualCapture": {
+    "pairs": [
+      {
+        "id": "hollow-wreckage-1-entry",
+        "version": "v2",
+        "world": "hollow-wreckage",
+        "grade": "severe",
+        "seed": 20261004,
+        "position": {
+          "x": 196,
+          "y": 588
+        },
+        "ground": 598,
+        "facing": "right",
+        "imageDimensions": [
+          1136,
+          758
+        ],
+        "normalMode": "normal",
+        "pairedPngBytesEqual": true,
+        "actualAllActorSpansEqual": true,
+        "observedStateEqual": true,
+        "actorsCompared": 5,
+        "visibleNonPlayerMaskObjects": 0,
+        "coverageKind": "primary-body-texture-query",
+        "actualCoverage": {
+          "opaque": 243,
+          "hidden": 0,
+          "visible": 243,
+          "relief": 0
+        },
+        "oldImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-1-entry-old.png",
+          "bytes": 186545,
+          "sha256": "7b5a444f74af3e3dbb93e7562a3ce40af4f9eb81ce5d3f25783d03082ace39b1"
+        },
+        "newImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-1-entry-new.png",
+          "bytes": 186545,
+          "sha256": "7b5a444f74af3e3dbb93e7562a3ce40af4f9eb81ce5d3f25783d03082ace39b1"
+        }
+      },
+      {
+        "id": "hollow-wreckage-2-departure",
+        "version": "v2",
+        "world": "hollow-wreckage",
+        "grade": "severe",
+        "seed": 20261004,
+        "position": {
+          "x": 481.69449999999756,
+          "y": 588
+        },
+        "ground": 598,
+        "facing": "right",
+        "imageDimensions": [
+          1136,
+          758
+        ],
+        "normalMode": "normal",
+        "pairedPngBytesEqual": true,
+        "actualAllActorSpansEqual": true,
+        "observedStateEqual": true,
+        "actorsCompared": 5,
+        "visibleNonPlayerMaskObjects": 0,
+        "coverageKind": "primary-body-texture-query",
+        "actualCoverage": {
+          "opaque": 235,
+          "hidden": 0,
+          "visible": 235,
+          "relief": 10
+        },
+        "oldImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-2-departure-old.png",
+          "bytes": 204569,
+          "sha256": "73dda3330aa064bc711d2aea3ffb1b8453052b6f410c7f45382fb41f9f43f3e8"
+        },
+        "newImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-2-departure-new.png",
+          "bytes": 204569,
+          "sha256": "73dda3330aa064bc711d2aea3ffb1b8453052b6f410c7f45382fb41f9f43f3e8"
+        }
+      },
+      {
+        "id": "felt-wedges-1-entry",
+        "version": "v2",
+        "world": "felt-wedges",
+        "grade": "severe",
+        "seed": 20261004,
+        "position": {
+          "x": 196,
+          "y": 588
+        },
+        "ground": 598,
+        "facing": "right",
+        "imageDimensions": [
+          1136,
+          758
+        ],
+        "normalMode": "normal",
+        "pairedPngBytesEqual": true,
+        "actualAllActorSpansEqual": true,
+        "observedStateEqual": true,
+        "actorsCompared": 5,
+        "visibleNonPlayerMaskObjects": 0,
+        "coverageKind": "primary-body-texture-query",
+        "actualCoverage": {
+          "opaque": 243,
+          "hidden": 0,
+          "visible": 243,
+          "relief": 0
+        },
+        "oldImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/felt-wedges-1-entry-old.png",
+          "bytes": 191918,
+          "sha256": "1af045dbfe1bde0c30260184ec3121d0e9a694fcd271f51fb96b7cf3d3c7a246"
+        },
+        "newImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/felt-wedges-1-entry-new.png",
+          "bytes": 191918,
+          "sha256": "1af045dbfe1bde0c30260184ec3121d0e9a694fcd271f51fb96b7cf3d3c7a246"
+        }
+      },
+      {
+        "id": "felt-wedges-2-departure",
+        "version": "v2",
+        "world": "felt-wedges",
+        "grade": "severe",
+        "seed": 20261004,
+        "position": {
+          "x": 244.3890000000003,
+          "y": 588
+        },
+        "ground": 598,
+        "facing": "right",
+        "imageDimensions": [
+          1136,
+          758
+        ],
+        "normalMode": "normal",
+        "pairedPngBytesEqual": true,
+        "actualAllActorSpansEqual": true,
+        "observedStateEqual": true,
+        "actorsCompared": 5,
+        "visibleNonPlayerMaskObjects": 0,
+        "coverageKind": "primary-body-texture-query",
+        "actualCoverage": {
+          "opaque": 235,
+          "hidden": 0,
+          "visible": 235,
+          "relief": 0
+        },
+        "oldImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/felt-wedges-2-departure-old.png",
+          "bytes": 196382,
+          "sha256": "123f5e90927dbcbc42ef26a5c48e29907f2486b39379e189c3e6079b7dabafe3"
+        },
+        "newImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/felt-wedges-2-departure-new.png",
+          "bytes": 196382,
+          "sha256": "123f5e90927dbcbc42ef26a5c48e29907f2486b39379e189c3e6079b7dabafe3"
+        }
+      },
+      {
+        "id": "hollow-wreckage-1-composite-partial-arrival",
+        "version": "v3",
+        "world": "hollow-wreckage",
+        "grade": "severe",
+        "seed": 20261004,
+        "position": {
+          "x": 266.6496693993262,
+          "y": 403.91551365148746
+        },
+        "ground": 413.91551365148746,
+        "facing": "up",
+        "imageDimensions": [
+          1136,
+          758
+        ],
+        "normalMode": "normal",
+        "pairedPngBytesEqual": true,
+        "actualAllActorSpansEqual": true,
+        "observedStateEqual": true,
+        "actorsCompared": 5,
+        "visibleNonPlayerMaskObjects": 0,
+        "coverageKind": "visible-composite-image-query-alpha-at-least-0.15",
+        "actualCoverage": {
+          "opaque": 344,
+          "hidden": 0,
+          "visible": 344,
+          "relief": 0,
+          "byTexture": {
+            "player-dense-up-idle-3": {
+              "opaque": 218,
+              "hidden": 0
+            },
+            "player-aura-pool": {
+              "opaque": 8,
+              "hidden": 0
+            },
+            "player-aura-glow": {
+              "opaque": 48,
+              "hidden": 0
+            },
+            "player-aura-mote": {
+              "opaque": 5,
+              "hidden": 0
+            },
+            "crowbar-held-ordinary-standard": {
+              "opaque": 65,
+              "hidden": 0
+            }
+          }
+        },
+        "oldImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/hollow-wreckage-1-composite-partial-arrival-old.png",
+          "bytes": 184695,
+          "sha256": "9f818953567fea61336c2c92f55f50924731d5398d40f52d6b1a6e9d72f8b93d"
+        },
+        "newImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/hollow-wreckage-1-composite-partial-arrival-new.png",
+          "bytes": 184695,
+          "sha256": "9f818953567fea61336c2c92f55f50924731d5398d40f52d6b1a6e9d72f8b93d"
+        }
+      },
+      {
+        "id": "felt-wedges-1-composite-partial-arrival",
+        "version": "v3",
+        "world": "felt-wedges",
+        "grade": "severe",
+        "seed": 20261004,
+        "position": {
+          "x": 453.9338985443587,
+          "y": 434.8645288358555
+        },
+        "ground": 444.8645288358555,
+        "facing": "down",
+        "imageDimensions": [
+          1136,
+          758
+        ],
+        "normalMode": "normal",
+        "pairedPngBytesEqual": true,
+        "actualAllActorSpansEqual": true,
+        "observedStateEqual": true,
+        "actorsCompared": 5,
+        "visibleNonPlayerMaskObjects": 0,
+        "coverageKind": "visible-composite-image-query-alpha-at-least-0.15",
+        "actualCoverage": {
+          "opaque": 581,
+          "hidden": 0,
+          "visible": 581,
+          "relief": 0,
+          "byTexture": {
+            "player-dense-down-walk-3": {
+              "opaque": 228,
+              "hidden": 0
+            },
+            "player-dense-right-walk-3": {
+              "opaque": 243,
+              "hidden": 0
+            },
+            "player-aura-pool": {
+              "opaque": 24,
+              "hidden": 0
+            },
+            "player-aura-glow": {
+              "opaque": 16,
+              "hidden": 0
+            },
+            "player-aura-mote": {
+              "opaque": 5,
+              "hidden": 0
+            },
+            "crowbar-held-ordinary-standard": {
+              "opaque": 65,
+              "hidden": 0
+            }
+          }
+        },
+        "oldImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/felt-wedges-1-composite-partial-arrival-old.png",
+          "bytes": 204388,
+          "sha256": "eb088334082020daea3525c13a107f959fd13f9bfc9a445d8501e0b770c06157"
+        },
+        "newImage": {
+          "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/felt-wedges-1-composite-partial-arrival-new.png",
+          "bytes": 204388,
+          "sha256": "eb088334082020daea3525c13a107f959fd13f9bfc9a445d8501e0b770c06157"
+        }
+      }
+    ],
+    "successfulGymContexts": 4,
+    "initialToolFailureGymContexts": 2,
+    "naturalSortiesAdded": 0,
+    "addedPerformanceSamples": 0,
+    "recordedActorsPerPair": 5,
+    "recordedActorMaskComparisons": 30,
+    "actualVisibleNonPlayerActorObjects": 0,
+    "sampledFacing": [
+      "right",
+      "up",
+      "down"
+    ],
+    "notSampledFacing": [
+      "left"
+    ],
+    "images": "12 PNG，实际浏览器显示尺寸1136×758；游戏逻辑960×640。保留原浏览器缩放后的画面，未后处理成资产/未声称这批PNG是1:1像素资产母版。",
+    "domCaution": "locator.screenshot框住canvas，但其显示区域内重叠的正常DOM HUD可进入截图；这些是实际画面区域截图，并非分离DOM的canvas像素导出。",
+    "stateScope": "可导出的player/tools/chaos/search/field/trail/minimap/hosts/material/run/inventory及共享result/conditions/presentationSequence/defenseHudEffects、时钟、camera、source灯光和Gym probe/combat stats逐对相同。Gym未启用combat/AI正式recovery导出，明确未拥有完整正式checkpoint；未为测试启用它。",
+    "allQueriesRestored": true,
+    "allContextsAndBrowsersClosed": true,
+    "productionDeltaFilesUnchanged": true
+  },
+  "directImageReview": {
+    "rawImagesPhysicallyViewed": [
+      {
+        "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-1-entry-new.png",
+        "bytes": 186545,
+        "sha256": "7b5a444f74af3e3dbb93e7562a3ce40af4f9eb81ce5d3f25783d03082ace39b1"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-2-departure-new.png",
+        "bytes": 204569,
+        "sha256": "73dda3330aa064bc711d2aea3ffb1b8453052b6f410c7f45382fb41f9f43f3e8"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/felt-wedges-1-entry-new.png",
+        "bytes": 191918,
+        "sha256": "1af045dbfe1bde0c30260184ec3121d0e9a694fcd271f51fb96b7cf3d3c7a246"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/felt-wedges-2-departure-new.png",
+        "bytes": 196382,
+        "sha256": "123f5e90927dbcbc42ef26a5c48e29907f2486b39379e189c3e6079b7dabafe3"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/hollow-wreckage-1-composite-partial-arrival-new.png",
+        "bytes": 184695,
+        "sha256": "9f818953567fea61336c2c92f55f50924731d5398d40f52d6b1a6e9d72f8b93d"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/felt-wedges-1-composite-partial-arrival-new.png",
+        "bytes": 204388,
+        "sha256": "eb088334082020daea3525c13a107f959fd13f9bfc9a445d8501e0b770c06157"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v2/hollow-wreckage-2-departure-old.png",
+        "bytes": 204569,
+        "sha256": "73dda3330aa064bc711d2aea3ffb1b8453052b6f410c7f45382fb41f9f43f3e8"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/hollow-wreckage-1-composite-partial-arrival-old.png",
+        "bytes": 184695,
+        "sha256": "9f818953567fea61336c2c92f55f50924731d5398d40f52d6b1a6e9d72f8b93d"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/occlusion-visual/v3/felt-wedges-1-composite-partial-arrival-old.png",
+        "bytes": 204388,
+        "sha256": "eb088334082020daea3525c13a107f959fd13f9bfc9a445d8501e0b770c06157"
+      }
+    ],
+    "additionalContextImagesPhysicallyViewed": [
+      {
+        "file": "docs/qa/artifacts/r100-i14/runtime-reference/hollow-wreckage-end.png",
+        "bytes": 564480,
+        "sha256": "c1e4c2c5da90e8bf7c7ae2a2c6367a998fc91b0162b1d71e47378e415215f9d5"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/runtime-reference/felt-wedges-end.png",
+        "bytes": 243991,
+        "sha256": "88282ed9526b0cb95ab9611daaa2846be367bf36230381ad1afba83eadb07071"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/runtime-reference/hollow-wreckage-end.png",
+        "bytes": 576814,
+        "sha256": "b61cdca178dac8904c59899c9a6ce79ed297ea457a04f21e53cc92a74dfdd167"
+      },
+      {
+        "file": "docs/qa/artifacts/r100-i14/actor-occlusion/runtime-reference/felt-wedges-end.png",
+        "bytes": 244056,
+        "sha256": "100f6a8a755e61da25cb6044f65991eeb85a07f1111ffcd2d33141bf1f5df264"
+      }
+    ],
+    "contextLimit": "4张原/新性能末帧位置/时钟不同，只用于确认正常灯雾及材质上下文；不计同状态对。",
+    "observations": [
+      {
+        "scene": "hollow-wreckage v2 entry/departure",
+        "observed": "入口蓝灰地床上的头部、背包、分腿和持物边缘完整。走到浅起伏材料接缝后，地表线条从脚边延续，头与两腿未出现新增缺口；实际主身体样本235个不透明像素中10个落在relief，0个被mask隐藏。",
+        "boundary": "主身体贴图query覆盖不等于对全部复合body/crop逐像素的视觉测量；像素数按原工具口径保留。"
+      },
+      {
+        "scene": "hollow-wreckage v3 solid approach",
+        "observed": "角色实际站到高实体的左下斜边；肩灯照出浅色受光面与深色侧面，脚部和持物保持完整。旧/新原帧可见边缘位置相同；没有将普通实体侧影改成空洞或改画法。",
+        "boundary": "预测原朝向16个复合像素会被遮挡，实到up朝向后hidden=0，不能据此宣称真实partial发生。"
+      },
+      {
+        "scene": "felt-wedges v2 entry/departure",
+        "observed": "紫灰纤维状地床和玩家亮部关系一致；行走后的头、背包与分腿轮廓保持，旧/新PNG完全相同。",
+        "boundary": "该固定seed顶层可见relief为0，不声称此处验证relief。"
+      },
+      {
+        "scene": "felt-wedges v3 solid approach",
+        "observed": "玩家靠近青蓝高起的尖棱，与紫灰侧面形成材料接合；脚和灯光边缘仍可读，旧/新原帧未出现条带残留。下方另有世界物件，但记录的4个非玩家actor对象均不可见，不能据其外观推称多敌人遮挡已验。",
+        "boundary": "候选原朝向预测23个复合像素遮挡，实到down朝向hidden=0；真实partial仍未覆盖。"
+      }
+    ]
+  },
+  "preservedFailuresAndMisses": {
+    "firstAttempt": {
+      "file": "docs/qa/artifacts/r100-i14/occlusion-visual/capture-report.json",
+      "bytes": 4134,
+      "sha256": "df00816330da8707157abab89d5ab889941853b7cb376cd57994edffee742fa3"
+    },
+    "firstAttemptCause": "Gym combat recovery未启用；在entry导出前停止，0移动/0配对，已恢复query并关浏览器。v2显式缩小状态导出口径，不改生产或启用recovery。",
+    "v2PrimaryBodyCandidates": "2世界分别搜索8633/8933个可达几何节点，均未找到主身体partial；不是世界不存在partial的证明。",
+    "v3BoundedSupplement": "Root准许只用各世界剩余第3对额度；以实际可见Image alpha/crop/transform查复合像素。真实走到目标后朝向/步态与原候选不同，实际hidden=0。未强制朝向、位置或clock以造出结果；未继续扩跑。"
+  },
+  "uncovered": [
+    "可见角色真正进入partial遮挡并连续走出，及一帧残留/连续运动主观体验。",
+    "左向以及全部四向/所有步态；本批仅right/up/down停点。",
+    "多个可见actor位于遮挡两侧；本批记录30份mask但4个非玩家actor一直不可见。",
+    "全108世界/324等级的视觉重验、真实弱设备、实际人耳听感与最终审美。"
+  ],
+  "pixelSkillSelfCheck": [
+    {
+      "item": "0 因果链",
+      "answer": "保留原人类玩家/既有世界实体的形体范围，遮挡query缓存不产生新形体候选，不作抽卡或换世界观。原形体、材质与污染含义来自现行资产。"
+    },
+    {
+      "item": "1 载体平面",
+      "answer": "原立姿人物和世界坐标实体不变；没有将地面物画成立体或改相机。"
+    },
+    {
+      "item": "2 实景辨认",
+      "answer": "已亲看正常落地底上的9原帧，玩家头、背包、腿及持物仍可辨；PNG为1136×758显示区域，非新1:1资产验收。"
+    },
+    {
+      "item": "3 外沿",
+      "answer": "未重画外沿；已观察实体近侧及角色清晰轮廓，old/new PNG相同。没有为既有资产重跑外沿占比，不能据此新增全资产边缘结论。"
+    },
+    {
+      "item": "4 面色",
+      "answer": "不改材质/贴图/色板；场内仍见蓝灰层与紫灰纤维及邻面明暗，不以本轮给旧资产重授艺术通过。"
+    },
+    {
+      "item": "5 动层",
+      "answer": "捕获时真实Escape暂停，记录state相同；没有调框架/动画，连续动态仍未验。"
+    },
+    {
+      "item": "6 色板与暖色",
+      "answer": "无新RGB/色板格/资产；旧/new PNG相同。可见暖亮来自既有肩灯，不新增污染侧光源。未声明全资产palette重验。"
+    },
+    {
+      "item": "7 相机",
+      "answer": "沿原肩灯/雾/相机，old/new状态camera相同。"
+    },
+    {
+      "item": "8 落地底/朝向",
+      "answer": "均在对应实际世界地表，正常键盘改变朝向；没有旋转角色GameObject或注入朝向。"
+    },
+    {
+      "item": "9 容器",
+      "answer": "未更改薪柴/翻堆外形或内容物披露，本项没有新容器产出。"
+    },
+    {
+      "item": "10 抽卡",
+      "answer": "无新视觉方向/形体候选，不发生抽卡。"
+    },
+    {
+      "item": "10b 世界观",
+      "answer": "原玩家设备、低光与污染色关系保持，没有另画通用皮。"
+    },
+    {
+      "item": "11 悬空像素",
+      "answer": "无新增资产像素；old/new图片相同，未对全部旧资产作孤立像素审计。"
+    },
+    {
+      "item": "12 青绿形态",
+      "answer": "未改变活层shape或shader；既有青绿仍位于场景材质/污染，不能将有限帧扩大到全活层审美。"
+    }
+  ],
+  "humanApproval": false,
+  "soundHeard": false,
+  "releaseGatePass": false,
+  "newConfirmedP0P1InObservedFrames": [],
+  "reviewPageBoundary": "原file审阅页自动预览拒绝仍有效，本任务未访问/绕行该页面。既有review HTML/JSON与art-handoff保持原封存；此处只产独立游戏渲染回归证据。"
+}
