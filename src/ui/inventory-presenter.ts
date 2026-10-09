@@ -6,7 +6,7 @@ import { catalogIconUrl } from '@/art/contaminant-catalog-icons';
 import { getContaminantQualityName, getContaminantQualityRank, getContaminantMaxUses, supportsContaminantQuality } from '@/systems/contaminant-quality';
 /** Projects the one inventory owner into the shared base / field view. */
 import { GAME_CONSTANTS } from '@/config/constants';
-import { projectItemForPlayer, projectDiscoveredCatalogItems } from '@/systems/contaminant-catalog';
+import { getCatalogRuntimeAbility, projectItemForPlayer, projectDiscoveredCatalogItems } from '@/systems/contaminant-catalog';
 import { WEAPON_DATA } from '@/generated/weapon-data';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { inventoryStore } from '@/systems/inventory-store';
@@ -81,6 +81,7 @@ export function projectInventoryItem(item: InventoryItem, mode: InventoryPanelMo
   const c = item.contaminant, view = projectItemForPlayer(c);
   const count = contaminantSystem.getSortieSlotCount();
   const passive = view.slot === 'passive', unknown = view.identification === 'unidentified';
+  const runConsumption = !unknown && getCatalogRuntimeAbility(c)?.scope === 'run';
   const toolSlots = canEquip && view.slot
     ? Array.from({ length: count }, (_, i) => i).filter(i => passive === (i === count - 1)).map(String) : [];
   const qualityName = supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity);
@@ -88,14 +89,14 @@ export function projectInventoryItem(item: InventoryItem, mode: InventoryPanelMo
   return { ...common, name: view.name, stageLabel: itemStageLabel(c),
     quality: view.inert ? undefined : unknown ? `结构保持性 · ${qualityName}` : qualityName,
     qualityRank: view.inert ? 0 : getContaminantQualityRank(c), toolSlots, icon: itemIconUrl(c),
-    usesRemaining: view.usesRemaining, canEquip: canEquip && !view.inert, canOffer: common.canOffer && !view.inert,
+    usesRemaining: view.usesRemaining, useUnit: unknown || view.inert ? undefined : runConsumption ? '趟' : '次', canEquip: canEquip && !view.inert, canOffer: common.canOffer && !view.inert,
     description: view.inert ? `${view.summary} 可留存或丢弃，不能携入裂隙。` : unknown ? `供奉：${view.offeringSummary} 完成供奉后，揭晓真实物件及裂隙能力。` : view.summary,
     explanations: [{ label: unknown ? '供奉说明' : '物件说明', text: view.description }],
     stats: [
       ...(view.inert ? [] : [{ label: unknown ? '结构保持性' : '品质', value: qualityName }]),
       ...(unknown || c.stage === 'defense' ? [{ label: '供奉积累', value: `${view.impactCharges} / ${view.offeringCharges}` }]
-        : view.inert ? [] : [{ label: '类型', value: passive ? '整趟被动' : '主动' },
-          { label: passive ? '剩余趟数' : '余次', value: `${view.usesRemaining ?? 0} / ${maxUses}${c.catalog?.runBinding ? ' · 本趟已生效' : ''}` }]),
+        : view.inert ? [] : [{ label: '类型', value: passive ? runConsumption ? '整趟被动' : '被动' : '主动' },
+          { label: runConsumption ? '剩余趟数' : '余次', value: `${view.usesRemaining ?? 0} / ${maxUses}${c.catalog?.runBinding ? ' · 本趟已生效' : ''}` }]),
     ],
   };
 }
@@ -120,9 +121,9 @@ function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
   return {
     departureGrades: options.mode === 'prepare' ? options.getDepartureGrades?.() : undefined,
     departureConditions: options.mode === 'prepare' ? [
-      { label: '装置·混乱增速', value: formatChaosRateDelta(modifiers.chaosRateModifier) },
+      { label: '混乱增速', value: formatChaosRateDelta(modifiers.chaosRateModifier) },
       { label: '每堆所得示例', value: calculateKindlingYieldExamples(growthSystem.getModifiers().kindlingAffinity, modifiers.kindlingValueModifier).join(' / '), note: '小 / 中 / 大份 · 已含亲和' },
-      { label: '装置·初始混乱', value: modifiers.startingChaos },
+      { label: '起始混乱', value: modifiers.startingChaos },
     ] : undefined,
     discoveries: options.mode === 'catalog' ? projectDiscoveredCatalogItems(inventoryStore.getDiscoveredCatalogIds()).map(view => ({
       id: `discovery:${view.definitionId}`, kind: 'contaminant' as const, discovery: true, name: view.name,

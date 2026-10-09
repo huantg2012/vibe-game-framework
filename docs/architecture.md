@@ -1340,6 +1340,8 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 
 `inventory-store.ts`是唯一实例/归属/装备/出击账本所有者；`inventory-presenter.ts`与DOM视图共享于报告物件页、入口备行及裂隙Tab拾获（B已由DEC-142下线）。`field-loot-inventory.ts`提交揭晓/取得/交换/落地，`weapon-loot.ts`使用独立确定性随机流。`survival-attributes.ts`从已提交库存派生抗性及负重速度，场景订阅后更新玩家、Chaos及HUD；预览不更改运行时属性。
 
+2026-10-09备行在同一`inventoryPanel`内部增加`overview / equipment`展示状态，复用正式领域快照/动作与原出发事务；选级只在总览展开，库存只在整理展开。两态切换不改变库存所有权、持久结构或世界身份；样式限定prepare，catalog/rift保持原边界。屏幕空间继续挂`#dom-ui-root`，960×640逻辑画布；列表DOM、筛选、焦点与滚动在同次备行内保留。`prepare-review.html` / `src/dev/prepare-review.ts`以Boot前注入的内存存储运行真实净化点和出发链，夹具只用于DEV，不接触玩家记录。具体交互归`system-field-inventory.md`第5节，限定验证归`docs/qa/preparation-ui-2026-10-09.md`。
+
 出发先保存beginRun，再转换场景；RunController先保存死亡/撤离settleRun，结果只读实际returnedIds。基地收益/冲击/潮汐/baseSettled通过SaveManager.commitWorldTransaction保存一次；失败保留会话结果并锁下一次出发，重试只写快照。开发ui-review的此事务也隔离真实存档。
 
 未完成出击的刷新/退出政策尚未确定；当前session阻止active账本载入基地，保留原记录并说明无法继续。该保护不是裂隙快照恢复。

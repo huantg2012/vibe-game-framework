@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-09T09:28:53.507Z",
+  "revision": "working-tree/2026-10-09 after 51040b5a",
+  "parentRelease": {
+    "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+    "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+  },
+  "parentSources": {
+    "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+    "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca",
+    "count": 1398
+  },
+  "unchangedCount": 1395,
+  "changed": [
+    {
+      "path": "src/ui/dom/inventory-panel-styles.ts",
+      "before": "95a9013757c5baa2d691c2d28091667a12dcfbf7df76fddfb5b89daba60b56eb",
+      "after": "6f83a5af3bd82f8baa9f251809b8deec00f2001d16738bbafe63054a9dff60d7"
+    },
+    {
+      "path": "src/ui/dom/inventory-panel.ts",
+      "before": "17e3fdad8cf9cf2018988856f4aca9cfc3cdee6b836e20350b94004e34773e7f",
+      "after": "e1f8de8f077c80df7b711fc8ce763f2cf811cb50b3da843f476abd5e6d6cc7c4"
+    },
+    {
+      "path": "src/ui/inventory-presenter.ts",
+      "before": "598447af95b15e261ce758f6a1632d2d0de619156acaa93d07785eb895892e61",
+      "after": "5e64db453639d4ffe82c5aa7f92f5fb51016a8a23b53a239ee3b0b5b3b70e5bb"
+    }
+  ],
+  "addedDevSources": [
+    {
+      "path": "prepare-review.html",
+      "sha256": "214702487c8ac7db47c4b6f6498b6d504867a58928b9f8baab25d0c61dff0a50"
+    },
+    {
+      "path": "src/dev/prepare-review.ts",
+      "sha256": "b80e0955c67987cc8ae9bb4ecf2396544a041a9fd0e862f958bb1d3d79aa5fb9"
+    }
+  ],
+  "scope": "UI component, prepare-scoped styles and public display projection only. No modified gameplay rules, data, scenes, generation, persistence or worker code in the frozen source set.",
+  "limitations": "Byte comparison is not behavioral or visual equivalence. Old RC qualification remains bound to that old release; new UI runtime/art evidence is separate. No new human or release approval."
+}

@@ -1,0 +1,17 @@
+node:internal/modules/run_main:122
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /供奉：.*成熟后/. Input:
+
+'消声的旧布\n优良 · 未成熟 · 留存\n\n减伤30%。\n\n品质\n优良\n供奉积累\n0 / 3\n物件说明'
+
+    at file:///Users/yilungao/coh/tools/inventory/check-inventory-report.mjs:49:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '消声的旧布\n优良 · 未成熟 · 留存\n\n减伤30%。\n\n品质\n优良\n供奉积累\n0 / 3\n物件说明',
+  expected: /供奉：.*成熟后/,
+  operator: 'match'
+}
+
+Node.js v22.14.0

@@ -1,0 +1,201 @@
+{
+  "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.",
+  "pageErrors": [],
+  "state": {
+    "active": [],
+    "paused": true,
+    "staged": false,
+    "nativeFence": false,
+    "entry": {
+      "active": false,
+      "elapsedMs": 0,
+      "durationMs": 0,
+      "progress": 1
+    },
+    "blocked": false,
+    "inventory": {
+      "version": 4,
+      "items": [
+        {
+          "kind": "weapon",
+          "id": "WPN_ae64bffd-68bb-42f8-b963-510047a1bbb0",
+          "weapon": {
+            "id": "WPN_ae64bffd-68bb-42f8-b963-510047a1bbb0",
+            "definitionId": "crowbar_plain",
+            "stage": "tool",
+            "impactCharges": 3,
+            "usesRemaining": 60
+          },
+          "location": {
+            "kind": "carried"
+          }
+        },
+        {
+          "kind": "contaminant",
+          "id": "ui-q",
+          "contaminant": {
+            "id": "ui-q",
+            "type": "solidify",
+            "rarity": "common",
+            "stage": "tool",
+            "usesRemaining": 3,
+            "impactCharges": 3
+          },
+          "location": {
+            "kind": "carried"
+          }
+        },
+        {
+          "kind": "contaminant",
+          "id": "ui-f",
+          "contaminant": {
+            "id": "ui-f",
+            "type": "solidify",
+            "rarity": "common",
+            "stage": "tool",
+            "usesRemaining": 5,
+            "impactCharges": 3
+          },
+          "location": {
+            "kind": "carried"
+          }
+        },
+        {
+          "kind": "contaminant",
+          "id": "ui-offer",
+          "contaminant": {
+            "id": "ui-offer",
+            "type": "muffle",
+            "rarity": "fine",
+            "stage": "defense",
+            "usesRemaining": 0,
+            "impactCharges": 0
+          },
+          "location": {
+            "kind": "stash"
+          }
+        }
+      ],
+      "equipment": {
+        "weaponId": "WPN_ae64bffd-68bb-42f8-b963-510047a1bbb0",
+        "toolIds": [
+          "ui-q",
+          "ui-f"
+        ],
+        "defenseIds": []
+      },
+      "run": {
+        "id": "c25f2019-5755-4cde-b5c4-3a5c202b310f",
+        "status": "active",
+        "carriedOutIds": [
+          "WPN_ae64bffd-68bb-42f8-b963-510047a1bbb0",
+          "ui-q",
+          "ui-f"
+        ],
+        "revealedNodes": {},
+        "destroyedIds": [],
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2,
+        "actionReceipts": {},
+        "passiveReceipts": [],
+        "dropPlan": {
+          "sourceRegions": {
+            "r100-contaminant-contested-1": {
+              "sourceTag": "tension",
+              "hint": "多见改变牵拉与位移的残留"
+            },
+            "r100-contaminant-safe-1": {
+              "sourceTag": "density",
+              "hint": "多见改变重量的残留"
+            },
+            "r100-kindling-contested-1": {
+              "sourceTag": "density",
+              "hint": "多见改变重量的残留"
+            },
+            "r100-kindling-contested-2": {
+              "sourceTag": "tension",
+              "hint": "多见改变牵拉与位移的残留"
+            },
+            "r100-kindling-deep-1": {
+              "sourceTag": "tension",
+              "hint": "多见改变牵拉与位移的残留"
+            },
+            "r100-kindling-safe-1": {
+              "sourceTag": "density",
+              "hint": "多见改变重量的残留"
+            }
+          },
+          "version": 1,
+          "catalogVersion": "contaminant-v1",
+          "lootAlgorithmVersion": 1,
+          "runId": "c25f2019-5755-4cde-b5c4-3a5c202b310f",
+          "runSeed": 4215663340,
+          "tutorialNodeId": "r100-contaminant-safe-1",
+          "entries": [
+            {
+              "nodeId": "r100-contaminant-contested-1",
+              "tier": "contested",
+              "sourceTag": "tension",
+              "contaminant": {
+                "id": "CAT_c25f2019-5755-4cde-b5c4-3a5c202b310f_r100-contaminant-contested-1",
+                "type": "catalog",
+                "rarity": "common",
+                "quality": "good",
+                "stage": "defense",
+                "impactCharges": 0,
+                "usesRemaining": 0,
+                "catalog": {
+                  "catalogVersion": "contaminant-v1",
+                  "definitionId": "one_eyed_puppet_head",
+                  "appearanceId": "stitched_pouch",
+                  "offeringProfileId": "resist_25",
+                  "acquiredOrdinal": 0,
+                  "identification": "unidentified"
+                }
+              }
+            },
+            {
+              "nodeId": "r100-contaminant-safe-1",
+              "tier": "safe",
+              "sourceTag": "density",
+              "contaminant": {
+                "id": "CAT_c25f2019-5755-4cde-b5c4-3a5c202b310f_r100-contaminant-safe-1",
+                "type": "catalog",
+                "rarity": "common",
+                "quality": "ordinary",
+                "stage": "defense",
+                "impactCharges": 0,
+                "usesRemaining": 0,
+                "catalog": {
+                  "catalogVersion": "contaminant-v1",
+                  "definitionId": "amber_beetle",
+                  "appearanceId": "thin_shell_ovoid",
+                  "offeringProfileId": "resist_35",
+                  "acquiredOrdinal": 0,
+                  "identification": "unidentified"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "starterGranted": true,
+      "firstWeaponDiscovered": false,
+      "catalogTutorialRevealed": false,
+      "discoveredCatalogIds": [],
+      "offeringReceipts": {},
+      "nextAcquiredOrdinal": 1,
+      "riftWorldHistory": {
+        "version": 1,
+        "visits": [
+          {
+            "worldId": "rolled-fragments",
+            "grade": "low"
+          }
+        ]
+      }
+    },
+    "body": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\n完整度\n100/100\n混乱\n15\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n凝滞的石块\n3\nF\n凝滞的石块\n6\n被动\n未装配\n—\n退路未见\n当前状态未通过检查，行动已停住。上一次完整记录仍在；返回标题可继续已保存的出行。\n返回标题，保留已存记录"
+  }
+}

@@ -1,0 +1,353 @@
+{
+  "ready": true,
+  "fixture": "expanded",
+  "activeScene": "PurificationScene",
+  "scenes": [
+    "PurificationScene"
+  ],
+  "grade": "low",
+  "view": "overview",
+  "equipment": {
+    "weaponId": "WPN_60aac1fa-6b33-48d8-8069-961972940603",
+    "toolIds": [
+      "prepare-fixture-0",
+      "prepare-fixture-1",
+      "prepare-fixture-3",
+      "prepare-fixture-2"
+    ],
+    "defenseIds": [
+      null
+    ]
+  },
+  "inventory": [
+    {
+      "id": "WPN_60aac1fa-6b33-48d8-8069-961972940603",
+      "kind": "weapon",
+      "weight": 30,
+      "location": "carried",
+      "equippedLabel": "在手",
+      "canEquip": true,
+      "usesRemaining": 60,
+      "stageLabel": "已成熟",
+      "canOffer": false,
+      "name": "普通撬棍",
+      "quality": "普通",
+      "qualityRank": 1,
+      "maxDurability": 60,
+      "icon": "/assets/weapons/crowbars/crowbar_plain-icon.png",
+      "description": "已完成供奉。每次有效命中消耗 1 点耐久度，同次挥击只扣一次，空挥不消耗；耐久归零后损坏。伤害在区间内浮动。",
+      "stats": [
+        {
+          "label": "品质",
+          "value": "普通"
+        },
+        {
+          "label": "构造",
+          "value": "标准"
+        },
+        {
+          "label": "伤害",
+          "value": "22–28"
+        },
+        {
+          "label": "污染抗性",
+          "value": "0%"
+        }
+      ]
+    },
+    {
+      "id": "prepare-fixture-0",
+      "kind": "contaminant",
+      "weight": 20,
+      "location": "carried",
+      "equippedLabel": "工具 Q",
+      "canEquip": true,
+      "usesRemaining": 3,
+      "stageLabel": "已成熟",
+      "canOffer": false,
+      "name": "冷灰烟斗",
+      "quality": "普通",
+      "qualityRank": 1,
+      "toolSlots": [
+        "0",
+        "1",
+        "2"
+      ],
+      "icon": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%226%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%227%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%228%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%228%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%228%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2220%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%229%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%229%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%229%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%239babaf%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%229%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2210%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2210%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%239babaf%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2210%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2210%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2221%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2211%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2211%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2220%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2212%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2212%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2212%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2212%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2212%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2213%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2213%22%20width%3D%2210%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2214%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2214%22%20width%3D%2210%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2215%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2215%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2215%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2216%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2216%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2216%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23463b2c%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2217%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2217%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2217%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2218%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2218%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2219%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2219%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2219%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2220%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2220%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2220%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ad8d60%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2221%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2221%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%237c6445%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2221%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2222%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3C%2Fsvg%3E",
+      "useUnit": "次",
+      "description": "压住一处污染源3秒",
+      "explanations": [
+        {
+          "label": "物件说明",
+          "text": "压住一处污染源3秒"
+        }
+      ],
+      "stats": [
+        {
+          "label": "品质",
+          "value": "普通"
+        },
+        {
+          "label": "类型",
+          "value": "主动"
+        },
+        {
+          "label": "余次",
+          "value": "3 / 3"
+        }
+      ]
+    },
+    {
+      "id": "prepare-fixture-1",
+      "kind": "contaminant",
+      "weight": 20,
+      "location": "carried",
+      "equippedLabel": "工具 F",
+      "canEquip": true,
+      "usesRemaining": 5,
+      "stageLabel": "已成熟",
+      "canOffer": false,
+      "name": "琥珀甲虫",
+      "quality": "普通",
+      "qualityRank": 1,
+      "toolSlots": [
+        "0",
+        "1",
+        "2"
+      ],
+      "icon": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%2212%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%224%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23f2d38a%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%225%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23f2d38a%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%225%22%20width%3D%228%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f2d38a%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f2d38a%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%226%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f2d38a%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%227%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f2d38a%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%227%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%228%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%228%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f2d38a%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%229%22%20width%3D%227%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%229%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f2d38a%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2210%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%2364767c%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2210%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2210%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23dba14c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%2364767c%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2211%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2212%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%2364767c%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2212%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2213%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2213%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%2364767c%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2213%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2214%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2214%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%2364767c%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2214%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2215%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2215%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%2364767c%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2215%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2215%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2216%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2216%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23343e44%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2216%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23263437%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2216%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2217%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2217%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2218%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2218%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2218%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2219%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2219%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2219%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23683b23%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2219%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2220%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2220%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a86b32%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2220%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2220%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2221%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3C%2Fsvg%3E",
+      "useUnit": "次",
+      "description": "停住一敌2.5秒；受伤解除",
+      "explanations": [
+        {
+          "label": "物件说明",
+          "text": "停住一敌2.5秒；受伤解除"
+        }
+      ],
+      "stats": [
+        {
+          "label": "品质",
+          "value": "普通"
+        },
+        {
+          "label": "类型",
+          "value": "主动"
+        },
+        {
+          "label": "余次",
+          "value": "5 / 5"
+        }
+      ]
+    },
+    {
+      "id": "prepare-fixture-2",
+      "kind": "contaminant",
+      "weight": 20,
+      "location": "carried",
+      "equippedLabel": "被动挂位",
+      "canEquip": true,
+      "usesRemaining": 2,
+      "stageLabel": "已成熟",
+      "canOffer": false,
+      "name": "铜框单镜",
+      "quality": "普通",
+      "qualityRank": 1,
+      "toolSlots": [
+        "3"
+      ],
+      "icon": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%228%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%224%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23efcf90%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%224%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%225%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23efcf90%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%225%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23efcf90%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%226%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23557f88%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%226%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23d1e0ce%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%226%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23557f88%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23d1e0ce%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%227%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23557f88%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23314b58%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%228%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23557f88%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23d1e0ce%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%228%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23557f88%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23314b58%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%229%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23557f88%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23d1e0ce%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%229%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23557f88%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%229%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23314b58%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2210%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23d1e0ce%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2210%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23557f88%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2210%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%2386bab7%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2211%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23557f88%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%2386bab7%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2211%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23314b58%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2212%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23314b58%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2212%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23557f88%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%2386bab7%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2212%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23314b58%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2212%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2213%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23314b58%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%2386bab7%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2213%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23314b58%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2213%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2214%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2214%22%20width%3D%228%22%20height%3D%221%22%20fill%3D%22%23314b58%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2214%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2215%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2215%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23314b58%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2215%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2216%22%20width%3D%228%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2216%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2217%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2217%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2218%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2218%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2219%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2219%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2220%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2221%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2222%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%239b713c%22%2F%3E%3C%2Fsvg%3E",
+      "useUnit": "趟",
+      "description": "本趟视距增加10%",
+      "explanations": [
+        {
+          "label": "物件说明",
+          "text": "本趟视距增加10%"
+        }
+      ],
+      "stats": [
+        {
+          "label": "品质",
+          "value": "普通"
+        },
+        {
+          "label": "类型",
+          "value": "整趟被动"
+        },
+        {
+          "label": "剩余趟数",
+          "value": "2 / 2"
+        }
+      ]
+    },
+    {
+      "id": "prepare-fixture-3",
+      "kind": "contaminant",
+      "weight": 20,
+      "location": "carried",
+      "equippedLabel": "工具 G",
+      "canEquip": true,
+      "usesRemaining": 3,
+      "stageLabel": "已成熟",
+      "canOffer": false,
+      "name": "断跟短靴",
+      "quality": "普通",
+      "qualityRank": 1,
+      "toolSlots": [
+        "0",
+        "1",
+        "2"
+      ],
+      "icon": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%226%22%20y%3D%222%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%223%22%20width%3D%229%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%224%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%224%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%224%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%225%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23a67559%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%225%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%226%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%226%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a67559%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%226%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%227%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a67559%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%228%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a67559%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%228%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%229%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%229%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a67559%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%229%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2210%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2210%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a67559%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2210%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2211%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a67559%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2211%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2212%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2212%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a67559%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2212%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2213%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2213%22%20width%3D%227%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2213%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2214%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2214%22%20width%3D%228%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2214%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2215%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2215%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2215%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23c89b75%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2215%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2215%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2216%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2216%22%20width%3D%227%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2216%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23c89b75%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2216%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2216%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2217%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2217%22%20width%3D%228%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23c89b75%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2217%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2218%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2218%22%20width%3D%228%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23c89b75%22%2F%3E%3Crect%20x%3D%2220%22%20y%3D%2218%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2219%22%20width%3D%2210%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2219%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23c89b75%22%2F%3E%3Crect%20x%3D%2220%22%20y%3D%2219%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2220%22%20width%3D%2210%22%20height%3D%221%22%20fill%3D%22%23422f2c%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2221%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2221%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%2221%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2221%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2222%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%2376504a%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2222%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%2222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3C%2Fsvg%3E",
+      "useUnit": "次",
+      "description": "沿可走地面短冲48像素",
+      "explanations": [
+        {
+          "label": "物件说明",
+          "text": "沿可走地面短冲48像素"
+        }
+      ],
+      "stats": [
+        {
+          "label": "品质",
+          "value": "普通"
+        },
+        {
+          "label": "类型",
+          "value": "主动"
+        },
+        {
+          "label": "余次",
+          "value": "3 / 3"
+        }
+      ]
+    },
+    {
+      "id": "prepare-fixture-4",
+      "kind": "contaminant",
+      "weight": 20,
+      "location": "stash",
+      "canEquip": false,
+      "stageLabel": "未鉴定",
+      "canOffer": true,
+      "name": "蜡封包",
+      "quality": "结构保持性 · 普通",
+      "qualityRank": 1,
+      "toolSlots": [],
+      "icon": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%2210%22%20y%3D%224%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%2212%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%226%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%226%22%20width%3D%229%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%227%22%20width%3D%228%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%228%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%228%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%228%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%228%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%229%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%229%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%229%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%229%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2217%22%20y%3D%229%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%229%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%2210%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2210%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2210%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2210%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2210%22%20width%3D%225%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2210%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%2211%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2211%22%20width%3D%229%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2212%22%20width%3D%227%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2212%22%20width%3D%228%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2219%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2213%22%20width%3D%227%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2213%22%20width%3D%227%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2213%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2214%22%20width%3D%227%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e9d9a7%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2214%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2214%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2215%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2215%22%20width%3D%228%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2215%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2216%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2216%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2211%22%20y%3D%2216%22%20width%3D%227%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%2217%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2217%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23ccba87%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2217%22%20width%3D%228%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2218%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%2218%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2218%22%20width%3D%226%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2216%22%20y%3D%2218%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2219%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2219%22%20width%3D%223%22%20height%3D%221%22%20fill%3D%22%23655641%22%2F%3E%3Crect%20x%3D%2213%22%20y%3D%2219%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2220%22%20width%3D%222%22%20height%3D%221%22%20fill%3D%22%23a49266%22%2F%3E%3C%2Fsvg%3E",
+      "description": "供奉：供奉期间冲击伤害减少25% 完成供奉后，揭晓真实物件及裂隙能力。",
+      "explanations": [
+        {
+          "label": "供奉说明",
+          "text": "供奉期间冲击伤害减少25%"
+        }
+      ],
+      "stats": [
+        {
+          "label": "结构保持性",
+          "value": "普通"
+        },
+        {
+          "label": "供奉积累",
+          "value": "0 / 3"
+        }
+      ]
+    }
+  ],
+  "run": null,
+  "cycle": 0,
+  "base": {
+    "kindlingReserve": 35,
+    "cycle": 0,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 70,
+        "maxHp": 100
+      }
+    ],
+    "moduleMaxHpTier": 0,
+    "pendingSideEffects": [],
+    "upgradeDiscount": 0,
+    "moduleSwapActive": false,
+    "repairBonusHp": 0
+  },
+  "storageCalls": {
+    "get": 9,
+    "set": 2,
+    "remove": 1
+  },
+  "journey": {
+    "player": {
+      "x": 509.1935363330473,
+      "y": 356.8080750016289
+    },
+    "route": "main",
+    "transitioning": false,
+    "pendingSave": false,
+    "worldPlayer": {
+      "x": 3.8,
+      "y": 0,
+      "z": 3.8
+    },
+    "resting": false,
+    "rest": {
+      "x": 528.7701417249435,
+      "y": 391.868164617227,
+      "depth": 5.843310565925061
+    },
+    "nearTarget": "rest",
+    "fps": 51.5,
+    "camera": {
+      "zoom": 2.2,
+      "scrollX": 104,
+      "scrollY": 67
+    },
+    "devices": {
+      "core": {
+        "x": 684.1171244047266,
+        "y": 391.69284342892763
+      },
+      "storage": {
+        "x": 730.2721281671445,
+        "y": 249.0266190132017
+      },
+      "purifier": {
+        "x": 435.60091566112055,
+        "y": 294.1897074452697
+      },
+      "entrance": {
+        "x": 458.0525543975513,
+        "y": 334.63152000519256
+      },
+      "offering": {
+        "x": 465.42557207627164,
+        "y": 234.51720081356174
+      },
+      "growth": {
+        "x": 659.5419039172348,
+        "y": 227.8069946921345
+      }
+    },
+    "panels": {
+      "inventory": true,
+      "status": false,
+      "offering": false,
+      "impact": false,
+      "allocation": false,
+      "growth": false
+    }
+  }
+}

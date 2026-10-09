@@ -1,0 +1,385 @@
+{
+  "purpose": "bounded-preparation-ui-qa",
+  "date": "2026-10-09",
+  "status": "UI-SCOPE-PASS / LEGACY-REPORT-PARTIAL / HUMAN-REVIEW-PENDING",
+  "features": [
+    "COH-F003",
+    "COH-F023",
+    "COH-F038",
+    "COH-F052"
+  ],
+  "issue": "R100-P49",
+  "scope": "Preparation overview/editor only. No R100 release, economy, current RC, human visual or broad gameplay acceptance.",
+  "production": [
+    {
+      "file": "src/ui/dom/inventory-panel.ts",
+      "sha256": "e1f8de8f077c80df7b711fc8ce763f2cf811cb50b3da843f476abd5e6d6cc7c4"
+    },
+    {
+      "file": "src/ui/dom/inventory-panel-styles.ts",
+      "sha256": "6f83a5af3bd82f8baa9f251809b8deec00f2001d16738bbafe63054a9dff60d7"
+    },
+    {
+      "file": "src/ui/inventory-presenter.ts",
+      "sha256": "5e64db453639d4ffe82c5aa7f92f5fb51016a8a23b53a239ee3b0b5b3b70e5bb"
+    }
+  ],
+  "currentProductionMatchesPassedSuite": true,
+  "environment": {
+    "browser": "155.0.8059.39",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "hardwareConcurrency": 14,
+    "devicePixelRatio": 1,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "gpu": {
+      "vendor": "Google Inc. (Apple)",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)"
+    }
+  },
+  "testTools": [
+    {
+      "file": "tools/inventory/check-inventory-view.mjs",
+      "sha256": "735b35f3d7fece73ec98c26806d8826b4e74c3be10152d95b8a4bd8e4eac0109"
+    },
+    {
+      "file": "tools/inventory/check-inventory-report.mjs",
+      "sha256": "7d4ef93f373604d4e5d5df9d5fee83737998a788a43c7668947a813a2384d1b0"
+    },
+    {
+      "file": "tools/inventory/check-preparation-ui.mjs",
+      "sha256": "83e047eef62f452431fbc2d7f6298aae3ee482bb92737772d6718bd6d53429c1"
+    }
+  ],
+  "results": {
+    "preparation": {
+      "status": "passed-bounded-preparation-ui",
+      "passedCases": 8,
+      "failedCases": 0,
+      "report": {
+        "file": "docs/qa/artifacts/preparation-ui-2026-10-09/preparation-run-02/report.json",
+        "sha256": "aa01c40414924ef4000bf6b97b602054b6e38a4697dbe0e1893c291c457f38af"
+      },
+      "testSource": {
+        "file": "docs/qa/artifacts/preparation-ui-2026-10-09/preparation-run-02/test-source.mjs",
+        "sha256": "83e047eef62f452431fbc2d7f6298aae3ee482bb92737772d6718bd6d53429c1"
+      },
+      "sourceBeforeEqualsAfter": true,
+      "fixtures": [
+        "starter",
+        "equipped",
+        "expanded",
+        "long",
+        "blocked"
+      ],
+      "realDepartures": [
+        {
+          "selectedGrade": "low",
+          "runId": "d33a7342-9223-4b5f-b9ba-38d6b31274be",
+          "actualGrade": "low",
+          "cycle": 1
+        },
+        {
+          "selectedGrade": "medium",
+          "runId": "c260042d-c19e-4b7d-9f14-b6d8866d4000",
+          "actualGrade": "medium",
+          "cycle": 1
+        },
+        {
+          "selectedGrade": "severe",
+          "runId": "5b7a55d9-33a5-45a3-93dd-0f4559974514",
+          "actualGrade": "severe",
+          "cycle": 1
+        }
+      ],
+      "covered": [
+        "overview hides inventory/detail; real scene actor, no second portrait",
+        "three grade mouse/keyboard, one roving tabstop, hover does not select, no preview/resource changes",
+        "normal Enter/Space including repeat cannot depart in overview/editor; ShiftEnter repeat makes one actual run",
+        "4/5 slots, sibling text/slot rectangle non-overlap, footer reachable; independent long list/detail scroll",
+        "wheel-only return retains old selection and scrolled position; filter/sort/detail expansion and scroll survive return",
+        "actual two-column visible range includes partial row; grid navigation ±1/±2/±6/Home/End",
+        "native details expansion retains footer; unknown public projection does not disclose effect/name/uses",
+        "catalog run passive shows remaining trips; legacy event passive shows remaining uses in summary and detail",
+        "empty tools permitted; missing equipped weapon blocks real departure; slot filtering and Esc layering",
+        "closed scene retains same world, camera returns, actual player input re-enables after focus tween"
+      ],
+      "isolation": {
+        "freshContexts": 8,
+        "origin": "http://127.0.0.1:3027",
+        "saveManager": "Production transactions via BuildLabMemoryStorage",
+        "rawNativeLocalStorageCalls": 0,
+        "sentinelKeys": [
+          "coh-save-v1",
+          "coh-save-v1:previous",
+          "qa-preparation-sentinel",
+          "coh.atmosphere.v1",
+          "coh.locale.v1"
+        ],
+        "allSentinelsUnchanged": true,
+        "userBrowserUsed": false,
+        "serverStartedOrStopped": false
+      }
+    },
+    "inventoryView": {
+      "status": "passed",
+      "exitCode": 0,
+      "log": {
+        "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-03/inventory-view.log",
+        "sha256": "6f70a4050d8861857106b6af779dbf26757ef45144e4fbf582faf5bb57546f49"
+      },
+      "scope": "60 items; equip rollback/one transaction under held Enter; repeated ShiftEnter once; compatible entry without invented grade; catalog permanent discard/navigation; rift exchange/Esc/movement forwarding"
+    },
+    "inventoryReport": {
+      "status": "failed-after-initial-rift-hud",
+      "exitCode": 1,
+      "log": {
+        "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-05/inventory-report.log",
+        "sha256": "d5f4e1263acb461c1388977e4da8b5217589e3ae67a1e922f19b50249aef015e"
+      },
+      "failure": {
+        "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-05/inventory-report-failure.json",
+        "sha256": "bf411b0cd41b539f6c7b7fdde956bdb152a1b70e3323a9f8c1294990139e0836"
+      },
+      "screenshot": {
+        "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-05/inventory-report-failure.png",
+        "sha256": "b620fcca5008294748372155a2eb6996e4d12b3ef69f7a6606879ff678a0d808"
+      },
+      "passedUntil": "Real catalog, offering navigation, preparation equipment editor/long detail and fixed footer, real initial Rift HUD with 4 slots",
+      "notValidated": [
+        "successful committed tool consumption reflected in HUD",
+        "remaining shared field collection checks after that assertion"
+      ],
+      "directMutation": {
+        "frameOpen": true,
+        "domainResult": {
+          "ok": true,
+          "usesLeft": 5
+        },
+        "worldCommitAccepted": false,
+        "scenePaused": true,
+        "stagedEntryActive": false,
+        "nativeFenceActive": false,
+        "entryViewActive": false,
+        "frameCommitBlocked": false,
+        "pageErrors": [],
+        "hudUses": 6,
+        "inMemoryUses": 5,
+        "beforeSnapshotLimitation": "Receipt before is a live getItem reference, serialized after mutation as 5; it is not an independent before snapshot. HUD was separately asserted as 6 before this call."
+      },
+      "interpretation": "Direct QA inventory mutation was accepted inside an open frame, but complete world validation then rejected the frame. No claim that this was a legal, durable gameplay consumption or a production UI regression. No production fix or further retry."
+    }
+  },
+  "failuresPreserved": {
+    "preparationFirst": {
+      "report": {
+        "file": "docs/qa/artifacts/preparation-ui-2026-10-09/preparation-run-01/report.json",
+        "sha256": "c5294b64134306fb8289ebdf4399fb7dcfa3d3ca175b87b969b1d3224ad4551f"
+      },
+      "failedCases": 3,
+      "classification": {
+        "starter": "260ms sample still camera zoom1.108 and input false; no tween detail retained, so first root cause remains unproven. Follow-up production focus trace completes to camera1/0/0 and input true; no production focus fix.",
+        "equipped": "Test measured initial camera tween versus settled camera. Wait for actual focus tween completion before grade comparisons.",
+        "long": "Actual partial fourth row visible 1–8, position reported1–6; code fixed ceil end bound, follow-up passed."
+      },
+      "nativeStorageBeforeInlineIsolation": {
+        "starter": [
+          {
+            "method": "getItem",
+            "key": "coh_locale"
+          }
+        ],
+        "equipped": [
+          {
+            "method": "getItem",
+            "key": "coh_locale"
+          }
+        ],
+        "expanded": [
+          {
+            "method": "getItem",
+            "key": "coh_locale"
+          }
+        ],
+        "long": [
+          {
+            "method": "getItem",
+            "key": "coh_locale"
+          }
+        ],
+        "blocked": [
+          {
+            "method": "getItem",
+            "key": "coh_locale"
+          }
+        ],
+        "departure-low": [
+          {
+            "method": "getItem",
+            "key": "coh_locale"
+          },
+          {
+            "method": "getItem",
+            "key": "coh.atmosphere.v1"
+          },
+          {
+            "method": "setItem",
+            "key": "coh.atmosphere.v1"
+          }
+        ],
+        "departure-medium": [
+          {
+            "method": "getItem",
+            "key": "coh_locale"
+          },
+          {
+            "method": "getItem",
+            "key": "coh.atmosphere.v1"
+          },
+          {
+            "method": "setItem",
+            "key": "coh.atmosphere.v1"
+          }
+        ],
+        "departure-severe": [
+          {
+            "method": "getItem",
+            "key": "coh_locale"
+          },
+          {
+            "method": "getItem",
+            "key": "coh.atmosphere.v1"
+          },
+          {
+            "method": "setItem",
+            "key": "coh.atmosphere.v1"
+          }
+        ]
+      }
+    },
+    "legacyView": {
+      "firstPass": {
+        "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-01/inventory-view.log",
+        "sha256": "6f70a4050d8861857106b6af779dbf26757ef45144e4fbf582faf5bb57546f49"
+      },
+      "testExpectationFailure": {
+        "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-02/inventory-view.log",
+        "sha256": "99137e530d9df18c80b4a9d0f471320aefc4fcf1602f36b7b3d106dafd7982c6"
+      },
+      "reason": "New assertion wrongly required compatibility wording on the footer button; contract places it in visible legacy summary, and button must merely not invent low pollution."
+    },
+    "legacyReport": [
+      {
+        "run": 1,
+        "log": {
+          "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-01/inventory-report.log",
+          "sha256": "a70680ba2d0111435939cf908b5514e53f6329db52bf6748d362a9c187c24f46"
+        },
+        "reason": "Old legacy immature item expected future-ability disclosure; current HEAD public projection exposes known defense + offering progress and one explanation. Updated test only."
+      },
+      {
+        "run": 2,
+        "log": {
+          "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-02/inventory-report.log",
+          "sha256": "aaace7e03fda56fc3a8da41f916be6205651e2ad8cd6a51f048b67421d4c8b34"
+        },
+        "reason": "Rift scene activated before staged HUD creation; added actual HUD lifecycle gate."
+      },
+      {
+        "run": 3,
+        "log": {
+          "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-03/inventory-report.log",
+          "sha256": "93cb8c09e91b7abcf7b0f14779c56fb960e5d97bfc84fc51e88d025105819956"
+        },
+        "reason": "Immediate direct mutation HUD read was6 rather than5."
+      },
+      {
+        "run": 4,
+        "log": {
+          "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-04/inventory-report.log",
+          "sha256": "07f5e2a050f52f2dcd3fbb078ceea8a8ee4e6b100d8846d4345df7a258ee0f1e"
+        },
+        "reason": "Waiting for mutation presentation timed out; did not prove durable frame."
+      },
+      {
+        "run": 5,
+        "log": {
+          "file": "docs/qa/artifacts/preparation-ui-2026-10-09/checks-05/inventory-report.log",
+          "sha256": "d5f4e1263acb461c1388977e4da8b5217589e3ae67a1e922f19b50249aef015e"
+        },
+        "reason": "Final complete entry diagnostic confirms domain mutation then world validation pause. Stopped at declared limit."
+      }
+    ]
+  },
+  "focusReturnFollowup": [
+    {
+      "wall": 2455,
+      "sceneTime": 2449.4,
+      "focused": true,
+      "hidden": false,
+      "sceneActive": true,
+      "inputEnabled": false,
+      "camera": {
+        "zoom": 2.2,
+        "scrollX": 104,
+        "scrollY": 67
+      },
+      "tween": null
+    },
+    {
+      "wall": 2719.9000000953674,
+      "sceneTime": 2716.1,
+      "focused": true,
+      "hidden": false,
+      "sceneActive": true,
+      "inputEnabled": true,
+      "camera": {
+        "zoom": 1,
+        "scrollX": 0,
+        "scrollY": 0
+      },
+      "tween": null
+    },
+    {
+      "wall": 2722,
+      "sceneTime": 2716.1,
+      "focused": true,
+      "hidden": false,
+      "sceneActive": true,
+      "inputEnabled": true,
+      "camera": {
+        "zoom": 1,
+        "scrollX": 0,
+        "scrollY": 0
+      },
+      "tween": null
+    }
+  ],
+  "longMemory": {
+    "detail": 57,
+    "list": 298,
+    "selected": "prepare-fixture-1"
+  },
+  "art": {
+    "file": "docs/qa/artifacts/preparation-ui-2026-10-09/art-review.md",
+    "sha256": "5cbc355c6beec7a19d3dd45cb7223fcc20e0f500e63670b6084da060be986ac5"
+  },
+  "visualEvidence": [
+    "docs/qa/artifacts/preparation-ui-2026-10-09/final-frames/overview-low.png",
+    "docs/qa/artifacts/preparation-ui-2026-10-09/final-frames/expanded.png",
+    "docs/qa/artifacts/preparation-ui-2026-10-09/final-frames/settled-severe.png",
+    "docs/qa/artifacts/preparation-ui-2026-10-09/final-frames/settled-long.png",
+    "docs/qa/artifacts/preparation-ui-2026-10-09/final-frames/settled-conditions-open.png"
+  ],
+  "limitations": [
+    "User three-question aesthetic approval remains pending.",
+    "Actual composite-background 4.5:1 text / 3:1 selection contrast not independently measured; no all-green U3/U9 claim.",
+    "400ms feedback latency was not separately instrumented; synchronized behavior and source animation durations only.",
+    "Five-slot normal names and long-library actual names/detail were covered separately, not an invented extra-long-name stress corpus.",
+    "No weak-device, cross-engine, long session, natural economic, or release claim.",
+    "Build is root-owned; this QA did not rerun it."
+  ],
+  "executionBound": "No more report diagnostics after checks-05. All QA-created Chromium instances closed. Existing3027server untouched."
+}

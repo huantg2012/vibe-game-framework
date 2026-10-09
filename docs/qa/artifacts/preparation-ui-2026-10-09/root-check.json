@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-09",
+  "progress": {
+    "command": "check",
+    "status": "active",
+    "counts": {
+      "candidates": 108,
+      "qualified": 108,
+      "production": 108,
+      "humanApproved": 0,
+      "qualifiedGradeCases": 324,
+      "productionGradeCases": 324
+    },
+    "warnings": [],
+    "iterations": 14,
+    "workflowSteps": 10,
+    "sourceSha256": "0ceeea8c2f7f39bacfc45cfc9ea0251cda07ae5d5cd21b11c4bd27fc3668c672"
+  },
+  "gameStateIndex": {
+    "command": "npm run state:index",
+    "exitCode": 0,
+    "features": 53,
+    "evidence": 195,
+    "log": "state-index.log",
+    "warningsRetained": [
+      "warnings: 领域尚未核对: 语言、设置与可达性",
+      "warnings: 历史证据适用性：52 条关联实现已变化，143 条无法按版本比较；基线不改变此判断。"
+    ],
+    "staleSourceCount": 703,
+    "baselineRefreshed": false
+  },
+  "diffCheck": {
+    "command": "git diff --check",
+    "exitCode": 0
+  },
+  "sourceAuditMatchesCurrent": true,
+  "qaBoundReferencesChecked": 21,
+  "limitation": "Structural checks and hashes do not replace runtime, human aesthetic or release approval."
+}

@@ -1,0 +1,13 @@
+PASS one Tab catalog, no base burden/equipment editing, real icons and offering navigation
+Inventory consumption receipt {"frameOpen":true,"before":{"kind":"contaminant","id":"ui-f","contaminant":{"id":"ui-f","type":"solidify","rarity":"common","stage":"tool","usesRemaining":5,"impactCharges":3},"location":{"kind":"carried"}},"result":{"ok":true,"value":{"broken":false,"usesLeft":5}},"after":{"kind":"contaminant","id":"ui-f","contaminant":{"id":"ui-f","type":"solidify","rarity":"common","stage":"tool","usesRemaining":5,"impactCharges":3},"location":{"kind":"carried"}}}
+node:internal/modules/run_main:122
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 30000ms exceeded.
+    at /Users/yilungao/coh/tools/inventory/check-inventory-report.mjs:101:14 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v22.14.0

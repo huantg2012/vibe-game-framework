@@ -453,7 +453,7 @@
     "id": "COH-F038",
     "title": "面板共同交互与信息呈现",
     "domain": "interface",
-    "summary": "共享 overlay 根、固定逻辑尺寸、键鼠选择、检查详情和状态刷新服务于正式面板。R8修复读数与世界条共享生命周期，PRE_RENDER按同帧投影避让；关闭交接及销毁清理计时器/订阅。完整度状态按固定100效能条件，容量条仍为hp/maxHp，0HP保留端帽。",
+    "summary": "共享 overlay 根、固定逻辑尺寸、键鼠选择、检查详情和状态刷新服务于正式面板。R8修复读数与世界条共享生命周期，PRE_RENDER按同帧投影避让；关闭交接及销毁清理计时器/订阅。完整度状态按固定100效能条件，容量条仍为hp/maxHp，0HP保留端帽。 备行局部采用总览/整理两态、纵向选级和固定出发；共享catalog/rift不引入新编排，新交互及审美单独验证。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -568,6 +568,43 @@
       {
         "path": "tools/qa/check-i30-r8-transactions.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/qa/preparation-ui-2026-10-09.md",
+        "role": "doc",
+        "note": "P49备行重构及限定验证；不替代原冻结RC。"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/inventory-presenter.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/inventory/check-preparation-ui.mjs",
+        "role": "test"
+      },
+      {
+        "path": "prepare-review.html",
+        "role": "test"
+      },
+      {
+        "path": "src/dev/prepare-review.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/inventory/check-inventory-view.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/inventory/check-inventory-report.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -583,11 +620,14 @@
       "COH-E-I30-R8-INTEGRITY",
       "COH-E-I30-R8-TECHNICAL",
       "COH-E-I30-R8-REVIEW",
-      "COH-E-I30-R8-TRANSACTIONS"
+      "COH-E-I30-R8-TRANSACTIONS",
+      "COH-E194",
+      "COH-E195"
     ],
     "unknowns": [
       "R8读数限定范围已验证，用户美术终审待定；不均匀帧间隔双显反例已修复并独立重放，不据此声称所有 UI 时序组合无缺陷。",
-      "所有面板在长名、大库存、缩放、连续重开等组合下的完整可达性矩阵未在本轮运行。"
+      "所有面板在长名、大库存、缩放、连续重开等组合下的完整可达性矩阵未在本轮运行。",
+      "2026-10-09用户要求整改备行布局和污染选择（P49）；新总览/整理已完成8场景专项及限定实帧复核，用户审美仍待复看，原RC证据不自动覆盖新UI。"
     ]
   }
 ]

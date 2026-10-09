@@ -361,11 +361,12 @@
     "id": "COH-F003",
     "title": "入口备行与出击配置",
     "domain": "loop",
-    "summary": "备行保留选级、容量和最近8次世界软回避；冻结身份后异步准备并原子保存history。修订6的108世界/324等级已启用并内部结案，324正式进入/冷续与48自然流程及存档接续已另验；旧修订5证据保持其历史范围。",
+    "summary": "备行默认总览选污染程度、检查紧凑行装，按需进入整理库存；两态保留出发，装置读数可展开。出发容量、最近8次软回避、冻结身份后异步准备及history原子保存保持。108世界/324等级的旧RC内部证据保持原范围，新UI独立验证与用户复看。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点左前地坪深狭口：同层走近裂口周边的完整可达地面，提示踏入裂隙时 E → inventoryPanel(prepare)备行；Shift+Enter 出发"
+      "净化点左前地坪深狭口：同层走近裂口周边的完整可达地面，提示踏入裂隙时 E → inventoryPanel(prepare)备行；Shift+Enter 出发",
+      "DEV隔离：/prepare-review.html?fixture=equipped，正式净化点/备行/出发链，所有记录与偏好用页内存储。"
     ],
     "sources": [
       {
@@ -514,6 +515,31 @@
       {
         "path": "docs/qa/artifacts/r100-i14/root/release-gates-through48.json",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/preparation-ui-2026-10-09.md",
+        "role": "doc",
+        "note": "P49备行重构及限定验证；不替代原冻结RC。"
+      },
+      {
+        "path": "tools/inventory/check-preparation-ui.mjs",
+        "role": "test"
+      },
+      {
+        "path": "prepare-review.html",
+        "role": "test"
+      },
+      {
+        "path": "src/dev/prepare-review.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/inventory/check-inventory-view.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/inventory/check-inventory-report.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -558,14 +584,17 @@
       "COH-E182",
       "COH-E183",
       "COH-E184",
-      "COH-E191"
+      "COH-E191",
+      "COH-E194",
+      "COH-E195"
     ],
     "unknowns": [
       "2026-09-30旧阈边受控实机仅验证裂口E打开正式备行，不自动覆盖本次全周交互区；新范围验证由本轮QA单独记录。未据此重验Shift+Enter实际出击、Rift全程、结算归来、持久localStorage或长期经济。",
       "I31每堆整数所得示例已接入，新的收益读法仍待玩家人审；不代表长期经济或成长体验已通过。",
       "E142补齐本批六十格Shift+Enter与冷恢复；E139历史单例范围保持不变。长期供给和玩家终审未由此通过。",
       "R100本批第一笔成长、90趟连续供给与三母版准备深返已通过限定实测；正式仅选污染等级、世界仍随机，不能假设玩家事先知道将进哪张图。用户体验、长期相对收益继续复核。",
-      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10/弱设备/用户终验仍待。"
+      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10/用户终验仍待；较弱设备补测已获用户豁免，未实测。",
+      "2026-10-09用户要求整改备行布局和污染选择（P49）；新总览/整理已完成8场景专项及限定实帧复核，用户审美仍待复看，原RC证据不自动覆盖新UI。"
     ]
   },
   {

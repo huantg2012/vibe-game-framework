@@ -1,5 +1,7 @@
 ## QA Report: R100 I14 发布门独立核查
 
+**2026-10-09用户试玩整改：** 新增P49，备行加入污染等级后布局杂乱、选择表达粗糙。重构和新入口验证归[备行专项QA](preparation-ui-2026-10-09.md)。以下“当前RC/四门通过”均指已冻结的遮挡优化候选，不包括后续UI工作树；旧证据不修改，新界面与用户认可另验，I14未结案。
+
 日期：2026-10-09。当前为 **本轮可自主QA已完成，四项发布门有界通过，I14仍active**。新增48趟全部独审：192份原始存档、53,604条核账断言，三档各16、六材料齐，47撤离＋1真实死亡；旧源12趟与批准渲染修复后的新源36趟明确分开。COVERAGE／ECONOMY／RECOVERY／EXPEDITION的[最终独立建议](artifacts/r100-i14/qa-release-gates-through48.json)已由[Director采纳](artifacts/r100-i14/root/release-gates-through48.json)。当前RC的四例性能、六例入口／冷续、资源回落及清洁设备包完成限定复验。**ART／RELEASE、实际视听／疲劳和用户当前RC终验仍待验；13／14轮不改为全部结案。** 用户现已明确“没其他设备，这个问题 pass。”，仅豁免另一档较弱真实硬件验证，记为[用户豁免、未实测](artifacts/r100-i14/root/weaker-device-user-waiver.json)（`R100-H-I14-WEAKER-DEVICE-WAIVER`），不再阻断I14；这不是弱设备性能实测通过或整体终验。 原失败与游戏遗失均保留，本报告不代填人审或`finalAcceptance`。
 
 依据：[总任务](../tasks/rift-r100.md)、[I01 原预算](../tasks/rift-r100-i01.md#冻结的测量与资格预算-v1)、[唯一台账](../progress/rift-r100.json)的 I14 与六项 `qualityPlan.releaseGates`；本轮范围归[已预登记Task](../tasks/rift-r100-i14.md)。Feature IDs：COH-F052、F011–F013、F003–F005、F008、F023、F041、F044、F045。历史候选为修订6 [内部 RC](artifacts/r100-i10-i12/release-candidate.json)；当前[新RC](artifacts/r100-i14/release-candidate.json)为`r100-native-v3-revision-6-i14-occlusion-rc-20261009`，SHA `bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3`，由[Director精确delta裁决](artifacts/r100-i14/root/actor-occlusion-disposition.json)桥接，不因源码或构建通过变成发布通过。

@@ -393,7 +393,7 @@
     "domain": "items",
     "summary": "同一物件实例在基地、供奉、携带和地面间转移，装备引用实例，消耗与结算走统一事务。库存schema4加入最近世界记录并与beginRun原子保存，旧schema1–3迁移空历史。48实际连续出征核工具扣次、准备成本及死亡携带损失，死亡遗失与耗尽/销毁明确区分；经济规则保持。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "基地存续报告物件页；入口装配；Rift 本趟拾获"
     ],
@@ -467,6 +467,23 @@
       {
         "path": "docs/qa/artifacts/r100-i14/root/release-gates-through48.json",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/preparation-ui-2026-10-09.md",
+        "role": "doc",
+        "note": "P49备行重构及限定验证；不替代原冻结RC。"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/inventory/check-preparation-ui.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -484,10 +501,13 @@
       "COH-E182",
       "COH-E183",
       "COH-E184",
-      "COH-E191"
+      "COH-E191",
+      "COH-E194",
+      "COH-E195"
     ],
     "unknowns": [
-      "当前修订5为有限内部验收；原20修订4人审不扩为新增32/当前版本人审。静帧与熟练控制器路线不代表新手或全种子品质；实际听感R100-R10、弱设备I14独立保留；I13有限经营结论见E183，未扩为无限供给或全部档位净收益排序。"
+      "当前修订5为有限内部验收；原20修订4人审不扩为新增32/当前版本人审。静帧与熟练控制器路线不代表新手或全种子品质；实际听感R100-R10独立保留，I14较弱设备补测已获用户豁免（未测）；I13有限经营结论见E183，未扩为无限供给或全部档位净收益排序。",
+      "2026-10-09用户要求整改备行布局和污染选择（P49）；新总览/整理已完成8场景专项及限定实帧复核，用户审美仍待复看，原RC证据不自动覆盖新UI。"
     ]
   },
   {

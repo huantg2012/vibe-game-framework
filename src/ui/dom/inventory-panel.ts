@@ -31,6 +31,8 @@ export interface InventoryPanelItem {
   canEquip?: boolean;
   stageLabel?: string;
   usesRemaining?: number;
+  /** Publicly known consumption unit; omitted for unidentified items. */
+  useUnit?: '次' | '趟';
   /** Weapon-only display ceiling; consumption still uses the shared lifecycle. */
   maxDurability?: number;
 }
@@ -138,6 +140,17 @@ class InventoryPanel {
   private previousFocus: HTMLElement | null = null;
   private discardTimer: ReturnType<typeof setTimeout> | null = null;
   private discardControl: HTMLButtonElement | null = null;
+  private prepareView: 'overview' | 'equipment' = 'overview';
+  private prepareViewport!: HTMLDivElement;
+  private prepareOverview!: HTMLDivElement;
+  private prepareEditor!: HTMLDivElement;
+  private prepareOverviewEquipment!: HTMLDivElement;
+  private prepareEditorEquipment!: HTMLDivElement;
+  private prepareContext!: HTMLElement;
+  private prepareBack!: HTMLButtonElement;
+  private prepareHelp!: HTMLElement;
+  private prepareOriginSlot: string | null = null;
+  private prepareDetailScroll = 0;
 
   isOpen(): boolean { return this.panel !== null; }
 
@@ -150,6 +163,7 @@ class InventoryPanel {
     this.options = options;
     this.filter = 'all'; this.sort = 'kept';
     this.focusId = null; this.lane = 'main'; this.pendingScroll.clear();
+    this.prepareView = 'overview'; this.prepareOriginSlot = null; this.prepareDetailScroll = 0;
     this.picks.clear(); this.takes.clear(); this.memory.clear(); this.filters.clear();
     this.signature = ''; this.equipmentSignature = ''; this.detailSignature = ''; this.localMessage = ''; this.busy = false; this.suggestedGround = false;
     this.previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -162,7 +176,8 @@ class InventoryPanel {
     document.addEventListener('visibilitychange', this.cancelDiscardHold);
     window.addEventListener('blur', this.cancelDiscardHold);
     this.update();
-    this.panel?.focus({ preventScroll: true });
+    if (options.mode === 'prepare') (this.gradePanel.querySelector<HTMLElement>('[aria-pressed="true"]') ?? this.panel?.querySelector<HTMLElement>('.inventory-prepare-edit'))?.focus({ preventScroll: true });
+    else this.panel?.focus({ preventScroll: true });
   }
 
   close(): void {
@@ -214,12 +229,13 @@ class InventoryPanel {
     const header = element('header', 'inventory-header');
     header.append(element('h2', 'inventory-title', this.options!.mode === 'prepare' ? '备行' : '本趟拾获'));
     header.hidden = embedded;
-    header.append(element('span', 'inventory-context', this.options!.mode === 'rift' ? '只收好这次带回的物件' : '沿旧路出发'));
+    this.prepareContext = element('span', 'inventory-context', this.options!.mode === 'rift' ? '只收好这次带回的物件' : '');
+    header.append(this.prepareContext);
     this.equipment = element('div', 'inventory-equipment');
     this.conditions = element('div', 'inventory-departure-conditions');
     this.conditions.setAttribute('aria-label', '下次踏入条件');
     this.weight = element('div', 'inventory-weight'); header.append(this.weight);
-    const close = button('inventory-close', 'Esc 收起', () => this.close()); close.setAttribute('aria-label', this.options!.mode === 'prepare' ? '离开备行' : '合上拾获'); header.append(close);
+    const close = button('inventory-close', this.options!.mode === 'prepare' ? '离开备行' : 'Esc 收起', () => this.close()); close.setAttribute('aria-label', this.options!.mode === 'prepare' ? '离开备行' : '合上拾获'); header.append(close);
     this.equipment.setAttribute('aria-label', '本趟装备'); this.equipment.hidden = this.options!.mode !== 'prepare';
     const filters = element('nav', 'inventory-filters'); filters.setAttribute('aria-label', '物件筛选');
     for (const [value, label] of [['all', '全部'], ['weapon', '武器'], ['contaminant', '污染物']] as const) {
@@ -254,10 +270,34 @@ class InventoryPanel {
     const bottom = element('footer', 'inventory-bottom');
     this.message = element('div', 'inventory-message'); this.message.setAttribute('role', 'status'); this.message.setAttribute('aria-live', 'polite');
     const bottomRow = element('div', 'inventory-bottom-row');
-    const help = element('span', 'inventory-key-help', embedded ? '↑↓ 查看 · Enter 操作' : this.options!.mode === 'prepare' ? '↑↓ 查看 · Tab 移步 · Esc 离开' : '↑↓ 查看 · Enter 操作 · Tab / Esc 合上');
+    const help = element('span', 'inventory-key-help', embedded ? '↑↓ 查看 · Enter 操作' : this.options!.mode === 'prepare' ? '↑↓ 选污染程度 · Tab 移步 · Esc 离开' : '↑↓ 查看 · Enter 操作 · Tab / Esc 合上');
+    this.prepareHelp = help;
     this.primary = button('inventory-primary', '', () => this.primaryAction());
+    if (this.options!.mode === 'prepare') {
+      this.prepareBack = button('inventory-prepare-back', 'Esc 返回备行', () => this.showPrepareOverview());
+      this.prepareBack.hidden = true;
+      bottomRow.append(this.prepareBack);
+    }
     bottomRow.append(help, this.primary); bottom.append(this.message, bottomRow);
-    panel.append(header, this.equipment, this.conditions, this.gradePanel, filters, this.exchangeInspect, body, bottom);
+    if (this.options!.mode === 'prepare') {
+      this.prepareViewport = element('div', 'inventory-prepare-viewport');
+      this.prepareOverview = element('div', 'inventory-prepare-overview');
+      this.prepareEditor = element('div', 'inventory-prepare-editor');
+      const equipmentSection = element('section', 'inventory-prepare-loadout');
+      const equipmentHeading = element('div', 'inventory-prepare-section-heading');
+      equipmentHeading.append(element('span', '', '本趟行装'), button('inventory-prepare-edit', '整理行装', () => this.showPrepareEquipment()));
+      this.prepareOverviewEquipment = element('div', 'inventory-prepare-equipment-host');
+      equipmentSection.append(equipmentHeading, this.prepareOverviewEquipment);
+      const conditions = element('details', 'inventory-prepare-conditions');
+      conditions.append(element('summary', '', '装置读数'), this.conditions);
+      this.prepareOverview.append(this.gradePanel, equipmentSection, conditions);
+      this.prepareEditorEquipment = element('div', 'inventory-prepare-equipment-host');
+      this.prepareEditor.append(this.prepareEditorEquipment, filters, body);
+      this.prepareViewport.append(this.prepareOverview);
+      this.prepareOverviewEquipment.append(this.equipment);
+      panel.append(header, this.prepareViewport, bottom);
+      panel.dataset.prepareView = 'overview';
+    } else panel.append(header, this.equipment, this.conditions, this.gradePanel, filters, this.exchangeInspect, body, bottom);
     panel.addEventListener('pointerdown', event => event.stopPropagation());
     panel.addEventListener('click', event => event.stopPropagation());
     panel.addEventListener('wheel', event => event.stopPropagation(), { passive: true });
@@ -320,8 +360,17 @@ class InventoryPanel {
 
   private renderDepartureGrades(): void {
     const grades = this.snapshot?.departureGrades;
-    this.gradePanel.hidden = this.options?.mode !== 'prepare' || !grades;
-    if (this.gradePanel.hidden || !grades) return;
+    this.gradePanel.hidden = this.options?.mode !== 'prepare';
+    if (this.gradePanel.hidden) return;
+    this.prepareContext.textContent = this.prepareView === 'equipment'
+      ? `本次 · ${grades?.options.find(option => option.id === grades.selected)?.label ?? '原有出行条件'}`
+      : '选择污染程度，带好行装';
+    if (!grades) {
+      this.prepareContext.textContent = this.prepareView === 'equipment' ? '本次 · 原有出行条件' : '带好行装';
+      this.prepareHelp.textContent = this.prepareView === 'equipment' ? '方向键查看 · Enter 操作 · Tab 移步' : 'Tab 移步 · Esc 离开';
+      this.gradePanel.replaceChildren(element('p', 'inventory-grade-legacy', '沿旧路出发 · 沿用原有出行条件'));
+      return;
+    }
     const signature = JSON.stringify(grades);
     if (signature === this.gradeSignature) return;
     const focused = document.activeElement instanceof HTMLElement ? document.activeElement.dataset.departureGrade : undefined;
@@ -342,11 +391,11 @@ class InventoryPanel {
     }
     this.gradePanel.append(choices);
     const selected = grades.options.find(option => option.id === grades.selected);
-    if (selected) this.gradePanel.append(
-      element('p', 'inventory-grade-risk', selected.risk),
-      element('p', 'inventory-grade-reward', selected.reward),
-      element('p', 'inventory-grade-preparation', selected.preparation),
-    );
+    for (const control of choices.querySelectorAll<HTMLButtonElement>('button')) control.tabIndex = control.dataset.departureGrade === grades.selected ? 0 : -1;
+    const facts = element('div', 'inventory-grade-facts');
+    facts.setAttribute('aria-live', 'polite');
+    if (selected) facts.append(element('p', 'inventory-grade-risk', selected.risk), element('p', 'inventory-grade-reward', selected.reward), element('p', 'inventory-grade-preparation', selected.preparation));
+    this.gradePanel.append(facts);
     if (focused) [...choices.querySelectorAll<HTMLButtonElement>('button')].find(button => button.dataset.departureGrade === focused)?.focus({ preventScroll: true });
   }
 
@@ -357,18 +406,16 @@ class InventoryPanel {
     this.equipmentSignature = signature;
     const activeId = document.activeElement instanceof HTMLElement ? document.activeElement.dataset.slotId : undefined;
     this.equipment.replaceChildren();
-    if (this.options.portrait) { const portrait = element('img', 'inventory-player-portrait'); portrait.src = this.options.portrait; portrait.alt = ''; this.equipment.append(portrait); }
     for (const slot of this.snapshot!.equipment) {
       const item = this.item(slot.itemId ?? null);
       const control = button('inventory-slot', '', () => {
-        if (item) this.select(item.id, 'main', false);
-        else { this.localMessage = this.options?.mode === 'rift' ? '本趟装备已定' : slot.locked ? '这个挂点尚未开放' : `先选一件污染物，再装到 ${slot.label}`; this.renderFooter(); }
+        this.showPrepareEquipment(slot.id);
       });
       control.dataset.slotId = slot.id; control.classList.toggle('is-locked', !!slot.locked);
       control.setAttribute('aria-label', `${slot.label} · ${item?.name ?? (slot.locked ? '未开放' : '空')}`);
       const art = element('span', 'inventory-slot-icon'); putIcon(art, item);
       control.append(art, element('span', 'inventory-slot-label', slot.label), element('span', 'inventory-slot-name', item?.name ?? '未装配'));
-      if (item?.usesRemaining !== undefined) control.append(element('span', 'inventory-slot-uses', item.kind === 'weapon' ? `耐久 ${item.usesRemaining} / ${item.maxDurability ?? '—'}` : `余次 ${item.usesRemaining}`));
+      if (item?.usesRemaining !== undefined) control.append(element('span', 'inventory-slot-uses', item.kind === 'weapon' ? `耐久 ${item.usesRemaining} / ${item.maxDurability ?? '—'}` : `余${item.useUnit ?? '次'} ${item.usesRemaining}`));
       this.equipment.append(control);
       if (activeId === slot.id) control.focus({ preventScroll: true });
     }
@@ -413,8 +460,10 @@ class InventoryPanel {
     const count = view.ids.length;
     if (!count) { view.position.textContent = ''; return; }
     const rowHeight = (view.list.firstElementChild as HTMLElement | null)?.offsetHeight || 52;
-    const start = Math.min(count, Math.floor(view.list.scrollTop / rowHeight) + 1);
-    const end = Math.max(start, Math.floor((view.list.scrollTop + view.list.clientHeight) / rowHeight));
+    const columns = this.options?.mode === 'prepare' ? 2 : 1;
+    const start = Math.min(count, Math.floor(view.list.scrollTop / rowHeight) * columns + 1);
+    const visibleRows = (view.list.scrollTop + view.list.clientHeight) / rowHeight;
+    const end = Math.max(start, (columns === 2 ? Math.ceil(visibleRows) : Math.floor(visibleRows)) * columns);
     view.position.textContent = `${start}–${Math.min(count, end)} / ${count}`;
   }
 
@@ -458,7 +507,7 @@ class InventoryPanel {
     this.detail.append(art, element('h3', '', item.name), element('div', 'inventory-detail-meta', [item.quality, item.stageLabel, locationName(item), this.options?.mode === 'rift' ? `负重 ${formatWeight(item.weight)}` : ''].filter(Boolean).join(' · ')));
     if (item.usesRemaining !== undefined) {
       const remaining = element('div', 'inventory-stat inventory-detail-uses');
-      remaining.append(element('span', '', item.kind === 'weapon' ? '耐久度' : '剩余次数'), element('strong', '', item.kind === 'weapon' ? `${item.usesRemaining} / ${item.maxDurability ?? '—'}` : String(item.usesRemaining)));
+      remaining.append(element('span', '', item.kind === 'weapon' ? '耐久度' : item.useUnit === '趟' ? '剩余趟数' : '剩余次数'), element('strong', '', item.kind === 'weapon' ? `${item.usesRemaining} / ${item.maxDurability ?? '—'}` : String(item.usesRemaining)));
       this.detail.append(remaining);
     }
     if (item.description) this.detail.append(element('p', '', item.description));
@@ -571,8 +620,12 @@ class InventoryPanel {
       this.primary.disabled ||= over > 0 || !this.takes.size;
       this.message.textContent = this.localMessage || this.snapshot.message || (this.takes.size ? `${formatWeight(this.snapshot.weight)} − ${formatWeight(preview.removed)} + ${formatWeight(preview.added)} = ${formatWeight(preview.result)} / ${formatWeight(this.snapshot.capacity)}　·　Space 选择，Esc 保持原样` : '先选附近物件，再用 Space 选择要放下的收获');
     } else if (this.options?.mode === 'prepare' && this.options.onDepart) {
-      this.primary.textContent = 'Shift+Enter 踏入裂隙'; this.primary.disabled ||= this.snapshot.canDepart === false;
-      this.message.textContent = this.localMessage || this.snapshot.message || this.snapshot.departReason || '只装配已成熟物件 · 空工具位不妨碍出发';
+      const grades = this.snapshot.departureGrades;
+      const grade = grades?.options.find(option => option.id === grades.selected)?.label;
+      const emptyTools = this.snapshot.equipment.some(slot => slot.id !== 'weapon' && !slot.locked && !slot.itemId);
+      const guidance = [this.prepareView === 'equipment' ? '只装配已成熟物件' : '', emptyTools ? '空工具位不妨碍出发' : ''].filter(Boolean).join(' · ');
+      this.primary.textContent = `${grade ? `${grade} · ` : ''}踏入裂隙  Shift+Enter`; this.primary.disabled ||= this.snapshot.canDepart === false;
+      this.message.textContent = [...new Set([this.snapshot.departReason, this.localMessage || this.snapshot.message].filter(Boolean))].join(' ') || guidance;
     } else {
       const item = this.item(this.focusId);
       this.primary.textContent = this.options?.mode === 'rift' ? 'Enter 放在脚边' : item?.canOffer && this.options?.onOffering ? 'Enter 前往供奉台' : '仅供查看';
@@ -625,6 +678,57 @@ class InventoryPanel {
     if (this.options?.mode === 'prepare' && !this.busy && this.snapshot?.canDepart !== false) this.options.onDepart?.();
   }
 
+  private focusPrepareOverview(): void {
+    const selector = this.prepareOriginSlot
+      ? `[data-slot-id="${this.prepareOriginSlot}"]` : '.inventory-prepare-edit';
+    (this.panel?.querySelector<HTMLElement>(selector)
+      ?? this.gradePanel.querySelector<HTMLElement>('[aria-pressed="true"]') ?? this.panel)?.focus({ preventScroll: true });
+  }
+
+  private showPrepareEquipment(slotId?: string): void {
+    if (!this.panel || this.options?.mode !== 'prepare' || this.busy) return;
+    const entering = this.prepareView === 'overview';
+    if (entering) this.prepareOriginSlot = slotId ?? null;
+    this.prepareView = 'equipment'; this.panel.dataset.prepareView = 'equipment';
+    this.prepareEditorEquipment.append(this.equipment);
+    this.prepareViewport.replaceChildren(this.prepareEditor);
+    this.prepareBack.hidden = false;
+    this.prepareHelp.textContent = '方向键查看 · Enter 操作 · Tab 移步';
+    if (entering) this.restore();
+    this.render();
+    const slot = this.snapshot?.equipment.find(value => value.id === slotId);
+    const item = slot?.itemId ? this.item(slot.itemId) : undefined;
+    if (slot) {
+      this.changeFilter(slot.id === 'weapon' ? 'weapon' : 'contaminant');
+      const target = item ?? this.visibleItems('main').find(value => value.canEquip &&
+        (slot.id === 'weapon' ? value.kind === 'weapon' : value.toolSlots?.includes(slot.id)));
+      if (target) this.select(target.id, 'main', true);
+      else {
+        this.focusId = null; this.renderSelection(); this.renderDetail();
+        this.showMessage(slot.locked ? '这个挂点尚未开放' : slot.id === 'weapon' ? '尚无可用的成熟撬棍' : `暂无可装入${slot.label}的成熟物件；空工具位不妨碍出发`);
+        this.prepareBack.focus({ preventScroll: true });
+      }
+    } else if (this.focusId) {
+      // Returning to the editor preserves the user's scroll, even when its
+      // selected item is outside the viewport. A slot click deliberately locates.
+      this.lists.main?.rows.get(this.focusId)?.focus({ preventScroll: true });
+      this.detail.scrollTop = this.prepareDetailScroll;
+    }
+    else this.prepareBack.focus({ preventScroll: true });
+    this.renderPosition('main'); this.updateDetailOverflow();
+  }
+
+  private showPrepareOverview(): void {
+    if (!this.panel || this.options?.mode !== 'prepare' || this.busy) return;
+    this.remember(); this.prepareDetailScroll = this.detail.scrollTop;
+    this.prepareView = 'overview'; this.panel.dataset.prepareView = 'overview';
+    this.prepareOverviewEquipment.append(this.equipment);
+    this.prepareViewport.replaceChildren(this.prepareOverview);
+    this.prepareBack.hidden = true;
+    this.prepareHelp.textContent = '↑↓ 选污染程度 · Tab 移步 · Esc 离开';
+    this.localMessage = ''; this.renderDepartureGrades(); this.renderFooter(); this.focusPrepareOverview();
+  }
+
   private async dispatch(action: InventoryPanelAction): Promise<void> {
     if (!this.options || this.busy) return;
     const options = this.options, revision = this.revision;
@@ -672,7 +776,8 @@ class InventoryPanel {
     if (key === 'escape' || (key === 'tab' && this.options.mode === 'rift')) {
       event.preventDefault(); event.stopImmediatePropagation();
       if (!event.repeat) {
-        if (key === 'escape' && this.exchange && (this.takes.size || this.picks.size)) {
+        if (this.options.mode === 'prepare' && this.prepareView === 'equipment') this.showPrepareOverview();
+        else if (key === 'escape' && this.exchange && (this.takes.size || this.picks.size)) {
           this.takes.clear(); this.picks.clear(); this.localMessage = '已取消本次选择，物件保持原样。再按 Esc 收起';
           this.renderSelection(); this.renderDetail(); this.renderFooter();
         } else this.close();
@@ -680,18 +785,22 @@ class InventoryPanel {
       return;
     }
     if (this.options.mode === 'rift' && ['w', 'a', 's', 'd'].includes(key)) { this.close(); return; }
-    if (target?.dataset.departureGrade && ['ArrowLeft', 'ArrowRight', ' ', 'Enter'].includes(event.key) && !event.shiftKey) {
+    if (target?.dataset.departureGrade && ['ArrowUp', 'ArrowDown', 'Home', 'End', ' ', 'Enter'].includes(event.key) && !event.shiftKey) {
       event.preventDefault(); event.stopImmediatePropagation();
       if (event.repeat || this.busy) return;
       const buttons = [...this.gradePanel.querySelectorAll<HTMLButtonElement>('[data-departure-grade]')];
       const index = buttons.indexOf(target as HTMLButtonElement);
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-        const next = buttons[(index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length];
+      if (['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+        const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : Math.max(0, Math.min(buttons.length - 1, index + (event.key === 'ArrowDown' ? 1 : -1)));
+        const next = buttons[nextIndex];
         next?.focus({ preventScroll: true }); next?.click();
       } else target.click();
       return;
     }
     if (event.key === 'Enter' && event.shiftKey) { event.preventDefault(); event.stopImmediatePropagation(); if (!event.repeat) this.depart(); return; }
+    if (this.options.mode === 'prepare' && target === this.primary && ['Enter', ' '].includes(event.key)) {
+      event.preventDefault(); event.stopImmediatePropagation(); return;
+    }
     if (target?.tagName === 'SUMMARY' && ['Enter', ' '].includes(event.key)) { event.stopImmediatePropagation(); return; }
     if (target instanceof HTMLSelectElement && ['ArrowUp', 'ArrowDown', 'Home', 'End', ' '].includes(event.key)) { event.stopImmediatePropagation(); return; }
     if (event.key === 'Tab') {
@@ -703,21 +812,34 @@ class InventoryPanel {
     const handled = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', 'Enter', ' '].includes(event.key);
     if (handled) {
       event.preventDefault(); event.stopImmediatePropagation();
+      if (this.options.mode === 'prepare' && this.prepareView === 'overview') {
+        if (!event.repeat && ['Enter', ' '].includes(event.key) && target instanceof HTMLButtonElement) target.click();
+        return;
+      }
       if (event.key === 'Enter') {
         if (event.repeat) return;
         if (target instanceof HTMLButtonElement && this.panel.contains(target) && !target.classList.contains('inventory-item')) target.click();
         else if (this.exchange) this.primaryAction(); else this.itemAction();
         return;
       }
-      if (event.key === ' ') { if (!event.repeat) { const item = this.item(this.focusId); if (item) this.togglePick(item); } return; }
+      if (event.key === ' ') {
+        if (!event.repeat) {
+          if (this.options.mode === 'prepare' && target instanceof HTMLButtonElement && !target.classList.contains('inventory-item')) target.click();
+          else { const item = this.item(this.focusId); if (item) this.togglePick(item); }
+        }
+        return;
+      }
       if (this.exchange && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
         this.lane = event.key === 'ArrowLeft' ? 'nearby' : 'main';
         const id = this.lists[this.lane]!.ids[0]; if (id) this.select(id, this.lane, true); return;
       }
       const view = this.lists[this.lane]!; if (!view.ids.length) return;
       let index = Math.max(0, view.ids.indexOf(this.focusId ?? ''));
-      if (event.key === 'ArrowUp') index--;
-      if (event.key === 'ArrowDown') index++;
+      const grid = this.options.mode === 'prepare';
+      if (event.key === 'ArrowUp') index -= grid ? 2 : 1;
+      if (event.key === 'ArrowDown') index += grid ? 2 : 1;
+      if (grid && event.key === 'ArrowLeft') index--;
+      if (grid && event.key === 'ArrowRight') index++;
       if (event.key === 'PageUp') index -= 6;
       if (event.key === 'PageDown') index += 6;
       if (event.key === 'Home') index = 0;

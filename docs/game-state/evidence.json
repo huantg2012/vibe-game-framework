@@ -7447,5 +7447,71 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E194",
+    "kind": "human",
+    "result": "fail",
+    "date": "2026-10-09",
+    "revision": "51040b5a",
+    "scope": "用户实际备行截图指出加入污染选择后布局杂乱、等级选择粗糙，要求重构交互与信息呈现；登记R100-P49。",
+    "limitations": "此为备行体验整改，不否定历史世界美术或技术证据；新编排尚无人审，I14整体视听与终验未完成。",
+    "features": [
+      "COH-F003",
+      "COH-F023",
+      "COH-F038",
+      "COH-F052"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/preparation-ui-2026-10-09.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/preparation-ui-2026-10-09/user-before.png",
+        "role": "art"
+      }
+    ]
+  },
+  {
+    "id": "COH-E195",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-09",
+    "revision": "working-tree/2026-10-09 after 51040b5a",
+    "scope": "P49备行两态重构已接入正式组件；独立浏览器8/8场景通过：三档选择和实际出发承诺、空槽/无武器/五槽、长库双列计数与滚动驻留、退出恢复和全页DEV存储隔离。类型/构建及限定Art实帧复核完成。",
+    "limitations": "DEV物件是授予，不计自然经济或长期体验；首轮计数/同步/偏好存储隔离失败保留。共享库存view通过；旧report在直接消费后的完整world校验失败，消费HUD/后续采集段未验，详见QA汇总。用户审美待复看，P49仍open；未重签R100旧RC或发布验收，未测合成背景定量对比。",
+    "features": [
+      "COH-F003",
+      "COH-F023",
+      "COH-F038",
+      "COH-F052"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/preparation-ui-2026-10-09.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/preparation-ui-2026-10-09/preparation-run-02/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/preparation-ui-2026-10-09/source-delta.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/preparation-ui-2026-10-09/build.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/preparation-ui-2026-10-09/art-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/preparation-ui-2026-10-09/qa-summary.json",
+        "role": "doc"
+      }
+    ]
   }
 ]

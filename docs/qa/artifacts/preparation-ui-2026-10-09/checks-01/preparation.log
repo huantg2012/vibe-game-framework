@@ -1,0 +1,29 @@
+FAILED starter: false == true
+FAILED equipped: Expected values to be strictly deep-equal:
++ actual - expected
+
+  {
++   scrollX: 104,
++   scrollY: 67,
++   zoom: 2.2
+-   scrollX: 55,
+-   scrollY: 36,
+-   zoom: 1.6434608800970576
+  }
+
+PASSED expanded
+FAILED long: Visible position must count both columns: {"count":66,"first":1,"last":8,"hint":"1–6 / 66"}
++ actual - expected
+
+  [
+    1,
++   6,
+-   8,
+    66
+  ]
+
+PASSED blocked
+PASSED departure-low
+PASSED departure-medium
+PASSED departure-severe
+{"status":"failed","cases":8,"failures":3,"output":"docs/qa/artifacts/preparation-ui-2026-10-09/preparation-run-01"}

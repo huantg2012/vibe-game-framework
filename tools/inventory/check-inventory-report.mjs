@@ -1,5 +1,6 @@
 /** Actual report / preparation / field collection flow; isolated Chromium save. */
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 const browser = await chromium.launch({ headless: true, ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}) });
 const page = await browser.newPage({ viewport: { width: 1200, height: 800 } });
@@ -46,8 +47,8 @@ try {
   assert.match(await page.locator('.inventory-explanation[open]').innerText(), /阻止移动、感知与攻击。受到伤害后提前解除/);
   assert.deepEqual(await page.evaluate(async()=>(await window.productionModule('/src/systems/inventory-store.ts')).inventoryStore.getEquipment()),beforeExplanation);
   await page.locator('[data-item-id="ui-offer"]').click();
-  assert.match(await page.locator('.inventory-detail').innerText(), /供奉：.*成熟后/);
-  assert.equal(await page.locator('.inventory-explanation').count(),2);
+  assert.match(await page.locator('.inventory-detail').innerText(), /未成熟[\s\S]*供奉积累[\s\S]*0 \/ 3/);
+  assert.equal(await page.locator('.inventory-explanation').count(),1); // Current legacy public projection exposes its known defense, not an extra future-ability disclosure.
   assert.equal(await page.locator('.inventory-detail').evaluate(node=>node.scrollTop),0);
 
   await page.getByRole('button',{name:'前往供奉台',exact:true}).click();
@@ -61,9 +62,14 @@ try {
   console.log('PASS one Tab catalog, no base burden/equipment editing, real icons and offering navigation');
 
   await page.evaluate(()=>window.__game.scene.getScene('PurificationScene').enterRift()); await page.waitForSelector('#inventory-panel.is-prepare');
-  assert.equal(await page.locator('.inventory-player-portrait').count(),1);
+  assert.equal(await page.locator('.inventory-player-portrait').count(),0, 'Preparation uses the real scene actor, not a second portrait.');
+  assert.ok(await page.evaluate(()=>window.__game.scene.isActive('PurificationScene')&&!!window.__game.scene.getScene('PurificationScene').player), 'The real purification scene and its player remain present.');
+  assert.equal(await page.locator('#inventory-panel').getAttribute('data-prepare-view'),'overview');
+  assert.equal(await page.locator('.inventory-item:visible').count(),0);
   assert.equal(await page.locator('.inventory-slot').count(),4);
   assert.doesNotMatch(await page.locator('#inventory-panel').innerText(),/负重/);
+  await page.locator('.inventory-prepare-edit').click();
+  assert.equal(await page.locator('#inventory-panel').getAttribute('data-prepare-view'),'equipment');
   await page.locator('[data-item-id="ui-q"]').click(); await page.getByRole('button',{name:'装到 工具 Q',exact:true}).click();
   await page.locator('[data-item-id="ui-f"]').click(); await page.getByRole('button',{name:'装到 工具 F',exact:true}).click();
   await page.evaluate(async()=>{
@@ -85,10 +91,14 @@ try {
   await page.locator('.inventory-explanation summary').click();
   if(process.env.SCREENSHOT_DIR) await page.screenshot({path:`${process.env.SCREENSHOT_DIR}/inventory-report-prepare.png`});
   await page.keyboard.press('Shift+Enter',{delay:70}); await page.waitForFunction(()=>window.__game.scene.isActive('RiftScene'));
+  await page.waitForSelector('.rift-equipment-row'); // Scene activation precedes its staged HUD construction.
+  await page.waitForFunction(()=>{const scene=window.__game.scene.getScene('RiftScene');return !scene.stagedEntry?.isActive()&&!scene.nativeEntryFence?.isActive()&&!scene.entryView?.active&&!scene.frameCommit?.isBlocked();});
   await page.evaluate(()=>window.__game.scene.getScene('RiftScene').probeReviewProtection(true));
   assert.equal(await page.locator('.rift-equipment-row').count(),4);
   assert.match(await page.locator('.rift-equipment-row[data-slot-id="weapon"]').innerText(),/60/);
-  await page.evaluate(async()=>{(await window.productionModule('/src/systems/inventory-store.ts')).inventoryStore.consumeTool('ui-f');});
+  const consumption=await page.evaluate(async()=>{const {inventoryStore}=await window.productionModule('/src/systems/inventory-store.ts');return {frameOpen:inventoryStore.hasFrameTransaction(),before:inventoryStore.getItem('ui-f'),result:inventoryStore.consumeTool('ui-f'),after:inventoryStore.getItem('ui-f')};});
+  console.log('Inventory consumption receipt',JSON.stringify(consumption));assert.equal(consumption.result.ok,true,'The HUD check requires a successful real inventory transaction');
+  await page.waitForFunction(()=>document.querySelector('.rift-equipment-row[data-item-id="ui-f"] .rift-equipment-uses')?.textContent==='5'); // HUD reflects committed inventory on the actual game update.
   assert.equal(await page.locator('.rift-equipment-row[data-item-id="ui-f"] .rift-equipment-uses').innerText(),'5');
   assert.equal(await page.locator('.rift-equipment-row[data-item-id="ui-q"] .rift-equipment-uses').innerText(),'3');
   await page.keyboard.press('b',{delay:70}); assert.equal(await page.locator('#inventory-panel').count(),0);
@@ -110,4 +120,7 @@ try {
   assert.equal(await page.locator('.inventory-item').count(),1); assert.equal(await page.locator('.inventory-item').getAttribute('data-item-id'),'ui-acquired');
   if(process.env.SCREENSHOT_DIR) await page.screenshot({path:`${process.env.SCREENSHOT_DIR}/inventory-report-rift.png`});
   assert.deepEqual(errors,[]); console.log('PASS field report lists only newly acquired objects');
+}catch(error){
+  if(process.env.SCREENSHOT_DIR){await page.screenshot({path:`${process.env.SCREENSHOT_DIR}/inventory-report-failure.png`}).catch(()=>{});const failure=await page.evaluate(async()=>{const scene=window.__game?.scene.getScene('RiftScene');const {inventoryStore}=await window.productionModule('/src/systems/inventory-store.ts');return {active:window.__game.scene.getScenes(true).map(s=>s.scene.key),paused:scene?.scene.isPaused(),staged:scene?.stagedEntry?.isActive(),nativeFence:scene?.nativeEntryFence?.isActive(),entry:scene?.entryView,blocked:scene?.frameCommit?.isBlocked(),inventory:inventoryStore.getState(),body:document.body.innerText};}).catch(failure=>({diagnosticError:String(failure)}));fs.writeFileSync(`${process.env.SCREENSHOT_DIR}/inventory-report-failure.json`,JSON.stringify({error:String(error),pageErrors:errors,state:failure},null,2));}
+  throw error;
 }finally{await browser.close();}
