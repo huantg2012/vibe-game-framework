@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "date": "2026-10-09",
   "kind": "qa-plan-and-evidence-applicability",
-  "status": "autonomous-bounded-QA-complete48-four-gates-recommended-human-and-real-weaker-device-pending",
+  "status": "autonomous-bounded-QA-complete48-four-gates-human-pending-weaker-device-user-waived-unmeasured",
   "reviewer": "qa",
   "worktreeHead": "bbf69de52dc5cc5e6a0c0fd0c1b190038fb766f3",
   "actualChecksThisArtifact": [
@@ -196,18 +196,22 @@
         "budget"
       ],
       "newOrBindingRequirements": [
-        "real-weaker-hardware",
         "actual-listening-and-fatigue",
         "human-final-RC-acceptance",
         "current-release-evidence-binding"
       ],
-      "limits": "Current exact repair four reference cases pass unchanged budgets. Original3fail/1pass and pre-Rift51–487ms tasks remain. Actual weaker device, hearing/fatigue and final user acceptance are still missing."
+      "limits": "Current exact repair four reference cases pass unchanged budgets. Original3fail/1pass and pre-Rift51–487ms tasks remain. Additional real weaker-device validation is user-waived and unmeasured, no longer blocking; actual hearing/visual fatigue and final user acceptance remain pending.",
+      "waivedRequirements": [
+        "real-weaker-hardware"
+      ],
+      "waiverEvidence": "docs/qa/artifacts/r100-i14/root/weaker-device-user-waiver.json"
     }
   ],
   "samplingAuthority": {
     "originalQuote": "不用做全量测试，抽查即可",
     "originalArtifactAppliesTo": "remaining I10-I12 only; I14 real weak-device/listening/human gates explicitly unwaived",
-    "currentDirectorDecision": "Preserve I01 I14 new48 continuous sorties; run in small batches with three grades and six material families. Old I12/I13 are not counted as new I14. No new profit or exact-tool-refill gate."
+    "currentDirectorDecision": "Preserve I01 I14 new48 continuous sorties; run in small batches with three grades and six material families. Old I12/I13 are not counted as new I14. No new profit or exact-tool-refill gate.",
+    "subsequentUserAmendment": "The original I10–I12 sampling receipt remains unchanged. User now separately waives only the additional real weaker-device validation for current I14; listening/visual fatigue/final acceptance remain unwaived."
   },
   "approvedPendingExecution": [
     {
@@ -262,9 +266,15 @@
   "externalRequirements": [
     {
       "id": "real-weaker-hardware",
-      "status": "not-executed",
+      "status": "waived-by-user",
       "minimumModel": null,
-      "requirement": "At least one actual device weaker than M4Pro14core48GiB; original contract gives no model minimum; simulation is not a substitute"
+      "requirement": "No additional weaker physical-device run required under this current-RC user waiver; no measured pass is claimed.",
+      "originalRequirement": "At least one actual device weaker than M4Pro14core48GiB; original contract gives no model minimum; simulation is not a substitute",
+      "runtimeExecuted": false,
+      "testResult": "not-executed",
+      "blocking": false,
+      "waiverEvidence": "docs/qa/artifacts/r100-i14/root/weaker-device-user-waiver.json",
+      "evidenceId": "R100-H-I14-WEAKER-DEVICE-WAIVER"
     },
     {
       "id": "actual-listening-and-fatigue",
@@ -291,7 +301,7 @@
   "currentDisposition": {
     "coverage": "new-RC-bounded-internal-pass-recommended",
     "economy": "new-RC-bounded-internal-pass-recommended",
-    "otherGates": "ART/RELEASE pending; complete48 and reference repair are bounded technical evidence, not human or weaker-device approval",
+    "otherGates": "ART/RELEASE pending on actual visual/listening/fatigue review and current-RC final acceptance. Additional weaker physical-device validation is waived-by-user and unmeasured, not a remaining blocker.",
     "sourceAudit": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
     "gateRecommendations": "docs/qa/artifacts/r100-i14/qa-release-gates-through48.json",
     "firstColdFailure": "docs/qa/artifacts/r100-i14/qa-first-cold-audit.json",
@@ -317,7 +327,14 @@
     "deviceHandoff": "docs/qa/artifacts/r100-i14/root/device-kit-rc/handoff-clean.json",
     "expedition": "new-RC-bounded-internal-pass-recommended",
     "rootAcceptance": "docs/qa/artifacts/r100-i14/root/release-gates-through48.json",
-    "terminalCapital": "ServiceDebt0; original51/102/51 capitalDebt1 at final52/101/54. No new economic/full-refill gate; no additional farming."
+    "terminalCapital": "ServiceDebt0; original51/102/51 capitalDebt1 at final52/101/54. No new economic/full-refill gate; no additional farming.",
+    "weakerDevice": "waived-by-user-not-measured-no-longer-blocking",
+    "weakerDeviceWaiver": "docs/qa/artifacts/r100-i14/root/weaker-device-user-waiver.json",
+    "reviewHandoff": "docs/qa/artifacts/r100-i14/review-handoff-device-waived.md",
+    "remainingHumanWork": [
+      "Actual listening and continuous visual/fatigue feedback",
+      "Explicit final acceptance of the current RC"
+    ]
   },
   "worktreeHeadScope": "Historical I14 kickoff HEAD only; current production identity is the explicitly bound release candidate, not this old commit.",
   "finalStatistics": {
@@ -349,5 +366,23 @@
     ],
     "originalServiceDebt": 0,
     "originalCapitalDebt": 1
+  },
+  "weakerDeviceUserWaiver": {
+    "evidenceId": "R100-H-I14-WEAKER-DEVICE-WAIVER",
+    "path": "docs/qa/artifacts/r100-i14/root/weaker-device-user-waiver.json",
+    "userQuote": "没其他设备，这个问题 pass。",
+    "scope": "Only the additional genuinely weaker physical-device validation for the current I14 RC.",
+    "status": "waived-by-user",
+    "runtimeExecuted": false,
+    "testResult": "not-executed",
+    "blocking": false,
+    "releaseManifestHash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3",
+    "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+    "limits": [
+      "Not a measured hardware pass or cross-device compatibility claim.",
+      "Does not waive actual listening/visual-fatigue review or current-RC user final acceptance.",
+      "Does not alter frozen QA receipts, four-gate recommendations or historical requirements."
+    ],
+    "sha256": "9a9e12ef8b9ec8263a706b3ff2980232322dda532b95769151cda56fb7e6668f"
   }
 }

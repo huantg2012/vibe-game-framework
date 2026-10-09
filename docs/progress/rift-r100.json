@@ -44,10 +44,10 @@
   },
   "resume": {
     "iteration": "R100-I14",
-    "batch": "I14本机回归完成：真实较弱设备与视听/终验待审",
-    "nextAction": "在另一台较弱真实设备执行当前clean包；完成实际听感/连续视觉体验复核，再取得绑定当前RC的用户最终认可。",
-    "lastCompleted": "48新增唯一run/192原档/53604守恒断言独核通过：47撤离+1真实死亡，三档各16/六材料自然覆盖；原12+优化源36连续，资本债1保留。覆盖/有限经济/恢复/出征四门已采纳，本机性能/资源/入口与clean包已验。",
-    "headline": "I14待实机与人审 · 13/14轮已结 · 108世界/324等级",
+    "batch": "I14本机与连续回归完成：待实际视听体验/终验",
+    "nextAction": "完成实际听感/连续视觉体验复核，并取得绑定当前RC的用户最终认可；另一档较弱设备补测已获用户豁免。",
+    "lastCompleted": "48新增唯一run/192原档/53604守恒断言独核通过：47撤离+1真实死亡，三档各16/六材料自然覆盖；原12+优化源36连续，资本债1保留。覆盖/有限经济/恢复/出征四门已采纳，本机性能/资源/入口与clean包已验。 用户因无其他设备明确豁免较弱硬件补测；该项未测，不再阻断。",
+    "headline": "I14待视听与终验 · 13/14轮已结 · 108世界/324等级",
     "updatedDate": "2026-10-09",
     "evidenceRevision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009"
   },
@@ -9445,10 +9445,15 @@
         },
         {
           "id": "real-weaker-device",
-          "label": "至少另一档较弱真实设备",
-          "status": "pending",
+          "label": "较弱设备补测：用户豁免（未实测）",
+          "status": "pass",
           "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
-          "evidenceIds": []
+          "evidenceIds": [
+            "R100-H-I14-WEAKER-DEVICE-WAIVER"
+          ],
+          "disposition": "user-waived",
+          "actualTested": false,
+          "note": "按用户明确决定解除本轮阻断，未增加任何较弱设备实测证据。"
         },
         {
           "id": "actual-audiovisual-review",
@@ -9495,7 +9500,9 @@
         "R100-E-I14-CONTINUOUS-36",
         "R100-E-I14-REVIEW-HANDOFF-CURRENT",
         "R100-E-I14-CONTINUOUS-48",
-        "R100-E-I14-QA-EXPEDITION-48"
+        "R100-E-I14-QA-EXPEDITION-48",
+        "R100-H-I14-WEAKER-DEVICE-WAIVER",
+        "R100-E-I14-REVIEW-HANDOFF-AFTER-WAIVER"
       ],
       "targetGradeCases": 324
     }
@@ -67739,6 +67746,26 @@
       "documentSha256": "f6dcd831a04e8a7f80a3813645816ecf37fa63f51e87b35fa46ca7b46d109299",
       "scope": "48 new continuous sorties from one actually earned A23 terminal: low/medium/severe16 each, all six material families naturally sampled, formal preparation/entry/search/return-or-death/base settlement and next departure preserved. First12 ran on1397 source; remaining36 ran on the explicitly qualified1398 exact-render-delta source.",
       "limitations": "One earned player lineage, not48 independent players. Natural identities were not rerolled; gameplay deaths/losses/empty returns remain in the denominator. The original first low strict-byte assertion and its same-run recovery count once. The v3 origin mismatch stopped before departure and adds zero natural runs. Diagnostic focus, render entry, performance and resource branches are excluded. This is the original I14 bounded stability/grade-selection sample, not a new profitability, exact-item refill, unlimited supply or all-world/all-seed gate. Only the first three natural sorties received the full pause/cold lifecycle insertion; later isolated new-source cold probes do not mean all48 were cold-restored. I13 preparation/tool-action success and failures retain their original scope and ancestry; current mature ancestral inventory is not newly earned supply. Automated route completion and accounting do not sign enjoyment, current overall ART, listening, fatigue, weaker hardware or user final acceptance."
+    },
+    {
+      "id": "R100-H-I14-WEAKER-DEVICE-WAIVER",
+      "kind": "human",
+      "purpose": "requirement-waiver",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "releaseManifestHash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3",
+      "path": "docs/qa/artifacts/r100-i14/root/weaker-device-user-waiver.json",
+      "documentSha256": "9a9e12ef8b9ec8263a706b3ff2980232322dda532b95769151cda56fb7e6668f",
+      "scope": "用户明确“没其他设备，这个问题 pass。”，豁免另一档较弱真实硬件补测并解除该项阻断。",
+      "limitations": "较弱实机未测事实保留；本条不是性能实测证据，不包含实际视听/疲劳认可或当前RC最终验收。"
+    },
+    {
+      "id": "R100-E-I14-REVIEW-HANDOFF-AFTER-WAIVER",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "path": "docs/qa/artifacts/r100-i14/review-handoff-device-waived.md",
+      "documentSha256": "ae242a090af6f18570a3f6a9968461a507e9368ec4b260bdc815a1c3595e7254",
+      "scope": "当前人审交接按用户设备豁免更新，保留当前RC试玩、视听素材与实际体验/终验两项。",
+      "limitations": "文件交接不代替实际视听体验或最终认可；历史素材与自动预览拒绝限制保留。"
     }
   ],
   "risks": [
@@ -67829,13 +67856,15 @@
       "evidenceIds": [
         "R100-E-COMPLETION-AUDIO-ENGINEERING",
         "R100-E-I14-REVIEW-HANDOFF",
-        "R100-E-I14-REVIEW-HANDOFF-CURRENT"
+        "R100-E-I14-REVIEW-HANDOFF-CURRENT",
+        "R100-E-I14-REVIEW-HANDOFF-AFTER-WAIVER"
       ],
-      "reviewPath": "docs/qa/artifacts/r100-i14/review-handoff-current.md",
+      "reviewPath": "docs/qa/artifacts/r100-i14/review-handoff-device-waived.md",
       "disposition": "2026-10-07 root按sound-disposition.json批准现有源/配方有限复用；真实听感未签，I14发布门保留，最终依赖变化使复用失效。 2026-10-09 I14已启动，本项为最终发布阻断；来源核对和技术准备可独立继续。 当前新RC的源音频/素材未改，复核入口与真实自然片段已交付；仍未实际审听，不因文件/技术通过关闭。",
       "historicalReviewPaths": [
         "docs/qa/artifacts/r100-i03-i06/audio-mix/README.md",
-        "docs/qa/artifacts/r100-i14/review-handoff.md"
+        "docs/qa/artifacts/r100-i14/review-handoff.md",
+        "docs/qa/artifacts/r100-i14/review-handoff-current.md"
       ]
     }
   ],
@@ -68872,6 +68901,11 @@
       "date": "2026-10-09",
       "kind": "i14-continuous48-and-human-review",
       "summary": "I14新增48连续出击全部独核通过：192原档、53604守恒断言、47撤离/1死亡，旧12+优化源36。落袋1154/维修641/成长38、现金35→510；储藏原资本债1保留，不新增经营门。Director采纳EXPEDITION，六发布门4通过/ART及RELEASE待验。当前clean实机包与视听交接已备；真实弱设备/实际视听/用户终验未签，I14仍active、13/14轮。"
+    },
+    {
+      "date": "2026-10-09",
+      "kind": "human-i14-weaker-device-waiver",
+      "summary": "用户明确“没其他设备，这个问题 pass。”，仅豁免另一档较弱真实设备补测，保留未测事实并移出阻断。实际视听/疲劳与当前RC最终认可仍待；四发布门通过、I14 active及13/14轮保持。"
     }
   ],
   "qualityPlan": {
@@ -69000,7 +69034,10 @@
       "status": "pending",
       "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
       "evidenceIds": [],
-      "note": "真实较弱设备、实际审听/连续视觉疲劳及绑定当前RC的用户最终验收待完成。"
+      "note": "另一档较弱硬件补测已由用户明确豁免，未测事实保留；实际审听/连续视觉体验及绑定当前RC的用户最终验收仍待。",
+      "waiverEvidenceIds": [
+        "R100-H-I14-WEAKER-DEVICE-WAIVER"
+      ]
     }
   ],
   "releaseGateHistory": [

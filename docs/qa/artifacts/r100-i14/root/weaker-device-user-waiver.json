@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T07:24:22.531235+00:00",
+  "status": "user-waived-unmeasured-weaker-device-requirement",
+  "authority": {
+    "kind": "human",
+    "quote": "没其他设备，这个问题 pass。",
+    "context": "用户在已说明本机实测完成、剩余另一档较弱真实设备后，明确表示没有其他设备并对此项pass。"
+  },
+  "iteration": "R100-I14",
+  "localGateId": "real-weaker-device",
+  "release": {
+    "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+    "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+    "hash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+  },
+  "disposition": "豁免另一档较弱真实硬件补测，移出本轮阻断。当前参考Mac已有实测；另一档较弱硬件仍未测。",
+  "actualWeakerDeviceTested": false,
+  "blockingI14": false,
+  "supersedesRequirement": {
+    "path": "docs/tasks/rift-r100-i14.md",
+    "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356",
+    "section": "I14-B03，仅另一档较弱真实硬件要求；已冻结执行合同原文保留"
+  },
+  "unaffected": [
+    "原参考机实测及失败/整改证据",
+    "实际听感与连续视觉体验/疲劳复核",
+    "当前RC用户最终验收",
+    "ART和RELEASE其余条件"
+  ],
+  "finalAcceptance": null,
+  "releaseApproval": false
+}

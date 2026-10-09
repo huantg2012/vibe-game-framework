@@ -1,6 +1,6 @@
 ## QA Report: R100 I14 发布门独立核查
 
-日期：2026-10-09。当前为 **本轮可自主QA已完成，四项发布门有界通过，I14仍active**。新增48趟全部独审：192份原始存档、53,604条核账断言，三档各16、六材料齐，47撤离＋1真实死亡；旧源12趟与批准渲染修复后的新源36趟明确分开。COVERAGE／ECONOMY／RECOVERY／EXPEDITION的[最终独立建议](artifacts/r100-i14/qa-release-gates-through48.json)已由[Director采纳](artifacts/r100-i14/root/release-gates-through48.json)。当前RC的四例性能、六例入口／冷续、资源回落及清洁设备包完成限定复验。**ART／RELEASE、真实弱设备、实际视听／疲劳和用户当前RC终验未过；13／14轮不改为全部结案。** 原失败与游戏遗失均保留，本报告不代填人审或`finalAcceptance`。
+日期：2026-10-09。当前为 **本轮可自主QA已完成，四项发布门有界通过，I14仍active**。新增48趟全部独审：192份原始存档、53,604条核账断言，三档各16、六材料齐，47撤离＋1真实死亡；旧源12趟与批准渲染修复后的新源36趟明确分开。COVERAGE／ECONOMY／RECOVERY／EXPEDITION的[最终独立建议](artifacts/r100-i14/qa-release-gates-through48.json)已由[Director采纳](artifacts/r100-i14/root/release-gates-through48.json)。当前RC的四例性能、六例入口／冷续、资源回落及清洁设备包完成限定复验。**ART／RELEASE、实际视听／疲劳和用户当前RC终验仍待验；13／14轮不改为全部结案。** 用户现已明确“没其他设备，这个问题 pass。”，仅豁免另一档较弱真实硬件验证，记为[用户豁免、未实测](artifacts/r100-i14/root/weaker-device-user-waiver.json)（`R100-H-I14-WEAKER-DEVICE-WAIVER`），不再阻断I14；这不是弱设备性能实测通过或整体终验。 原失败与游戏遗失均保留，本报告不代填人审或`finalAcceptance`。
 
 依据：[总任务](../tasks/rift-r100.md)、[I01 原预算](../tasks/rift-r100-i01.md#冻结的测量与资格预算-v1)、[唯一台账](../progress/rift-r100.json)的 I14 与六项 `qualityPlan.releaseGates`；本轮范围归[已预登记Task](../tasks/rift-r100-i14.md)。Feature IDs：COH-F052、F011–F013、F003–F005、F008、F023、F041、F044、F045。历史候选为修订6 [内部 RC](artifacts/r100-i10-i12/release-candidate.json)；当前[新RC](artifacts/r100-i14/release-candidate.json)为`r100-native-v3-revision-6-i14-occlusion-rc-20261009`，SHA `bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3`，由[Director精确delta裁决](artifacts/r100-i14/root/actor-occlusion-disposition.json)桥接，不因源码或构建通过变成发布通过。
 
@@ -15,11 +15,11 @@
 3. **R100-G-COVERAGE：有界pass。** 当前1398源／308依赖与108完整作者payload独核，精确渲染delta显式桥接原324正式进入／冷续、342身份等价及108／324内部资格。旧307依赖中的lockfile单独核验；原74完整／1中断／33未测性能范围保留。新四例性能通过不冒充整库性能重跑。
 4. **R100-G-ECONOMY：有界pass。** [I13结案](artifacts/r100-i13-continuation/root/closure-disposition.json)支持A23原服务／资本恢复与实际成长68、自然重度深处带回及普通可付再备、B14本支偿债。两方向不能双算同一短靴；祖先定身替补、再重Q4不足、B短冲0／固定配方失败及全链同服务−19均保留。I14不新增盈利、逐件回满或无限供给门；其末储藏101相对原资本102仍欠1薪，不冒称资本全恢复。
 5. **R100-G-RECOVERY：有界pass。** 原[31恢复／4冻结合同](artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json)及324冷续按显式来源桥接。当前Chrome155三档真实暂停／正常菜单冷续、可信blur全域稳定已验，新1398源又做三历史检查点冷续；序号／checksum尾提交与约16.67ms正常首帧叶差完整保留。没有新测hidden、OS应用切换或其他引擎／弱设备；不同范围不互代。
-6. **R100-G-RELEASE：pending。** [当前清洁设备包](artifacts/r100-i14/root/device-kit-rc/handoff-clean.json)已逐成员核对并继承相同bytes的参考机新装／正式Menu／CLI退出实际验证，但M4 Pro不是另一档较弱实机。仍需真实弱设备结果、实际人的听感／连续视觉及疲劳反馈、当前RC的用户`final-acceptance`；历史受控混音、源码、构建或“推进I14”授权均不能替签。
+6. **R100-G-RELEASE：pending。** [当前清洁设备包](artifacts/r100-i14/root/device-kit-rc/handoff-clean.json)已逐成员核对并继承相同bytes的参考机新装／正式Menu／CLI退出实际验证，但M4 Pro不是另一档较弱实机。另一档较弱真实硬件验证已由用户明确豁免，未实测事实保留，不再列为发布阻断。仍需实际人的听感／连续视觉及疲劳反馈、当前RC的用户`final-acceptance`；设备豁免、历史受控混音、源码、构建或“推进I14”授权均不能替签。
 
 ### 抽查授权与原48趟合同
 
-[用户原话及 root 裁决](artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json)为“不用做全量测试，抽查即可”；该件的 `authorization.appliesTo` 明列 I10–I12 剩余验证，`limitations` 明列 I14 weak-device/listening/human 门未豁免。因此可沿用**74完整／1中断／33未测性能**、**6材料预热＋10同图＋18低档混合／12 GC**及**8／89语义反例**的有限事实，不补写全量通过。74是原顺序前缀，不是随机样本；两项材料提交p95已触3ms上限。
+[用户原话及 root 裁决](artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json)为“不用做全量测试，抽查即可”；该件的 `authorization.appliesTo` 明列 I10–I12 剩余验证，`limitations` 明列 I14 weak-device/listening/human 门未豁免。因此可沿用**74完整／1中断／33未测性能**、**6材料预热＋10同图＋18低档混合／12 GC**及**8／89语义反例**的有限事实，不补写全量通过。74是原顺序前缀，不是随机样本；两项材料提交p95已触3ms上限。该历史抽查裁决保持原件；本次新的用户豁免仅覆盖另一档较弱真实硬件验证，不覆盖实际视听或版本终验。
 
 I01末段另有“I14再做至少48趟连续稳定性／选择复核，覆盖三档及所有材料家族”。**2026-10-09 Director明确保留本轮新增48趟**，这是相对全库324格的连续抽样；分小批执行，旧I12自然48／I13真52只作继承证据，不计为I14新增。不得把48日志等同真人长期疲劳，也不添加经济盈利、指定工具回满或追稀缺材料的通过条件。
 
@@ -30,12 +30,12 @@ I01末段另有“I14再做至少48趟连续稳定性／选择复核，覆盖三
 - **当前浏览器正式入口／恢复三格。** 低／中／重各一，开跑前写世界、seed、实际赚取源档、输入与暂停／失焦／冷续窗口；可合并采集帧时，但不把技术诊断叫自然出击。使用真实场景／菜单和隔离存储，保留首次错误，不换世界补赢；每个承诺按完整存档字段核对。
 - **参考机尾部四个重档。** `hollow-wreckage`、`buried-lamellae`（旧3ms边界）、`felt-wedges`（原中断）、`white-scarfield`（旧未测且复杂结构），每项正常移动／压力覆盖≥60秒。此集合已经入Task／冻结配置，与自然入口样本分开。只签新 Chrome 环境的这四例，不改旧74／1／33统计，不估计全库p99。
 - **旧硬预算保持。** frame p95≤20ms、p99≤33.4ms、>50ms帧≤0.5%；CPU提交p95≤12ms，新增材料提交p95≤3ms；生成／冷恢复参考机目标p95≤5s（三例只报单例与最大，不冒称总体p95）；交互任务≤50ms。首次建场与首屏／菜单长任务分账。新的构建收据要保留实际包体与警告，`build` 为 `tsc && vite build`，项目未声明 `npm test`。
-- **真实较弱设备执行包。** 原合同未锁具体型号或最低配置；开跑前记录CPU／GPU／RAM、OS／浏览器、硬件渲染器、逻辑960×640、视口／DPR、电源与温度环境。先复用B02冻结四重档性能诊断及原预算；其固定开发场景不代替自然出行／恢复／资源回落，实际问题再按影响定向验证，定向样本不假装总体统计。无设备时保留未测并先完成可携包，不用CPU节流替签。
+- **真实较弱设备：用户豁免，未实测。** 原合同要求另一档较弱硬件，未锁具体型号或最低配置；用户现因无其他设备明确豁免该项。已完成的同源清洁执行包和参考机结果保留，不再要求提供设备或运行补验；也不把软件节流、可携包或M4 Pro测量写成弱设备实测。豁免只适用于此项，不提升跨设备兼容性、实际视听或终验状态。
 - **实际审听和用户交付包。** 沿[R10原问题](artifacts/r100-i03-i06/audio-mix/README.md)检查六材料身份、低中重节律、关键提示分离、接缝与重复疲劳；利用[既有试听页](interactive/r100-material-listening.html)，另含正常游戏片段／试玩。原合同未规定“听几分钟即通过”，应记录实际听者、时长、播放设备、音量环境、时间码和具体反馈。离线音轨波形、非静音、自动播放日志均不代签听感。
 
 ### 依赖与当前未验证
 
-48连续、当前参考机四例性能整改／六例入口冷续／资源回落、明确来源桥接、当前RC清洁交付包及可审视听材料均已完成本轮可自主范围，不再有待运行自然趟数。余项需要实际事实：至少另一档较弱硬件的同源运行；真实听者记录播放设备／实际时长／反馈；正常连续视觉与疲劳的实际体验；当前RC的用户终验。无已锁最低机型或“听满N分钟”自动通过线，不新增此类门槛。
+48连续、当前参考机四例性能整改／六例入口冷续／资源回落、明确来源桥接、当前RC清洁交付包及可审视听材料均已完成本轮可自主范围，不再有待运行自然趟数。另一档较弱真实硬件运行已获用户豁免，未执行事实保留，当前无需再提供设备。下一步仍需真实听者记录播放设备／实际时长／反馈、正常连续视觉与疲劳的实际体验，以及当前RC的用户终验；没有“听满N分钟”自动通过线，不新增此类门槛。 当前试玩、片段与两项反馈入口见[设备豁免后的供审交接](artifacts/r100-i14/review-handoff-device-waived.md)。
 
 当前[清洁包独审](artifacts/r100-i14/qa-device-current-rc-clean-review.json)核1520个常规tar成员（1519清单项＋manifest），无额外文件；原安装／CLI证据按精确同bytes继承。首包AppleDouble成员、旧关页退出、焦点模拟、尾提交断言、origin载体、原性能超标和游戏死亡记录保留。网站／净化点的51—487ms长任务、实际partial遮挡未观察、hidden／OS切换／跨引擎未测、未实际播放视听材料等范围继续披露。不能用Rift限定窗口通过或交付包可安装抵销这些空白。
 
@@ -142,4 +142,4 @@ Director负责台账、当前入口和人审交接；QA至此只给四项有界�
 
 最终47撤离＋1真实死亡、0空返。第18趟死亡及其带出物／深处收获遗失完整保留；首低严格字节断言中断与冷续同run计一次，v3 origin错误0出发，六入口／focus／固定性能／资源诊断均不进自然分母。累计落袋1154、维修641、成长38，现金核式35＋1154−641−38＝510；末模块52／101／54（上限145），原服务51／100／51债0，原资本51／102／51债1。没有为消除这个资本差额追加游戏，也没有把正现金解释成全工具长期成本补齐。
 
-[最终四门建议](artifacts/r100-i14/qa-release-gates-through48.json)独立复核完整48原件、所有引用、当前源及旧三门建议后才生成；[Director接纳](artifacts/r100-i14/root/release-gates-through48.json)是新增收据，旧来源桥接及阶段失败原件均未改。COVERAGE／ECONOMY／RECOVERY／EXPEDITION有界通过；ART／RELEASE及真实弱设备、实际审听／视觉疲劳、用户终验保持待验，I14仍active／13轮已结。
+[最终四门建议](artifacts/r100-i14/qa-release-gates-through48.json)独立复核完整48原件、所有引用、当前源及旧三门建议后才生成；[Director接纳](artifacts/r100-i14/root/release-gates-through48.json)是新增收据，旧来源桥接及阶段失败原件均未改。COVERAGE／ECONOMY／RECOVERY／EXPEDITION有界通过；ART／RELEASE及实际审听／视觉疲劳、用户终验保持待验，I14仍active／13轮已结。上述冻结建议与接纳收据保留当时的弱设备待验口径；之后新增的[用户设备豁免](artifacts/r100-i14/root/weaker-device-user-waiver.json)取消该项阻断，但没有新增实测结果或整体发布批准。

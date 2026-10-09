@@ -1,0 +1,60 @@
+{
+  "createdAt": "2026-10-09T07:26:50.808361+00:00",
+  "status": "user-waiver-recorded-without-measurement-or-final-acceptance-upgrade",
+  "authority": {
+    "path": "docs/qa/artifacts/r100-i14/root/weaker-device-user-waiver.json",
+    "sha256": "9a9e12ef8b9ec8263a706b3ff2980232322dda532b95769151cda56fb7e6668f"
+  },
+  "remainingLocalGates": [
+    "actual-audiovisual-review",
+    "final-human-acceptance"
+  ],
+  "passedGlobalReleaseGates": 4,
+  "progressChecks": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/waiver-progress-check.log",
+      "sha256": "f27a37112447b3b366ea807a75e93fbdcdcd77e0481753b60f2ffce9f7885066"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/waiver-progress-render.log",
+      "sha256": "8e61b22e1698b78cae166d6086a4efe035c5967eedfab7cd5973a36182c9c6af"
+    }
+  ],
+  "index": {
+    "exitCode": 0,
+    "log": {
+      "path": "docs/qa/artifacts/r100-i14/root/waiver-state-index.log",
+      "sha256": "40f2598c92d23d7e79e0289e58586a51a87e983dd1ec3ce14537ef0225b90b02"
+    },
+    "knownStaleFingerprints": 685,
+    "structuralErrorsReported": 0,
+    "baselineReset": false
+  },
+  "links": [
+    {
+      "path": "docs/qa/rift-r100-i14.md",
+      "localTargets": 69,
+      "missing": []
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/review-handoff-device-waived.md",
+      "localTargets": 13,
+      "missing": []
+    }
+  ],
+  "qa": [
+    {
+      "path": "docs/qa/rift-r100-i14.md",
+      "sha256": "b3db1c7e92eb093e07b85f23e266b134d1e9ac4d1ed8c5252c99a55f9effce64"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-release-evidence-matrix.json",
+      "sha256": "29c9dba428f7e638ed396e4b138dc53c14e8bcf834092c434bc93b4b8e2f6dd2"
+    }
+  ],
+  "diffCheckExitCode": 0,
+  "runtimeTestsAdded": 0,
+  "weakerDeviceActuallyTested": false,
+  "finalAcceptance": null,
+  "releaseApproval": false
+}
