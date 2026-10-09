@@ -1,7 +1,7 @@
 import { selectMasterSourceCells, type MasterSourceCell } from './source-cells';
 import type Phaser from 'phaser';
 import { deriveFragmentContamRamp, type Rgb } from '@/entities/form-renderers/d/fragment-ramp';
-import { nativeVolumeHeightAt, type NativeVolumeLight } from '@/generation/world-study/native-volume-raster';
+import { type NativeVolumeLight } from '@/generation/world-study/native-volume-raster';
 import { bakeMasterWorldSurface } from './surface-bake';
 import type { RiftDevRuntime, RiftDevRuntimeContext, RiftDevActorVisuals } from '@/scenes/rift-scene';
 import type { MasterWorld } from '@/generation/world-study/r100-master-world';
@@ -11,6 +11,7 @@ import { MasterMaterialAudio } from './audio';
 import type { PaintedMaterial } from './painted-material';
 import { audioManager } from '@/managers/audio-manager';
 import { r100MaterialPressure, r100PresentationIdentity, validR100PresentationState, type R100PresentationState } from './presentation-state';
+import { ActorOcclusionField } from './actor-occlusion-field';
 export type MasterViewMode='normal'|'albedo'|'light'|'geometry';
 const mix=(a:Rgb,b:Rgb,t:number):Rgb=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
 let presentationSequence=0;
@@ -32,6 +33,7 @@ export class MasterPresentation implements RiftDevRuntime {
  private readonly lamp:NativeVolumeLight={x:0,y:0,z:28,radius:264,intensity:3.1,color:[1,.94,.86],castsShadow:false};
  private readonly lights:NativeVolumeLight[];
  private readonly actorMasks:Array<{actor:RiftDevActorVisuals;graphics:Phaser.GameObjects.Graphics;mask:Phaser.Display.Masks.GeometryMask;objects:Phaser.GameObjects.Components.Mask[];key:string;retired:boolean}>=[];
+ private readonly actorOcclusionField:ActorOcclusionField;
  private mode:MasterViewMode='normal';private motion=true;private destroyed=false;
  private time=0;private lastElapsed=0;private phase='缓慢闪动';private activity=.72;private renderMs=0;
  constructor(private readonly context:RiftDevRuntimeContext,readonly world:MasterWorld,painting?:PaintedMaterial,preparedRenderer?:MasterSurfaceRenderer,preparedSources?:readonly MasterSourceCell[]){
@@ -45,6 +47,8 @@ export class MasterPresentation implements RiftDevRuntime {
   this.key=`r100-native-${world.definition.id}-${world.layout.seed}-${++presentationSequence}`;
   const rollback:Array<()=>void>=[()=>this.renderer.destroy()];
   try {
+  this.actorOcclusionField=new ActorOcclusionField(world);
+  rollback.push(()=>this.actorOcclusionField.destroy());
   rollback.push(()=>{if(scene.textures.exists(this.key))scene.textures.remove(this.key);});
   const texture=scene.textures.addImage(this.key,this.renderer.canvas as unknown as HTMLImageElement);
   if(!texture){this.renderer.destroy();throw new Error('Could not allocate native material texture');}
@@ -158,8 +162,8 @@ export class MasterPresentation implements RiftDevRuntime {
    x0=Math.floor(x0);x1=Math.ceil(x1);y0=Math.floor(y0);y1=Math.ceil(y1);
    const key=`${x0},${x1},${y0},${y1},${ground}`;if(key===entry.key)continue;entry.key=key;
    const g=entry.graphics;g.clear();g.fillStyle(0xffffff);
-   for(let y=y0;y<=y1;y++){let start=-1;for(let x=x0;x<=x1+1;x++){
-    const visible=x<=x1&&(this.world.roleAt(x,y)!=='solid'||nativeVolumeHeightAt(this.world.raster,x,y)<Math.max(1,ground-y));
+   for(let y=y0;y<=y1;y++){let start=-1;const heightLimit=Math.max(1,ground-y);for(let x=x0;x<=x1+1;x++){
+    const visible=x<=x1&&this.actorOcclusionField.isVisibleAtPixel(x,y,heightLimit);
     if(visible&&start<0)start=x;if(!visible&&start>=0){g.fillRect(start,y,x-start,1);start=-1;}
    }}
   }
@@ -184,5 +188,5 @@ export class MasterPresentation implements RiftDevRuntime {
   this.activity=.72+r100MaterialPressure(this.time,this.world.definition.motion_period)*.40;
   this.phase=cycle<.56?'缓慢闪动':cycle<.76?'绿色侵蚀逐渐变亮':cycle<.83?'绿色侵蚀强烈闪动':'绿色侵蚀逐渐变暗';
  }
- destroy():void{if(this.destroyed)return;this.destroyed=true;for(const entry of this.actorMasks){if(entry.retired)continue;for(const object of entry.objects)object.clearMask();entry.mask.destroy();entry.graphics.destroy();}this.audio.destroy();this.stress.destroy();this.image.destroy();if(this.context.scene.textures.exists(this.key))this.context.scene.textures.remove(this.key);this.renderer.destroy();}
+ destroy():void{if(this.destroyed)return;this.destroyed=true;for(const entry of this.actorMasks){if(entry.retired)continue;for(const object of entry.objects)object.clearMask();entry.mask.destroy();entry.graphics.destroy();}this.actorOcclusionField.destroy();this.audio.destroy();this.stress.destroy();this.image.destroy();if(this.context.scene.textures.exists(this.key))this.context.scene.textures.remove(this.key);this.renderer.destroy();}
 }
