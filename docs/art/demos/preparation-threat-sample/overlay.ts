@@ -1,111 +1,238 @@
 import type { ActorRegion, Grade, Phase } from './background';
+import { VeilMotion } from './veil-motion';
+import { VEIL_FRAGMENT_SHADER, VEIL_VERTEX_SHADER } from './veil-shader';
 
-/** Screen-space atmosphere on the preparation veil, never world geometry.
- * Signalis: quiet type; Darkwood: human presence; HLD: direct selection marks.
- * Organic stain density/overlap carries pressure, not an opaque green wash.
- * The actor and typography do not move, tint, or participate in distortion.
+export interface VeilTelemetry {
+  readonly renderer: 'webgl2';
+  readonly width: number;
+  readonly height: number;
+  readonly frameCount: number;
+  readonly timeSeconds: number;
+  readonly travelPixels: number;
+  readonly targetGrade: Grade;
+  readonly currentLevel: number;
+  readonly trailLevel: number;
+  readonly transitionActive: boolean;
+  readonly transitionElapsedMs: number;
+  readonly phase: Phase;
+  readonly phaseSpeed: number;
+  readonly motionEnabled: boolean;
+  readonly visible: boolean;
+  readonly documentVisible: boolean;
+  readonly rafScheduled: boolean;
+  readonly lastFrameMs: number;
+  readonly lastDrawCpuMs: number;
+  readonly contextLost: boolean;
+  readonly disposed: boolean;
+}
+
+export interface VeilController {
+  setActor(region: ActorRegion): void;
+  setGrade(grade: Grade): void;
+  setPhase(phase: Phase): void;
+  setVisible(visible: boolean): void;
+  setMotion(enabled: boolean): void;
+  getTelemetry(): VeilTelemetry;
+  dispose(): void;
+}
+
+/** Independent VFX study: transparent transported sheets above the reading veil.
+ * No world pixels, DOM text or gameplay state are sampled or changed. WebGL is
+ * required; a silent static fallback would conceal the method being evaluated.
  */
-export function mountVeil(canvas: HTMLCanvasElement) {
-  const width = 480, height = 320;
-  canvas.width = width; canvas.height = height;
-  const ctx = canvas.getContext('2d', { alpha: true });
-  if (!ctx) throw new Error('无法创建遮罩样例');
-  const pixels = ctx.createImageData(width, height);
-  const values = new Float32Array(128 * 128);
-  let seed = 861207;
-  for (let i = 0; i < values.length; i++) {
-    seed = Math.imul(seed ^ (seed >>> 15), 2246822519);
-    values[i] = (seed >>> 0) / 4294967295;
+export function mountVeil(canvas: HTMLCanvasElement): VeilController {
+  const width = 960, height = 640;
+  canvas.width = width;
+  canvas.height = height;
+  const gl = canvas.getContext('webgl2', {
+    alpha: true,
+    premultipliedAlpha: false,
+    antialias: false,
+    depth: false,
+    stencil: false,
+    preserveDrawingBuffer: true,
+    powerPreference: 'high-performance',
+  });
+  if (!gl) throw new Error('此动态遮罩样例需要 WebGL 2；当前环境无法运行，请换用支持 WebGL 2 的浏览器。');
+
+  let vertex: WebGLShader | null = null;
+  let fragment: WebGLShader | null = null;
+  let program: WebGLProgram | null = null;
+  let vertexArray: WebGLVertexArrayObject | null = null;
+  function deleteGpuResources(): void {
+    if (vertexArray) { gl!.deleteVertexArray(vertexArray); vertexArray = null; }
+    if (program) { gl!.deleteProgram(program); program = null; }
+    if (vertex) { gl!.deleteShader(vertex); vertex = null; }
+    if (fragment) { gl!.deleteShader(fragment); fragment = null; }
   }
-  const smooth = (a: number, b: number, n: number) => {
-    const v = Math.max(0, Math.min(1, (n - a) / (b - a)));
-    return v * v * (3 - 2 * v);
-  };
-  function noise(x: number, y: number): number {
-    const ix = Math.floor(x), iy = Math.floor(y);
-    const fx = smooth(0, 1, x - ix), fy = smooth(0, 1, y - iy);
-    const at = (a: number, b: number) => values[(b & 127) * 128 + (a & 127)]!;
-    const top = at(ix, iy) * (1 - fx) + at(ix + 1, iy) * fx;
-    return top * (1 - fy) + (at(ix, iy + 1) * (1 - fx) + at(ix + 1, iy + 1) * fx) * fy;
-  }
-  let actor: ActorRegion | undefined;
-  let grade: Grade = 'low', phase: Phase = 'pollution';
-  let running = false, visible = true, disposed = false, frame = 0;
-  let seconds = 0, previous = 0, lastPaint = 0;
-  const protection = new Float32Array(width * height).fill(1);
-  function setActor(region: ActorRegion): void {
-    actor = region;
-    const cx = actor.x + actor.width / 2, cy = actor.y + actor.height / 2;
-    const rx = actor.width / 2 + 22, ry = actor.height / 2 + 20;
-    for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
-      const distance = Math.hypot((x * 2 - cx) / rx, (y * 2 - cy) / ry);
-      protection[y * width + x] = smooth(1, 1.8, distance);
+  function compile(type: number, source: string): WebGLShader {
+    const shader = gl!.createShader(type);
+    if (!shader) throw new Error('无法创建遮罩着色器。');
+    gl!.shaderSource(shader, source);
+    gl!.compileShader(shader);
+    if (!gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)) {
+      const log = gl!.getShaderInfoLog(shader) ?? '未知编译错误';
+      gl!.deleteShader(shader);
+      throw new Error(`遮罩着色器编译失败：${log}`);
     }
-    paint();
+    return shader;
   }
-  function paint(): void {
-    if (disposed) return;
-    const level = grade === 'low' ? 0 : grade === 'medium' ? 1 : 2;
-    const t = seconds;
-    for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
-      const px = x * 2, py = y * 2;
-      const slow = noise(px * .006 + t * .011, py * .006 - t * .006);
-      const warp = (slow - .5) * 64;
-      const detail = noise((px + warp) * .018 - t * .005, (py - warp) * .014 + t * .009);
-      const fine = noise(px * .075 + warp * .008, py * .055 - t * .006);
-      const erosion = (detail - .5) * 65 + (fine - .5) * 12;
-      // Unequal fronts flow over the veil; no horizon or world-space silhouette.
-      const topWeight = .25 + .75 * Math.exp(-(((px - 620) / 310) ** 2));
-      const top = -5 + level * 92 * topWeight + 24 * Math.sin(px * .007 + slow * 3) - py;
-      const rightWeight = .28 + .72 * Math.exp(-(((py - 280) / 180) ** 2));
-      const right = -3 + level * 115 * rightWeight + 32 * Math.sin(py * .009 + slow * 4) - (960 - px);
-      const bottomWeight = .12 + .88 * Math.exp(-(((px - 270) / 240) ** 2));
-      const bottom = -12 + level * 95 * bottomWeight + 24 * Math.sin(px * .009 - slow * 2) - (640 - py);
-      const left = -24 + level * 30 + 22 * Math.sin(py * .008 + slow) - px;
-      const front = Math.max(top, right, bottom, left) + erosion;
-      const body = smooth(-30, 36, front);
-      const edge = (1 - smooth(3, 24, Math.abs(front + 4))) * (.36 + detail * .64);
-      // Broad uneven deposits, not closed contour lines or bubble outlines.
-      const internal = smooth(.28, .76, detail) * body;
-      const overlap = smooth(.40, .74, slow) * body;
-      let alpha = body * (.13 + level * .095) + edge * (.035 + level * .055) + internal * .20;
-      // Typography remains unfiltered; a broad calm reading area limits contrast
-      // of material behind facts while retaining effects between groups/edges.
-      const quietX = smooth(505, 538, px) * (1 - smooth(889, 930, px));
-      const quietY = smooth(178, 210, py) * (1 - smooth(508, 533, py));
-      alpha *= (1 - quietX * quietY * .35) * protection[y * width + x]!;
-      const tone = 31 + edge * 23 + internal * 29 - overlap * 12 + (fine - .5) * 5;
-      const i = (y * width + x) * 4;
-      pixels.data[i] = tone * .88;
-      pixels.data[i + 1] = tone;
-      pixels.data[i + 2] = tone * .88;
-      pixels.data[i + 3] = Math.round(Math.min(.72, alpha) * 255);
-    }
-    ctx!.putImageData(pixels, 0, 0);
-    canvas.dataset.grade = grade;
-    canvas.dataset.frame = String(Number(canvas.dataset.frame ?? 0) + 1);
+  try {
+    vertex = compile(gl.VERTEX_SHADER, VEIL_VERTEX_SHADER);
+    fragment = compile(gl.FRAGMENT_SHADER, VEIL_FRAGMENT_SHADER);
+    program = gl.createProgram();
+    if (!program) throw new Error('无法创建遮罩渲染程序。');
+    gl.attachShader(program, vertex);
+    gl.attachShader(program, fragment);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(`遮罩程序链接失败：${gl.getProgramInfoLog(program) ?? '未知链接错误'}`);
+    vertexArray = gl.createVertexArray();
+    if (!vertexArray) throw new Error('无法创建遮罩顶点对象。');
+  } catch (error) {
+    deleteGpuResources();
+    throw error;
+  }
+
+  const resolutionUniform = gl.getUniformLocation(program, 'uResolution');
+  const actorUniform = gl.getUniformLocation(program, 'uActor');
+  const levelsUniform = gl.getUniformLocation(program, 'uLevels');
+  const travelUniform = gl.getUniformLocation(program, 'uTravel');
+  if (!resolutionUniform || !actorUniform || !levelsUniform || !travelUniform) {
+    deleteGpuResources();
+    throw new Error('遮罩着色器缺少必要参数。');
+  }
+  gl.useProgram(program);
+  gl.bindVertexArray(vertexArray);
+  gl.viewport(0, 0, width, height);
+  gl.disable(gl.DEPTH_TEST);
+  gl.disable(gl.BLEND);
+  gl.uniform2f(resolutionUniform, width, height);
+  // No actor opening until the actual renderer has reported its bounds.
+  gl.uniform4f(actorUniform, -10000, -10000, 1, 1);
+
+  const motion = new VeilMotion();
+  const abort = new AbortController();
+  let motionEnabled = false, visible = true, disposed = false, contextLost = false;
+  let raf = 0;
+  let previousTimestamp: number | undefined;
+  let frameCount = 0, lastFrameMs = 0, lastDrawCpuMs = 0;
+  let actorX = -10000, actorY = -10000, actorRadiusX = 1, actorRadiusY = 1;
+
+  function canDraw(): boolean { return !disposed && !contextLost && visible && !document.hidden; }
+  function shouldRun(): boolean { return canDraw() && motionEnabled; }
+  function draw(): void {
+    if (!canDraw()) return;
+    const started = performance.now();
+    gl!.useProgram(program);
+    gl!.bindVertexArray(vertexArray);
+    gl!.uniform2f(levelsUniform, motion.currentLevel, motion.trailLevel);
+    gl!.uniform1f(travelUniform, motion.travelPixels);
+    gl!.drawArrays(gl!.TRIANGLES, 0, 3);
+    frameCount++;
+    lastDrawCpuMs = performance.now() - started;
+  }
+  function stopFrames(): void {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    previousTimestamp = undefined;
   }
   function tick(now: number): void {
-    if (disposed || !running || !visible || document.hidden) { frame = 0; previous = 0; return; }
-    if (previous) seconds += Math.min(.1, (now - previous) / 1000) * (phase === 'equipment' ? .35 : 1);
-    previous = now;
-    if (now - lastPaint >= 66) { paint(); lastPaint = now; }
-    frame = requestAnimationFrame(tick);
+    raf = 0;
+    if (!shouldRun()) { previousTimestamp = undefined; return; }
+    if (previousTimestamp !== undefined) {
+      lastFrameMs = Math.max(0, now - previousTimestamp);
+      // A delayed frame never jumps the sheet forward by a hidden/background gap.
+      motion.advance(Math.min(0.05, lastFrameMs / 1000));
+    }
+    previousTimestamp = now;
+    draw();
+    raf = requestAnimationFrame(tick);
   }
-  function sync(): void {
-    if (frame) cancelAnimationFrame(frame);
-    frame = 0; previous = 0;
-    if (running && visible && !document.hidden && !disposed) frame = requestAnimationFrame(tick);
+  function syncFrames(): void {
+    if (shouldRun()) {
+      if (!raf) raf = requestAnimationFrame(tick);
+    } else stopFrames();
   }
-  const onVisibility = () => sync();
-  document.addEventListener('visibilitychange', onVisibility);
-  paint();
+  function visibilityChanged(): void {
+    if (document.hidden) stopFrames();
+    else {
+      draw();
+      syncFrames();
+    }
+  }
+  function reportContextError(message: string): void {
+    contextLost = true;
+    stopFrames();
+    canvas.dataset.ready = 'false';
+    canvas.dataset.error = message;
+    canvas.dispatchEvent(new CustomEvent<Error>('veilerror', { detail: new Error(message) }));
+  }
+  canvas.addEventListener('webglcontextlost', (event) => {
+    event.preventDefault();
+    reportContextError('动态遮罩的 WebGL 上下文已丢失；请重新载入样例。');
+  }, { signal: abort.signal });
+  canvas.addEventListener('webglcontextrestored', () => {
+    reportContextError('动态遮罩的 WebGL 上下文已恢复；请重新载入以重建资源。');
+  }, { signal: abort.signal });
+  document.addEventListener('visibilitychange', visibilityChanged, { signal: abort.signal });
+  canvas.dataset.renderer = 'webgl2-transported-veil';
+  canvas.dataset.ready = 'true';
+  draw();
+
   return {
-    setActor,
-    setGrade(next: Grade) { if (grade !== next) { grade = next; paint(); } },
-    setPhase(next: Phase) { phase = next; },
-    setVisible(next: boolean) { visible = next; sync(); },
-    setMotion(next: boolean) { running = next; if (!next) { seconds = 0; paint(); } sync(); },
-    dispose() { disposed = true; if (frame) cancelAnimationFrame(frame); document.removeEventListener('visibilitychange', onVisibility); },
+    setActor(region: ActorRegion): void {
+      if (disposed || contextLost) return;
+      const x = region.x + region.width / 2, y = region.y + region.height / 2;
+      const radiusX = region.width / 2 + 22, radiusY = region.height / 2 + 20;
+      if (x === actorX && y === actorY && radiusX === actorRadiusX && radiusY === actorRadiusY) return;
+      actorX = x; actorY = y; actorRadiusX = radiusX; actorRadiusY = radiusY;
+      gl.useProgram(program);
+      gl.uniform4f(actorUniform, x, y, radiusX, radiusY);
+      draw();
+    },
+    setGrade(grade: Grade): void {
+      if (disposed || contextLost || !motion.setGrade(grade, motionEnabled)) return;
+      // State is accepted now; the next frame transports the front from exactly
+      // its present coverage. No reseeding, phase reset or queued transitions.
+      draw();
+      syncFrames();
+    },
+    setPhase(phase: Phase): void {
+      if (disposed || contextLost || !motion.setPhase(phase)) return;
+      if (!motionEnabled) motion.settle();
+      syncFrames();
+    },
+    setVisible(next: boolean): void {
+      if (disposed || visible === next) return;
+      visible = next;
+      if (next) draw();
+      syncFrames();
+    },
+    setMotion(next: boolean): void {
+      if (disposed || motionEnabled === next) return;
+      motionEnabled = next;
+      if (!next) { motion.settle(); draw(); }
+      syncFrames();
+    },
+    getTelemetry(): VeilTelemetry {
+      return Object.freeze({
+        renderer: 'webgl2', width, height, frameCount,
+        timeSeconds: motion.timeSeconds, travelPixels: motion.travelPixels,
+        targetGrade: motion.targetGrade, currentLevel: motion.currentLevel,
+        trailLevel: motion.trailLevel, transitionActive: motion.transitionActive,
+        transitionElapsedMs: motion.transitionElapsedSeconds * 1000,
+        phase: motion.phase, phaseSpeed: motion.phaseSpeed, motionEnabled, visible,
+        documentVisible: !document.hidden, rafScheduled: raf !== 0,
+        lastFrameMs, lastDrawCpuMs, contextLost, disposed,
+      });
+    },
+    dispose(): void {
+      if (disposed) return;
+      disposed = true;
+      stopFrames();
+      abort.abort();
+      deleteGpuResources();
+      canvas.dataset.ready = 'false';
+    },
   };
 }

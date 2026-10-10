@@ -458,7 +458,7 @@
     "work": "active",
     "entryPoints": [
       "各正式面板的键鼠操作、详情检查与关闭",
-      "独立视觉样例：/docs/art/demos/preparation-threat-sample/，同一世界底图上的整层UI遮罩三档动静候选，稳定人物保护；无业务桥、存档或出发。"
+      "独立视觉样例：/docs/art/demos/preparation-threat-sample/，同一世界底图上的整层UI遮罩三档持续流动/连续切档与实际录像，稳定人物保护；无业务桥、存档或出发。"
     ],
     "sources": [
       {
@@ -666,6 +666,31 @@
         "path": "docs/reviews/artifacts/preparation-threat-overlay-2026-10-10/art-review.md",
         "role": "doc",
         "note": "用户纠偏后遮罩实帧独立复核，非人审"
+      },
+      {
+        "path": "docs/art/demos/preparation-threat-sample/veil-shader.ts",
+        "role": "code",
+        "note": "样例WebGL2双层运输与分档侵入范围"
+      },
+      {
+        "path": "docs/art/demos/preparation-threat-sample/veil-motion.ts",
+        "role": "code",
+        "note": "连续切档/重定向与停动时序"
+      },
+      {
+        "path": "docs/art/demos/preparation-threat-sample/capture.ts",
+        "role": "code",
+        "note": "当前真实世界/遮罩与DOM缓存的10秒本地录像"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-threat-motion-2026-10-10/validation.md",
+        "role": "doc",
+        "note": "本轮限定动态/帧序列复核；不代人审或生产验收"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-threat-motion-2026-10-10/art-review.md",
+        "role": "doc",
+        "note": "本轮限定动态/帧序列复核；不代人审或生产验收"
       }
     ],
     "dependsOn": [],
@@ -689,13 +714,14 @@
       "COH-E198",
       "COH-E199",
       "COH-E200",
-      "COH-E201"
+      "COH-E201",
+      "COH-E202"
     ],
     "unknowns": [
       "R8读数限定范围已验证，用户美术终审待定；不均匀帧间隔双显反例已修复并独立重放，不据此声称所有 UI 时序组合无缺陷。",
       "所有面板在长名、大库存、缩放、连续重开等组合下的完整可达性矩阵未在本轮运行。",
       "2026-10-09用户否决f9eea773总览/双列，新的先选污染→单列配置已通过8场景及真实背包交互对照、限定文字实景核；新审美待复看，P49仍open。旧report直接消费后world校验失败未重验，不冒称已修。",
-      "DEC-190纠正背景为整层UI遮罩；E200远景样例为历史。当前独立样例有三档遮罩、动静/效果开关和固定人物保护，未接正式游戏；心理压力、长时动态舒适、真实库存/保存和生产生命周期不由有限预览证明，B仍常驻审稿。"
+      "DEC-190纠正背景为整层UI遮罩；E200远景样例为历史。E201动态被用户否决；当前新样例有双层持续运输、连续切档、动静/效果开关、实际录像和固定人物保护，未接正式游戏；心理压力、长时动态舒适、真实库存/保存和生产生命周期不由有限预览证明，B仍常驻审稿。"
     ]
   }
 ]

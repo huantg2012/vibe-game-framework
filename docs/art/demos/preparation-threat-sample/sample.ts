@@ -3,6 +3,7 @@ import weaponSource from '../../../../data/weapons.csv?raw';
 import qualitySource from '../../../../data/weapon-qualities.csv?raw';
 import { mountBackground } from './background';
 import { mountVeil } from './overlay';
+import { createCapture } from './capture';
 
 type Grade = 'low' | 'medium' | 'severe';
 type Phase = 'pollution' | 'equipment';
@@ -69,9 +70,23 @@ const backgroundToggle = requireElement<HTMLButtonElement>('#background-toggle')
 const effectToggle = requireElement<HTMLButtonElement>('#effect-toggle');
 const motionToggle = requireElement<HTMLButtonElement>('#motion-toggle');
 const veilCanvas = requireElement<HTMLCanvasElement>('#veil-canvas');
-const veil = mountVeil(veilCanvas);
+let veil: ReturnType<typeof mountVeil>;
+try { veil = mountVeil(veilCanvas); }
+catch (error) {
+  const notice = requireElement('#load-error');
+  notice.hidden = false;
+  notice.textContent = `动态预览无法启动：${error instanceof Error ? error.message : String(error)}`;
+  throw error;
+}
+veilCanvas.addEventListener('veilerror', () => {
+  const notice = requireElement('#load-error');
+  notice.hidden = false;
+  notice.textContent = '动态图层已中断。请刷新恢复；当前不是有效的动态样例。';
+}, { signal });
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-let motionEnabled = !reducedMotion.matches;
+// This explicit visual-feasibility study starts playing. Its visible pause
+// control remains available; no operating-system preference is changed.
+let motionEnabled = true;
 let effectEnabled = true;
 const resetButton = requireElement<HTMLButtonElement>('#reset-sample');
 const status = requireElement<HTMLElement>('#sample-status');
@@ -87,6 +102,8 @@ let phase: Phase = 'pollution';
 let backgroundOnly = false;
 let closed = false;
 let disposed = false;
+let recording = false;
+let recordingUrl: string | undefined;
 let background: Awaited<ReturnType<typeof mountBackground>> | undefined;
 
 // Fit the preview as a single image; never reflow the fixed logical game UI.
@@ -137,7 +154,7 @@ function render(): void {
   veil.setPhase(phase);
   veil.setVisible(!closed && effectEnabled);
   veil.setMotion(motionEnabled);
-  backgroundToggle.disabled = closed;
+  backgroundToggle.disabled = closed || recording;
   resetButton.textContent = closed ? '重新打开' : '复位';
   status.textContent = closed
     ? '样例已收起。点击“重新打开”继续查看。'
@@ -189,7 +206,9 @@ backgroundToggle.addEventListener('click', () => {
 }, { signal });
 effectToggle.addEventListener('click', () => { effectEnabled = !effectEnabled; render(); focusStage(); }, { signal });
 motionToggle.addEventListener('click', () => { motionEnabled = !motionEnabled; render(); focusStage(); }, { signal });
-reducedMotion.addEventListener('change', () => { motionEnabled = !reducedMotion.matches; render(); }, { signal });
+reducedMotion.addEventListener('change', () => {
+  if (!recording) { motionEnabled = !reducedMotion.matches; render(); }
+}, { signal });
 resetButton.addEventListener('click', () => {
   selectedGrade = 'low';
   phase = 'pollution';
@@ -206,7 +225,7 @@ requireElement('#depart-preview').addEventListener('click', () => {
   focusStage();
 }, { signal });
 stage.addEventListener('keydown', (event) => {
-  if (event.repeat || event.altKey || event.ctrlKey || event.metaKey) return;
+  if (recording || event.repeat || event.altKey || event.ctrlKey || event.metaKey) return;
   if (event.key === 'Escape') {
     event.preventDefault();
     back();
@@ -225,11 +244,64 @@ stage.addEventListener('keydown', (event) => {
     event.preventDefault();
   }
 }, { signal });
+const recordButton = requireElement<HTMLButtonElement>('#record-sample');
+const cancelRecording = requireElement<HTMLButtonElement>('#cancel-recording');
+const recordStatus = requireElement<HTMLElement>('#record-status');
+const recordingVideo = requireElement<HTMLVideoElement>('#sample-recording');
+const recordingDownload = requireElement<HTMLAnchorElement>('#recording-download');
+const metricsElement = requireElement<HTMLElement>('#recording-metrics');
+let captureMetrics: unknown[] = [];
+let lastMetricSecond = -1;
+const capture = createCapture({
+  world: canvas, veil: veilCanvas, uiRoot: requireElement('#dom-ui-root'), stage,
+  selectGrade,
+  onPrepared() { veil.setMotion(false); veil.setGrade('low'); veil.setMotion(true); },
+  onProgress(progress) {
+    recordStatus.textContent = progress.stage === 'preparing' ? '正在准备实际画面…' : `录制中 · ${Math.min(10, progress.seconds).toFixed(1)} / 10 秒`;
+    if (progress.stage === 'recording' && progress.seconds - lastMetricSecond >= .2) {
+      captureMetrics.push({ at: progress.seconds, grade: progress.grade, ...veil.getTelemetry() });
+      lastMetricSecond = progress.seconds;
+    }
+  },
+});
+function setRecording(value: boolean): void {
+  recording = value;
+  stage.inert = value;
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-toolbar] button')) button.disabled = value;
+  recordButton.disabled = value;
+  cancelRecording.hidden = !value;
+}
+recordButton.addEventListener('click', async () => {
+  if (!background || recording) { recordStatus.textContent = '请等场景载入后再录制。'; return; }
+  phase = 'pollution'; backgroundOnly = false; closed = false;
+  motionEnabled = true; effectEnabled = true;
+  render(); setRecording(true);
+  captureMetrics = []; lastMetricSecond = -1;
+  try {
+    const blob = await capture.record();
+    if (disposed) return;
+    if (recordingUrl) URL.revokeObjectURL(recordingUrl);
+    recordingUrl = URL.createObjectURL(blob);
+    recordingVideo.src = recordingUrl;
+    recordingVideo.hidden = false;
+    recordingDownload.href = recordingUrl;
+    recordingDownload.hidden = false;
+    metricsElement.textContent = JSON.stringify(captureMetrics);
+    recordStatus.textContent = '录像已完成，可播放或下载。记录的是本页实际效果。';
+  } catch (error) {
+    if (disposed) return;
+    recordStatus.textContent = error instanceof DOMException && error.name === 'AbortError'
+      ? '录制已取消。' : `录制失败：${error instanceof Error ? error.message : String(error)}`;
+  } finally { if (!disposed) { setRecording(false); render(); } }
+}, { signal });
+cancelRecording.addEventListener('click', () => capture.cancel(), { signal });
 function dispose(): void {
   if (disposed) return;
   disposed = true;
   abortController.abort();
   resizeObserver.disconnect();
+  capture.dispose();
+  if (recordingUrl) URL.revokeObjectURL(recordingUrl);
   background?.dispose();
   veil.dispose();
 }

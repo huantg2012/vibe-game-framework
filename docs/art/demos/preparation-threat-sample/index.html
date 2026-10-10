@@ -11,8 +11,8 @@
     <main class="sample-shell">
       <header class="sample-heading">
         <div>
-          <p class="sample-eyebrow">VISUAL STUDY · 02</p>
-          <h1>裂隙前 · 遮罩氛围</h1>
+          <p class="sample-eyebrow">VISUAL STUDY · 03</p>
+          <h1>裂隙前 · 流动与侵入</h1>
         </div>
         <p class="sample-scope">独立视觉样例 · 未接入游戏</p>
       </header>
@@ -34,7 +34,7 @@
         <canvas id="world-canvas" width="960" height="640" aria-label="裂隙边的净化点背景"></canvas>
         <div id="dom-ui-root">
           <div class="reading-backdrop" aria-hidden="true"></div>
-          <canvas id="veil-canvas" class="veil-canvas" width="480" height="320" aria-hidden="true"></canvas>
+          <canvas id="veil-canvas" class="veil-canvas" width="960" height="640" aria-hidden="true"></canvas>
           <section id="pollution-pane" class="preparation-pane" aria-label="选择污染程度">
             <header class="prepare-heading">
               <p class="stage-label">备行 <span>1 / 2</span></p>
@@ -100,6 +100,12 @@
         <p id="sample-status" role="status">在整层半透明遮罩上比较三档氛围；角色与世界底图保持一致。</p>
         <p>独立遮罩视效样例 · 低语固定供审稿 · 无声音 · 不读取存档或出发</p>
       </footer>
+      <section class="motion-proof" aria-label="动态演示录像">
+        <div class="proof-controls"><button type="button" id="record-sample">录制 10 秒切档演示</button><button type="button" id="cancel-recording" hidden>取消录制</button><span id="record-status" role="status">下方可播放本轮实录：低 → 中 → 重 → 低。也可重新录制。</span></div>
+        <video id="sample-recording" controls playsinline preload="metadata" src="../../../reviews/artifacts/preparation-threat-motion-2026-10-10/preparation-motion.mp4" aria-label="三档持续动态与切换过渡录屏"></video>
+        <a id="recording-download" href="../../../reviews/artifacts/preparation-threat-motion-2026-10-10/preparation-motion.webm" download="preparation-motion.webm">下载原始录像</a>
+        <script type="application/json" id="recording-metrics">[]</script>
+      </section>
     </main>
     <script type="module" src="./sample.ts"></script>
   </body>
