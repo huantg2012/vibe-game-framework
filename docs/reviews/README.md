@@ -6,6 +6,8 @@
 
 ## 从哪里读
 
+- [裂隙彼端正式合入审查](2026-10-10-preparation-integration.md) · 1项P1、1项P2、1项P3，待整改
+
 - [成长样板复评](growth-sample-review-2026-09-21.md) · [交互摘要](interactive/growth-sample-review-2026-09-21.html)
 - [净化点场景与成长](purification-growth-review-2026-09-20.md) · [交互摘要](interactive/purification-growth-review-2026-09-20.html)
 - [完整目录](index.html)按时间列出对象、正文、可用摘要与后续处理，包含早期敌人生成、污染物、世界生成和场景美术审查。

@@ -1,0 +1,20 @@
+import {chromium} from '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs';
+import fs from 'node:fs';
+const out='docs/reviews/artifacts/preparation-integration-review-2026-10-10/veil';
+const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+const page=await browser.newPage({viewport:{width:960,height:688},deviceScaleFactor:1});
+const report={console:[],errors:[]};
+page.on('console',m=>report.console.push({type:m.type(),text:m.text()}));page.on('pageerror',e=>report.errors.push(String(e)));
+await page.emulateMedia({reducedMotion:'reduce'});
+await page.goto('http://127.0.0.1:3027/prepare-review.html?fixture=equipped');
+await page.waitForSelector('#inventory-panel');await page.waitForTimeout(1200);
+const inspect=()=>page.evaluate(async()=>{const url=performance.getEntriesByType('resource').map(e=>e.name).reverse().find(u=>/\/src\/ui\/dom\/inventory-panel\.ts(?:\?|$)/.test(u));const {inventoryPanel:p}=await import(url);window.probePanel=p;return {veil:p.prepareVeil?.getTelemetry(),actor:p.options?.getPreparationActorRegion?.(),hidden:p.prepareCanvas?.hidden,gameContextLost:window.__game.renderer.gl.isContextLost()};});
+await page.locator('[data-departure-grade=severe]').click();await page.waitForTimeout(350);report.beforeEquipment=await inspect();
+await page.locator('[data-prepare-action=next]').click();await page.waitForTimeout(350);report.equipment=await inspect();await page.screenshot({path:`${out}/reduced-equipment-before-redraw.png`});
+await page.evaluate(()=>{let a=window.probePanel.options.getPreparationActorRegion();window.probePanel.prepareVeil.setActor({...a,x:a.x+0.0001});});await page.waitForTimeout(100);report.afterForcedRedraw=await inspect();await page.screenshot({path:`${out}/reduced-equipment-after-redraw.png`});
+await page.emulateMedia({reducedMotion:'no-preference'});
+report.cycles=[];
+for(let i=0;i<40;i++){await page.evaluate(()=>{window.__prepareReview.close();window.__prepareReview.open();});await page.waitForTimeout(50);report.cycles.push({i,...await inspect()});if(report.cycles.at(-1).gameContextLost)break;}
+await page.screenshot({path:`${out}/after-open-close-cycles.png`});
+fs.writeFileSync(`${out}/probe.json`,JSON.stringify(report,null,2));
+await browser.close();console.log(JSON.stringify({before:report.beforeEquipment,equipment:report.equipment,after:report.afterForcedRedraw,cycles:report.cycles.length,last:report.cycles.at(-1),warnings:report.console.filter(x=>x.type==='warning'),errors:report.errors}));

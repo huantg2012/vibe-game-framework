@@ -1,0 +1,245 @@
+{
+  "contextLoss": {
+    "console": [
+      {
+        "type": "debug",
+        "text": "[vite] connecting..."
+      },
+      {
+        "type": "debug",
+        "text": "[vite] connected."
+      },
+      {
+        "type": "log",
+        "text": "%c %c %c %c %c Phaser v3.90.0 (WebGL | Web Audio) %c https://phaser.io/v390 background: #ff0000 background: #ffff00 background: #00ff00 background: #00ffff color: #ffffff; background: #000000 background: transparent"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "warning",
+        "text": "WARNING: Too many active WebGL contexts. Oldest context will be lost."
+      },
+      {
+        "type": "warning",
+        "text": "WebGL Context lost. Renderer disabled"
+      },
+      {
+        "type": "warning",
+        "text": "WebGL Context restored. Renderer running again."
+      }
+    ],
+    "states": [
+      {
+        "cycle": 1,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 2,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 3,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 4,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 5,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 6,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 7,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 8,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 9,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 10,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 11,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 12,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 13,
+        "lost": false,
+        "rendererLost": false,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      },
+      {
+        "cycle": 14,
+        "lost": true,
+        "rendererLost": true,
+        "scene": [
+          "PurificationScene"
+        ],
+        "panel": true
+      }
+    ],
+    "lossAt": 14,
+    "afterClose": {
+      "lost": true,
+      "rendererLost": true,
+      "scene": [
+        "PurificationScene"
+      ],
+      "panel": false
+    },
+    "afterOneSecond": {
+      "lost": true,
+      "rendererLost": true,
+      "scene": [
+        "PurificationScene"
+      ],
+      "panel": false
+    },
+    "afterTenSeconds": {
+      "lost": false,
+      "rendererLost": false,
+      "scene": [
+        "PurificationScene"
+      ],
+      "panel": false
+    }
+  },
+  "fallback": {
+    "console": [
+      {
+        "type": "debug",
+        "text": "[vite] connecting..."
+      },
+      {
+        "type": "debug",
+        "text": "[vite] connected."
+      },
+      {
+        "type": "log",
+        "text": "%c %c %c %c %c Phaser v3.90.0 (WebGL | Web Audio) %c https://phaser.io/v390 background: #ff0000 background: #ffff00 background: #00ff00 background: #00ffff color: #ffffff; background: #000000 background: transparent"
+      },
+      {
+        "type": "warning",
+        "text": "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      }
+    ],
+    "grades": [
+      {
+        "grade": "low",
+        "gameGL": "WebGLRenderingContext",
+        "lost": false,
+        "canvasHidden": true,
+        "error": "动态遮罩需要 WebGL 2；当前环境将保留基础阅读暗场。",
+        "backdropClass": "game-panel-backdrop scene-menu-backdrop inventory-prepare-backdrop has-actor-region",
+        "backdropCSS": "--actor-cx: 313.90000000000003px; --actor-cy: 237.49999999999997px; --actor-rx: 47.3px; --actor-ry: 65.1px;"
+      },
+      {
+        "grade": "medium",
+        "gameGL": "WebGLRenderingContext",
+        "lost": false,
+        "canvasHidden": true,
+        "error": "动态遮罩需要 WebGL 2；当前环境将保留基础阅读暗场。",
+        "backdropClass": "game-panel-backdrop scene-menu-backdrop inventory-prepare-backdrop has-actor-region",
+        "backdropCSS": "--actor-cx: 312.8px; --actor-cy: 238.6px; --actor-rx: 46.2px; --actor-ry: 64px;"
+      },
+      {
+        "grade": "severe",
+        "gameGL": "WebGLRenderingContext",
+        "lost": false,
+        "canvasHidden": true,
+        "error": "动态遮罩需要 WebGL 2；当前环境将保留基础阅读暗场。",
+        "backdropClass": "game-panel-backdrop scene-menu-backdrop inventory-prepare-backdrop has-actor-region",
+        "backdropCSS": "--actor-cx: 313.90000000000003px; --actor-cy: 238.6px; --actor-rx: 47.3px; --actor-ry: 64px;"
+      }
+    ],
+    "equipmentAccessible": "equipment"
+  }
+}
