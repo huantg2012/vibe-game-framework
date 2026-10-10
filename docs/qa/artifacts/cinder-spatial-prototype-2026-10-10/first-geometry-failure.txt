@@ -1,0 +1,130 @@
+{
+  "seed": 20261010,
+  "grade": "medium",
+  "sourceHash": "5232d8f3fbe848e7ea255bbe64f9c4a160dc69fe1db52738e9a8d4de83149eb3",
+  "worldId": "cinder-ridge",
+  "sourceMode": "DEV-only CSV geometry, production renderer and 20px body checks",
+  "width": 2304,
+  "height": 1792,
+  "bodySize": 20,
+  "baselineReachableBodySeats": 8051,
+  "reachableBodySeats": 16394,
+  "reachableBodyAreaPx": 1049216,
+  "areaMultiplier": 2.0362687864861506,
+  "terrainFillRatio": 0.5518818204365079,
+  "solidTerrainRatio": 0.41252141673454484,
+  "bodyReachableRatio": 0.9199259300824869,
+  "unreachableBodySeats": 1427,
+  "solidObjectCount": 20,
+  "spawnCandidate": "south-b",
+  "exitCandidate": "south-a",
+  "spawn": {
+    "x": 1476,
+    "y": 1556
+  },
+  "extraction": {
+    "x": 1356,
+    "y": 1540
+  },
+  "anchorRelocations": [
+    {
+      "id": "west-basin",
+      "distancePx": 1
+    },
+    {
+      "id": "middle-basin",
+      "distancePx": 84.48076704197234
+    },
+    {
+      "id": "east-basin",
+      "distancePx": 4
+    },
+    {
+      "id": "north-branch",
+      "distancePx": 5
+    },
+    {
+      "id": "south-branch",
+      "distancePx": 5.656854249492381
+    },
+    {
+      "id": "west-loop-from",
+      "distancePx": 4.242640687119286
+    },
+    {
+      "id": "west-loop-to",
+      "distancePx": 3.6055512754639896
+    },
+    {
+      "id": "west-loop-north",
+      "distancePx": 5
+    },
+    {
+      "id": "west-loop-south",
+      "distancePx": 4.242640687119286
+    },
+    {
+      "id": "east-loop-from",
+      "distancePx": 4.242640687119286
+    },
+    {
+      "id": "east-loop-to",
+      "distancePx": 0
+    },
+    {
+      "id": "east-loop-north",
+      "distancePx": 3
+    },
+    {
+      "id": "east-loop-south",
+      "distancePx": 2.23606797749979
+    }
+  ],
+  "routes": [
+    {
+      "id": "retreat",
+      "lengthPx": 136
+    },
+    {
+      "id": "west-north",
+      "lengthPx": 1744
+    },
+    {
+      "id": "west-south",
+      "lengthPx": 2976
+    },
+    {
+      "id": "east-north",
+      "lengthPx": 3120
+    },
+    {
+      "id": "east-south",
+      "lengthPx": 1280
+    },
+    {
+      "id": "to-north-branch",
+      "lengthPx": 1864
+    },
+    {
+      "id": "to-south-branch",
+      "lengthPx": 1184
+    }
+  ],
+  "baselineBounds": {
+    "width": 1024,
+    "height": 768
+  },
+  "verificationBoundary": "No live encounter/economy or fogged playtest. Ordinary solids are physical, not a new line-of-sight rule."
+}
+/Users/yilungao/coh/tools/spatial-prototype/check.ts:6
+if (Number(metrics.areaMultiplier) < 3.4 || Number(metrics.areaMultiplier) > 5.2) throw new Error('Body-supported area outside prototype target');
+                                                                                        ^
+
+
+Error: Body-supported area outside prototype target
+    at <anonymous> (/Users/yilungao/coh/tools/spatial-prototype/check.ts:6:89)
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:578:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.14.0

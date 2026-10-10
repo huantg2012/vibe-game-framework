@@ -1495,3 +1495,8 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 `HavenNarration` 由 PurificationScene 持有，负责到场、交互物驻足和坐下；Rift 的 `EncounterNarration` 共用单行承接遭遇、环境和阈值，由成功帧 delta 驱动。暂停事件临时隐藏并冻结，恢复继续，退出销毁。`rift-result-panel` / `impact-result-panel` 依据实际结算数据选一条辅助句，保留原事实和操作。世界匹配只读冻结 profile.id，未知/DEV 走 generic；完整恢复预算未知时不补环境句，不添加恢复字段。
 
 规则唯一正文：[氛围旁白](specs/system-atmosphere-narration.md)；污染形态/身份仍归句法 spec。无配音、新机制、新UI容器或美术素材重制。
+
+
+### 余烬脊空间审阅入口（2026-10-10，DEV）
+
+`rift-spatial-prototype.html` / `src/dev/rift-spatial-prototype.ts` 仅在开发模式运行，专用 CSV 经 `tools/spatial-prototype/codegen.mjs` 编译后由 `rift-spatial-prototype-world.ts` 构造一个新空间样本。复用 MasterWorld、原生实体碰撞与 MasterSurfaceRenderer，完整地面烘焙不叠玩家视野迷雾；审阅路线/地点和碰撞是可关闭的第二张 canvas，不改变地形。无正式出征接线、保存读写、敌人/经济放大或玩家 HUD 改动。已烘焙帧静止展示，不启动游戏帧循环；重建与离页释放独立 GPU 上下文。范围见 `docs/tasks/cinder-spatial-prototype.md`。

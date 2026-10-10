@@ -1,0 +1,124 @@
+{
+  "seed": 20261011,
+  "grade": "medium",
+  "sourceHash": "5c7dd76824e2ecfdc12b6ed8d53d2940f28b221c1dd3dfc2865586b2aa07e41b",
+  "worldId": "cinder-ridge",
+  "sourceMode": "DEV-only CSV geometry, production renderer and 20px body checks",
+  "width": 2304,
+  "height": 1792,
+  "bodySize": 20,
+  "baselineReachableBodySeats": 8038,
+  "reachableBodySeats": 31067,
+  "reachableBodyAreaPx": 1988288,
+  "areaMultiplier": 3.8650161731774073,
+  "terrainFillRatio": 0.6772848462301587,
+  "solidTerrainRatio": 0.21177305289176757,
+  "bodyReachableRatio": 0.9999678125402344,
+  "unreachableBodySeats": 1,
+  "solidObjectCount": 20,
+  "spawnCandidate": "east-b",
+  "exitCandidate": "east-a",
+  "spawn": {
+    "x": 1980,
+    "y": 636
+  },
+  "extraction": {
+    "x": 1980,
+    "y": 492
+  },
+  "actualRetreatDistancePx": 144,
+  "spawnRelocationPx": 1,
+  "extractionRelocationPx": 3,
+  "anchorRelocations": [
+    {
+      "id": "west-basin",
+      "distancePx": 1
+    },
+    {
+      "id": "middle-basin",
+      "distancePx": 41
+    },
+    {
+      "id": "east-basin",
+      "distancePx": 4
+    },
+    {
+      "id": "north-branch",
+      "distancePx": 5
+    },
+    {
+      "id": "south-branch",
+      "distancePx": 5.656854249492381
+    },
+    {
+      "id": "west-loop-from",
+      "distancePx": 4.242640687119286
+    },
+    {
+      "id": "west-loop-to",
+      "distancePx": 3.6055512754639896
+    },
+    {
+      "id": "west-loop-north",
+      "distancePx": 5
+    },
+    {
+      "id": "west-loop-south",
+      "distancePx": 4.242640687119286
+    },
+    {
+      "id": "east-loop-from",
+      "distancePx": 4.242640687119286
+    },
+    {
+      "id": "east-loop-to",
+      "distancePx": 0
+    },
+    {
+      "id": "east-loop-north",
+      "distancePx": 3
+    },
+    {
+      "id": "east-loop-south",
+      "distancePx": 2.23606797749979
+    }
+  ],
+  "routes": [
+    {
+      "id": "retreat",
+      "lengthPx": 144
+    },
+    {
+      "id": "west-north",
+      "lengthPx": 1216
+    },
+    {
+      "id": "west-south",
+      "lengthPx": 1296
+    },
+    {
+      "id": "east-north",
+      "lengthPx": 2144
+    },
+    {
+      "id": "east-south",
+      "lengthPx": 1280
+    },
+    {
+      "id": "to-north-branch",
+      "lengthPx": 1064
+    },
+    {
+      "id": "to-south-branch",
+      "lengthPx": 2208
+    }
+  ],
+  "baselineBounds": {
+    "width": 1024,
+    "height": 768
+  },
+  "verificationBoundary": "No live encounter/economy or fogged playtest. Ordinary solids are physical, not a new line-of-sight rule."
+}
+west alternative route shared ratio: 0.006622516556291391
+east alternative route shared ratio: 0
+PASS: same physical grid, irregular boundary, body area and two alternative-route pairs

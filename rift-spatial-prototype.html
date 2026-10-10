@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>余烬脊 · 空间结构原型</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/src/dev/rift-spatial-prototype.css">
+</head>
+<body>
+  <header>
+    <div><p class="eyebrow">地图结构审阅 · 独立原型</p><h1>余烬脊</h1></div>
+    <p id="identity">正在生成完整地形…</p>
+  </header>
+  <nav aria-label="地图审阅工具">
+    <button id="clean" aria-pressed="true" disabled>去雾全图</button>
+    <button id="routes" aria-pressed="false" disabled>路线与地点</button>
+    <button id="collision" aria-pressed="false" disabled>实际阻挡</button>
+    <span class="divider"></span>
+    <button id="fit" aria-pressed="true" disabled>全图</button>
+    <button id="native" aria-pressed="false" disabled>原始像素</button>
+    <label>种子 <input id="seed" type="text" inputmode="numeric" value="20261010" aria-label="地图种子"></label>
+    <button id="rebuild" disabled>重新生成</button>
+    <button id="download" disabled>保存当前图</button>
+  </nav>
+  <main id="viewport"><div id="stage"><canvas id="map" aria-label="余烬脊去雾全图"></canvas><canvas id="annotation" aria-hidden="true"></canvas></div></main>
+  <footer><p id="summary" role="status">生成地形、核对身体可达性并烘焙现有材质。</p><p>黑色为真实缺地 · 标记仅供审阅 · 本页不读写游戏存档</p></footer>
+  <p id="error" role="alert" hidden></p>
+  <details><summary>结构检查与范围</summary><p>本页复用游戏的实体几何、碰撞支撑、材质烘焙与渲染。仅检查一个代表世界的空间原型，尚未接入正式出征、完整敌人与资源部署或经济平衡。</p><pre id="diagnostics"></pre></details>
+  <script type="module" src="/src/dev/rift-spatial-prototype.ts"></script>
+</body>
+</html>
