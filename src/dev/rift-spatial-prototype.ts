@@ -55,7 +55,8 @@ function label(text: string, x: number, y: number, color: string): void {
 
 function drawAnnotations(): void {
   pen.clearRect(0, 0, annotation.width, annotation.height);
-  if (!prototype || mode === 'clean') return;
+  if (!prototype) return;
+  if (mode === 'clean') { drawDepartureAnchors(); return; }
   if (mode === 'collision') {
     const grid = prototype.world.layout.tileMap;
     pen.fillStyle = '#c4873a';
@@ -65,6 +66,7 @@ function drawAnnotations(): void {
     }
     pen.globalAlpha = 1;
     label('橙色：真实实体占地（非装饰）', 45, 45, '#e0a848');
+    drawDepartureAnchors();
     return;
   }
   const colors = ['#e0a848', '#c8cdd4', '#b89040', '#8a8f96'];
@@ -78,9 +80,9 @@ function drawAnnotations(): void {
     pen.setLineDash(index % 2 ? [14, 10] : []); pen.stroke(); pen.setLineDash([]);
   }
   for (const anchor of prototype.anchors) {
-    if (anchor.role === 'route') continue;
+    if (anchor.role === 'route' || anchor.role === 'spawn' || anchor.role === 'extraction') continue;
     const { x, y } = anchor.point;
-    const color = anchor.role === 'extraction' ? '#e0a848' : '#c8cdd4';
+    const color = '#c8cdd4';
     pen.strokeStyle = color; pen.lineWidth = 3;
     pen.fillStyle = '#0a0b0d'; pen.beginPath(); pen.arc(x, y, 9, 0, Math.PI * 2); pen.fill(); pen.stroke();
     label(anchor.label, x, y - 24, color);
@@ -88,6 +90,25 @@ function drawAnnotations(): void {
   const x = 55, y = map.height - 60;
   pen.strokeStyle = '#c8cdd4'; pen.lineWidth = 3; pen.strokeRect(x, y - 20, 20, 20);
   label('20 × 20 角色碰撞尺寸', x + 15, y - 10, '#c8cdd4');
+  drawDepartureAnchors();
+}
+
+/** Essential review landmarks stay visible independently of the route layer. */
+function drawDepartureAnchors(): void {
+  if (!prototype) return;
+  for (const anchor of prototype.anchors) {
+    if (anchor.role !== 'spawn' && anchor.role !== 'extraction') continue;
+    const { x, y } = anchor.point, spawn = anchor.role === 'spawn';
+    const color = spawn ? '#c8cdd4' : '#e0a848';
+    pen.setLineDash([]); pen.globalAlpha = 1;
+    pen.fillStyle = '#0a0b0d'; pen.strokeStyle = color; pen.lineWidth = 4;
+    pen.beginPath();
+    if (spawn) pen.arc(x, y, 13, 0, Math.PI * 2);
+    else { pen.moveTo(x, y - 17); pen.lineTo(x + 15, y); pen.lineTo(x, y + 17); pen.lineTo(x - 15, y); pen.closePath(); }
+    pen.fill(); pen.stroke();
+    if (spawn) { pen.fillStyle = color; pen.fillRect(x - 3, y - 3, 6, 6); }
+    label(spawn ? '出生点' : '撤离点', x, y - 32, color);
+  }
 }
 
 function selectMode(value: typeof mode): void {
@@ -121,7 +142,7 @@ async function build(): Promise<void> {
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(renderer.canvas, 0, 0);
     element('identity').textContent = `中污染 · 种子 ${seed} · ${map.width} × ${map.height} 原始像素`;
-    element('summary').textContent = '去雾地形全图 · 可切换路线标记与实体占地核对';
+    element('summary').textContent = '白色圆环：出生点 · 金色菱形：撤离点 · 可切换路线与实体占地';
     element('diagnostics').textContent = JSON.stringify({ scope: 'DEV spatial structure only; production rendering and collision; no complete sortie deployment', seed, metrics: next.metrics, routes: next.routes.map(route => ({ id: route.id, label: route.label, lengthPx: route.lengthPx })), anchors: next.anchors }, null, 2);
     const url = new URL(location.href); url.searchParams.set('seed', String(seed)); history.replaceState(null, '', url);
     fit(); drawAnnotations(); ready = true;

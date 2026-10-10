@@ -13,7 +13,7 @@
 
 ## 执行与证据
 
-`node tools/spatial-prototype/codegen.mjs --check`、`npm run typecheck`、两个种子的`tools/spatial-prototype/check.ts`、Chrome真实渲染/五个审阅控件检查执行。浏览器截图与运行数据在 [artifacts/cinder-spatial-prototype-2026-10-10](artifacts/cinder-spatial-prototype-2026-10-10)。无标记清图、路线图及实体占地图均由真实渲染帧直接保存，不是概念图；黑色来自缺地支持，未后贴黑罩。
+`node tools/spatial-prototype/codegen.mjs --check`、`npm run typecheck`、两个种子的`tools/spatial-prototype/check.ts`、Chrome真实渲染/五个审阅控件检查执行。浏览器截图与运行数据在 [artifacts/cinder-spatial-prototype-2026-10-10](artifacts/cinder-spatial-prototype-2026-10-10)。去雾全图、路线图及实体占地图均由真实渲染帧直接保存，不是概念图；黑色来自缺地支持，未后贴黑罩。
 
 设计子代理确认近侧归返循环和扩大后内容密度边界。QA子代理独立重算7条路径及两组共享率；美术子代理对照旧余烬脊确认材料继承、轮廓与脊群可辨，并指出标签重叠。已隐藏仅用于求路的辅助点标签，保留入口/撤离/区域/支路。
 
@@ -26,3 +26,8 @@
 ## 限制
 
 只检查单世界、两个种子及中污染空间表现；其他种子/档位没有由此获得资格。路线是物理可走关系，普通实体不自动形成视线遮蔽。当前无完整敌人、薪柴/污染物资源与风险收益重新部署；未验证迷雾下辨路、自然搜撤时长、经济平衡或更大世界的运行性能。图中标记属于审阅覆盖层，非游戏HUD。正式推广和审美/可玩性认可仍待用户。
+
+
+### 出生与撤离标记补正
+
+用户指出默认去雾图漏显两个关键位置。位置原已生成，但原版只在路线覆盖层标出；现将出生点（白色圆环）与撤离点（金色菱形）设为三个视图常显，加入明确文字与底栏图例，仍为DEV审阅标记。地图生成/锚点位置未变，更新浏览器截图；标记属于审阅层而非正式游戏内物件。
