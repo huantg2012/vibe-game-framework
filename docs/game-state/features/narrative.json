@@ -3,7 +3,7 @@
     "id": "COH-F043",
     "title": "世界主题与游戏内叙事载体",
     "domain": "narrative",
-    "summary": "世界主题通过场景、物件说明与节制的角色自语呈现。净化点坐下/驻足/归来、裂隙入场/安全间隙/混乱阈值及结果报告已接共享CSV旁白，按语义池无放回轮换；独立表现历史跨重载保留，不进入玩法存档或随机流。 同场景每次起身再坐立即重新选句，不再复用30秒旧句。 备行状态联动B目前仅有设计，独立样例仍为已选固定三句。",
+    "summary": "世界主题通过场景、物件说明与节制的角色自语呈现。净化点坐下/驻足/归来、裂隙入场/安全间隙/混乱阈值及结果报告已接共享CSV旁白，按语义池无放回轮换；独立表现历史跨重载保留，不进入玩法存档或随机流。 同场景每次起身再坐立即重新选句，不再复用30秒旧句。 备行72句/12池已审并prepared-only独立生成，真实状态联动未接，独立样例仍为已选固定三句。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -134,6 +134,26 @@
         "path": "docs/reviews/2026-10-10-preparation-threat-plan.md",
         "role": "doc",
         "note": "知情静态子代理审查；不代新运行或人审。"
+      },
+      {
+        "path": "data/preparation-narration-pools.csv",
+        "role": "data",
+        "note": "prepared-only内容准备，不作为生产入口声明。"
+      },
+      {
+        "path": "src/generated/preparation-narration-data.ts",
+        "role": "code",
+        "note": "prepared-only内容准备，不作为生产入口声明。"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-selftalk-2026-10-10/review.md",
+        "role": "doc",
+        "note": "72句内容审查与纯数据验证；无状态联动。"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-selftalk-2026-10-10/verification.json",
+        "role": "doc",
+        "note": "72句内容审查与纯数据验证；无状态联动。"
       }
     ],
     "dependsOn": [
@@ -147,13 +167,14 @@
       "COH-E118",
       "COH-E198",
       "COH-E199",
-      "COH-E204"
+      "COH-E204",
+      "COH-E205"
     ],
     "unknowns": [
       "本轮154句氛围文案与64句遭遇低语的写作质量、自然出现节奏及长期重复感仍待玩家复看；技术/生命周期验证不代替体验认可。",
       "64句遭遇表含8句旧wall兼容内容，保留旧token不表示全部条目均在当前正式世界投放；五世界文案仅引用已有材料，不增设地点身世或生物。",
       "世界设定不等于所有设定已进入游戏；未找到正式任务日志、NPC对话树或剧情章节入口，不登记为已实现内容。",
-      "2026-10-10用户认可2ee77886独立样例并要求自语少重复、联动真实近况；本轮完成状态只读核查与备行B设计，新增句先候选，未改样例或正式代码。最近事件、资格筛选和防刷预算仍未实现。"
+      "2026-10-10按用户授权经编辑/事实资格子代理复审后，72句/12池已准备并独立生成；样例仍是原3句，正式B和状态选择器未接。真实损失回执不存在，损失两池等待未来adapter证实，不能读destroyedIds冒充遗失。"
     ]
   }
 ]

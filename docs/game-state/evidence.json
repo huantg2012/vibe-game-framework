@@ -7890,5 +7890,48 @@
         "role": "data"
       }
     ]
+  },
+  {
+    "id": "COH-E205",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-10-10",
+    "revision": "working-tree:2026-10-10-preparation-selftalk",
+    "scope": "F003/F038/F043：72句12池prepared-only内容；编辑及事实条件两代理逐批审读后10处修订终核，生成一致性、24负例、每池三轮轮换/重载、旧32生产池字节一致和构建通过。",
+    "limitations": "PASS只覆盖内容/生成/纯数据检查，非人审或生产状态联动。正文hash与各命令范围见verification.json；无新页面运行验证。损失回执缺失另核实，destroyedIds不能作死亡遗失；两个损失池须等待adapter。",
+    "sources": [
+      {
+        "path": "docs/reviews/artifacts/preparation-selftalk-2026-10-10/review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-selftalk-2026-10-10/verification.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/specs/system-atmosphere-narration.md",
+        "role": "spec"
+      },
+      {
+        "path": "data/atmosphere-lines.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/preparation-narration-pools.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/atmosphere-copy/generate.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/atmosphere-copy/check.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/generated/preparation-narration-data.ts",
+        "role": "code"
+      }
+    ]
   }
 ]

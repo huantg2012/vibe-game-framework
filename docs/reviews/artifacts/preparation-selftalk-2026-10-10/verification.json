@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-10",
+  "revision": "38040e25 + task working tree",
+  "scope": "prepared-only corpus and generation; no game/sample selector",
+  "prepared": {
+    "lines": 72,
+    "pools": 12,
+    "contexts": 8,
+    "maxCharacters": 25,
+    "retainedUserSelected": 3,
+    "perPool": {
+      "prepare.baseline.low": 6,
+      "prepare.baseline.medium": 6,
+      "prepare.baseline.severe": 6,
+      "prepare.new_weapon.low": 6,
+      "prepare.new_weapon.medium": 6,
+      "prepare.new_weapon.severe": 6,
+      "prepare.ready_item": 6,
+      "prepare.body_growth": 6,
+      "prepare.return_gain": 6,
+      "prepare.return_loss": 6,
+      "prepare.loss_new_weapon": 6,
+      "prepare.worn_weapon": 6
+    }
+  },
+  "production": {
+    "pools": 32,
+    "oldRows": 154,
+    "oldRowsUnchanged": true,
+    "generatedBytesUnchanged": true
+  },
+  "reviews": {
+    "editor": "PASS: all 72 reviewed in 15 batches; 10 final changed IDs reread",
+    "conditions": "PASS: semantic eligibility only; no runtime adapter implied",
+    "editorAndConditionsHash": "a3f14d05f4f5a08c8fe47664767f7f8d5c799c0d76e09487d34dbd48583c78ff"
+  },
+  "checks": [
+    {
+      "command": "npm run check:atmosphere",
+      "exitCode": 0,
+      "groups": 10,
+      "negativeFixtures": 24,
+      "rotation": "every prepared pool: three no-replacement cycles including reload"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "note": "tsc + Vite; existing >500 kB chunk advisory remains"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "executedBy": "preparation_copy_pipeline before final prose edits; final build rechecks types"
+    },
+    {
+      "command": "npm run check:haven-narration",
+      "exitCode": 0,
+      "groups": 6,
+      "executedBy": "preparation_copy_pipeline"
+    },
+    {
+      "command": "npm run dev on port 3039",
+      "exitCode": 0,
+      "executedBy": "preparation_copy_pipeline",
+      "http200": [
+        "/",
+        "/src/main.ts",
+        "/src/generated/atmosphere-copy-data.ts",
+        "/src/generated/preparation-narration-data.ts"
+      ],
+      "note": "temporary server stopped; startup/transform smoke only, not gameplay"
+    }
+  ],
+  "sourceHashes": {
+    "data/atmosphere-lines.csv": "a3f14d05f4f5a08c8fe47664767f7f8d5c799c0d76e09487d34dbd48583c78ff",
+    "data/preparation-narration-pools.csv": "64cf963a4f119fe934febf3bef2b61fb837b0993f09ae72b62cbf3c5011cade0",
+    "src/generated/atmosphere-copy-data.ts": "4b35b7f08ca2ff58266897146b4c5e6343b6718c01363a10328e0ec5449d212e",
+    "src/generated/preparation-narration-data.ts": "d64a53fdb7a11829b6649a82d09de517ae098b859a17c05e4072fbf6039ab529",
+    "tools/atmosphere-copy/generate.mjs": "9567f71b218923e154ba3014e1002209d6cacec36d3973f777b92dedde366025",
+    "tools/atmosphere-copy/check.mjs": "a076af447613df22e9d03c409cd9080ea56c8d317d551efc08f02cb32772f65e"
+  },
+  "limitations": [
+    "No gameplay state selector, event collector, or preparation budget implementation.",
+    "No reliable loss receipt currently exists: loss pools require future successful-settlement adapter; destroyedIds is not a loss receipt.",
+    "No new browser text layout/lifecycle or player experience verification; original sample remains fixed three lines.",
+    "No lint script or ESLint dependency in package; no lint PASS claimed."
+  ]
+}

@@ -61,3 +61,8 @@ features: COH-F003 / COH-F038 / COH-F041 / COH-F042 / COH-F043 / COH-F052
 阅读 HTML 已从两份源文档导出并核哈希；本轮浏览器工具的 URL 策略拒绝 `file://`，未尝试绕过。因此未完成浏览器实看/展开验证，不声称页面视觉通过；完整 Markdown 是本次主交付。阅读页刷新命令：`python3 docs/reviews/artifacts/preparation-threat-2026-10-10/render-reading.py`。
 
 相关文本归方案及现有各系统 spec；本报告只保留审查结论和处置，不成为平行机制真源。归属：COH-F003/F038/F041/F042/F043/F052；证据 E198 为方向确认，E199 为有限静态审查，不能提升正式交付等级。
+
+
+## 后续：情境自语内容审查（DEC-194）
+
+用户后续明确授权代理审查后扩充文案集。两路代理完成标杆与72句全文审读，10处修订后确认编辑/条件PASS；正文与12池情境登记为prepared-only，未接入游戏或样例。独立记录：[文案集审查与处置](artifacts/preparation-selftalk-2026-10-10/review.md)。此增量不改写以上P0历史审查，不把内容准备记为P1–P4完成。

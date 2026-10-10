@@ -1490,6 +1490,8 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 
 `data/atmosphere-lines.csv` 经 `tools/atmosphere-copy/generate.mjs`（合入 codegen）生成具名池。`src/narrative/atmosphere.ts` / `narration-memory.ts` 提供实际呈现时才消费的无放回轮换，装饰性 localStorage 与业务存档/玩法 RNG 分离；坏存储降级内存。
 
+2026-10-10 备行情境自语仅做内容准备：同一正文 CSV 的 12 个 `prepare.*` 池由 `data/preparation-narration-pools.csv` 登记档位、语境及固定 `prepared-only` 状态。生成器同时校验精确语义名单、元数据对应关系和正文，再将原 32 个生产池原样输出到 `atmosphere-copy-data.ts`，将备行池与类型化登记独立输出到 `preparation-narration-data.ts`。新表无游戏或独立视觉样例消费者，不进入 `AtmospherePool` / `pickAtmosphere`；没有状态选择器、事件采集、准备行程预算或存档变更。`check:atmosphere` 覆盖生成一致性、孤儿／未知／重复／语义错配拒绝、第一人称及句长规范，并以现有 `NarrationMemory` 对新池做纯数据轮换／重载验证；这些检查不宣称联动已接入。
+
 `HavenNarration` 由 PurificationScene 持有，负责到场、交互物驻足和坐下；Rift 的 `EncounterNarration` 共用单行承接遭遇、环境和阈值，由成功帧 delta 驱动。暂停事件临时隐藏并冻结，恢复继续，退出销毁。`rift-result-panel` / `impact-result-panel` 依据实际结算数据选一条辅助句，保留原事实和操作。世界匹配只读冻结 profile.id，未知/DEV 走 generic；完整恢复预算未知时不补环境句，不添加恢复字段。
 
 规则唯一正文：[氛围旁白](specs/system-atmosphere-narration.md)；污染形态/身份仍归句法 spec。无配音、新机制、新UI容器或美术素材重制。
