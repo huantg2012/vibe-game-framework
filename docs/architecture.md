@@ -1344,7 +1344,7 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 
 2026-10-10新增独立视觉展示 `docs/art/demos/preparation-threat-sample/index.html`，仅由开发 URL 打开，不注册到游戏入口、生产构建或存档流程。首版远景解读被用户纠正为整层半透明 UI 遮罩；之后 E201 版本又获“动态像静态、缺少切档过渡”的反馈，两轮证据均保留历史，不提升为当前动态达成。`background.ts` 只读消费正式 `LastLightRenderer`、布局及 Last Light 资产，固定静息相位后提供三档相同的世界底图和实际 `actorRegion`。
 
-当前样例 `overlay.ts` 拥有完整 960×640 WebGL2 画布和 RAF／资源生命周期，`veil-shader.ts` 绘制主层／薄层错方向输运，`veil-motion.ts` 管理连续运动及切档外观。低／中／重主流候选为 8／15／22 逻辑 px/s；切档主前沿升 0.82 秒／降 1.02 秒，滞后尾层最晚 1.34 秒结束；快速改选从当前值追随，不重置纹理时间或排队。层位是世界→CSS基础阅读暗场→veil→文字，人物保护固定、文字／命中区不位移。默认播放并提供显式动／静、氛围及隐藏文字按钮；本次动态演示不因 OS 减少动态偏好自动静止，不改变 OS 或正式游戏设置。行装降速，关闭停 RAF；没有静态降级冒充 WebGL2 动态可行性。
+当前样例 `overlay.ts` 拥有完整 960×640 WebGL2 画布和 RAF／资源生命周期，`veil-shader.ts` 绘制主层／薄层错方向输运与五处局部错相半卷场，`veil-motion.ts` 管理连续运动及切档外观；`uTime`独立传入连续模拟时间，局部伸入、横拉、残痕与运输共享暂停/隐藏/行装降速生命周期。低／中／重主流候选为 12／20／28 逻辑 px/s；切档主前沿升 0.82 秒／降 1.02 秒，滞后尾层最晚 1.34 秒结束；快速改选从当前值追随，不重置纹理时间或排队。层位是世界→CSS基础阅读暗场→veil→文字，人物保护固定、文字／命中区不位移。默认播放并提供显式动／静、氛围及隐藏文字按钮；本次动态演示不因 OS 减少动态偏好自动静止，不改变 OS 或正式游戏设置。行装降速，关闭停 RAF；没有静态降级冒充 WebGL2 动态可行性。
 
 `capture.ts` 从实际 worldCanvas、CSS 暗场快照、实时 veilCanvas 和同 DOM 透明文字缓存合成 960×640 画布，用 captureStream／MediaRecorder 录制 10 秒低→中→重→低真实切档。DOM 预热在录像外完成，每帧不重新读 DOM、不重画另一套视效；WebGL preserveDrawingBuffer 支持真实帧采样。输出本地 WebM Blob，`sample.ts` 拥有视频／下载 URL 并在替换及销毁时释放。取消、隐藏、pagehide 和异常会释放录制 RAF、tracks 与监听；污染或空 SVG 快照明确报错。Root 已录得约 5 MB 的首个 960×640／10 秒片段，实际页面 console error 为空，包含 DOM.Iterable 的定向 strict 通过；最终帧序列及美术修订仍待本轮复核。记录归 `docs/reviews/artifacts/preparation-threat-motion-2026-10-10/validation.md`／`art-review.md`，不以技术通过代签观感。
 

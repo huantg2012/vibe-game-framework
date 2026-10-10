@@ -68,6 +68,6 @@ export class VeilMotion {
     const flowDelta = deltaSeconds * this.phaseSpeed;
     this.timeSeconds += flowDelta;
     // These are logical pixels transported per second, not noise-time nudges.
-    this.travelPixels += flowDelta * (8 + this.currentLevel * 7);
+    this.travelPixels += flowDelta * (12 + this.currentLevel * 8);
   }
 }

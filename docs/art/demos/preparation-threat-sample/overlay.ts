@@ -97,7 +97,8 @@ export function mountVeil(canvas: HTMLCanvasElement): VeilController {
   const actorUniform = gl.getUniformLocation(program, 'uActor');
   const levelsUniform = gl.getUniformLocation(program, 'uLevels');
   const travelUniform = gl.getUniformLocation(program, 'uTravel');
-  if (!resolutionUniform || !actorUniform || !levelsUniform || !travelUniform) {
+  const timeUniform = gl.getUniformLocation(program, 'uTime');
+  if (!resolutionUniform || !actorUniform || !levelsUniform || !travelUniform || !timeUniform) {
     deleteGpuResources();
     throw new Error('遮罩着色器缺少必要参数。');
   }
@@ -127,6 +128,7 @@ export function mountVeil(canvas: HTMLCanvasElement): VeilController {
     gl!.bindVertexArray(vertexArray);
     gl!.uniform2f(levelsUniform, motion.currentLevel, motion.trailLevel);
     gl!.uniform1f(travelUniform, motion.travelPixels);
+    gl!.uniform1f(timeUniform, motion.timeSeconds);
     gl!.drawArrays(gl!.TRIANGLES, 0, 3);
     frameCount++;
     lastDrawCpuMs = performance.now() - started;
