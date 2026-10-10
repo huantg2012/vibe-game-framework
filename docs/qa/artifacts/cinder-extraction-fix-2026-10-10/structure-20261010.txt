@@ -1,0 +1,163 @@
+{
+  "seed": 20261010,
+  "grade": "medium",
+  "sourceHash": "026976e2f0f1523df8fa7cd7c9201235ca09aaad35ec5453da6d4d29512014bc",
+  "worldId": "cinder-ridge",
+  "sourceMode": "DEV-only CSV geometry, production renderer and 20px body checks",
+  "width": 2304,
+  "height": 1792,
+  "bodySize": 20,
+  "baselineReachableBodySeats": 8051,
+  "reachableBodySeats": 30874,
+  "reachableBodyAreaPx": 1975936,
+  "areaMultiplier": 3.834803130045957,
+  "terrainFillRatio": 0.6772848462301587,
+  "solidTerrainRatio": 0.2156180623898565,
+  "bodyReachableRatio": 0.9999676113360324,
+  "unreachableBodySeats": 1,
+  "solidObjectCount": 20,
+  "spawnCandidate": "south-b",
+  "spawn": {
+    "x": 1476,
+    "y": 1556
+  },
+  "extraction": {
+    "x": 556,
+    "y": 204
+  },
+  "extractionSelection": {
+    "point": {
+      "x": 556,
+      "y": 204
+    },
+    "cell": 7269,
+    "pathDistancePx": 1733.0764773832516,
+    "interactionPathDistancePx": 1683.135351886297,
+    "euclideanDistancePx": 1635.329936129098,
+    "pathFraction": 0.8352578916748036,
+    "regionId": 0,
+    "distanceBand": 2,
+    "candidateCount": 14680,
+    "regionCount": 10
+  },
+  "extractionCandidateField": {
+    "reachableCount": 30874,
+    "maxPathDistancePx": 2074.8998538741153,
+    "minCandidatePathDistancePx": 964.54833995939,
+    "maxCandidatePathDistancePx": 2052.5079348883273,
+    "candidateCount": 14680,
+    "regionCount": 10,
+    "distanceBandCount": 3,
+    "regionCounts": {
+      "0": 1928,
+      "1": 1897,
+      "2": 1860,
+      "3": 2562,
+      "4": 2618,
+      "5": 870,
+      "6": 315,
+      "7": 581,
+      "8": 1145,
+      "9": 904
+    },
+    "distanceBandCounts": {
+      "0": 5229,
+      "1": 7252,
+      "2": 2199
+    }
+  },
+  "spawnRelocationPx": 3,
+  "extractionRelocationPx": 0,
+  "anchorRelocations": [
+    {
+      "id": "west-basin",
+      "distancePx": 1
+    },
+    {
+      "id": "middle-basin",
+      "distancePx": 41.77319714841084
+    },
+    {
+      "id": "east-basin",
+      "distancePx": 4
+    },
+    {
+      "id": "north-branch",
+      "distancePx": 5
+    },
+    {
+      "id": "south-branch",
+      "distancePx": 5.656854249492381
+    },
+    {
+      "id": "west-loop-from",
+      "distancePx": 4.242640687119286
+    },
+    {
+      "id": "west-loop-to",
+      "distancePx": 3.6055512754639896
+    },
+    {
+      "id": "west-loop-north",
+      "distancePx": 5
+    },
+    {
+      "id": "west-loop-south",
+      "distancePx": 4.242640687119286
+    },
+    {
+      "id": "east-loop-from",
+      "distancePx": 4.242640687119286
+    },
+    {
+      "id": "east-loop-to",
+      "distancePx": 0
+    },
+    {
+      "id": "east-loop-north",
+      "distancePx": 3
+    },
+    {
+      "id": "east-loop-south",
+      "distancePx": 2.23606797749979
+    }
+  ],
+  "routes": [
+    {
+      "id": "extraction",
+      "lengthPx": 2272
+    },
+    {
+      "id": "west-north",
+      "lengthPx": 1216
+    },
+    {
+      "id": "west-south",
+      "lengthPx": 1296
+    },
+    {
+      "id": "east-north",
+      "lengthPx": 2144
+    },
+    {
+      "id": "east-south",
+      "lengthPx": 1280
+    },
+    {
+      "id": "to-north-branch",
+      "lengthPx": 1528
+    },
+    {
+      "id": "to-south-branch",
+      "lengthPx": 1136
+    }
+  ],
+  "baselineBounds": {
+    "width": 1024,
+    "height": 768
+  },
+  "verificationBoundary": "No live encounter/economy or fogged playtest. Ordinary solids are physical, not a new line-of-sight rule."
+}
+west alternative route shared ratio: 0.006622516556291391
+east alternative route shared ratio: 0
+PASS: same physical grid, irregular boundary, body area and two alternative-route pairs

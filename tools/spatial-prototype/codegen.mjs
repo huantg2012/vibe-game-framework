@@ -7,6 +7,13 @@ const [configRows,erosionRows,volumeRows,anchorRows]=contents.map(parse);
 if(configRows.length!==1)throw new Error('One explicitly scoped spatial prototype required');
 const numeric = row => Object.fromEntries(Object.entries(row).map(([key,value])=>[key,/^-?\d+(\.\d+)?$/.test(value)?Number(value):value]));
 const config=numeric(configRows[0]);
+const configKeys = ['world_id', 'cols', 'rows', 'body_size', 'extraction_min_path_distance', 'extraction_min_euclidean_distance', 'extraction_min_path_fraction', 'extraction_max_path_fraction', 'extraction_clearance_half_size', 'extraction_region_cols', 'extraction_region_rows', 'extraction_distance_bands'];
+if (Object.keys(config).length !== configKeys.length || configKeys.some(key => !(key in config))) throw new Error('Unexpected spatial prototype config fields');
+for (const key of configKeys.filter(key => key !== 'world_id')) if (typeof config[key] !== 'number' || !Number.isFinite(config[key])) throw new Error(`Invalid spatial config number: ${key}`);
+for (const key of ['cols', 'rows', 'body_size', 'extraction_region_cols', 'extraction_region_rows', 'extraction_distance_bands']) if (!Number.isInteger(config[key]) || config[key] <= 0) throw new Error(`Invalid positive spatial config integer: ${key}`);
+if (!config.world_id || config.body_size !== 20 || config.extraction_min_path_distance <= 0 || config.extraction_min_euclidean_distance <= 0
+  || config.extraction_min_path_fraction < 0 || config.extraction_max_path_fraction > 1 || config.extraction_min_path_fraction >= config.extraction_max_path_fraction
+  || config.extraction_clearance_half_size < config.body_size / 2) throw new Error('Invalid spatial extraction range or body clearance');
 const erosion=erosionRows.map(row=>({id:row.id,points:row.points.split('|').map(point=>{const[x,y]=point.split(':').map(Number);if(!Number.isFinite(x)||!Number.isFinite(y))throw new Error('Invalid erosion point');return{x,y};})}));
 const volumes=volumeRows.map(numeric),anchors=anchorRows.map(numeric);
 for(const values of [erosion,volumes,anchors])if(new Set(values.map(row=>row.id)).size!==values.length)throw new Error('Duplicate spatial ID');

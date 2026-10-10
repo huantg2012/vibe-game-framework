@@ -9,6 +9,7 @@ import type { WorldProfile } from '@/generation/world-study/types';
 import { bodyHasSupport, bodyDisplacementFraction } from '@/systems/ai/physical-grid';
 import { TileGrid } from '@/systems/tile-grid';
 import { TileType, type Vector2 } from '@/types/game-types';
+import { buildSpatialExtractionField, selectSpatialExtraction } from './spatial-extraction-selection';
 
 export interface SpatialPrototypeAnchor {
   readonly id: string;
@@ -93,24 +94,36 @@ export function createSpatialPrototype(seed: number, grade: MasterGrade = 'mediu
   const candidateRows = SPATIAL_PROTOTYPE_ANCHORS.filter(row => row.role === 'candidate');
   const candidates = [...candidateRows].sort((a, b) => mix32(seed, `spatial-spawn-${a.id}`) - mix32(seed, `spatial-spawn-${b.id}`));
   const spawn = candidates[0]!;
-  const paired = candidateRows.filter(row => {
-    const distance = Math.hypot(row.x - spawn.x, row.y - spawn.y);
-    return distance >= CONFIG.anchor_pair_min_distance && distance <= CONFIG.anchor_pair_max_distance;
-  }).sort((a, b) => mix32(seed, `spatial-exit-${a.id}`) - mix32(seed, `spatial-exit-${b.id}`));
-  const exit = paired[0]; if (!exit) throw new Error('Spatial prototype has no near-side retreat pair');
   const branch = SPATIAL_PROTOTYPE_ANCHORS.find(row => row.role === 'branch')!;
   const region = SPATIAL_PROTOTYPE_ANCHORS.find(row => row.role === 'region')!;
   const definition: MasterDefinition = { ...source.nativeDefinition,
     id: `${CONFIG.world_id}-spatial-${grade}`, label: `${source.nativeDefinition.label} · 空间原型`,
     cols: CONFIG.cols, rows: CONFIG.rows, seed,
-    spawn_x: spawn.x, spawn_y: spawn.y, exit_x: exit.x, exit_y: exit.y,
+    // The first build provides physical terrain only. Its temporary exit is
+    // never exposed; placement is resolved from the completed body graph.
+    spawn_x: spawn.x, spawn_y: spawn.y, exit_x: spawn.x, exit_y: spawn.y,
     search_x: branch.x, search_y: branch.y, enemy_x: region.x, enemy_y: region.y,
     instances: SPATIAL_PROTOTYPE_VOLUMES, erosion: SPATIAL_PROTOTYPE_EROSION.map(row => row.points),
   };
-  const base = createMasterWorld(definition, seed, { grade: source.gradeDefinition, profile: source.profile });
-  const actualRetreatDistance = Math.hypot(base.layout.spawnPoint.x - base.layout.extractionPoint.position.x, base.layout.spawnPoint.y - base.layout.extractionPoint.position.y);
-  if (actualRetreatDistance < CONFIG.anchor_pair_min_distance || actualRetreatDistance > CONFIG.anchor_pair_max_distance)
-    throw new Error('Spatial prototype actual retreat pair escaped its near-side range');
+  const terrain = createMasterWorld(definition, seed, { grade: source.gradeDefinition, profile: source.profile });
+  const extractionField = buildSpatialExtractionField(new TileGrid(terrain.layout.tileMap), terrain.layout.spawnPoint, {
+    minPathDistancePx: CONFIG.extraction_min_path_distance,
+    minEuclideanDistancePx: CONFIG.extraction_min_euclidean_distance,
+    minPathFraction: CONFIG.extraction_min_path_fraction,
+    maxPathFraction: CONFIG.extraction_max_path_fraction,
+    clearanceHalfSize: CONFIG.extraction_clearance_half_size,
+    regionCols: CONFIG.extraction_region_cols,
+    regionRows: CONFIG.extraction_region_rows,
+    distanceBands: CONFIG.extraction_distance_bands,
+  });
+  const exit = selectSpatialExtraction(extractionField, seed);
+  // Rebuild deployment around the chosen exit, so the actual extraction,
+  // surface sample, frozen authoring definition and pollution reservations
+  // agree. Never move only the review marker.
+  const finalDefinition = { ...definition, exit_x: exit.point.x, exit_y: exit.point.y };
+  const base = createMasterWorld(finalDefinition, seed, { grade: source.gradeDefinition, profile: source.profile });
+  if (base.layout.extractionPoint.position.x !== exit.point.x || base.layout.extractionPoint.position.y !== exit.point.y)
+    throw new Error('Extraction placement changed after final physical deployment');
   const world: MasterWorld = { ...base, algorithmRevision: 6, appearance: source.appearance };
   const field = bodyField(world);
   const anchors: SpatialPrototypeAnchor[] = [
@@ -135,7 +148,7 @@ export function createSpatialPrototype(seed: number, grade: MasterGrade = 'mediu
     }
     routes.push({ id, label, points: simplify(simple), lengthPx: Math.max(0, simple.length - 1) * field.grid.tileSize });
   }
-  addRoute('retreat', '近侧撤离', ['spawn', 'extraction']);
+  addRoute('extraction', '可走撤离路线', ['spawn', 'extraction']);
   for (const side of ['west', 'east'] as const) for (const route of ['north', 'south'] as const)
     addRoute(`${side}-${route}`, `${side === 'west' ? '西脊' : '东脊'}${route === 'north' ? '北绕' : '南绕'}`, [`${side}-loop-from`, `${side}-loop-${route}`, `${side}-loop-to`]);
   for (const target of anchors.filter(row => row.role === 'branch')) addRoute(`to-${target.id}`, target.label, ['spawn', target.id]);
@@ -158,10 +171,11 @@ export function createSpatialPrototype(seed: number, grade: MasterGrade = 'mediu
     terrainFillRatio: matter / field.seats.length, solidTerrainRatio: solid / matter,
     bodyReachableRatio: field.count / supported, unreachableBodySeats: supported - field.count,
     solidObjectCount: definition.instances.filter(row => row.role === 'solid').length,
-    spawnCandidate: spawn.id, exitCandidate: exit.id, spawn: world.layout.spawnPoint, extraction: world.layout.extractionPoint.position,
-    actualRetreatDistancePx: actualRetreatDistance,
+    spawnCandidate: spawn.id, spawn: world.layout.spawnPoint, extraction: world.layout.extractionPoint.position,
+    extractionSelection: exit,
+    extractionCandidateField: extractionField.summary,
     spawnRelocationPx: Math.hypot(spawn.x - world.layout.spawnPoint.x, spawn.y - world.layout.spawnPoint.y),
-    extractionRelocationPx: Math.hypot(exit.x - world.layout.extractionPoint.position.x, exit.y - world.layout.extractionPoint.position.y),
+    extractionRelocationPx: 0,
     anchorRelocations: relocation, routes: routes.map(({ id, lengthPx }) => ({ id, lengthPx })),
     baselineBounds: { width: baseline.raster.width, height: baseline.raster.height },
     verificationBoundary: 'No live encounter/economy or fogged playtest. Ordinary solids are physical, not a new line-of-sight rule.',

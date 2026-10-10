@@ -1499,4 +1499,4 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 
 ### 余烬脊空间审阅入口（2026-10-10，DEV）
 
-`rift-spatial-prototype.html` / `src/dev/rift-spatial-prototype.ts` 仅在开发模式运行，专用 CSV 经 `tools/spatial-prototype/codegen.mjs` 编译后由 `rift-spatial-prototype-world.ts` 构造一个新空间样本。复用 MasterWorld、原生实体碰撞与 MasterSurfaceRenderer，完整地面烘焙不叠玩家视野迷雾；审阅路线/地点和碰撞是可关闭的第二张 canvas，不改变地形。无正式出征接线、保存读写、敌人/经济放大或玩家 HUD 改动。已烘焙帧静止展示，不启动游戏帧循环；重建与离页释放独立 GPU 上下文。范围见 `docs/tasks/cinder-spatial-prototype.md`。
+`rift-spatial-prototype.html` / `src/dev/rift-spatial-prototype.ts` 仅在开发模式运行，专用 CSV 经 `tools/spatial-prototype/codegen.mjs` 编译后由 `rift-spatial-prototype-world.ts` 构造一个新空间样本。复用 MasterWorld、原生实体碰撞与 MasterSurfaceRenderer，完整地面烘焙不叠玩家视野迷雾；审阅路线/地点和碰撞是可关闭的第二张 canvas，不改变地形。无正式出征接线、保存读写、敌人/经济放大或玩家 HUD 改动。已烘焙帧静止展示，不启动游戏帧循环；重建与离页释放独立 GPU 上下文。范围见 `docs/tasks/cinder-spatial-prototype.md`。`spatial-extraction-selection.ts`在实际20px身体八向可达图上筛选全图撤离候选，按距离层/空间区/位置种子抽选；`rift-spatial-prototype-world.ts`用选定坐标重新部署MasterWorld，确保布局、污染排除和诊断使用同一撤离点。没有近侧配对或最远点回退；参数来自专用CSV，不改变正式冻结生成器。

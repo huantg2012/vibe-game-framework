@@ -3,17 +3,19 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const out = path.resolve(process.env.QA_OUTPUT_DIR ?? 'docs/qa/artifacts/cinder-spatial-prototype-2026-10-10');
+const seed = Number(process.env.QA_SEED ?? 20261010);
+assert(Number.isSafeInteger(seed) && seed >= 0, 'QA_SEED must be a nonnegative integer');
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
 const page = await browser.newPage({ viewport: { width: 1600, height: 1180 }, deviceScaleFactor: 1 });
 const errors = [];
 page.on('pageerror', error => errors.push(String(error)));
 try {
-  await page.goto(`${process.env.GAME_URL ?? 'http://127.0.0.1:3027'}/rift-spatial-prototype.html?seed=20261010`);
+  await page.goto(`${process.env.GAME_URL ?? 'http://127.0.0.1:3027'}/rift-spatial-prototype.html?seed=${seed}`);
   await page.waitForFunction(() => window.__spatialPrototype?.getState().ready || !document.getElementById('error')?.hidden, null, { timeout: 180000 });
   const state = await page.evaluate(() => window.__spatialPrototype?.getState());
   assert(state?.ready, await page.locator('#error').textContent());
-  assert.equal(state.seed, 20261010);
+  assert.equal(state.seed, seed);
   for (const mode of ['clean', 'routes', 'collision']) {
     await page.locator(`#${mode}`).click();
     assert.equal(await page.evaluate(() => window.__spatialPrototype.getState().mode), mode);
