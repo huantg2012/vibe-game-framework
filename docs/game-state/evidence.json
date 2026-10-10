@@ -7835,5 +7835,60 @@
         "role": "art"
       }
     ]
+  },
+  {
+    "id": "COH-E204",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-10",
+    "revision": "2ee77886",
+    "scope": "F003/F038/F043：静态追踪库存、成熟回执、成长成功提交、上趟结果及共享轮换，形成备行状态联动B的计划；Design子代理复核事实资格、准备预算、两环节和防重复边界。",
+    "limitations": "本轮只改设计和进度；无新增运行文本或状态联动代码，无新实机验证。用户认可此前独立视效样例不证明本设计已实现；候选措辞待选择，正式备行B仍未接入。",
+    "sources": [
+      {
+        "path": "docs/tasks/preparation-threat-ux.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/specs/system-atmosphere-narration.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      },
+      {
+        "path": "src/systems/inventory-store.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/growth-purchases.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/inventory-presenter.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/contaminant-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/types/inventory-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/narrative/narration-memory.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/upgrades.csv",
+        "role": "data"
+      }
+    ]
   }
 ]
