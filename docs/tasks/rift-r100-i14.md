@@ -2,7 +2,7 @@
 status: ACTIVE
 created: 2026-10-09
 created-by: design agent / director
-last-modified-date: 2026-10-09
+last-modified-date: 2026-10-10
 acceptance: pending / release-review-preparation
 features: [COH-F052, COH-F001, COH-F002, COH-F003, COH-F004, COH-F006, COH-F007, COH-F008, COH-F011, COH-F012, COH-F013, COH-F014, COH-F021, COH-F023, COH-F037, COH-F041, COH-F044, COH-F045, COH-F049]
 ---
@@ -12,6 +12,8 @@ features: [COH-F052, COH-F001, COH-F002, COH-F003, COH-F004, COH-F006, COH-F007,
 > **TL;DR：** 用户已授权推进I14。沿现有六项发布门，先核有效RC与继承证据，执行新增48趟的分批连续抽样，准备当前浏览器的恢复／性能及可直接体验的视听材料，再完成真实弱设备、实际审听／视觉疲劳与用户总验收。所有未跑、未听、未审项保持pending；技术准备不因最终人审未到而停下，不解锁I28或扩游戏机制。
 
 ## 目标、来源与所有权
+
+**2026-10-10 P49 设计接续：** 用户已确认自由进入并要求等级威胁即刻可感知。选择背景承担三档主要情绪，A解释规则、B文学化烘托。当前仅制定并审查[方案与计划](preparation-threat-ux.md)，新视听尚未实施，原两环节生产/QA与历史RC分别保留，不以计划收口I14。
 
 本轮实现[R100总合同](rift-r100.md)及[唯一台账](../progress/rift-r100.json)的I14退出条件：108个有效正式世界、324个低／中／重资格格、六项发布门及对应RC的用户最终验收全部成立，才可标RELEASED。本轮不是重新设计世界、经济或物件。世界观与核心循环保持：可选污染等级，具体异世界未知；观察、有限停留、真实消耗、带回与净化点维护相互作用。
 

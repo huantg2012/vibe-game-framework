@@ -3,7 +3,7 @@ status: APPROVED-FOR-IMPLEMENTATION
 phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
-last-modified-date: 2026-10-09
+last-modified-date: 2026-10-10
 last-modified-by: design（P49按用户决定改为先选污染、再配行装；复用净化点单列浏览，领域规则及出发原子性不变）
 interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes, system-map-generation]
 exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, RiftWorldHistory, inventoryStore.getRiftWorldHistory(), inventoryStore.reconcileExpandedToolSlots(previousSlotCount), SaveLoadSnapshot, saveManager.captureLoadSnapshot(), saveManager.matchesLoadSnapshot(snapshot), loadExpedition]
@@ -221,6 +221,14 @@ InventoryStore是唯一物品及装配引用所有者。物品仍区分weapon和
 结构自审对应U1/U5/U6/U7/U8/U9/U12：世界内读数载体、既有术语与真实资格、左侧世界保护区、完整键盘路径、空态与缺口说明、标签/值/状态独立及具名参考已定义。此为设计自审，不是运行通过或用户审美签字。
 
 **已锁定**：先污染后行装、两环节之间能返回、第二环节才出发、单列并与净化点物件浏览一致；已有装备规则与世界未知性保持。**待验证**：正常显示尺寸下当前决定与下一动作能先于辅助文字被读到；行装页在4/5槽和最长合法内容下仍清晰；两个环节的返回与首进不会让玩家丢失操作位置。没有需要用户补定才能实现的规则，实际效果由用户复看，不能再以此前总览的机器通过记P49结案。
+
+### 5.12 污染选择的威胁感知增量（2026-10-10，计划中）
+
+用户已明确接受低/中/重自由进入；原“完成中污染搜撤后开放重度”的候选条件不实施。既有出发资格与本节两环节交互保持。新目标是在选级时立即感知低档相对安全、中档有压力但有信心、重档高度危险需谨慎决定。
+
+信息采用两种职责：A 为简洁准确的公开规则说明，按危险判断→原因→应对→收益排列；B 为角色当下感官与身体反应的文学低语，与 A 分区、低频出现。背景的整体构图、层次及后续动效承担主要压力表达，字体/颜色只辅助；不用新的装备门、世界预览、保证收益或倒计时增加选择负担。行装页保留选档短摘要，背景表现收敛，不暗示装备后地图降档。
+
+具体制作方案、候选文案、分批依赖和验证问题见[方案与计划](../tasks/preparation-threat-ux.md)。其数值/文案例稿均为待实景校准的制作输入；最终交互规则仍原地回填本节，表现归 Kit，实际运行文案归 CSV。该增量尚未实现，不改变上文 `8cbd86ec` 的生产事实，也不沿用既有 UI 测试证明新体验。
 
 ## 6. 裂隙唯一携带限制与拾获界面
 
