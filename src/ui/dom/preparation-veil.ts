@@ -53,6 +53,10 @@ export function mountVeil(canvas: HTMLCanvasElement, options: { preserveDrawingB
     powerPreference: 'high-performance',
   });
   if (!gl) throw new Error('动态遮罩需要 WebGL 2；当前环境将保留基础阅读暗场。');
+  // The panel owns this canvas. Removing it from the DOM or deleting shader
+  // objects does not release its context slot; repeated visits can evict the
+  // world's renderer before the browser happens to collect retired canvases.
+  const contextLifetime = gl.getExtension('WEBGL_lose_context');
 
   let vertex: WebGLShader | null = null;
   let fragment: WebGLShader | null = null;
@@ -63,6 +67,10 @@ export function mountVeil(canvas: HTMLCanvasElement, options: { preserveDrawingB
     if (program) { gl!.deleteProgram(program); program = null; }
     if (vertex) { gl!.deleteShader(vertex); vertex = null; }
     if (fragment) { gl!.deleteShader(fragment); fragment = null; }
+  }
+  function releaseGpuResources(): void {
+    deleteGpuResources();
+    if (!gl!.isContextLost()) contextLifetime?.loseContext();
   }
   function compile(type: number, source: string): WebGLShader {
     const shader = gl!.createShader(type);
@@ -88,7 +96,7 @@ export function mountVeil(canvas: HTMLCanvasElement, options: { preserveDrawingB
     vertexArray = gl.createVertexArray();
     if (!vertexArray) throw new Error('无法创建遮罩顶点对象。');
   } catch (error) {
-    deleteGpuResources();
+    releaseGpuResources();
     throw error;
   }
 
@@ -99,7 +107,7 @@ export function mountVeil(canvas: HTMLCanvasElement, options: { preserveDrawingB
   const timeUniform = gl.getUniformLocation(program, 'uTime');
   const phaseUniform = gl.getUniformLocation(program, 'uEquipment');
   if (!resolutionUniform || !actorUniform || !levelsUniform || !travelUniform || !timeUniform) {
-    deleteGpuResources();
+    releaseGpuResources();
     throw new Error('遮罩着色器缺少必要参数。');
   }
   gl.useProgram(program);
@@ -235,8 +243,10 @@ export function mountVeil(canvas: HTMLCanvasElement, options: { preserveDrawingB
       if (disposed) return;
       disposed = true;
       stopFrames();
+      // Stop error/restoration handlers before intentionally losing the owned
+      // context. Reopening mounts a new canvas, never restores this retired one.
       abort.abort();
-      deleteGpuResources();
+      releaseGpuResources();
       canvas.dataset.ready = 'false';
     },
   };

@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-10",
+  "baseRevision": "7890dd69",
+  "scope": "PI-01/P1 and PI-03/P3 only",
+  "sourceSha256": {
+    "src/ui/dom/preparation-veil.ts": "e94d6e1200c5c6ce6d005216721771b0f330a92996c6d8b155f3ee3118cd0a8f",
+    "src/narrative/preparation-narration.ts": "42b3dbcc82462b5f7c893d53d85d94b3abb43e58e1297e5caea6b2989b5a8e6d",
+    "tools/inventory/check-preparation-presentation.mjs": "9aa97281b05dd88cf4323bf839b7fc060a6f7e505d396354f309515e41fb1e5e",
+    "tools/qa/check-preparation-narration.ts": "2562b7592eedcd0e0244afd2a07705330dbd75e850adbfa8ecc31e7a55e99a37",
+    "docs/specs/system-atmosphere-narration.md": "0b35e9f87de187c7748f5829192c6c414c88e0c79964612faa409e6361a66db7"
+  },
+  "checks": {
+    "typecheck": "pass",
+    "build": "pass; existing large-chunk warning",
+    "check:preparation": "pass",
+    "check:atmosphere": "pass (P3 agent)",
+    "browserPresentation": "pass: p1/final/vfx-report.json",
+    "oldP3Reproducer": "returned empty; secondWornUtterance false",
+    "art": "source compliance only"
+  },
+  "remaining": [
+    "PI-02/P2 static grade fallback",
+    "P49/I14 user acceptance"
+  ],
+  "storage": "DEV memory fixture; user save not read or written",
+  "stateCheck": {
+    "errors": 0,
+    "warnings": 2,
+    "stale": 774,
+    "unowned": 0,
+    "features": 53,
+    "evidence": 208,
+    "baseline": "not refreshed; historical fingerprint drift retained"
+  }
+}

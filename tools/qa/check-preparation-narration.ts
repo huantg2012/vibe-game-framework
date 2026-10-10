@@ -161,3 +161,75 @@ assert.equal(improvedPreparationWeapon(
  {id:'standard',kind:'weapon',weapon:createWeaponInstance('crowbar_good_standard',true,'standard'),location:{kind:'carried'}},
  {id:'light',kind:'weapon',weapon:createWeaponInstance('crowbar_good_light',true,'light'),location:{kind:'carried'}}),false,
  'Same quality lighter variant does not imply melee strength');
+
+function wornWeaponFixture() {
+ const store = fixture();
+ const state = store.getState();
+ const original = state.items.find(item => item.id === 'old')!;
+ if (original.kind !== 'weapon') throw Error('fixture');
+ original.weapon.usesRemaining = 10;
+ state.items.push({ id: 'alternate', kind: 'weapon', weapon: createWeaponInstance('crowbar_plain', true, 'alternate'), location: { kind: 'stash' } });
+ assert(store.loadState(state));
+ return store;
+}
+function belongsTo(pool: keyof typeof PREPARATION_NARRATION_POOLS, text: string): boolean {
+ return PREPARATION_NARRATION_POOLS[pool].lines.some(row => row.text === text);
+}
+const equipment = { ...low, visible: false };
+function advancePreparation(journey: PreparationNarrationJourney, elapsedMs = 256): string {
+ let result = '';
+ for (let elapsed = 0; elapsed < elapsedMs; elapsed += 16) result = journey.update(16, low);
+ return result;
+}
+
+// PI-03: intermediate loss of qualification must not survive restoration of the read context.
+{
+ const store = wornWeaponFixture();
+ const initialState = store.getState();
+ const adapter = new PreparationNarrationAdapter(store);
+ const journey = adapter.createJourney();
+ assert(belongsTo('prepare.worn_weapon', journey.update(250, low)));
+ for (let round = 0; round < 3; round++) {
+  journey.update(0, equipment);
+  assert(store.prepareWeapon('alternate').ok); journey.update(16, equipment);
+  assert(store.prepareWeapon('old').ok); journey.update(16, equipment);
+  assert.deepEqual(store.getState(), initialState, 'A→B→A restores the actual inventory state');
+  assert.equal(advancePreparation(journey), '', 'Restoring the read weapon must not draw another line');
+ }
+ // The unused extra opportunity still belongs to a later successfully committed growth event.
+ journey.update(0, equipment);
+ eventBus.emit(GameEvent.GROWTH_PURCHASED, { upgradeId: 'growth_vitality', newLevel: 1 });
+ assert(belongsTo('prepare.body_growth', advancePreparation(journey)));
+ journey.update(6000, low); journey.update(0, equipment);
+ eventBus.emit(GameEvent.GROWTH_PURCHASED, { upgradeId: 'growth_vitality', newLevel: 2 });
+ assert.equal(advancePreparation(journey), '', 'The genuine update still consumes the one extra opportunity');
+ journey.destroy(); adapter.destroy();
+}
+// A genuinely different held state may invalidate the old claim and fall back, after the full dwell.
+{
+ const store = wornWeaponFixture();
+ const adapter = new PreparationNarrationAdapter(store);
+ const journey = adapter.createJourney();
+ assert(belongsTo('prepare.worn_weapon', journey.update(250, low)));
+ journey.update(0, equipment);
+ assert(store.prepareWeapon('alternate').ok); journey.update(16, equipment);
+ assert.equal(advancePreparation(journey, 240), '');
+ assert(belongsTo('prepare.baseline.low', journey.update(16, low)), 'Invalidation must not restart the dwell every frame');
+ journey.destroy(); adapter.destroy();
+}
+// A strength event that no longer qualifies at return cannot spend the extra budget either.
+{
+ const store = wornWeaponFixture();
+ const adapter = new PreparationNarrationAdapter(store);
+ const journey = adapter.createJourney();
+ assert(belongsTo('prepare.worn_weapon', journey.update(250, low)));
+ journey.update(0, equipment);
+ assert(store.prepareWeapon('strong').ok); journey.update(16, equipment);
+ assert(store.prepareWeapon('old').ok); journey.update(16, equipment);
+ assert.equal(advancePreparation(journey), '', 'An abandoned upgrade cannot refresh the restored worn context');
+ journey.update(0, equipment);
+ assert(store.prepareWeapon('strong').ok); journey.update(16, equipment);
+ assert(belongsTo('prepare.new_weapon.low', advancePreparation(journey)), 'The unconsumed upgrade can speak once when actually held');
+ journey.destroy(); adapter.destroy();
+}
+console.log('PASS PI-03: restored equipment stays silent; later growth keeps its extra opportunity; genuine replacement and live upgrade still speak');

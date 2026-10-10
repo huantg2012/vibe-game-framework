@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-10",
+  "features": [
+    "COH-F003",
+    "COH-F038"
+  ],
+  "commit": "7890dd698d06723f7753b4a6eb591cf07d54e825",
+  "worktree": "P1 source modification and QA tool present; see source hashes",
+  "browser": "Google Chrome 155.0.8059.39",
+  "node": "v22.14.0",
+  "platform": "darwin",
+  "entry": "http://127.0.0.1:3042/prepare-review.html?fixture=equipped",
+  "isolation": "Independent Playwright Chromium context; entry replaces localStorage and SaveManager with memory stores; no player saves touched",
+  "sourceSha256": {
+    "src/ui/dom/preparation-veil.ts": "e94d6e1200c5c6ce6d005216721771b0f330a92996c6d8b155f3ee3118cd0a8f",
+    "src/ui/dom/inventory-panel.ts": "24fef6bc4cb9e66a6cdbf3dd20df34b73dfc8b4508727555694029307e8c3e78",
+    "src/ui/dom/preparation-veil-motion.ts": "b93f48dc8c7ed9bf3235d09045decb25a3f322855110627e3a34102cbcc65caa",
+    "src/ui/dom/preparation-veil-shader.ts": "370a0301ba6155e78acf8d933bdae598d333c051abadc5f3527b13464d7bba09",
+    "docs/art/demos/preparation-threat-sample/overlay.ts": "e4becd1c5741e6899cba051f21a3e5bd275c89d0852e86c6f063a94723f12564",
+    "tools/inventory/check-preparation-presentation.mjs": "9aa97281b05dd88cf4323bf839b7fc060a6f7e505d396354f309515e41fb1e5e"
+  },
+  "report": "final/vfx-report.json",
+  "initialRun": "vfx-report.json: HMR/page reload interrupted the run before first grade assertion; not a production failure",
+  "limitations": [
+    "Chrome on this macOS host only",
+    "No added real-device coverage",
+    "No verification of WEBGL_lose_context extension unavailable",
+    "P2 static fallback remains open; context-loss navigation assertion is not a P2 visual pass",
+    "Sample checks shared wrapper disposal/new-canvas rebuild, not the complete recorder or page HMR lifecycle",
+    "No continuous visual/aesthetic or full GPU-performance acceptance"
+  ]
+}
