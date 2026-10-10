@@ -1,0 +1,934 @@
+{
+  "world": "cinder-ridge",
+  "seed": 20261010,
+  "method": "Production R100 gym; browser-only game reference, visibility bypass, hidden fog overlays, full-map camera at zoom 1, motion frozen. No production source or save changes.",
+  "captures": [
+    {
+      "grade": "low",
+      "width": 1024,
+      "height": 768,
+      "recipe": {
+        "version": 3,
+        "requestedSeed": 20261010,
+        "paintGeometryVersion": 2,
+        "profile": {
+          "id": "cinder-ridge",
+          "label": "余烬脊",
+          "description": "余烬脊的原生材料与完整搜撤地段",
+          "material": "granular",
+          "surface": {
+            "substrate": "granular",
+            "coating": "granular",
+            "organization": "bands",
+            "coverage": 0.46,
+            "wear": 0.52,
+            "deposits": 0.52,
+            "scale": 1.1,
+            "relief": 0.52,
+            "contrast": 0.75,
+            "regionScale": 1.15,
+            "quietness": 0.48,
+            "formScale": 1.3,
+            "fragmentation": 0.65,
+            "accentCoverage": 0.02
+          },
+          "palette": {
+            "void": 592137,
+            "shadow": 1381653,
+            "floorDeep": 3284260,
+            "floor": 7090991,
+            "floorLight": 11102027,
+            "materialDark": 4400936,
+            "materialMid": 9584953,
+            "materialLight": 13334867,
+            "faceLight": 14920823,
+            "accentDim": 5395026,
+            "accent": 11184810,
+            "accentLight": 13421772,
+            "peak": 15658734,
+            "actorDark": 1842204,
+            "actorMid": 12237498,
+            "actorLight": 16777215,
+            "ground": 7090991,
+            "groundLight": 11102027,
+            "groundDark": 3284260,
+            "wall": 9584953,
+            "wallLight": 13334867,
+            "wallDark": 4400936
+          }
+        },
+        "appearance": {
+          "version": 1,
+          "worldId": "cinder-ridge",
+          "ground": {
+            "dark": 3284260,
+            "mid": 7090991,
+            "light": 11102027
+          },
+          "solid": {
+            "dark": 4400936,
+            "mid": 9584953,
+            "light": 13334867
+          },
+          "cleaved": {
+            "dark": 6764594,
+            "mid": 13006163,
+            "light": 14920823
+          },
+          "secondary": {
+            "dark": 3159616,
+            "mid": 5856364,
+            "light": 9606048
+          },
+          "groundPattern": "grains",
+          "patternScale": 104,
+          "patternStrength": 0.73,
+          "secondaryCoverage": 0.22,
+          "textureContrast": 1.18,
+          "quietCoverage": 0.27
+        },
+        "space": {
+          "id": "open-scars",
+          "label": "疏落蚀坑",
+          "voidFraction": 0.09,
+          "crackFraction": 0.2,
+          "holeScale": 1,
+          "directionality": 0.2,
+          "clustering": 0.25
+        },
+        "contentFragmentTypeId": "frag-outdoor",
+        "nativeDefinition": {
+          "id": "cinder-ridge-low",
+          "family": "granular-ridge",
+          "grade": "low",
+          "label": "余烬脊",
+          "profile": "cinder-ridge",
+          "cols": 32,
+          "rows": 24,
+          "seed": 20261002,
+          "spawn_x": 196,
+          "spawn_y": 588,
+          "exit_x": 148,
+          "exit_y": 664,
+          "search_x": 516,
+          "search_y": 580,
+          "enemy_x": 840,
+          "enemy_y": 172,
+          "axis": -0.28,
+          "light_radius": 112,
+          "emission": 0.35,
+          "motion_period": 19,
+          "ground_quietness": 0.84,
+          "ground_contrast": 0.5,
+          "ground_coverage": 0.26,
+          "ground_material_blend": 0.32,
+          "instances": [
+            {
+              "id": 1,
+              "family": "granular-ridge",
+              "role": "relief",
+              "x": 492,
+              "y": 430,
+              "rotation": -0.2,
+              "length": 540,
+              "width": 268,
+              "height": 6,
+              "thickness": 2,
+              "fold": 0.2816,
+              "branches": 3,
+              "opening": 0.55,
+              "distortion": 0.5456,
+              "constructionVersion": 2
+            },
+            {
+              "id": 2,
+              "family": "granular-ridge",
+              "role": "solid",
+              "x": 410,
+              "y": 325,
+              "rotation": -0.18,
+              "length": 354,
+              "width": 244,
+              "height": 64,
+              "thickness": 13,
+              "fold": 0.6335999999999999,
+              "branches": 3,
+              "opening": 0.72,
+              "distortion": 0.748,
+              "constructionVersion": 2
+            },
+            {
+              "id": 3,
+              "family": "granular-ridge",
+              "role": "solid",
+              "x": 750,
+              "y": 480,
+              "rotation": 0.55,
+              "length": 252,
+              "width": 138,
+              "height": 22,
+              "thickness": 8,
+              "fold": 0.22,
+              "branches": 6,
+              "opening": 0.25,
+              "distortion": 0.5104,
+              "constructionVersion": 2
+            }
+          ],
+          "erosion": [
+            [
+              {
+                "x": 668,
+                "y": 424
+              },
+              {
+                "x": 704,
+                "y": 416
+              },
+              {
+                "x": 752,
+                "y": 440
+              },
+              {
+                "x": 744,
+                "y": 464
+              },
+              {
+                "x": 692,
+                "y": 454
+              }
+            ]
+          ]
+        },
+        "gradeDefinition": {
+          "id": "low",
+          "version": 1,
+          "label": "低污染",
+          "status": "dev-masters",
+          "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+          "paintCount": 2,
+          "paintSubstrate": "oil_film",
+          "paintContinuity": "monolith",
+          "paintCoverage": "infiltrate",
+          "volumeCount": 1,
+          "volumeSubstrate": "gas_mass",
+          "volumeCoverage": "infiltrate",
+          "volumeCols": 3,
+          "volumeRows": 3,
+          "chaosStartRate": 0.24,
+          "chaosEndRate": 0.34,
+          "chaosRampStartSeconds": 90,
+          "chaosRampEndSeconds": 210
+        },
+        "contentDefinition": {
+          "grade_id": "low",
+          "version": 2,
+          "status": "production-candidate",
+          "label": "低污染",
+          "public_risk": "污染较少，混乱增长较慢",
+          "public_preparation": "观察路线，补充行装",
+          "public_reward": "深入仍需承担路程",
+          "enemy_count": 2,
+          "kindling_safe_count": 1,
+          "kindling_contested_count": 2,
+          "kindling_deep_count": 1,
+          "kindling_safe_value": 1,
+          "kindling_contested_value": 2,
+          "kindling_deep_value": 4,
+          "contaminant_safe_count": 1,
+          "contaminant_contested_count": 1,
+          "contaminant_deep_count": 0
+        },
+        "package": {
+          "id": "r100-cinder-ridge",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "c424234a",
+          "grade": "low"
+        }
+      },
+      "metadata": {
+        "world": "r100-cinder-ridge",
+        "space": "cinder-ridge-low",
+        "contentFragmentTypeId": "frag-outdoor",
+        "requestedSeed": 20261010,
+        "effectiveSeed": 20261010,
+        "attempt": 0,
+        "rejected": [],
+        "signature": "64992c9b",
+        "bodySize": 20,
+        "supportTileSize": 8,
+        "hostTileSize": 32,
+        "reachableBodySeats": 8155,
+        "extractionRoutePx": 91.88225099390857
+      },
+      "viewport": {
+        "x": 0,
+        "y": 0,
+        "zoom": 1
+      },
+      "fogVisible": false
+    },
+    {
+      "grade": "medium",
+      "width": 1024,
+      "height": 768,
+      "recipe": {
+        "version": 3,
+        "requestedSeed": 20261010,
+        "paintGeometryVersion": 2,
+        "profile": {
+          "id": "cinder-ridge",
+          "label": "余烬脊",
+          "description": "余烬脊的原生材料与完整搜撤地段",
+          "material": "granular",
+          "surface": {
+            "substrate": "granular",
+            "coating": "granular",
+            "organization": "bands",
+            "coverage": 0.46,
+            "wear": 0.52,
+            "deposits": 0.52,
+            "scale": 1.1,
+            "relief": 0.52,
+            "contrast": 0.75,
+            "regionScale": 1.15,
+            "quietness": 0.48,
+            "formScale": 1.3,
+            "fragmentation": 0.65,
+            "accentCoverage": 0.02
+          },
+          "palette": {
+            "void": 592137,
+            "shadow": 1381653,
+            "floorDeep": 3284260,
+            "floor": 7090991,
+            "floorLight": 11102027,
+            "materialDark": 4400936,
+            "materialMid": 9584953,
+            "materialLight": 13334867,
+            "faceLight": 14920823,
+            "accentDim": 5395026,
+            "accent": 11184810,
+            "accentLight": 13421772,
+            "peak": 15658734,
+            "actorDark": 1842204,
+            "actorMid": 12237498,
+            "actorLight": 16777215,
+            "ground": 7090991,
+            "groundLight": 11102027,
+            "groundDark": 3284260,
+            "wall": 9584953,
+            "wallLight": 13334867,
+            "wallDark": 4400936
+          }
+        },
+        "appearance": {
+          "version": 1,
+          "worldId": "cinder-ridge",
+          "ground": {
+            "dark": 3284260,
+            "mid": 7090991,
+            "light": 11102027
+          },
+          "solid": {
+            "dark": 4400936,
+            "mid": 9584953,
+            "light": 13334867
+          },
+          "cleaved": {
+            "dark": 6764594,
+            "mid": 13006163,
+            "light": 14920823
+          },
+          "secondary": {
+            "dark": 3159616,
+            "mid": 5856364,
+            "light": 9606048
+          },
+          "groundPattern": "grains",
+          "patternScale": 104,
+          "patternStrength": 0.73,
+          "secondaryCoverage": 0.22,
+          "textureContrast": 1.18,
+          "quietCoverage": 0.27
+        },
+        "space": {
+          "id": "open-scars",
+          "label": "疏落蚀坑",
+          "voidFraction": 0.09,
+          "crackFraction": 0.2,
+          "holeScale": 1,
+          "directionality": 0.2,
+          "clustering": 0.25
+        },
+        "contentFragmentTypeId": "frag-outdoor",
+        "nativeDefinition": {
+          "id": "cinder-ridge-medium",
+          "family": "granular-ridge",
+          "grade": "medium",
+          "label": "余烬脊",
+          "profile": "cinder-ridge",
+          "cols": 32,
+          "rows": 24,
+          "seed": 20261002,
+          "spawn_x": 196,
+          "spawn_y": 588,
+          "exit_x": 148,
+          "exit_y": 664,
+          "search_x": 516,
+          "search_y": 580,
+          "enemy_x": 840,
+          "enemy_y": 172,
+          "axis": -0.28,
+          "light_radius": 132,
+          "emission": 0.55,
+          "motion_period": 16,
+          "ground_quietness": 0.84,
+          "ground_contrast": 0.5,
+          "ground_coverage": 0.26,
+          "ground_material_blend": 0.32,
+          "instances": [
+            {
+              "id": 1,
+              "family": "granular-ridge",
+              "role": "relief",
+              "x": 492,
+              "y": 430,
+              "rotation": -0.2,
+              "length": 540,
+              "width": 268,
+              "height": 6,
+              "thickness": 2,
+              "fold": 0.32,
+              "branches": 3,
+              "opening": 0.55,
+              "distortion": 0.62,
+              "constructionVersion": 2
+            },
+            {
+              "id": 2,
+              "family": "granular-ridge",
+              "role": "solid",
+              "x": 410,
+              "y": 325,
+              "rotation": -0.18,
+              "length": 354,
+              "width": 244,
+              "height": 64,
+              "thickness": 13,
+              "fold": 0.72,
+              "branches": 3,
+              "opening": 0.72,
+              "distortion": 0.85,
+              "constructionVersion": 2
+            },
+            {
+              "id": 3,
+              "family": "granular-ridge",
+              "role": "solid",
+              "x": 750,
+              "y": 480,
+              "rotation": 0.55,
+              "length": 252,
+              "width": 138,
+              "height": 22,
+              "thickness": 8,
+              "fold": 0.25,
+              "branches": 6,
+              "opening": 0.25,
+              "distortion": 0.58,
+              "constructionVersion": 2
+            }
+          ],
+          "erosion": [
+            [
+              {
+                "x": 632,
+                "y": 424
+              },
+              {
+                "x": 696,
+                "y": 400
+              },
+              {
+                "x": 776,
+                "y": 424
+              },
+              {
+                "x": 804,
+                "y": 464
+              },
+              {
+                "x": 764,
+                "y": 488
+              },
+              {
+                "x": 700,
+                "y": 460
+              },
+              {
+                "x": 656,
+                "y": 464
+              }
+            ],
+            [
+              {
+                "x": 216,
+                "y": 200
+              },
+              {
+                "x": 288,
+                "y": 176
+              },
+              {
+                "x": 332,
+                "y": 200
+              },
+              {
+                "x": 316,
+                "y": 232
+              },
+              {
+                "x": 248,
+                "y": 240
+              }
+            ]
+          ]
+        },
+        "gradeDefinition": {
+          "id": "medium",
+          "version": 1,
+          "label": "中污染",
+          "status": "dev-masters",
+          "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+          "paintCount": 4,
+          "paintSubstrate": "oil_film",
+          "paintContinuity": "monolith",
+          "paintCoverage": "rewrite",
+          "volumeCount": 2,
+          "volumeSubstrate": "gas_mass",
+          "volumeCoverage": "rewrite",
+          "volumeCols": 4,
+          "volumeRows": 3,
+          "chaosStartRate": 0.42,
+          "chaosEndRate": 0.6,
+          "chaosRampStartSeconds": 60,
+          "chaosRampEndSeconds": 180
+        },
+        "contentDefinition": {
+          "grade_id": "medium",
+          "version": 2,
+          "status": "production-candidate",
+          "label": "中污染",
+          "public_risk": "侵蚀更广，久留代价更高",
+          "public_preparation": "按行装选择绕行或穿越",
+          "public_reward": "更多收获在较深处",
+          "enemy_count": 3,
+          "kindling_safe_count": 1,
+          "kindling_contested_count": 2,
+          "kindling_deep_count": 2,
+          "kindling_safe_value": 1,
+          "kindling_contested_value": 2,
+          "kindling_deep_value": 4,
+          "contaminant_safe_count": 1,
+          "contaminant_contested_count": 1,
+          "contaminant_deep_count": 1
+        },
+        "package": {
+          "id": "r100-cinder-ridge",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "55f58dd0",
+          "grade": "medium"
+        }
+      },
+      "metadata": {
+        "world": "r100-cinder-ridge",
+        "space": "cinder-ridge-medium",
+        "contentFragmentTypeId": "frag-outdoor",
+        "requestedSeed": 20261010,
+        "effectiveSeed": 20261010,
+        "attempt": 0,
+        "rejected": [],
+        "signature": "e04c901e",
+        "bodySize": 20,
+        "supportTileSize": 8,
+        "hostTileSize": 32,
+        "reachableBodySeats": 8051,
+        "extractionRoutePx": 91.88225099390857
+      },
+      "viewport": {
+        "x": 0,
+        "y": 0,
+        "zoom": 1
+      },
+      "fogVisible": false
+    },
+    {
+      "grade": "severe",
+      "width": 1024,
+      "height": 768,
+      "recipe": {
+        "version": 3,
+        "requestedSeed": 20261010,
+        "paintGeometryVersion": 2,
+        "profile": {
+          "id": "cinder-ridge",
+          "label": "余烬脊",
+          "description": "余烬脊的原生材料与完整搜撤地段",
+          "material": "granular",
+          "surface": {
+            "substrate": "granular",
+            "coating": "granular",
+            "organization": "bands",
+            "coverage": 0.46,
+            "wear": 0.52,
+            "deposits": 0.52,
+            "scale": 1.1,
+            "relief": 0.52,
+            "contrast": 0.75,
+            "regionScale": 1.15,
+            "quietness": 0.48,
+            "formScale": 1.3,
+            "fragmentation": 0.65,
+            "accentCoverage": 0.02
+          },
+          "palette": {
+            "void": 592137,
+            "shadow": 1381653,
+            "floorDeep": 3284260,
+            "floor": 7090991,
+            "floorLight": 11102027,
+            "materialDark": 4400936,
+            "materialMid": 9584953,
+            "materialLight": 13334867,
+            "faceLight": 14920823,
+            "accentDim": 5395026,
+            "accent": 11184810,
+            "accentLight": 13421772,
+            "peak": 15658734,
+            "actorDark": 1842204,
+            "actorMid": 12237498,
+            "actorLight": 16777215,
+            "ground": 7090991,
+            "groundLight": 11102027,
+            "groundDark": 3284260,
+            "wall": 9584953,
+            "wallLight": 13334867,
+            "wallDark": 4400936
+          }
+        },
+        "appearance": {
+          "version": 1,
+          "worldId": "cinder-ridge",
+          "ground": {
+            "dark": 3284260,
+            "mid": 7090991,
+            "light": 11102027
+          },
+          "solid": {
+            "dark": 4400936,
+            "mid": 9584953,
+            "light": 13334867
+          },
+          "cleaved": {
+            "dark": 6764594,
+            "mid": 13006163,
+            "light": 14920823
+          },
+          "secondary": {
+            "dark": 3159616,
+            "mid": 5856364,
+            "light": 9606048
+          },
+          "groundPattern": "grains",
+          "patternScale": 104,
+          "patternStrength": 0.73,
+          "secondaryCoverage": 0.22,
+          "textureContrast": 1.18,
+          "quietCoverage": 0.27
+        },
+        "space": {
+          "id": "open-scars",
+          "label": "疏落蚀坑",
+          "voidFraction": 0.09,
+          "crackFraction": 0.2,
+          "holeScale": 1,
+          "directionality": 0.2,
+          "clustering": 0.25
+        },
+        "contentFragmentTypeId": "frag-outdoor",
+        "nativeDefinition": {
+          "id": "cinder-ridge-severe",
+          "family": "granular-ridge",
+          "grade": "severe",
+          "label": "余烬脊",
+          "profile": "cinder-ridge",
+          "cols": 32,
+          "rows": 24,
+          "seed": 20261002,
+          "spawn_x": 196,
+          "spawn_y": 588,
+          "exit_x": 148,
+          "exit_y": 664,
+          "search_x": 516,
+          "search_y": 580,
+          "enemy_x": 840,
+          "enemy_y": 172,
+          "axis": -0.28,
+          "light_radius": 154,
+          "emission": 0.72,
+          "motion_period": 14,
+          "ground_quietness": 0.84,
+          "ground_contrast": 0.5,
+          "ground_coverage": 0.26,
+          "ground_material_blend": 0.32,
+          "instances": [
+            {
+              "id": 1,
+              "family": "granular-ridge",
+              "role": "relief",
+              "x": 492,
+              "y": 430,
+              "rotation": -0.2,
+              "length": 540,
+              "width": 268,
+              "height": 6,
+              "thickness": 2,
+              "fold": 0.35200000000000004,
+              "branches": 3,
+              "opening": 0.55,
+              "distortion": 0.682,
+              "constructionVersion": 2
+            },
+            {
+              "id": 2,
+              "family": "granular-ridge",
+              "role": "solid",
+              "x": 410,
+              "y": 325,
+              "rotation": -0.18,
+              "length": 354,
+              "width": 244,
+              "height": 64,
+              "thickness": 13,
+              "fold": 0.792,
+              "branches": 3,
+              "opening": 0.72,
+              "distortion": 0.935,
+              "constructionVersion": 2
+            },
+            {
+              "id": 3,
+              "family": "granular-ridge",
+              "role": "solid",
+              "x": 750,
+              "y": 480,
+              "rotation": 0.55,
+              "length": 252,
+              "width": 138,
+              "height": 22,
+              "thickness": 8,
+              "fold": 0.275,
+              "branches": 6,
+              "opening": 0.25,
+              "distortion": 0.638,
+              "constructionVersion": 2
+            }
+          ],
+          "erosion": [
+            [
+              {
+                "x": 632,
+                "y": 424
+              },
+              {
+                "x": 712,
+                "y": 392
+              },
+              {
+                "x": 824,
+                "y": 424
+              },
+              {
+                "x": 864,
+                "y": 480
+              },
+              {
+                "x": 800,
+                "y": 520
+              },
+              {
+                "x": 712,
+                "y": 480
+              },
+              {
+                "x": 664,
+                "y": 504
+              },
+              {
+                "x": 616,
+                "y": 472
+              }
+            ],
+            [
+              {
+                "x": 176,
+                "y": 176
+              },
+              {
+                "x": 256,
+                "y": 152
+              },
+              {
+                "x": 344,
+                "y": 184
+              },
+              {
+                "x": 352,
+                "y": 224
+              },
+              {
+                "x": 288,
+                "y": 248
+              },
+              {
+                "x": 224,
+                "y": 232
+              },
+              {
+                "x": 160,
+                "y": 216
+              }
+            ],
+            [
+              {
+                "x": 384,
+                "y": 560
+              },
+              {
+                "x": 456,
+                "y": 544
+              },
+              {
+                "x": 528,
+                "y": 576
+              },
+              {
+                "x": 520,
+                "y": 612
+              },
+              {
+                "x": 448,
+                "y": 620
+              },
+              {
+                "x": 392,
+                "y": 592
+              }
+            ]
+          ]
+        },
+        "gradeDefinition": {
+          "id": "severe",
+          "version": 1,
+          "label": "重度污染",
+          "status": "dev-masters",
+          "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+          "paintCount": 6,
+          "paintSubstrate": "oil_film",
+          "paintContinuity": "monolith",
+          "paintCoverage": "overwrite",
+          "volumeCount": 3,
+          "volumeSubstrate": "gas_mass",
+          "volumeCoverage": "overwrite",
+          "volumeCols": 5,
+          "volumeRows": 3,
+          "chaosStartRate": 0.64,
+          "chaosEndRate": 0.96,
+          "chaosRampStartSeconds": 40,
+          "chaosRampEndSeconds": 130
+        },
+        "contentDefinition": {
+          "grade_id": "severe",
+          "version": 2,
+          "status": "production-candidate",
+          "label": "重度污染",
+          "public_risk": "地面与空气受侵占，混乱增长快",
+          "public_preparation": "备好脱身工具，留出归途",
+          "public_reward": "更多收获在深处，入口无加成",
+          "enemy_count": 4,
+          "kindling_safe_count": 1,
+          "kindling_contested_count": 2,
+          "kindling_deep_count": 2,
+          "kindling_safe_value": 1,
+          "kindling_contested_value": 2,
+          "kindling_deep_value": 6,
+          "contaminant_safe_count": 1,
+          "contaminant_contested_count": 1,
+          "contaminant_deep_count": 2
+        },
+        "package": {
+          "id": "r100-cinder-ridge",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "7237552e",
+          "grade": "severe"
+        }
+      },
+      "metadata": {
+        "world": "r100-cinder-ridge",
+        "space": "cinder-ridge-severe",
+        "contentFragmentTypeId": "frag-outdoor",
+        "requestedSeed": 20261010,
+        "effectiveSeed": 20261010,
+        "attempt": 0,
+        "rejected": [],
+        "signature": "a95f56b9",
+        "bodySize": 20,
+        "supportTileSize": 8,
+        "hostTileSize": 32,
+        "reachableBodySeats": 7730,
+        "extractionRoutePx": 91.88225099390857
+      },
+      "viewport": {
+        "x": 0,
+        "y": 0,
+        "zoom": 1
+      },
+      "fogVisible": false
+    }
+  ],
+  "featureIds": [
+    "COH-F011",
+    "COH-F007",
+    "COH-F049"
+  ],
+  "sourceCommit": "7847e626c12d0a1d0831d4654a1591a817d86344",
+  "scope": "Three inspection captures only; not gameplay or visual acceptance. Actual requested and effective seed match in all grades. Black native voids remain; visibility fog removed."
+}
