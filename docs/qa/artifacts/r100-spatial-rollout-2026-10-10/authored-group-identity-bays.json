@@ -1,0 +1,2594 @@
+{
+  "status": "passed",
+  "sourceHashes": {
+    "data/rift-native-worlds.csv": "54178c4e6932219e1149bb7fe89d38b777860e9d333cb51c3c743f65570f383a",
+    "data/rift-spatial-authored-groups.csv": "96cb80e5e7ce4dd69e91003595aafd0c3dbf2975bf93285e2529ca9794dd68ad",
+    "data/rift-spatial-authored-erosion.csv": "b31ae54842029c1ae79b16b35f8a37eb049d505953a6215c2e9c4a53783505fc",
+    "src/generated/r100-spatial-data.ts": "7bcfe743e4673b9de5909a8b5360ff5d5fb6462af9f7983a44fff24a75cb8660",
+    "src/generation/world-study/r100-spatial-world.ts": "3c245eb1b92b46483a85be309b5adbacf832d2fc48a6ea90238fca7d04f859bc",
+    "src/generation/world-study/native-volume-erosion.ts": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992",
+    "tools/spatial-rollout/check-authored-groups.mjs": "d6d20ae99979e46a6ed0d7d56333869f1418cf2717daaa03b1a85abe7c60e8f5"
+  },
+  "cases": [
+    {
+      "world": "rib-vault",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "rib-vault",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "rib-vault",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "blister-field",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 1,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "blister-field",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 1,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "blister-field",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 1,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "bleached-court",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "bleached-court",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "bleached-court",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "split-rib-causeway",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "split-rib-causeway",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "split-rib-causeway",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "satin-fan",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "satin-fan",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "satin-fan",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "chalk-steps",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "chalk-steps",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "chalk-steps",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "amber-ribs",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 1,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "amber-ribs",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 1,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "amber-ribs",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 1,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pale-sail",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pale-sail",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pale-sail",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "root-cistern",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "root-cistern",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "root-cistern",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "scab-islands",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "scab-islands",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "scab-islands",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "foam-trenches",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "foam-trenches",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "foam-trenches",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "resin-fall",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "resin-fall",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "resin-fall",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "felt-basin",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "felt-basin",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "felt-basin",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "cork-shelves",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "cork-shelves",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "cork-shelves",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "lacquer-court",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "lacquer-court",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "lacquer-court",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "ribbed-delta",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "ribbed-delta",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "ribbed-delta",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "bladder-weave",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 4,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "bladder-weave",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 4,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "bladder-weave",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 4,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "flake-thicket",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "flake-thicket",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "flake-thicket",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "resin-hollows",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "resin-hollows",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "resin-hollows",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "stepped-bowl",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "stepped-bowl",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "stepped-bowl",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "draped-bay",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "draped-bay",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "draped-bay",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "ember-cushions",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 4,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "ember-cushions",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 4,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "ember-cushions",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 4,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "splinter-rotunda",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "splinter-rotunda",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "splinter-rotunda",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "quilted-scars",
+      "grade": "low",
+      "sourceCount": 6,
+      "solidCount": 4,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "quilted-scars",
+      "grade": "medium",
+      "sourceCount": 6,
+      "solidCount": 4,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "quilted-scars",
+      "grade": "severe",
+      "sourceCount": 6,
+      "solidCount": 4,
+      "reliefCount": 2,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "silt-colonnade",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "silt-colonnade",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "silt-colonnade",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shell-causeway",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shell-causeway",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shell-causeway",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 2304,
+      "shoreCount": 9,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 2304,
+      "shoreCount": 9,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 2304,
+      "shoreCount": 9,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fallen-spines",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 5,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fallen-spines",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 5,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fallen-spines",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 5,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "clamped-shore",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "clamped-shore",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "clamped-shore",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "torn-reservoir",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "torn-reservoir",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "torn-reservoir",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "braided-seam",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 2,
+      "reliefCount": 3,
+      "sourceErosionSeats": 2971,
+      "shoreCount": 10,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "braided-seam",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 2,
+      "reliefCount": 3,
+      "sourceErosionSeats": 2971,
+      "shoreCount": 10,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "braided-seam",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 2,
+      "reliefCount": 3,
+      "sourceErosionSeats": 2971,
+      "shoreCount": 10,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "scalloped-reach",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 5382,
+      "shoreCount": 7,
+      "maxShoreVertices": 12
+    },
+    {
+      "world": "scalloped-reach",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 5382,
+      "shoreCount": 7,
+      "maxShoreVertices": 12
+    },
+    {
+      "world": "scalloped-reach",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 5382,
+      "shoreCount": 7,
+      "maxShoreVertices": 12
+    },
+    {
+      "world": "offset-pan",
+      "grade": "low",
+      "sourceCount": 6,
+      "solidCount": 3,
+      "reliefCount": 3,
+      "sourceErosionSeats": 3352,
+      "shoreCount": 8,
+      "maxShoreVertices": 13
+    },
+    {
+      "world": "offset-pan",
+      "grade": "medium",
+      "sourceCount": 6,
+      "solidCount": 3,
+      "reliefCount": 3,
+      "sourceErosionSeats": 3352,
+      "shoreCount": 8,
+      "maxShoreVertices": 13
+    },
+    {
+      "world": "offset-pan",
+      "grade": "severe",
+      "sourceCount": 6,
+      "solidCount": 3,
+      "reliefCount": 3,
+      "sourceErosionSeats": 3352,
+      "shoreCount": 8,
+      "maxShoreVertices": 13
+    },
+    {
+      "world": "thin-delta",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 1,
+      "reliefCount": 4,
+      "sourceErosionSeats": 5104,
+      "shoreCount": 7,
+      "maxShoreVertices": 14
+    },
+    {
+      "world": "thin-delta",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 1,
+      "reliefCount": 4,
+      "sourceErosionSeats": 5104,
+      "shoreCount": 7,
+      "maxShoreVertices": 14
+    },
+    {
+      "world": "thin-delta",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 1,
+      "reliefCount": 4,
+      "sourceErosionSeats": 5104,
+      "shoreCount": 7,
+      "maxShoreVertices": 14
+    },
+    {
+      "world": "shard-switchback",
+      "grade": "low",
+      "sourceCount": 6,
+      "solidCount": 6,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shard-switchback",
+      "grade": "medium",
+      "sourceCount": 6,
+      "solidCount": 6,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shard-switchback",
+      "grade": "severe",
+      "sourceCount": 6,
+      "solidCount": 6,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "hollow-wreckage",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "hollow-wreckage",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "hollow-wreckage",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "knotted-run",
+      "grade": "low",
+      "sourceCount": 9,
+      "solidCount": 9,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "knotted-run",
+      "grade": "medium",
+      "sourceCount": 9,
+      "solidCount": 9,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "knotted-run",
+      "grade": "severe",
+      "sourceCount": 9,
+      "solidCount": 9,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "rolled-fragments",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 5,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "rolled-fragments",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 5,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "rolled-fragments",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 5,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fibre-choke",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 5,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fibre-choke",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 5,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fibre-choke",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 5,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "buried-lamellae",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "buried-lamellae",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "buried-lamellae",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pressed-rim",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pressed-rim",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pressed-rim",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "wedged-hide",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "wedged-hide",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "wedged-hide",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "quiet-spur",
+      "grade": "low",
+      "sourceCount": 7,
+      "solidCount": 6,
+      "reliefCount": 1,
+      "sourceErosionSeats": 8080,
+      "shoreCount": 6,
+      "maxShoreVertices": 11
+    },
+    {
+      "world": "quiet-spur",
+      "grade": "medium",
+      "sourceCount": 7,
+      "solidCount": 6,
+      "reliefCount": 1,
+      "sourceErosionSeats": 8080,
+      "shoreCount": 6,
+      "maxShoreVertices": 11
+    },
+    {
+      "world": "quiet-spur",
+      "grade": "severe",
+      "sourceCount": 7,
+      "solidCount": 6,
+      "reliefCount": 1,
+      "sourceErosionSeats": 8080,
+      "shoreCount": 6,
+      "maxShoreVertices": 11
+    },
+    {
+      "world": "split-fall",
+      "grade": "low",
+      "sourceCount": 6,
+      "solidCount": 6,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "split-fall",
+      "grade": "medium",
+      "sourceCount": 6,
+      "solidCount": 6,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "split-fall",
+      "grade": "severe",
+      "sourceCount": 6,
+      "solidCount": 6,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "three-shelves",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "three-shelves",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "three-shelves",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "frayed-outwash",
+      "grade": "low",
+      "sourceCount": 7,
+      "solidCount": 5,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "frayed-outwash",
+      "grade": "medium",
+      "sourceCount": 7,
+      "solidCount": 5,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "frayed-outwash",
+      "grade": "severe",
+      "sourceCount": 7,
+      "solidCount": 5,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "short-fibre-mat",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "short-fibre-mat",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "short-fibre-mat",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "marrow-break",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "marrow-break",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "marrow-break",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "felt-wedges",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "felt-wedges",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "felt-wedges",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pore-bank",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pore-bank",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pore-bank",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "staggered-cups",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "staggered-cups",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "staggered-cups",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "split-tows",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 4,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "split-tows",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 4,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "split-tows",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 4,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "curled-flats",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "curled-flats",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "curled-flats",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pitch-forks",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pitch-forks",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pitch-forks",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "grain-weld",
+      "grade": "low",
+      "sourceCount": 6,
+      "solidCount": 3,
+      "reliefCount": 3,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "grain-weld",
+      "grade": "medium",
+      "sourceCount": 6,
+      "solidCount": 3,
+      "reliefCount": 3,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "grain-weld",
+      "grade": "severe",
+      "sourceCount": 6,
+      "solidCount": 3,
+      "reliefCount": 3,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "silk-catch",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "silk-catch",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "silk-catch",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "resin-sleeve",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "resin-sleeve",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "resin-sleeve",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shell-threads",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shell-threads",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shell-threads",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "chalk-divide",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 4,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "chalk-divide",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 4,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "chalk-divide",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 4,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "red-vault-fragments",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 4,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "red-vault-fragments",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 4,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "red-vault-fragments",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 4,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "blue-fault",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 856,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "blue-fault",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 856,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "blue-fault",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 2,
+      "reliefCount": 2,
+      "sourceErosionSeats": 856,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pale-pressure",
+      "grade": "low",
+      "sourceCount": 6,
+      "solidCount": 5,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pale-pressure",
+      "grade": "medium",
+      "sourceCount": 6,
+      "solidCount": 5,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pale-pressure",
+      "grade": "severe",
+      "sourceCount": 6,
+      "solidCount": 5,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "notched-backwater",
+      "grade": "low",
+      "sourceCount": 7,
+      "solidCount": 6,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "notched-backwater",
+      "grade": "medium",
+      "sourceCount": 7,
+      "solidCount": 6,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "notched-backwater",
+      "grade": "severe",
+      "sourceCount": 7,
+      "solidCount": 6,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "crossed-casings",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "crossed-casings",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "crossed-casings",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fibre-stumpfield",
+      "grade": "low",
+      "sourceCount": 8,
+      "solidCount": 6,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fibre-stumpfield",
+      "grade": "medium",
+      "sourceCount": 8,
+      "solidCount": 6,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fibre-stumpfield",
+      "grade": "severe",
+      "sourceCount": 8,
+      "solidCount": 6,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 511,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 511,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 1,
+      "reliefCount": 2,
+      "sourceErosionSeats": 511,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "crushed-seam",
+      "grade": "low",
+      "sourceCount": 6,
+      "solidCount": 4,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "crushed-seam",
+      "grade": "medium",
+      "sourceCount": 6,
+      "solidCount": 4,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "crushed-seam",
+      "grade": "severe",
+      "sourceCount": 6,
+      "solidCount": 4,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "husk-reef",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 4,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "husk-reef",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 4,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "husk-reef",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 4,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fibre-scree",
+      "grade": "low",
+      "sourceCount": 8,
+      "solidCount": 6,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fibre-scree",
+      "grade": "medium",
+      "sourceCount": 8,
+      "solidCount": 6,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fibre-scree",
+      "grade": "severe",
+      "sourceCount": 8,
+      "solidCount": 6,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "gel-rafts",
+      "grade": "low",
+      "sourceCount": 6,
+      "solidCount": 2,
+      "reliefCount": 4,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "gel-rafts",
+      "grade": "medium",
+      "sourceCount": 6,
+      "solidCount": 2,
+      "reliefCount": 4,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "gel-rafts",
+      "grade": "severe",
+      "sourceCount": 6,
+      "solidCount": 2,
+      "reliefCount": 4,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "double-return",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 2140,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "double-return",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 2140,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "double-return",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 3,
+      "reliefCount": 1,
+      "sourceErosionSeats": 2140,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "offset-basins",
+      "grade": "low",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "offset-basins",
+      "grade": "medium",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "offset-basins",
+      "grade": "severe",
+      "sourceCount": 2,
+      "solidCount": 2,
+      "reliefCount": 0,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pinched-fan",
+      "grade": "low",
+      "sourceCount": 6,
+      "solidCount": 4,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pinched-fan",
+      "grade": "medium",
+      "sourceCount": 6,
+      "solidCount": 4,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "pinched-fan",
+      "grade": "severe",
+      "sourceCount": 6,
+      "solidCount": 4,
+      "reliefCount": 2,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "spliced-reaches",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 2,
+      "reliefCount": 3,
+      "sourceErosionSeats": 3206,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "spliced-reaches",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 2,
+      "reliefCount": 3,
+      "sourceErosionSeats": 3206,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "spliced-reaches",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 2,
+      "reliefCount": 3,
+      "sourceErosionSeats": 3206,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "white-scarfield",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 915,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "white-scarfield",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 915,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "white-scarfield",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 3,
+      "reliefCount": 2,
+      "sourceErosionSeats": 915,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "black-lacuna",
+      "grade": "low",
+      "sourceCount": 4,
+      "solidCount": 1,
+      "reliefCount": 3,
+      "sourceErosionSeats": 2580,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "black-lacuna",
+      "grade": "medium",
+      "sourceCount": 4,
+      "solidCount": 1,
+      "reliefCount": 3,
+      "sourceErosionSeats": 2580,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "black-lacuna",
+      "grade": "severe",
+      "sourceCount": 4,
+      "solidCount": 1,
+      "reliefCount": 3,
+      "sourceErosionSeats": 2580,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "ochre-folds",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "ochre-folds",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "ochre-folds",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 3,
+      "reliefCount": 0,
+      "sourceErosionSeats": 0,
+      "shoreCount": 6,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "violet-marrows",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "violet-marrows",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "violet-marrows",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fractured-estuary",
+      "grade": "low",
+      "sourceCount": 5,
+      "solidCount": 2,
+      "reliefCount": 3,
+      "sourceErosionSeats": 4475,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fractured-estuary",
+      "grade": "medium",
+      "sourceCount": 5,
+      "solidCount": 2,
+      "reliefCount": 3,
+      "sourceErosionSeats": 4475,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "fractured-estuary",
+      "grade": "severe",
+      "sourceCount": 5,
+      "solidCount": 2,
+      "reliefCount": 3,
+      "sourceErosionSeats": 4475,
+      "shoreCount": 8,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "low",
+      "sourceCount": 6,
+      "solidCount": 3,
+      "reliefCount": 3,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "medium",
+      "sourceCount": 6,
+      "solidCount": 3,
+      "reliefCount": 3,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "severe",
+      "sourceCount": 6,
+      "solidCount": 3,
+      "reliefCount": 3,
+      "sourceErosionSeats": 191,
+      "shoreCount": 7,
+      "maxShoreVertices": 9
+    },
+    {
+      "world": "last-shelf",
+      "grade": "low",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 3259,
+      "shoreCount": 7,
+      "maxShoreVertices": 13
+    },
+    {
+      "world": "last-shelf",
+      "grade": "medium",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 3259,
+      "shoreCount": 7,
+      "maxShoreVertices": 13
+    },
+    {
+      "world": "last-shelf",
+      "grade": "severe",
+      "sourceCount": 3,
+      "solidCount": 2,
+      "reliefCount": 1,
+      "sourceErosionSeats": 3259,
+      "shoreCount": 7,
+      "maxShoreVertices": 13
+    }
+  ]
+}

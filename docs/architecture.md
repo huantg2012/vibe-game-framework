@@ -12,7 +12,7 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 ## DEC-ARCH-021：R100 角色遮挡查询的场景内缓存（2026-10-09）
 
-`src/systems/r100-world/actor-occlusion-field.ts` 由 `MasterPresentation` 独占：建场时按世界整数像素保存原 `roleAt` 为 solid 的 Float32 高度，其余为负无穷。`presentation.ts` 仍按每帧角色边界、脚点和原高度阈值生成相同遮挡条带；原角色缓存键、退役清理和遮挡语义保持。新世界与冷续建场各建一份，表现销毁时释放，不跨场景共享；不缓存视野、Host、AI、角色位置，也不写入存档或生成身份。
+`src/systems/r100-world/actor-occlusion-field.ts` 由 `MasterPresentation` 独占：建场时按世界整数像素保存原 `roleAt` 为 solid 的 Float32 高度，其余为负无穷。`presentation.ts` 仍按每帧角色边界、脚点和原高度阈值生成相同遮挡条带；原角色缓存键、退役清理和遮挡语义保持。每行另建16px块最大高度索引，仅当整块最大高度严格低于原阈值时跳过逐像素比较，可能遮挡的块仍逐像素输出同一合并条带；不改变刷新频率、角色显隐或缓存键。2304×1792的额外索引为1,032,192字节，destroy同时释放两个数组。新世界与冷续建场各建一份，表现销毁时释放，不跨场景共享；不缓存视野、Host、AI、角色位置，也不写入存档或生成身份。
 
 这项实现优化对应 I14 的性能问题 R100-P48。缓存增加按地图像素面积计算的 CPU 内存，构建成本、冷续首帧和销毁回落须分别验证；不将 Node 基准或像素等价当作浏览器性能通过。未新增玩法规则或调整画法，地图和移动规格继续为机制正文，实际范围见 [I14 QA](qa/rift-r100-i14.md)。
 
@@ -46,9 +46,9 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `r100-production-map.ts` → `r100-master-world.ts` / `r100-pollution.ts` → `r100-expedition.ts`：先建立原生几何、8px 身体支持与独立观察/攻击权限，再布置真实 32px Host、敌人及搜取内容。20px 身体全幅寻路；搜取成本遍历 48px 范围内可达且有视线的实际站位，计入出生→站位→撤离相对直接撤离的额外距离。失败最多 8 次，保持同一世界、污染档和冻结配置。`r100-native-data.ts` 只传纯数据及 typed array；主线程按同一布局恢复查询方法。
 
-`native-body-collision.ts` 为正式v3角色提供独立于保守导航格的20×20身体查询：所有solid同源XY三角形参与连续扫掠，VOID仍用原8px支撑，浮雕不擦除实体。WASD、敌人推挤后的校正、工具扫掠与存档准入共用该查询；不改变旧v1/v2、生成器保守寻路或Host的32px投放。斜面接触保留切向运动；技能Body.reset后同步offset与前帧坐标，不能留下同帧身体偏移。详细契约归[移动规格](specs/system-movement-vision.md#r100-v3--实体足边与完整身体2026-10-04)。
+`native-body-collision.ts` 为正式v3角色提供独立于保守导航格的20×20身体查询：所有solid同源XY三角形参与连续扫掠，VOID仍用原8px支撑，浮雕不擦除实体。静态三角AABB按64px桶构建CSR索引；查询完整身体或整段扫掠AABB，以复用bitset去重后按原三角顺序执行原SAT，保留同距法线、豁免、SEPARATION与4轮滑动。索引与布局沿原WeakMap生命周期释放，不写入存档；本轮实测额外常驻最大338,348字节。WASD、敌人推挤后的校正、工具扫掠与存档准入共用该查询；不改变旧v1/v2、生成器保守寻路或Host的32px投放。斜面接触保留切向运动；技能Body.reset后同步offset与前帧坐标，不能留下同帧身体偏移。详细契约归[移动规格](specs/system-movement-vision.md#r100-v3--实体足边与完整身体2026-10-04)。
 
-当前新出发使用 v3 `algorithmRevision: 6` 与内容定义 version 2，新增形体与选择合同见下方“I07—I09”；原材料与构造合同见“R100 世界区分度 · 修订4”；以下保留早期修订的巡路与恢复合同。`legacy-r100-v2/executor.js` 从 a089bf7 封存完整 50 项依赖闭包（无可变 import），统一保护原修订 1／2 的几何、部署和校验；`freeze-native-r100-revision2.mjs` 可从固定提交逐字重建，旧记录按保存修订分派，不使用当前世界 CSV。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
+当前新出发使用 v3 `algorithmRevision: 7` 与内容定义 version 2，新增形体与选择合同见下方“I07—I09”；原材料与构造合同见“R100 世界区分度 · 修订4”；以下保留早期修订的巡路与恢复合同。`legacy-r100-v2/executor.js` 从 a089bf7 封存完整 50 项依赖闭包（无可变 import），统一保护原修订 1／2 的几何、部署和校验；`freeze-native-r100-revision2.mjs` 可从固定提交逐字重建，旧记录按保存修订分派，不使用当前世界 CSV。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
 
 `systems/r100-world-presentation.ts` 持有正式表现准备，DEV 母版只保留兼容导出。`surface-preparation-client.ts` / `surface-preparation-worker.ts` 是专用可终止准备 Worker：接收已准入的原生数据及共享解码像素，执行地表、材质光照、侵蚀字段和 `surface-bake.ts` 的四张 RGBA 烘焙，以 transferable 返回。等待期间提前创建并上传 WebGL 材质接收器；`MasterPresentation` 建场消费一次，正式路径缺准备时抛错，绝不临时同步补烤。异步取消、迟到响应、替换与两份上限的 LRU 均释放未消费的 GPU 资源；已消费资源由场景销毁。准备身份包含包身份、实际种子、构造 ID 和尺寸，源图片像素缓存与一次性 GPU 资源分离。
 
@@ -84,6 +84,16 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `PlayerConfig.readMovementInput` 只接受DEV巡查意图，真实键盘优先；`MasterPatrol` 在最终身体网格找路线，移动、加速、碰撞、动画仍归Player。作者小场景不计入108世界或324等级资格；I02实际美术和运行证据归[任务](tasks/rift-r100-i02.md)、[独立美术记录](art/rift-r100-i02-review.md)及[QA](qa/rift-r100-i02.md)。
 
+## 裂隙空间推广 · 修订7（DEC-197）
+
+`r100-spatial-world.ts` 读取冻结 `spatialPolicy`，输出2304×1792真实有地/VOID及实体几何。20个v1/v2成群材料世界使用CSV定义的三种宏观组织；88个v3/v4作者世界保留完整关系组，86个统一平面仿射、2个独立组合。`rift-spatial-authored-groups.csv`冻结整体变换与原实例对应，`rift-spatial-authored-erosion.csv`冻结保留原海口的新岸；离线Python工具只负责准确多边形并集，生成代码不依赖Python。`organizationRules`、`groupTransform`及全部placement/cut参与保存身份，恢复不读取今日表重算。扩大图以不等切角、错位侧湾与原海口形成真实边界，单polygon仍最多32顶点；多边形数量、无交/不接触与总像素预算保持。
+
+`spatial-extraction-selection.ts` 在完整身体八向图上按路程层、空间区、种子选唯一撤离；DEV原型仅重导出同一选择器。临时地形只用于求真实撤离候选，最终master以该点重建Host/内容与诊断，不把旧出生附近的部署坐标搬过来。`r100-spatial-deployment.ts` 校验冻结搜取路程与Host分布边界；新图巡逻窗口站位另需出生连通分量支持，未传策略的旧母版保持原行为。
+
+组织材质的本体UV与附加岸壁world UV有显式边界。mesh记录岸壁起始顶点/三角，raster每像素一bit标明最终获胜的岸壁面；本体独立fit连续源窗，岸壁保持world UV原生密度。修订7的15个带岸壁世界增加516,096字节，当前颜色变化仅压纤四角；原几何/碰撞/部署和其它表面通道不变。主缓冲随native/cache原生命周期释放，生成Worker归一transfer；表面准备Worker保持原clone输入模式，临时等量副本随成功/取消/超时terminate释放。旧修订6表面仍走封存闭包。
+
+修订7空间表单向编入generated模块，并随配方和包依赖hash保存。`legacy-r100-v6`从4459d7c3封存生成/校验/表面与材料闭包，恢复投影仅含原108世界，不读取当前空间表。公开配方、生成与表面入口都拒绝未知修订；显式修订缺必需外观/策略同样拒绝。worker时限、4M像素预算及旧签名验证保持。扩大图的性能和有限实际搜撤证据独立记录，不继承旧小图结论。
+
 ## R100 I10—I12：地床分路与修订6（内部结案）
 
 `native-volume-ground.ts`独立拥有构造版本4的宽断床、倒束、夹岸与撕膜；`native-volume-geometry.ts`显式按版本/profile分派，旧v1–v3不换实现。`native-volume-erosion.ts`共享CSV解析及冻结配方恢复校验；作者多边形编入原`MasterDefinition.erosion`，由同一个8px地表存在网格表达真实缺地；不因此生成Host或赋予普通实体吞光能力。`native-volume-ground-edge.ts`只在实际存在的地表格内建立浅断沿，归首个主材低浮雕所有，不另生阻挡层。完整身体路线在最终缺地和实体叠加后检查，不从仅含几何中心的路线推断可通。具体数据语法、大小和退化拒绝见[地图spec](specs/system-map-generation.md)。
@@ -108,7 +118,7 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `native-volume-geometry.ts`按显式`constructionVersion`执行两套兼容构造；默认版本1保留，版本2提供六族深化形状。数据编译器校验CSV字段并写入各实例，碰撞、可走破口、面与材质坐标均来自同一网格。新角色色、HUD和污染数值不属于本次变更。
 
-`legacy-r100-v3/executor.js`从固定`5788ef07`封存生成、配方校验、表面预烤闭包；`freeze-native-r100-revision3.mjs --check`核对摘要，旧修订3不导入当前材料与几何实现。`r100-production-map.ts`和`r100-world-presentation.ts`按revision路由。该节记录revision4的材料管线；I10起新出击为revision6，revision1/2/3/4/5封存继续保留。验证与未覆盖范围见[本轮QA](qa/rift-r100-world-identity.md)。
+`legacy-r100-v3/executor.js`从固定`5788ef07`封存生成、配方校验、表面预烤闭包；`freeze-native-r100-revision3.mjs --check`核对摘要，旧修订3不导入当前材料与几何实现。`r100-production-map.ts`和`r100-world-presentation.ts`按revision路由。该节记录revision4的材料管线；I10的revision6现已封存；DEC-197起新出击为revision7，revision1–6封存继续保留。验证与未覆盖范围见[本轮QA](qa/rift-r100-world-identity.md)。
 
 ## R100 I01：持久生成版本与DEV资格底座
 

@@ -49,7 +49,8 @@ function sees(world: MasterWorld, track: Track, point: Readonly<Vector2>): boole
 }
 
 export function findR100PatrolWindows(world: MasterWorld, enemies: readonly EnemySpawnData[],
-  nodes: readonly { readonly id: string; readonly position: Readonly<Vector2> }[]): readonly R100PatrolWindow[] {
+  nodes: readonly { readonly id: string; readonly position: Readonly<Vector2> }[],
+  canReach?: (position: Readonly<Vector2>) => boolean): readonly R100PatrolWindow[] {
   if (enemies.some(enemy => enemy.patrol.mode === 'static' || enemy.patrol.waypoints.length < 2)) return [];
   const tracks: Track[] = enemies.map(spawn => ({ spawn, position: { x: (spawn.spawn.col + .5) * 8, y: (spawn.spawn.row + .5) * 8 },
     facing: degToRad(spawn.facing), index: 1, direction: 1, pause: 0,
@@ -62,6 +63,7 @@ export function findR100PatrolWindows(world: MasterWorld, enemies: readonly Enem
     for (let dy = -radius; dy <= radius; dy += 8) for (let dx = -radius; dx <= radius; dx += 8) {
       const position = { x: node.position.x + dx, y: node.position.y + dy };
       if (Math.hypot(dx, dy) > radius || !bodyHasSupport(grid, position, 10, 10)
+        || (canReach !== undefined && !canReach(position))
         || !hasLineOfSight(world.sight, position, node.position, radius + .001)) continue;
       const col = Math.floor(position.x / 32), row = Math.floor(position.y / 32);
       // Preserve an actual dry station even when the volume is releasing. This

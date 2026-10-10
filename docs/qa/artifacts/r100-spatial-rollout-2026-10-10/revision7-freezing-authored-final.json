@@ -1,0 +1,106 @@
+{
+  "status": "pass",
+  "cases": [
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "organization": "offset-divides",
+      "sourceMode": "repeat",
+      "dependencyHash": "8ec0755d",
+      "savedRecipeHash": "729713bc792a0a3629ddf59ece91e79193f312d554eb0f725a7734a3dfb607ac",
+      "definitionHash": "3bc0330e1dea80edb56e6889a52d83e19ab75c150f8c53dbc5eed3bd80b0b446",
+      "maxErosionVertices": 20
+    },
+    {
+      "world": "monolith-sill",
+      "grade": "medium",
+      "organization": "single-buttress",
+      "sourceMode": "source-once",
+      "dependencyHash": "4057a27b",
+      "savedRecipeHash": "b58e696322055387ab191bfea36ec3db3b183c053ea31ce65cfda788b3b75946",
+      "definitionHash": "b87c8004153b449b664a05ab0064be9aa08e999100eb14bcc71ce8a160305506",
+      "maxErosionVertices": 15
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "medium",
+      "organization": "joined-quarters",
+      "sourceMode": "source-once",
+      "dependencyHash": "5afad133",
+      "savedRecipeHash": "eb341834f29f893f5303f12c0b42aa5abe3ae3c44e613172d57d1ad473250627",
+      "definitionHash": "1d3366126838c7831e26a0a098746324d2d69afa2ea06ea27e76e52f4d51a8d6",
+      "maxErosionVertices": 15
+    },
+    {
+      "world": "rib-vault",
+      "grade": "medium",
+      "organization": "authored-group",
+      "sourceMode": "source-once",
+      "dependencyHash": "8846714a",
+      "savedRecipeHash": "8d2a979f9700e6a5453e82b7f53e9874286da47fb12a95659f8b61a3703d6d14",
+      "definitionHash": "d10e3d61d6c1ab7674dc69a233e1e3b8b3e38e71e110a3ecdd3436740f0f112a",
+      "maxErosionVertices": 8
+    },
+    {
+      "world": "quiet-spur",
+      "grade": "medium",
+      "organization": "authored-group",
+      "sourceMode": "source-once",
+      "dependencyHash": "000d1101",
+      "savedRecipeHash": "33e99a1bfd3bee37d858d38633e50c7fdc42e388492c5edcdbb77f2f7400c4c9",
+      "definitionHash": "0af8fca433d3f0f3f446604326bf823a4f223b91197cfb122034c46347e1868e",
+      "maxErosionVertices": 39
+    }
+  ],
+  "mutations": [
+    "config dimensions/jitter",
+    "generic and special placement catalog",
+    "world assignments and mirrors",
+    "generic cuts, spawn anchors and material scaling",
+    "organization rules and counts",
+    "authored group transform, counts, placements and compiled cuts",
+    "deployment policy"
+  ],
+  "sources": [
+    {
+      "path": "src/generation/world-study/r100-package.ts",
+      "sha256": "ba994fc3bc8f1dc6a65f98b3c41d72b56a60ccd0aa3d2376bcb495c3f2406fe9"
+    },
+    {
+      "path": "src/generation/world-study/r100-spatial-world.ts",
+      "sha256": "ccce5974bd06d012583f716da01f093657b14ef0d1313a946d7d67cec711dfa6"
+    },
+    {
+      "path": "src/generation/world-study/r100-spatial-deployment.ts",
+      "sha256": "cfd995473bde42450f8ffa0fbfb90119d20697ddce5458abb98db7982b916818"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-erosion.ts",
+      "sha256": "009759ac7741c968ab6162e1d890a4a4a1ef461d7adaa96b3c9569e915410f1a"
+    },
+    {
+      "path": "src/generated/r100-spatial-data.ts",
+      "sha256": "623048cc15bda3a217467f825e61c6864b4a567eccbdb71c475b879cb246cad3"
+    },
+    {
+      "path": "src/generated/rift-spatial-deployment-data.ts",
+      "sha256": "0a01b4a8eb97ef95c9365b0184a5f494d740ae1fd94647b59749bbfbb175aeb4"
+    },
+    {
+      "path": "src/generated/r100-package-manifest.ts",
+      "sha256": "3a8f80f28a72744849f27871c381b2ed41db4a95861cf5cafc1f68f66c8bfdeb"
+    },
+    {
+      "path": "tools/recovery/check-native-r100-revision7-freezing.mjs",
+      "sha256": "7e43e1e6cb168734978a04d514074249a741ee033a2b96312a700710a9145e84"
+    }
+  ],
+  "checks": [
+    "structurally valid non-current sourceHash accepted",
+    "all snapshot bytes remain unchanged after live catalog mutation",
+    "saved package remains valid",
+    "exact frozen spatial definition including compiled cuts remains unchanged",
+    "live mutations demonstrably affect new factory call"
+  ],
+  "scope": "Five representative saved snapshots, JSON ownership, validation and lightweight definition construction. No full terrain/surface regeneration, persistence IO or visual qualification."
+}

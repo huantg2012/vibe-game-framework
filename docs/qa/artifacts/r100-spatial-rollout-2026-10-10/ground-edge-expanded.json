@@ -1,0 +1,700 @@
+{
+  "status": "passed",
+  "scope": "Complete production admissions at stated requested seed; quotas, real body support, patrol sweeps, geometry metrics and frozen recipe integrity. Optional independent worker-wire regeneration, not browser or human acceptance.",
+  "seed": 20261010,
+  "recovery": false,
+  "sourceHashes": {
+    "src/generation/world-study/r100-spatial-world.ts": "1243d0c65cac5205cfd2578a87fb246d0033e2a2f5d2d0badf43c229c9d93d53",
+    "src/generated/r100-spatial-data.ts": "04fd733ae5f7c3387deb254797b04c07835ede3eabdf63e9f87bc2fe5c9b3af7",
+    "src/generation/world-study/r100-package.ts": "ba994fc3bc8f1dc6a65f98b3c41d72b56a60ccd0aa3d2376bcb495c3f2406fe9",
+    "src/generation/world-study/r100-production-map.ts": "ea8a7e0c5502559232615179c03270d5211ea175cb35b4674495619c6eff287c",
+    "src/generation/world-study/r100-master-world.ts": "7e477de2e9a2093b06ad1e55f354559922a363b2413fd50b9c402cd17603c8c5",
+    "src/generation/world-study/r100-pollution.ts": "328804c3dd7423627fc31a4c119cff81cbe8078c0575094cc5c2c5d4eb1538dc",
+    "src/generation/world-study/r100-expedition.ts": "2a26a8b883d7da5c022ff34accda45dbf5e40c1c424dc8d558fb9f5fb93cb774",
+    "src/generation/world-study/spatial-extraction-selection.ts": "afccec7d982b52e5cbf1c2dd87d67e83d0eaffe4b87ce03b271645294a003308",
+    "tools/spatial-rollout/check-production.mjs": "60b759f4afb5cf5b58615c3dd6f6c031b2b0bad74e03bcd811e6d0bdea4122be"
+  },
+  "cases": [
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "requestedSeed": 20261010,
+      "effectiveSeed": 651732515,
+      "attempts": 3,
+      "generationMs": 25119.574375,
+      "signature": "c5f9b6fe",
+      "recipeBytes": 10115,
+      "spawn": {
+        "x": 1628,
+        "y": 1460
+      },
+      "extraction": {
+        "x": 756,
+        "y": 1420
+      },
+      "extractionStraightPx": 872.9169490850776,
+      "extractionRoutePx": 1006.7249634685271,
+      "terrainFill": 0.6291542658730159,
+      "solidRatio": 0.2597565782990046,
+      "reachableFraction": 0.9998853955762692,
+      "reachableSeats": 26174,
+      "instances": 23,
+      "patrolSegments": 14,
+      "spatial": {
+        "version": 1,
+        "worldId": "cleft-tableland",
+        "sourceHash": "240414ad22fe90863b3ea6f8ff3c4a86d64724fc634aa502af0da73780baec3f",
+        "organization": "broken-bay",
+        "width": 2304,
+        "height": 1792,
+        "terrainFillRatio": 0.6291542658730159,
+        "solidTerrainRatio": 0.2597565782990046,
+        "bodyReachableRatio": 0.9998853955762692,
+        "unreachableBodySeats": 3,
+        "spawnIndex": 6,
+        "spawnRelocationPx": 1,
+        "extraction": {
+          "point": {
+            "x": 756,
+            "y": 1420
+          },
+          "cell": 51070,
+          "pathDistancePx": 1006.7249634685271,
+          "interactionPathDistancePx": 956.7838379715729,
+          "euclideanDistancePx": 872.9169490850776,
+          "pathFraction": 0.4470947383360008,
+          "regionId": 9,
+          "distanceBand": 0,
+          "candidateCount": 11750,
+          "regionCount": 10
+        },
+        "extractionCandidateField": {
+          "reachableCount": 26174,
+          "maxPathDistancePx": 2251.7038943812236,
+          "minCandidatePathDistancePx": 966.2539674441607,
+          "maxCandidatePathDistancePx": 2229.076477383254,
+          "candidateCount": 11750,
+          "regionCount": 10,
+          "distanceBandCount": 3,
+          "regionCounts": {
+            "0": 1817,
+            "1": 1500,
+            "2": 1606,
+            "3": 1531,
+            "4": 2059,
+            "5": 1927,
+            "6": 88,
+            "7": 231,
+            "8": 732,
+            "9": 259
+          },
+          "distanceBandCounts": {
+            "0": 3904,
+            "1": 4971,
+            "2": 2875
+          }
+        },
+        "solidObjectCount": 20
+      },
+      "expedition": {
+        "reachableBodySeats": 26174,
+        "extractionRoutePx": 1006.7249634685271,
+        "maximumExtraTravelPx": 2650.566809391374,
+        "directReturnRoutePx": 956.7838379715727,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 93.25483399593895,
+            "approachRoutePx": 46.62741699796952,
+            "interactionSeats": 86,
+            "pollutionDistancePx": 89.27841806805036
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 23.43145750507631,
+            "approachRoutePx": 46.62741699796952,
+            "interactionSeats": 95,
+            "pollutionDistancePx": 228.0317440323738
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 515.4112549695433,
+            "approachRoutePx": 1264.4305909532989,
+            "interactionSeats": 111,
+            "pollutionDistancePx": 380.9691346263317
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 517.019335983756,
+            "approachRoutePx": 258.5096679918781,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 28.153619241621193
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 496.6660889654827,
+            "approachRoutePx": 248.333044482741,
+            "interactionSeats": 62,
+            "pollutionDistancePx": 28.153619241621193
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 1000.7636354360407,
+            "approachRoutePx": 1221.6854249492385,
+            "interactionSeats": 68,
+            "pollutionDistancePx": 45.05070600652827
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 1002.3717164502539,
+            "approachRoutePx": 1330.3717164502536,
+            "interactionSeats": 78,
+            "pollutionDistancePx": 90.40279716860073
+          },
+          {
+            "id": "contaminant/deep",
+            "minimumExtraTravelPx": 906.3717164502539,
+            "approachRoutePx": 1234.3717164502536,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 21.607017003965517
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 1716,
+              "y": 1140
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 916,
+              "y": 756
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 1860,
+              "y": 1252
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 564,
+              "y": 1220
+            },
+            "startMs": 2200,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-deep-1",
+            "seat": {
+              "x": 796,
+              "y": 844
+            },
+            "startMs": 7300,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-2",
+            "seat": {
+              "x": 700,
+              "y": 924
+            },
+            "startMs": 15900,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 3,
+        "kindlingCount": 5,
+        "contaminantCount": 3
+      }
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "medium",
+      "requestedSeed": 20261010,
+      "effectiveSeed": 20261010,
+      "attempts": 1,
+      "generationMs": 3964.2686250000006,
+      "signature": "25993a54",
+      "recipeBytes": 11181,
+      "spawn": {
+        "x": 2036,
+        "y": 692
+      },
+      "extraction": {
+        "x": 100,
+        "y": 236
+      },
+      "extractionStraightPx": 1988.9776268223836,
+      "extractionRoutePx": 2151.3910524340117,
+      "terrainFill": 0.6782924107142857,
+      "solidRatio": 0.21280680104209515,
+      "reachableFraction": 0.9998385221547603,
+      "reachableSeats": 30959,
+      "instances": 23,
+      "patrolSegments": 10,
+      "spatial": {
+        "version": 1,
+        "worldId": "woven-quarters",
+        "sourceHash": "240414ad22fe90863b3ea6f8ff3c4a86d64724fc634aa502af0da73780baec3f",
+        "organization": "offset-divides",
+        "width": 2304,
+        "height": 1792,
+        "terrainFillRatio": 0.6782924107142857,
+        "solidTerrainRatio": 0.21280680104209515,
+        "bodyReachableRatio": 0.9998385221547603,
+        "unreachableBodySeats": 5,
+        "spawnIndex": 0,
+        "spawnRelocationPx": 2.23606797749979,
+        "extraction": {
+          "point": {
+            "x": 100,
+            "y": 236
+          },
+          "cell": 8364,
+          "pathDistancePx": 2151.3910524340117,
+          "interactionPathDistancePx": 2103.3910524340117,
+          "euclideanDistancePx": 1988.9776268223836,
+          "pathFraction": 0.8132120379842953,
+          "regionId": 0,
+          "distanceBand": 2,
+          "candidateCount": 15269,
+          "regionCount": 10
+        },
+        "extractionCandidateField": {
+          "reachableCount": 30959,
+          "maxPathDistancePx": 2645.5474734076174,
+          "minCandidatePathDistancePx": 965.6854249492369,
+          "maxCandidatePathDistancePx": 2614.9200564096477,
+          "candidateCount": 15269,
+          "regionCount": 10,
+          "distanceBandCount": 3,
+          "regionCounts": {
+            "0": 2222,
+            "1": 2242,
+            "2": 110,
+            "4": 1321,
+            "5": 2293,
+            "6": 870,
+            "8": 2608,
+            "9": 1642,
+            "10": 1555,
+            "11": 406
+          },
+          "distanceBandCounts": {
+            "0": 5463,
+            "1": 6315,
+            "2": 3491
+          }
+        },
+        "solidObjectCount": 20
+      },
+      "expedition": {
+        "reachableBodySeats": 30959,
+        "extractionRoutePx": 2151.3910524340117,
+        "maximumExtraTravelPx": 2177.194226389342,
+        "directReturnRoutePx": 2103.3910524340113,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 38.62741699796952,
+            "interactionSeats": 108,
+            "pollutionDistancePx": 280.4733157437611
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 152,
+            "interactionSeats": 68,
+            "pollutionDistancePx": 276.0266654815868
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 512.6660889654836,
+            "approachRoutePx": 380.4507934888321,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 17.182520563948003
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 511.058007951267,
+            "approachRoutePx": 1141.3523804664965,
+            "interactionSeats": 66,
+            "pollutionDistancePx": 242.98148077579904
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 502.8225099390852,
+            "approachRoutePx": 1804.645886429951,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 462.2591901445154
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 1012.7434329005068,
+            "approachRoutePx": 1635.2733034279204,
+            "interactionSeats": 97,
+            "pollutionDistancePx": 60
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 1075.9393923934003,
+            "approachRoutePx": 1498.371716450253,
+            "interactionSeats": 111,
+            "pollutionDistancePx": 100
+          },
+          {
+            "id": "contaminant/deep",
+            "minimumExtraTravelPx": 1182.1160159025367,
+            "approachRoutePx": 1611.5088014401015,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 20
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 1924,
+              "y": 1028
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 1196,
+              "y": 956
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 468,
+              "y": 788
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 868,
+              "y": 1412
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-deep-1",
+            "seat": {
+              "x": 940,
+              "y": 1604
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-2",
+            "seat": {
+              "x": 1020,
+              "y": 1532
+            },
+            "startMs": 5000,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 3,
+        "kindlingCount": 5,
+        "contaminantCount": 3
+      }
+    },
+    {
+      "world": "last-shelf",
+      "grade": "medium",
+      "requestedSeed": 20261010,
+      "effectiveSeed": 20261010,
+      "attempts": 1,
+      "generationMs": 3508.429916000001,
+      "signature": "48913076",
+      "recipeBytes": 10154,
+      "spawn": {
+        "x": 1724,
+        "y": 1524
+      },
+      "extraction": {
+        "x": 764,
+        "y": 132
+      },
+      "extractionStraightPx": 1690.9358355656195,
+      "extractionRoutePx": 1850.5668093913712,
+      "terrainFill": 0.6384238591269841,
+      "solidRatio": 0.258121691837032,
+      "reachableFraction": 0.9999626335849339,
+      "reachableSeats": 26761,
+      "instances": 23,
+      "patrolSegments": 7,
+      "spatial": {
+        "version": 1,
+        "worldId": "last-shelf",
+        "sourceHash": "240414ad22fe90863b3ea6f8ff3c4a86d64724fc634aa502af0da73780baec3f",
+        "organization": "staggered-reaches",
+        "width": 2304,
+        "height": 1792,
+        "terrainFillRatio": 0.6384238591269841,
+        "solidTerrainRatio": 0.258121691837032,
+        "bodyReachableRatio": 0.9999626335849339,
+        "unreachableBodySeats": 1,
+        "spawnIndex": 2,
+        "spawnRelocationPx": 2,
+        "extraction": {
+          "point": {
+            "x": 764,
+            "y": 132
+          },
+          "cell": 4703,
+          "pathDistancePx": 1850.5668093913712,
+          "interactionPathDistancePx": 1800.6256838944166,
+          "euclideanDistancePx": 1690.9358355656195,
+          "pathFraction": 0.8006430402512529,
+          "regionId": 1,
+          "distanceBand": 2,
+          "candidateCount": 14391,
+          "regionCount": 11
+        },
+        "extractionCandidateField": {
+          "reachableCount": 26761,
+          "maxPathDistancePx": 2311.350647362947,
+          "minCandidatePathDistancePx": 965.4499269370542,
+          "maxCandidatePathDistancePx": 2210.6643558619317,
+          "candidateCount": 14391,
+          "regionCount": 11,
+          "distanceBandCount": 3,
+          "regionCounts": {
+            "0": 1686,
+            "1": 1998,
+            "2": 1408,
+            "3": 780,
+            "4": 747,
+            "5": 2080,
+            "6": 1040,
+            "7": 787,
+            "8": 1498,
+            "9": 2310,
+            "10": 57
+          },
+          "distanceBandCounts": {
+            "0": 6818,
+            "1": 4694,
+            "2": 2879
+          }
+        },
+        "solidObjectCount": 20
+      },
+      "expedition": {
+        "reachableBodySeats": 26761,
+        "extractionRoutePx": 1850.5668093913712,
+        "maximumExtraTravelPx": 2753.998266896449,
+        "directReturnRoutePx": 1800.6256838944187,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 42.17662350913611,
+            "approachRoutePx": 78.62741699796952,
+            "interactionSeats": 70,
+            "pollutionDistancePx": 410.9896550494046
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 14.05887450304408,
+            "approachRoutePx": 151.19595949289334,
+            "interactionSeats": 57,
+            "pollutionDistancePx": 427.8760892103055
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 500.35324701827085,
+            "approachRoutePx": 1208.999133448223,
+            "interactionSeats": 109,
+            "pollutionDistancePx": 28.153619241621193
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 515.8822509939073,
+            "approachRoutePx": 389.5878784786799,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 20.181444068749045
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 511.999999999995,
+            "approachRoutePx": 1126.253967444161,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 278.3640190234281
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 997.8233764908596,
+            "approachRoutePx": 887.8620484583746,
+            "interactionSeats": 58,
+            "pollutionDistancePx": 98.79271228182775
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 981.0193359837558,
+            "approachRoutePx": 1449.3321779309654,
+            "interactionSeats": 89,
+            "pollutionDistancePx": 95.86659251017358
+          },
+          {
+            "id": "contaminant/deep",
+            "minimumExtraTravelPx": 981.3523804664951,
+            "approachRoutePx": 768.4305909532983,
+            "interactionSeats": 47,
+            "pollutionDistancePx": 84
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 1436,
+              "y": 444
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 2036,
+              "y": 1236
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 812,
+              "y": 924
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-deep-1",
+            "seat": {
+              "x": 2164,
+              "y": 916
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 2156,
+              "y": 828
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-2",
+            "seat": {
+              "x": 1612,
+              "y": 236
+            },
+            "startMs": 3300,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 3,
+        "kindlingCount": 5,
+        "contaminantCount": 3
+      }
+    }
+  ],
+  "failures": [],
+  "finishedAt": "2026-10-10T15:45:13.653Z"
+}

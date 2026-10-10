@@ -1,3 +1,4 @@
+import { bakeMasterWorldSurface as bakeRevision6Surface } from '@/generation/legacy-r100-v6/executor-recovery.js';
 import { bakeMasterWorldSurface as bakeRevision5Surface } from '@/generation/legacy-r100-v5/executor-recovery.js';
 import { bakeMasterWorldSurface as bakeRevision4Surface } from '@/generation/legacy-r100-v4/executor.js';
 /** Pure immutable texture bake. Runs in the preparation Worker, never in a frame. */
@@ -55,7 +56,10 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
    const objectPaint=hasSurface?familyPaints[r.family[i]!]:painting;
    const solidPaint=fields.solid[i]===1?objectPaint?.solid:undefined;
    const receiverPaint=solidPaint??objectPaint;
-   const organizedSurface=hasSurface?organizationWindows?.get(r.objectId[i]!):undefined;
+   const groundEdge=r.groundEdgePixels!==undefined&&(r.groundEdgePixels[i>>>5]!&(1<<(i&31)))!==0;
+   // The shoreline already carries world UVs at native pixel density. Only
+   // the owner's actual formation fits into its contiguous source window.
+   const organizedSurface=hasSurface&&!groundEdge?organizationWindows?.get(r.objectId[i]!):undefined;
    // Apparent transmission uses only this world's known static substrate.
    // The receiver stays opaque: it can never reveal a hidden actor, change
    // the tactical visibility mask or erase an impassable thick edge.
@@ -185,8 +189,12 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
  return {width:w,height:h,albedo,normal,response,emission,diagnostics};
 }
 export function bakeMasterWorldSurface(world:MasterWorld,painting?:PaintedMaterial):MasterSurfaceBake {
+ const revision=world.algorithmRevision;
+ if(revision!==undefined&&revision!==5&&revision!==6&&revision!==7)throw new Error('Unknown native surface algorithm revision');
+ if(revision!==undefined&&!world.appearance)throw new Error('Explicit native surface revision requires frozen appearance');
  if(!world.appearance)return bakeRevision3Surface(world,painting);
  if(world.algorithmRevision===undefined)return bakeRevision4Surface(world,painting);
  if(world.algorithmRevision===5)return bakeRevision5Surface(world,painting);
+ if(world.algorithmRevision===6)return bakeRevision6Surface(world,painting);
  return bakeMasterSurface(world,paintMasterGround(world),new NativeVolumeLighting(world.raster,masterVolumePalette(world),{seed:world.sample.seed,axis:world.definition.axis}),painting);
 }

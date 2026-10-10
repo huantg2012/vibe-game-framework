@@ -32,7 +32,10 @@ export function prepareOrganizationSurfaceWindows(
   for (const mesh of meshes) {
     if (mesh.spec.family !== primaryFamily) continue;
     let minU = Infinity, minV = Infinity, maxU = -Infinity, maxV = -Infinity;
-    for (let i = 0; i < mesh.uv.length; i += 2) {
+    // A low formation may own the entire world's shallow shore geometry.
+    // Those appended world UVs must not enlarge this piece's source window.
+    const localUvLength = (mesh.groundEdgeStart?.vertex ?? mesh.vertexCount) * 2;
+    for (let i = 0; i < localUvLength; i += 2) {
       minU = Math.min(minU, mesh.uv[i]!); maxU = Math.max(maxU, mesh.uv[i]!);
       minV = Math.min(minV, mesh.uv[i + 1]!); maxV = Math.max(maxV, mesh.uv[i + 1]!);
     }

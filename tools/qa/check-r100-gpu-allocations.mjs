@@ -10,6 +10,9 @@ import { createHash } from 'node:crypto';
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const out = path.resolve(process.env.QA_OUTPUT_DIR ?? 'docs/qa/artifacts/r100-i03-i06-completion/gpu-allocations');
 const base = (process.env.GAME_URL ?? 'http://127.0.0.1:3074').replace(/\/$/, '');
+const families = (process.env.QA_FAMILIES ?? 'ash-strata,crystal-fibre,ivory-basin,cinder-ridge,pallid-membrane,silt-gel').split(',');
+const baselineWorld = process.env.QA_BASE_WORLD ?? 'ash-strata';
+assert(families.length > 0 && families.every(Boolean) && new Set(families).size === families.length);
 const MiB = 1024 * 1024;
 fs.mkdirSync(out, { recursive: true });
 const args = ['--enable-precise-memory-info'];
@@ -18,7 +21,7 @@ const browser = await chromium.launch({ headless: true, executablePath: process.
 const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
 const page = await context.newPage(), cdp = await browser.newBrowserCDPSession(), renderer = await context.newCDPSession(page);
 const report = {
-  status: 'running', base, environment: { platform: os.platform(), arch: os.arch(), cpu: os.cpus()[0].model, browser: browser.version(), backendRequested: process.env.QA_GPU_BACKEND ?? 'default' },
+  status: 'running', base, families, baselineWorld, environment: { platform: os.platform(), arch: os.arch(), cpu: os.cpus()[0].model, browser: browser.version(), backendRequested: process.env.QA_GPU_BACKEND ?? 'default' },
   method: 'Fresh isolated browser. Chrome memory-infra detailed deterministic dumps of the GPU process; gpu.size includes shared resources once at that process root. Two actual renderer GC calls before each sample. Same renderer/game, real native world rebuilds. No user storage.',
   limitations: 'Allocator backing accounting, not exclusive device physical residency; one physical machine. GPU-process total includes compositor tile caches and transfer staging, so is recorded, not confused with game-owned leak count. Shared-image WebGL/Canvas backing below is a separate, non-overlapping mailbox subtotal, not all private ANGLE resources. SwiftShader is a software-backend check, not a second hardware device. Dump overhead is not frame-time evidence.',
   references: ['https://chromium.googlesource.com/chromium/src/+/HEAD/docs/memory-infra/probe-gpu.md', 'https://chromedevtools.github.io/devtools-protocol/tot/Tracing/'],
@@ -95,14 +98,13 @@ async function select(world, grade, seed) {
 
 try {
   report.systemInfo = await cdp.send('SystemInfo.getInfo');
-  await page.goto(`${base}/r100-gym.html?world=ash-strata&grade=severe&seed=20261004`);
+  await page.goto(`${base}/r100-gym.html?world=${baselineWorld}&grade=severe&seed=20261004`);
   await page.waitForFunction(() => window.__r100Gym?.getState().runtime.running, null, { timeout: 60000 });
-  const families = ['ash-strata', 'crystal-fibre', 'ivory-basin', 'cinder-ridge', 'pallid-membrane', 'silt-gel'];
   for (const world of families) { await select(world, 'severe', 20261004); await snapshot(`family-${world}`); }
-  await select('ash-strata', 'severe', 20261004); await snapshot('warmed-baseline');
+  await select(baselineWorld, 'severe', 20261004); await snapshot('warmed-baseline');
   const baseline = report.samples.at(-1);
   const repetitions = Number(process.env.QA_REBUILDS ?? 10);
-  for (let i = 0; i < repetitions; i++) { await select('ash-strata', 'severe', 20261004); await snapshot(`identical-${i + 1}`); }
+  for (let i = 0; i < repetitions; i++) { await select(baselineWorld, 'severe', 20261004); await snapshot(`identical-${i + 1}`); }
   const worlds = await page.locator('#world option').evaluateAll(options => options.map(o => o.value));
   const mixed = Number(process.env.QA_MIXED_REBUILDS ?? 12);
   const mixedCycles = Number(process.env.QA_MIXED_CYCLES ?? 1);
@@ -110,7 +112,7 @@ try {
   report.mixedCycles = mixedCycles;
   for (let cycle = 0; cycle < mixedCycles; cycle++) {
     for (let i = 0; i < mixed; i++) await select(worlds[(i + 6) % worlds.length], ['low', 'medium', 'severe'][i % 3], 20261004 + i);
-    await select('ash-strata', 'severe', 20261004);
+    await select(baselineWorld, 'severe', 20261004);
     await snapshot(cycle === 0 ? 'after-mixed-return' : `after-mixed-return-${cycle + 1}`);
   }
   for (const sample of report.samples.filter(s => s.label.startsWith('identical-') || s.label.startsWith('after-mixed-return'))) {

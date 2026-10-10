@@ -134,6 +134,7 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
     candidates.push({ cell, position, distance: interactionDistance, approachDistance, interactionSeats, pollutionDistance: pollutionDistance(position) });
   }
   const maxDistance = Math.max(...candidates.map(seat => seat.distance));
+  const spatial = world.spatialDeployment;
   const chosen: { seat: Seat; tier: KindlingTier; kind: 'kindling' | 'contaminant' }[] = [];
   const kindlingNodes: KindlingNodeDef[] = [], contaminantNodes: ContaminantNodeDef[] = [];
   for (const tier of TIERS) for (const kind of ['kindling', 'contaminant'] as const) {
@@ -141,13 +142,19 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
     for (let slot = 0; slot < count; slot++) {
       const minDepth = tier === 'safe' ? 0 : tier === 'contested' ? .32 : .65;
       const maxDepth = tier === 'safe' ? .4 : tier === 'contested' ? .8 : 1;
-      const allowed = candidates.filter(seat => seat.distance >= maxDistance * minDepth && seat.distance <= maxDistance * maxDepth
+      const minimum = spatial ? tier === 'safe' ? 0 : spatial[`${tier}_min_extra_travel_px`] : maxDistance * minDepth;
+      const maximum = spatial ? spatial[`${tier}_max_extra_travel_px`] : maxDistance * maxDepth;
+      const allowed = candidates.filter(seat => seat.distance >= minimum && seat.distance <= maximum
+        && (!spatial || seat.approachDistance <= (tier === 'safe' ? spatial.safe_max_approach_px : spatial.max_search_approach_px))
         && seat.pollutionDistance >= (tier === 'safe' ? 34 : 16)
         && (tier !== 'safe' || safePoints.some(point => Math.hypot(point.x - seat.position.x, point.y - seat.position.y) < 30))
-        && chosen.every(other => Math.hypot(other.seat.position.x - seat.position.x, other.seat.position.y - seat.position.y) >= 52));
-      const goal = maxDistance * (tier === 'safe' ? .2 : tier === 'contested' ? .57 : .85);
+        && (!spatial || tier !== 'deep' || seat.pollutionDistance <= 100)
+        && chosen.every(other => Math.hypot(other.seat.position.x - seat.position.x, other.seat.position.y - seat.position.y) >= (spatial?.node_spacing_px ?? 52)));
+      const goal = spatial ? (minimum + maximum) / 2 : maxDistance * (tier === 'safe' ? .2 : tier === 'contested' ? .57 : .85);
       const score = (seat: Seat): number => -Math.abs(seat.distance - goal)
         + (tier === 'safe' ? Math.min(100, seat.pollutionDistance) * .5 : -Math.min(180, seat.pollutionDistance) * .45)
+        + (spatial && chosen.length ? Math.min(600, ...chosen.map(other => Math.hypot(other.seat.position.x - seat.position.x, other.seat.position.y - seat.position.y))) * spatial.node_spread_weight : 0)
+        - (spatial && tier === 'safe' ? seat.approachDistance * .2 : 0)
         + mix32(base.seed, `r100-content-${kind}-${tier}-${slot}-${seat.cell}`) / 0x100000000 * 64;
       allowed.sort((a, b) => score(b) - score(a) || a.cell - b.cell);
       const seat = allowed[0];
@@ -162,7 +169,8 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
   const enemies: EnemySpawnData[] = [];
   for (let slot = 0; slot < definition.enemy_count; slot++) {
     const target = threats[Math.floor(slot * threats.length / definition.enemy_count)]!.seat;
-    const allowed = candidates.filter(seat => seat.distance >= maxDistance * .38 && seat.pollutionDistance >= 14
+    const allowed = candidates.filter(seat => seat.distance >= (spatial?.contested_min_extra_travel_px ?? maxDistance * .38) && seat.pollutionDistance >= 14
+      && (!spatial || seat.approachDistance <= spatial.max_search_approach_px)
       && Math.hypot(seat.position.x - base.spawnPoint.x, seat.position.y - base.spawnPoint.y) >= 170
       && chosen.filter(item => item.tier === 'safe').every(item => Math.hypot(seat.position.x - item.seat.position.x, seat.position.y - item.seat.position.y) >= 112)
       && chosen.every(item => Math.hypot(seat.position.x - item.seat.position.x, seat.position.y - item.seat.position.y) >= 40)
@@ -199,7 +207,8 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
     if (!hostile && item.seat.pollutionDistance > 100) throw new Error('Deep prize has no actual hostile approach');
   }
   const searchable = [...kindlingNodes, ...contaminantNodes].filter(node => node.tier !== 'safe');
-  const patrolWindows = findR100PatrolWindows(world, enemies, searchable);
+  const patrolWindows = findR100PatrolWindows(world, enemies, searchable,
+    spatial ? point => Number.isFinite(field.distance[cellOf(grid, point)]) : undefined);
   if (patrolWindows.length !== searchable.length) throw new Error(`No complete search window: ${searchable.filter(node => !patrolWindows.some(window => window.id === node.id)).map(node => node.id).join(',')}`);
   const layout: GeneratedRiftLayout = { ...base, recipeId: `r100-native-v3:${world.definition.id}`,
     kindlingNodes, contaminantNodes, enemySpawns: enemies,
@@ -208,5 +217,6 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
     extractionRoutePx: field.distance[cellOf(grid, base.extractionPoint.position)], maximumExtraTravelPx: maxDistance, directReturnRoutePx: directReturn,
     nodes: chosen.map(item => ({ id: `${item.kind}/${item.tier}`, minimumExtraTravelPx: item.seat.distance, approachRoutePx: item.seat.approachDistance, interactionSeats: item.seat.interactionSeats, pollutionDistancePx: item.seat.pollutionDistance })),
     patrolWindows, patrolWindowContract: '2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately',
+    ...(spatial ? { spatialDeployment: spatial, searchExtraTravelCapPx: spatial.deep_max_extra_travel_px } : {}),
     costBasis: 'all-body-safe-48px-interaction-seats', guaranteedSafeReturn: true, enemyCount: enemies.length, kindlingCount: kindlingNodes.length, contaminantCount: contaminantNodes.length } };
 }

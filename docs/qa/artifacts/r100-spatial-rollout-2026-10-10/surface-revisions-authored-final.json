@@ -1,0 +1,135 @@
+{
+  "status": "pass",
+  "cases": [
+    {
+      "world": "cinder-ridge",
+      "sourceRevision": 6,
+      "unsupportedValues": [
+        {
+          "type": "object",
+          "display": "null"
+        },
+        {
+          "type": "number",
+          "display": "0"
+        },
+        {
+          "type": "number",
+          "display": "8"
+        },
+        {
+          "type": "number",
+          "display": "99"
+        },
+        {
+          "type": "string",
+          "display": "7"
+        },
+        {
+          "type": "number",
+          "display": "7.1"
+        },
+        {
+          "type": "boolean",
+          "display": "true"
+        },
+        {
+          "type": "number",
+          "display": "NaN"
+        },
+        {
+          "type": "number",
+          "display": "Infinity"
+        }
+      ],
+      "missingPackageRevisionRejected": true,
+      "crossRevisionRelabellingRejected": true
+    },
+    {
+      "world": "quiet-spur",
+      "sourceRevision": 7,
+      "unsupportedValues": [
+        {
+          "type": "object",
+          "display": "null"
+        },
+        {
+          "type": "number",
+          "display": "0"
+        },
+        {
+          "type": "number",
+          "display": "8"
+        },
+        {
+          "type": "number",
+          "display": "99"
+        },
+        {
+          "type": "string",
+          "display": "7"
+        },
+        {
+          "type": "number",
+          "display": "7.1"
+        },
+        {
+          "type": "boolean",
+          "display": "true"
+        },
+        {
+          "type": "number",
+          "display": "NaN"
+        },
+        {
+          "type": "number",
+          "display": "Infinity"
+        }
+      ],
+      "missingPackageRevisionRejected": true,
+      "crossRevisionRelabellingRejected": true
+    }
+  ],
+  "explicitAppearanceRequired": [
+    5,
+    6,
+    7
+  ],
+  "missingRevision7SpatialPolicyRejected": true,
+  "sources": [
+    {
+      "path": "src/generation/world-study/r100-package.ts",
+      "sha256": "ba994fc3bc8f1dc6a65f98b3c41d72b56a60ccd0aa3d2376bcb495c3f2406fe9"
+    },
+    {
+      "path": "src/generation/world-study/r100-production-map.ts",
+      "sha256": "ea8a7e0c5502559232615179c03270d5211ea175cb35b4674495619c6eff287c"
+    },
+    {
+      "path": "src/generation/legacy-r100-v6/executor-recovery.js",
+      "sha256": "f4b1b49689381e990825db75f9f64cd4061e31c030669d66002413f3bc0087fe"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-erosion.ts",
+      "sha256": "009759ac7741c968ab6162e1d890a4a4a1ef461d7adaa96b3c9569e915410f1a"
+    },
+    {
+      "path": "src/systems/r100-world/surface-bake.ts",
+      "sha256": "098aeebda01231a522ffa63afeb0b4d91f56acc0cd38dd7cafb8092251a852c7"
+    },
+    {
+      "path": "src/generated/r100-spatial-data.ts",
+      "sha256": "623048cc15bda3a217467f825e61c6864b4a567eccbdb71c475b879cb246cad3"
+    },
+    {
+      "path": "src/generated/r100-package-manifest.ts",
+      "sha256": "3a8f80f28a72744849f27871c381b2ed41db4a95861cf5cafc1f68f66c8bfdeb"
+    },
+    {
+      "path": "tools/recovery/check-native-r100-surface-revisions.mjs",
+      "sha256": "ff7b907807f63986d484fdc3c6e605900f215b946663b74abdaeecad0245ba9e"
+    }
+  ],
+  "legacyNote": "Undefined MasterWorld algorithmRevision remains valid only for original appearance-based revision3/4 surface dispatch; package algorithmRevision is always required.",
+  "scope": "Boundary rejection before terrain/surface allocation, covering r6 and authored-group r7 recipes. This is not successful full surface equivalence or WebGL qualification."
+}

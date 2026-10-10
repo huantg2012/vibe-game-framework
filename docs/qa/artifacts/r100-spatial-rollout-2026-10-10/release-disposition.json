@@ -1,0 +1,32 @@
+{
+  "status": "bounded-internal-pass",
+  "generation": "324 unique production worlds/grades at requested seed20261010; previous generation evidence retained through explicit geometry/behavior bridges, not rerun after pure performance fixes",
+  "runtime": {
+    "cases": 7,
+    "worlds": [
+      "ash-strata",
+      "crystal-fibre",
+      "ivory-basin",
+      "cinder-ridge",
+      "pallid-membrane",
+      "silt-gel",
+      "woven-quarters"
+    ],
+    "maxFrameP95Ms": 18.5,
+    "maxStepCpuP95Ms": 10.5,
+    "maxMaterialAggregateP95Ms": 2.5,
+    "profilePolicy": {
+      "scope": "Fresh temporary QA profile only; browser Battery Saver disabled for normal 60Hz measurement. No system or user profile changes; no frame-rate override flags.",
+      "requestedPreference": 0,
+      "persistedPreference": 0
+    }
+  },
+  "retention": {
+    "report": "gpu-performance-release/report.json",
+    "maxWebglCanvasBackingGrowthBytes": 0,
+    "maxHeapPlusBackingGrowthBytes": 633022
+  },
+  "build": "build-performance-release.json",
+  "source": "runtime-performance-release/source-snapshot.json",
+  "limits": "Shared M4 Pro machine. Browser Battery Saver disabled only in fresh isolated QA profile to restore normal60Hz; system low-power and user Chrome unchanged. No108-world human signoff, all-seed/whole-library performance, natural blind search, long-term economy or I14/P49 closure."
+}

@@ -29,6 +29,8 @@ export interface WorldProductionRecipeV3 extends Omit<WorldProductionRecipeV1, '
   readonly paintGeometryVersion: 2;
   /** Revision 4 material identity; absent on immutable earlier packages. */
   readonly appearance?: import('./r100-world-appearance').R100WorldAppearance;
+  /** Revision 7 freezes expansion/exploration policy; older records omit it. */
+  readonly spatialPolicy?: import('./r100-spatial-world').R100SpatialPolicy;
   readonly nativeDefinition: import('./r100-master-world').MasterDefinition;
   readonly gradeDefinition: import('./pollution-grade').PollutionGradeDefinition;
   readonly contentDefinition: import('./r100-expedition').R100ExpeditionDefinition;

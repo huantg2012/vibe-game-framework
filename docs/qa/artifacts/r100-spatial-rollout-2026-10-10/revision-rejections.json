@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "unknownRevisions": [
+    null,
+    0,
+    8,
+    99,
+    "7"
+  ],
+  "explicitAppearanceRequired": [
+    5,
+    6,
+    7
+  ],
+  "missingPackageRevisionRejected": true,
+  "sources": [
+    {
+      "path": "src/generation/world-study/r100-package.ts",
+      "sha256": "ba994fc3bc8f1dc6a65f98b3c41d72b56a60ccd0aa3d2376bcb495c3f2406fe9"
+    },
+    {
+      "path": "src/generation/world-study/r100-production-map.ts",
+      "sha256": "ea8a7e0c5502559232615179c03270d5211ea175cb35b4674495619c6eff287c"
+    },
+    {
+      "path": "src/systems/r100-world/surface-bake.ts",
+      "sha256": "098aeebda01231a522ffa63afeb0b4d91f56acc0cd38dd7cafb8092251a852c7"
+    },
+    {
+      "path": "tools/recovery/check-native-r100-surface-revisions.mjs",
+      "sha256": "53aeed094af104954c07c8e46a1dc364a2de5bb88a701982d04f07a214961179"
+    }
+  ],
+  "legacyNote": "Undefined MasterWorld algorithmRevision remains valid only for original appearance-based revision3/4 surface dispatch; package algorithmRevision is always required."
+}

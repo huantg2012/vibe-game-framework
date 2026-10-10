@@ -3,7 +3,18 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { writeR100QualificationManifests } from './r100-qualification-manifests.mjs';
 const hash = value => createHash('sha256').update(value).digest('hex');
-const paths = ['data/rift-master-scenes.csv', 'data/rift-pollution-grades.csv', 'data/rift-expedition-grades.csv',
+const paths = ['data/rift-spatial-policy.csv', 'data/rift-spatial-deployment.csv',
+  'src/generated/rift-spatial-deployment-data.ts', 'src/generation/world-study/r100-spatial-deployment.ts', 'data/rift-spatial-layouts.csv', 'data/rift-spatial-erosion.csv',
+  'data/rift-spatial-anchors.csv', 'data/rift-spatial-worlds.csv', 'data/rift-spatial-materials.csv',
+  'data/rift-spatial-organizations.csv', 'data/rift-spatial-authored-groups.csv', 'data/rift-spatial-authored-erosion.csv',
+  'tools/world-study/codegen-r100-spatial.mjs', 'tools/world-study/build-r100-authored-shores.py',
+  'tools/world-study/generate-spatial-deployment.mjs',
+  'src/generated/r100-spatial-data.ts', 'src/generation/world-study/r100-spatial-types.ts',
+  'src/generation/world-study/r100-spatial-world.ts', 'src/generation/world-study/spatial-extraction-selection.ts',
+  'src/systems/ai/physical-grid.ts', 'src/systems/tile-grid.ts', 'src/types/game-types.ts',
+  'src/config/constants.ts', 'src/generation/seed-fork.ts', 'src/utils/random.ts',
+  'src/generation/world-study/r100-production-map.ts', 'src/generation/world-study/production-recipe.ts',
+  'data/rift-master-scenes.csv', 'data/rift-pollution-grades.csv', 'data/rift-expedition-grades.csv',
   'data/rift-world-appearance.csv', 'data/rift-master-materials.csv', 'data/rift-search-remains.csv', 'data/rift-native-worlds.csv',
   'src/generation/world-study/r100-world-appearance.ts', 'src/generation/world-study/world-material-pigment.ts',
   'src/systems/r100-world/surface-bake.ts', 'src/systems/r100-world/ground.ts',

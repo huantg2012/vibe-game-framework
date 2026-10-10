@@ -1,0 +1,116 @@
+{
+  "status": "passed-bounded-visual-delta",
+  "scope": "324-map body/placement proof remains tied to pre-material source; visual delta changes metadata/shore material domain only, with explicit source diff and three rebuilt production geometry matches. This is scoped inheritance, not a new 324 rerun.",
+  "productionChanges": {
+    "src/generated/r100-package-manifest.ts": {
+      "before": "b88fb0c21dfb4b9deda20e450c20473df7bdb62da995c380354951ef1779eb18",
+      "after": "276775b493bc26cad9421a53c1594c5fc0f6b37751e9a5a0b2074cdcd0bb3723"
+    },
+    "src/generation/world-study/native-volume-geometry.ts": {
+      "before": "b9d56c768a33fc855661d37912bc28df76dfecd66fe75414a21cfc57b489e2a8",
+      "after": "cd50791d2c18cbc25fc6bfa8818a35fd07cb6f14a05db1feb0bfc94ae2da2142"
+    },
+    "src/generation/world-study/native-volume-raster.ts": {
+      "before": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0",
+      "after": "573768b2769ee8cae521e84e5997d17a676bf4bdde72b5c13cb024d181f4e32d"
+    },
+    "src/systems/r100-world/organization-sampling.ts": {
+      "before": "7a3afe8ba3cb1816fbf899bbecde20dc020d4432c9f35b7da2398c4dc3bdca3e",
+      "after": "06ca0558cf191b65559efd7c3fbfd19f1889d2d3ce0bb26cb9e9bc6cecc9506e"
+    },
+    "src/systems/r100-world/surface-bake.ts": {
+      "before": "098aeebda01231a522ffa63afeb0b4d91f56acc0cd38dd7cafb8092251a852c7",
+      "after": "ee15a75d5365978502da3e3e81d9e1c4128f04410825b64df8c58e704762c626"
+    }
+  },
+  "cases": [
+    {
+      "world": "cleft-tableland",
+      "geometry": {
+        "width": 2304,
+        "height": 1792,
+        "spawn": {
+          "x": 1492,
+          "y": 316
+        },
+        "extraction": {
+          "x": 276,
+          "y": 396
+        },
+        "geometry": "e6749924"
+      },
+      "matched": [
+        "nativeDefinition",
+        "spatialPolicy",
+        "appearance",
+        "contentDefinition",
+        "gradeDefinition",
+        "profile",
+        "effectiveSeed",
+        "attempt",
+        "reachableBodySeats",
+        "extractionRoutePx"
+      ]
+    },
+    {
+      "world": "shell-chain",
+      "geometry": {
+        "width": 2304,
+        "height": 1792,
+        "spawn": {
+          "x": 284,
+          "y": 740
+        },
+        "extraction": {
+          "x": 548,
+          "y": 1604
+        },
+        "geometry": "79c4ac62"
+      },
+      "matched": [
+        "nativeDefinition",
+        "spatialPolicy",
+        "appearance",
+        "contentDefinition",
+        "gradeDefinition",
+        "profile",
+        "effectiveSeed",
+        "attempt",
+        "reachableBodySeats",
+        "extractionRoutePx"
+      ]
+    },
+    {
+      "world": "woven-quarters",
+      "geometry": {
+        "width": 2304,
+        "height": 1792,
+        "spawn": {
+          "x": 300,
+          "y": 700
+        },
+        "extraction": {
+          "x": 2092,
+          "y": 292
+        },
+        "geometry": "e88c7129"
+      },
+      "matched": [
+        "nativeDefinition",
+        "spatialPolicy",
+        "appearance",
+        "contentDefinition",
+        "gradeDefinition",
+        "profile",
+        "effectiveSeed",
+        "attempt",
+        "reachableBodySeats",
+        "extractionRoutePx"
+      ]
+    }
+  ],
+  "byteProof": "woven-material-domain.json",
+  "legacyProof": "woven-material-r6-routing.json",
+  "sourceFilesCompared": 754,
+  "limitations": "Full bytes compared in woven medium; three real Worker builds compared for geometric inputs/fingerprint and deployment metrics. Appearance changed only woven shore-owner albedo; other107 definitions lack the combined material-organization/groundEdge condition. New0.492MiB per15 owner worlds requires separate resource sample."
+}

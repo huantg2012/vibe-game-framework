@@ -20,7 +20,14 @@ export function appendNativeGroundEdges(b: Builder, context: NativeGroundEdgeCon
   const width = b.spec.groundEdgeWidth;
   if (width === undefined) return;
   if (!context || !context.polygons.length || typeof context.matterAt !== 'function'
-    || !Number.isInteger(context.width / 8) || !Number.isInteger(context.height / 8)) throw new Error('Ground edge requires the complete authoritative terrain context');
+    || !Number.isInteger(context.width / 8) || !Number.isInteger(context.height / 8)
+    || context.width <= 0 || context.height <= 0 || context.width * context.height > 4194304)
+    throw new Error('Ground edge requires the complete bounded authoritative terrain context');
+  // Revision 7 authors the whole shoreline at 2304x1792, not a few local cuts.
+  // Keep the old source-world limit and bound expanded terrain separately.
+  // This retains the exact 8px seam geometry; it does not coarsen the bank or
+  // alter the native raster's 4,194,304-pixel allocation budget.
+  const triangleBudget = context.width <= 1280 && context.height <= 1024 ? 2048 : 16384;
   const cosine = Math.cos(b.spec.rotation), sine = Math.sin(b.spec.rotation);
   const local = (x: number, y: number, z: number): Point => {
     const dx = x - b.spec.x, dy = y - b.spec.y;
@@ -86,7 +93,7 @@ export function appendNativeGroundEdges(b: Builder, context: NativeGroundEdgeCon
   const faces: (readonly UV[])[] = [];
   const face = (polygon: readonly UV[]): void => {
     triangles += polygon.length - 2;
-    if (triangles > 2048) throw new Error('Authored ground cut exceeds the 2048-triangle edge budget');
+    if (triangles > triangleBudget) throw new Error(`Authored ground cut exceeds the ${triangleBudget}-triangle edge budget`);
     faces.push(polygon);
     for (const p of polygon) nextPeak = Math.max(nextPeak, heightAt(p[0], p[1]));
   };

@@ -7,6 +7,9 @@ import { mix32 } from '@/generation/seed-fork';
 import type { ContaminationPins, CorridorAabb } from '@/generation/types';
 import type { PollutionGradeDefinition } from '@/generation/world-study/pollution-grade';
 import type { TileGrid } from '@/systems/tile-grid';
+import { bodyDisplacementFraction } from '@/systems/ai/physical-grid';
+import { GAME_CONSTANTS } from '@/config/constants';
+import type { R100SpatialDeploymentPolicy } from './r100-spatial-deployment';
 import type { TileMapData } from '@/types/map-types';
 import { TileType, type Vector2 } from '@/types/game-types';
 
@@ -22,7 +25,7 @@ export interface MasterPollution {
 }
 const TILE = 32;
 export function createMasterPollution(grade: PollutionGradeDefinition, seed: number, grid: TileGrid,
-  reachable: Uint8Array, start: number, targets: readonly Readonly<Vector2>[]): MasterPollution {
+  reachable: Uint8Array, start: number, targets: readonly Readonly<Vector2>[], spatial?: R100SpatialDeploymentPolicy): MasterPollution {
   const cols = grid.cols * grid.tileSize / TILE, rows = grid.rows * grid.tileSize / TILE;
   const scale = TILE / grid.tileSize;
   const tiles = Array.from({ length: rows }, (_, row) => Array.from({ length: cols }, (_, col) => {
@@ -36,12 +39,16 @@ export function createMasterPollution(grade: PollutionGradeDefinition, seed: num
   const fineCenter = (cell: number): Vector2 => ({ x: (cell % grid.cols + .5) * grid.tileSize, y: (Math.floor(cell / grid.cols) + .5) * grid.tileSize });
   // Protect one honest walking route to the loot and extraction. Other routes
   // can cross pollution; none is a compulsory toll on entering or retreating.
-  const parents = new Int32Array(reachable.length).fill(-1), queue = [start]; parents[start] = start;
+  const parents = new Int32Array(reachable.length).fill(-1), approach = new Float64Array(reachable.length).fill(Infinity), queue = [start]; parents[start] = start; approach[start] = 0;
   for (let at = 0; at < queue.length; at++) {
     const cell = queue[at]!;
     for (const next of [cell - 1, cell + 1, cell - grid.cols, cell + grid.cols]) {
       if (!reachable[next] || parents[next] !== -1 || (Math.abs(next - cell) === 1 && Math.floor(next / grid.cols) !== Math.floor(cell / grid.cols))) continue;
-      parents[next] = cell; queue.push(next);
+      if (spatial) {
+        const point = fineCenter(cell), to = fineCenter(next), half = GAME_CONSTANTS.PLAYER.BODY_SIZE / 2;
+        if (bodyDisplacementFraction(grid, point, half, half, to.x - point.x, to.y - point.y) < 1) continue;
+      }
+      parents[next] = cell; approach[next] = approach[cell]! + grid.tileSize; queue.push(next);
     }
   }
   const protectedCells = new Set<number>();
@@ -64,6 +71,24 @@ export function createMasterPollution(grade: PollutionGradeDefinition, seed: num
   const candidates: { col: number; row: number }[] = [];
   for (let row = 0; row < rows; row++) for (let col = 0; col < cols; col++) if (isFloor(col, row)
     && reachable[fineCell({ x: (col + .5) * TILE, y: (row + .5) * TILE })]) candidates.push({ col, row });
+
+  const approachAt = (col: number, row: number): number => approach[fineCell({ x: col * TILE, y: row * TILE })]!;
+  const regionAt = (col: number, row: number): number => spatial
+    ? Math.min(spatial.host_region_cols - 1, Math.floor(col / cols * spatial.host_region_cols))
+      + Math.min(spatial.host_region_rows - 1, Math.floor(row / rows * spatial.host_region_rows)) * spatial.host_region_cols : 0;
+  const spatialHostScore = (col: number, row: number, slot: number, count: number, kind: string,
+    placed: readonly { readonly col: number; readonly row: number }[]): number => {
+    if (!spatial) return 0;
+    const distance = approachAt(col, row);
+    if (!Number.isFinite(distance) || distance < spatial.host_min_approach_px || distance > spatial.host_max_approach_px) return -Infinity;
+    const jitter = mix32(seed, `spatial-${kind}-depth-${slot}`) / 0x100000000;
+    const target = spatial.host_min_approach_px + (slot + .25 + jitter * .5) / count
+      * (spatial.host_max_approach_px - spatial.host_min_approach_px);
+    const spread = placed.length ? Math.min(600, ...placed.map(seat => Math.hypot(col - seat.col, row - seat.row) * TILE)) : 0;
+    const occupiedRegion = placed.some(seat => regionAt(col, row) === regionAt(seat.col, seat.row));
+    return -Math.abs(distance - target) * .6 + spread * .35 - Number(occupiedRegion) * 240
+      + mix32(seed, `spatial-${kind}-${slot}-${col}-${row}`) / 0x100000000 * 80;
+  };
 
   const forms: ContaminationForm[] = [], paintFloors: ContaminationPins['paintFloors'][number][] = [];
   const occupiedPaint = new Set<number>();
@@ -99,12 +124,14 @@ export function createMasterPollution(grade: PollutionGradeDefinition, seed: num
     const score = (seat: Seat): number => {
       const x = (seat.col + .5) * TILE, y = (seat.row + .5) * TILE;
       const placed = chosen.filter((p): p is Seat => p !== null);
+      if (spatial) return spatialHostScore(seat.col + .5, seat.row + .5, slot, grade.paintCount, 'paint', placed.map(p => ({ col: p.col + .5, row: p.row + .5 })));
       if (!placed.length) return -Math.abs(Math.hypot(x - spawn.x, y - spawn.y) - 160);
       return Math.min(...placed.map(p => Math.hypot(seat.col - p.col, seat.row - p.row))) * TILE
         - Math.abs(Math.hypot(x - spawn.x, y - spawn.y) - 250) * .14;
     };
     allowed.sort((a, b) => score(b) - score(a) || a.row - b.row || a.col - b.col);
     for (const seat of allowed) {
+      if (spatial && !Number.isFinite(score(seat))) continue;
       chosen[slot] = seat;
       for (const cell of seat.danger) occupiedPaint.add(cell);
       if (placePaint(remaining - 1)) return true;
@@ -128,12 +155,14 @@ export function createMasterPollution(grade: PollutionGradeDefinition, seed: num
     });
     const score = (seat: typeof candidates[number]): number => {
       const x = (seat.col + grade.volumeCols / 2) * TILE, y = (seat.row + grade.volumeRows / 2) * TILE;
+      if (spatial) return spatialHostScore(x / TILE, y / TILE, slot, grade.volumeCount, 'volume',
+        [...chosen.filter((p): p is Seat => p !== null).map(p => ({ col: p.col + .5, row: p.row + .5 })), ...volumes.map(box => ({ col: box.coreCol + .5, row: box.coreRow + .5 }))]);
       const distance = Math.hypot(x - spawn.x, y - spawn.y);
       const spread = volumes.length ? Math.min(...volumes.map(box => Math.hypot(x - (box.coreCol + .5) * TILE, y - (box.coreRow + .5) * TILE))) : 0;
       return spread - Math.abs(distance - 210) * .6;
     };
     allowed.sort((a, b) => score(b) - score(a) || a.row - b.row || a.col - b.col);
-    const seat = allowed[0];
+    const seat = allowed.find(seat => !spatial || Number.isFinite(score(seat)));
     if (!seat) throw new Error(`${grade.id}: no complete native volume footprint for Host ${slot + 1}`);
     const box = { minCol: seat.col, minRow: seat.row, maxCol: seat.col + grade.volumeCols - 1,
       maxRow: seat.row + grade.volumeRows - 1, coreCol: seat.col + Math.floor((grade.volumeCols - 1) / 2), coreRow: seat.row + Math.floor((grade.volumeRows - 1) / 2) };

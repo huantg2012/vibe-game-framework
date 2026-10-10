@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "finishedAt": "2026-10-10T15:58:15.658Z",
+  "environment": {
+    "node": "v22.14.0",
+    "platform": "darwin"
+  },
+  "scope": "Synthetic three-island geometry, independent eight-way full-body BFS, optional patrol-window reachability adapter. Not production-map sampling, live pursuit or whole-save compatibility.",
+  "reachableSeats": 660,
+  "previousBehavior": [
+    {
+      "id": "reachable-station",
+      "seat": {
+        "x": 140,
+        "y": 44
+      },
+      "startMs": 0,
+      "durationMs": 2400
+    },
+    {
+      "id": "isolated-station",
+      "seat": {
+        "x": 596,
+        "y": 44
+      },
+      "startMs": 0,
+      "durationMs": 2400
+    }
+  ],
+  "allReachableAdapter": [
+    {
+      "id": "reachable-station",
+      "seat": {
+        "x": 140,
+        "y": 44
+      },
+      "startMs": 0,
+      "durationMs": 2400
+    },
+    {
+      "id": "isolated-station",
+      "seat": {
+        "x": 596,
+        "y": 44
+      },
+      "startMs": 0,
+      "durationMs": 2400
+    }
+  ],
+  "noReachableAdapter": [],
+  "filtered": [
+    {
+      "id": "reachable-station",
+      "seat": {
+        "x": 140,
+        "y": 44
+      },
+      "startMs": 0,
+      "durationMs": 2400
+    }
+  ],
+  "legacyRevision6Sha256": "f4b1b49689381e990825db75f9f64cd4061e31c030669d66002413f3bc0087fe",
+  "sourceHashes": {
+    "src/generation/world-study/r100-patrol-windows.ts": "9dfe9ba3ca1a8486c771b06590b9a8efa21ce5add55b32a94877f66b16d761ae",
+    "src/generation/world-study/r100-expedition.ts": "f55c7bc0e9f50878785f9a691b53cfb6bb5f7ea882265e3aebe0dd32d1d6b620",
+    "src/systems/ai/physical-grid.ts": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab",
+    "tools/spatial-rollout/check-patrol-window-reachability.mjs": "3d89805137c46c3796188ea9e95c72a604b7dfc5416d6e0a6c15a953c9431f5a",
+    "src/generation/legacy-r100-v6/executor-recovery.js": "f4b1b49689381e990825db75f9f64cd4061e31c030669d66002413f3bc0087fe"
+  }
+}

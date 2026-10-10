@@ -21,6 +21,9 @@ export interface NativeVolumeRaster {
   readonly heightField: Float32Array;
   readonly normals: Float32Array;
   readonly uv: Float32Array;
+  /** One bit per winning shoreline pixel. Kept separate from material/region
+   * IDs so physics, construction events and all existing fields stay exact. */
+  readonly groundEdgePixels?: Uint32Array;
   readonly occupiedPixels: Uint32Array;
   readonly ambientOcclusion: Float32Array;
 }
@@ -74,6 +77,8 @@ export function compileNativeVolumeRaster(meshes: readonly NativeVolumeMesh[], c
   const size = width * height, columns = Math.ceil(config.width / cellSize), rows = Math.ceil(config.height / cellSize);
   const matter = new Uint8Array(size), objectId = new Int32Array(size), material = new Uint8Array(size), family = new Uint8Array(size), region = new Uint8Array(size);
   const heightField = new Float32Array(size), normals = new Float32Array(size * 3), uv = new Float32Array(size * 2);
+  const groundEdgePixels = meshes.some(mesh => mesh.groundEdgeStart !== undefined)
+    ? new Uint32Array(Math.ceil(size / 32)) : undefined;
   heightField.fill(-Infinity);
   const usedIds = new Set<number>();
   for (const mesh of meshes) {
@@ -81,6 +86,7 @@ export function compileNativeVolumeRaster(meshes: readonly NativeVolumeMesh[], c
     usedIds.add(mesh.spec.id);
     const p = mesh.positions, n = mesh.normals, tex = mesh.uv;
     for (let f = 0; f < mesh.triangleCount; f++) {
+      const groundEdge = mesh.groundEdgeStart !== undefined && f >= mesh.groundEdgeStart.triangle;
       const ia = mesh.indices[f * 3]!, ib = mesh.indices[f * 3 + 1]!, ic = mesh.indices[f * 3 + 2]!;
       const a = ia * 3, b = ib * 3, c = ic * 3;
       const ax = (p[a]! - config.x) / pixelSize, ay = (p[a + 1]! - config.y) / pixelSize;
@@ -102,6 +108,10 @@ export function compileNativeVolumeRaster(meshes: readonly NativeVolumeMesh[], c
           const z = wa * p[a + 2]! + wb * p[b + 2]! + wc * p[c + 2]!;
           if (z < heightField[index]! - 1e-5 || (Math.abs(z - heightField[index]!) < 1e-5 && mesh.spec.id > objectId[index]!)) continue;
           matter[index] = 1; objectId[index] = mesh.spec.id; material[index] = mesh.materials[f]!;
+          if (groundEdgePixels) {
+            const word = index >>> 5, bit = 1 << (index & 31);
+            groundEdgePixels[word] = groundEdge ? groundEdgePixels[word]! | bit : groundEdgePixels[word]! & ~bit;
+          }
           region[index] = mesh.regions[f]!;
           family[index] = FAMILY_ID[mesh.spec.family]; heightField[index] = z;
           let nx = n[a]! * wa + n[b]! * wb + n[c]! * wc;
@@ -144,7 +154,7 @@ export function compileNativeVolumeRaster(meshes: readonly NativeVolumeMesh[], c
   }
   return { config: Object.freeze({ ...config }), width, height, pixelSize, cellSize, columns, rows,
     occupancy, optical, cellHeight, matter, objectId, material, region, family, heightField, normals, uv,
-    occupiedPixels: new Uint32Array(occupied), ambientOcclusion };
+    occupiedPixels: new Uint32Array(occupied), ambientOcclusion, ...(groundEdgePixels ? { groundEdgePixels } : {}) };
 }
 
 /** No matter is represented by -Infinity, never by a black-emitting material. */

@@ -3,7 +3,7 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "正式出发冻结身份，继续同趟不重抽、不离线推进；schema4记录最近8次世界并与beginRun同事务。修订6当前108世界的324进入/冷续、342浏览器等价、31恢复合同及48自然/192存档接续核账已通过；旧v1/v2及revision1–5保持原冻结恢复。跨设备/无限异常组合仍不外推。",
+    "summary": "正式出发冻结身份，继续同趟不重抽、不离线推进；schema4最近8次世界历史仍与beginRun同事务。修订7冻结空间组织、作者组变换、缺地、出生候选、撤离及部署策略，恢复不读当前CSV重算；旧v1/v2及revision1–6由各自冻结执行器恢复。r6原324配方/8代表完整payload与RGBA及2例公开路由等价已验；r7三档正式浏览器冷续保持身份、身体位置及一次visit记账。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -235,6 +235,124 @@
       {
         "path": "docs/qa/artifacts/r100-i14/root/release-gates-through48.json",
         "role": "doc"
+      },
+      {
+        "path": "docs/tasks/rift-spatial-rollout.md",
+        "role": "doc",
+        "note": "4459d7c3代表认可与正式推广授权；验收仍按本轮实际证据。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v6/assets.json",
+        "role": "data",
+        "note": "固定4459d7c3的revision6生成/恢复/表面闭包，不让新空间回写旧存档。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v6/executor-recovery.d.ts",
+        "role": "code",
+        "note": "固定4459d7c3的revision6生成/恢复/表面闭包，不让新空间回写旧存档。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v6/executor-recovery.js",
+        "role": "code",
+        "note": "固定4459d7c3的revision6生成/恢复/表面闭包，不让新空间回写旧存档。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v6/executor-revision6.d.ts",
+        "role": "code",
+        "note": "固定4459d7c3的revision6生成/恢复/表面闭包，不让新空间回写旧存档。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v6/executor-revision6.js",
+        "role": "code",
+        "note": "固定4459d7c3的revision6生成/恢复/表面闭包，不让新空间回写旧存档。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v6/executor.d.ts",
+        "role": "code",
+        "note": "固定4459d7c3的revision6生成/恢复/表面闭包，不让新空间回写旧存档。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v6/executor.js",
+        "role": "code",
+        "note": "固定4459d7c3的revision6生成/恢复/表面闭包，不让新空间回写旧存档。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v6/manifest-recovery.json",
+        "role": "data",
+        "note": "固定4459d7c3的revision6生成/恢复/表面闭包，不让新空间回写旧存档。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v6/manifest-revision6.json",
+        "role": "data",
+        "note": "固定4459d7c3的revision6生成/恢复/表面闭包，不让新空间回写旧存档。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v6/manifest.json",
+        "role": "data",
+        "note": "固定4459d7c3的revision6生成/恢复/表面闭包，不让新空间回写旧存档。"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-spatial-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-spatial-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision6-live.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision6.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision7-freezing.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision7-recipes.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-surface-revisions.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/derive-native-r100-revision6.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/freeze-native-r100-revision6.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/project-native-r100-revision6.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/revision7-recipes-bays.json",
+        "role": "doc",
+        "note": "最终32点岸线合同及限定保存/冷续证据，旧实验阶段不代替本结果。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/revision7-freezing-bays.json",
+        "role": "doc",
+        "note": "最终32点岸线合同及限定保存/冷续证据，旧实验阶段不代替本结果。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/entry-release/report.json",
+        "role": "doc",
+        "note": "最终32点岸线合同及限定保存/冷续证据，旧实验阶段不代替本结果。"
       }
     ],
     "dependsOn": [],
@@ -263,13 +381,16 @@
       "COH-E184",
       "COH-E187",
       "COH-E189",
-      "COH-E191"
+      "COH-E191",
+      "COH-E211",
+      "COH-E212"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。",
       "最终交互站位版本恢复20组通过，含4份不可变v1金样、3份v2冷JSON及生产套件5次随机新出击冷恢复；隔离浏览器一趟真实新建/出击/暂停/刷新同身份同位置/搜取/撤离/首归通过。开发中v2算法变化曾使测试entry签名失配，中间失败保留，不代表已发布v1迁移；未穷尽所有在途异常与长期恢复组合。",
       "生产烟测发现既有v2精确签名会受不同V8运行时的atan2末位差异影响（R100-P05）。当前浏览器DEV与dist等价不代表跨引擎/升级后的旧档恢复保证，冻结执行器与严格签名未放宽。",
-      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10/弱设备/用户终验仍待。"
+      "历史修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10和用户终验仍待；弱设备补测已获豁免且未测。",
+      "r7最终324配方与5代表隔离变更反例通过，三档正式新出发/浏览器刷新/继续保持完整身份、位置及一次visit。样本未穷尽跨引擎、全部存档异常或发现后跨刷新记忆；r6兼容和三档入口不代替r7自然旅程或长期恢复保证。"
     ]
   },
   {

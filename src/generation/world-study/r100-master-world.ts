@@ -5,6 +5,7 @@ import { POLLUTION_GRADE_DEFINITIONS } from '@/generated/rift-pollution-grade-da
 import type { PollutionGradeDefinition } from './pollution-grade';
 import type { WorldProfile } from './types';
 import { createMasterPollution, type MasterPollution } from './r100-pollution';
+import { validateR100SpatialDeploymentPolicy, type R100SpatialDeploymentPolicy } from './r100-spatial-deployment';
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import { measureOutline } from '@/generation/outline-mask';
 import type { GeneratedRiftLayout } from '@/generation/types';
@@ -36,7 +37,8 @@ export interface MasterDefinition {
 }
 export interface MasterWorld {
   /** New packages opt into current presentation; absence preserves frozen r4. */
-  readonly algorithmRevision?: 5 | 6;
+  readonly algorithmRevision?: 5 | 6 | 7;
+  readonly spatialDeployment?: R100SpatialDeploymentPolicy;
   readonly appearance?: import('./r100-world-appearance').R100WorldAppearance;
   /** Production-only frozen dependency identity; DEV masters omit it. */
   readonly packageHash?: string;
@@ -95,8 +97,9 @@ function solidCoverage(meshes: readonly NativeVolumeMesh[], cols: number, rows: 
   return coverage;
 }
 
-export function createMasterWorld(definition: MasterDefinition, seed: number, frozen?: { readonly grade: PollutionGradeDefinition; readonly profile: WorldProfile }): MasterWorld {
+export function createMasterWorld(definition: MasterDefinition, seed: number, frozen?: { readonly grade: PollutionGradeDefinition; readonly profile: WorldProfile; readonly spatialDeployment?: R100SpatialDeploymentPolicy }): MasterWorld {
   if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('种子必须是 0–4294967295 的整数');
+  if (frozen?.spatialDeployment) validateR100SpatialDeploymentPolicy(frozen.spatialDeployment);
   const width = definition.cols * TILE, height = definition.rows * TILE;
   const land = new Uint8Array(definition.cols * definition.rows), walls = new Uint8Array(land.length);
   const flowAngle = new Float32Array(land.length), deposition = new Float32Array(land.length);
@@ -153,7 +156,7 @@ export function createMasterWorld(definition: MasterDefinition, seed: number, fr
   const physicalLand=Uint8Array.from(tiles.flat(),v=>v===TileType.VOID?0:1), physicalWalls=Uint8Array.from(tiles.flat(),v=>v===TileType.WALL?1:0);
   const fragmentTypeId='frag-outdoor';
   const grade = frozen?.grade ?? POLLUTION_GRADE_DEFINITIONS.find(item => item.id === definition.grade)!;
-  const pollution = createMasterPollution(grade, seed, grid, reachable, start, [exitPoint, searchPoint]);
+  const pollution = createMasterPollution(grade, seed, grid, reachable, start, [exitPoint, searchPoint], frozen?.spatialDeployment);
   const outline={seed,attempt:0,cols,rows,tileSize:SUPPORT,land:physicalLand,tileMap,metrics:measureOutline(physicalLand,cols,rows)};
   const enemyCell={col:Math.floor(enemyPoint.x/SUPPORT),row:Math.floor(enemyPoint.y/SUPPORT)};
   const layout:GeneratedRiftLayout={seed,paintGeometryVersion:2,fragmentTypeId,recipeId:`r100-art-lab:${definition.id}`,contaminationAge:'new',ruinSeverity:'broken',tileMap,
@@ -166,7 +169,7 @@ export function createMasterWorld(definition: MasterDefinition, seed: number, fr
   const sample:WorldSample={profile:{...baseProfile,surface:{...baseProfile.surface,quietness:definition.ground_quietness,contrast:definition.ground_contrast,coverage:definition.ground_coverage}},topologyId:'loops',seed,cols:definition.cols,rows:definition.rows,tileSize:TILE,land,walls,spawn:spawnPoint,exit:exitPoint,formations:[],flowAngle,deposition};
   const sight:OccluderGrid={cols,rows,tileSize:SUPPORT,version:0,isOpaque:(col,row)=>col<0||row<0||col>=cols||row>=rows||!matter[row*cols+col]};
   let hash=2166136261;for(const mesh of meshes)for(const v of mesh.positions){hash=Math.imul(hash^Math.round(v*100),16777619);}for(const v of physicalWalls)hash=Math.imul(hash^v,16777619);for(const v of matter)hash=Math.imul(hash^v,16777619);
-  return{definition,meshes,raster,sample,layout,hostTileMap:pollution.hostTileMap,pollution,sight,combat:grid,matterAt,roleAt,diagnostics:{identity:definition.id,family:definition.family,grade:definition.grade,seed,
+  return{...(frozen?.spatialDeployment ? { spatialDeployment: frozen.spatialDeployment } : {}),definition,meshes,raster,sample,layout,hostTileMap:pollution.hostTileMap,pollution,sight,combat:grid,matterAt,roleAt,diagnostics:{identity:definition.id,family:definition.family,grade:definition.grade,seed,
     sourceHash:MASTER_SCENES_SOURCE_HASH,geometryFingerprint:(hash>>>0).toString(16).padStart(8,'0'),qualification:'author-local-art-lab; not a production-world admission',projection:'native XY topdown; height projection 0',
     nativeCanvas:[960,640],cameraZoom:1.5,actorBody:HALF_BODY*2,movementPxPerSecond:80,supportCell:SUPPORT,
     triangles:meshes.reduce((n,m)=>n+m.triangleCount,0),reachableBodySeats:queue.length,spawnPoint,exitPoint,searchPoint,enemyPoint,

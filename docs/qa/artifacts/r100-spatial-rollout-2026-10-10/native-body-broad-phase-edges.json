@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "clearEndpointLongSweepStopped": 0.09499975024999999,
+  "fullExemption": 1,
+  "laterVoidStillStopped": 0.45499975025,
+  "repeatedEarlyReturnThenClearQueries": 100,
+  "checks": [
+    "whole 400px sweep",
+    "effective full exemption",
+    "partial exemption remains solid",
+    "exemption cannot bypass VOID",
+    "candidate-set reuse"
+  ],
+  "sources": [
+    {
+      "path": "src/generation/world-study/native-body-collision.ts",
+      "sha256": "1ed10631c73ed5f4acfcb0204aa232a37e18e94fcf706c7db50b172c258d5228"
+    },
+    {
+      "path": "tools/spatial-rollout/check-native-body-broad-phase-edges.ts",
+      "sha256": "7074a3a3f21c0ed1ab1c5466383b8f4394bf92da3f709299e6cec7bfa56f7365"
+    },
+    {
+      "path": "tools/spatial-rollout/fixtures/native-body-collision-before-grid.ts",
+      "sha256": "1e62ebe7795c793cef3808827b5329d984562628950e22a73fd56a19622f54b7"
+    }
+  ]
+}

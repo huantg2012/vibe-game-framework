@@ -162,10 +162,7 @@ export class MasterPresentation implements RiftDevRuntime {
    x0=Math.floor(x0);x1=Math.ceil(x1);y0=Math.floor(y0);y1=Math.ceil(y1);
    const key=`${x0},${x1},${y0},${y1},${ground}`;if(key===entry.key)continue;entry.key=key;
    const g=entry.graphics;g.clear();g.fillStyle(0xffffff);
-   for(let y=y0;y<=y1;y++){let start=-1;const heightLimit=Math.max(1,ground-y);for(let x=x0;x<=x1+1;x++){
-    const visible=x<=x1&&this.actorOcclusionField.isVisibleAtPixel(x,y,heightLimit);
-    if(visible&&start<0)start=x;if(!visible&&start>=0){g.fillRect(start,y,x-start,1);start=-1;}
-   }}
+   for(let y=y0;y<=y1;y++)this.actorOcclusionField.drawVisibleRow(g,x0,x1,y,Math.max(1,ground-y));
   }
  }
  snapshot():Record<string,unknown>&{phase:string}{return{mode:this.mode,motion:this.motion,phase:this.phase,elapsedMs:this.time,activity:this.activity,lastRenderMs:this.renderMs,

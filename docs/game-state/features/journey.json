@@ -826,7 +826,7 @@
     "id": "COH-F005",
     "title": "资源加载与场景过渡",
     "domain": "loop",
-    "summary": "Boot加载正式资源后进入F标题；主菜单进入净化点仍使用既有新建/继续短过渡和session存档逻辑。共用title-motion/title-exterior由Scene时间驱动，首页减动清空叠加、实景time=0保留静态。正式默认资产启用joint-depth，DEV独立profile及历史对照保持且不覆盖生产配置；生命周期执行范围按本轮QA记录。 正式Rift生成与表面准备在可取消Worker执行，建场分段并在完整首帧后交控；参考机60次新出发与60次冷续的Rift阶段无≥50ms任务。网页启动至菜单仍有100–117ms事件，弱硬件和发布长尾留I14。 生成/表面Worker仅未确认开始的首次错误可同请求重启一次，原总截止/取消/存档事务保持；纯合同、旧内容回归和三组真实浏览器受控故障恢复通过；修订6最终324正式进入/冷续和48自然流程已另验通过，原失败与Worker/P44环境归因限制保留；I10–I12内部结案，I14弱硬件/长尾仍待。",
+    "summary": "Boot与F首页、净化点会话和短过渡保持既有入口。正式Rift生成与表面准备由可取消Worker执行，分段建场并在完整首帧后交控；首次未确认启动的Worker错误可在原截止内同请求重启一次。修订7扩大世界的三档正式进入/冷续已通过限定浏览器验证，新大图7例重污染运行预算已限定通过；旧修订3/6入口及48自然流程证据保持历史范围。弱设备已豁免且未测。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1050,6 +1050,44 @@
         "path": "docs/qa/rift-r100-async-entry-2026-10-03.md",
         "role": "doc",
         "note": "Worker/取消/恢复/场景销毁有限验证及入场预算缺口"
+      },
+      {
+        "path": "docs/tasks/rift-spatial-rollout.md",
+        "role": "doc",
+        "note": "4459d7c3代表认可与正式推广授权；验收仍按本轮实际证据。"
+      },
+      {
+        "path": "src/generation/rift-generation-execute.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/rift-generation-worker.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/rift-generation-protocol.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/spatial-rollout/check-entry.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-rollout/capture-production.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-rollout/freeze-browser-source.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/entry-release/report.json",
+        "role": "doc",
+        "note": "本轮三档正式新出发/冷续有限验证；运行预算另验。"
       }
     ],
     "dependsOn": [
@@ -1072,14 +1110,17 @@
       "COH-E150",
       "COH-E173",
       "COH-E174",
-      "COH-E180"
+      "COH-E180",
+      "COH-E211",
+      "COH-E212"
     ],
     "unknowns": [
       "闪帧专项的同实例重启仅验证可见性/角色重建，不作为自然搜撤返程证据。",
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
       "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。",
       "2026-10-01用户认可48b700c联合画面与动效并授权正式推广，巨影不再记人审待定。正式资源原样推广，运行与存档/生命周期证据按统一QA实际范围判断，不由旧DEV结果推定。首页图像域遮罩与实景真实深度管线保持；跨设备/Canvas动态、长期性能及完整搜撤交易未自动扩验。",
-      "联合DEV旧操作证据按原范围保留，正式接入另验；首页坐姿到实景站姿仍为剪辑，长期性能/低端回退/完整搜撤交易的未验范围归本轮QA。"
+      "联合DEV旧操作证据按原范围保留，正式接入另验；首页坐姿到实景站姿仍为剪辑，长期性能/低端回退/完整搜撤交易的未验范围归本轮QA。",
+      "修订7三档正式两阶段备行、自然选池新出发、暂停存档和冷续已通过entry-release。该用例通过场景方法打开备行，未冒称实走净化点；进入耗时与捕获成功不能代替帧率、长尾或长期资源预算，新大图运行预算仍待收口。"
     ]
   },
   {

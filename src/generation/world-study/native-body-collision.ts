@@ -15,6 +15,7 @@ interface Hit { fraction: number; normalX: number; normalY: number }
 export interface NativeBodyMotion { x: number; y: number; velocityX: number; velocityY: number; collided: boolean }
 const EPSILON = 1e-7;
 const SEPARATION = 1e-4;
+const SOLID_BUCKET_SIZE = 64;
 
 function polygon(points: readonly Point[]): Polygon | null {
   if (points.length < 3) return null;
@@ -90,6 +91,11 @@ function sweepPolygon(p: Polygon, center: Point, halfW: number, halfH: number, d
  * allocation-free except the rare phase-ability clipping request. */
 export class NativeBodyCollision implements PhysicalBodyQueries {
   private readonly solids: readonly Polygon[];
+  private readonly bucketCols: number;
+  private readonly bucketRows: number;
+  private readonly bucketOffsets: Uint32Array;
+  private readonly bucketSolids: Uint32Array;
+  private readonly candidateBits: Uint32Array;
   private readonly hit: Hit = { fraction: 1, normalX: 0, normalY: 0 };
   private readonly at: Vector2 = { x: 0, y: 0 };
   private readonly cell: Polygon;
@@ -110,6 +116,25 @@ export class NativeBodyCollision implements PhysicalBodyQueries {
       }
     }
     this.solids = solids; this.triangleCount = solids.length;
+    this.bucketCols = Math.max(1, Math.ceil(map.cols * map.tileSize / SOLID_BUCKET_SIZE));
+    this.bucketRows = Math.max(1, Math.ceil(map.rows * map.tileSize / SOLID_BUCKET_SIZE));
+    const counts = new Uint32Array(this.bucketCols * this.bucketRows);
+    // Clamping both insertion and query ranges retains out-of-map triangles
+    // in the edge buckets. It can add candidates, never discard an overlap.
+    const visitBuckets = (solid: Polygon, visit: (bucket: number) => void): void => {
+      const left = this.bucketCoordinate(solid.minX, this.bucketCols), right = this.bucketCoordinate(solid.maxX, this.bucketCols);
+      const top = this.bucketCoordinate(solid.minY, this.bucketRows), bottom = this.bucketCoordinate(solid.maxY, this.bucketRows);
+      for (let row = top; row <= bottom; row++) for (let col = left; col <= right; col++) visit(row * this.bucketCols + col);
+    };
+    for (const solid of solids) visitBuckets(solid, bucket => { counts[bucket] = counts[bucket]! + 1; });
+    this.bucketOffsets = new Uint32Array(counts.length + 1);
+    for (let i = 0; i < counts.length; i++) this.bucketOffsets[i + 1] = this.bucketOffsets[i]! + counts[i]!;
+    this.bucketSolids = new Uint32Array(this.bucketOffsets[counts.length]!);
+    const writeAt = this.bucketOffsets.slice(0, counts.length);
+    for (let i = 0; i < solids.length; i++) visitBuckets(solids[i]!, bucket => {
+      const at = writeAt[bucket]!; this.bucketSolids[at] = i; writeAt[bucket] = at + 1;
+    });
+    this.candidateBits = new Uint32Array(Math.ceil(solids.length / 32));
     // A mutable axis-aligned cell avoids allocations when sweeping missing floor.
     this.cell = { points: [], axes: [{ x: 1, y: 0, min: 0, max: 0 }, { x: 0, y: 1, min: 0, max: 0 }], minX: 0, minY: 0, maxX: 0, maxY: 0 };
   }
@@ -120,7 +145,15 @@ export class NativeBodyCollision implements PhysicalBodyQueries {
     for (let row = Math.floor((center.y - halfH + EPSILON) / size); row <= Math.floor((center.y + halfH - EPSILON) / size); row++)
       for (let col = Math.floor((center.x - halfW + EPSILON) / size); col <= Math.floor((center.x + halfW - EPSILON) / size); col++)
         if (this.map.tiles[row]![col] === TileType.VOID) return false;
-    for (const solid of this.solids) if (overlap(solid, center, halfW, halfH)) return false;
+    this.collectCandidates(center.x - halfW, center.y - halfH, center.x + halfW, center.y + halfH);
+    for (let word = 0; word < this.candidateBits.length; word++) {
+      let bits = this.candidateBits[word]!;
+      while (bits !== 0) {
+        const index = word * 32 + 31 - Math.clz32(bits & -bits);
+        if (overlap(this.solids[index]!, center, halfW, halfH)) return false;
+        bits &= bits - 1;
+      }
+    }
     return true;
   }
 
@@ -156,6 +189,26 @@ export class NativeBodyCollision implements PhysicalBodyQueries {
       && center.x + halfW <= this.map.cols * this.map.tileSize && center.y + halfH <= this.map.rows * this.map.tileSize;
   }
 
+  private bucketCoordinate(value: number, extent: number): number {
+    return Math.max(0, Math.min(extent - 1, Math.floor(value / SOLID_BUCKET_SIZE)));
+  }
+
+  /** Reused bitset deduplicates bucket overlap and enumerates original solid
+   * indices in ascending order, preserving equal-time contact normals. */
+  private collectCandidates(minX: number, minY: number, maxX: number, maxY: number): void {
+    const bits = this.candidateBits; bits.fill(0);
+    if (!bits.length) return;
+    const left = this.bucketCoordinate(minX, this.bucketCols), right = this.bucketCoordinate(maxX, this.bucketCols);
+    const top = this.bucketCoordinate(minY, this.bucketRows), bottom = this.bucketCoordinate(maxY, this.bucketRows);
+    for (let row = top; row <= bottom; row++) for (let col = left; col <= right; col++) {
+      const bucket = row * this.bucketCols + col, end = this.bucketOffsets[bucket + 1]!;
+      for (let at = this.bucketOffsets[bucket]!; at < end; at++) {
+        const index = this.bucketSolids[at]!, word = index >>> 5;
+        bits[word] = bits[word]! | (1 << (index & 31));
+      }
+    }
+  }
+
   private trace(center: Point, halfW: number, halfH: number, dx: number, dy: number, exemption?: Readonly<PhysicalSolidExemption>): Hit {
     const hit = this.hit; hit.fraction = 1; hit.normalX = 0; hit.normalY = 0;
     const size = this.map.tileSize;
@@ -169,9 +222,16 @@ export class NativeBodyCollision implements PhysicalBodyQueries {
       cell.axes[0]!.min = cell.minX; cell.axes[0]!.max = cell.maxX; cell.axes[1]!.min = cell.minY; cell.axes[1]!.max = cell.maxY;
       sweepPolygon(cell, center, halfW, halfH, dx, dy, hit);
     }
-    for (const solid of this.solids) {
-      if (exemption) for (const piece of outsideExemption(solid, exemption)) sweepPolygon(piece, center, halfW, halfH, dx, dy, hit);
-      else sweepPolygon(solid, center, halfW, halfH, dx, dy, hit);
+    this.collectCandidates(Math.min(center.x, center.x + dx) - halfW, Math.min(center.y, center.y + dy) - halfH,
+      Math.max(center.x, center.x + dx) + halfW, Math.max(center.y, center.y + dy) + halfH);
+    for (let word = 0; word < this.candidateBits.length; word++) {
+      let bits = this.candidateBits[word]!;
+      while (bits !== 0) {
+        const solid = this.solids[word * 32 + 31 - Math.clz32(bits & -bits)]!;
+        if (exemption) for (const piece of outsideExemption(solid, exemption)) sweepPolygon(piece, center, halfW, halfH, dx, dy, hit);
+        else sweepPolygon(solid, center, halfW, halfH, dx, dy, hit);
+        bits &= bits - 1;
+      }
     }
     if (hit.fraction < 1) hit.fraction = Math.max(0, hit.fraction - SEPARATION / Math.max(Math.abs(dx), Math.abs(dy), SEPARATION));
     return hit;

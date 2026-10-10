@@ -32,6 +32,46 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "bd5f8b3d2863ff4e1974d56922afeb8a477116e65755e8830d19a27e0b0401fa"
     },
     {
+      "path": "data/rift-spatial-anchors.csv",
+      "sha256": "5b3859c55310182b43322574bced45fdf23557858b36802f218a70a645d7741a"
+    },
+    {
+      "path": "data/rift-spatial-authored-erosion.csv",
+      "sha256": "b31ae54842029c1ae79b16b35f8a37eb049d505953a6215c2e9c4a53783505fc"
+    },
+    {
+      "path": "data/rift-spatial-authored-groups.csv",
+      "sha256": "96cb80e5e7ce4dd69e91003595aafd0c3dbf2975bf93285e2529ca9794dd68ad"
+    },
+    {
+      "path": "data/rift-spatial-deployment.csv",
+      "sha256": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    },
+    {
+      "path": "data/rift-spatial-erosion.csv",
+      "sha256": "3fc991148491ca06447f852582549a9626d42d8550d0ebffd4e0467dc30a92b4"
+    },
+    {
+      "path": "data/rift-spatial-layouts.csv",
+      "sha256": "df60ea47965926ac405290d80275c2f9e3eaf4eec37031da4d950fe8421d1d57"
+    },
+    {
+      "path": "data/rift-spatial-materials.csv",
+      "sha256": "1a63547da080ad5f4903acf34051b798ad43c13c47e402267e16dfc5207e3100"
+    },
+    {
+      "path": "data/rift-spatial-organizations.csv",
+      "sha256": "1efc9f8d123c073b2574b68162b132f20bd7fa8f747cfd76c949f821711083e2"
+    },
+    {
+      "path": "data/rift-spatial-policy.csv",
+      "sha256": "62744dd396971d1a222935452324b37e982a1ffaa42f005d7f9517723422549f"
+    },
+    {
+      "path": "data/rift-spatial-worlds.csv",
+      "sha256": "dee3de3c73f4c1c7c73f9993649504b1fb8b9f1e437b084cf381515ad9ea31d8"
+    },
+    {
       "path": "data/rift-world-appearance.csv",
       "sha256": "8fc9ea2cac80fda4bba849f01e7b5096dd7fb3212acfaef6bf983f89ea0a9cca"
     },
@@ -108,6 +148,22 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
     },
     {
+      "path": "src/config/constants.ts",
+      "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+    },
+    {
+      "path": "src/generated/r100-spatial-data.ts",
+      "sha256": "7bcfe743e4673b9de5909a8b5360ff5d5fb6462af9f7983a44fff24a75cb8660"
+    },
+    {
+      "path": "src/generated/rift-spatial-deployment-data.ts",
+      "sha256": "0a01b4a8eb97ef95c9365b0184a5f494d740ae1fd94647b59749bbfbb175aeb4"
+    },
+    {
+      "path": "src/generation/seed-fork.ts",
+      "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+    },
+    {
       "path": "src/generation/world-study/native-volume-cellular.ts",
       "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
     },
@@ -121,11 +177,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/native-volume-geometry.ts",
-      "sha256": "b9d56c768a33fc855661d37912bc28df76dfecd66fe75414a21cfc57b489e2a8"
+      "sha256": "cd50791d2c18cbc25fc6bfa8818a35fd07cb6f14a05db1feb0bfc94ae2da2142"
     },
     {
       "path": "src/generation/world-study/native-volume-ground-edge.ts",
-      "sha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc"
+      "sha256": "8119ee6b008a9ff1ad13ff6f3097be67050fbe144730dfe10c3f7db1721c03a5"
     },
     {
       "path": "src/generation/world-study/native-volume-ground.ts",
@@ -141,7 +197,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/native-volume-raster.ts",
-      "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+      "sha256": "573768b2769ee8cae521e84e5997d17a676bf4bdde72b5c13cb024d181f4e32d"
     },
     {
       "path": "src/generation/world-study/native-volume-settled-projection.ts",
@@ -156,36 +212,64 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "6d4d009cce7cca97417fefd26137f42c297a51cbe50e9b7ad56aa1091d7483e0"
     },
     {
+      "path": "src/generation/world-study/production-recipe.ts",
+      "sha256": "7e2c53d491d92816cc3e78dca2393f3163f3da5571c02d5b9f683f62a887e793"
+    },
+    {
       "path": "src/generation/world-study/r100-expedition-v1.ts",
       "sha256": "78b3811bf950b323e66b29bd3f8120808fc989a0d6d0149ab7ef1babfc246899"
     },
     {
       "path": "src/generation/world-study/r100-expedition.ts",
-      "sha256": "3d62896b06faccee9e902806a8bb71827c84efa2775d5a2f07d69a05a6d771b1"
+      "sha256": "f55c7bc0e9f50878785f9a691b53cfb6bb5f7ea882265e3aebe0dd32d1d6b620"
     },
     {
       "path": "src/generation/world-study/r100-master-world.ts",
-      "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+      "sha256": "7e477de2e9a2093b06ad1e55f354559922a363b2413fd50b9c402cd17603c8c5"
     },
     {
       "path": "src/generation/world-study/r100-package.ts",
-      "sha256": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4"
+      "sha256": "ba994fc3bc8f1dc6a65f98b3c41d72b56a60ccd0aa3d2376bcb495c3f2406fe9"
     },
     {
       "path": "src/generation/world-study/r100-patrol-windows.ts",
-      "sha256": "80bd1a32f5e528f416a3d33c28bbe7f9a20fd23c2eb7cb9674c628d145c790f2"
+      "sha256": "9dfe9ba3ca1a8486c771b06590b9a8efa21ce5add55b32a94877f66b16d761ae"
     },
     {
       "path": "src/generation/world-study/r100-pollution.ts",
-      "sha256": "3eb662b7a0e6de61bb18c579a321eb294f3eb906e40df7f226edf12894d7a27f"
+      "sha256": "328804c3dd7423627fc31a4c119cff81cbe8078c0575094cc5c2c5d4eb1538dc"
+    },
+    {
+      "path": "src/generation/world-study/r100-production-map.ts",
+      "sha256": "ea8a7e0c5502559232615179c03270d5211ea175cb35b4674495619c6eff287c"
+    },
+    {
+      "path": "src/generation/world-study/r100-spatial-deployment.ts",
+      "sha256": "cfd995473bde42450f8ffa0fbfb90119d20697ddce5458abb98db7982b916818"
+    },
+    {
+      "path": "src/generation/world-study/r100-spatial-types.ts",
+      "sha256": "711d534288b6719e8c5ae9f2bf9dfd0f28094032ba1599f6c71412cd3e0233d8"
+    },
+    {
+      "path": "src/generation/world-study/r100-spatial-world.ts",
+      "sha256": "3c245eb1b92b46483a85be309b5adbacf832d2fc48a6ea90238fca7d04f859bc"
     },
     {
       "path": "src/generation/world-study/r100-world-appearance.ts",
       "sha256": "71441ad19d1ef8702e737f46898abf05a7b0262de4916aede9bfddbe6fe04b59"
     },
     {
+      "path": "src/generation/world-study/spatial-extraction-selection.ts",
+      "sha256": "afccec7d982b52e5cbf1c2dd87d67e83d0eaffe4b87ce03b271645294a003308"
+    },
+    {
       "path": "src/generation/world-study/world-material-pigment.ts",
       "sha256": "fd524196627d38cc804379e4e1448c2707b557c395e0748038910fb507fc028a"
+    },
+    {
+      "path": "src/systems/ai/physical-grid.ts",
+      "sha256": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
     },
     {
       "path": "src/systems/r100-world/ground.ts",
@@ -193,14 +277,38 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/systems/r100-world/organization-sampling.ts",
-      "sha256": "7a3afe8ba3cb1816fbf899bbecde20dc020d4432c9f35b7da2398c4dc3bdca3e"
+      "sha256": "06ca0558cf191b65559efd7c3fbfd19f1889d2d3ce0bb26cb9e9bc6cecc9506e"
     },
     {
       "path": "src/systems/r100-world/surface-bake.ts",
-      "sha256": "603d3680ed4f6b95223fa268034a2332760dc0c804f26c00337526a29a7592fa"
+      "sha256": "ee15a75d5365978502da3e3e81d9e1c4128f04410825b64df8c58e704762c626"
+    },
+    {
+      "path": "src/systems/tile-grid.ts",
+      "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+    },
+    {
+      "path": "src/types/game-types.ts",
+      "sha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19"
+    },
+    {
+      "path": "src/utils/random.ts",
+      "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
+    },
+    {
+      "path": "tools/world-study/build-r100-authored-shores.py",
+      "sha256": "6ed6a4158867916366e4ff98c334806f34c4e749be969a7ffc698a120c28c585"
+    },
+    {
+      "path": "tools/world-study/codegen-r100-spatial.mjs",
+      "sha256": "64d1c86490ff426292e6fd0876c30cc6f00e6b7b8fe48b5daa2997773fc9c7f0"
+    },
+    {
+      "path": "tools/world-study/generate-spatial-deployment.mjs",
+      "sha256": "2a666f37f57aa8d74904f488cec644f7ced77187a5ee03c804258b529cadb862"
     }
   ],
-  "hash": "88804a16ec8d5d78d0b06dbeac3ac8d60e7808cd85f9b9201a1965f3f85c14d7"
+  "hash": "a602f2a38f37b9ed0f283b35ce624cc5b0edd1648db99d1ee64070023d687ccc"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {

@@ -1,0 +1,104 @@
+{
+  "createdAt": "2026-10-10T17:17:57.529Z",
+  "purpose": "One causal diagnostic for an observed spatial-rollout budget failure; not a repeat qualification attempt or natural exploration playtest.",
+  "authorization": "Director assigned this independent spatial-rollout profiler; --run remains a separately scheduled action to avoid concurrent browser sampling.",
+  "tools": [
+    {
+      "path": "tools/spatial-rollout/profile-runtime.mjs",
+      "sha256": "cac827035e20fd3f23bd9cef4a27ed35d0ae74228441bcb97e2613613309f19b"
+    },
+    {
+      "path": "tools/qa/check-r100-i14-runtime-budget.mjs",
+      "sha256": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1"
+    }
+  ],
+  "sources": [
+    {
+      "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/runtime-profile-crystal/failure-report-at-freeze.json",
+      "sha256": "6fc7cf74122c7e3458d5d7651c9ce84f3a0269bfc46549c6e50b519f52193a64"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/runtime-profile-crystal/source-snapshot.json",
+      "sha256": "1a0273d281859b5b0c4211970d9b7d61ba751f18c68f3a0b9bfdfa9b7197c3d1"
+    }
+  ],
+  "originalFailureReport": {
+    "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/runtime-release/report.json",
+    "sha256AtCapture": "6fc7cf74122c7e3458d5d7651c9ce84f3a0269bfc46549c6e50b519f52193a64",
+    "statusAtCapture": "running",
+    "note": "Append-only case results can continue after freeze; this preserved copy is the diagnostic input."
+  },
+  "originalSourceSnapshot": {
+    "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/runtime-release/source-snapshot.json",
+    "sha256": "a538715db62c155126e09da20150bec8b0ff8c3d069688ad14288070134b7dbb"
+  },
+  "selectedCase": {
+    "world": "crystal-fibre",
+    "grade": "severe",
+    "seed": 20261004,
+    "frames": {
+      "count": 4143,
+      "p50": 16.700000286102295,
+      "p95": 22.59999990463257,
+      "p99": 31.09999990463257,
+      "max": 45.89999961853027,
+      "over50": 0
+    },
+    "cpu": {
+      "count": 4144,
+      "p50": 11.800000190734863,
+      "p95": 20.200000286102295,
+      "p99": 26.699999809265137,
+      "max": 44.19999980926514,
+      "over50": 0
+    },
+    "materialSubmit": {
+      "count": 4144,
+      "p50": 0.9000000953674316,
+      "p95": 4.5,
+      "p99": 5.399999618530273,
+      "max": 7.800000190734863,
+      "over50": 0
+    }
+  },
+  "gameUrl": "http://127.0.0.1:3046",
+  "world": "crystal-fibre",
+  "grade": "severe",
+  "seed": 20261004,
+  "keys": [
+    "d",
+    "w",
+    "a",
+    "s",
+    "d",
+    "s",
+    "a",
+    "w",
+    "d",
+    "w",
+    "a",
+    "s"
+  ],
+  "heldMs": 5100,
+  "changes": [
+    "Synchronous duration wrappers: original material stages plus scene update, visibility, AI, hosts, pose/depth, minimap, presentation sync and frame commit.",
+    "CDP V8 CPU sampling at 1000us; retain complete profile and raw stage samples. Durations are inclusive and overlapping, not additive.",
+    "Original PRE_STEP intervals / PRE_STEP to POST_STEP submission aggregates; not GPU duration."
+  ],
+  "unchanged": [
+    "Normal body, visibility, enemies, damage, resources and time; the same twelve held keys for 61.2 seconds.",
+    "Source/data frozen server; no fixture injection, teleports, visibility override, clock changes, power changes or user-app manipulation."
+  ],
+  "limitations": [
+    "Shared reference machine; external activity is not excluded.",
+    "Instrumentation changes timing: all outcomes remain diagnostic-only.",
+    "Static assets and installed dependencies are linked by the original source snapshot, not independently frozen by this profiler."
+  ],
+  "powerAtFreeze": {
+    "battery": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t21%; discharging; (no estimate) present: true",
+    "processInfo": {
+      "lowPowerModeEnabled": true,
+      "thermalState": 0
+    }
+  }
+}

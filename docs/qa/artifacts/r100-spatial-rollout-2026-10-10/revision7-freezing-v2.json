@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "world": "cinder-ridge",
+  "grade": "medium",
+  "sources": [
+    {
+      "path": "src/generation/world-study/r100-package.ts",
+      "sha256": "ba994fc3bc8f1dc6a65f98b3c41d72b56a60ccd0aa3d2376bcb495c3f2406fe9"
+    },
+    {
+      "path": "src/generation/world-study/r100-spatial-world.ts",
+      "sha256": "1a345cda12c6950d3cfec8c8a5c2a9cc2a75762a0ad6093f2f53469182e22cd3"
+    },
+    {
+      "path": "src/generation/world-study/r100-spatial-deployment.ts",
+      "sha256": "cfd995473bde42450f8ffa0fbfb90119d20697ddce5458abb98db7982b916818"
+    },
+    {
+      "path": "tools/recovery/check-native-r100-revision7-freezing.mjs",
+      "sha256": "f426d9aba9f28734a48cf34ce22063e31f04d2ab110c58673517e5bc233dcda2"
+    }
+  ],
+  "checks": [
+    "snapshot accepts structurally valid non-current sourceHash",
+    "config mutation isolated from recipe",
+    "placement mutation isolated from recipe",
+    "world assignment mutation isolated from recipe",
+    "deployment mutation isolated from recipe",
+    "snapshot remains valid after live data changes"
+  ],
+  "scope": "In-process isolated catalog mutations demonstrate snapshot ownership/validation only; not persistence IO or new-generation equivalence."
+}

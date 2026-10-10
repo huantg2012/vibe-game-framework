@@ -3,11 +3,11 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "108世界324等级r100-native v3修订6已正式接入并绑定当前内部资格；启用只改56个enabled字段，完整配方/依赖身份保持。revision1–5及旧v1/v2走原冻结执行器。I10–I12按用户授权性能/资源抽查结案，逐世界已测与未测性能范围分别记录。",
+    "summary": "正式新出发已切换r100-native v3修订7：108世界/324档位使用2304×1792扩大空间、真实缺地轮廓、多区域出生与全图探索式唯一撤离。20个v1/v2材料世界采用三种宏观组织，86个v3/v4世界保留完整作者关系组，单柱与压纤四角另有明确布局。108×3限定种子完整生产准入已通过；revision1–6及旧v1/v2沿原冻结执行器恢复。4459d7c3代表认可不扩为全库人审。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 裂隙备行 → 选择污染等级 → 等级内随机v3世界",
+      "净化点 → 裂隙备行 → 选择污染等级 → 等级内随机revision7大图世界",
       "标题继续 → 原存档的v1/v2/v3执行器和冻结数据",
       "DEV rift-spatial-prototype.html → 余烬脊去雾地形、路线地点与实体占地"
     ],
@@ -463,6 +463,116 @@
         "path": "docs/qa/cinder-extraction-fix-2026-10-10.md",
         "role": "doc",
         "note": "DEC-196 DEV撤离探索选点；未推广生产。"
+      },
+      {
+        "path": "docs/tasks/rift-spatial-rollout.md",
+        "role": "doc",
+        "note": "4459d7c3代表认可与正式推广授权；验收仍按本轮实际证据。"
+      },
+      {
+        "path": "data/rift-spatial-policy.csv",
+        "role": "data",
+        "note": "正式r7空间数据；与DEV prototype四表分开。"
+      },
+      {
+        "path": "data/rift-spatial-layouts.csv",
+        "role": "data",
+        "note": "正式r7空间数据；与DEV prototype四表分开。"
+      },
+      {
+        "path": "data/rift-spatial-erosion.csv",
+        "role": "data",
+        "note": "正式r7空间数据；与DEV prototype四表分开。"
+      },
+      {
+        "path": "data/rift-spatial-anchors.csv",
+        "role": "data",
+        "note": "正式r7空间数据；与DEV prototype四表分开。"
+      },
+      {
+        "path": "data/rift-spatial-worlds.csv",
+        "role": "data",
+        "note": "正式r7空间数据；与DEV prototype四表分开。"
+      },
+      {
+        "path": "data/rift-spatial-materials.csv",
+        "role": "data",
+        "note": "正式r7空间数据；与DEV prototype四表分开。"
+      },
+      {
+        "path": "data/rift-spatial-organizations.csv",
+        "role": "data",
+        "note": "正式r7空间数据；与DEV prototype四表分开。"
+      },
+      {
+        "path": "data/rift-spatial-authored-groups.csv",
+        "role": "data",
+        "note": "正式r7空间数据；与DEV prototype四表分开。"
+      },
+      {
+        "path": "data/rift-spatial-authored-erosion.csv",
+        "role": "data",
+        "note": "正式r7空间数据；与DEV prototype四表分开。"
+      },
+      {
+        "path": "src/generated/r100-spatial-data.ts",
+        "role": "code",
+        "note": "冻结空间配方、保作者关系和真实撤离；shore union仅构建期，runtime无新增几何库。"
+      },
+      {
+        "path": "src/generation/world-study/r100-spatial-world.ts",
+        "role": "code",
+        "note": "冻结空间配方、保作者关系和真实撤离；shore union仅构建期，runtime无新增几何库。"
+      },
+      {
+        "path": "src/generation/world-study/r100-spatial-types.ts",
+        "role": "code",
+        "note": "冻结空间配方、保作者关系和真实撤离；shore union仅构建期，runtime无新增几何库。"
+      },
+      {
+        "path": "src/generation/world-study/spatial-extraction-selection.ts",
+        "role": "code",
+        "note": "冻结空间配方、保作者关系和真实撤离；shore union仅构建期，runtime无新增几何库。"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-spatial.mjs",
+        "role": "code",
+        "note": "冻结空间配方、保作者关系和真实撤离；shore union仅构建期，runtime无新增几何库。"
+      },
+      {
+        "path": "tools/world-study/build-r100-authored-shores.py",
+        "role": "code",
+        "note": "冻结空间配方、保作者关系和真实撤离；shore union仅构建期，runtime无新增几何库。"
+      },
+      {
+        "path": "tools/spatial-rollout/check-production.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-rollout/check-authored-groups.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-rollout/check-special-organizations.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-rollout/check-route-obstruction.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-rollout/route-obstruction.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/production-release-summary.json",
+        "role": "doc",
+        "note": "最终108世界×3档限定种子完整生产图；不是全种子或运行帧率验收。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/entry-release/report.json",
+        "role": "doc",
+        "note": "三档自然选池、正式两阶段备行/进入/冷续；净化点物理行走未覆盖。"
       }
     ],
     "dependsOn": [
@@ -513,20 +623,24 @@
       "COH-E179",
       "COH-E180",
       "COH-E209",
-      "COH-E210"
+      "COH-E210",
+      "COH-E211",
+      "COH-E212"
     ],
     "unknowns": [
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
       "修订3的2400+480生成、60正式新出发/冷续与I03—I06有限完整搜撤是历史证据（E156）；修订4重做几何后，须独立验证完整自然搜取与撤离，不能继承旧资格或把有限准入当作全种子通过。",
-      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10/弱设备/用户终验仍待。",
-      "2026-10-10余烬脊DEV代表世界可达面积3.8348倍、两组绕路；近侧撤离错误已按DEC-196修为全图探索选点，8出生×128种子有限分布/物理检查与两个种子Chrome图通过。1孤立支持格保留；未接正式库，迷雾发现信息/敌人/收益/用户认可仍待。"
+      "历史修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10和用户终验仍待；弱设备补测已获豁免且未测。",
+      "4459d7c3余烬脊代表已获“pass，推广”；认可仅覆盖当时代表方向并授权实施，不代表108世界、所有种子或生产搜撤资格。旧代表1孤立支持格和单一几何1024选点抽样的限制保留；推广使用各世界自己的真实支持图另验。",
+      "本轮108×3限定种子完整生产准入324/324通过：每图至少2组真实双侧绕行，最小身体可达99.284%、有效撤离交互路线923.176px，候选至少8区域/3距离层。有限种子不外推总体重试尾部、空间记忆或所有连续参数；旧图性能/收益资格不自动覆盖新图。",
+      "本轮构图、规则外岸及压纤低床粗格块均已在限定实图复核关闭。当前大图性能抽测出现超门，正在查证全图材质绘制/上传成本；E212暂partial，旧失败保留。有限图审不等于108世界人审。"
     ]
   },
   {
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "108作者世界保持材料本色、源笔触、实体/浅浮雕分工，构造4补地床分路、真实缺地、材料交接、孔髓与压层。三档返修、近邻和最终260条艺术来源绑定已完成；I10–I12内部结案，原局部画面限制及人审边界保留，资源抽查通过。",
+    "summary": "修订7扩大空间沿用逐世界材料、本色与solid/relief分工：86个作者关系组和源切口整体等比变换，2个特殊世界保原主体/接合关系，唯一ground-edge owner不复制。真实缺地影响8px支持与吞光，普通实体只挡身体/近战。14代表冻结源全图/入口已按有限范围独立审查；单柱正常前足近读通过，压纤四角低床纹理尺度P1经材质域分离与正常近景复核已关闭。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -872,6 +986,51 @@
         "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
         "role": "doc",
         "note": "I10–I12实际内部结案与用户抽查范围；不是发布或人审通过。"
+      },
+      {
+        "path": "docs/tasks/rift-spatial-rollout.md",
+        "role": "doc",
+        "note": "4459d7c3代表认可与正式推广授权；验收仍按本轮实际证据。"
+      },
+      {
+        "path": "src/generation/world-study/r100-spatial-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/build-r100-authored-shores.py",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-spatial-authored-groups.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-spatial-authored-erosion.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-spatial-organizations.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/qa/rift-spatial-rollout-art.md",
+        "role": "art",
+        "note": "本轮独立图审与身份破坏返修；不代用户全库终审。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/browser-release/capture.json",
+        "role": "doc",
+        "note": "14例捕获成功不等于108世界人审；实际图审范围见独立art报告。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/near-woven-frame/report.json",
+        "role": "doc",
+        "note": "真实输入近景证据，图像材质P1另由art判定，导航passed不代替美术通过。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/near-monolith-frame/report.json",
+        "role": "doc",
+        "note": "单柱正常肩灯前足近读；未声称走穿侧出口。"
       }
     ],
     "dependsOn": [
@@ -911,21 +1070,25 @@
       "COH-E175",
       "COH-E176",
       "COH-E178",
-      "COH-E180"
+      "COH-E180",
+      "COH-E211",
+      "COH-E212"
     ],
     "unknowns": [
-      "旧v1/v2及v3修订1/2/3按各自封存身份恢复；当前修订4仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
+      "旧v1/v2及v3修订1/2/3按各自封存身份恢复；历史修订4及当前修订7仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
       "历史地表动效、支撑与暂停/清理检查保留原版本；新世界身份的正常帧、定点补图与边界操作只证明各自可见/实际采样范围，不能代签整图可记忆性或完整自然绕行。",
       "修订3的120正常视野与20近邻深走为历史记录，不自动覆盖修订4新构造；本批修订4视觉人审另列E159，实际声音听感与较弱设备预算仍未通过本批代验。",
       "本批视觉的人审“pass”不把有限作者配方和实图证据扩张成全种子、全边界、连续动效或完整自然旅程；低光、污染绿和可走/阻挡语义继续保持既有合同。",
-      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10/弱设备/用户终验仍待。"
+      "历史修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10和用户终验仍待；弱设备补测已获豁免且未测。",
+      "通用逐实例循环破坏构图的首轮失败保留；258作者定义及最终324地图已通过。独立美术审查覆盖14代表的限定全图/入口与单柱前足、压纤低床近景，不代签全库或全部外壁近读。浅岸39点试验仅为历史，当前作者组最大14点、全库最大20点，所有尺寸仍受32点上限。",
+      "压纤低床本体与海岸UV域已分离，正常近景确认粗格块消除。旧mesh/raster/layout、normal/response/emission字节保持，albedo只影响woven owner1；15世界增加0.492MiB岸壁位图，当前资源抽测已过。新运行预算超门仍待定位；局部美术通过不代整体视听/长期体验。"
     ]
   },
   {
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "108世界正式启用；旧52原312过程按严格连续性继承，新56原336过程及补验共346报告，168/168档位对通过。最终48自然为42非入口搜撤、4空返、2死亡，100真实非入口拾取；原失败保留，长期等级净收益仍归I13。",
+    "summary": "修订7在扩大地图上先确定真实出生与探索式撤离，再重建污染和完整敌人/资源部署；配额与混乱规则沿用，新增冻结的空间部署策略约束入口保护、分散搜取与额外路程。撤离从全图可达候选按距离层/区域抽取，不绑定对岸或最远点。巡逻窗口只接纳出生连通分量内实际可操作站位。修订6的完整搜撤与收益记录保留历史范围，不作为新图经营验收。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1130,6 +1293,69 @@
         "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
         "role": "doc",
         "note": "I10–I12实际内部结案与用户抽查范围；不是发布或人审通过。"
+      },
+      {
+        "path": "docs/tasks/rift-spatial-rollout.md",
+        "role": "doc",
+        "note": "4459d7c3代表认可与正式推广授权；验收仍按本轮实际证据。"
+      },
+      {
+        "path": "src/generation/world-study/r100-spatial-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/rift-spatial-deployment-data.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/spatial-extraction-selection.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/generate-spatial-deployment.mjs",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-spatial-deployment.csv",
+        "role": "data",
+        "note": "扩大空间内容部署冻结策略，配额和混乱曲线不由此增加。"
+      },
+      {
+        "path": "tools/world-study/check-spatial-deployment.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-rollout/check-patrol-window-reachability.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-rollout/check-journey.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-spatial-rollout-code-review.md",
+        "role": "doc",
+        "note": "独立真实两组双侧绕行门及限定执行范围。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/production-release-summary.json",
+        "role": "doc",
+        "note": "最终108世界×3档限定种子完整生产图；不是全种子或运行帧率验收。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/journey-release-low/report.json",
+        "role": "doc",
+        "note": "全图只读诊断导航，正常输入safe搜取/发现/撤离；不是自然未知探索或经济验证。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/journey-release-medium/report.json",
+        "role": "doc",
+        "note": "全图只读诊断导航，正常输入safe搜取/发现/撤离；不是自然未知探索或经济验证。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/journey-release-severe/report.json",
+        "role": "doc",
+        "note": "全图只读诊断导航，正常输入safe搜取/发现/撤离；不是自然未知探索或经济验证。"
       }
     ],
     "dependsOn": [
@@ -1165,7 +1391,9 @@
       "COH-E176",
       "COH-E178",
       "COH-E180",
-      "COH-E210"
+      "COH-E210",
+      "COH-E211",
+      "COH-E212"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
@@ -1175,16 +1403,17 @@
       "E134仅补充来源外观的有限实景证据，不重新证明或改变部署质量、路线合同与资源平衡。",
       "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。",
       "修订3集中2×6深薪、旧90趟经营及三母版针对性准备的有限证据保留；修订4未改收益和巡逻合同，但几何影响实际搜索/撤离路径，完整自然流程及长期相对效率不能继承。",
-      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10/弱设备/用户终验仍待。"
+      "历史修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10和用户终验仍待；弱设备补测已获豁免且未测。",
+      "最终324完整地图已过配额、部署与至少两组真实双侧绕行；三代表低/中/重普通输入safe翻找、雾内发现及撤离终局均通过。导航预读静态全图，只证明流程接通；巡逻窗口孤岛反例与可达席位不证明动态追击安全、深区实际取舍或长期等级收益排序。"
     ]
   },
   {
     "id": "COH-F014",
     "title": "探索记忆、小地图与已知退路",
     "domain": "world",
-    "summary": "局部小地图记录实际观察到的地形；已见撤离方向可保留边缘刻记；探查为限时快照，不揭未知地形或跟踪实时敌人。",
+    "summary": "局部小地图记录实际观察地形，已识别撤离点才显示已知退路，探查仍为限时快照。修订7扩大图与全图候选撤离沿实际世界尺寸及冻结身份恢复；三档正式进入/冷续均保持未知出口不泄漏，三代表普通输入旅程从未知到实际发现出口并正常撤离已通过限定验证。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "Rift 右下小地图；已识别撤离点或使用探查工具"
     ],
@@ -1218,6 +1447,44 @@
         "path": "docs/qa/rift-r100-i13.md",
         "role": "doc",
         "note": "I13旧28失败保持，续推实际实录与独立结论另列。"
+      },
+      {
+        "path": "docs/tasks/rift-spatial-rollout.md",
+        "role": "doc",
+        "note": "4459d7c3代表认可与正式推广授权；验收仍按本轮实际证据。"
+      },
+      {
+        "path": "src/generation/world-study/spatial-extraction-selection.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/spatial-rollout/check-journey.mjs",
+        "role": "test",
+        "note": "真实按键翻找、撤离发现/记忆与搜撤检查；结果单独登记。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/entry-release/report.json",
+        "role": "doc",
+        "note": "三档自然选池、正式两阶段备行/进入/冷续；净化点物理行走未覆盖。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/journey-release-low/report.json",
+        "role": "doc",
+        "note": "全图只读诊断导航，正常输入safe搜取/发现/撤离；不是自然未知探索或经济验证。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/journey-release-medium/report.json",
+        "role": "doc",
+        "note": "全图只读诊断导航，正常输入safe搜取/发现/撤离；不是自然未知探索或经济验证。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/journey-release-severe/report.json",
+        "role": "doc",
+        "note": "全图只读诊断导航，正常输入safe搜取/发现/撤离；不是自然未知探索或经济验证。"
       }
     ],
     "dependsOn": [
@@ -1229,21 +1496,24 @@
       "COH-E-SRC-world",
       "COH-E-HIST-PRODUCTION",
       "COH-E183",
-      "COH-E184"
+      "COH-E184",
+      "COH-E211",
+      "COH-E212"
     ],
     "unknowns": [
-      "全图只读导航的测试不代表普通玩家可凭局部记忆顺利找到出口。"
+      "全图只读导航的测试不代表普通玩家可凭局部记忆顺利找到出口。",
+      "三档正式进入/冷续验证未发现出口不泄漏；三代表普通输入旅程验证实际走近后发现并撤离。测试预读完整地图，不代表玩家仅凭局部记忆能顺利找到出口；发现后的跨刷新记忆未在这组三档入口冷续中独立覆盖。"
     ]
   },
   {
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "I01/I02人审、I03–I13内部结案，13/14轮；108世界/324等级通过显式渲染等价桥接至I14新RC。遮挡缓存修复后4性能/6入口冷续/资源复验通过；新增48连续趟独核47撤离+1死亡、192原档/53604断言、三档各16/六材料齐，原源12+优化源36。四发布门通过；原储藏资本债1保留。另一档弱设备补测已获用户豁免（未测），实际视听及用户终验仍待验，R100仍active。",
+    "summary": "R100仍13/14轮，I14/P49保持开放；I01/I02人审及I03–I13内部结案保留历史范围。DEC-197正式新出发已接修订7的108世界大图、作者关系组与探索式撤离，旧1–6冻结。最终324完整地图、14代表浏览器、三档正式进入/冷续及三代表普通输入搜撤通过限定验证；材质P1已关闭，碰撞/遮挡等价优化后7例重污染运行预算与新增索引资源回收通过，本轮推广内部完成，E212限定pass。弱设备豁免且未测；不继承旧性能/经济资格，不代签108世界人审。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 裂隙备行 → 选级出发；当前108世界三档已启用，修订6最终运行资格另验",
+      "净化点 → 裂隙备行 → 选级出发；当前108世界三档revision7已接入，本轮扩大空间资格另验",
       "r100-gym.html：正常实景、三档、隔离游玩；可见不等于已过审",
       "docs/reading/rift-r100.html：唯一迭代/资格台账；原I01/I02及修订4用户认可保留",
       "docs/qa/interactive/r100-i07-i09-worlds.html：新增32世界、三档实图和近邻对照；完整限定验证见E161",
@@ -2568,6 +2838,59 @@
         "path": "docs/reviews/2026-10-10-preparation-threat-plan.md",
         "role": "doc",
         "note": "知情静态子代理审查；不代新运行或人审。"
+      },
+      {
+        "path": "docs/tasks/rift-spatial-rollout.md",
+        "role": "doc",
+        "note": "4459d7c3代表认可与正式推广授权；验收仍按本轮实际证据。"
+      },
+      {
+        "path": "docs/qa/rift-spatial-rollout-art.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-spatial-rollout-code-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/production-release-summary.json",
+        "role": "doc",
+        "note": "最终108世界×3档限定种子完整生产图；不是全种子或运行帧率验收。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/browser-release/capture.json",
+        "role": "doc",
+        "note": "14例捕获成功不等于108世界人审；实际图审范围见独立art报告。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/near-woven-frame/report.json",
+        "role": "doc",
+        "note": "真实输入近景证据，图像材质P1另由art判定，导航passed不代替美术通过。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/near-monolith-frame/report.json",
+        "role": "doc",
+        "note": "单柱正常肩灯前足近读；未声称走穿侧出口。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/entry-release/report.json",
+        "role": "doc",
+        "note": "三档自然选池、正式两阶段备行/进入/冷续；净化点物理行走未覆盖。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/journey-release-low/report.json",
+        "role": "doc",
+        "note": "全图只读诊断导航，正常输入safe搜取/发现/撤离；不是自然未知探索或经济验证。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/journey-release-medium/report.json",
+        "role": "doc",
+        "note": "全图只读诊断导航，正常输入safe搜取/发现/撤离；不是自然未知探索或经济验证。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-spatial-rollout-2026-10-10/journey-release-severe/report.json",
+        "role": "doc",
+        "note": "全图只读诊断导航，正常输入safe搜取/发现/撤离；不是自然未知探索或经济验证。"
       }
     ],
     "dependsOn": [
@@ -2660,21 +2983,25 @@
       "COH-E196",
       "COH-E197",
       "COH-E198",
-      "COH-E199"
+      "COH-E199",
+      "COH-E211",
+      "COH-E212"
     ],
     "unknowns": [
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
       "e8888655后用户确认折板南侧低斜面在normal中仍像地面。已局部重做阻挡物厚断面及材质坐标，外足占地不变；本轮取得44/48独立方向、50次受控键盘接近和600支撑采样；四方向未覆盖、四次战斗干扰和三次沿边滑动见E133，不算完整自然绕行。此前54帧不证明全部阻挡边缘可读，“这次好多了”当时仅为局部肯定；其后2026-10-04明确整体验收单列E138，未覆盖的运行范围仍不补判。",
       "翻找物来源修复只覆盖现有五来源及九组DEV母版；四种主形不等于新增四个合格世界。E134不外推采集后并行更新的地形材料，I01/I02的后续整体验收单列E138，不能倒改E134的实际证据范围。",
       "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。",
-      "历史修订3的60正式新出发与60冷续、参考机GPU预算有界回收通过；其无Rift阶段≥50ms任务结论不外推修订4。新批仅记录自身实际性能采样，较弱真实硬件与整体发布长尾仍留I14。",
-      "旧132趟失败与修订3的90趟成长、三母版准备验证均保留原记录；不把历史有限完整体验视作修订4新几何自然搜撤通过。实际听感R10、弱设备I14保持；I13有限内部结案不删除R07旧亏损或推断中重总体长期效率。",
-      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10/弱设备/用户终验仍待。",
+      "历史修订3的60正式新出发与60冷续、参考机GPU预算有界回收通过；其无Rift阶段≥50ms任务结论不外推修订4。新批仅记录自身实际性能采样，旧较弱真实硬件缺口仍属未测事实，用户已豁免其补测；整体发布长尾另验。",
+      "旧132趟失败与修订3的90趟成长、三母版准备验证均保留原记录；不把历史有限完整体验视作修订4新几何自然搜撤通过。实际听感R10仍待；弱设备I14补测已获豁免且未测；I13有限内部结案不删除R07旧亏损或推断中重总体长期效率。",
+      "历史修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10和用户终验仍待；弱设备补测已获豁免且未测。",
       "I13已以52唯一出击完成有限内部验收；B14短冲耗尽/固定配方未恢复、A23定身再次重度Q4不足、有限祖先消耗和原失败均保留。当前可付普通两方向不代表无限供给、所有档位期望收益或相同准备处处成立；详情见E183/E184。",
-      "I14 P48仅精确查询缓存优化获有限通过；实际partial动态/多可见actor未观察，数值等价不代替整体美术。新连续链须明确旧12/新36来源，弱设备/听感/疲劳/用户终验仍待。",
+      "I14 P48仅精确查询缓存优化获有限通过；实际partial动态/多可见actor未观察，数值等价不代替整体美术。新连续链须明确旧12/新36来源，弱设备补测已豁免且未测，听感/疲劳/用户终验仍待。",
       "2026-10-09用户已豁免I14另一档较弱真实设备补测。上文旧待验描述保留历史技术范围；该设备仍未测但不再阻断本轮，实际视听/疲劳和最终认可未被豁免。",
       "2026-10-09用户否决f9eea773总览/双列，新的先选污染→单列配置已通过8场景及真实背包交互对照、限定文字实景核；新审美待复看，P49仍open。旧report直接消费后world校验失败未重验，不冒称已修。",
-      "2026-10-10自由选级已获用户明确接受；整体背景压力和A机制/B文学文案已规划并静态分审。三档视觉/听感/心理辨认及生命周期的新样板均未实施验证；现有production状态仅指旧有能力，不指计划已接入。"
+      "2026-10-10自由选级已获用户明确接受；整体背景压力和A机制/B文学文案已规划并静态分审。三档视觉/听感/心理辨认及生命周期的新样板均未实施验证；现有production状态仅指旧有能力，不指计划已接入。",
+      "空间推广最终324完整地图、14代表浏览器捕获、三档正式进入/冷续与三例普通输入搜撤已登记。全图诊断导航不证明自然未知搜索或长期经营；代表pass不代签108世界审美或I14/P49结案，新大图运行预算仍待本轮证据。",
+      "本轮构图、规则外岸及压纤低床粗格块均已在限定实图复核关闭。当前大图性能抽测出现超门，正在查证全图材质绘制/上传成本；E212暂partial，旧失败保留。有限图审不等于108世界人审。"
     ]
   }
 ]

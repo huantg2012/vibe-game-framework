@@ -44,6 +44,9 @@ export interface NativeVolumeMesh {
   readonly regions: Uint8Array;
   readonly vertexCount: number;
   readonly triangleCount: number;
+  /** Appended world-space shoreline UVs are a separate material domain from
+   * this formation's local UVs. Geometry and face ordering stay unchanged. */
+  readonly groundEdgeStart?: Readonly<{ vertex: number; triangle: number }>;
   readonly bounds: Readonly<NativeVolumeBounds>;
   readonly joints: readonly NativeVolumeJoint[];
 }
@@ -93,6 +96,7 @@ export function validateNativeVolumeSpec(spec: Readonly<NativeVolumeSpec>): void
 }
 
 class MeshBuilder {
+  private groundEdgeStart?: Readonly<{ vertex: number; triangle: number }>;
   private readonly points: number[] = [];
   private readonly normalData: number[] = [];
   private readonly texels: number[] = [];
@@ -138,6 +142,9 @@ class MeshBuilder {
       x: this.spec.x + p[0] * this.cosine - p[1] * this.sine,
       y: this.spec.y + p[0] * this.sine + p[1] * this.cosine, z: p[2] });
   }
+  beginGroundEdges(): void {
+    this.groundEdgeStart = Object.freeze({ vertex: this.points.length / 3, triangle: this.slots.length });
+  }
   finish(): NativeVolumeMesh {
     // Content authors specify maximum world height, not an extra displacement
     // on top of thickness. Preserve positions, normals and source lights together.
@@ -152,7 +159,8 @@ class MeshBuilder {
     this.bounds.maxZ = this.spec.height;
     return { spec: Object.freeze({ ...this.spec }), positions: new Float32Array(this.points), normals: new Float32Array(this.normalData),
       uv: new Float32Array(this.texels), indices: new Uint32Array(this.triangles), materials: new Uint8Array(this.slots), regions: new Uint8Array(this.regions),
-      vertexCount: this.points.length / 3, triangleCount: this.slots.length, bounds: Object.freeze(this.bounds), joints: this.joints };
+      vertexCount: this.points.length / 3, triangleCount: this.slots.length,
+      ...(this.groundEdgeStart ? { groundEdgeStart: this.groundEdgeStart } : {}), bounds: Object.freeze(this.bounds), joints: this.joints };
   }
 }
 
@@ -720,7 +728,7 @@ export function buildNativeVolume(spec: Readonly<NativeVolumeSpec>, ground?: Nat
   else if (spec.family === 'granular-ridge') granularRidge(builder);
   else if (spec.family === 'membrane-rim') membraneRim(builder);
   else gelFlow(builder);
-  if (spec.groundEdgeWidth !== undefined) appendNativeGroundEdges(builder, ground!);
+  if (spec.groundEdgeWidth !== undefined) { builder.beginGroundEdges(); appendNativeGroundEdges(builder, ground!); }
   const mesh = builder.finish();
   if (spec.constructionVersion === 4 && (spec.shapeProfile === 'compressed-wedge' || spec.shapeProfile === 'porous-break'))
     return smoothOrganizedSurface(mesh);

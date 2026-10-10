@@ -1,0 +1,31 @@
+{
+  "startedAt": "2026-10-10T17:35:21.486Z",
+  "scope": "Two independently owned mkdtemp QA Chrome profiles; local Battery Saver preference 1 then 0. Blank-page scheduling only. No system/user Chrome settings or frame-rate flags.",
+  "budgetQualification": false,
+  "powerBefore": {
+    "battery": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t15%; discharging; 0:40 remaining present: true\n",
+    "settings": "Battery Power:\n Sleep On Power Button 1\n powermode            1\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         180\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            0\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         180\n womp                 1\n networkoversleep     0\n sleep                0\n tcpkeepalive         1\n disksleep            0\n"
+  },
+  "samples": [
+    {
+      "requestedPreference": 1,
+      "temporaryProfile": "/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-spatial-qa-battery-pref-kulLcS",
+      "startedAt": "2026-10-10T17:35:21.515Z",
+      "ownedProcessExited": null,
+      "localStateAfterClose": 1,
+      "finishedAt": "2026-10-10T17:35:23.756Z"
+    }
+  ],
+  "sources": [
+    "https://raw.githubusercontent.com/chromium/chromium/main/chrome/browser/performance_manager/user_tuning/battery_saver_mode_manager.cc",
+    "https://raw.githubusercontent.com/chromium/chromium/main/components/performance_manager/public/user_tuning/prefs.h",
+    "https://raw.githubusercontent.com/chromium/chromium/main/components/performance_manager/user_tuning/prefs.cc"
+  ],
+  "status": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: Exactly one Chrome process must own this unique temporary user-data-dir\n\n7 !== 1\n\n    at file:///private/tmp/coh-spatial-battery-pref-profile-control.mjs:27:11",
+  "powerAfter": {
+    "battery": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21626979)\t15%; discharging; 0:40 remaining present: true\n",
+    "settings": "Battery Power:\n Sleep On Power Button 1\n powermode            1\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         180\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            0\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         180\n womp                 1\n networkoversleep     0\n sleep                0\n tcpkeepalive         1\n disksleep            0\n"
+  },
+  "finishedAt": "2026-10-10T17:35:23.855Z"
+}

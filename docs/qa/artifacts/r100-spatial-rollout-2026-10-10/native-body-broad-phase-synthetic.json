@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "oracle": {
+    "path": "tools/spatial-rollout/fixtures/native-body-collision-before-grid.ts",
+    "fileSha256": "1e62ebe7795c793cef3808827b5329d984562628950e22a73fd56a19622f54b7",
+    "originalSourceSha256": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e",
+    "normalization": "Remove two provenance comment lines and relocate only one type-only import; remaining source bytes exact."
+  },
+  "cases": [
+    {
+      "name": "empty-solid-index",
+      "triangles": 0,
+      "comparisons": 326,
+      "traces": 307,
+      "exemptions": 29,
+      "broadCoverage": 0,
+      "prepareMs": 0.13154099999997015,
+      "memoryBytes": 324,
+      "localMeanCandidates": 0,
+      "benchmarkQueries": 576,
+      "benchmarkCurrentMedianMs": 0.23783300000002328,
+      "benchmarkOriginalMedianMs": 0.21458300000000463,
+      "benchmarkScope": "Same deterministic supported positions, 20px bodies and 1.4px local steps; CPU microbenchmark, not browser/FPS qualification."
+    },
+    {
+      "name": "bucket-edges-overflow-ties-void-exemptions",
+      "triangles": 105,
+      "comparisons": 2338,
+      "traces": 2319,
+      "exemptions": 315,
+      "broadCoverage": 1349,
+      "prepareMs": 0.9834579999999846,
+      "memoryBytes": 984,
+      "localMeanCandidates": 2.625,
+      "benchmarkQueries": 576,
+      "benchmarkCurrentMedianMs": 0.24379099999998743,
+      "benchmarkOriginalMedianMs": 1.1767089999999598,
+      "benchmarkScope": "Same deterministic supported positions, 20px bodies and 1.4px local steps; CPU microbenchmark, not browser/FPS qualification."
+    }
+  ],
+  "sources": [
+    {
+      "path": "src/generation/world-study/native-body-collision.ts",
+      "sha256": "1ed10631c73ed5f4acfcb0204aa232a37e18e94fcf706c7db50b172c258d5228"
+    },
+    {
+      "path": "tools/spatial-rollout/fixtures/native-body-collision-before-grid.ts",
+      "sha256": "1e62ebe7795c793cef3808827b5329d984562628950e22a73fd56a19622f54b7"
+    },
+    {
+      "path": "tools/spatial-rollout/check-native-body-broad-phase.ts",
+      "sha256": "145018d65503a2602484e9986bb6700152bb0dd3a85f4cb77fc8dcdb3d3801b9"
+    }
+  ]
+}

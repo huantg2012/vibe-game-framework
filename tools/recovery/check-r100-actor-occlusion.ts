@@ -85,9 +85,10 @@ for (const id of ['ash-strata', 'crystal-fibre', 'ivory-basin', 'cinder-ridge', 
   a.object.scene = null; maskActor.call(owner); assert(a.entry.retired); assert.equal(a.events.graphicsDestroyed, 1); assert.equal(a.events.maskDestroyed, 1); assert.equal(a.entry.objects.length, 0); assertions += 4;
   b.object.scene = null; maskActor.call(owner); field.destroy(); assert.equal(field.byteLength, 0); maskActor.call(owner); // Retired actors never query the destroyed field.
   assert.throws(() => field.isVisibleAtPixel(0, 0, 1), /after destruction/); assertions += 2;
-  const rebuilt = new ActorOcclusionField(world); assert.equal(rebuilt.byteLength, oldAlpha.length * 4); assert.equal(rebuilt.isVisibleAtPixel(0, 0, 1), oracle(world, 0, 0, 1)); rebuilt.destroy(); assertions += 2;
+  const allocatedBytes = (oldAlpha.length + Math.ceil(field.width / 16) * field.height) * 4;
+  const rebuilt = new ActorOcclusionField(world); assert.equal(rebuilt.byteLength, allocatedBytes); assert.equal(rebuilt.isVisibleAtPixel(0, 0, 1), oracle(world, 0, 0, 1)); rebuilt.destroy(); assertions += 2;
   const row = { world: id, family: world.definition.family, grade: 'severe', seed: 20261004, buildMs, width: field.width, height: field.height,
-    allocatedBytes: oldAlpha.length * 4, roles: { solid, relief, empty }, alphaOldSha256: hash(oldAlpha), alphaNewSha256: hash(newAlpha), alphaDifferences: 0, poses, destroyedBytes: field.byteLength };
+    allocatedBytes, roles: { solid, relief, empty }, alphaOldSha256: hash(oldAlpha), alphaNewSha256: hash(newAlpha), alphaDifferences: 0, poses, destroyedBytes: field.byteLength };
   results.push(row); console.log(`${id}: exact pixels/spans, build${buildMs.toFixed(2)}ms/${row.allocatedBytes}bytes`);
 }
 writeFileSync(`${out}/report.json`, `${JSON.stringify({ status: 'passed', assertions, sources: ['src/systems/r100-world/actor-occlusion-field.ts', 'src/systems/r100-world/presentation.ts'].map(path => ({ path })), results }, null, 2)}\n`);

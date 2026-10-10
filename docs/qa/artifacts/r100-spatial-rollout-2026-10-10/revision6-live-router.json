@@ -1,0 +1,46 @@
+{
+  "status": "pass",
+  "cases": [
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "seed": 20261010,
+      "payloadHash": "87bcf1e429b180b0c60d5df98353aa5ac74208100ebf5e9b066ecca9d08ecdb4",
+      "layoutHash": "611a04f862243880704be44e2ee1827a8ba00d4ae676a59c904c28d98a1e3b72",
+      "nativeHash": "b7c2acdc6a32ba6f1b7cac9477c7bf3e3a2d1f7e60cdf47947c11a5dfbd0b14e"
+    },
+    {
+      "world": "marrow-break",
+      "grade": "severe",
+      "seed": 20261010,
+      "payloadHash": "f0c8fe522d8e4242a4bd53eec875185fddff757a22e855a071d0f53f8608dcda",
+      "layoutHash": "766af155b42a284dc7b744529d4d2d80ac328598206f343e6046a118c5a1a35e",
+      "nativeHash": "8c25371d6a415029ce8b1d99a393ae831ae1ba4363187c76b6f8397342011e16"
+    }
+  ],
+  "sources": [
+    {
+      "path": "src/generation/world-study/r100-package.ts",
+      "sha256": "ba994fc3bc8f1dc6a65f98b3c41d72b56a60ccd0aa3d2376bcb495c3f2406fe9"
+    },
+    {
+      "path": "src/generation/world-study/r100-production-map.ts",
+      "sha256": "ea8a7e0c5502559232615179c03270d5211ea175cb35b4674495619c6eff287c"
+    },
+    {
+      "path": "src/generation/legacy-r100-v6/executor.js",
+      "sha256": "838e948167038fc780963851448028707c4d16d84805f7f5b818999d877373c3"
+    },
+    {
+      "path": "src/generation/legacy-r100-v6/executor-recovery.js",
+      "sha256": "f4b1b49689381e990825db75f9f64cd4061e31c030669d66002413f3bc0087fe"
+    },
+    {
+      "path": "tools/recovery/check-native-r100-revision6-live.mjs",
+      "sha256": "c4feafba7bb0bd626041be48a1d9b6f78ccdf5c81a6fd4f1e11633522b862574"
+    }
+  ],
+  "hashSchema": "framed values and raw typed-array bytes v1; all own fields, no identity exclusions; bundle-local prototype identities excluded",
+  "correction": "Prior deepStrictEqual harness compared TileGrid constructors from separate immutable bundles; corrected to the exact data protocol already used in three-archive checks.",
+  "scope": "Two real saved revision6 recipes through public live dispatch versus original immutable generation. No new revision7 map qualification."
+}

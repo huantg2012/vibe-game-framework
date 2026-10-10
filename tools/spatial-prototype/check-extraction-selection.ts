@@ -9,7 +9,7 @@ import { createSpatialPrototype } from '../../src/dev/rift-spatial-prototype-wor
 import {
   buildSpatialExtractionField, getSpatialExtractionPath, selectSpatialExtraction,
   type SpatialExtractionPolicy,
-} from '../../src/dev/spatial-extraction-selection';
+} from '../../src/generation/world-study/spatial-extraction-selection';
 import { SPATIAL_PROTOTYPE_ANCHORS, SPATIAL_PROTOTYPE_CONFIG as CONFIG } from '../../src/generated/rift-spatial-prototype-data';
 import { mix32 } from '../../src/generation/seed-fork';
 import { bodyDisplacementFraction, bodyHasSupport } from '../../src/systems/ai/physical-grid';
@@ -212,7 +212,7 @@ assert.throws(() => buildSpatialExtractionField(grid, reports[0]!.spawn, { ...PO
 const incompletePolicy: Record<string, number> = { ...POLICY };
 delete incompletePolicy.minPathDistancePx;
 assert.throws(() => buildSpatialExtractionField(grid, reports[0]!.spawn, incompletePolicy as unknown as SpatialExtractionPolicy), /Invalid spatial extraction policy/);
-const sourcePaths = ['src/dev/spatial-extraction-selection.ts', 'src/dev/rift-spatial-prototype-world.ts', 'src/generated/rift-spatial-prototype-data.ts', 'tools/spatial-prototype/check-extraction-selection.ts'];
+const sourcePaths = ['src/generation/world-study/spatial-extraction-selection.ts', 'src/dev/spatial-extraction-selection.ts', 'src/dev/rift-spatial-prototype-world.ts', 'src/generated/rift-spatial-prototype-data.ts', 'tools/spatial-prototype/check-extraction-selection.ts'];
 const evidence = {
   result: 'PASS', feature: 'COH-F011', createdAt: new Date().toISOString(), geometrySeed: GEOMETRY_SEED,
   geometry: { width: grid.widthPx, height: grid.heightPx, supportTilePx: grid.tileSize, bodyPx: 20, triggerRadiusPx: 48 },

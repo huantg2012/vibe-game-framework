@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "sourceHashes": [
+    {
+      "path": "src/systems/r100-world/actor-occlusion-field.ts",
+      "sha256": "5d025b68803ed3241b79d8809c1c2e284795d905c838ed29b6b122d79494991f"
+    },
+    {
+      "path": "src/systems/r100-world/presentation.ts",
+      "sha256": "8fb3f5b47eedf0690738966aed6f20b14d9e532bcb3641001b507705604c9589"
+    },
+    {
+      "path": "src/generation/world-study/r100-production-map.ts",
+      "sha256": "ea8a7e0c5502559232615179c03270d5211ea175cb35b4674495619c6eff287c"
+    },
+    {
+      "path": "src/generation/legacy-r100-v6/executor-recovery.js",
+      "sha256": "f4b1b49689381e990825db75f9f64cd4061e31c030669d66002413f3bc0087fe"
+    }
+  ],
+  "results": [
+    {
+      "revision": 7,
+      "world": "crystal-fibre",
+      "seed": 20261010,
+      "effectiveSeed": 1143061128,
+      "width": 2304,
+      "height": 1792,
+      "buildMs": 60.71283400000084,
+      "allocatedBytes": 17547264,
+      "blockBytes": 1032192,
+      "destroyedBytes": 0,
+      "pixelChecks": 4136964,
+      "rowChecks": 5382,
+      "alphaOldSha256": "3d497c73c38c9d74d74b911b2e39fc84d54a2c8c03af186a742c1dbe06897c45",
+      "alphaNewSha256": "3d497c73c38c9d74d74b911b2e39fc84d54a2c8c03af186a742c1dbe06897c45"
+    },
+    {
+      "revision": 7,
+      "world": "woven-quarters",
+      "seed": 20261010,
+      "effectiveSeed": 20261010,
+      "width": 2304,
+      "height": 1792,
+      "buildMs": 85.27512500000012,
+      "allocatedBytes": 17547264,
+      "blockBytes": 1032192,
+      "destroyedBytes": 0,
+      "pixelChecks": 4136964,
+      "rowChecks": 5382,
+      "alphaOldSha256": "3f25c2a2e6b157e45c855dc7d46e06a1a9f9a4d53d4ee4572a928443efcd1687",
+      "alphaNewSha256": "3f25c2a2e6b157e45c855dc7d46e06a1a9f9a4d53d4ee4572a928443efcd1687"
+    },
+    {
+      "revision": 6,
+      "world": "cinder-ridge",
+      "seed": 20261010,
+      "effectiveSeed": 20261010,
+      "width": 1024,
+      "height": 768,
+      "buildMs": 29.179041999999754,
+      "allocatedBytes": 3342336,
+      "blockBytes": 196608,
+      "destroyedBytes": 0,
+      "pixelChecks": 790020,
+      "rowChecks": 2310,
+      "alphaOldSha256": "f3e4ec3e71c432d0b172b2e4af71e9792a1de614eb3da4bb63f73f5edf98559d",
+      "alphaNewSha256": "f3e4ec3e71c432d0b172b2e4af71e9792a1de614eb3da4bb63f73f5edf98559d"
+    }
+  ],
+  "scope": "Two current r7 full spatial production worlds and one actual r6 recovery world. Exact mask output only; browser runtime is separate."
+}
