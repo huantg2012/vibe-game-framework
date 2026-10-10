@@ -2,6 +2,7 @@ import gradeCopySource from './copy.csv?raw';
 import weaponSource from '../../../../data/weapons.csv?raw';
 import qualitySource from '../../../../data/weapon-qualities.csv?raw';
 import { mountBackground } from './background';
+import { mountVeil } from './overlay';
 
 type Grade = 'low' | 'medium' | 'severe';
 type Phase = 'pollution' | 'equipment';
@@ -65,6 +66,13 @@ const canvas = requireElement<HTMLCanvasElement>('#world-canvas');
 const pollutionPane = requireElement<HTMLElement>('#pollution-pane');
 const equipmentPane = requireElement<HTMLElement>('#equipment-pane');
 const backgroundToggle = requireElement<HTMLButtonElement>('#background-toggle');
+const effectToggle = requireElement<HTMLButtonElement>('#effect-toggle');
+const motionToggle = requireElement<HTMLButtonElement>('#motion-toggle');
+const veilCanvas = requireElement<HTMLCanvasElement>('#veil-canvas');
+const veil = mountVeil(veilCanvas);
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let motionEnabled = !reducedMotion.matches;
+let effectEnabled = true;
 const resetButton = requireElement<HTMLButtonElement>('#reset-sample');
 const status = requireElement<HTMLElement>('#sample-status');
 const risk = requireElement<HTMLElement>('#threat-risk');
@@ -119,16 +127,25 @@ function render(): void {
   for (const element of document.querySelectorAll<HTMLElement>('[data-selected-grade]')) element.textContent = current.name;
   for (const element of document.querySelectorAll<HTMLElement>('[data-selected-risk]')) element.textContent = current.risk;
   backgroundToggle.setAttribute('aria-pressed', String(backgroundOnly));
-  backgroundToggle.textContent = backgroundOnly ? '显示文字' : '仅看背景';
+  backgroundToggle.textContent = backgroundOnly ? '显示文字' : '隐藏文字';
+  effectToggle.textContent = effectEnabled ? '氛围开启' : '氛围关闭';
+  effectToggle.setAttribute('aria-pressed', String(effectEnabled));
+  motionToggle.textContent = motionEnabled ? '动态开启' : '静止查看';
+  motionToggle.setAttribute('aria-pressed', String(motionEnabled));
+  veilCanvas.hidden = !effectEnabled;
+  veil.setGrade(selectedGrade);
+  veil.setPhase(phase);
+  veil.setVisible(!closed && effectEnabled);
+  veil.setMotion(motionEnabled);
   backgroundToggle.disabled = closed;
   resetButton.textContent = closed ? '重新打开' : '复位';
   status.textContent = closed
     ? '样例已收起。点击“重新打开”继续查看。'
     : backgroundOnly
-      ? '仅看背景：保留同一阅读暗场。用上方档位按钮或 ↑ ↓ 比较静态构图。'
+      ? '隐藏文字：保留整层遮罩。可关闭氛围对比，或静止查看三档。'
       : phase === 'equipment'
         ? '行装承接样例：单列物件浏览，Esc 返回选级。“踏入裂隙”只展示位置，不执行出发。'
-        : '静态构图与排字样例。点击等级或用 ↑ ↓ 对比，Enter 查看行装承接。';
+        : '整层遮罩氛围样例。点击等级或用 ↑ ↓ 对比，Enter 查看行装承接。';
   background?.setGrade(selectedGrade);
   background?.setPhase(phase);
 }
@@ -170,6 +187,9 @@ backgroundToggle.addEventListener('click', () => {
   render();
   focusStage();
 }, { signal });
+effectToggle.addEventListener('click', () => { effectEnabled = !effectEnabled; render(); focusStage(); }, { signal });
+motionToggle.addEventListener('click', () => { motionEnabled = !motionEnabled; render(); focusStage(); }, { signal });
+reducedMotion.addEventListener('change', () => { motionEnabled = !reducedMotion.matches; render(); }, { signal });
 resetButton.addEventListener('click', () => {
   selectedGrade = 'low';
   phase = 'pollution';
@@ -211,6 +231,7 @@ function dispose(): void {
   abortController.abort();
   resizeObserver.disconnect();
   background?.dispose();
+  veil.dispose();
 }
 window.addEventListener('pagehide', dispose, { once: true, signal });
 if (import.meta.hot) import.meta.hot.dispose(dispose);
@@ -219,6 +240,12 @@ focusStage();
 void mountBackground(canvas).then((mounted) => {
   if (disposed) { mounted.dispose(); return; }
   background = mounted;
+  veil.setActor(mounted.actorRegion);
+  const actor = mounted.actorRegion;
+  stage.style.setProperty('--actor-cx', `${actor.x + actor.width / 2}px`);
+  stage.style.setProperty('--actor-cy', `${actor.y + actor.height / 2}px`);
+  stage.style.setProperty('--actor-rx', `${actor.width / 2 + 24}px`);
+  stage.style.setProperty('--actor-ry', `${actor.height / 2 + 22}px`);
   background.setMotion(false);
   render();
 }).catch((error: unknown) => {

@@ -94,3 +94,7 @@ h1 { font-size: 21px; line-height: 30px; font-weight: 400; letter-spacing: 1px; 
 .sample-caption { margin-top: 17px; font-size: 12px; line-height: 21px; color: #abb4a8; }
 .sample-caption p + p { margin-top: 4px; font-size: 11px; color: #7d8a7f; }
 #load-error { position: absolute; left: 28px; bottom: 28px; max-width: 280px; background: #101710; padding: 14px; font-size: 12px; line-height: 21px; color: #c5b6a3; }
+
+/* Screen-space veil: effect is over the reading backdrop and under all text. */
+.veil-canvas { position: absolute; inset: 0; width: 960px; height: 640px; pointer-events: none; image-rendering: pixelated; }
+.reading-backdrop { mask-image: radial-gradient(ellipse var(--actor-rx, 55px) var(--actor-ry, 90px) at var(--actor-cx, 320px) var(--actor-cy, 235px), transparent 65%, #000 150%); }
