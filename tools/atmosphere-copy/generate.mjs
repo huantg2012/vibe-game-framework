@@ -58,7 +58,7 @@ function readPreparationRegistry(csv){
     const [pool,rawGrades,context,status]=columns;
     assert(Object.hasOwn(preparationContracts,pool),`Unknown preparation pool ${pool}`);
     assert(!Object.hasOwn(registry,pool),`Duplicate preparation pool ${pool}`);
-    assert.equal(status,'prepared-only',`${pool}: content must remain prepared-only`);
+    assert.equal(status,'production',`${pool}: expected production status`);
     const grades=rawGrades.split('|');
     assert(grades.length&&grades.every(grade=>preparationGrades.includes(grade))&&new Set(grades).size===grades.length,`${pool}: grades must be a nonempty unique low|medium|severe subset`);
     const contract=preparationContracts[pool];
@@ -72,12 +72,12 @@ function readPreparationRegistry(csv){
 
 function preparationSource(registry){
   return '// AUTO-GENERATED from data/atmosphere-lines.csv + data/preparation-narration-pools.csv — DO NOT EDIT\n'
-    + '// Prepared content only: no production selector or presentation hook imports this registry.\n'
+    + '// Preparation-only semantic registry consumed by the state-qualified production selector.\n'
     + `export type PreparationNarrationGrade = ${preparationGrades.map(value=>JSON.stringify(value)).join(' | ')};\n`
     + `export type PreparationNarrationContext = ${preparationContexts.map(value=>JSON.stringify(value)).join(' | ')};\n`
     + `export type PreparationNarrationPool = ${Object.keys(registry).map(value=>JSON.stringify(value)).join(' | ')};\n`
     + 'export interface PreparationNarrationLine { readonly id: string; readonly text: string }\n'
-    + 'export interface PreparationNarrationPoolDefinition { readonly grades: readonly PreparationNarrationGrade[]; readonly context: PreparationNarrationContext; readonly status: "prepared-only"; readonly lines: readonly PreparationNarrationLine[] }\n'
+    + 'export interface PreparationNarrationPoolDefinition { readonly grades: readonly PreparationNarrationGrade[]; readonly context: PreparationNarrationContext; readonly status: "production"; readonly lines: readonly PreparationNarrationLine[] }\n'
     + `export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPool, PreparationNarrationPoolDefinition>> = ${JSON.stringify(registry,null,2)};\n`;
 }
 

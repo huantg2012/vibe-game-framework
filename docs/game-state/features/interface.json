@@ -453,7 +453,7 @@
     "id": "COH-F038",
     "title": "面板共同交互与信息呈现",
     "domain": "interface",
-    "summary": "共享 overlay 根、固定逻辑尺寸、键鼠选择、检查详情和状态刷新服务于正式面板。R8修复读数与世界条共享生命周期，PRE_RENDER按同帧投影避让；关闭交接及销毁清理计时器/订阅。完整度状态按固定100效能条件，容量条仍为hp/maxHp，0HP保留端帽。 备行局部采用选级→配置顺序流程，装配回归catalog同款单列浏览；阶段标题、当前选择、说明与主次动作分层。共享catalog/rift保持原编排，新交互及审美单独验证。",
+    "summary": "共享overlay根和固定逻辑尺寸服务面板；备行保留两环节/单列浏览，并接共享动态污流、实际人物保护、行装阅读保护与衬线自语。减少动态、失焦/暂停与销毁按独立生命周期处理；其他面板不引入这些效果。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -716,6 +716,42 @@
         "path": "docs/reviews/artifacts/preparation-selftalk-2026-10-10/verification.json",
         "role": "doc",
         "note": "72句内容审查与纯数据验证；无状态联动。"
+      },
+      {
+        "path": "docs/qa/preparation-integration-2026-10-10.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/ui/dom/preparation-veil.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/preparation-veil-motion.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/preparation-veil-shader.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/preparation-veil-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/preparation-threat-copy.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/preparation-threat-copy.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/preparation-copy/generate.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/inventory/check-preparation-presentation.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -743,14 +779,15 @@
       "COH-E202",
       "COH-E203",
       "COH-E204",
-      "COH-E205"
+      "COH-E205",
+      "COH-E206"
     ],
     "unknowns": [
       "R8读数限定范围已验证，用户美术终审待定；不均匀帧间隔双显反例已修复并独立重放，不据此声称所有 UI 时序组合无缺陷。",
       "所有面板在长名、大库存、缩放、连续重开等组合下的完整可达性矩阵未在本轮运行。",
       "2026-10-09用户否决f9eea773总览/双列，新的先选污染→单列配置已通过8场景及真实背包交互对照、限定文字实景核；新审美待复看，P49仍open。旧report直接消费后world校验失败未重验，不冒称已修。",
       "DEC-190纠正背景为整层UI遮罩；E200远景样例为历史。E201动态被用户否决；当前新样例有双层持续运输、连续切档、动静/效果开关、实际录像和固定人物保护，未接正式游戏；心理压力、长时动态舒适、真实库存/保存和生产生命周期不由有限预览证明，B仍常驻审稿。",
-      "2026-10-10按用户授权经编辑/事实资格子代理复审后，72句/12池已准备并独立生成；样例仍是原3句，正式B和状态选择器未接。真实损失回执不存在，损失两池等待未来adapter证实，不能读destroyedIds冒充遗失。"
+      "正式接入后的用户连续观感/心理压力复看待定；局部验证不替代P49/I14整体终验。"
     ]
   }
 ]

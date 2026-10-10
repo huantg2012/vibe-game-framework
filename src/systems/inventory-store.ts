@@ -40,6 +40,34 @@ export class InventoryStore {
   private rules: InventoryRules = { capacity: INVENTORY_RULES.carry_capacity_tenths, contaminantWeight: INVENTORY_RULES.contaminant_weight_tenths, weaponDefinition: () => undefined, isPassiveTool: () => false, toolSlotCount: () => 3, defenseSlotCount: () => 3 };
   private persist: ((state: InventoryState) => void) | null = null;
   private readonly listeners = new Set<() => void>();
+  private readonly replacementListeners = new Set<() => void>();
+  /** Explicit record replacement, never ordinary transactions or frame rollback. */
+  subscribeReplacement(listener: () => void): () => void {
+    this.replacementListeners.add(listener); return () => this.replacementListeners.delete(listener);
+  }
+  private notifyReplacement(): void {
+    for (const listener of this.replacementListeners) {
+      try { listener(); } catch (error) { console.error('Inventory replacement observer failed', error); }
+    }
+  }
+  private readonly committedListeners = new Map<(before: InventoryState, after: InventoryState) => void,
+    (before: Readonly<InventoryState>, after: Readonly<InventoryState>) => boolean>();
+  /** Durable mutations only; load, rollback and refused writes never emit.
+   * Optional interest predicate is read-only and runs before snapshot allocation. */
+  subscribeCommitted(listener: (before: InventoryState, after: InventoryState) => void,
+    interested: (before: Readonly<InventoryState>, after: Readonly<InventoryState>) => boolean = () => true): () => void {
+    this.committedListeners.set(listener, interested); return () => this.committedListeners.delete(listener);
+  }
+  private interestedCommitted(before: InventoryState, after: InventoryState): ((before: InventoryState, after: InventoryState) => void)[] {
+    return [...this.committedListeners].filter(([, interested]) => {
+      try { return interested(before, after); } catch (error) { console.error('Inventory observer predicate failed', error); return false; }
+    }).map(([listener]) => listener);
+  }
+  private notifyCommitted(before: InventoryState, listeners = this.interestedCommitted(before, this.state)): void {
+    for (const listener of listeners) {
+      try { listener(copy(before), this.getState()); } catch (error) { console.error('Inventory committed observer failed', error); }
+    }
+  }
   private frame: { before: InventoryState; changed: boolean; locked: boolean } | null = null;
   configure(rules: Partial<InventoryRules>): void { this.rules = { ...this.rules, ...rules }; }
   setPersistence(persist: ((state: InventoryState) => void) | null): void { this.persist = persist; }
@@ -119,7 +147,11 @@ export class InventoryStore {
       return result;
     }
     try { this.persist?.(copy(draft)); } catch { return fail('storage-failed'); }
-    this.publish(draft);
+    const listeners = this.interestedCommitted(this.state, draft);
+    const before = listeners.length ? this.getState() : null;
+    this.publish(draft, false);
+    if (before) this.notifyCommitted(before, listeners);
+    this.notify();
     return result;
   }
   /** Explicit opt-in for a scene that saves inventory and its resulting world
@@ -138,7 +170,7 @@ export class InventoryStore {
     frame.locked = true;
     try { persistCompleteFrame(this.getState()); } catch { return false; }
     this.frame = null;
-    if (frame.changed) this.notify();
+    if (frame.changed) { this.notifyCommitted(frame.before); this.notify(); }
     return true;
   }
   /** Teardown only: the coordinator must also discard the matching uncommitted
@@ -224,10 +256,11 @@ export class InventoryStore {
     }
     for(const [key,receipts] of Object.entries(state.offeringReceipts!))if(!key||!Array.isArray(receipts)||receipts.some(r=>!r||typeof r.itemId!=='string'||!['weapon','contaminant'].includes(r.kind)||typeof r.definitionId!=='string'||!Number.isInteger(r.slotIndex)||r.slotIndex<0))return false;
     if (!restoreRunPassiveReceipts(state)) return false;
+    this.notifyReplacement();
     this.publish(copy(state));
     return true;
   }
-  reset(): void { this.publish(emptyState()); }
+  reset(): void { this.notifyReplacement(); this.publish(emptyState()); }
   /** Explicit V1/dev import; supplies the sole canonical contaminant payloads. */
   importLegacy(contaminants: readonly Contaminant[], defenseIds: (string | null)[], toolIds: (string | null)[]): void {
     const state = emptyState();

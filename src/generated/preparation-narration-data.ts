@@ -1,17 +1,17 @@
 // AUTO-GENERATED from data/atmosphere-lines.csv + data/preparation-narration-pools.csv — DO NOT EDIT
-// Prepared content only: no production selector or presentation hook imports this registry.
+// Preparation-only semantic registry consumed by the state-qualified production selector.
 export type PreparationNarrationGrade = "low" | "medium" | "severe";
 export type PreparationNarrationContext = "baseline" | "new_weapon" | "ready_item" | "body_growth" | "return_gain" | "return_loss" | "loss_new_weapon" | "worn_weapon";
 export type PreparationNarrationPool = "prepare.baseline.low" | "prepare.baseline.medium" | "prepare.baseline.severe" | "prepare.new_weapon.low" | "prepare.new_weapon.medium" | "prepare.new_weapon.severe" | "prepare.ready_item" | "prepare.body_growth" | "prepare.return_gain" | "prepare.return_loss" | "prepare.loss_new_weapon" | "prepare.worn_weapon";
 export interface PreparationNarrationLine { readonly id: string; readonly text: string }
-export interface PreparationNarrationPoolDefinition { readonly grades: readonly PreparationNarrationGrade[]; readonly context: PreparationNarrationContext; readonly status: "prepared-only"; readonly lines: readonly PreparationNarrationLine[] }
+export interface PreparationNarrationPoolDefinition { readonly grades: readonly PreparationNarrationGrade[]; readonly context: PreparationNarrationContext; readonly status: "production"; readonly lines: readonly PreparationNarrationLine[] }
 export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPool, PreparationNarrationPoolDefinition>> = {
   "prepare.baseline.low": {
     "grades": [
       "low"
     ],
     "context": "baseline",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_low_01",
@@ -44,7 +44,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "medium"
     ],
     "context": "baseline",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_medium_01",
@@ -77,7 +77,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "severe"
     ],
     "context": "baseline",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_severe_01",
@@ -110,7 +110,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "low"
     ],
     "context": "new_weapon",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_weapon_low_01",
@@ -143,7 +143,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "medium"
     ],
     "context": "new_weapon",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_weapon_medium_01",
@@ -176,7 +176,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "severe"
     ],
     "context": "new_weapon",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_weapon_severe_01",
@@ -211,7 +211,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "severe"
     ],
     "context": "ready_item",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_ready_01",
@@ -246,7 +246,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "severe"
     ],
     "context": "body_growth",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_growth_01",
@@ -281,7 +281,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "severe"
     ],
     "context": "return_gain",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_gain_01",
@@ -316,7 +316,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "severe"
     ],
     "context": "return_loss",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_loss_01",
@@ -351,7 +351,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "severe"
     ],
     "context": "loss_new_weapon",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_loss_weapon_01",
@@ -386,7 +386,7 @@ export const PREPARATION_NARRATION_POOLS: Readonly<Record<PreparationNarrationPo
       "severe"
     ],
     "context": "worn_weapon",
-    "status": "prepared-only",
+    "status": "production",
     "lines": [
       {
         "id": "prepare_worn_01",

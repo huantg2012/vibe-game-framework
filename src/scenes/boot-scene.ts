@@ -4,6 +4,7 @@
  */
 
 import Phaser from 'phaser';
+import { installPreparationNarration } from '@/narrative/preparation-narration-adapter';
 import { LastLightVisual } from './last-light-visual';
 import { AUDIO_ASSETS, audioUrlsFor } from '@/managers/audio-catalog';
 import { audioManager } from '@/managers/audio-manager';
@@ -30,6 +31,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   preload(): void {
+    installPreparationNarration();
     injectPanelStyles();
     LastLightVisual.preload(this);
     this.load.image('menu-refuge-f', 'assets/art/menu-refuge-f.png');

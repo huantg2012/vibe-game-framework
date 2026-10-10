@@ -125,7 +125,7 @@ const checks=[];
     ['multi-grade baseline',replaceMetadata(baseline,row=>[row[0],'low|medium',row[2],row[3]]),/grade does not match/],
     ['wrong known context',replaceMetadata(ready,row=>[row[0],row[1],'body_growth',row[3]]),/context does not match/],
     ['unknown context',replaceMetadata(ready,row=>[row[0],row[1],'anything',row[3]]),/context does not match/],
-    ['unearned production status',replaceMetadata(ready,row=>[row[0],row[1],row[2],'hooked']),/must remain prepared-only/],
+    ['unknown delivery status',replaceMetadata(ready,row=>[row[0],row[1],row[2],'hooked']),/expected production status/],
   ];
   for(const [label,bad,error] of badMetadata)assert.throws(()=>atmosphereSources(real,bad),error,label);
   const rows=real.trim().split(/\r?\n/),preparedRows=rows.filter(line=>line.split(',')[1]===baseline);
@@ -148,7 +148,7 @@ const checks=[];
 }
 {
   for(const [name,definition] of Object.entries(PREPARATION_NARRATION_POOLS)){
-    assert.equal(definition.status,'prepared-only');
+    assert.equal(definition.status,'production');
     const rows=definition.lines,storage=new MemoryStorage(),out=[];
     let memory=new NarrationMemory(storage,()=>0);
     for(let n=0;n<rows.length*3;n++){
@@ -168,12 +168,12 @@ const checks=[];
       const file=path.join(directory,entry.name);
       if(entry.isDirectory())scan(file);
       else if(/\.[cm]?[jt]sx?$/.test(entry.name)&&entry.name!=='preparation-narration-data.ts'){
-        assert(!fs.readFileSync(file,'utf8').includes('preparation-narration-data'),`Prepared content unexpectedly consumed by ${path.relative(root,file)}`);
+        if (fs.readFileSync(file,'utf8').includes('preparation-narration-data')) assert.equal(path.relative(root,file),'src/narrative/preparation-narration.ts','Only the qualified selector may consume preparation pools');
       }
     }
   };
   scan(path.join(root,'src'));
   scan(path.join(root,'docs/art/demos/preparation-threat-sample'));
-  checks.push('prepared registry has no game or sample consumer; no runtime integration is claimed');
+  checks.push('preparation registry is consumed only by the qualified production selector');
 }
 console.log(JSON.stringify({status:'PASS',checks:checks.length,details:checks},null,2));

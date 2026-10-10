@@ -1344,11 +1344,11 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 
 2026-10-10新增独立视觉展示 `docs/art/demos/preparation-threat-sample/index.html`，仅由开发 URL 打开，不注册到游戏入口、生产构建或存档流程。首版远景解读被用户纠正为整层半透明 UI 遮罩；之后 E201 版本又获“动态像静态、缺少切档过渡”的反馈，两轮证据均保留历史，不提升为当前动态达成。`background.ts` 只读消费正式 `LastLightRenderer`、布局及 Last Light 资产，固定静息相位后提供三档相同的世界底图和实际 `actorRegion`。
 
-当前样例 `overlay.ts` 拥有完整 960×640 WebGL2 画布和 RAF／资源生命周期，`veil-shader.ts` 绘制主层／薄层错方向输运与五处局部错相半卷场，`veil-motion.ts` 管理连续运动及切档外观；`uTime`独立传入连续模拟时间，局部伸入、横拉、残痕与运输共享暂停/隐藏/行装降速生命周期。低／中／重主流候选为 12／20／28 逻辑 px/s；切档主前沿升 0.82 秒／降 1.02 秒，滞后尾层最晚 1.34 秒结束；快速改选从当前值追随，不重置纹理时间或排队。层位是世界→CSS基础阅读暗场→veil→文字，人物保护固定、文字／命中区不位移。默认播放并提供显式动／静、氛围及隐藏文字按钮；本次动态演示不因 OS 减少动态偏好自动静止，不改变 OS 或正式游戏设置。行装降速，关闭停 RAF；没有静态降级冒充 WebGL2 动态可行性。
+当前共享实现 `src/ui/dom/preparation-veil.ts` 拥有完整 960×640 WebGL2 画布和 RAF／资源生命周期，`veil-shader.ts` 绘制主层／薄层错方向输运与五处局部错相半卷场，`veil-motion.ts` 管理连续运动及切档外观；`uTime`独立传入连续模拟时间，局部伸入、横拉、残痕与运输共享暂停/隐藏/行装降速生命周期。低／中／重主流候选为 12／20／28 逻辑 px/s；切档主前沿升 0.82 秒／降 1.02 秒，滞后尾层最晚 1.34 秒结束；快速改选从当前值追随，不重置纹理时间或排队。层位是世界→CSS基础阅读暗场→veil→文字，人物保护固定、文字／命中区不位移。默认播放并提供显式动／静、氛围及隐藏文字按钮；本次动态演示不因 OS 减少动态偏好自动静止，不改变 OS 或正式游戏设置。行装降速，关闭停 RAF；没有静态降级冒充 WebGL2 动态可行性。
 
 `capture.ts` 从实际 worldCanvas、CSS 暗场快照、实时 veilCanvas 和同 DOM 透明文字缓存合成 960×640 画布，用 captureStream／MediaRecorder 录制 10 秒低→中→重→低真实切档。DOM 预热在录像外完成，每帧不重新读 DOM、不重画另一套视效；WebGL preserveDrawingBuffer 支持真实帧采样。输出本地 WebM Blob，`sample.ts` 拥有视频／下载 URL 并在替换及销毁时释放。取消、隐藏、pagehide 和异常会释放录制 RAF、tracks 与监听；污染或空 SVG 快照明确报错。Root 已录得约 5 MB 的首个 960×640／10 秒片段，实际页面 console error 为空，包含 DOM.Iterable 的定向 strict 通过；最终帧序列及美术修订仍待本轮复核。记录归 `docs/reviews/artifacts/preparation-threat-motion-2026-10-10/validation.md`／`art-review.md`，不以技术通过代签观感。
 
-`sample.ts` / `sample.css` 保留独立 A/B 排字和单列行装承接；候选文案读本目录 `copy.csv`，普通撬棍身份／耐久只读现有 CSV。B 常驻审稿，预览无声、不实例化业务库存、不读写存档、不执行装配或出发。样例内 `#dom-ui-root` 与画布同为960×640，预览包裹层以 ResizeObserver 等比缩放舞台；不是游戏响应式布局。页面/HMR销毁撤销自身事件、ResizeObserver、动画、录制与背景资源。此样例不是正式 panel→presenter→scene 的 P1 状态桥；`src/**`、`data/**`、`public/**` 未改，新视听未接入。制作与验证范围归[威胁表达计划](tasks/preparation-threat-ux.md#当前独立视觉样例2026-10-10)。
+`sample.ts` / `sample.css` 保留独立 A/B 排字和单列行装承接；候选文案读本目录 `copy.csv`，普通撬棍身份／耐久只读现有 CSV。B 常驻审稿，预览无声、不实例化业务库存、不读写存档、不执行装配或出发。样例内 `#dom-ui-root` 与画布同为960×640，预览包裹层以 ResizeObserver 等比缩放舞台；不是游戏响应式布局。页面/HMR销毁撤销自身事件、ResizeObserver、动画、录制与背景资源。样例保留独立审稿入口；正式游戏现从 panel→presenter→PurificationScene 接状态桥，样例的overlay/motion/shader转引生产共享实现，避免视效分叉。制作与验证范围归[威胁表达计划](tasks/preparation-threat-ux.md#当前独立视觉样例2026-10-10)。
 
 出发先保存beginRun，再转换场景；RunController先保存死亡/撤离settleRun，结果只读实际returnedIds。基地收益/冲击/潮汐/baseSettled通过SaveManager.commitWorldTransaction保存一次；失败保留会话结果并锁下一次出发，重试只写快照。开发ui-review的此事务也隔离真实存档。
 
@@ -1490,7 +1490,7 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 
 `data/atmosphere-lines.csv` 经 `tools/atmosphere-copy/generate.mjs`（合入 codegen）生成具名池。`src/narrative/atmosphere.ts` / `narration-memory.ts` 提供实际呈现时才消费的无放回轮换，装饰性 localStorage 与业务存档/玩法 RNG 分离；坏存储降级内存。
 
-2026-10-10 备行情境自语仅做内容准备：同一正文 CSV 的 12 个 `prepare.*` 池由 `data/preparation-narration-pools.csv` 登记档位、语境及固定 `prepared-only` 状态。生成器同时校验精确语义名单、元数据对应关系和正文，再将原 32 个生产池原样输出到 `atmosphere-copy-data.ts`，将备行池与类型化登记独立输出到 `preparation-narration-data.ts`。新表无游戏或独立视觉样例消费者，不进入 `AtmospherePool` / `pickAtmosphere`；没有状态选择器、事件采集、准备行程预算或存档变更。`check:atmosphere` 覆盖生成一致性、孤儿／未知／重复／语义错配拒绝、第一人称及句长规范，并以现有 `NarrationMemory` 对新池做纯数据轮换／重载验证；这些检查不宣称联动已接入。
+2026-10-10 用户授权正式接入。`preparation-narration-pools.csv` 的12池登记为production，正文仍由同一CSV生成独立类型表；原32池保持。`PreparationNarrationAdapter`在Boot安装，订阅InventoryStore提交前后快照及保存成功后的成长事件，只从已提交变化采集成熟、有效武器增强、实际归来收获和真实携带损失；载入/重置清近期事件，不从旧等级推断刚升级。`PurificationScene`每次到场创建`PreparationNarrationJourney`，关闭面板保留每档预算和全程一次额外机会，场景销毁释放。`InventoryPresenter`将只读port/暂停状态/真实人物投影传给prepare模式；UI停稳250ms后显示6秒，暂停冻结、隐藏撤销待选、关开不刷句。独立轮换历史继续使用`NarrationMemory`，业务存档及玩法RNG不新增字段或消费。
 
 `HavenNarration` 由 PurificationScene 持有，负责到场、交互物驻足和坐下；Rift 的 `EncounterNarration` 共用单行承接遭遇、环境和阈值，由成功帧 delta 驱动。暂停事件临时隐藏并冻结，恢复继续，退出销毁。`rift-result-panel` / `impact-result-panel` 依据实际结算数据选一条辅助句，保留原事实和操作。世界匹配只读冻结 profile.id，未知/DEV 走 generic；完整恢复预算未知时不补环境句，不添加恢复字段。
 

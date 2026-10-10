@@ -77,6 +77,15 @@ const CSS = `
 #inventory-panel.is-prepare .inventory-primary small{font-size:10px;line-height:18px;color:#8f9b8b}
 #inventory-panel.is-prepare .inventory-primary:disabled{color:#8f8069!important}
 #inventory-panel.is-prepare .inventory-prepare-back{flex:none;font-size:11px;line-height:18px;color:#a7afa2;white-space:nowrap}
+.inventory-prepare-veil{position:absolute;inset:0;width:960px;height:640px;z-index:1090;pointer-events:none}
+.inventory-prepare-backdrop.has-actor-region{mask-image:radial-gradient(ellipse var(--actor-rx) var(--actor-ry) at var(--actor-cx) var(--actor-cy),transparent 65%,#000 150%)}
+#inventory-panel.is-prepare .inventory-grade-facts{position:relative;display:block;height:270px}
+#inventory-panel.is-prepare .inventory-grade-danger{position:absolute;top:0;width:100%}
+#inventory-panel.is-prepare .inventory-grade-choice .inventory-grade-risk{font-size:16px;line-height:24px;color:#a7afa2;margin-top:6px}
+#inventory-panel.is-prepare .inventory-grade-choice .inventory-grade-description{white-space:pre-line;margin-top:13px}
+#inventory-panel.is-prepare .inventory-grade-response{position:absolute;top:134px;width:100%}
+#inventory-panel.is-prepare .inventory-grade-resources{position:absolute;top:190px;display:flex;align-items:baseline;gap:19px}
+#inventory-panel.is-prepare .inventory-prepare-narration{position:absolute;left:190px;right:0;top:298px;margin:0;min-height:44px;font:13px/22px "Songti SC","Noto Serif CJK SC","SimSun",serif;font-weight:400;letter-spacing:.3px;color:#b0b4a5}
 @keyframes prepare-content-in{from{opacity:.45}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){#inventory-panel.is-prepare .inventory-prepare-pollution,#inventory-panel.is-prepare .inventory-prepare-editor,#inventory-panel.is-prepare .inventory-grade-facts{animation:none}}
 

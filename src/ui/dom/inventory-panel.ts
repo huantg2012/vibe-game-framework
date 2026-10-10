@@ -2,6 +2,10 @@
  * capacity validation, and world time remain the injected domain's concern. */
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 import { ensureInventoryPanelStyles } from './inventory-panel-styles';
+import { mountVeil, type VeilController } from './preparation-veil';
+import type { ActorRegion, Grade } from './preparation-veil-types';
+import type { PreparationNarrationPort } from '../../narrative/preparation-narration';
+import { PREPARATION_THREAT_COPY } from '../../generated/preparation-threat-copy';
 
 export type InventoryPanelMode = 'catalog' | 'prepare' | 'rift';
 export interface InventoryPanelStat { label: string; value: string | number; comparison?: string | number }
@@ -73,6 +77,9 @@ export interface InventoryPanelOptions {
   onOffering?: () => void;
   mount?: HTMLElement;
   portrait?: string;
+  getPreparationActorRegion?: () => ActorRegion | null;
+  isPreparationPaused?: () => boolean;
+  preparationNarration?: PreparationNarrationPort;
 }
 type Filter = 'all' | 'weapon' | 'contaminant' | 'discovered';
 type Sort = 'kept' | 'name' | 'weight';
@@ -148,6 +155,57 @@ class InventoryPanel {
   private prepareBack!: HTMLButtonElement;
   private prepareHelp!: HTMLElement;
   private prepareDetailScroll = 0;
+  private prepareVeil: VeilController | null = null;
+  private prepareCanvas: HTMLCanvasElement | null = null;
+  private prepareNarration: HTMLElement | null = null;
+  private prepareFrame = 0;
+  private prepareFrameTime = 0;
+  private prepareActorSignature = '';
+  private prepareMotionPreference: MediaQueryList | null = null;
+  private preparationMotionChanged = (): void => { this.prepareVeil?.setMotion(!this.prepareMotionPreference?.matches); };
+  private preparationVisibilityChanged = (): void => {
+    cancelAnimationFrame(this.prepareFrame); this.prepareFrame = 0;
+    this.prepareFrameTime = 0;
+    this.updatePreparationPresentation(performance.now());
+  };
+
+  private selectedPreparationGrade(): Grade | null {
+    const grade = this.snapshot?.departureGrades?.selected;
+    return grade === 'low' || grade === 'medium' || grade === 'severe' ? grade : null;
+  }
+
+  private updatePreparationPresentation = (now: number): void => {
+    this.prepareFrame = 0;
+    if (!this.panel || this.options?.mode !== 'prepare') return;
+    const paused = document.hidden || !document.hasFocus() || !!this.options.isPreparationPaused?.();
+    const grade = this.selectedPreparationGrade();
+    const delta = this.prepareFrameTime ? Math.min(100, Math.max(0, now - this.prepareFrameTime)) : 0;
+    this.prepareFrameTime = now;
+    this.prepareVeil?.setVisible(!paused && grade !== null);
+    this.prepareVeil?.setPhase(this.prepareView);
+    if (grade) this.prepareVeil?.setGrade(grade);
+    const region = this.options.getPreparationActorRegion?.();
+    if (region) {
+      this.prepareVeil?.setActor(region);
+      const signature = `${region.x},${region.y},${region.width},${region.height}`;
+      if (signature !== this.prepareActorSignature && this.backdrop) {
+        this.prepareActorSignature = signature;
+        this.backdrop.style.setProperty('--actor-cx', `${region.x + region.width / 2}px`);
+        this.backdrop.style.setProperty('--actor-cy', `${region.y + region.height / 2}px`);
+        this.backdrop.style.setProperty('--actor-rx', `${region.width / 2 + 22}px`);
+        this.backdrop.style.setProperty('--actor-ry', `${region.height / 2 + 20}px`);
+        this.backdrop.classList.add('has-actor-region');
+      }
+    }
+    if (grade && this.options.preparationNarration && this.prepareNarration) {
+      const text = this.options.preparationNarration.update(delta, { grade, visible: this.prepareView === 'pollution', paused });
+      if (this.prepareNarration.textContent !== text) this.prepareNarration.textContent = text;
+    }
+    // Browser visibility/focus resumes through events. The remaining cheap
+    // foreground observation also detects scene-owned pause changes; it never
+    // advances the veil or narration while that owner reports a pause.
+    if (!document.hidden && document.hasFocus()) this.prepareFrame = requestAnimationFrame(this.updatePreparationPresentation);
+  };
 
   isOpen(): boolean { return this.panel !== null; }
 
@@ -173,6 +231,13 @@ class InventoryPanel {
     document.addEventListener('visibilitychange', this.cancelDiscardHold);
     window.addEventListener('blur', this.cancelDiscardHold);
     this.update();
+    if (options.mode === 'prepare') {
+      document.addEventListener('visibilitychange', this.preparationVisibilityChanged);
+      window.addEventListener('blur', this.preparationVisibilityChanged);
+      window.addEventListener('focus', this.preparationVisibilityChanged);
+      this.prepareFrameTime = 0; this.prepareActorSignature = '';
+      this.prepareFrame = requestAnimationFrame(this.updatePreparationPresentation);
+    }
     if (options.mode === 'prepare') (this.gradePanel.querySelector<HTMLElement>('[aria-pressed="true"]') ?? this.primary)?.focus({ preventScroll: true });
     else this.panel?.focus({ preventScroll: true });
   }
@@ -180,6 +245,16 @@ class InventoryPanel {
   close(): void {
     if (!this.panel) return;
     this.cancelDiscardHold();
+    const grade = this.selectedPreparationGrade();
+    if (grade) this.options?.preparationNarration?.update(0, { grade, visible: false, paused: false });
+    cancelAnimationFrame(this.prepareFrame); this.prepareFrame = 0;
+    document.removeEventListener('visibilitychange', this.preparationVisibilityChanged);
+    window.removeEventListener('blur', this.preparationVisibilityChanged);
+    window.removeEventListener('focus', this.preparationVisibilityChanged);
+    this.prepareMotionPreference?.removeEventListener('change', this.preparationMotionChanged);
+    this.prepareMotionPreference = null;
+    this.prepareVeil?.dispose(); this.prepareVeil = null;
+    this.prepareCanvas?.remove(); this.prepareCanvas = null; this.prepareNarration = null;
     const callback = this.options?.onClose;
     this.revision++;
     document.removeEventListener('keydown', this.onKeyDown, true);
@@ -224,7 +299,7 @@ class InventoryPanel {
     const panel = element('div', `inventory-wrap ${embedded ? 'inventory-catalog' : 'game-panel crt-stack scene-menu'} is-${this.options!.mode}`); panel.id = 'inventory-panel'; panel.tabIndex = -1;
     panel.setAttribute('role', embedded ? 'region' : 'dialog'); if (!embedded) panel.setAttribute('aria-modal', 'true'); panel.setAttribute('aria-label', this.options!.mode === 'prepare' ? '备行' : embedded ? '物件' : '本趟拾获');
     const header = element('header', 'inventory-header');
-    header.append(element('h2', 'inventory-title', this.options!.mode === 'prepare' ? '选择污染程度' : '本趟拾获'));
+    header.append(element('h2', 'inventory-title', this.options!.mode === 'prepare' ? '裂隙彼端' : '本趟拾获'));
     header.hidden = embedded;
     this.prepareContext = element('span', 'inventory-context', this.options!.mode === 'rift' ? '只收好这次带回的物件' : '');
     header.append(this.prepareContext);
@@ -278,7 +353,9 @@ class InventoryPanel {
       this.prepareViewport = element('div', 'inventory-prepare-viewport');
       this.preparePollution = element('div', 'inventory-prepare-pollution');
       this.prepareEditor = element('div', 'inventory-prepare-editor');
-      this.preparePollution.append(this.gradePanel);
+      this.prepareNarration = element('p', 'inventory-prepare-narration');
+      this.prepareNarration.setAttribute('aria-live', 'polite');
+      this.preparePollution.append(this.gradePanel, this.prepareNarration);
       this.prepareEditorEquipment = element('div', 'inventory-prepare-equipment-host');
       this.prepareEditorEquipment.append(this.equipment);
       this.prepareEditor.append(this.prepareEditorEquipment, filters, body);
@@ -290,6 +367,19 @@ class InventoryPanel {
     panel.addEventListener('click', event => event.stopPropagation());
     panel.addEventListener('wheel', event => event.stopPropagation(), { passive: true });
     if (!embedded) { this.backdrop = element('div', 'game-panel-backdrop scene-menu-backdrop'); getDomUiRoot().append(this.backdrop); }
+    if (this.options!.mode === 'prepare') {
+      this.backdrop?.classList.add('inventory-prepare-backdrop');
+      const canvas = element('canvas', 'inventory-prepare-veil');
+      canvas.setAttribute('aria-hidden', 'true');
+      getDomUiRoot().append(canvas); this.prepareCanvas = canvas;
+      try {
+        this.prepareVeil = mountVeil(canvas);
+        this.prepareMotionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+        this.prepareMotionPreference.addEventListener('change', this.preparationMotionChanged);
+        this.preparationMotionChanged();
+      }
+      catch (error) { canvas.dataset.error = error instanceof Error ? error.message : String(error); canvas.hidden = true; }
+    }
     (this.options!.mount ?? getDomUiRoot()).append(panel); this.panel = panel;
   }
 
@@ -346,7 +436,7 @@ class InventoryPanel {
       ? `备行 2/2 · ${grades?.options.find(option => option.id === grades.selected)?.label ?? '原有出行条件'}`
       : '备行 1/2';
     const title = this.panel?.querySelector('.inventory-title');
-    if (title) title.textContent = this.prepareView === 'equipment' ? '配置行装' : '选择污染程度';
+    if (title) title.textContent = this.prepareView === 'equipment' ? '配置行装' : '裂隙彼端';
     if (!grades) {
       this.prepareHelp.textContent = this.prepareView === 'equipment' ? '方向键查看 · Enter 操作 · Tab 移步' : 'Tab 移步 · Esc 离开';
       this.gradePanel.replaceChildren(element('p', 'inventory-grade-legacy', '沿旧路出发 · 沿用原有出行条件'));
@@ -375,10 +465,18 @@ class InventoryPanel {
     for (const control of choices.querySelectorAll<HTMLButtonElement>('button')) control.tabIndex = control.dataset.departureGrade === grades.selected ? 0 : -1;
     const facts = element('div', 'inventory-grade-facts');
     facts.setAttribute('aria-live', 'polite');
-    if (selected) for (const [label, className, value] of [['危险', 'inventory-grade-risk', selected.risk], ['收获', 'inventory-grade-reward', selected.reward], ['行前准备', 'inventory-grade-preparation', selected.preparation]]) {
-      const group = element('div', 'inventory-grade-fact');
-      group.append(element('span', 'inventory-grade-fact-label', label), element('p', className, value));
-      facts.append(group);
+    const grade = this.selectedPreparationGrade();
+    const copy = grade ? PREPARATION_THREAT_COPY[grade] : null;
+    if (copy) {
+      const risk = element('div', 'inventory-grade-fact inventory-grade-danger');
+      risk.append(element('span', 'inventory-grade-fact-label', '危险'), element('p', 'inventory-grade-risk', copy.risk), element('p', 'inventory-grade-description', copy.facts.split('|').join('\n')));
+      const preparation = element('div', 'inventory-grade-fact inventory-grade-response');
+      preparation.append(element('span', 'inventory-grade-fact-label', '行前准备'), element('p', 'inventory-grade-preparation', copy.response));
+      const resources = element('div', 'inventory-grade-fact inventory-grade-resources');
+      resources.append(element('span', 'inventory-grade-fact-label', '深处资源'), element('p', 'inventory-grade-reward', copy.resources));
+      facts.append(risk, preparation, resources);
+    } else if (selected) {
+      facts.append(element('p', 'inventory-grade-risk', selected.risk));
     }
     this.gradePanel.append(facts);
     if (focused) [...choices.querySelectorAll<HTMLButtonElement>('button')].find(button => button.dataset.departureGrade === focused)?.focus({ preventScroll: true });

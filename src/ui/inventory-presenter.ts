@@ -15,7 +15,7 @@ import { getSurvivalAttributes, sumPollutionResistance } from '@/systems/surviva
 import type { InventoryError, InventoryItem, InventoryResult } from '@/types/inventory-types';
 import type { Vector2 } from '@/types/game-types';
 import { getRarityStars } from './contaminant-names';
-import { inventoryPanel, type InventoryPanelAction, type InventoryPanelActionResult, type InventoryPanelItem, type InventoryPanelMode, type InventoryPanelSnapshot } from './dom/inventory-panel';
+import { inventoryPanel, type InventoryPanelOptions, type InventoryPanelAction, type InventoryPanelActionResult, type InventoryPanelItem, type InventoryPanelMode, type InventoryPanelSnapshot } from './dom/inventory-panel';
 
 const ERRORS: Record<InventoryError, string> = {
   'duplicate-action': '这项操作已经完成。',
@@ -41,6 +41,9 @@ export interface InventoryPresenterOptions {
   onOffering?: () => void;
   mount?: HTMLElement;
   portrait?: string;
+  preparationNarration?: InventoryPanelOptions['preparationNarration'];
+  getPreparationActorRegion?: InventoryPanelOptions['getPreparationActorRegion'];
+  isPreparationPaused?: InventoryPanelOptions['isPreparationPaused'];
   getPollutionResistanceBonus?: () => number;
   getNearby?: () => readonly InventoryItem[];
   getDropPosition?: () => Vector2;

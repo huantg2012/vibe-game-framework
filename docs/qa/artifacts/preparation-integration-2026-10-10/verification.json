@@ -1,0 +1,111 @@
+{
+  "status": "PASS-bounded",
+  "revision": "working-tree based on f999bc95",
+  "scope": "Production preparation visual/narration integration; no full release requalification",
+  "sources": [
+    {
+      "path": "data/preparation-narration-pools.csv",
+      "sha256": "f25f29ee4439fcea7b49bbfe1956e5cf97e5e6f3860c3c0389dbb2eb795d7aaa"
+    },
+    {
+      "path": "data/preparation-threat-copy.csv",
+      "sha256": "b8f91315b99fa7b6d587e3e441f41b9cfd766ef86372e29e174c61562881f5d7"
+    },
+    {
+      "path": "src/generated/preparation-narration-data.ts",
+      "sha256": "54ecec8d9649e3a9a79aaad5e52ebba127aa993ae125eb935b04f2007bf966e0"
+    },
+    {
+      "path": "src/generated/preparation-threat-copy.ts",
+      "sha256": "a01c452ed42c3e5d92804c3060f0119a09fd524d939214b4766c86fcbcd5f880"
+    },
+    {
+      "path": "src/narrative/preparation-narration-adapter.ts",
+      "sha256": "b7b931405500ef3cf7d89b48d158351c18943d4cd9999d608e731a264a6bac56"
+    },
+    {
+      "path": "src/narrative/preparation-narration.ts",
+      "sha256": "9e2061b7f2bfaf63810d6d0313725ec11677708f7f9fd1a95695d69ad75b2ce4"
+    },
+    {
+      "path": "src/scenes/boot-scene.ts",
+      "sha256": "19c1f98a156fcaaf9f8d20142bda5ed6cf3c3e4c92e7ee0090eed0e832b343d2"
+    },
+    {
+      "path": "src/scenes/purification-scene.ts",
+      "sha256": "7c5e85d3b3680abbb21816d28d0eec49f978004f2045730eaeb4475382ead29b"
+    },
+    {
+      "path": "src/systems/inventory-store.ts",
+      "sha256": "1158ba623a3ead0a68111c3bcdff1e48cf24b251a64dcfc306e21d1ff013cc77"
+    },
+    {
+      "path": "src/ui/dom/inventory-panel-styles.ts",
+      "sha256": "5c75b2ac507aedb2817cc02285fb9112cf9924bc4070632f1e0cf4180b041e1a"
+    },
+    {
+      "path": "src/ui/dom/inventory-panel.ts",
+      "sha256": "24fef6bc4cb9e66a6cdbf3dd20df34b73dfc8b4508727555694029307e8c3e78"
+    },
+    {
+      "path": "src/ui/dom/preparation-veil-motion.ts",
+      "sha256": "b93f48dc8c7ed9bf3235d09045decb25a3f322855110627e3a34102cbcc65caa"
+    },
+    {
+      "path": "src/ui/dom/preparation-veil-shader.ts",
+      "sha256": "370a0301ba6155e78acf8d933bdae598d333c051abadc5f3527b13464d7bba09"
+    },
+    {
+      "path": "src/ui/dom/preparation-veil-types.ts",
+      "sha256": "955d7625c7b21acb3bb08d4d217830a58b3dd9dffb56bc3ab7837df6bc160bab"
+    },
+    {
+      "path": "src/ui/dom/preparation-veil.ts",
+      "sha256": "0c94994b3c3bcd1ba07cbaae0fbb908e668827ad183ac5b762e081b109d5b7bf"
+    },
+    {
+      "path": "src/ui/inventory-presenter.ts",
+      "sha256": "79eb17d7bf8f922bd2d72929b113fea9bfcf815888fd3f214c18ce044bd5c025"
+    },
+    {
+      "path": "tools/atmosphere-copy/check.mjs",
+      "sha256": "85f36d06a2018b2993aa224f4006c041d6f8c9ef56f2e4a6ee8723be38bce8ce"
+    },
+    {
+      "path": "tools/atmosphere-copy/generate.mjs",
+      "sha256": "02a504bd9525e41a73c7b8afc1803e99681c91d4b9806e7256cd48f36228d288"
+    },
+    {
+      "path": "tools/inventory/check-preparation-presentation.mjs",
+      "sha256": "86245f5bd8e16df8cccea3d44b504f05a1e5459f8c8a6bded84221dc60af83e7"
+    },
+    {
+      "path": "tools/preparation-copy/generate.mjs",
+      "sha256": "58687f7a519f939e38b197af4c519716edf3d458cb05fe087b8cdb31aa3ee2a8"
+    },
+    {
+      "path": "tools/qa/check-preparation-growth-purchase.ts",
+      "sha256": "37b55043eea8754cc33963b00e7819d63ec897a895b8c7cea053e157f2e1ab55"
+    },
+    {
+      "path": "tools/qa/check-preparation-narration.ts",
+      "sha256": "419b7871c0154b5bf230086a5d5073dadc6819eb7454f0a365556e5080352b50"
+    }
+  ],
+  "checks": {
+    "productionFlow": "8/8 including three actual grade departures",
+    "presentation": "3 grades + transitions/pause/reduced motion/20 reopen/context-loss PASS",
+    "narration": "qualified events, budgets, true loss, replacement/rollback and real growth SaveManager refusal/success PASS",
+    "atmosphere": "10 groups + 24 negative fixtures PASS",
+    "sharedInventoryView": "6 groups PASS",
+    "domain": "inventory9/tool18/save12 PASS (subagent execution)",
+    "build": "tsc + Vite PASS; existing 500kB chunk advisory",
+    "art": "four actual frames, limited non-blocking; user continuous aesthetic review pending"
+  },
+  "limitations": [
+    "Fresh isolated browser contexts and DEV memory stores; no user saves touched",
+    "No new audio",
+    "No other-device test; user waiver retained",
+    "No frame-time performance benchmark or R100 full release gate rerun"
+  ]
+}

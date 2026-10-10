@@ -34,6 +34,8 @@ import { HavenNarration } from '@/ui/dom/haven-narration';
  */
 
 import Phaser from 'phaser';
+import { installPreparationNarration } from '@/narrative/preparation-narration-adapter';
+import type { PreparationNarrationJourney } from '@/narrative/preparation-narration';
 import { MenuEntryTransition } from './menu-entry-transition';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { ACTIVE_CONTAMINANT_TYPES } from '@/generated/contaminant-data';
@@ -194,6 +196,7 @@ export class PurificationScene extends Phaser.Scene {
   private devSession: PurificationDevSession | null = null;
   private productionDeparture: RiftCheckpoint['identity'] | null = null;
   private preparedDepartureWorld: WorldProductionMap | null = null;
+  private preparationNarration: PreparationNarrationJourney | null = null;
   private departureGrade: PollutionGrade = 'low';
   private departureAbort: AbortController | null = null;
   private devDeparture: PurificationDevDeparture | null = null;
@@ -229,6 +232,8 @@ export class PurificationScene extends Phaser.Scene {
   create(data?: { kindlingGained?: number; survived?: boolean; fromMenu?: boolean; menuEntry?: MenuEntryTransition; devSession?: PurificationDevSession }): void {
     this.havenNarration.destroy();
     this.havenNarration = new HavenNarration();
+    this.preparationNarration?.destroy();
+    this.preparationNarration = installPreparationNarration().createJourney();
     this.shuttingDown = false;
     this.cleanupComplete = false;
     this.resting = false;
@@ -902,12 +907,30 @@ export class PurificationScene extends Phaser.Scene {
     this.departureGrade = 'low';
     this.focusWorldInteraction(CHAMBER_DEVICE_BASES.rift, 184);
     openInventory({ mode: 'prepare', portrait: this.chamber?.getPortrait(), onClose: () => this.restoreInteractionFocus(),
+      preparationNarration: this.preparationNarration ?? undefined,
+      getPreparationActorRegion: this.getPreparationActorRegion,
+      isPreparationPaused: () => this.scene.isPaused() || this.shuttingDown,
       onDepart: () => this.transitionToRift(),
       getDepartureGrades: () => this.devSession ? undefined : this.getDepartureGrades(),
       onSelectDepartureGrade: id => { if (!this.departureAbort && isPollutionGrade(id)) this.departureGrade = id; },
       onOffering: () => this.openOfferingFromInventory(),
     });
   }
+
+  /** Match the actual Last Light actor and current focus camera in DOM pixels. */
+  private readonly preparationActorRegion = { x: 0, y: 0, width: 0, height: 0 };
+  private readonly getPreparationActorRegion = () => {
+    if (!this.chamber || this.shuttingDown) return null;
+    const bounds = this.chamber.getActorBounds(this.interactionPlayerBounds);
+    const camera = this.cameras.main;
+    const ox = camera.width * camera.originX, oy = camera.height * camera.originY;
+    const region = this.preparationActorRegion;
+    region.x = camera.x + ox + (bounds.x - camera.scrollX - ox) * camera.zoom;
+    region.y = camera.y + oy + (bounds.y - camera.scrollY - oy) * camera.zoom;
+    region.width = bounds.width * camera.zoom;
+    region.height = bounds.height * camera.zoom;
+    return region;
+  };
 
   private getDepartureGrades() {
     return {
@@ -1307,6 +1330,7 @@ export class PurificationScene extends Phaser.Scene {
       if (this.preparedDepartureWorld) discardPreparedR100Presentation(this.preparedDepartureWorld);
       this.preparedDepartureWorld = null;
     });
+    dispose('preparation-narration', () => this.preparationNarration?.destroy()); this.preparationNarration = null;
     dispose('weapon-observer', () => this.unsubscribeWeapon?.()); this.unsubscribeWeapon = null;
     dispose('offering-observer', () => this.unsubscribeOffering?.()); this.unsubscribeOffering = null;
     dispose('forecast-observer', () => this.unsubscribeForecast?.()); this.unsubscribeForecast = null;
