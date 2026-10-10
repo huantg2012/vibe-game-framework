@@ -7606,5 +7606,88 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E200",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-10",
+    "revision": "working-tree/preparation-threat-sample-20261010",
+    "scope": "独立视觉样例的有限IAB检查：鼠标三档正常文字帧、824px窄视口完整等比显示，实际↑↓低→中→重、Enter进装备、Shift+Enter无出发且踏入不可执行、Esc返选级保留重档、背景开关后Esc还原、再Esc关闭、复位低档重开；console error为空。最终样例及背景导入链定向strict TypeScript、git diff --check通过。三档/行装/重档去字截图和独立美术实看已保存。",
+    "limitations": "只读复用LastLightRenderer和既有资产；背景候选归样例本地，不是P1真实状态桥完成。美术指出变化集中左下、重档仍有板片感，整体压力尚未证明，用户尚未审看。无音频/动态/存档/真实装配/出发；B固定审稿不覆盖正式时序，未测长库存、异常路径、兼容渲染或正式游戏生命周期。COH-F042/F043/F052仅为背景/文案/等级上下文，不提升其生产或验收结论。",
+    "features": [
+      "COH-F003",
+      "COH-F038",
+      "COH-F042",
+      "COH-F043",
+      "COH-F052"
+    ],
+    "sources": [
+      {
+        "path": "docs/tasks/preparation-threat-ux.md",
+        "role": "doc",
+        "note": "当前独立视觉样例：范围与限定检查实录"
+      },
+      {
+        "path": "docs/art/demos/preparation-threat-sample/index.html",
+        "role": "doc",
+        "note": "独立视觉样例入口；不是游戏或正式P1状态桥"
+      },
+      {
+        "path": "docs/art/demos/preparation-threat-sample/sample.ts",
+        "role": "code",
+        "note": "仅样例交互/CSV消费/预览缩放，不持有业务状态"
+      },
+      {
+        "path": "docs/art/demos/preparation-threat-sample/sample.css",
+        "role": "code",
+        "note": "固定960×640样例排字及外层预览外壳"
+      },
+      {
+        "path": "docs/art/demos/preparation-threat-sample/background.ts",
+        "role": "code",
+        "note": "只读复用LastLightRenderer与资产；sample-local静态候选"
+      },
+      {
+        "path": "docs/art/demos/preparation-threat-sample/copy.csv",
+        "role": "data",
+        "note": "独立样例候选A/B稿；未修改生产文案源"
+      },
+      {
+        "path": "docs/art/demos/preparation-threat-sample/README.md",
+        "role": "doc",
+        "note": "独立样例复现、有限核查与不足"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-threat-sample-2026-10-10/art-review.md",
+        "role": "doc",
+        "note": "知情美术实看；局部差异/板片感/整体压力限制"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-threat-sample-2026-10-10/low.jpg",
+        "role": "art",
+        "note": "独立样例限定帧；非生产游戏验收"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-threat-sample-2026-10-10/medium.jpg",
+        "role": "art",
+        "note": "独立样例限定帧；非生产游戏验收"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-threat-sample-2026-10-10/severe.jpg",
+        "role": "art",
+        "note": "独立样例限定帧；非生产游戏验收"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-threat-sample-2026-10-10/equipment.jpg",
+        "role": "art",
+        "note": "独立样例限定帧；非生产游戏验收"
+      },
+      {
+        "path": "docs/reviews/artifacts/preparation-threat-sample-2026-10-10/severe-background.jpg",
+        "role": "art",
+        "note": "独立样例限定帧；非生产游戏验收"
+      }
+    ]
   }
 ]

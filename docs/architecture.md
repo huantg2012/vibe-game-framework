@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-10-09
+last-modified: 2026-10-10
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -1341,6 +1341,8 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 `inventory-store.ts`是唯一实例/归属/装备/出击账本所有者；`inventory-presenter.ts`与DOM视图共享于报告物件页、入口备行及裂隙Tab拾获（B已由DEC-142下线）。`field-loot-inventory.ts`提交揭晓/取得/交换/落地，`weapon-loot.ts`使用独立确定性随机流。`survival-attributes.ts`从已提交库存派生抗性及负重速度，场景订阅后更新玩家、Chaos及HUD；预览不更改运行时属性。
 
 2026-10-09备行按用户复评改为同一`inventoryPanel`内部的`pollution / equipment`两个顺序环节。污染页只选级并进入配置，`depart`与主动作入口都限制为行装页才允许出发；选级页Shift+Enter不绕过流程。配置复用净化点catalog的单列、48px行高、选中ID、列表/详情更新和上下逐项导航，仅装配动作能力随prepare上下文变化。装置三项读数留在已有StatusPanel存续报告，不在备行重复。两页往返仅改变UI会话状态，保留真实装配、筛选/选择与独立滚动，不改变库存所有权、存档schema、生成身份及出发保存事务。样式限定prepare，继续挂`#dom-ui-root`与960×640逻辑画布。`prepare-review.html` / `src/dev/prepare-review.ts`以Boot前注入的内存存储运行真实场景，夹具只用于DEV，不接触玩家记录。具体合同归`system-field-inventory.md`第5节，新验证归`docs/qa/preparation-flow-2026-10-09.md`；旧总览版本证据不自动覆盖本流程。
+
+2026-10-10新增独立视觉展示 `docs/art/demos/preparation-threat-sample/index.html`，仅由开发 URL 打开，不注册到游戏入口、生产构建或存档流程。`background.ts` 只读消费正式 `LastLightRenderer`、布局及 Last Light 资产，固定静息相位后绘制 sample-local 三档构图候选；未修改正式 renderer 或资源。`sample.ts` / `sample.css` 为独立静态 A/B 排字和单列行装承接，候选文案读本目录 `copy.csv`，普通撬棍身份／耐久读现有 CSV；不实例化业务库存，不执行装配、出发、音频或动态。样例内 `#dom-ui-root` 与画布同为960×640，预览包裹层以 ResizeObserver 等比缩放整个舞台，外部工具栏可换行；不是游戏响应式布局。页面/HMR销毁撤销事件、ResizeObserver与背景资源。此样例为用户要求的接入前展示，不是正式 panel→presenter→scene 的 P1 状态桥实现；正式两环节和 `8cbd86ec` 新视听未接入边界保持。制作与验证范围归[威胁表达计划](tasks/preparation-threat-ux.md#当前独立视觉样例2026-10-10)。
 
 出发先保存beginRun，再转换场景；RunController先保存死亡/撤离settleRun，结果只读实际returnedIds。基地收益/冲击/潮汐/baseSettled通过SaveManager.commitWorldTransaction保存一次；失败保留会话结果并锁下一次出发，重试只写快照。开发ui-review的此事务也隔离真实存档。
 

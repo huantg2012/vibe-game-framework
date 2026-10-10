@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>裂隙 · 污染选择视觉样例</title>
+    <link rel="stylesheet" href="./sample.css" />
+  </head>
+  <body>
+    <main class="sample-shell">
+      <header class="sample-heading">
+        <div>
+          <p class="sample-eyebrow">VISUAL STUDY · 01</p>
+          <h1>裂隙前 · 三种压力</h1>
+        </div>
+        <p class="sample-scope">独立视觉样例 · 未接入游戏</p>
+      </header>
+      <nav class="sample-toolbar" aria-label="样例查看工具" data-toolbar>
+        <div class="sample-grades" aria-label="快速查看污染档位">
+          <button type="button" data-preview-grade="low" aria-pressed="true">低污染</button>
+          <button type="button" data-preview-grade="medium" aria-pressed="false">中污染</button>
+          <button type="button" data-preview-grade="severe" aria-pressed="false">重度污染</button>
+        </div>
+        <div class="sample-tools">
+          <button type="button" id="background-toggle" aria-pressed="false">仅看背景</button>
+          <button type="button" id="reset-sample">复位</button>
+        </div>
+      </nav>
+      <div id="sample-viewport" class="sample-viewport">
+      <section id="sample-stage" class="sample-stage" tabindex="0" aria-label="裂隙备行视觉样例，可用上下方向键选择污染档位">
+        <canvas id="world-canvas" width="960" height="640" aria-label="裂隙边的净化点背景"></canvas>
+        <div id="dom-ui-root">
+          <div class="reading-backdrop" aria-hidden="true"></div>
+          <section id="pollution-pane" class="preparation-pane" aria-label="选择污染程度">
+            <header class="prepare-heading">
+              <p class="stage-label">备行 <span>1 / 2</span></p>
+              <h2>选择污染程度</h2>
+            </header>
+            <div class="grade-list" role="group" aria-label="污染程度">
+              <button type="button" data-grade="low" class="grade-choice is-selected" aria-pressed="true">低污染</button>
+              <button type="button" data-grade="medium" class="grade-choice" aria-pressed="false">中污染</button>
+              <button type="button" data-grade="severe" class="grade-choice" aria-pressed="false">重度污染</button>
+            </div>
+            <section class="threat-details" aria-live="polite" aria-atomic="true">
+              <p class="detail-label risk-label">危险</p>
+              <h3 id="threat-risk" class="risk-value"></h3>
+              <p id="threat-facts" class="threat-facts"></p>
+              <div class="response-group"><p class="detail-label">行前准备</p><p id="threat-response"></p></div>
+              <p class="resource-line"><span class="detail-label">深处资源</span><span id="threat-resources"></span></p>
+              <p class="shared-rule">入口附近的收获不随档位增加。</p>
+              <p id="threat-narration" class="threat-narration"></p>
+            </section>
+            <footer class="prepare-footer">
+              <div class="footer-left">
+                <p class="navigation-hint"><span class="key">↑ ↓</span>选择</p>
+                <button type="button" class="secondary-action" id="close-prepare"><span class="key">Esc</span>离开</button>
+              </div>
+              <button type="button" id="to-equipment" class="primary-action"><span class="key">Enter</span><span class="action-name">整理行装</span></button>
+            </footer>
+          </section>
+          <section id="equipment-pane" class="preparation-pane" aria-label="配置行装" hidden>
+            <header class="prepare-heading">
+              <p class="stage-label">备行 <span>2 / 2</span></p>
+              <div class="equipment-title"><h2>配置行装</h2><p><span data-selected-grade></span><span class="summary-divider">·</span><span data-selected-risk></span></p></div>
+            </header>
+            <div class="equipment-slots" aria-label="行装挂位">
+              <div class="equipment-slot"><img src="/assets/weapons/crowbars/crowbar_plain-icon.png" alt="" /><div><p class="slot-name">在手</p><p class="slot-state">耐久 <span data-weapon-durability></span></p></div></div>
+              <div class="equipment-slot"><p class="slot-name">工具 <span class="key">Q</span></p><p class="slot-state">未装配</p></div>
+              <div class="equipment-slot"><p class="slot-name">工具 <span class="key">F</span></p><p class="slot-state">未装配</p></div>
+              <div class="equipment-slot"><p class="slot-name">被动</p><p class="slot-state">未装配</p></div>
+            </div>
+            <div class="catalog-heading"><p>收存物件</p><p>原来顺序</p></div>
+            <div class="equipment-catalog">
+              <div class="catalog-list" aria-label="物件单列清单">
+                <button type="button" class="catalog-item is-selected" aria-pressed="true"><img src="/assets/weapons/crowbars/crowbar_plain-icon.png" alt="" /><span><span class="catalog-name" data-weapon-name></span><span class="catalog-state">普通 · 已成熟 · 在手</span></span></button>
+                <p class="catalog-count">1—1 / 1</p>
+              </div>
+              <section class="item-detail" aria-label="当前物件详情">
+                <h3 data-weapon-name></h3>
+                <p class="item-state">在手 · 已成熟</p>
+                <p class="durability-line"><span class="detail-label">耐久</span><span class="durability-value" data-weapon-durability></span></p>
+                <p class="item-description">每次有效命中消耗 1 点耐久。<br />同次挥击只扣一次。</p>
+                <button type="button" class="item-action" disabled>已在手</button>
+              </section>
+            </div>
+            <footer class="prepare-footer">
+              <div class="footer-left"><button type="button" id="back-to-pollution" class="secondary-action"><span class="key">Esc</span>返回选择</button></div>
+              <div class="departure-group"><p data-selected-grade></p><button type="button" class="primary-action departure-action" id="depart-preview" aria-disabled="true"><span class="key">Shift+Enter</span><span class="action-name">踏入裂隙</span></button></div>
+            </footer>
+          </section>
+        </div>
+        <p id="load-error" role="alert" hidden></p>
+      </section>
+      </div>
+      <footer class="sample-caption">
+        <p id="sample-status" role="status">静态构图与排字样例。点击等级或用 ↑ ↓ 对比，Enter 查看行装承接。</p>
+        <p>低语固定显示供审稿 · 无声音 · 不读取存档 · 不执行装配或出发</p>
+      </footer>
+    </main>
+    <script type="module" src="./sample.ts"></script>
+  </body>
+</html>
