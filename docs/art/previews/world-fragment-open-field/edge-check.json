@@ -1,0 +1,780 @@
+{
+  "scope": "Independent authored-silhouette corner-treatment diagnostics, not production gameplay or aesthetic acceptance.",
+  "source": {
+    "geometrySha256": "428c14958eb57dfefc001f42c3b414256e30646fca3b5b5b14770f0347ac1183",
+    "baselinePngSha256": "336f2c982f65dbcbeac9789abefd3effd408c04007284ead3eb0b387c938226c",
+    "treatmentSha256": "33e36f51b5dbb3054141a2fd6608bef2a4b1c3ae9b45a90c2a37a431088df55e",
+    "authoringFrame": [
+      1152,
+      896
+    ],
+    "worldUnitsPerRasterPixel": 2
+  },
+  "methods": {
+    "raster": "Only exactly white pixels count as ground; antialiased pixels conservatively count as void; all components use four-neighbor adjacency.",
+    "body": "20 world-pixel square body, checked by a full 11-pixel square window; conservative quantization margin included.",
+    "holes": "Non-frame-connected black components; same count AND one-to-one nonempty pixel-overlap correspondence with baseline required.",
+    "boundaryDistance": "Euclidean distance between raster-pixel centers adjacent to a ground/void transition, expressed in world pixels. Raster cell extent adds up to a cell diagonal of uncertainty to a geometric-boundary interpretation.",
+    "straightRuns": "Contiguous horizontal/vertical raster boundary-edge lengths; thresholds are diagnostics, not aesthetic gates.",
+    "determinism": "Generate each published seed twice on cloned source geometry, compare the entire returned JSON, require source-input immutability, and compare published PNG against an independent SVG render of the returned evenodd contour path."
+  },
+  "baseline": {
+    "topology": {
+      "groundPixels": 447084,
+      "landComponentCount": 1,
+      "landComponents": [
+        {
+          "id": 1,
+          "areaPixels": 447084,
+          "touchesFrame": false,
+          "boundsAuthoring": [
+            65,
+            60,
+            1089,
+            829
+          ]
+        }
+      ],
+      "enclosedHoleCount": 10,
+      "bodyCenterPixels": 410414,
+      "bodyComponentCount": 1,
+      "bodyMainFraction": 1,
+      "bodyComponents": [
+        {
+          "id": 1,
+          "areaPixels": 410414,
+          "touchesFrame": false,
+          "boundsAuthoring": [
+            70,
+            65,
+            1084,
+            824
+          ]
+        }
+      ]
+    },
+    "straightBoundaryRuns": {
+      "totalBoundaryLengthWorld": 14320,
+      "runCount": 96,
+      "longestWorld": 600,
+      "thresholds": [
+        {
+          "minimumWorld": 64,
+          "count": 75,
+          "lengthWorld": 13290,
+          "fractionOfRasterBoundaryLength": 0.92807263
+        },
+        {
+          "minimumWorld": 128,
+          "count": 47,
+          "lengthWorld": 10610,
+          "fractionOfRasterBoundaryLength": 0.74092179
+        },
+        {
+          "minimumWorld": 256,
+          "count": 13,
+          "lengthWorld": 4760,
+          "fractionOfRasterBoundaryLength": 0.33240223
+        }
+      ]
+    }
+  },
+  "variants": [
+    {
+      "seed": 20261011,
+      "file": "polished.png",
+      "pngSha256": "020e29399fc53395b09989b67545cc150fb24ff4faba3d88daed39ef656265f4",
+      "topology": {
+        "groundPixels": 446246,
+        "landComponentCount": 1,
+        "landComponents": [
+          {
+            "id": 1,
+            "areaPixels": 446246,
+            "touchesFrame": false,
+            "boundsAuthoring": [
+              65,
+              60,
+              1089,
+              829
+            ]
+          }
+        ],
+        "enclosedHoleCount": 10,
+        "bodyCenterPixels": 409273,
+        "bodyComponentCount": 1,
+        "bodyMainFraction": 1,
+        "bodyComponents": [
+          {
+            "id": 1,
+            "areaPixels": 409273,
+            "touchesFrame": false,
+            "boundsAuthoring": [
+              70,
+              65,
+              1084,
+              824
+            ]
+          }
+        ]
+      },
+      "determinism": {
+        "repeatedGenerationEqual": true,
+        "sourceInputUnchanged": true,
+        "generatedPathSha256": "30c81f45392df00af9fbbab0ee72612ccfd98117edad82a17f71e84599642955",
+        "expectedRasterMismatchPixels": 0
+      },
+      "originalHoleMapping": {
+        "oneToOne": true,
+        "pairs": [
+          {
+            "originalHoleId": 9,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 9,
+                "nextHoleId": 9,
+                "overlapPixels": 14012,
+                "originalPixels": 14250,
+                "nextPixels": 14064
+              }
+            ]
+          },
+          {
+            "originalHoleId": 2,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 2,
+                "nextHoleId": 2,
+                "overlapPixels": 13673,
+                "originalPixels": 13875,
+                "nextPixels": 13972
+              }
+            ]
+          },
+          {
+            "originalHoleId": 10,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 10,
+                "nextHoleId": 10,
+                "overlapPixels": 9896,
+                "originalPixels": 10500,
+                "nextPixels": 9985
+              }
+            ]
+          },
+          {
+            "originalHoleId": 5,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 5,
+                "nextHoleId": 5,
+                "overlapPixels": 9611,
+                "originalPixels": 9900,
+                "nextPixels": 9707
+              }
+            ]
+          },
+          {
+            "originalHoleId": 7,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 7,
+                "nextHoleId": 7,
+                "overlapPixels": 5519,
+                "originalPixels": 5650,
+                "nextPixels": 5646
+              }
+            ]
+          },
+          {
+            "originalHoleId": 4,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 4,
+                "nextHoleId": 4,
+                "overlapPixels": 4714,
+                "originalPixels": 4775,
+                "nextPixels": 4746
+              }
+            ]
+          },
+          {
+            "originalHoleId": 8,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 8,
+                "nextHoleId": 8,
+                "overlapPixels": 1865,
+                "originalPixels": 2000,
+                "nextPixels": 1865
+              }
+            ]
+          },
+          {
+            "originalHoleId": 11,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 11,
+                "nextHoleId": 11,
+                "overlapPixels": 1551,
+                "originalPixels": 1600,
+                "nextPixels": 1551
+              }
+            ]
+          },
+          {
+            "originalHoleId": 6,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 6,
+                "nextHoleId": 6,
+                "overlapPixels": 1000,
+                "originalPixels": 1000,
+                "nextPixels": 1000
+              }
+            ]
+          },
+          {
+            "originalHoleId": 3,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 3,
+                "nextHoleId": 3,
+                "overlapPixels": 595,
+                "originalPixels": 616,
+                "nextPixels": 595
+              }
+            ]
+          }
+        ]
+      },
+      "changedArea": {
+        "addedPixels": 3032,
+        "removedPixels": 3870,
+        "totalPixels": 6902,
+        "fractionOfOriginalGround": 0.01543781,
+        "areaWorldSquared": 27608
+      },
+      "changedPixelsDistanceToOriginalBoundary": {
+        "samplePixels": 6902,
+        "p50World": 4,
+        "p95World": 28,
+        "maxWorld": 52
+      },
+      "polishedBoundaryDistanceToOriginal": {
+        "samplePixels": 13166,
+        "p50World": 0,
+        "p95World": 10,
+        "maxWorld": 54
+      },
+      "originalBoundaryDistanceToPolished": {
+        "samplePixels": 14224,
+        "p50World": 0,
+        "p95World": 15.2315,
+        "maxWorld": 74.4043
+      },
+      "straightBoundaryRuns": {
+        "totalBoundaryLengthWorld": 14440,
+        "runCount": 1274,
+        "longestWorld": 596,
+        "thresholds": [
+          {
+            "minimumWorld": 64,
+            "count": 66,
+            "lengthWorld": 10022,
+            "fractionOfRasterBoundaryLength": 0.69404432
+          },
+          {
+            "minimumWorld": 128,
+            "count": 30,
+            "lengthWorld": 6614,
+            "fractionOfRasterBoundaryLength": 0.45803324
+          },
+          {
+            "minimumWorld": 256,
+            "count": 6,
+            "lengthWorld": 2302,
+            "fractionOfRasterBoundaryLength": 0.15941828
+          }
+        ]
+      }
+    },
+    {
+      "seed": 20261027,
+      "file": "polished-20261027.png",
+      "pngSha256": "502dd3c9d19484f2195a4e23a49a7fefd10b80749399fd2b95a156db62bcc65c",
+      "topology": {
+        "groundPixels": 448137,
+        "landComponentCount": 1,
+        "landComponents": [
+          {
+            "id": 1,
+            "areaPixels": 448137,
+            "touchesFrame": false,
+            "boundsAuthoring": [
+              65,
+              60,
+              1089,
+              829
+            ]
+          }
+        ],
+        "enclosedHoleCount": 10,
+        "bodyCenterPixels": 411097,
+        "bodyComponentCount": 1,
+        "bodyMainFraction": 1,
+        "bodyComponents": [
+          {
+            "id": 1,
+            "areaPixels": 411097,
+            "touchesFrame": false,
+            "boundsAuthoring": [
+              70,
+              65,
+              1084,
+              824
+            ]
+          }
+        ]
+      },
+      "determinism": {
+        "repeatedGenerationEqual": true,
+        "sourceInputUnchanged": true,
+        "generatedPathSha256": "0093e3521c7ab0563b66b9323ecff5a0ac4de77b129a1cd436ade6ca3c9327ed",
+        "expectedRasterMismatchPixels": 0
+      },
+      "originalHoleMapping": {
+        "oneToOne": true,
+        "pairs": [
+          {
+            "originalHoleId": 9,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 9,
+                "nextHoleId": 9,
+                "overlapPixels": 13545,
+                "originalPixels": 14250,
+                "nextPixels": 13669
+              }
+            ]
+          },
+          {
+            "originalHoleId": 2,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 2,
+                "nextHoleId": 2,
+                "overlapPixels": 13588,
+                "originalPixels": 13875,
+                "nextPixels": 13875
+              }
+            ]
+          },
+          {
+            "originalHoleId": 10,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 10,
+                "nextHoleId": 10,
+                "overlapPixels": 9990,
+                "originalPixels": 10500,
+                "nextPixels": 10045
+              }
+            ]
+          },
+          {
+            "originalHoleId": 5,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 5,
+                "nextHoleId": 5,
+                "overlapPixels": 9757,
+                "originalPixels": 9900,
+                "nextPixels": 9757
+              }
+            ]
+          },
+          {
+            "originalHoleId": 7,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 7,
+                "nextHoleId": 7,
+                "overlapPixels": 5537,
+                "originalPixels": 5650,
+                "nextPixels": 5537
+              }
+            ]
+          },
+          {
+            "originalHoleId": 4,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 4,
+                "nextHoleId": 4,
+                "overlapPixels": 4412,
+                "originalPixels": 4775,
+                "nextPixels": 4412
+              }
+            ]
+          },
+          {
+            "originalHoleId": 8,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 8,
+                "nextHoleId": 8,
+                "overlapPixels": 1928,
+                "originalPixels": 2000,
+                "nextPixels": 1928
+              }
+            ]
+          },
+          {
+            "originalHoleId": 11,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 11,
+                "nextHoleId": 11,
+                "overlapPixels": 1519,
+                "originalPixels": 1600,
+                "nextPixels": 1519
+              }
+            ]
+          },
+          {
+            "originalHoleId": 6,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 6,
+                "nextHoleId": 6,
+                "overlapPixels": 972,
+                "originalPixels": 1000,
+                "nextPixels": 972
+              }
+            ]
+          },
+          {
+            "originalHoleId": 3,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 3,
+                "nextHoleId": 3,
+                "overlapPixels": 604,
+                "originalPixels": 616,
+                "nextPixels": 604
+              }
+            ]
+          }
+        ]
+      },
+      "changedArea": {
+        "addedPixels": 3995,
+        "removedPixels": 2942,
+        "totalPixels": 6937,
+        "fractionOfOriginalGround": 0.0155161,
+        "areaWorldSquared": 27748
+      },
+      "changedPixelsDistanceToOriginalBoundary": {
+        "samplePixels": 6937,
+        "p50World": 4,
+        "p95World": 18,
+        "maxWorld": 34
+      },
+      "polishedBoundaryDistanceToOriginal": {
+        "samplePixels": 13088,
+        "p50World": 0,
+        "p95World": 10,
+        "maxWorld": 36
+      },
+      "originalBoundaryDistanceToPolished": {
+        "samplePixels": 14224,
+        "p50World": 0,
+        "p95World": 16.1245,
+        "maxWorld": 49.679
+      },
+      "straightBoundaryRuns": {
+        "totalBoundaryLengthWorld": 14468,
+        "runCount": 1380,
+        "longestWorld": 550,
+        "thresholds": [
+          {
+            "minimumWorld": 64,
+            "count": 68,
+            "lengthWorld": 10052,
+            "fractionOfRasterBoundaryLength": 0.69477468
+          },
+          {
+            "minimumWorld": 128,
+            "count": 32,
+            "lengthWorld": 6804,
+            "fractionOfRasterBoundaryLength": 0.47027924
+          },
+          {
+            "minimumWorld": 256,
+            "count": 7,
+            "lengthWorld": 2702,
+            "fractionOfRasterBoundaryLength": 0.18675698
+          }
+        ]
+      }
+    },
+    {
+      "seed": 20261109,
+      "file": "polished-20261109.png",
+      "pngSha256": "46bbc9ccfb0f61bbcce97f14ee3c6448e5422db40e3ec99a025acea67665ccbb",
+      "topology": {
+        "groundPixels": 445354,
+        "landComponentCount": 1,
+        "landComponents": [
+          {
+            "id": 1,
+            "areaPixels": 445354,
+            "touchesFrame": false,
+            "boundsAuthoring": [
+              65,
+              60,
+              1089,
+              829
+            ]
+          }
+        ],
+        "enclosedHoleCount": 10,
+        "bodyCenterPixels": 408322,
+        "bodyComponentCount": 1,
+        "bodyMainFraction": 1,
+        "bodyComponents": [
+          {
+            "id": 1,
+            "areaPixels": 408322,
+            "touchesFrame": false,
+            "boundsAuthoring": [
+              70,
+              65,
+              1084,
+              824
+            ]
+          }
+        ]
+      },
+      "determinism": {
+        "repeatedGenerationEqual": true,
+        "sourceInputUnchanged": true,
+        "generatedPathSha256": "ae2ac503b0c8b59947273cd3588938f843b291ae7462625c29ed8bf76abdb143",
+        "expectedRasterMismatchPixels": 0
+      },
+      "originalHoleMapping": {
+        "oneToOne": true,
+        "pairs": [
+          {
+            "originalHoleId": 9,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 9,
+                "nextHoleId": 9,
+                "overlapPixels": 14117,
+                "originalPixels": 14250,
+                "nextPixels": 14117
+              }
+            ]
+          },
+          {
+            "originalHoleId": 2,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 2,
+                "nextHoleId": 2,
+                "overlapPixels": 13312,
+                "originalPixels": 13875,
+                "nextPixels": 13312
+              }
+            ]
+          },
+          {
+            "originalHoleId": 10,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 10,
+                "nextHoleId": 10,
+                "overlapPixels": 10350,
+                "originalPixels": 10500,
+                "nextPixels": 10350
+              }
+            ]
+          },
+          {
+            "originalHoleId": 5,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 5,
+                "nextHoleId": 5,
+                "overlapPixels": 9699,
+                "originalPixels": 9900,
+                "nextPixels": 9806
+              }
+            ]
+          },
+          {
+            "originalHoleId": 7,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 7,
+                "nextHoleId": 7,
+                "overlapPixels": 5487,
+                "originalPixels": 5650,
+                "nextPixels": 5517
+              }
+            ]
+          },
+          {
+            "originalHoleId": 4,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 4,
+                "nextHoleId": 4,
+                "overlapPixels": 4676,
+                "originalPixels": 4775,
+                "nextPixels": 4709
+              }
+            ]
+          },
+          {
+            "originalHoleId": 8,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 8,
+                "nextHoleId": 8,
+                "overlapPixels": 1914,
+                "originalPixels": 2000,
+                "nextPixels": 1914
+              }
+            ]
+          },
+          {
+            "originalHoleId": 11,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 11,
+                "nextHoleId": 11,
+                "overlapPixels": 1582,
+                "originalPixels": 1600,
+                "nextPixels": 1582
+              }
+            ]
+          },
+          {
+            "originalHoleId": 6,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 6,
+                "nextHoleId": 6,
+                "overlapPixels": 1000,
+                "originalPixels": 1000,
+                "nextPixels": 1000
+              }
+            ]
+          },
+          {
+            "originalHoleId": 3,
+            "overlappingNextCount": 1,
+            "matches": [
+              {
+                "originalHoleId": 3,
+                "nextHoleId": 3,
+                "overlapPixels": 583,
+                "originalPixels": 616,
+                "nextPixels": 583
+              }
+            ]
+          }
+        ]
+      },
+      "changedArea": {
+        "addedPixels": 2216,
+        "removedPixels": 3946,
+        "totalPixels": 6162,
+        "fractionOfOriginalGround": 0.01378264,
+        "areaWorldSquared": 24648
+      },
+      "changedPixelsDistanceToOriginalBoundary": {
+        "samplePixels": 6162,
+        "p50World": 4,
+        "p95World": 20,
+        "maxWorld": 34
+      },
+      "polishedBoundaryDistanceToOriginal": {
+        "samplePixels": 13298,
+        "p50World": 0,
+        "p95World": 10,
+        "maxWorld": 34
+      },
+      "originalBoundaryDistanceToPolished": {
+        "samplePixels": 14224,
+        "p50World": 0,
+        "p95World": 15.2315,
+        "maxWorld": 48.3735
+      },
+      "straightBoundaryRuns": {
+        "totalBoundaryLengthWorld": 14464,
+        "runCount": 1166,
+        "longestWorld": 540,
+        "thresholds": [
+          {
+            "minimumWorld": 64,
+            "count": 73,
+            "lengthWorld": 10696,
+            "fractionOfRasterBoundaryLength": 0.73949115
+          },
+          {
+            "minimumWorld": 128,
+            "count": 36,
+            "lengthWorld": 7314,
+            "fractionOfRasterBoundaryLength": 0.50566925
+          },
+          {
+            "minimumWorld": 256,
+            "count": 7,
+            "lengthWorld": 2440,
+            "fractionOfRasterBoundaryLength": 0.16869469
+          }
+        ]
+      }
+    }
+  ],
+  "violations": [],
+  "limitations": [
+    "Only three authored corner-treatment seeds are checked. No production generator, CSV, 8 px production grid, movement integration or actual gameplay has been run.",
+    "A connected body-center mask does not validate exit search, light propagation, camera framing, encounter balance or visual quality.",
+    "Preserved hole topology, limited boundary changes and long straight edges do not prove that a map feels open or satisfies the world-fragment aesthetic."
+  ]
+}

@@ -3,9 +3,11 @@
 2026-10-10，用户对 `4459d7c3` 代表空间回复“pass，推广”。绑定 COH-F011/F012/F013/F014，影响F005/F006/F039/F044/F052。2026-10-11历史技术状态：本轮正式r7空间推广曾内部完成，324完整地图、限定浏览器/三档输入旅程、7例重污染运行预算及新增索引资源回收通过；E212按限定范围pass。代表认可不代签108世界人审，I14/P49不提升。
 
 
-## 2026-10-11 地下城读法被否决：世界碎片构型推演（当前，DEC-202）
+## 2026-10-11 世界碎片构型与自由断缘（当前，DEC-204）
 
-用户明确纠正：此轮只要地图剪影以判断外边界+空洞，之前AI概念图是误交，退出现行候选。已重做同尺度黑白三卡：[A斜向截离](../art/previews/world-fragment-silhouettes/a-oblique.png)、[B扇向展开](../art/previews/world-fragment-silhouettes/b-fan.png)、[C偏心回卷](../art/previews/world-fragment-silhouettes/c-curved.png)。[可编辑几何与范围](../art/previews/world-fragment-silhouettes/manifest.json)；独立初核后调整孔径与间距，白地连通/8内孔检查仅为剪影拓扑，不代签实际通行或人审。没有游戏实现变更。
+**当前：DEC-204矩形构型方向获人认可；边角打磨待复看。** 用户指定边界与空洞由矩形拼合，对[当前矩形骨架](../art/previews/world-fragment-open-field/silhouette.png)回复“很好，是这种感觉”。原A/B/C因孔间通路仍主导退出候选，固定八孔的比较方式撤销；错误AI概念图继续退役。
+
+用户追加边角自由打磨：保留矩形大形，局部断缘有不同切入、长短和深浅，不能统一圆角或均匀锯齿。原骨架与打磨可在[预览](../art/previews/world-fragment-open-field/index.html)切换，具体范围见[记录](../art/previews/world-fragment-open-field/README.md)。方向认可不等于打磨、人审搜撤或正式生成器通过；本轮无游戏实现变更。
 
 用户否决f4989438的整体构型，要求在漂泊于无尽时空的世界碎片目标下重新推导。当前游戏仍是下述正向地床候选，整体质量已被否决，不能继续记作只待复看。
 

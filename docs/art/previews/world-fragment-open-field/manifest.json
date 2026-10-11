@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-11",
+  "status": "direction-approved-edge-treatment-awaiting-human-review",
+  "features": [
+    "COH-F007",
+    "COH-F011",
+    "COH-F012",
+    "COH-F013",
+    "COH-F014",
+    "COH-F052"
+  ],
+  "humanDecision": {
+    "direction": "用户要求地面边界及空洞均用矩形拼合，看到本目录silhouette.png后回复“很好，是这种感觉”。",
+    "followUp": "用户明确这只是大方向；边角需适当打磨，不能固定圆角，要很大的动态感、随机性、自由度。",
+    "scope": "认可矩形构型方向；不代签新边角样例、生产接入、自然搜撤或全库。"
+  },
+  "authoring": {
+    "source": "geometry.json",
+    "operation": "union(landRects) minus union(voidRects)",
+    "worldFrame": [
+      2304,
+      1792
+    ],
+    "authoringFrame": [
+      1152,
+      896
+    ],
+    "worldScale": 2,
+    "primitiveCountIsQuota": false,
+    "silhouette": "silhouette.png"
+  },
+  "edgeTreatment": {
+    "source": "edge-treatment.mjs",
+    "render": "edge-render.mjs",
+    "seeds": [
+      20261011,
+      20261027,
+      20261109
+    ],
+    "images": [
+      "polished.png",
+      "polished-20261027.png",
+      "polished-20261109.png"
+    ],
+    "method": "作用于矩形布尔结果的真实轮廓，保留部分原角/长直岸，按局部尺度和种子组合非等距斜切、多段崩角、少量断岸。小孔保留不同数量原角，避免统一八边形。",
+    "dynamicMeaning": "形态节奏与可复现种子差异；未新增随时间移动的地形机制。"
+  },
+  "preview": {
+    "page": "index.html",
+    "editableUI": [
+      "preview.template.html",
+      "preview.mjs"
+    ],
+    "build": "build-preview.mjs",
+    "fragment": "preview.fragment.html",
+    "controls": [
+      "矩形骨架对照",
+      "换一组打磨（三份代表样例）",
+      "可选20px身体与224px转身几何观察参照"
+    ],
+    "browserEvidence": "实际IAB打开；三组打磨1→2→3→1、骨架对照、身体开关和裂带观察点均操作核实，并查看实际截图。非游戏试玩。"
+  },
+  "validation": {
+    "base": "check.json",
+    "edges": "edge-check.json",
+    "scope": "纯剪影几何、保守像素身体净空、三个seed确定性/一对一空洞保留与渲染一致性。非生产碰撞/LOS/自然探索或全种子质量。"
+  },
+  "artReview": "独立art看图确认宽地保持、形状未整体退回矩形；局部东端仍有附接房间风险。打磨初稿小孔趋同八边形已调整，复看可供人比较，新效果待人审。",
+  "previousCandidates": "旧A/B/C因孔间通路主导退出候选；此前AI概念图是错误交付对象。",
+  "productionChange": false,
+  "specDecision": "本轮为独立构型/边角研究，无当前游戏规则变化，不改正式spec或CSV。",
+  "remaining": "正式生成器、现有材质/VOID同源接入、随机出撤点/部署、正常视野与自然搜撤仍待；I14 13/14、P49及另107世界开放。",
+  "stateCheck": "state-check.json：结构错误0、未登记文件0；既有来源漂移与新登记未基线提醒保留，未全局刷新基线。"
+}

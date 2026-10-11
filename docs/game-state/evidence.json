@@ -8796,5 +8796,86 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E226",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-11",
+    "revision": "98cb4463+rectilinear-study",
+    "scope": "矩形并合/挖空的开放碎片剪影；原白地单一连通，20px身体保守像素侵蚀后中心单一连通，10内部空洞；按实际224px提供可选尺度与几何遮挡参照。",
+    "limitations": "手工作者研究，孔数不是定额；非生产地图、正式身体/LOS、自然探索或美术验收。",
+    "sources": [
+      {
+        "path": "docs/art/previews/world-fragment-open-field/geometry.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/silhouette.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/check.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E227",
+    "kind": "human",
+    "result": "pass",
+    "date": "2026-10-11",
+    "revision": "98cb4463+rectilinear-study",
+    "scope": "用户在看到矩形构型样例后回复“很好，是这种感觉”；随后明确这是大方向，并要求边角不能固定圆角，需适当自由打磨。",
+    "limitations": "仅矩形拼合构型方向获认可。新边角样例、游戏接入、实际搜撤与108世界均不在此通过范围。",
+    "sources": [
+      {
+        "path": "docs/art/previews/world-fragment-open-field/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/silhouette.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      }
+    ]
+  },
+  {
+    "id": "COH-E228",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-11",
+    "revision": "98cb4463+free-edge-study",
+    "scope": "同一矩形骨架派生三份可复现断缘；独立art复看并修正小孔八边形趋同。三seed地面与保守20px身体中心单一连通，10孔一对一保持，源不变、确定性和独立重渲染一致。预览支持骨架对照、换样例与观察尺度。",
+    "limitations": "限定3seed纯剪影几何和实际预览显示；打磨未获人审，未测生产碰撞/FOV、正常材质或自然搜撤。",
+    "sources": [
+      {
+        "path": "docs/art/previews/world-fragment-open-field/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/edge-treatment.mjs",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/edge-samples.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/edge-check.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/polished.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/index.html",
+        "role": "doc"
+      }
+    ]
   }
 ]
