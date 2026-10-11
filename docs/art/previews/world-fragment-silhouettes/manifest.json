@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-11",
+  "status": "awaiting-human-selection",
+  "features": [
+    "COH-F007",
+    "COH-F011",
+    "COH-F012",
+    "COH-F013",
+    "COH-F014",
+    "COH-F052"
+  ],
+  "scope": "用户本轮只确认地图构型：完整外边界与内部空洞。白色地块，黑色缺地；无材质、实体、角色、远景或出生撤离符号。",
+  "method": "同一1000×800坐标框内直接作者多边形，SVG为可编辑源，sharp同源生成PNG；不是AI概念图或生产生成器输出。",
+  "shared": "同尺度、同配色、每图8个内孔作为本次受控比较量；不是长期设计定额。白地单一连通只证明像素拓扑，不证明身体可通或视野探索成立。",
+  "cards": [
+    {
+      "id": "A",
+      "name": "斜向截离",
+      "image": "a-oblique.png",
+      "source": "a-oblique.svg"
+    },
+    {
+      "id": "B",
+      "name": "扇向展开",
+      "image": "b-fan.png",
+      "source": "b-fan.svg"
+    },
+    {
+      "id": "C",
+      "name": "偏心回卷",
+      "image": "c-curved.png",
+      "source": "c-curved.svg"
+    }
+  ],
+  "artReview": "独立美术看初稿指出A下半孔间距近、B一伸出部一孔过齐、C沿弧双瓣孔过似。已在同一轮调整孔径、间距及偏置，根代理复看；仍待人选，不代签构型通过。",
+  "validation": "check.json仅检查白地连通和内孔数量；无游戏代码、CSV、正式spec改动。",
+  "rejectedDelivery": "此前world-fragment-cards是误交的AI美术概念图，用户纠正本轮只要边界+空洞剪影，不再作为现行候选。"
+}

@@ -8715,5 +8715,86 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E223",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-11",
+    "revision": "afe55410+fragment-cards-preview",
+    "scope": "按用户要求生成三张世界碎片构型AI效果图。独立美术实际看图指出B窄接合，局部编辑为宽阔同层地带；提示词与残留歧义已记录。",
+    "limitations": "仅概念图片，不是正式游戏截图或生成输出；没有运行、通行、LOS、动态或人审证据。三卡待人选择，游戏及其他世界状态未变。 用户随后纠正只要边界+空洞剪影，此组交付对象错误，不再作为现行候选；见E224。",
+    "sources": [
+      {
+        "path": "docs/art/previews/world-fragment-cards/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-cards/a-oblique-strata.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-cards/b-open-fan.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-cards/c-curved-strata.png",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E224",
+    "kind": "human",
+    "result": "fail",
+    "date": "2026-10-11",
+    "revision": "afe55410+fragment-cards-preview",
+    "scope": "用户纠正：要地图剪影确认构型（边界+空洞区域），不是AI美术概念图。",
+    "limitations": "否决交付对象，不据此推断用户选定某种地图构型或对三张概念图作出美术评分。",
+    "sources": [
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      },
+      {
+        "path": "docs/tasks/rift-spatial-rollout.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E225",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-11",
+    "revision": "afe55410+silhouette-worktree",
+    "scope": "三张同尺度黑白正俯视剪影：A斜向截离、B扇向展开、C偏心回卷；只画边界与空间空洞。独立初核后调整孔径/间距；白地均单一连通，各8内孔。",
+    "limitations": "手工作者构型候选，非正式生成器输出。像素连通/内孔数不证明角色身体可通、视野表现、自然搜索、人审或全库通过。",
+    "sources": [
+      {
+        "path": "docs/art/previews/world-fragment-silhouettes/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-silhouettes/geometry.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-silhouettes/check.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-silhouettes/a-oblique.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-silhouettes/b-fan.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-silhouettes/c-curved.png",
+        "role": "doc"
+      }
+    ]
   }
 ]

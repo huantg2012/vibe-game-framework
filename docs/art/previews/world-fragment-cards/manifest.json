@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-11",
+  "status": "superseded-wrong-deliverable",
+  "features": [
+    "COH-F007",
+    "COH-F011",
+    "COH-F012",
+    "COH-F013",
+    "COH-F014",
+    "COH-F052"
+  ],
+  "method": "Built-in image_gen; three AI concept previews. B revised once after independent art review identified a narrow join.",
+  "scope": "用户纠正交付对象：只要地图剪影（边界+空洞），不是本目录AI概念图。本目录只保存误交记录，现行候选在../world-fragment-silhouettes/。",
+  "shared": "余烬脊铁锈红层床、相近俯瞰镜头与角色尺度；三卡比较原生层理组织及截断关系。画面允许非玩法远层残片，不引入新移动能力。",
+  "sourceDesign": "docs/reviews/2026-10-11-world-fragment-conception.md",
+  "cards": [
+    {
+      "id": "A",
+      "title": "斜切长层床",
+      "file": "a-oblique-strata.png",
+      "description": "长向层脊被斜向截断，宽腹地保留横向选择。",
+      "limitation": "长脊顶面有可走道路歧义，正式转译需明确为不可走实体。"
+    },
+    {
+      "id": "B",
+      "title": "张开的扇床",
+      "file": "b-open-fan.png",
+      "description": "偏置根部向三片不等面积扇面展开，中央同层宽面连续。",
+      "limitation": "初稿窄接合被退回，当前修正版只核视觉接合；真实路线与空洞信息价值未验证。"
+    },
+    {
+      "id": "C",
+      "title": "回卷弧层床",
+      "file": "c-curved-strata.png",
+      "description": "偏心弧向原结构大幅剥失，留下厚腹与敞开的黑域。",
+      "limitation": "左上层带有阶梯/环道联想，正式转译需明确卷层不是额外通行层。"
+    }
+  ],
+  "references": [
+    "Hyper Light Drifter：局部光色层次，不借其配色或角色",
+    "Rain World：环境尺度与冷漠感，不借侧视玩法"
+  ],
+  "mixable": [
+    "外部远层参照的克制程度",
+    "断面描绘强弱"
+  ],
+  "notMixable": [
+    "三卡的主体地形构成，不能直接把三种轮廓拼接"
+  ],
+  "prompts": {
+    "common": "Use case: stylized-concept. Asset type: high-end 2D game environment concept render for a visual direction comparison, NOT a diagram.\nCreate ONE landscape image, approximately 1536 by 1024. A world fragment severed from an immense alien reality, drifting unsupported in endless dark spacetime. Near top-down orthographic game camera at about 78 degrees elevation, no horizon; view most of the whole fragment with generous negative space beyond its broken coastline. Tiny solitary hooded scavenger with backpack and a small warm shoulder lamp, around 20 pixels tall, on the lower central open ground; use this exact scale in all variants.\nProfessional art-directed dark atmospheric 2D game painting with crisp finely clustered pixel-art edges and convincing materials, not photorealism, not vector, not a graybox. The SAME material in all variants: compacted iron-rust sediment, dark maroon-black granular beds, subdued brick-red ridges, fresh muted red-ochre cross sections, charcoal ash. Red is solid matte material, NOT fire or lava. Deep but readable dim cool ambient light, tiny localized unhealthy gray-green contamination embedded in a few material seams; warm lamp belongs only to the person. Rich mid-scale mass and coherent layered strata, quiet traversable surfaces between structural concentrations, avoid uniformly noisy texture.\nOne main continuous broad traversable land surface at a single navigation elevation, the vast majority reads as open ground wide enough for freely choosing many walking lines. Broken native ridges emerge FROM the same strata, several are severed at a coastline or void. Modest density of substantial solids, small salvage remnants made of the same material. Several unevenly distributed irregular pure-black spatial voids of different sizes interrupt actual matter; these are bottomless absent space with sharp material termination, not water, not dark ground. Some connect to the outside, others internal; no uniform punched holes. Fractures cross strata AND ridges rather than weaving politely around props.\nThe broken perimeter is substantially asymmetric, retaining irregular directional masses and missing sectors. Strong original geological order interrupted by one or two dominant destructive events, not random jagged noise. Visible shallow layered cross-sections at near edges establish severed material thickness without becoming a high encircling wall. Extremely subtle disconnected nonplayable distant remnants in the dark outside give scale and unsupported drift; no starfield, nebula wallpaper, ground underneath, enclosing cave, pit walls or dome.\nNo HUD, titles, captions, text, numbers, map symbols, arrows, pathways painted on ground, extraction portal, buildings, fantasy castle, vegetation, chains, plank bridges, multi-level playable terrain. Avoid rectangular or oval slab with holes, narrow corridors, a dungeon of rooms and doors, disconnected islands linked by bridges, regular puzzle board, perfect crater, complete concentric rings, tall mountainous terrain. This is full-quality concept ART whose spatial composition itself carries the design.",
+    "variants": [
+      {
+        "key": "A",
+        "title": "斜切长层床",
+        "specific": "COMPOSITION A — OBLIQUELY SEVERED STRATA: The inherited world had long oblique sediment layers crossing from lower-left toward upper-right. A very broad irregular swathe of land retains that directional flow, with a heavy off-center belly and unequal lateral flanks. A dramatic oblique shear abruptly cuts off the upper-right continuation of THREE differently sized native ridge structures; their cross sections and surface striations line up with the same fracture. A deep irregular bite enters from the left but stops before a very wide remaining belly. Other smaller offset gaps interrupt parts of the layered surface. The lower-left taper is irregular and NOT a corridor. No continuous uniform exterior rim. Let long geological relations continue visually across the internal missing patches, while retaining wide ways around their ends. The silhouette has strong oblique direction but no rectangular long axis or four filled corners. All ridges are unequal, nonparallel enough to feel geological and embedded, not rows of stone walls."
+      },
+      {
+        "key": "B",
+        "title": "张开的扇床",
+        "specific": "COMPOSITION B — TORN SEDIMENT FAN: The inherited world spread outward in a broad asymmetric fan of sweeping strata. A thick wide off-center root on the left opens into THREE broad unequal joined expanses spreading toward upper-right, right and lower-right. The entire root AND mid-belly remain a broad continuous land surface with generous lateral movement. Two unequal deep wedge-shaped missing sectors interrupt the outside fan, one extending inward past and cutting through a substantial embedded ridge; several shorter asymmetrical internal void scars occur off-axis. All fault edges show the same torn layered sediment organization. The fan is broken and non-geometric, NOT a radial flower or hand, NOT three narrow fingers or islands, NOT a hub connected to rooms, no symmetry, no spokes or thin bridges. Strongly different overall massing from an elongated slab; wide sweeping expanses and partially lost perimeter. Local strata gradually diverge, not equal lines engraved onto a flat stage. Most grounds remain wide and freely traversable."
+      },
+      {
+        "key": "C",
+        "title": "回卷弧层床",
+        "specific": "COMPOSITION C — INCOMPLETE CURVING STRATA: The inherited world had slowly curving, returning strata around a center far beyond the upper-left of the image. Only an eccentric thick fragment of those strata remains. A massive wide belly occupies the right-middle and lower-right; a very broad shoulder extends irregularly to the upper-left and another broken flared margin extends to the lower-left. The curved original pattern is seen in several low embedded ridges and material layers, but most of its former outer continuation has been violently lost. A large non-circular black void bite cuts inward from the lower-left, abruptly severing parts of the curved layered relation; irregular interior voids and secondary short fractures are scattered with clear hierarchy, leaving ample broad ground around their ends. This must NOT resemble a narrow crescent, a ring race track, a donut, circular arena, volcano, crater basin or tall mountain. Curvature is slow and asymmetric, a pattern continuing far outside the fragment, NOT closed concentric arcs. The rolled strata at the near edge are broken cross-sections only, never stairs or stacked playable floors."
+      }
+    ],
+    "bRevision": "Edit this exact concept artwork. Keep the camera, matte rusty stratified material, dark unsupported space, fan-shaped overall composition, broad lower player plateau and the same small figure and lighting.\nCorrect ONLY the central land connectivity: the middle-right projecting fan lobe currently looks like a separate island joined by a narrow vertical rock neck. Make the inner half of the black cut directly below this lobe into a broad, clearly flat, continuous sediment surface that joins seamlessly into the lower main plateau. This wide join must be at exactly the SAME walking elevation as the player and the right lobe, span at least 15 player widths front-to-back and read as a broad belly of land, NEVER a bridge, ramp, step, wall, thin shelf or ridge. Remove the upright vertical ridge at the lobe root and replace it with a low broken native outcrop aside from the broad join. Also ensure a broad same-level joining surface toward the upper fan lobe.\nPreserve the outer half of the black wedge opening on the far right as a destructive notch, so this remains a torn sediment fan, not an oval slab. Keep several interior irregular true black voids in other areas, not pinholes; keep negative space open. The coherent strata gently diverge through this now wide central ground. Change only what is needed for this structural correction, retain the polished detailed art quality, do not add text, HUD, arrows or new characters."
+  },
+  "artReview": "独立美术已实际看三张初稿及B最终修正版。A/C层脊或层带存在额外通行联想；B修后中右扇叶通过宽阔连续地面接回主腹，原细颈/侧岛读法明显缓解。仅概念图表现核对，非实际通行或人审通过。"
+}

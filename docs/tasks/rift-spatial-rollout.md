@@ -5,6 +5,8 @@
 
 ## 2026-10-11 地下城读法被否决：世界碎片构型推演（当前，DEC-202）
 
+用户明确纠正：此轮只要地图剪影以判断外边界+空洞，之前AI概念图是误交，退出现行候选。已重做同尺度黑白三卡：[A斜向截离](../art/previews/world-fragment-silhouettes/a-oblique.png)、[B扇向展开](../art/previews/world-fragment-silhouettes/b-fan.png)、[C偏心回卷](../art/previews/world-fragment-silhouettes/c-curved.png)。[可编辑几何与范围](../art/previews/world-fragment-silhouettes/manifest.json)；独立初核后调整孔径与间距，白地连通/8内孔检查仅为剪影拓扑，不代签实际通行或人审。没有游戏实现变更。
+
 用户否决f4989438的整体构型，要求在漂泊于无尽时空的世界碎片目标下重新推导。当前游戏仍是下述正向地床候选，整体质量已被否决，不能继续记作只待复看。
 
 本轮完成[构型推演与三路知情审查](../reviews/2026-10-11-world-fragment-conception.md)：连续原世界先成立，再让断裂截断它；宽面承载行动，VOID组织信息差，实体与威胁改变接近方式。推荐分别验证正常镜头的残存与漂泊表达、一次有理由的路线选择、完整自然搜撤的两阶段成本。局部撤离征兆和外岸远层参照属于待验证的新表达提案。此轮没有游戏、CSV、正式spec或运行验收变更，不指定新的孔数／实体数定额，不扩产其他107世界；I14仍13/14、P49开放。
