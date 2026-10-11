@@ -1,38 +1,39 @@
 # 世界碎片：矩形骨架与自由断缘
 
-## 当前方向
+## 已认可基准
 
-用户明确要求边界和空洞都用矩形拼合，并在看到本目录矩形剪影后回复“很好，是这种感觉”。认可的是构型大方向：偏置且非整块矩形的开放地面、集中而不均匀的空间缺失。用户随后要求边角适当打磨，不能固定圆角，要有动态感、随机性和自由度。新打磨尚不继承原骨架的人审。
+2026-10-11，用户对 `ada26f43` 展示的构型及断缘回复“效果很不错，这是我想要的”，要求固化方便推广（DEC-205）。批准母版为本目录的矩形骨架与三份种子样例；批准的是空间语言，不是将同一张图复制到所有世界。
 
-`geometry.json` 是手工作者研究，不是生产策划表。地面由矩形并合，空洞由矩形挖除；矩形数量、孔数和本图坐标均不是未来生成器定额。本图不放实体、出生点、撤离点、敌人或奖励；其既有游戏规则未改变。
+白地是矩形并合后被矩形挖除的连续开放地面，VOID集中且不均匀；局部断缘保留长直岸与部分原角，混合不等长斜切、多段崩角和少量岸线缺口。“动态感”是形态节奏，不是地形随时间移动。小孔不统一倒成八边形，全周不加等距噪声。
 
-## 为什么与上一轮不同
+## 唯一实现与使用入口
 
-上一轮 A/B/C 根据孔间余地组织移动，分别仍可读作主路、分叉、环路。固定八孔的比较进一步诱发了均匀布孔；它不是用户对未来地图的要求，三卡已退出候选。
+- **共享算法：** [src/generation/world-study/fragment-shape/index.ts](../../../../src/generation/world-study/fragment-shape/index.ts)。TypeScript纯函数，`rectilinear-fragment-v1` 冻结本次策略。
+- **调用合同：** [地图生成spec](../../../specs/system-map-generation.md#rectangle-fragment-authoring)。输入完整矩形layout和uint32边角seed；输出真正外环/内孔、版本、坐标单位、SVG路径及诊断。v1一作者单位固定为2世界像素，`fragmentContoursToWorld`只转换一次。
+- **作者方法：** [空间设计说明](../../../design-notes/rift-world-space.md#rectangle-fragment-authoring)。先组织宽地、偏置外岸与局部破坏，再处理边角。不能让孔间余地变成房间—走廊骨架。
+- **后续接入：** [推广任务](../../../tasks/rift-spatial-rollout.md)。先冻结旧r7、建立新版本与CSV作者链，再统一地形/身体/LOS/材质和内容部署，代表验证后分批展开。
 
-本图西侧—中央—南部连续宽地先成立，密集破坏偏向东侧；局部仍允许窄肩与绕孔，不让它们概括全图。独立美术指出东侧伸出端仍可能读成附接房间，是后续正常视野和完整搜撤需检查的局部风险。此次用户认可只锁构型方向，不宣称漂泊语境、生产地图或自然探索已经通过。
+`edge-treatment.mjs` 只是兼容预览的薄适配，不再保存一份算法。`geometry.json` 是手工作者研究夹具，不是生产策划表；矩形数量、孔数和本图坐标不是生成定额。算法不自动设计每张地图的宏观构型，也不把坏输入修补成默认矩形。
 
-## 边角样例
+## 不漂移的回归
 
-边角处理作用于矩形布尔运算之后的实际边界，不能对每个原始矩形分别加圆角产生接缝。`edge-treatment.mjs` 按可复现种子派生局部处理；`edge-render.mjs` 输出样例。大形与孔位由原骨架确定，局部切口长短、深浅和偏向变化，保留部分原角与直岸。动态感在这里指形态节奏，不是地形持续蠕动。
-
-预览中“矩形骨架”可对照已认可的原图，“换一组打磨”切换三份代表样例；可选身体/观察尺度只是几何示意。蓝色为转身扫视的224px几何范围，不是生产方向视域、渐变、混乱修正或真正试玩。
-
-## 证据与再生成
-
-- `check.json`：原矩形剪影、20px身体的保守像素侵蚀、净空诊断及跨孔短线。
-- `edge-check.json`：边角样例独立检查；具体范围以该文件为准。
-- `manifest.json`：方向认可、新样例范围和状态。
-- `index.html`：浏览器预览；`preview.fragment.html` 为派生内联版本。
+[accepted-v1.json](../../../../tools/fragment-shape/accepted-v1.json) 绑定 `ada26f43` 已认可输入、三份轮廓/统计及PNG/SVG的SHA256。检查只读这些基准，绝不先重新生成expected再宣布通过。
 
 ```sh
-node docs/art/previews/world-fragment-open-field/render.mjs
-node docs/art/previews/world-fragment-open-field/check.mjs
-node docs/art/previews/world-fragment-open-field/edge-render.mjs
-node docs/art/previews/world-fragment-open-field/edge-check.mjs
+npm run check:fragment-shape
+npm run typecheck
+```
+
+`tools/fragment-shape/check.mjs` 检查母版精确复现、预览适配同源、输入不变性、单位转换、非母版布局及错误拒绝，传入报告路径可写入结果；本次归 `consolidation-check.json`。不同矩形输入不能仅靠通过算法就算人审通过；纯矢量检查也不等于20px身体/8px支撑或真实LOS准入。
+
+## 预览与样例维护
+
+预览提供“矩形骨架”对照及三组打磨切换；可选20px身体、224px转身几何范围不是真实方向FOV或游戏试玩。`preview.template.html` / `preview.mjs` 为可编辑UI，`build-preview.mjs` 打包共享源，`preview.fragment.html` / `index.html` 为派生页面。
+
+```sh
 node docs/art/previews/world-fragment-open-field/build-preview.mjs
 ```
 
-独立 HTML 包装使用 visualize skill 的 `scripts/render.py`，输入本目录 `preview.fragment.html`，输出 `index.html`，覆盖时加 `--force`。当前浏览器入口为 `/docs/art/previews/world-fragment-open-field/`。
+独立HTML使用visualize的 `scripts/render.py` 包装fragment，浏览器入口为 `/docs/art/previews/world-fragment-open-field/`。母版图由 `render.mjs` 和 `node --import tsx .../edge-render.mjs` 产生；它们会覆盖获认可样片，普通回归禁止运行。需要改变v1策略时另立版本与比较母版，不原地更新指纹掩盖变化。
 
-本轮未改游戏实现、CSV或正式spec。相关功能：COH-F007/F011/F012/F013/F014/F052。I14仍13/14、P49和另107世界仍开放。
+原 `check.json` / `edge-check.json` 保存此前矩形/三seed保守像素身体、孔一一对应与独立光栅检查，保留原验证范围。本次没有新增出生/撤离/实体或正式生产接入；正式存档、真实探索及其他107世界仍待推广，I14保持13/14、P49开放。功能绑定COH-F007/F011/F012/F013/F014/F052。

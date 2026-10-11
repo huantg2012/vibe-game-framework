@@ -1529,3 +1529,12 @@ DEC-199当前只改余烬脊的作者数据；其余107世界保持基线。`che
 `r100-master-world.ts` 在新路径直接从外环生成8px matter，再减内部VOID，粗32px材料采样从matter派生；身体、视线、小地图和撤离都消费同一结果。断沿上下文使用外环与孔边，`systems/r100-world/surface-fields.ts` 同样接纳外部缺地，不新增另一个渲染蒙版。原材质、实例role及ground-edge唯一所有者规则不变；无新生产模块、UI或玩法收益。
 
 当前轮廓宏形与生产实图、冻结兼容、技术边界见 `docs/tasks/rift-spatial-rollout.md` 与 `docs/qa/rift-spatial-positive-ground-design.md`。算法能表示非矩形不等于每个作者输入已通过形状质量；独立宏形评审和用户终审分别记录。
+
+
+### 矩形碎片共享作者能力（2026-10-11，DEC-205，未接生产）
+
+`generation/world-study/fragment-shape/index.ts` 暴露 `generateRectilinearFragment` 与 `fragmentContoursToWorld`；`types.ts`定义版本/单位/预算，`rectilinear-fragment.ts`完成矩形集合运算与种子断缘，`validation.ts`拒绝不合法输入及拓扑。模块为纯函数，不读取CSV、DOM、存档或当前游戏世界。v1固定作者单位×2到世界像素；消费者通过唯一转换函数跨坐标边界。
+
+独立预览 `docs/art/previews/world-fragment-open-field/edge-treatment.mjs` 适配旧展示数据并调用同源实现，浏览器经esbuild打包；Node检查使用 `--import tsx`。`tools/fragment-shape/accepted-v1.json`锁定ada26f43获认可母版，`check.mjs`只读比较，不自刷基准。冻结策略不代表自动完成宏观关卡编排。
+
+当前r7生成、worker、保存恢复均未导入新模块。未来接入先冻结r7 live执行器/校验器，再用新修订适配轮廓预算及CSV来源；认可样例80点外环不能削成旧32点。最终几何必须沿现有MasterWorld同源matter/材质/身体/LOS与部署链流转，具体职责和验收见地图spec与 `docs/tasks/rift-spatial-rollout.md`。

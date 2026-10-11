@@ -8877,5 +8877,59 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E229",
+    "kind": "human",
+    "result": "pass",
+    "date": "2026-10-11",
+    "revision": "ada26f43",
+    "scope": "用户对矩形骨架与自由断缘展示效果回复“效果很不错，这是我想要的”，要求固化算法或机制方便推广（DEC-205）。",
+    "limitations": "仅展示的空间构型和边缘语言获认可；不是指定唯一seed作全库模板，不覆盖正式接入、自然搜撤或108世界。",
+    "sources": [
+      {
+        "path": "docs/art/previews/world-fragment-open-field/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/polished.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      }
+    ]
+  },
+  {
+    "id": "COH-E230",
+    "kind": "source",
+    "result": "pass",
+    "date": "2026-10-11",
+    "revision": "ada26f43+fragment-consolidation",
+    "scope": "rectilinear-fragment-v1纯TS共享库和薄预览适配完成。独立从Git原实现复核，3认可seed完整study/轮廓/path与RGBA逐像素相同；23拒绝案例，0/1/2孔布局各4seed，输入不变、确定性、单位转换通过。稀疏frame漏洞经独立发现后修复；类型检查及实际浏览器三样例/骨架切换通过，运行error日志空。",
+    "limitations": "未接入生产生成/CSV/旧存档；纯矢量与预览验证不等于8px网格、20px身体、真实LOS、完整搜撤或全种子品质。",
+    "sources": [
+      {
+        "path": "docs/art/previews/world-fragment-open-field/consolidation-check.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/consolidation-review.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/fragment-shape/accepted-v1.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/fragment-shape/check.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/generation/world-study/fragment-shape/index.ts",
+        "role": "code"
+      }
+    ]
   }
 ]

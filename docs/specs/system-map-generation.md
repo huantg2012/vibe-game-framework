@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: director / code（DEC-201：正向地床轮廓）
+last-modified-by: design / code（矩形拼合与自由断缘作者机制固化）
 last-modified-date: 2026-10-11
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
 interface-changed: true
@@ -15,6 +15,8 @@ interfaces-with:
   - system-contamination-lexicon   # 交出墙缘折线 / 占漆地板格（贪婪薪柴路径） / 走廊包围盒 + 一份 contaminationDraw；菌落与场不得加墙
   - system-growth-tide             # 输出污染物节点；工具 abyss 不得再直读固定图薪柴坐标
 exposes:
+  - generateRectilinearFragment(request) → RectilinearFragmentResult（world-study作者能力，未接生产生成/恢复）
+  - fragmentContoursToWorld(result)（同一作者结果到世界坐标的转换，未改变现行GeneratedRiftLayout）
   - prepareProceduralDeparture({ signal?, pollutionGrade?, worldHistory? }?) → Promise<RiftCheckpoint.identity>（正式新出击，固定一次配方后后台生成）
   - prepareProceduralRecovery(identity, { signal? }?) → Promise<void>（按原身份准备，不重新抽选）
   - withPreparedProceduralRecovery(identity, action)（同步准入作用域，缓存缺失不得同步生成）
@@ -32,7 +34,61 @@ exposes:
 
 # 系统设计：裂隙地图生成
 
-TL;DR：正式新出发冻结修订7的世界、污染档和空间部署策略，生成较大的不规则实体地形；出生与唯一撤离分离，撤离位置需要探索发现。旧在途按原修订恢复，地图与实体、迷雾、内容和保存身份同源。
+TL;DR：正式新出发仍使用修订7，旧在途按原修订恢复；出生与唯一撤离分离，撤离需要探索发现。已认可的矩形拼合与自由断缘现固化为独立作者能力，尚未接入正式地形、内容部署或保存恢复。
+
+<a id="rectangle-fragment-authoring"></a>
+
+## 已认可作者机制：矩形拼合与自由断缘（2026-10-11，尚未生产接入）
+
+用户认可 `ada26f43` 的[矩形骨架及三份断缘样例](../art/previews/world-fragment-open-field/index.html)，并要求固化以便推广。本节定义可复用机制，**不改变下文现行修订7合同**。普通solid仍只阻挡身体和近战；空间空洞仍是真实缺地，同时阻挡身体与视线。已认可的是此样例的构型和边缘语言，未宣告新布局、108世界或自然搜撤通过。作者组织及推广步骤归[设计依据](../design-notes/rift-world-space.md#rectangle-fragment-authoring)。
+
+### 输入、所有权与版本
+
+`src/generation/world-study/fragment-shape/` 的共享入口为 `generateRectilinearFragment`，输入合同如下：
+
+```typescript
+type RequestV1 = {
+  algorithmVersion: 'rectilinear-fragment-v1';
+  layout: {
+    authoringFrame: [width: number, height: number];
+    worldScale: 2;
+    landRects: [x: number, y: number, width: number, height: number][];
+    voidRects: [x: number, y: number, width: number, height: number][];
+  };
+  edgeSeed: number; // uint32：0…4294967295的整数
+}
+```
+
+以上为字段示意，实际类型与预算由同目录 `types.ts` / `validation.ts` 定义。输入矩形使用作者坐标；v1固定一作者单位等于2世界像素。输出的 `contours`、`pathD` 仍是作者坐标，`fragmentContoursToWorld(result)` 统一转换世界坐标，不得消费方各乘一次或遗漏缩放。`contourKinds` 区分外岸与内孔；结果同时携带算法版本、`worldScale`、规范化seed与诊断 `stats`。SVG路径和统计不是可直接出击的地图，也不包含出生、撤离、敌人或奖励。
+
+作者负责矩形编排及内容身份：哪里保留宽地、哪里集中破坏、尺度层次与外岸偏置。算法只编译**给定的layout**并处理其局部边缘，不会自己生成已通过人审的宽面组织或全库构型多样性。预览 `geometry.json` 是获认可研究夹具；正式世界作者数据仍须来自 `data/*.csv` 单向编译，不能将这张图硬编码进运行时再复制到所有世界。
+
+v1冻结局部处理的概率、尺度限制、关联破坏区和样式规则；对外只选明确的布局与seed，没有任意噪声强度、圆角半径或每世界私有权重。改变策略需要显式新版本和母版对照，不以保持旧版本号的方式改变已保存结果。同版本、同完整layout、同seed须精确复现且不修改输入；不承诺编辑layout后其他边角仍局部不变。首版作者能力不提供生产存档保证，后续必须冻结算法版本、布局来源及必要编译产物/执行器，才能加入正式身份。
+
+### 几何处理顺序
+
+1. **先做集合运算：** `union(landRects) − union(voidRects)`。提取实际外岸和内孔，去除矩形重叠产生的内部接缝。伸向外界的void矩形形成外岸缺口，不伪装成跨越外环的内部erosion。禁止逐个矩形倒角后再拼接。
+2. **再作局部自由断缘：** 在真实轮廓上混合保留原角、不等长斜切、多段崩角和少量长岸断缺；用局部关联的受损倾向形成疏密与方向节奏。相邻边长和到其他轮廓的净空共同限制处理范围；小孔保留不同原角分配，避免统一变成八边形按钮。保留足够长直岸及安静段，不全周加细噪，不套统一圆角或固定倒角宽度。
+3. **校验再输出：** 地面保持一个主体，孔与原骨架一一对应；不得因打磨自交、并孔、吞孔、把内孔接通外界或切出独立地块。源布局本来不合法时拒绝，不靠局部处理补桥、填孔或自动取最大块隐去问题。轮廓计数、面积变化、原轴向边保留等只作诊断，不作为“开放世界”审美分数。
+
+本机制不规定矩形数、孔数、实体数或统一空地占比。样例的10孔，以及前轮余烬脊8孔/22实体，均不成为后续新布局定额。“动态感”指形态节奏与seed差异；同一次出击地形保持固定，不引入随时间蠕动、坍塌、跳跃或多层通行。
+
+### 明确失败与验证边界
+
+`FragmentShapeError` 以 `INVALID_INPUT` / `UNSUPPORTED_VERSION` / `BUDGET_EXCEEDED` / `UNSUPPORTED_TOPOLOGY` / `INVALID_OUTPUT` 区分拒绝原因。有限坐标、正尺寸、frame范围及几何预算先验收；未知版本、超预算或几何失败不得静默换seed、退回矩形、补地、删除孔或粗简化轮廓。调用方可修订layout或按已冻结的有界候选策略另试，必须保留失败，不把挑出一份成功图当作全seed通过。
+
+母版回归绑定获认可三seed的来源/输出，检查迁移共享算法后形状不变。其余输入/seed检查覆盖真实并集、确定性、输入不变性、孔关系和几何拒绝；**这不等于20px身体能通过，也不等于生产8px网格与真实LOS已通过**。预览的保守像素身体检查和224px转身几何参照保留各自范围；不能升级为正式移动、迷雾、自然搜索或全库质量证据。
+
+### 后续生产接入必须保持的接口
+
+以下为推广前置，当前未实现：
+
+- 完成轮廓表示、顶点预算和新生成身份的明确版本适配。现行r7外环与erosion的32顶点限制保持；新断缘不得截点、凸包化、统一平滑或强压到旧限制后声称等价，亦不得追改旧局冻结几何。
+- 同一最终外岸/内孔结果派生 `matter`、8px地面支撑、身体/导航、VOID观察遮挡、材料断沿与受光；显示不得独立多切一层假黑孔。solid几何另叠完整身体/近战阻挡，不能因此加入视线遮挡；relief仍可走。
+- **最终地形和实体完成后**再部署真实出生、唯一撤离、完整Host/敌人/资源，重算20px身体的实际可达、交互席位、额外路程与巡逻窗口。不得为保护旧点位回填地形，也不得减少既有配额凑准入。
+- 撤离继续按DEC-196从合法分层/分区候选独立抽选，既不靠近出生配对，也不固定两端、对岸或最远点；Minimap/Visibility维持实际发现前不泄露。最终地图分别做低/中/重、旧存档恢复、正常视野与自然搜撤验证。
+
+若构型仍读作房间走廊、矩形大盘或外围跑道，回到layout层；若只是边角趋同或噪声均匀，回到策略层。不能通过扩大像素点数、增加孔数、降低身体尺寸或缩短视距替代问题定位。
 
 ## 裂隙空间推广（DEC-197，2026-10-10）
 

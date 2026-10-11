@@ -115,7 +115,8 @@
     "generate:search-remains": "node tools/world-study/generate-search-remains.mjs",
     "check:search-remains": "node tools/world-study/generate-search-remains.mjs --check && node --import tsx tools/world-study/check-search-remains.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-world-search-presentation.ts",
     "generate:preparation-copy": "node tools/preparation-copy/generate.mjs",
-    "check:preparation": "node tools/preparation-copy/generate.mjs --check && node --import tsx tools/qa/check-preparation-narration.ts && tsx --tsconfig tools/contam-preview/tsconfig.json tools/qa/check-preparation-growth-purchase.ts"
+    "check:preparation": "node tools/preparation-copy/generate.mjs --check && node --import tsx tools/qa/check-preparation-narration.ts && tsx --tsconfig tools/contam-preview/tsconfig.json tools/qa/check-preparation-growth-purchase.ts",
+    "check:fragment-shape": "node --import tsx tools/fragment-shape/check.mjs"
   },
   "dependencies": {
     "phaser": "^3.80.1",

@@ -1837,7 +1837,7 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100仍13/14，I14/P49开放，旧迭代证据保留原范围。当前游戏正向地床已被DEC-202否决仍像地下城；旧A/B/C剪影也因孔间通路主导退出候选。DEC-204用户指定矩形拼合并认可新开放碎片构型大方向，追加边角自由打磨要求。三份边角样例及限定几何检查已交，新打磨待人审，尚未接入游戏或自然搜撤；另107待整改，弱设备豁免仍未测。",
+    "summary": "R100仍13/14，I14/P49开放。DEC-205用户认可ada26f43矩形拼合开放地面与自由断缘样例；已固化rectilinear-fragment-v1共享作者能力、三样例只读回归及推广合同。预览调用共享源，正式r7与保存未接入；其他107世界、真实材质/身体/LOS和自然搜撤仍待推广。此前地下城候选已否决，旧技术证据保留原范围，弱设备豁免且未测。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1847,7 +1847,8 @@
       "docs/qa/interactive/r100-i07-i09-worlds.html：新增32世界、三档实图和近邻对照；完整限定验证见E161",
       "docs/qa/interactive/r100-i10-i12-worlds.html：108世界原帧/近邻与来源离线索引，54历史缺直接帧档位明确标出",
       "docs/qa/artifacts/r100-i14/review-handoff-device-waived.md：较弱设备补测已豁免，保留当前RC试玩、视听素材及两项人审",
-      "docs/art/previews/world-fragment-open-field/index.html：矩形骨架/三份边角打磨对照，仅设计样例，非游戏入口"
+      "docs/art/previews/world-fragment-open-field/index.html：矩形骨架/三份边角打磨对照，仅设计样例，非游戏入口",
+      "src/generation/world-study/fragment-shape/index.ts：已实现纯作者库，尚未接入正式生成/恢复"
     ],
     "sources": [
       {
@@ -3296,6 +3297,44 @@
         "path": "docs/art/previews/world-fragment-open-field/index.html",
         "role": "doc",
         "note": "独立构型/边角样例，不作为生产地图资产或实玩证据"
+      },
+      {
+        "path": "src/generation/world-study/fragment-shape/index.ts",
+        "role": "code",
+        "note": "已认可机制共享编译器，当前仅预览调用，未接入正式生成/恢复。"
+      },
+      {
+        "path": "src/generation/world-study/fragment-shape/types.ts",
+        "role": "code",
+        "note": "已认可机制共享编译器，当前仅预览调用，未接入正式生成/恢复。"
+      },
+      {
+        "path": "src/generation/world-study/fragment-shape/validation.ts",
+        "role": "code",
+        "note": "已认可机制共享编译器，当前仅预览调用，未接入正式生成/恢复。"
+      },
+      {
+        "path": "src/generation/world-study/fragment-shape/rectilinear-fragment.ts",
+        "role": "code",
+        "note": "已认可机制共享编译器，当前仅预览调用，未接入正式生成/恢复。"
+      },
+      {
+        "path": "tools/fragment-shape/check.mjs",
+        "role": "test",
+        "note": "只读母版回归，拒绝与非母版布局用例；不是正式地图准入。"
+      },
+      {
+        "path": "tools/fragment-shape/accepted-v1.json",
+        "role": "doc",
+        "note": "绑定ada26f43母版输入与完整输出/图像哈希，检查不自动刷新。"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/consolidation-check.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/previews/world-fragment-open-field/consolidation-review.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -3400,7 +3439,9 @@
       "COH-E225",
       "COH-E226",
       "COH-E227",
-      "COH-E228"
+      "COH-E228",
+      "COH-E229",
+      "COH-E230"
     ],
     "unknowns": [
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
@@ -3418,7 +3459,7 @@
       "空间推广最终324完整地图、14代表浏览器捕获、三档正式进入/冷续与三例普通输入搜撤已登记。全图诊断导航不证明自然未知搜索或长期经营；代表pass不代签108世界审美或I14/P49结案，新大图运行预算仍待本轮证据。",
       "本轮构图、规则外岸及压纤低床粗格块均已在限定实图复核关闭。当前大图性能抽测出现超门，正在查证全图材质绘制/上传成本；E212暂partial，旧失败保留。有限图审不等于108世界人审。",
       "E221用户否决f4989438仍像地下城，当前正向地床整体质量不通过。E222仅为世界碎片构型推演及三路知情审查：新方向未实施／人审，撤离局部征兆与外岸漂泊参照均为提案。8孔与实体减量是旧候选局部反馈，不是新构型定额；另107及I14/P49保持开放。",
-      "E227只认可矩形构型大方向；E228的自由边角样例尚待人审。三seed几何连通/空洞对应不证明生产碰撞、LOS、自然搜索或所有未来种子质量。原A/B/C不再待选，当前游戏未采用新图。"
+      "E229/DEC-205已认可矩形构型和自由断缘样例；E230只证明共享抽取、三母版精确保真、23拒例、其他布局与浏览器预览。新生成修订/CSV、r7冻结、80点轮廓预算、生产身体/LOS/材质及自然搜撤仍待；当前游戏尚未采用新图。"
     ]
   }
 ]

@@ -1,0 +1,52 @@
+{
+  "scope": "Pre-integration pure fragment compiler; no production, raster-grid, body, LOS or gameplay admission.",
+  "algorithmVersion": "rectilinear-fragment-v1",
+  "acceptedRevision": "ada26f43",
+  "approvedArtifactsUntouched": true,
+  "golden": [
+    {
+      "seed": 20261011,
+      "exactStudy": true,
+      "exactContours": true,
+      "exactPath": true,
+      "exactRgbaPixels": true,
+      "immutableInput": true
+    },
+    {
+      "seed": 20261027,
+      "exactStudy": true,
+      "exactContours": true,
+      "exactPath": true,
+      "exactRgbaPixels": true,
+      "immutableInput": true
+    },
+    {
+      "seed": 20261109,
+      "exactStudy": true,
+      "exactContours": true,
+      "exactPath": true,
+      "exactRgbaPixels": true,
+      "immutableInput": true
+    }
+  ],
+  "rejectionCases": 23,
+  "additionalLayouts": [
+    {
+      "holes": 0,
+      "seeds": 4
+    },
+    {
+      "holes": 1,
+      "seeds": 4
+    },
+    {
+      "holes": 2,
+      "seeds": 4
+    }
+  ],
+  "limitations": [
+    "v1 requires one land component; authoring units are fixed at two world pixels.",
+    "Caller must validate chosen terrain grid, body clearance, hole identity in that grid, LOS, placement and traversal.",
+    "This does not generate macro-layouts or enable any production map."
+  ]
+}
