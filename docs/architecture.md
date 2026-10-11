@@ -1520,3 +1520,12 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 DEC-199当前只改余烬脊的作者数据；其余107世界保持基线。`check-production.mjs` 对作者分区仅记录地表fill，不再套非作者repeat的0.50–0.76筛查窗；完整身体连通、内容配额、巡逻、绕行和随机探索撤离门保持。`check-representative-scope.mjs` 支持明确的基线与世界白名单，并比较未改世界的完整作者分区。
 
 原DEV prototype使用独立CSV，不是这些正式改动的预览。当前材质/游戏取证走隔离内存 `r100-gym.html` 的正式worker与RiftScene；去雾图是实际已准入接收面副本，普通视野验证仍走真实玩家输入。证据与用户验收状态见[本次整改QA](qa/rift-spatial-open-damage-2026-10-11.md)，技术通过不提升地图质量状态。
+
+
+### 正向地床轮廓（2026-10-11，DEC-201）
+
+`rift-spatial-land-plates.csv` 的正向板片经 `build-r100-authored-shores.py` 严格联合为 `rift-spatial-land-outlines.csv`，spatial codegen编入对应作者分区的可选 `terrainOutline`。它通过 `r100-spatial-types.ts` / `r100-spatial-world.ts` / `r100-package.ts` 冻结到空间策略，展开后的运行时MasterDefinition携带该环；recipe.nativeDefinition保留原尺寸母版并拒绝outline字段，避免双源覆盖。`native-volume-erosion.ts` 共同校验简单外环和内部孔的包含关系。无字段路径保持旧冻结身份及结果，首批只有余烬脊 opt in；不是其他107世界已重做。
+
+`r100-master-world.ts` 在新路径直接从外环生成8px matter，再减内部VOID，粗32px材料采样从matter派生；身体、视线、小地图和撤离都消费同一结果。断沿上下文使用外环与孔边，`systems/r100-world/surface-fields.ts` 同样接纳外部缺地，不新增另一个渲染蒙版。原材质、实例role及ground-edge唯一所有者规则不变；无新生产模块、UI或玩法收益。
+
+当前轮廓宏形与生产实图、冻结兼容、技术边界见 `docs/tasks/rift-spatial-rollout.md` 与 `docs/qa/rift-spatial-positive-ground-design.md`。算法能表示非矩形不等于每个作者输入已通过形状质量；独立宏形评审和用户终审分别记录。

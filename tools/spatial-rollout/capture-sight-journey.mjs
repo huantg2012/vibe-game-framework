@@ -32,24 +32,52 @@ try{for(const item of cases){
   await page.evaluate(async target=>{
    const {audioManager}=await import('/src/managers/audio-manager.ts');
    const {bodyHasSupport,bodyDisplacementFraction}=await import('/src/systems/ai/physical-grid.ts');
-   const s=audioManager.game.scene.getScene('RiftScene'),g=s.formFloorGrid;
+   const s=audioManager.game.scene.getScene('RiftScene'),g=s.formFloorGrid,physical=s.nativeBody;
+   if(g.tileSize!==8||!physical)throw Error('Sight journey requires the native 8px grid and real body queries');
    const supported=Uint8Array.from({length:g.cols*g.rows},(_,i)=>bodyHasSupport(g,{x:(i%g.cols+.5)*8,y:(Math.floor(i/g.cols)+.5)*8},10,10)?1:0);
-   window.__sightJourney={s,g,supported,target,bodyDisplacementFraction};
+   window.__sightJourney={s,g,supported,target,physical,bodyHasSupport,bodyDisplacementFraction};
   },w.target);
   const state=()=>page.evaluate(()=>{const {s,target}=window.__sightJourney;return{position:{...s.player.getPosition()},target,visibility:s.visibility.getVisibilityAt(target),unoccludedVisibility:s.visibility.getUnoccludedVisibilityAt(target),forwardRadius:s.visibility.getEffectiveRadius(0),facingAngle:s.player.getFacingAngle(),targetDistance:Math.hypot(target.x-s.player.getPosition().x,target.y-s.player.getPosition().y),hp:s.combat.getHealth(),elapsedMs:s.runController.getElapsedMs(),ended:s.runController.isRunEnded()};});
   const walk=async target=>{
    const navigation=await page.evaluate(async target=>{
-    const {s,g,supported,bodyDisplacementFraction}=window.__sightJourney,p=s.player.getPosition();
-    const begin=Math.floor(p.y/8)*g.cols+Math.floor(p.x/8),end=Math.floor(target.y/8)*g.cols+Math.floor(target.x/8),prev=new Int32Array(supported.length).fill(-2),queue=[begin];prev[begin]=-1;
-    for(let at=0;at<queue.length&&prev[end]===-2;at++){const k=queue[at],x=k%g.cols,y=Math.floor(k/g.cols);for(const [dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){const xx=x+dx,yy=y+dy,j=yy*g.cols+xx;if(xx<0||yy<0||xx>=g.cols||yy>=g.rows||!supported[j]||prev[j]!==-2)continue;if(bodyDisplacementFraction(g,{x:(x+.5)*8,y:(y+.5)*8},10,10,dx*8,dy*8)<1)continue;prev[j]=k;queue.push(j);}}
-    if(prev[end]===-2)throw Error('No swept-body path to witness');
-    const raw=[];for(let k=end;k>=0;k=prev[k])raw.push({x:(k%g.cols+.5)*8,y:(Math.floor(k/g.cols)+.5)*8});raw.reverse();
+    const {s,g,supported,physical,bodyHasSupport,bodyDisplacementFraction}=window.__sightJourney,p={...s.player.getPosition()};
+    // BEGIN NATIVE JOURNEY START: also exercised offline against the failed position.
+    const planRoute=(p,target)=>{
+     const center=k=>({x:(k%g.cols+.5)*8,y:(Math.floor(k/g.cols)+.5)*8});
+     const begin=Math.floor(p.y/8)*g.cols+Math.floor(p.x/8),end=Math.floor(target.y/8)*g.cols+Math.floor(target.x/8);
+     if(!physical.supports(p,10,10))throw Error('Actual player lacks native body support');
+     if(!supported[end])throw Error('Witness endpoint lacks full grid-body support');
+     // Native triangle collision permits legal positions excluded by the
+     // conservative navigation grid. Connect the actual position to that
+     // graph with a real 20px body sweep; never snap or relocate the player.
+     const sweepTo=q=>physical.displacementFraction(p,10,10,q.x-p.x,q.y-p.y);
+     let seeds=[];
+     if(supported[begin]&&physical.supports(center(begin),10,10)&&sweepTo(center(begin))===1)seeds=[begin];
+     else{
+      const col=Math.floor(p.x/8),row=Math.floor(p.y/8);
+      for(let y=row-4;y<=row+4;y++)for(let x=col-4;x<=col+4;x++){
+       if(x<0||y<0||x>=g.cols||y>=g.rows)continue;
+       const k=y*g.cols+x,q=center(k);
+       if(supported[k]&&Math.hypot(q.x-p.x,q.y-p.y)<=32&&physical.supports(q,10,10)&&sweepTo(q)===1)seeds.push(k);
+      }
+      seeds.sort((a,b)=>Math.hypot(center(a).x-p.x,center(a).y-p.y)-Math.hypot(center(b).x-p.x,center(b).y-p.y));
+     }
+     if(!seeds.length)throw Error('No nearby grid center reachable by native body sweep');
+     const prev=new Int32Array(supported.length).fill(-2),queue=[...seeds];for(const k of queue)prev[k]=-1;
+     for(let at=0;at<queue.length&&prev[end]===-2;at++){const k=queue[at],x=k%g.cols,y=Math.floor(k/g.cols);for(const [dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){const xx=x+dx,yy=y+dy,j=yy*g.cols+xx;if(xx<0||yy<0||xx>=g.cols||yy>=g.rows||!supported[j]||prev[j]!==-2)continue;if(bodyDisplacementFraction(g,center(k),10,10,dx*8,dy*8)<1)continue;prev[j]=k;queue.push(j);}}
+     if(prev[end]===-2)throw Error('No swept-body path to witness');
+     const raw=[];for(let k=end;k>=0;k=prev[k])raw.push(center(k));raw.reverse();
+     const entry={actualPosition:p,snappedCenter:center(begin),actualGridSupported:bodyHasSupport(g,p,10,10),snappedGridSupported:!!supported[begin],actualNativeSupported:true,seedCount:seeds.length,selectedCenter:raw[0],distancePx:Math.hypot(raw[0].x-p.x,raw[0].y-p.y),sweepFraction:sweepTo(raw[0])};
+     return{raw,entry};
+    };
+    // END NATIVE JOURNEY START
+    const {raw,entry}=planRoute(p,target);
     const points=[raw[0]];for(let i=1;i<raw.length-1;i++){const a=raw[i-1],b=raw[i],c=raw[i+1];if(b.x-a.x!==c.x-b.x||b.y-a.y!==c.y-b.y)points.push(b);}points.push(raw.at(-1));
     const held=new Set(),codes={w:87,a:65,s:83,d:68},events=[];
     const change=next=>{for(const key of [...held])if(!next.includes(key)){window.dispatchEvent(new KeyboardEvent('keyup',{key,code:`Key${key.toUpperCase()}`,keyCode:codes[key],which:codes[key],bubbles:true}));held.delete(key);}for(const key of next)if(!held.has(key)){window.dispatchEvent(new KeyboardEvent('keydown',{key,code:`Key${key.toUpperCase()}`,keyCode:codes[key],which:codes[key],bubbles:true}));held.add(key);}};
     let index=0,last={...p},still=performance.now();const started=still;
     try{while(index<points.length){await new Promise(resolve=>requestAnimationFrame(resolve));const p=s.player.getPosition();if(s.runController.isRunEnded())throw Error('Run ended during normal navigation');if(performance.now()-started>180000)throw Error('Bounded route timed out');if(Math.hypot(p.x-last.x,p.y-last.y)>.3){still=performance.now();last={...p};}else if(held.size&&performance.now()-still>5000)throw Error('Swept path blocked');const t=points[index],dx=t.x-p.x,dy=t.y-p.y;if(Math.hypot(dx,dy)<=3){index++;change([]);continue;}const keys=[];if(Math.abs(dx)>2)keys.push(dx>0?'d':'a');if(Math.abs(dy)>2)keys.push(dy>0?'s':'w');change(keys);}}
-    finally{change([]);}return{points,length:(raw.length-1)*8,elapsedWallMs:performance.now()-started,position:{...s.player.getPosition()},events};
+    finally{change([]);}return{points,length:entry.distancePx+(raw.length-1)*8,entry,elapsedWallMs:performance.now()-started,position:{...s.player.getPosition()},events};
    },target);row.events.push(navigation);save();
   };
   const face=async()=>{const s=await state(),dx=w.target.x-s.position.x,dy=w.target.y-s.position.y;const key=Math.abs(dx)>Math.abs(dy)?(dx>0?'d':'a'):(dy>0?'s':'w');await page.keyboard.down(key);await page.waitForTimeout(220);await page.keyboard.up(key);await page.waitForTimeout(80);};

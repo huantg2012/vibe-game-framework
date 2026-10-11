@@ -45,6 +45,29 @@ def polygon(points):
 groups = read('rift-spatial-authored-groups.csv')
 sectors = read('rift-spatial-sectors.csv')
 sector_cuts = read('rift-spatial-sector-cuts.csv')
+land_plates = read('rift-spatial-land-plates.csv')
+assert len({(row['world_id'], row['id']) for row in land_plates}) == len(land_plates), 'Duplicate land plate'
+assert all(any(sector['world_id'] == row['world_id'] for sector in sectors) for row in land_plates), 'Unregistered land plate world'
+land_outlines, land_evidence, positive_lands = [], [], {}
+for world_id in dict.fromkeys(row['world_id'] for row in land_plates):
+    plates = [polygon([tuple(map(float, p.split(':'))) for p in row['points'].split('|')])
+              for row in land_plates if row['world_id'] == world_id]
+    assert all(plate.area >= 64 and box(0, 0, 2304, 1792).covers(plate) for plate in plates), (world_id, 'invalid positive plate')
+    land = unary_union(plates)
+    assert land.geom_type == 'Polygon' and land.is_valid and not land.interiors, (world_id, 'positive terrain must be one connected ring without holes')
+    points = list(land.exterior.coords)[:-1]
+    changed = True
+    while changed:
+        changed = False
+        for i in range(len(points)):
+            a, b, c = points[i-1], points[i], points[(i+1) % len(points)]
+            if abs((b[0]-a[0])*(c[1]-b[1])-(b[1]-a[1])*(c[0]-b[0])) < 1e-6:
+                points.pop(i); changed = True; break
+    assert 3 <= len(points) <= 32, (world_id, 'positive outline vertex budget', len(points))
+    positive_lands[world_id] = land
+    land_outlines.append({'world_id': world_id, 'points': '|'.join(f'{x:.6f}:{y:.6f}' for x, y in points)})
+    land_evidence.append({'worldId': world_id, 'plateCount': len(plates), 'vertexCount': len(points), 'unionArea': land.area,
+                          'lostSourceArea': sum(plate.difference(land).area for plate in plates)})
 sources = {row['world_id']: row for row in read('rift-native-worlds.csv')}
 shores = {row['id']: polygon([tuple(map(float, pair.split(':'))) for pair in row['points'].split('|')])
           for row in read('rift-spatial-erosion.csv') if row['organization'] == 'authored-group'}
@@ -124,6 +147,9 @@ for sector in sectors:
     cuts = [polygon([tuple(map(float, point.split(':'))) for point in row['points'].split('|')]) for row in source_rows]
     for cut in cuts:
         assert cut.area >= 64 and box(0, 0, 2304, 1792).covers(cut), (world_id, 'invalid authored sector bounds')
+        if world_id in positive_lands:
+            land = positive_lands[world_id]
+            assert land.contains(cut) and land.boundary.disjoint(cut), (world_id, 'internal erosion must lie strictly inside positive terrain')
     union = unary_union(cuts)
     polygons = list(union.geoms) if union.geom_type == 'MultiPolygon' else [union]
     assert 4 <= len(polygons) <= 12, (world_id, 'sector polygon budget', len(polygons))
@@ -143,7 +169,8 @@ for sector in sectors:
                      'resultCutCount': len(polygons), 'sourceArea': sum(cut.area for cut in cuts),
                      'unionArea': union.area, 'lostSourceArea': sum(cut.difference(union).area for cut in cuts)})
 write('rift-spatial-authored-erosion.csv', ['world_id', 'id', 'points'], rows)
+write('rift-spatial-land-outlines.csv', ['world_id', 'points'], land_outlines)
 if not CHECK:
     REPORT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT.write_text(json.dumps({'worldCount': len(groups) + len(sectors), 'method': 'exact polygon union from CSV authoring; only collinear vertices removed', 'cases': evidence}, indent=2) + '\n')
+    REPORT.write_text(json.dumps({'worldCount': len(groups) + len(sectors), 'method': 'exact polygon union from CSV authoring; only collinear vertices removed', 'cases': evidence, 'positiveTerrain': land_evidence}, indent=2) + '\n')
 print(f'{"Verified" if CHECK else "Authored"} {len(groups) + len(sectors)} world shores: {len(rows)} disjoint polygons')

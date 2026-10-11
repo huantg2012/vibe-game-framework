@@ -40,7 +40,8 @@ export function buildMasterSurfaceFields(world:MasterWorld):MasterSurfaceFields 
   }return inside;
  };
  for(let y=0;y<h;y+=8)for(let x=0;x<w;x+=8){
-  if(world.matterAt(x+4,y+4)||!world.definition.erosion.some(polygon=>within(polygon,x+4,y+4)))continue;
+  const outsideOutline=world.definition.terrainOutline!==undefined&&!within(world.definition.terrainOutline,x+4,y+4);
+  if(world.matterAt(x+4,y+4)||!outsideOutline&&!world.definition.erosion.some(polygon=>within(polygon,x+4,y+4)))continue;
   for(let yy=y;yy<Math.min(y+8,h);yy++)for(let xx=x;xx<Math.min(x+8,w);xx++)erosionDistance[yy*w+xx]=0;
  }
  // One pair of scans computes all fields. Fixed neighbours avoid allocating

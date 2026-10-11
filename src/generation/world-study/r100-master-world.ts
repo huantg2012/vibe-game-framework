@@ -10,7 +10,7 @@ import type { ContaminationForm } from '@/generation/contamination-draw';
 import { measureOutline } from '@/generation/outline-mask';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import { buildNativeVolume, type NativeVolumeMesh, type NativeVolumeSpec, type NativeVolumeFamily } from '@/generation/world-study/native-volume-geometry';
-import { validateNativeGroundEdgeOwnership } from './native-volume-erosion';
+import { validateNativeGroundEdgeOwnership, validateNativeTerrainOutline } from './native-volume-erosion';
 import { compileNativeVolumeRaster } from '@/generation/world-study/native-volume-raster';
 import { worldProfileById } from '@/generation/world-study/profiles';
 import type { WorldSample } from '@/generation/world-study/types';
@@ -32,6 +32,8 @@ export interface MasterDefinition {
   readonly ground_quietness:number; readonly ground_contrast:number; readonly ground_coverage:number; readonly ground_material_blend:number;
   readonly instances:readonly (Readonly<Omit<NativeVolumeSpec,'seed'|'family'|'blocking'>> & {readonly role:MasterPhysicalRole; readonly family?:NativeVolumeFamily})[];
   readonly erosion:readonly (readonly Readonly<Vector2>[])[];
+  /** Positive ground ring, before internal erosion; absent preserves old maps. */
+  readonly terrainOutline?: readonly Readonly<Vector2>[];
   /** Present only when the author explicitly replaces the grade default. */
   readonly authoredErosion?: true;
 }
@@ -101,11 +103,13 @@ export function createMasterWorld(definition: MasterDefinition, seed: number, fr
   if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('种子必须是 0–4294967295 的整数');
   if (frozen?.spatialDeployment) validateR100SpatialDeploymentPolicy(frozen.spatialDeployment);
   const width = definition.cols * TILE, height = definition.rows * TILE;
+  const positiveTerrain = Object.prototype.hasOwnProperty.call(definition, 'terrainOutline');
+  if (positiveTerrain) validateNativeTerrainOutline(definition.terrainOutline, width, height, definition.erosion);
   const land = new Uint8Array(definition.cols * definition.rows), walls = new Uint8Array(land.length);
   const flowAngle = new Float32Array(land.length), deposition = new Float32Array(land.length);
   for (let row=0; row<definition.rows; row++) for (let col=0; col<definition.cols; col++) {
     const i=row*definition.cols+col;
-    land[i]=col>=1 && row>=1 && col<definition.cols-1 && row<definition.rows-1 && !(col<3 && row<3) && !(col>definition.cols-4 && row>definition.rows-4) ? 1 : 0;
+    if (!positiveTerrain) land[i]=col>=1 && row>=1 && col<definition.cols-1 && row<definition.rows-1 && !(col<3 && row<3) && !(col>definition.cols-4 && row>definition.rows-4) ? 1 : 0;
     flowAngle[i]=definition.axis + Math.sin(row*.34)*.06;
     deposition[i]=.48 + Math.sin(col*.23+row*.1)*.15;
   }
@@ -113,17 +117,21 @@ export function createMasterWorld(definition: MasterDefinition, seed: number, fr
   const matter = new Uint8Array(cols * rows), erosion = new Uint8Array(matter.length);
   for (let row = 0; row < rows; row++) for (let col = 0; col < cols; col++) {
     const x = (col + .5) * SUPPORT, y = (row + .5) * SUPPORT, index = row * cols + col;
-    const floor = land[Math.floor(y / TILE) * definition.cols + Math.floor(x / TILE)] === 1;
+    const floor = positiveTerrain ? insidePolygon(definition.terrainOutline!, x, y)
+      : land[Math.floor(y / TILE) * definition.cols + Math.floor(x / TILE)] === 1;
     erosion[index] = floor && definition.erosion.some(polygon => insidePolygon(polygon, x, y)) ? 1 : 0;
     matter[index] = floor && !erosion[index] ? 1 : 0;
+    // The coarse material sample follows physical support, never clips it.
+    if (positiveTerrain && matter[index]) land[Math.floor(y / TILE) * definition.cols + Math.floor(x / TILE)] = 1;
   }
   const matterAt = (x:number,y:number): boolean => x>=0 && y>=0 && x<width && y<height && matter[Math.floor(y/SUPPORT)*cols+Math.floor(x/SUPPORT)]===1;
   validateNativeGroundEdgeOwnership(definition);
+  const terrainEdges = positiveTerrain ? [definition.terrainOutline!, ...definition.erosion] : definition.erosion;
   const roles = new Map<number, MasterPhysicalRole>();
   const meshes = definition.instances.map(instance => {
     const { role, ...geometry } = instance; roles.set(instance.id, role);
     return buildNativeVolume({ ...geometry, blocking: role === 'solid' ? 1 : 0, family: instance.family ?? definition.family, seed: seed ^ Math.imul(instance.id, 104729) },
-      instance.groundEdgeWidth === undefined ? undefined : { polygons: definition.erosion, width, height, matterAt });
+      instance.groundEdgeWidth === undefined ? undefined : { polygons: terrainEdges, width, height, matterAt });
   });
   const raster = compileNativeVolumeRaster(meshes, { x:0, y:0, width, height, pixelSize:1, supportCellSize:SUPPORT, opticalHeight:24 });
   const roleAt = (x:number,y:number): MasterPhysicalRole | null => {

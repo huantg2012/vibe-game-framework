@@ -95,6 +95,8 @@ export function validR100ProductionRecipe(value: unknown): value is WorldProduct
       || pack.algorithmRevision !== 7 || pack.grade !== native.grade || !/^r100-[a-z][a-z0-9-]+$/.test(pack.id)
       || !R100_NATIVE_WORLDS.some(world => `r100-${world.id}` === pack.id)
       || !Array.isArray(native.instances) || native.instances.length < 1 || native.instances.length > 32
+      // The source-sized mother form cannot own a second world-sized outline.
+      || Object.prototype.hasOwnProperty.call(native, 'terrainOutline')
       || !Number.isSafeInteger(native.cols) || !Number.isSafeInteger(native.rows) || native.cols < 24 || native.cols > 40 || native.rows < 18 || native.rows > 32
       || !isPollutionGradeDefinition(recipe.gradeDefinition) || recipe.gradeDefinition.id !== native.grade
       || recipe.contentDefinition?.grade_id !== native.grade || recipe.contentDefinition.version !== 2

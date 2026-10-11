@@ -50,6 +50,8 @@ export interface R100SpatialPolicy {
   readonly placements: readonly R100SpatialPlacement[];
   readonly materials: readonly R100SpatialMaterial[];
   readonly erosion: readonly (readonly Readonly<Vector2>[])[];
+  /** Positive ground ring; absent frozen policies retain their legacy terrain. */
+  readonly terrainOutline?: readonly Readonly<Vector2>[];
   readonly spawnCandidates: readonly Readonly<Vector2>[];
   readonly extraction: SpatialExtractionPolicy;
   readonly deployment: R100SpatialDeploymentPolicy;

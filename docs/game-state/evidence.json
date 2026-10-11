@@ -8539,5 +8539,135 @@
         "role": "art"
       }
     ]
+  },
+  {
+    "id": "COH-E219",
+    "kind": "human",
+    "result": "fail",
+    "date": "2026-10-11",
+    "revision": "3e0821a7",
+    "scope": "用户明确不过关：整体边界仍近矩形，前几个版本也有同一问题，生成算法底层意图错误。此前浅岸/掉角及实体减量均未解决大轮廓。",
+    "limitations": "否决当前整体轮廓，不撤销8孔数量的局部认可(E217)，不否定E218实际删减/生成事实；技术或AI图审不能代签形状验收。",
+    "sources": [
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      },
+      {
+        "path": "docs/tasks/rift-spatial-rollout.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E220",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-11",
+    "revision": "3e0821a7+DEC-201-worktree",
+    "scope": "仅余烬脊新增正向板片联合外环，冻结terrainOutline，以8px正向填地减8内部孔；22实体随地床重排。两种子6档完整生成、实际中档材质全图及入场出口未知、107作者隔离、旧r7等价恢复、正向合同/独立凹环与最终alpha夹具、构建取得限定证据。同一内部孔普通按键视线0→1→0，固定重档64秒运行预算通过；导航工具沿边起步错误经真实身体扫掠修正，原失败保留。",
+    "limitations": "准确生产源见browser-initial/source-snapshot.json；6例在第2至8候选成功，不代表全种子拒绝率。AI图审与普通视野/运行预算范围以本轮QA实录为准，不外推自然探索或全库品质；此前8孔数量认可不等于新整体人审。新轮廓仅余烬脊，其余107、I14/P49保持开放。",
+    "sources": [
+      {
+        "path": "docs/qa/rift-spatial-positive-ground-2026-10-11.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-spatial-positive-ground-design.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/contract.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/qa-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/qa-review-sources.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/qa-small-checks.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/qa-small-checks-v2.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/qa-small-checks-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/production-initial.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/production-second-seed.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/scope.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/authored-union.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/frozen-legacy.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/frozen-previous.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/previous-recipe.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/browser-initial/capture.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/browser-initial/source-snapshot.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/sight.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/sight-browser/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/build.log",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/navigation-start-probe.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/sight-browser-fixed/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/runtime/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/final-source-match.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-positive-ground-2026-10-11/art-review-final.md",
+        "role": "doc"
+      }
+    ]
   }
 ]

@@ -1,7 +1,7 @@
 /** Compile authored spatial arrangements. Runtime and recovery consume snapshots. */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-const names = ['policy', 'layouts', 'erosion', 'anchors', 'worlds', 'materials', 'organizations', 'authored-groups', 'authored-erosion', 'sectors', 'sector-layouts', 'sector-cuts', 'sector-anchors'];
+const names = ['policy', 'layouts', 'erosion', 'anchors', 'worlds', 'materials', 'organizations', 'authored-groups', 'authored-erosion', 'sectors', 'sector-layouts', 'sector-cuts', 'sector-anchors', 'land-plates', 'land-outlines'];
 const contents = names.map(name => readFileSync(new URL(`../../data/rift-spatial-${name}.csv`, import.meta.url), 'utf8'));
 function parse(source) {
   const [header, ...lines] = source.trim().split(/\r?\n/), keys = header.split(',');
@@ -12,7 +12,7 @@ function parse(source) {
     return Object.fromEntries(keys.map((key, index) => [key, values[index]]));
   });
 }
-const [configs, placements, erosion, anchors, worlds, materials, organizationRows, authoredGroups, authoredErosion, sectorRows, sectorLayouts, sectorCuts, sectorAnchors] = contents.map(parse);
+const [configs, placements, erosion, anchors, worlds, materials, organizationRows, authoredGroups, authoredErosion, sectorRows, sectorLayouts, sectorCuts, sectorAnchors, landPlates, landOutlines] = contents.map(parse);
 const nativeSource = readFileSync(new URL('../../data/rift-native-worlds.csv', import.meta.url), 'utf8');
 const nativeWorlds = parse(nativeSource);
 const organizations = organizationRows.map(row => row.organization);
@@ -61,6 +61,11 @@ const groups = authoredGroups.map(row => {
 });
 if (catalog.filter(row => row.organization === 'authored-group').length !== groups.length) throw new Error('Whole-group world registration mismatch');
 unique(sectorRows, row => row.world_id);
+unique(landPlates, row => `${row.world_id}:${row.id}`);
+unique(landOutlines, row => row.world_id);
+const positiveWorlds = [...new Set(landPlates.map(row => row.world_id))].sort();
+if (JSON.stringify(positiveWorlds) !== JSON.stringify(landOutlines.map(row => row.world_id).sort())
+  || positiveWorlds.some(id => !sectorRows.some(row => row.world_id === id))) throw new Error('Incomplete positive terrain compilation');
 for (const rows of [sectorLayouts, sectorCuts, sectorAnchors]) {
   unique(rows, row => `${row.world_id}:${row.id}`);
   if (rows.some(row => !sectorRows.some(sector => sector.world_id === row.world_id))) throw new Error('Unregistered sector authoring data');
@@ -81,7 +86,15 @@ const sectors = sectorRows.map(row => {
   const erosion = authoredErosion.filter(cut => cut.world_id === row.world_id).map(cut => cut.points.split('|').map(point => { const [x,y] = point.split(':').map(Number); return { x,y }; }));
   const spawnCandidates = sectorAnchors.filter(p => p.world_id === row.world_id).map(p => ({ x: number(p, 'x'), y: number(p, 'y') }));
   if (erosion.length < 4 || erosion.length > 12 || spawnCandidates.length < 6 || spawnCandidates.length > 32) throw new Error(`Incomplete sector arrangement ${row.world_id}`);
-  return { worldId: row.world_id, organizationRules, placementJitterPx: number(row, 'placement_jitter_px'), placements, erosion, spawnCandidates };
+  const outline = landOutlines.find(p => p.world_id === row.world_id);
+  const terrainOutline = outline?.points.split('|').map(pair => {
+    const values = pair.split(':').map(Number);
+    if (values.length !== 2 || !values.every(Number.isFinite) || values[0] < 0 || values[0] > config.cols * 32 || values[1] < 0 || values[1] > config.rows * 32) throw new Error('Invalid positive terrain point');
+    return { x: values[0], y: values[1] };
+  });
+  if (terrainOutline && (terrainOutline.length < 3 || terrainOutline.length > 32)) throw new Error('Invalid positive terrain outline');
+  return { worldId: row.world_id, organizationRules, placementJitterPx: number(row, 'placement_jitter_px'), placements, erosion, spawnCandidates,
+    ...(terrainOutline ? { terrainOutline } : {}) };
 });
 if (catalog.filter(row => row.organization === 'authored-sectors').length !== sectors.length) throw new Error('Sector world registration mismatch');
 const sourceHash = createHash('sha256').update([...contents, nativeSource].join('\n')).digest('hex');

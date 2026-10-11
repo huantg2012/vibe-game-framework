@@ -1,0 +1,1212 @@
+[
+  {
+    "world": "cinder-ridge",
+    "recipe": {
+      "version": 3,
+      "requestedSeed": 20261010,
+      "paintGeometryVersion": 2,
+      "profile": {
+        "id": "cinder-ridge",
+        "label": "余烬脊",
+        "description": "余烬脊的原生材料与完整搜撤地段",
+        "material": "granular",
+        "surface": {
+          "substrate": "granular",
+          "coating": "granular",
+          "organization": "bands",
+          "coverage": 0.46,
+          "wear": 0.52,
+          "deposits": 0.52,
+          "scale": 1.1,
+          "relief": 0.52,
+          "contrast": 0.75,
+          "regionScale": 1.15,
+          "quietness": 0.48,
+          "formScale": 1.3,
+          "fragmentation": 0.65,
+          "accentCoverage": 0.02
+        },
+        "palette": {
+          "void": 592137,
+          "shadow": 1381653,
+          "floorDeep": 3284260,
+          "floor": 7090991,
+          "floorLight": 11102027,
+          "materialDark": 4400936,
+          "materialMid": 9584953,
+          "materialLight": 13334867,
+          "faceLight": 14920823,
+          "accentDim": 5395026,
+          "accent": 11184810,
+          "accentLight": 13421772,
+          "peak": 15658734,
+          "actorDark": 1842204,
+          "actorMid": 12237498,
+          "actorLight": 16777215,
+          "ground": 7090991,
+          "groundLight": 11102027,
+          "groundDark": 3284260,
+          "wall": 9584953,
+          "wallLight": 13334867,
+          "wallDark": 4400936
+        }
+      },
+      "appearance": {
+        "version": 1,
+        "worldId": "cinder-ridge",
+        "ground": {
+          "dark": 3284260,
+          "mid": 7090991,
+          "light": 11102027
+        },
+        "solid": {
+          "dark": 4400936,
+          "mid": 9584953,
+          "light": 13334867
+        },
+        "cleaved": {
+          "dark": 6764594,
+          "mid": 13006163,
+          "light": 14920823
+        },
+        "secondary": {
+          "dark": 3159616,
+          "mid": 5856364,
+          "light": 9606048
+        },
+        "groundPattern": "grains",
+        "patternScale": 104,
+        "patternStrength": 0.73,
+        "secondaryCoverage": 0.22,
+        "textureContrast": 1.18,
+        "quietCoverage": 0.27
+      },
+      "space": {
+        "id": "open-scars",
+        "label": "疏落蚀坑",
+        "voidFraction": 0.09,
+        "crackFraction": 0.2,
+        "holeScale": 1,
+        "directionality": 0.2,
+        "clustering": 0.25
+      },
+      "contentFragmentTypeId": "frag-outdoor",
+      "nativeDefinition": {
+        "id": "cinder-ridge-medium",
+        "family": "granular-ridge",
+        "grade": "medium",
+        "label": "余烬脊",
+        "profile": "cinder-ridge",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 132,
+        "emission": 0.55,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "relief",
+            "x": 492,
+            "y": 430,
+            "rotation": -0.2,
+            "length": 540,
+            "width": 268,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.32,
+            "branches": 3,
+            "opening": 0.55,
+            "distortion": 0.62,
+            "constructionVersion": 2
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 410,
+            "y": 325,
+            "rotation": -0.18,
+            "length": 354,
+            "width": 244,
+            "height": 64,
+            "thickness": 13,
+            "fold": 0.72,
+            "branches": 3,
+            "opening": 0.72,
+            "distortion": 0.85,
+            "constructionVersion": 2
+          },
+          {
+            "id": 3,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 750,
+            "y": 480,
+            "rotation": 0.55,
+            "length": 252,
+            "width": 138,
+            "height": 22,
+            "thickness": 8,
+            "fold": 0.25,
+            "branches": 6,
+            "opening": 0.25,
+            "distortion": 0.58,
+            "constructionVersion": 2
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      "gradeDefinition": {
+        "id": "medium",
+        "version": 1,
+        "label": "中污染",
+        "status": "dev-masters",
+        "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+        "paintCount": 4,
+        "paintSubstrate": "oil_film",
+        "paintContinuity": "monolith",
+        "paintCoverage": "rewrite",
+        "volumeCount": 2,
+        "volumeSubstrate": "gas_mass",
+        "volumeCoverage": "rewrite",
+        "volumeCols": 4,
+        "volumeRows": 3,
+        "chaosStartRate": 0.42,
+        "chaosEndRate": 0.6,
+        "chaosRampStartSeconds": 60,
+        "chaosRampEndSeconds": 180
+      },
+      "contentDefinition": {
+        "grade_id": "medium",
+        "version": 2,
+        "status": "production-candidate",
+        "label": "中污染",
+        "public_risk": "侵蚀更广，久留代价更高",
+        "public_preparation": "按行装选择绕行或穿越",
+        "public_reward": "更多收获在较深处",
+        "enemy_count": 3,
+        "kindling_safe_count": 1,
+        "kindling_contested_count": 2,
+        "kindling_deep_count": 2,
+        "kindling_safe_value": 1,
+        "kindling_contested_value": 2,
+        "kindling_deep_value": 4,
+        "contaminant_safe_count": 1,
+        "contaminant_contested_count": 1,
+        "contaminant_deep_count": 1
+      },
+      "spatialPolicy": {
+        "version": 1,
+        "worldId": "cinder-ridge",
+        "sourceHash": "d8f87bd88076b77157d9a2b6bc269879181e717e17c91261f0cbe22684034df1",
+        "organization": "authored-sectors",
+        "organizationRules": {
+          "sourceMode": "repeat",
+          "materialScaling": true,
+          "solidCount": 22,
+          "reliefCount": 4
+        },
+        "groupTransform": null,
+        "cols": 72,
+        "rows": 56,
+        "mirrorX": false,
+        "mirrorY": false,
+        "placementJitterPx": 0,
+        "placements": [
+          {
+            "id": 1,
+            "role": "relief",
+            "sourceIndex": 0,
+            "x": 600,
+            "y": 700,
+            "rotation": -0.2,
+            "length": 600,
+            "width": 420
+          },
+          {
+            "id": 2,
+            "role": "relief",
+            "sourceIndex": 1,
+            "x": 1360,
+            "y": 1060,
+            "rotation": 0.35,
+            "length": 600,
+            "width": 450
+          },
+          {
+            "id": 3,
+            "role": "relief",
+            "sourceIndex": 2,
+            "x": 1720,
+            "y": 570,
+            "rotation": -0.2,
+            "length": 440,
+            "width": 380
+          },
+          {
+            "id": 4,
+            "role": "relief",
+            "sourceIndex": 3,
+            "x": 1850,
+            "y": 1320,
+            "rotation": 0.15,
+            "length": 300,
+            "width": 200
+          },
+          {
+            "id": 11,
+            "role": "solid",
+            "sourceIndex": 1,
+            "x": 570,
+            "y": 210,
+            "rotation": 0.18,
+            "length": 340,
+            "width": 160
+          },
+          {
+            "id": 13,
+            "role": "solid",
+            "sourceIndex": 3,
+            "x": 415,
+            "y": 680,
+            "rotation": 1.1,
+            "length": 340,
+            "width": 180
+          },
+          {
+            "id": 14,
+            "role": "solid",
+            "sourceIndex": 4,
+            "x": 590,
+            "y": 830,
+            "rotation": 0.08,
+            "length": 440,
+            "width": 185
+          },
+          {
+            "id": 15,
+            "role": "solid",
+            "sourceIndex": 5,
+            "x": 900,
+            "y": 900,
+            "rotation": 0.75,
+            "length": 150,
+            "width": 95
+          },
+          {
+            "id": 16,
+            "role": "solid",
+            "sourceIndex": 6,
+            "x": 1380,
+            "y": 250,
+            "rotation": -0.6,
+            "length": 260,
+            "width": 150
+          },
+          {
+            "id": 17,
+            "role": "solid",
+            "sourceIndex": 7,
+            "x": 1990,
+            "y": 365,
+            "rotation": 1.05,
+            "length": 320,
+            "width": 170
+          },
+          {
+            "id": 18,
+            "role": "solid",
+            "sourceIndex": 8,
+            "x": 1890,
+            "y": 565,
+            "rotation": 0.6,
+            "length": 170,
+            "width": 100
+          },
+          {
+            "id": 19,
+            "role": "solid",
+            "sourceIndex": 9,
+            "x": 1670,
+            "y": 710,
+            "rotation": -0.25,
+            "length": 340,
+            "width": 160
+          },
+          {
+            "id": 20,
+            "role": "solid",
+            "sourceIndex": 10,
+            "x": 1810,
+            "y": 900,
+            "rotation": 0.4,
+            "length": 135,
+            "width": 85
+          },
+          {
+            "id": 21,
+            "role": "solid",
+            "sourceIndex": 11,
+            "x": 2080,
+            "y": 655,
+            "rotation": 0.3,
+            "length": 115,
+            "width": 78
+          },
+          {
+            "id": 23,
+            "role": "solid",
+            "sourceIndex": 13,
+            "x": 570,
+            "y": 1060,
+            "rotation": 0.5,
+            "length": 175,
+            "width": 95
+          },
+          {
+            "id": 24,
+            "role": "solid",
+            "sourceIndex": 14,
+            "x": 850,
+            "y": 1110,
+            "rotation": 0,
+            "length": 300,
+            "width": 165
+          },
+          {
+            "id": 26,
+            "role": "solid",
+            "sourceIndex": 16,
+            "x": 1260,
+            "y": 665,
+            "rotation": -0.15,
+            "length": 440,
+            "width": 180
+          },
+          {
+            "id": 27,
+            "role": "solid",
+            "sourceIndex": 17,
+            "x": 1595,
+            "y": 940,
+            "rotation": 1.05,
+            "length": 340,
+            "width": 180
+          },
+          {
+            "id": 28,
+            "role": "solid",
+            "sourceIndex": 18,
+            "x": 300,
+            "y": 1250,
+            "rotation": 1.57,
+            "length": 300,
+            "width": 155
+          },
+          {
+            "id": 30,
+            "role": "solid",
+            "sourceIndex": 20,
+            "x": 875,
+            "y": 1410,
+            "rotation": -0.2,
+            "length": 340,
+            "width": 175
+          },
+          {
+            "id": 31,
+            "role": "solid",
+            "sourceIndex": 21,
+            "x": 1430,
+            "y": 780,
+            "rotation": 1,
+            "length": 155,
+            "width": 90
+          },
+          {
+            "id": 33,
+            "role": "solid",
+            "sourceIndex": 23,
+            "x": 1540,
+            "y": 1210,
+            "rotation": -0.7,
+            "length": 320,
+            "width": 180
+          },
+          {
+            "id": 34,
+            "role": "solid",
+            "sourceIndex": 24,
+            "x": 1670,
+            "y": 1450,
+            "rotation": -0.2,
+            "length": 430,
+            "width": 185
+          },
+          {
+            "id": 35,
+            "role": "solid",
+            "sourceIndex": 25,
+            "x": 2130,
+            "y": 990,
+            "rotation": 1.1,
+            "length": 260,
+            "width": 150
+          },
+          {
+            "id": 37,
+            "role": "solid",
+            "sourceIndex": 27,
+            "x": 2020,
+            "y": 1370,
+            "rotation": -0.3,
+            "length": 170,
+            "width": 100
+          },
+          {
+            "id": 40,
+            "role": "solid",
+            "sourceIndex": 30,
+            "x": 1540,
+            "y": 1500,
+            "rotation": 1.3,
+            "length": 125,
+            "width": 80
+          }
+        ],
+        "materials": [
+          {
+            "key": "folded-slab",
+            "lengthScale": 1.08,
+            "widthScale": 1.03
+          },
+          {
+            "key": "fibre-knot",
+            "lengthScale": 1.04,
+            "widthScale": 1.5
+          },
+          {
+            "key": "broken-shell",
+            "lengthScale": 0.8,
+            "widthScale": 1.2
+          },
+          {
+            "key": "granular-ridge",
+            "lengthScale": 1,
+            "widthScale": 1
+          },
+          {
+            "key": "membrane-rim",
+            "lengthScale": 1,
+            "widthScale": 0.9
+          },
+          {
+            "key": "gel-flow",
+            "lengthScale": 0.86,
+            "widthScale": 0.78
+          },
+          {
+            "key": "rib-vault",
+            "lengthScale": 1.1,
+            "widthScale": 1.5
+          },
+          {
+            "key": "pleated-sheet",
+            "lengthScale": 1.1,
+            "widthScale": 1.1
+          },
+          {
+            "key": "cellular-shell",
+            "lengthScale": 1.08,
+            "widthScale": 2.65
+          },
+          {
+            "key": "lobed-cushion",
+            "lengthScale": 1,
+            "widthScale": 1.7
+          },
+          {
+            "key": "monolith-buttress",
+            "lengthScale": 0.85,
+            "widthScale": 1.5
+          },
+          {
+            "key": "terrace-shelf",
+            "lengthScale": 1.05,
+            "widthScale": 1.05
+          },
+          {
+            "key": "fracture-fan",
+            "lengthScale": 0.97,
+            "widthScale": 1.2
+          },
+          {
+            "key": "fallen-bundle",
+            "lengthScale": 0.8,
+            "widthScale": 1.37
+          },
+          {
+            "key": "clamp-bank",
+            "lengthScale": 0.93,
+            "widthScale": 0.9
+          },
+          {
+            "key": "torn-sheet",
+            "lengthScale": 1.1,
+            "widthScale": 1.15
+          },
+          {
+            "key": "compressed-wedge",
+            "lengthScale": 0.9,
+            "widthScale": 0.98
+          },
+          {
+            "key": "porous-break",
+            "lengthScale": 0.82,
+            "widthScale": 1.18
+          },
+          {
+            "key": "pleated-tear",
+            "lengthScale": 1.1,
+            "widthScale": 1.1
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 0,
+              "y": 1600
+            },
+            {
+              "x": 185,
+              "y": 1470
+            },
+            {
+              "x": 120,
+              "y": 1240
+            },
+            {
+              "x": 230,
+              "y": 1040
+            },
+            {
+              "x": 148,
+              "y": 820
+            },
+            {
+              "x": 216,
+              "y": 650
+            },
+            {
+              "x": 88,
+              "y": 450
+            },
+            {
+              "x": 97.816216,
+              "y": 403.372973
+            },
+            {
+              "x": 130,
+              "y": 365
+            },
+            {
+              "x": 240,
+              "y": 205
+            },
+            {
+              "x": 442.494305,
+              "y": 94.948747
+            },
+            {
+              "x": 520,
+              "y": 112
+            },
+            {
+              "x": 740,
+              "y": 58
+            },
+            {
+              "x": 920,
+              "y": 188
+            },
+            {
+              "x": 1120,
+              "y": 112
+            },
+            {
+              "x": 1320,
+              "y": 170
+            },
+            {
+              "x": 1500,
+              "y": 88
+            },
+            {
+              "x": 1750,
+              "y": 170
+            },
+            {
+              "x": 1960,
+              "y": 76
+            },
+            {
+              "x": 2140,
+              "y": 120
+            },
+            {
+              "x": 2304,
+              "y": 96
+            },
+            {
+              "x": 2304,
+              "y": 0
+            },
+            {
+              "x": 0,
+              "y": 0
+            }
+          ],
+          [
+            {
+              "x": 1190,
+              "y": 450
+            },
+            {
+              "x": 1270,
+              "y": 430
+            },
+            {
+              "x": 1210,
+              "y": 335
+            },
+            {
+              "x": 1080,
+              "y": 300
+            },
+            {
+              "x": 1050,
+              "y": 380
+            },
+            {
+              "x": 1060,
+              "y": 475
+            },
+            {
+              "x": 1170,
+              "y": 520
+            }
+          ],
+          [
+            {
+              "x": 800,
+              "y": 690
+            },
+            {
+              "x": 865,
+              "y": 595
+            },
+            {
+              "x": 745,
+              "y": 450
+            },
+            {
+              "x": 575,
+              "y": 425
+            },
+            {
+              "x": 485,
+              "y": 320
+            },
+            {
+              "x": 360,
+              "y": 340
+            },
+            {
+              "x": 510,
+              "y": 565
+            },
+            {
+              "x": 640,
+              "y": 585
+            }
+          ],
+          [
+            {
+              "x": 650,
+              "y": 1390
+            },
+            {
+              "x": 735,
+              "y": 1320
+            },
+            {
+              "x": 695,
+              "y": 1180
+            },
+            {
+              "x": 600,
+              "y": 1210
+            },
+            {
+              "x": 460,
+              "y": 1180
+            },
+            {
+              "x": 420,
+              "y": 1330
+            },
+            {
+              "x": 490,
+              "y": 1460
+            },
+            {
+              "x": 630,
+              "y": 1510
+            }
+          ],
+          [
+            {
+              "x": 1890,
+              "y": 1570
+            },
+            {
+              "x": 1740,
+              "y": 1680
+            },
+            {
+              "x": 1520,
+              "y": 1620
+            },
+            {
+              "x": 1370,
+              "y": 1710
+            },
+            {
+              "x": 1180,
+              "y": 1650
+            },
+            {
+              "x": 980,
+              "y": 1700
+            },
+            {
+              "x": 760,
+              "y": 1580
+            },
+            {
+              "x": 610,
+              "y": 1660
+            },
+            {
+              "x": 400,
+              "y": 1580
+            },
+            {
+              "x": 240,
+              "y": 1670
+            },
+            {
+              "x": 0,
+              "y": 1616
+            },
+            {
+              "x": 0,
+              "y": 1792
+            },
+            {
+              "x": 2304,
+              "y": 1792
+            },
+            {
+              "x": 2304,
+              "y": 112
+            },
+            {
+              "x": 2240,
+              "y": 210
+            },
+            {
+              "x": 2130,
+              "y": 300
+            },
+            {
+              "x": 2220,
+              "y": 450
+            },
+            {
+              "x": 2160,
+              "y": 610
+            },
+            {
+              "x": 2230,
+              "y": 780
+            },
+            {
+              "x": 2230,
+              "y": 940
+            },
+            {
+              "x": 2280,
+              "y": 1020
+            },
+            {
+              "x": 2180,
+              "y": 1160
+            },
+            {
+              "x": 2230,
+              "y": 1330
+            },
+            {
+              "x": 2140,
+              "y": 1460
+            },
+            {
+              "x": 2200,
+              "y": 1596
+            },
+            {
+              "x": 2257.739703,
+              "y": 1587.116969
+            },
+            {
+              "x": 2250,
+              "y": 1595
+            },
+            {
+              "x": 2176.981132,
+              "y": 1623.396226
+            },
+            {
+              "x": 2100,
+              "y": 1640
+            }
+          ],
+          [
+            {
+              "x": 1610,
+              "y": 595
+            },
+            {
+              "x": 1720,
+              "y": 540
+            },
+            {
+              "x": 1775,
+              "y": 430
+            },
+            {
+              "x": 1720,
+              "y": 320
+            },
+            {
+              "x": 1560,
+              "y": 295
+            },
+            {
+              "x": 1515,
+              "y": 400
+            },
+            {
+              "x": 1490,
+              "y": 520
+            }
+          ],
+          [
+            {
+              "x": 2070,
+              "y": 810
+            },
+            {
+              "x": 2090,
+              "y": 705
+            },
+            {
+              "x": 2010,
+              "y": 710
+            },
+            {
+              "x": 1920,
+              "y": 675
+            },
+            {
+              "x": 1880,
+              "y": 760
+            },
+            {
+              "x": 1910,
+              "y": 840
+            },
+            {
+              "x": 1990,
+              "y": 890
+            }
+          ],
+          [
+            {
+              "x": 1200,
+              "y": 980
+            },
+            {
+              "x": 1330,
+              "y": 1010
+            },
+            {
+              "x": 1445,
+              "y": 925
+            },
+            {
+              "x": 1350,
+              "y": 845
+            },
+            {
+              "x": 1220,
+              "y": 860
+            },
+            {
+              "x": 1120,
+              "y": 790
+            },
+            {
+              "x": 1020,
+              "y": 845
+            },
+            {
+              "x": 1070,
+              "y": 925
+            },
+            {
+              "x": 1020,
+              "y": 1030
+            },
+            {
+              "x": 1140,
+              "y": 1090
+            }
+          ],
+          [
+            {
+              "x": 1920,
+              "y": 1210
+            },
+            {
+              "x": 1990,
+              "y": 1230
+            },
+            {
+              "x": 2060,
+              "y": 1140
+            },
+            {
+              "x": 1990,
+              "y": 1015
+            },
+            {
+              "x": 1890,
+              "y": 1040
+            },
+            {
+              "x": 1770,
+              "y": 1010
+            },
+            {
+              "x": 1760,
+              "y": 1130
+            },
+            {
+              "x": 1720,
+              "y": 1240
+            },
+            {
+              "x": 1840,
+              "y": 1320
+            }
+          ],
+          [
+            {
+              "x": 1430,
+              "y": 1490
+            },
+            {
+              "x": 1390,
+              "y": 1380
+            },
+            {
+              "x": 1330,
+              "y": 1400
+            },
+            {
+              "x": 1230,
+              "y": 1360
+            },
+            {
+              "x": 1180,
+              "y": 1440
+            },
+            {
+              "x": 1240,
+              "y": 1530
+            },
+            {
+              "x": 1350,
+              "y": 1590
+            }
+          ]
+        ],
+        "spawnCandidates": [
+          {
+            "x": 248,
+            "y": 864
+          },
+          {
+            "x": 688,
+            "y": 1556
+          },
+          {
+            "x": 800,
+            "y": 380
+          },
+          {
+            "x": 1262,
+            "y": 228
+          },
+          {
+            "x": 1702,
+            "y": 264
+          },
+          {
+            "x": 2062,
+            "y": 1534
+          },
+          {
+            "x": 1472,
+            "y": 1592
+          },
+          {
+            "x": 874,
+            "y": 818
+          }
+        ],
+        "extraction": {
+          "minPathDistancePx": 920,
+          "minEuclideanDistancePx": 560,
+          "minPathFraction": 0.28,
+          "maxPathFraction": 1,
+          "clearanceHalfSize": 28,
+          "regionCols": 4,
+          "regionRows": 3,
+          "distanceBands": 3
+        },
+        "deployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        }
+      },
+      "package": {
+        "id": "r100-cinder-ridge",
+        "algorithm": "r100-native",
+        "version": 3,
+        "algorithmRevision": 7,
+        "materials": {
+          "granular-ridge": {
+            "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+            "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+            "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+          }
+        },
+        "dependencyHash": "9f7fdc69",
+        "grade": "medium"
+      }
+    },
+    "geometry": "c250a3ea",
+    "spawn": {
+      "x": 2060,
+      "y": 1532
+    },
+    "extraction": {
+      "x": 1172,
+      "y": 1372
+    }
+  }
+]

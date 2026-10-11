@@ -1,0 +1,35 @@
+{
+  "status": "failed",
+  "startedAt": "2026-10-11T12:26:50.167Z",
+  "scope": "Small independent geometry counterexamples and ground/edge-field fixtures. Not full production generation, runtime performance, browser pixels or visual quality.",
+  "sourceHashes": {
+    "src/generation/world-study/native-volume-erosion.ts": "4ea1a9208f2f24a2b50f458035b9f46f66cb9081f0d24b8833fb0823a35dcd79",
+    "src/generation/world-study/master-ground-field.ts": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783",
+    "src/systems/r100-world/surface-fields.ts": "29da511c97b2ffc4d4b6d73526d853994432356cd5d9c70f9656f4e09fdf32a6",
+    "src/systems/r100-world/ground.ts": "36fc10eb24d9d111619c968367e937b82693d31d775a8d07800831794aa57f0d",
+    "src/generated/r100-native-worlds.ts": "5ab3e1de06a5c5385a82dafbc5051bc54357ddf37ee0b1d2de253a20896dc2e8",
+    "tools/spatial-rollout/check-positive-ground-qa.mjs": "741715cb506c7fad02feee27f02f5dfe96c2a77f4bf2647fb09033cebaf4be93"
+  },
+  "cases": [
+    {
+      "name": "concave ring and strictly enclosed hole accept either winding",
+      "status": "passed"
+    },
+    {
+      "name": "hole vertices inside but edges cross concave exterior must reject",
+      "status": "passed"
+    },
+    {
+      "name": "internal hole touching concave coast must reject",
+      "status": "passed"
+    }
+  ],
+  "failures": [
+    {
+      "name": "ground alpha and edge fields follow independent 8px support, including partial 32px cells",
+      "error": "AssertionError [ERR_ASSERTION]: Ground alpha at 0/0\n\n255 !== 0\n\n    at file:///Users/yilungao/coh/tools/spatial-rollout/check-positive-ground-qa.mjs:94:12\n    at check (file:///Users/yilungao/coh/tools/spatial-rollout/check-positive-ground-qa.mjs:29:62)\n    at file:///Users/yilungao/coh/tools/spatial-rollout/check-positive-ground-qa.mjs:63:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:578:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)"
+    }
+  ],
+  "changedSourcesDuringRun": [],
+  "finishedAt": "2026-10-11T12:26:50.484Z"
+}

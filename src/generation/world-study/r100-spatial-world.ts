@@ -8,7 +8,7 @@ import { bodyHasSupport } from '@/systems/ai/physical-grid';
 import { TileGrid } from '@/systems/tile-grid';
 import { TileType, type Vector2 } from '@/types/game-types';
 import { createMasterWorld, type MasterDefinition, type MasterWorld } from './r100-master-world';
-import { validateNativeErosion } from './native-volume-erosion';
+import { validateNativeErosion, validateNativeTerrainOutline } from './native-volume-erosion';
 import type { PollutionGradeDefinition } from './pollution-grade';
 import type { WorldProfile } from './types';
 import { buildSpatialExtractionField, selectSpatialExtraction } from './spatial-extraction-selection';
@@ -24,6 +24,7 @@ export function createR100SpatialPolicy(worldId: string): R100SpatialPolicy {
   const { organization: _organization, placementJitterPx, ...organizationRules } = organization;
   const group = R100_SPATIAL_AUTHORED_GROUPS.find(row => row.worldId === worldId);
   const sectors = R100_SPATIAL_SECTORS.find(row => row.worldId === worldId);
+  const terrainOutline = sectors && 'terrainOutline' in sectors ? sectors.terrainOutline : undefined;
   const policy: R100SpatialPolicy = {
     version: 1, worldId, sourceHash: R100_SPATIAL_SOURCE_HASH, organization: world.organization,
     organizationRules: sectors?.organizationRules ?? (group ? { ...organizationRules, solidCount: group.solidCount, reliefCount: group.reliefCount } : organizationRules),
@@ -33,6 +34,7 @@ export function createR100SpatialPolicy(worldId: string): R100SpatialPolicy {
     placements: sectors?.placements ?? group?.placements ?? R100_SPATIAL_PLACEMENTS.filter(row => row.organization === world.organization).map(({ organization: _organization, ...placement }) => placement),
     materials: R100_SPATIAL_MATERIALS,
     erosion: sectors?.erosion ?? group?.erosion ?? R100_SPATIAL_EROSION.filter(row => row.organization === world.organization).map(row => row.points),
+    ...(terrainOutline === undefined ? {} : { terrainOutline }),
     spawnCandidates: sectors?.spawnCandidates ?? R100_SPATIAL_ANCHORS.filter(row => row.organization === world.organization).map(({ x, y }) => ({ x, y })),
     extraction: {
       minPathDistancePx: CONFIG.extraction_min_path_distance, minEuclideanDistancePx: CONFIG.extraction_min_euclidean_distance,
@@ -54,7 +56,8 @@ const integer = (value: unknown, lo: number, hi: number): value is number => ran
  * frozen policy with current CSV contents, world assignments or source hashes. */
 export function validR100SpatialPolicy(value: unknown, worldId: string): value is R100SpatialPolicy {
   try {
-    if (!object(value) || !keysAre(value, ['version', 'worldId', 'sourceHash', 'organization', 'organizationRules', 'groupTransform', 'cols', 'rows', 'mirrorX', 'mirrorY', 'placementJitterPx', 'placements', 'materials', 'erosion', 'spawnCandidates', 'extraction', 'deployment'])
+    if (!object(value) || !keysAre(value, ['version', 'worldId', 'sourceHash', 'organization', 'organizationRules', 'groupTransform', 'cols', 'rows', 'mirrorX', 'mirrorY', 'placementJitterPx', 'placements', 'materials', 'erosion', 'spawnCandidates', 'extraction', 'deployment',
+      ...(Object.prototype.hasOwnProperty.call(value, 'terrainOutline') ? ['terrainOutline'] : [])])
       || value.version !== 1 || value.worldId !== worldId || !/^[a-z][a-z0-9-]+$/.test(worldId)
       || typeof value.sourceHash !== 'string' || !/^[0-9a-f]{64}$/.test(value.sourceHash)
       || !['offset-divides', 'broken-bay', 'staggered-reaches', 'single-buttress', 'joined-quarters', 'authored-group', 'authored-sectors'].includes(value.organization as string)
@@ -100,6 +103,10 @@ export function validR100SpatialPolicy(value: unknown, worldId: string): value i
     }
     if (value.erosion.some(polygon => !Array.isArray(polygon) || polygon.length < 3 || polygon.length > 32 || !polygon.every(point))) return false;
     validateNativeErosion(value.erosion, width, height);
+    if (Object.prototype.hasOwnProperty.call(value, 'terrainOutline')) {
+      if (value.organization !== 'authored-sectors') return false;
+      validateNativeTerrainOutline(value.terrainOutline, width, height, value.erosion);
+    }
     const e = value.extraction;
     if (!object(e) || !keysAre(e, ['minPathDistancePx', 'minEuclideanDistancePx', 'minPathFraction', 'maxPathFraction', 'clearanceHalfSize', 'regionCols', 'regionRows', 'distanceBands'])
       || !range(e.minPathDistancePx, 700, 8000) || !range(e.minEuclideanDistancePx, 400, 2000)
@@ -111,6 +118,8 @@ export function validR100SpatialPolicy(value: unknown, worldId: string): value i
 }
 
 export function createR100SpatialDefinition(native: MasterDefinition, policy: R100SpatialPolicy, seed: number): { definition: MasterDefinition; spawnIndex: number } {
+  if (Object.prototype.hasOwnProperty.call(native, 'terrainOutline'))
+    throw new Error('The source mother form cannot override the frozen spatial terrain outline');
   const width = policy.cols * 32, height = policy.rows * 32;
   const transform = (p: Readonly<Vector2>): Vector2 => ({ x: policy.mirrorX ? width - p.x : p.x, y: policy.mirrorY ? height - p.y : p.y });
   const solids = native.instances.filter(instance => instance.role === 'solid');
@@ -160,6 +169,7 @@ export function createR100SpatialDefinition(native: MasterDefinition, policy: R1
     spawn_x: spawn.x, spawn_y: spawn.y, exit_x: spawn.x, exit_y: spawn.y,
     search_x: search.x, search_y: search.y, enemy_x: enemy.x, enemy_y: enemy.y,
     instances, erosion: policy.erosion.map(polygon => polygon.map(transform)),
+    ...(policy.terrainOutline === undefined ? {} : { terrainOutline: policy.terrainOutline.map(transform) }),
   } };
 }
 

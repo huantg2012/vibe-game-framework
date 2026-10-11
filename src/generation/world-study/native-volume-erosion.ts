@@ -60,6 +60,21 @@ export function validateNativeErosion(value: unknown, width = 1024, height = 768
   }
 }
 
+/** Positive terrain is one bounded simple ring. Its optional absence is the
+ * legacy rectangular terrain contract; null/undefined are not valid rings. */
+export function validateNativeTerrainOutline(value: unknown, width: number, height: number,
+  erosion: NativeErosionPolygons = []): asserts value is readonly NativeErosionPoint[] {
+  validateNativeErosion([value], width, height);
+  const outline = value as readonly NativeErosionPoint[];
+  for (const hole of erosion) {
+    if (hole.some(point => !contains(outline, point))) throw new Error('Terrain erosion must remain inside the positive outline');
+    for (let i = 0; i < outline.length; i++) for (let j = 0; j < hole.length; j++) {
+      if (intersects(outline[i]!, outline[(i + 1) % outline.length]!, hole[j]!, hole[(j + 1) % hole.length]!))
+        throw new Error('Terrain erosion must not cross or touch the positive outline');
+    }
+  }
+}
+
 /** Empty CSV cells preserve the historical grade default exactly. */
 export function parseNativeErosionCell(text: string, constructionVersion: number): NativeErosionPolygons | undefined {
   if (text === '') return undefined;
