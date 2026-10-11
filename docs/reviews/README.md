@@ -6,6 +6,8 @@
 
 ## 从哪里读
 
+- [世界碎片地图构型推演](2026-10-11-world-fragment-conception.md) · 原世界秩序、开放行动面与信息分隔；三路知情审查，新方向未实施
+
 - [裂隙彼端正式合入审查](2026-10-10-preparation-integration.md) · 1项P1、1项P2、1项P3，待整改
 
 - [成长样板复评](growth-sample-review-2026-09-21.md) · [交互摘要](interactive/growth-sample-review-2026-09-21.html)
