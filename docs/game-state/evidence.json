@@ -8465,5 +8465,79 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E217",
+    "kind": "human",
+    "result": "partial",
+    "date": "2026-10-11",
+    "revision": "b8bd2667",
+    "scope": "用户明确“空洞数量 pass，障碍物太多了，减少约 30”。余烬脊8内部VOID的数量获认可，同时要求实体减约三成。",
+    "limitations": "只认可空洞数量，不覆盖形状/正常视野全部行为、整体地图、实体减量结果或另107世界。",
+    "sources": [
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      },
+      {
+        "path": "docs/qa/rift-spatial-obstacle-reduction-2026-10-11.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E218",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-11",
+    "revision": "b8bd2667+DEC-200-worktree",
+    "scope": "余烬脊实体32→22（-31.25%），保留3主脊/11中/8短。8内部VOID、岸形、4低床及保留实例不变；其余107逐值不变。低中重完整生成、实际中档生产全图/入场未知出口、旧32实体配方精确恢复和构建通过。",
+    "limitations": "准确源绑定browser/source-snapshot.json。限定请求种子20261010，低中重分别第2/3/4候选成功；不证明全种子、自然探索、重测性能或全库品质。新实体密度供用户复看，空洞数量局部认可另列E217；I14/P49保持开放。",
+    "sources": [
+      {
+        "path": "docs/qa/rift-spatial-obstacle-reduction-2026-10-11.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-obstacle-reduction-2026-10-11/production.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-obstacle-reduction-2026-10-11/scope.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-obstacle-reduction-2026-10-11/preservation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-obstacle-reduction-2026-10-11/deletion.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-obstacle-reduction-2026-10-11/browser/source-snapshot.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-obstacle-reduction-2026-10-11/browser/capture.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-obstacle-reduction-2026-10-11/previous-recipe.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-obstacle-reduction-2026-10-11/frozen.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-obstacle-reduction-2026-10-11/build.log",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-obstacle-reduction-2026-10-11/art-review.md",
+        "role": "art"
+      }
+    ]
   }
 ]

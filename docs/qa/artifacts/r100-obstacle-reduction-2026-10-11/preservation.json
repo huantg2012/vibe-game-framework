@@ -1,0 +1,93 @@
+{
+  "status": "passed",
+  "baseline": "b8bd2667",
+  "scope": "Exactly ten cinder-ridge solid rows deleted; all retained rows unchanged. All other spatial CSVs byte-identical, including eight VOID cuts, authored erosion, outer shore and anchors. No runtime changes.",
+  "removedIds": [
+    10,
+    12,
+    22,
+    25,
+    29,
+    32,
+    36,
+    38,
+    39,
+    41
+  ],
+  "beforeSolid": 32,
+  "after": {
+    "solid": 22,
+    "relief": 4
+  },
+  "reductionPercent": 31.25,
+  "unchangedSpatialFiles": [
+    {
+      "path": "data/rift-spatial-sector-cuts.csv",
+      "sha256": "30e68692ba55d3e8cadc2757f5dc90b5867f773bd6b02931746ee48cfede15d1"
+    },
+    {
+      "path": "data/rift-spatial-sector-anchors.csv",
+      "sha256": "78d2c0e647449607d4a6343de6d98c175494b2ffae8ae1251593ee3d74634ba2"
+    },
+    {
+      "path": "data/rift-spatial-materials.csv",
+      "sha256": "1a63547da080ad5f4903acf34051b798ad43c13c47e402267e16dfc5207e3100"
+    },
+    {
+      "path": "data/rift-spatial-policy.csv",
+      "sha256": "62744dd396971d1a222935452324b37e982a1ffaa42f005d7f9517723422549f"
+    },
+    {
+      "path": "data/rift-spatial-layouts.csv",
+      "sha256": "df60ea47965926ac405290d80275c2f9e3eaf4eec37031da4d950fe8421d1d57"
+    },
+    {
+      "path": "data/rift-spatial-organizations.csv",
+      "sha256": "90d427db727ca7033d578fd4f0e8d44fbd0cba45a49b828359b4f787c1695716"
+    },
+    {
+      "path": "data/rift-spatial-authored-erosion.csv",
+      "sha256": "064e2220e0244471370ca2055bd2dabbc4461fdfa9c56d0ea5310bbf0413c38a"
+    },
+    {
+      "path": "data/rift-spatial-worlds.csv",
+      "sha256": "15cde729e97a3c6892c5606f10a0c7f8b2ae3bf65b7933e170e8018127c95734"
+    },
+    {
+      "path": "data/rift-spatial-deployment.csv",
+      "sha256": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    },
+    {
+      "path": "data/rift-spatial-erosion.csv",
+      "sha256": "3fc991148491ca06447f852582549a9626d42d8550d0ebffd4e0467dc30a92b4"
+    },
+    {
+      "path": "data/rift-spatial-sectors.csv",
+      "sha256": "e936851d090f2469e139b9ac04a277526672ef4b649312cf67e3838acb94a43d"
+    },
+    {
+      "path": "data/rift-spatial-anchors.csv",
+      "sha256": "5b3859c55310182b43322574bced45fdf23557858b36802f218a70a645d7741a"
+    },
+    {
+      "path": "data/rift-spatial-prototype-erosion.csv",
+      "sha256": "49ba07c1826585ca6d267bc203f693b881e3fd4877fc6bf7a1899d84e0147770"
+    },
+    {
+      "path": "data/rift-spatial-prototype-volumes.csv",
+      "sha256": "e2be402b400e08e7707da952b8ca452ec59e8ce5d6d8f207a9189ef02f238c3e"
+    },
+    {
+      "path": "data/rift-spatial-authored-groups.csv",
+      "sha256": "7b3f87e5892d31c0fecc80cfd67053b9dfcffebe52628ebc716ea2f470522f17"
+    },
+    {
+      "path": "data/rift-spatial-prototype.csv",
+      "sha256": "33e9577bc3973eec241ca39d7a150085b889c236957fec44f00c14fee48b501f"
+    },
+    {
+      "path": "data/rift-spatial-prototype-anchors.csv",
+      "sha256": "d1536a87a69d32b0d2d753a3cc06aeba747c50789b06ccfea0bcc55a8f698d41"
+    }
+  ]
+}

@@ -77,7 +77,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-spatial-sector-layouts.csv",
-      "sha256": "534f8f2b0683d880d13e1581e072162c51b3a2650577253bddec7436145aa22c"
+      "sha256": "6c1a18de701090b52a8dfd5583a13b70a42be924cc1258831916fb56df8061b4"
     },
     {
       "path": "data/rift-spatial-sectors.csv",
@@ -169,7 +169,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generated/r100-spatial-data.ts",
-      "sha256": "3e9b16868bcdf26b4a27db4fa90ffba194323552e385d2bf3a8b8a654cc17374"
+      "sha256": "4f4e051d11af7a5d5559453a1eba7f403acdce0b0f309db4e3dff3111b3d650d"
     },
     {
       "path": "src/generated/rift-spatial-deployment-data.ts",
@@ -324,7 +324,7 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "2a666f37f57aa8d74904f488cec644f7ced77187a5ee03c804258b529cadb862"
     }
   ],
-  "hash": "9010cc628792a546ee102df160db80eefc7ea01cbe84083fe3e5296646d3664c"
+  "hash": "03442a9cf3f33a867b8777fe2aeffb921f5179086bca7297663ddd0f71a3e9d8"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {

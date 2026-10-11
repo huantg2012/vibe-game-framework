@@ -1,0 +1,4596 @@
+{
+  "status": "passed",
+  "scope": "Complete production admissions at stated requested seed; quotas, real body support, patrol sweeps, geometry metrics and frozen recipe integrity. Optional independent worker-wire regeneration, not browser or human acceptance.",
+  "seed": 20261010,
+  "recovery": false,
+  "sourceHashes": {
+    "src/generation/world-study/r100-spatial-world.ts": "6e98a91499825af8a1451e553a0c6ad49a083d0be308b9488cac40d697d11ce0",
+    "src/generated/r100-spatial-data.ts": "4f4e051d11af7a5d5559453a1eba7f403acdce0b0f309db4e3dff3111b3d650d",
+    "src/generation/world-study/r100-package.ts": "ba994fc3bc8f1dc6a65f98b3c41d72b56a60ccd0aa3d2376bcb495c3f2406fe9",
+    "src/generation/world-study/r100-production-map.ts": "ea8a7e0c5502559232615179c03270d5211ea175cb35b4674495619c6eff287c",
+    "src/generation/world-study/r100-master-world.ts": "7e477de2e9a2093b06ad1e55f354559922a363b2413fd50b9c402cd17603c8c5",
+    "src/generation/world-study/r100-pollution.ts": "328804c3dd7423627fc31a4c119cff81cbe8078c0575094cc5c2c5d4eb1538dc",
+    "src/generation/world-study/r100-expedition.ts": "f55c7bc0e9f50878785f9a691b53cfb6bb5f7ea882265e3aebe0dd32d1d6b620",
+    "src/generation/world-study/spatial-extraction-selection.ts": "afccec7d982b52e5cbf1c2dd87d67e83d0eaffe4b87ce03b271645294a003308",
+    "src/generation/world-study/native-volume-ground-edge.ts": "698e5ab1b42a3dccd9b4a68fcfd52a462df039b39692c146d2e67c07a1aeeaab",
+    "src/generation/world-study/r100-spatial-deployment.ts": "cfd995473bde42450f8ffa0fbfb90119d20697ddce5458abb98db7982b916818",
+    "src/generated/rift-spatial-deployment-data.ts": "0a01b4a8eb97ef95c9365b0184a5f494d740ae1fd94647b59749bbfbb175aeb4",
+    "src/generation/world-study/r100-patrol-windows.ts": "9dfe9ba3ca1a8486c771b06590b9a8efa21ce5add55b32a94877f66b16d761ae",
+    "tools/spatial-rollout/route-obstruction.mjs": "d39a8c22dace665de7b5ea9311ac8164cdae8963715f6b7f36045fb1c1264360",
+    "tools/spatial-rollout/check-production.mjs": "f19f94665965146012f6efb0ddaa4dae369addfb610f357d001f67e89987f122",
+    "src/generated/r100-package-manifest.ts": "6ed31d9f075694d46aae8b3623a627c2e68911aadba57b718b4766b2b0bb3e64",
+    "src/generation/world-study/native-volume-erosion.ts": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992",
+    "src/generation/world-study/r100-spatial-types.ts": "85fa9677e1040a3ad1ea40e781b923bfcff710fafa17da0b7b00c8577432270c",
+    "data/rift-spatial-anchors.csv": "5b3859c55310182b43322574bced45fdf23557858b36802f218a70a645d7741a",
+    "data/rift-spatial-authored-erosion.csv": "064e2220e0244471370ca2055bd2dabbc4461fdfa9c56d0ea5310bbf0413c38a",
+    "data/rift-spatial-authored-groups.csv": "7b3f87e5892d31c0fecc80cfd67053b9dfcffebe52628ebc716ea2f470522f17",
+    "data/rift-spatial-deployment.csv": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3",
+    "data/rift-spatial-erosion.csv": "3fc991148491ca06447f852582549a9626d42d8550d0ebffd4e0467dc30a92b4",
+    "data/rift-spatial-layouts.csv": "df60ea47965926ac405290d80275c2f9e3eaf4eec37031da4d950fe8421d1d57",
+    "data/rift-spatial-materials.csv": "1a63547da080ad5f4903acf34051b798ad43c13c47e402267e16dfc5207e3100",
+    "data/rift-spatial-organizations.csv": "90d427db727ca7033d578fd4f0e8d44fbd0cba45a49b828359b4f787c1695716",
+    "data/rift-spatial-policy.csv": "62744dd396971d1a222935452324b37e982a1ffaa42f005d7f9517723422549f",
+    "data/rift-spatial-prototype-anchors.csv": "d1536a87a69d32b0d2d753a3cc06aeba747c50789b06ccfea0bcc55a8f698d41",
+    "data/rift-spatial-prototype-erosion.csv": "49ba07c1826585ca6d267bc203f693b881e3fd4877fc6bf7a1899d84e0147770",
+    "data/rift-spatial-prototype-volumes.csv": "e2be402b400e08e7707da952b8ca452ec59e8ce5d6d8f207a9189ef02f238c3e",
+    "data/rift-spatial-prototype.csv": "33e9577bc3973eec241ca39d7a150085b889c236957fec44f00c14fee48b501f",
+    "data/rift-spatial-sector-anchors.csv": "78d2c0e647449607d4a6343de6d98c175494b2ffae8ae1251593ee3d74634ba2",
+    "data/rift-spatial-sector-cuts.csv": "30e68692ba55d3e8cadc2757f5dc90b5867f773bd6b02931746ee48cfede15d1",
+    "data/rift-spatial-sector-layouts.csv": "6c1a18de701090b52a8dfd5583a13b70a42be924cc1258831916fb56df8061b4",
+    "data/rift-spatial-sectors.csv": "e936851d090f2469e139b9ac04a277526672ef4b649312cf67e3838acb94a43d",
+    "data/rift-spatial-worlds.csv": "15cde729e97a3c6892c5606f10a0c7f8b2ae3bf65b7933e170e8018127c95734"
+  },
+  "cases": [
+    {
+      "world": "cinder-ridge",
+      "grade": "low",
+      "requestedSeed": 20261010,
+      "effectiveSeed": 1865353290,
+      "attempts": 2,
+      "generationMs": 2746.884042,
+      "signature": "4b391b45",
+      "recipeBytes": 11119,
+      "spawn": {
+        "x": 2060,
+        "y": 1532
+      },
+      "extraction": {
+        "x": 1196,
+        "y": 1212
+      },
+      "extractionStraightPx": 921.3555231288299,
+      "extractionRoutePx": 1044.54833995939,
+      "terrainFill": 0.6479414682539683,
+      "solidRatio": 0.2907177033492823,
+      "reachableFraction": 1,
+      "reachableSeats": 24825,
+      "instances": 26,
+      "patrolSegments": 6,
+      "spatial": {
+        "version": 1,
+        "worldId": "cinder-ridge",
+        "sourceHash": "d8f87bd88076b77157d9a2b6bc269879181e717e17c91261f0cbe22684034df1",
+        "organization": "authored-sectors",
+        "width": 2304,
+        "height": 1792,
+        "terrainFillRatio": 0.6479414682539683,
+        "solidTerrainRatio": 0.2907177033492823,
+        "bodyReachableRatio": 1,
+        "unreachableBodySeats": 0,
+        "spawnIndex": 5,
+        "spawnRelocationPx": 2.8284271247461903,
+        "extraction": {
+          "point": {
+            "x": 1196,
+            "y": 1212
+          },
+          "cell": 43637,
+          "pathDistancePx": 1044.54833995939,
+          "interactionPathDistancePx": 994.6072144624356,
+          "euclideanDistancePx": 921.3555231288299,
+          "pathFraction": 0.3884583013253591,
+          "regionId": 10,
+          "distanceBand": 0,
+          "candidateCount": 12841,
+          "regionCount": 11
+        },
+        "extractionCandidateField": {
+          "reachableCount": 24825,
+          "maxPathDistancePx": 2688.958728377162,
+          "minCandidatePathDistancePx": 968.0975464705577,
+          "maxCandidatePathDistancePx": 2541.645019878177,
+          "candidateCount": 12841,
+          "regionCount": 11,
+          "distanceBandCount": 3,
+          "regionCounts": {
+            "0": 1019,
+            "1": 2253,
+            "2": 1276,
+            "3": 1224,
+            "4": 1335,
+            "5": 1565,
+            "6": 967,
+            "7": 38,
+            "8": 1146,
+            "9": 1744,
+            "10": 274
+          },
+          "distanceBandCounts": {
+            "0": 3860,
+            "1": 6382,
+            "2": 2599
+          }
+        },
+        "solidObjectCount": 22
+      },
+      "expedition": {
+        "reachableBodySeats": 24825,
+        "extractionRoutePx": 1044.54833995939,
+        "maximumExtraTravelPx": 3176.8207768355387,
+        "directReturnRoutePx": 994.6072144624356,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 56.23549801218314,
+            "approachRoutePx": 139.31370849898477,
+            "interactionSeats": 98,
+            "pollutionDistancePx": 652.1065004864248
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 27.31370849898476,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 713.9523793643383
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 501.49033200812187,
+            "approachRoutePx": 1054.3919189857863,
+            "interactionSeats": 74,
+            "pollutionDistancePx": 140.43843832875572
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 529.803173955331,
+            "approachRoutePx": 1309.449926937056,
+            "interactionSeats": 93,
+            "pollutionDistancePx": 522.7284517930267
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 510.72496346852745,
+            "approachRoutePx": 725.3523804664967,
+            "interactionSeats": 82,
+            "pollutionDistancePx": 356.0224712009061
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 1023.8620484583753,
+            "approachRoutePx": 799.5290039756339,
+            "interactionSeats": 80,
+            "pollutionDistancePx": 20
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 1012,
+              "y": 1620
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 980,
+              "y": 956
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 1724,
+              "y": 1012
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 2180,
+              "y": 852
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 2,
+        "kindlingCount": 4,
+        "contaminantCount": 2
+      },
+      "obstruction": {
+        "world": "cinder-ridge",
+        "grade": "low",
+        "requestedSeed": 20261010,
+        "effectiveSeed": 1865353290,
+        "attempts": 2,
+        "organization": "authored-sectors",
+        "spatialSourceHash": "d8f87bd88076b77157d9a2b6bc269879181e717e17c91261f0cbe22684034df1",
+        "width": 2304,
+        "height": 1792,
+        "supportedSeats": 24825,
+        "reachableSeats": 24825,
+        "reachableFraction": 1,
+        "solidRatio": 0.2907177033492823,
+        "extractionInteractionPx": 994.6072144624356,
+        "candidateGroups": 25,
+        "groupsFound": 2,
+        "status": "passed",
+        "groups": [
+          {
+            "passed": true,
+            "group": {
+              "id": "solid-22101",
+              "kind": "solid",
+              "sourceSolidIds": [
+                19,
+                27,
+                31,
+                33
+              ],
+              "blockedCells": 2582,
+              "bounds": {
+                "x": 1360,
+                "y": 608,
+                "width": 480,
+                "height": 736
+              },
+              "center": {
+                "x": 1600,
+                "y": 976
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 980,
+              "from": {
+                "x": 1460,
+                "y": 980
+              },
+              "to": {
+                "x": 1732,
+                "y": 980
+              },
+              "straightPx": 272,
+              "directSweepFraction": 0.06617610661764747,
+              "groupHitCells": [
+                {
+                  "x": 1492,
+                  "y": 980
+                },
+                {
+                  "x": 1500,
+                  "y": 980
+                },
+                {
+                  "x": 1508,
+                  "y": 980
+                },
+                {
+                  "x": 1516,
+                  "y": 980
+                },
+                {
+                  "x": 1524,
+                  "y": 980
+                },
+                {
+                  "x": 1532,
+                  "y": 980
+                },
+                {
+                  "x": 1540,
+                  "y": 980
+                },
+                {
+                  "x": 1548,
+                  "y": 980
+                },
+                {
+                  "x": 1556,
+                  "y": 980
+                },
+                {
+                  "x": 1564,
+                  "y": 980
+                },
+                {
+                  "x": 1572,
+                  "y": 980
+                },
+                {
+                  "x": 1580,
+                  "y": 980
+                },
+                {
+                  "x": 1588,
+                  "y": 980
+                },
+                {
+                  "x": 1596,
+                  "y": 980
+                },
+                {
+                  "x": 1604,
+                  "y": 980
+                },
+                {
+                  "x": 1612,
+                  "y": 980
+                },
+                {
+                  "x": 1620,
+                  "y": 980
+                },
+                {
+                  "x": 1628,
+                  "y": 980
+                },
+                {
+                  "x": 1636,
+                  "y": 980
+                },
+                {
+                  "x": 1644,
+                  "y": 980
+                },
+                {
+                  "x": 1652,
+                  "y": 980
+                },
+                {
+                  "x": 1660,
+                  "y": 980
+                },
+                {
+                  "x": 1668,
+                  "y": 980
+                },
+                {
+                  "x": 1676,
+                  "y": 980
+                },
+                {
+                  "x": 1684,
+                  "y": 980
+                },
+                {
+                  "x": 1692,
+                  "y": 980
+                },
+                {
+                  "x": 1700,
+                  "y": 980
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 1024.6660889654818,
+              "cellCount": 115,
+              "segmentCount": 31,
+              "points": [
+                {
+                  "x": 1460,
+                  "y": 980
+                },
+                {
+                  "x": 1460,
+                  "y": 1148
+                },
+                {
+                  "x": 1404,
+                  "y": 1204
+                },
+                {
+                  "x": 1404,
+                  "y": 1212
+                },
+                {
+                  "x": 1388,
+                  "y": 1228
+                },
+                {
+                  "x": 1388,
+                  "y": 1244
+                },
+                {
+                  "x": 1380,
+                  "y": 1252
+                },
+                {
+                  "x": 1380,
+                  "y": 1300
+                },
+                {
+                  "x": 1388,
+                  "y": 1308
+                },
+                {
+                  "x": 1388,
+                  "y": 1316
+                },
+                {
+                  "x": 1396,
+                  "y": 1324
+                },
+                {
+                  "x": 1396,
+                  "y": 1332
+                },
+                {
+                  "x": 1412,
+                  "y": 1348
+                },
+                {
+                  "x": 1420,
+                  "y": 1348
+                },
+                {
+                  "x": 1428,
+                  "y": 1356
+                },
+                {
+                  "x": 1540,
+                  "y": 1356
+                },
+                {
+                  "x": 1548,
+                  "y": 1348
+                },
+                {
+                  "x": 1564,
+                  "y": 1348
+                },
+                {
+                  "x": 1572,
+                  "y": 1340
+                },
+                {
+                  "x": 1580,
+                  "y": 1340
+                },
+                {
+                  "x": 1588,
+                  "y": 1332
+                },
+                {
+                  "x": 1596,
+                  "y": 1332
+                },
+                {
+                  "x": 1612,
+                  "y": 1316
+                },
+                {
+                  "x": 1620,
+                  "y": 1316
+                },
+                {
+                  "x": 1684,
+                  "y": 1252
+                },
+                {
+                  "x": 1684,
+                  "y": 1236
+                },
+                {
+                  "x": 1692,
+                  "y": 1228
+                },
+                {
+                  "x": 1692,
+                  "y": 1212
+                },
+                {
+                  "x": 1700,
+                  "y": 1204
+                },
+                {
+                  "x": 1700,
+                  "y": 1108
+                },
+                {
+                  "x": 1732,
+                  "y": 1076
+                },
+                {
+                  "x": 1732,
+                  "y": 980
+                }
+              ],
+              "ratio": 3.7671547388436815,
+              "extraPx": 752.6660889654813
+            },
+            "negativeHalfPlane": {
+              "distancePx": 2320.8611819065986,
+              "cellCount": 253,
+              "segmentCount": 71,
+              "points": [
+                {
+                  "x": 1460,
+                  "y": 980
+                },
+                {
+                  "x": 1460,
+                  "y": 940
+                },
+                {
+                  "x": 1452,
+                  "y": 932
+                },
+                {
+                  "x": 1452,
+                  "y": 908
+                },
+                {
+                  "x": 1412,
+                  "y": 868
+                },
+                {
+                  "x": 1404,
+                  "y": 868
+                },
+                {
+                  "x": 1372,
+                  "y": 836
+                },
+                {
+                  "x": 1220,
+                  "y": 836
+                },
+                {
+                  "x": 1212,
+                  "y": 828
+                },
+                {
+                  "x": 1204,
+                  "y": 828
+                },
+                {
+                  "x": 1188,
+                  "y": 812
+                },
+                {
+                  "x": 1180,
+                  "y": 812
+                },
+                {
+                  "x": 1164,
+                  "y": 796
+                },
+                {
+                  "x": 1156,
+                  "y": 796
+                },
+                {
+                  "x": 1140,
+                  "y": 780
+                },
+                {
+                  "x": 1052,
+                  "y": 780
+                },
+                {
+                  "x": 1036,
+                  "y": 764
+                },
+                {
+                  "x": 1036,
+                  "y": 756
+                },
+                {
+                  "x": 1028,
+                  "y": 748
+                },
+                {
+                  "x": 1028,
+                  "y": 676
+                },
+                {
+                  "x": 1036,
+                  "y": 668
+                },
+                {
+                  "x": 1044,
+                  "y": 668
+                },
+                {
+                  "x": 1068,
+                  "y": 644
+                },
+                {
+                  "x": 1076,
+                  "y": 644
+                },
+                {
+                  "x": 1100,
+                  "y": 620
+                },
+                {
+                  "x": 1108,
+                  "y": 620
+                },
+                {
+                  "x": 1124,
+                  "y": 604
+                },
+                {
+                  "x": 1132,
+                  "y": 604
+                },
+                {
+                  "x": 1148,
+                  "y": 588
+                },
+                {
+                  "x": 1156,
+                  "y": 588
+                },
+                {
+                  "x": 1164,
+                  "y": 580
+                },
+                {
+                  "x": 1172,
+                  "y": 580
+                },
+                {
+                  "x": 1180,
+                  "y": 572
+                },
+                {
+                  "x": 1188,
+                  "y": 572
+                },
+                {
+                  "x": 1196,
+                  "y": 564
+                },
+                {
+                  "x": 1204,
+                  "y": 564
+                },
+                {
+                  "x": 1212,
+                  "y": 556
+                },
+                {
+                  "x": 1220,
+                  "y": 556
+                },
+                {
+                  "x": 1228,
+                  "y": 548
+                },
+                {
+                  "x": 1252,
+                  "y": 548
+                },
+                {
+                  "x": 1260,
+                  "y": 540
+                },
+                {
+                  "x": 1396,
+                  "y": 540
+                },
+                {
+                  "x": 1404,
+                  "y": 548
+                },
+                {
+                  "x": 1428,
+                  "y": 548
+                },
+                {
+                  "x": 1436,
+                  "y": 556
+                },
+                {
+                  "x": 1444,
+                  "y": 556
+                },
+                {
+                  "x": 1452,
+                  "y": 564
+                },
+                {
+                  "x": 1468,
+                  "y": 564
+                },
+                {
+                  "x": 1476,
+                  "y": 572
+                },
+                {
+                  "x": 1484,
+                  "y": 572
+                },
+                {
+                  "x": 1516,
+                  "y": 604
+                },
+                {
+                  "x": 1684,
+                  "y": 604
+                },
+                {
+                  "x": 1692,
+                  "y": 596
+                },
+                {
+                  "x": 1708,
+                  "y": 596
+                },
+                {
+                  "x": 1804,
+                  "y": 500
+                },
+                {
+                  "x": 1940,
+                  "y": 500
+                },
+                {
+                  "x": 1948,
+                  "y": 508
+                },
+                {
+                  "x": 1956,
+                  "y": 508
+                },
+                {
+                  "x": 1972,
+                  "y": 524
+                },
+                {
+                  "x": 1972,
+                  "y": 532
+                },
+                {
+                  "x": 1980,
+                  "y": 540
+                },
+                {
+                  "x": 1980,
+                  "y": 556
+                },
+                {
+                  "x": 1988,
+                  "y": 564
+                },
+                {
+                  "x": 1988,
+                  "y": 620
+                },
+                {
+                  "x": 1940,
+                  "y": 668
+                },
+                {
+                  "x": 1900,
+                  "y": 668
+                },
+                {
+                  "x": 1900,
+                  "y": 684
+                },
+                {
+                  "x": 1732,
+                  "y": 852
+                },
+                {
+                  "x": 1732,
+                  "y": 860
+                },
+                {
+                  "x": 1724,
+                  "y": 868
+                },
+                {
+                  "x": 1724,
+                  "y": 972
+                },
+                {
+                  "x": 1732,
+                  "y": 980
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 1024.6660889654818,
+              "cellCount": 115,
+              "segmentCount": 31,
+              "points": [
+                {
+                  "x": 1460,
+                  "y": 980
+                },
+                {
+                  "x": 1460,
+                  "y": 1148
+                },
+                {
+                  "x": 1404,
+                  "y": 1204
+                },
+                {
+                  "x": 1404,
+                  "y": 1212
+                },
+                {
+                  "x": 1388,
+                  "y": 1228
+                },
+                {
+                  "x": 1388,
+                  "y": 1244
+                },
+                {
+                  "x": 1380,
+                  "y": 1252
+                },
+                {
+                  "x": 1380,
+                  "y": 1300
+                },
+                {
+                  "x": 1388,
+                  "y": 1308
+                },
+                {
+                  "x": 1388,
+                  "y": 1316
+                },
+                {
+                  "x": 1404,
+                  "y": 1332
+                },
+                {
+                  "x": 1404,
+                  "y": 1340
+                },
+                {
+                  "x": 1412,
+                  "y": 1348
+                },
+                {
+                  "x": 1420,
+                  "y": 1348
+                },
+                {
+                  "x": 1428,
+                  "y": 1356
+                },
+                {
+                  "x": 1540,
+                  "y": 1356
+                },
+                {
+                  "x": 1548,
+                  "y": 1348
+                },
+                {
+                  "x": 1564,
+                  "y": 1348
+                },
+                {
+                  "x": 1572,
+                  "y": 1340
+                },
+                {
+                  "x": 1580,
+                  "y": 1340
+                },
+                {
+                  "x": 1588,
+                  "y": 1332
+                },
+                {
+                  "x": 1596,
+                  "y": 1332
+                },
+                {
+                  "x": 1612,
+                  "y": 1316
+                },
+                {
+                  "x": 1620,
+                  "y": 1316
+                },
+                {
+                  "x": 1684,
+                  "y": 1252
+                },
+                {
+                  "x": 1684,
+                  "y": 1236
+                },
+                {
+                  "x": 1692,
+                  "y": 1228
+                },
+                {
+                  "x": 1692,
+                  "y": 1212
+                },
+                {
+                  "x": 1700,
+                  "y": 1204
+                },
+                {
+                  "x": 1700,
+                  "y": 1108
+                },
+                {
+                  "x": 1732,
+                  "y": 1076
+                },
+                {
+                  "x": 1732,
+                  "y": 980
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 0
+          },
+          {
+            "passed": true,
+            "group": {
+              "id": "solid-18762",
+              "kind": "solid",
+              "sourceSolidIds": [
+                13,
+                14
+              ],
+              "blockedCells": 1727,
+              "bounds": {
+                "x": 280,
+                "y": 520,
+                "width": 536,
+                "height": 392
+              },
+              "center": {
+                "x": 548,
+                "y": 716
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 716,
+              "from": {
+                "x": 284,
+                "y": 716
+              },
+              "to": {
+                "x": 676,
+                "y": 716
+              },
+              "straightPx": 392,
+              "directSweepFraction": 0.04591811479591836,
+              "groupHitCells": [
+                {
+                  "x": 316,
+                  "y": 716
+                },
+                {
+                  "x": 324,
+                  "y": 716
+                },
+                {
+                  "x": 332,
+                  "y": 716
+                },
+                {
+                  "x": 340,
+                  "y": 716
+                },
+                {
+                  "x": 348,
+                  "y": 716
+                },
+                {
+                  "x": 356,
+                  "y": 716
+                },
+                {
+                  "x": 364,
+                  "y": 716
+                },
+                {
+                  "x": 372,
+                  "y": 716
+                },
+                {
+                  "x": 380,
+                  "y": 716
+                },
+                {
+                  "x": 388,
+                  "y": 716
+                },
+                {
+                  "x": 396,
+                  "y": 716
+                },
+                {
+                  "x": 404,
+                  "y": 716
+                },
+                {
+                  "x": 412,
+                  "y": 716
+                },
+                {
+                  "x": 420,
+                  "y": 716
+                },
+                {
+                  "x": 428,
+                  "y": 716
+                },
+                {
+                  "x": 436,
+                  "y": 716
+                },
+                {
+                  "x": 444,
+                  "y": 716
+                },
+                {
+                  "x": 452,
+                  "y": 716
+                },
+                {
+                  "x": 460,
+                  "y": 716
+                },
+                {
+                  "x": 468,
+                  "y": 716
+                },
+                {
+                  "x": 476,
+                  "y": 716
+                },
+                {
+                  "x": 484,
+                  "y": 716
+                },
+                {
+                  "x": 492,
+                  "y": 716
+                },
+                {
+                  "x": 500,
+                  "y": 716
+                },
+                {
+                  "x": 508,
+                  "y": 716
+                },
+                {
+                  "x": 516,
+                  "y": 716
+                },
+                {
+                  "x": 524,
+                  "y": 716
+                },
+                {
+                  "x": 532,
+                  "y": 716
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 690.0386719675124,
+              "cellCount": 74,
+              "segmentCount": 16,
+              "points": [
+                {
+                  "x": 284,
+                  "y": 716
+                },
+                {
+                  "x": 284,
+                  "y": 684
+                },
+                {
+                  "x": 276,
+                  "y": 676
+                },
+                {
+                  "x": 276,
+                  "y": 660
+                },
+                {
+                  "x": 268,
+                  "y": 652
+                },
+                {
+                  "x": 268,
+                  "y": 548
+                },
+                {
+                  "x": 292,
+                  "y": 524
+                },
+                {
+                  "x": 300,
+                  "y": 524
+                },
+                {
+                  "x": 308,
+                  "y": 516
+                },
+                {
+                  "x": 316,
+                  "y": 516
+                },
+                {
+                  "x": 324,
+                  "y": 508
+                },
+                {
+                  "x": 404,
+                  "y": 508
+                },
+                {
+                  "x": 596,
+                  "y": 700
+                },
+                {
+                  "x": 660,
+                  "y": 700
+                },
+                {
+                  "x": 668,
+                  "y": 708
+                },
+                {
+                  "x": 676,
+                  "y": 708
+                },
+                {
+                  "x": 676,
+                  "y": 716
+                }
+              ],
+              "ratio": 1.7603027346109996,
+              "extraPx": 298.03867196751185
+            },
+            "negativeHalfPlane": {
+              "distancePx": 690.0386719675123,
+              "cellCount": 74,
+              "segmentCount": 18,
+              "points": [
+                {
+                  "x": 284,
+                  "y": 716
+                },
+                {
+                  "x": 284,
+                  "y": 684
+                },
+                {
+                  "x": 276,
+                  "y": 676
+                },
+                {
+                  "x": 276,
+                  "y": 660
+                },
+                {
+                  "x": 268,
+                  "y": 652
+                },
+                {
+                  "x": 268,
+                  "y": 548
+                },
+                {
+                  "x": 292,
+                  "y": 524
+                },
+                {
+                  "x": 300,
+                  "y": 524
+                },
+                {
+                  "x": 308,
+                  "y": 516
+                },
+                {
+                  "x": 316,
+                  "y": 516
+                },
+                {
+                  "x": 324,
+                  "y": 508
+                },
+                {
+                  "x": 412,
+                  "y": 508
+                },
+                {
+                  "x": 476,
+                  "y": 572
+                },
+                {
+                  "x": 484,
+                  "y": 572
+                },
+                {
+                  "x": 612,
+                  "y": 700
+                },
+                {
+                  "x": 660,
+                  "y": 700
+                },
+                {
+                  "x": 668,
+                  "y": 708
+                },
+                {
+                  "x": 676,
+                  "y": 708
+                },
+                {
+                  "x": 676,
+                  "y": 716
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 1326.489465456345,
+              "cellCount": 149,
+              "segmentCount": 37,
+              "points": [
+                {
+                  "x": 284,
+                  "y": 716
+                },
+                {
+                  "x": 316,
+                  "y": 748
+                },
+                {
+                  "x": 316,
+                  "y": 756
+                },
+                {
+                  "x": 348,
+                  "y": 788
+                },
+                {
+                  "x": 348,
+                  "y": 876
+                },
+                {
+                  "x": 356,
+                  "y": 876
+                },
+                {
+                  "x": 372,
+                  "y": 892
+                },
+                {
+                  "x": 380,
+                  "y": 892
+                },
+                {
+                  "x": 388,
+                  "y": 900
+                },
+                {
+                  "x": 396,
+                  "y": 900
+                },
+                {
+                  "x": 404,
+                  "y": 908
+                },
+                {
+                  "x": 420,
+                  "y": 908
+                },
+                {
+                  "x": 428,
+                  "y": 916
+                },
+                {
+                  "x": 452,
+                  "y": 916
+                },
+                {
+                  "x": 460,
+                  "y": 924
+                },
+                {
+                  "x": 820,
+                  "y": 924
+                },
+                {
+                  "x": 852,
+                  "y": 956
+                },
+                {
+                  "x": 860,
+                  "y": 956
+                },
+                {
+                  "x": 868,
+                  "y": 964
+                },
+                {
+                  "x": 876,
+                  "y": 964
+                },
+                {
+                  "x": 884,
+                  "y": 972
+                },
+                {
+                  "x": 972,
+                  "y": 972
+                },
+                {
+                  "x": 988,
+                  "y": 956
+                },
+                {
+                  "x": 988,
+                  "y": 884
+                },
+                {
+                  "x": 916,
+                  "y": 812
+                },
+                {
+                  "x": 844,
+                  "y": 812
+                },
+                {
+                  "x": 804,
+                  "y": 772
+                },
+                {
+                  "x": 796,
+                  "y": 772
+                },
+                {
+                  "x": 772,
+                  "y": 748
+                },
+                {
+                  "x": 764,
+                  "y": 748
+                },
+                {
+                  "x": 756,
+                  "y": 740
+                },
+                {
+                  "x": 748,
+                  "y": 740
+                },
+                {
+                  "x": 740,
+                  "y": 732
+                },
+                {
+                  "x": 732,
+                  "y": 732
+                },
+                {
+                  "x": 724,
+                  "y": 724
+                },
+                {
+                  "x": 716,
+                  "y": 724
+                },
+                {
+                  "x": 708,
+                  "y": 716
+                },
+                {
+                  "x": 676,
+                  "y": 716
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 0
+          }
+        ],
+        "rejectedGroups": [],
+        "measurementMs": 73.43270799999982
+      }
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "requestedSeed": 20261010,
+      "effectiveSeed": 651732515,
+      "attempts": 3,
+      "generationMs": 3697.7837500000005,
+      "signature": "f3aae434",
+      "recipeBytes": 11241,
+      "spawn": {
+        "x": 2060,
+        "y": 1532
+      },
+      "extraction": {
+        "x": 1172,
+        "y": 1372
+      },
+      "extractionStraightPx": 902.2992851598631,
+      "extractionRoutePx": 1046.7249634685272,
+      "terrainFill": 0.6479414682539683,
+      "solidRatio": 0.2912200956937799,
+      "reachableFraction": 0.9998790371355993,
+      "reachableSeats": 24798,
+      "instances": 26,
+      "patrolSegments": 7,
+      "spatial": {
+        "version": 1,
+        "worldId": "cinder-ridge",
+        "sourceHash": "d8f87bd88076b77157d9a2b6bc269879181e717e17c91261f0cbe22684034df1",
+        "organization": "authored-sectors",
+        "width": 2304,
+        "height": 1792,
+        "terrainFillRatio": 0.6479414682539683,
+        "solidTerrainRatio": 0.2912200956937799,
+        "bodyReachableRatio": 0.9998790371355993,
+        "unreachableBodySeats": 3,
+        "spawnIndex": 5,
+        "spawnRelocationPx": 2.8284271247461903,
+        "extraction": {
+          "point": {
+            "x": 1172,
+            "y": 1372
+          },
+          "cell": 49394,
+          "pathDistancePx": 1046.7249634685272,
+          "interactionPathDistancePx": 996.783837971573,
+          "euclideanDistancePx": 902.2992851598631,
+          "pathFraction": 0.38641063519038765,
+          "regionId": 10,
+          "distanceBand": 0,
+          "candidateCount": 12929,
+          "regionCount": 11
+        },
+        "extractionCandidateField": {
+          "reachableCount": 24798,
+          "maxPathDistancePx": 2708.8409793710707,
+          "minCandidatePathDistancePx": 966.4894654563441,
+          "maxCandidatePathDistancePx": 2568.1546878700556,
+          "candidateCount": 12929,
+          "regionCount": 11,
+          "distanceBandCount": 3,
+          "regionCounts": {
+            "0": 1009,
+            "1": 2253,
+            "2": 1307,
+            "3": 1251,
+            "4": 1319,
+            "5": 1556,
+            "6": 963,
+            "7": 35,
+            "8": 1146,
+            "9": 1746,
+            "10": 344
+          },
+          "distanceBandCounts": {
+            "0": 3747,
+            "1": 6476,
+            "2": 2706
+          }
+        },
+        "solidObjectCount": 22
+      },
+      "expedition": {
+        "reachableBodySeats": 24798,
+        "extractionRoutePx": 1046.7249634685272,
+        "maximumExtraTravelPx": 3330.526404320311,
+        "directReturnRoutePx": 996.7838379715727,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 37.490332008122095,
+            "approachRoutePx": 107.31370849898477,
+            "interactionSeats": 95,
+            "pollutionDistancePx": 265.60662975836726
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 39.43145750507665,
+            "approachRoutePx": 437.82337649086264,
+            "interactionSeats": 69,
+            "pollutionDistancePx": 456.83261120685233
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 522.0386719675121,
+            "approachRoutePx": 741.3523804664968,
+            "interactionSeats": 79,
+            "pollutionDistancePx": 108.07404868885037
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 511.19595949289373,
+            "approachRoutePx": 1201.1370849898474,
+            "interactionSeats": 101,
+            "pollutionDistancePx": 204.31557108528537
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 511.86204845837597,
+            "approachRoutePx": 1234.1362184380707,
+            "interactionSeats": 62,
+            "pollutionDistancePx": 185.6091601051824
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 1008.3330444827416,
+            "approachRoutePx": 1451.646752981726,
+            "interactionSeats": 55,
+            "pollutionDistancePx": 17.182520563948003
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 939.9797974644662,
+            "approachRoutePx": 765.5878784786796,
+            "interactionSeats": 68,
+            "pollutionDistancePx": 90.68627239003706
+          },
+          {
+            "id": "contaminant/deep",
+            "minimumExtraTravelPx": 963.0782104868024,
+            "approachRoutePx": 1442.2741699796952,
+            "interactionSeats": 63,
+            "pollutionDistancePx": 39.24555320336759
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 1780,
+              "y": 948
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 820,
+              "y": 1540
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 1004,
+              "y": 1036
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-deep-1",
+            "seat": {
+              "x": 652,
+              "y": 1452
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-2",
+            "seat": {
+              "x": 2124,
+              "y": 836
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 668,
+              "y": 1612
+            },
+            "startMs": 700,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 3,
+        "kindlingCount": 5,
+        "contaminantCount": 3
+      },
+      "obstruction": {
+        "world": "cinder-ridge",
+        "grade": "medium",
+        "requestedSeed": 20261010,
+        "effectiveSeed": 651732515,
+        "attempts": 3,
+        "organization": "authored-sectors",
+        "spatialSourceHash": "d8f87bd88076b77157d9a2b6bc269879181e717e17c91261f0cbe22684034df1",
+        "width": 2304,
+        "height": 1792,
+        "supportedSeats": 24801,
+        "reachableSeats": 24798,
+        "reachableFraction": 0.9998790371355993,
+        "solidRatio": 0.2912200956937799,
+        "extractionInteractionPx": 996.783837971573,
+        "candidateGroups": 25,
+        "groupsFound": 2,
+        "status": "passed",
+        "groups": [
+          {
+            "passed": true,
+            "group": {
+              "id": "solid-22678",
+              "kind": "solid",
+              "sourceSolidIds": [
+                19,
+                27,
+                31,
+                33
+              ],
+              "blockedCells": 2583,
+              "bounds": {
+                "x": 1360,
+                "y": 624,
+                "width": 480,
+                "height": 736
+              },
+              "center": {
+                "x": 1600,
+                "y": 992
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 884,
+              "from": {
+                "x": 1028,
+                "y": 884
+              },
+              "to": {
+                "x": 1716,
+                "y": 884
+              },
+              "straightPx": 688,
+              "directSweepFraction": 0.002906832848837371,
+              "groupHitCells": [
+                {
+                  "x": 1460,
+                  "y": 884
+                },
+                {
+                  "x": 1468,
+                  "y": 884
+                },
+                {
+                  "x": 1476,
+                  "y": 884
+                },
+                {
+                  "x": 1484,
+                  "y": 884
+                },
+                {
+                  "x": 1492,
+                  "y": 884
+                },
+                {
+                  "x": 1500,
+                  "y": 884
+                },
+                {
+                  "x": 1508,
+                  "y": 884
+                },
+                {
+                  "x": 1516,
+                  "y": 884
+                },
+                {
+                  "x": 1524,
+                  "y": 884
+                },
+                {
+                  "x": 1532,
+                  "y": 884
+                },
+                {
+                  "x": 1540,
+                  "y": 884
+                },
+                {
+                  "x": 1548,
+                  "y": 884
+                },
+                {
+                  "x": 1556,
+                  "y": 884
+                },
+                {
+                  "x": 1564,
+                  "y": 884
+                },
+                {
+                  "x": 1572,
+                  "y": 884
+                },
+                {
+                  "x": 1580,
+                  "y": 884
+                },
+                {
+                  "x": 1588,
+                  "y": 884
+                },
+                {
+                  "x": 1596,
+                  "y": 884
+                },
+                {
+                  "x": 1604,
+                  "y": 884
+                },
+                {
+                  "x": 1612,
+                  "y": 884
+                },
+                {
+                  "x": 1620,
+                  "y": 884
+                },
+                {
+                  "x": 1628,
+                  "y": 884
+                },
+                {
+                  "x": 1636,
+                  "y": 884
+                },
+                {
+                  "x": 1644,
+                  "y": 884
+                },
+                {
+                  "x": 1652,
+                  "y": 884
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 1420.645886429949,
+              "cellCount": 150,
+              "segmentCount": 52,
+              "points": [
+                {
+                  "x": 1028,
+                  "y": 884
+                },
+                {
+                  "x": 1028,
+                  "y": 980
+                },
+                {
+                  "x": 1020,
+                  "y": 988
+                },
+                {
+                  "x": 1020,
+                  "y": 996
+                },
+                {
+                  "x": 1012,
+                  "y": 1004
+                },
+                {
+                  "x": 1012,
+                  "y": 1044
+                },
+                {
+                  "x": 1020,
+                  "y": 1052
+                },
+                {
+                  "x": 1028,
+                  "y": 1052
+                },
+                {
+                  "x": 1036,
+                  "y": 1060
+                },
+                {
+                  "x": 1044,
+                  "y": 1060
+                },
+                {
+                  "x": 1052,
+                  "y": 1068
+                },
+                {
+                  "x": 1060,
+                  "y": 1068
+                },
+                {
+                  "x": 1068,
+                  "y": 1076
+                },
+                {
+                  "x": 1076,
+                  "y": 1076
+                },
+                {
+                  "x": 1084,
+                  "y": 1084
+                },
+                {
+                  "x": 1092,
+                  "y": 1084
+                },
+                {
+                  "x": 1100,
+                  "y": 1092
+                },
+                {
+                  "x": 1108,
+                  "y": 1092
+                },
+                {
+                  "x": 1116,
+                  "y": 1100
+                },
+                {
+                  "x": 1164,
+                  "y": 1100
+                },
+                {
+                  "x": 1428,
+                  "y": 1364
+                },
+                {
+                  "x": 1436,
+                  "y": 1364
+                },
+                {
+                  "x": 1444,
+                  "y": 1372
+                },
+                {
+                  "x": 1516,
+                  "y": 1372
+                },
+                {
+                  "x": 1524,
+                  "y": 1364
+                },
+                {
+                  "x": 1540,
+                  "y": 1364
+                },
+                {
+                  "x": 1548,
+                  "y": 1356
+                },
+                {
+                  "x": 1556,
+                  "y": 1356
+                },
+                {
+                  "x": 1564,
+                  "y": 1348
+                },
+                {
+                  "x": 1572,
+                  "y": 1348
+                },
+                {
+                  "x": 1596,
+                  "y": 1324
+                },
+                {
+                  "x": 1604,
+                  "y": 1324
+                },
+                {
+                  "x": 1628,
+                  "y": 1300
+                },
+                {
+                  "x": 1628,
+                  "y": 1292
+                },
+                {
+                  "x": 1644,
+                  "y": 1276
+                },
+                {
+                  "x": 1644,
+                  "y": 1268
+                },
+                {
+                  "x": 1684,
+                  "y": 1228
+                },
+                {
+                  "x": 1684,
+                  "y": 1180
+                },
+                {
+                  "x": 1692,
+                  "y": 1172
+                },
+                {
+                  "x": 1692,
+                  "y": 1164
+                },
+                {
+                  "x": 1700,
+                  "y": 1156
+                },
+                {
+                  "x": 1700,
+                  "y": 1116
+                },
+                {
+                  "x": 1724,
+                  "y": 1092
+                },
+                {
+                  "x": 1724,
+                  "y": 1084
+                },
+                {
+                  "x": 1732,
+                  "y": 1076
+                },
+                {
+                  "x": 1732,
+                  "y": 1068
+                },
+                {
+                  "x": 1740,
+                  "y": 1060
+                },
+                {
+                  "x": 1740,
+                  "y": 940
+                },
+                {
+                  "x": 1732,
+                  "y": 932
+                },
+                {
+                  "x": 1732,
+                  "y": 924
+                },
+                {
+                  "x": 1724,
+                  "y": 916
+                },
+                {
+                  "x": 1724,
+                  "y": 892
+                },
+                {
+                  "x": 1716,
+                  "y": 884
+                }
+              ],
+              "ratio": 2.064892276787716,
+              "extraPx": 732.6458864299484
+            },
+            "negativeHalfPlane": {
+              "distancePx": 1805.7829714197967,
+              "cellCount": 194,
+              "segmentCount": 66,
+              "points": [
+                {
+                  "x": 1028,
+                  "y": 884
+                },
+                {
+                  "x": 1020,
+                  "y": 884
+                },
+                {
+                  "x": 1020,
+                  "y": 876
+                },
+                {
+                  "x": 1012,
+                  "y": 868
+                },
+                {
+                  "x": 1012,
+                  "y": 828
+                },
+                {
+                  "x": 1028,
+                  "y": 812
+                },
+                {
+                  "x": 1028,
+                  "y": 676
+                },
+                {
+                  "x": 1036,
+                  "y": 668
+                },
+                {
+                  "x": 1044,
+                  "y": 668
+                },
+                {
+                  "x": 1060,
+                  "y": 652
+                },
+                {
+                  "x": 1068,
+                  "y": 652
+                },
+                {
+                  "x": 1076,
+                  "y": 644
+                },
+                {
+                  "x": 1084,
+                  "y": 644
+                },
+                {
+                  "x": 1100,
+                  "y": 628
+                },
+                {
+                  "x": 1108,
+                  "y": 628
+                },
+                {
+                  "x": 1124,
+                  "y": 612
+                },
+                {
+                  "x": 1132,
+                  "y": 612
+                },
+                {
+                  "x": 1140,
+                  "y": 604
+                },
+                {
+                  "x": 1148,
+                  "y": 604
+                },
+                {
+                  "x": 1156,
+                  "y": 596
+                },
+                {
+                  "x": 1164,
+                  "y": 596
+                },
+                {
+                  "x": 1180,
+                  "y": 580
+                },
+                {
+                  "x": 1188,
+                  "y": 580
+                },
+                {
+                  "x": 1196,
+                  "y": 572
+                },
+                {
+                  "x": 1204,
+                  "y": 572
+                },
+                {
+                  "x": 1212,
+                  "y": 564
+                },
+                {
+                  "x": 1228,
+                  "y": 564
+                },
+                {
+                  "x": 1236,
+                  "y": 556
+                },
+                {
+                  "x": 1244,
+                  "y": 556
+                },
+                {
+                  "x": 1252,
+                  "y": 548
+                },
+                {
+                  "x": 1276,
+                  "y": 548
+                },
+                {
+                  "x": 1284,
+                  "y": 540
+                },
+                {
+                  "x": 1404,
+                  "y": 540
+                },
+                {
+                  "x": 1412,
+                  "y": 548
+                },
+                {
+                  "x": 1436,
+                  "y": 548
+                },
+                {
+                  "x": 1444,
+                  "y": 556
+                },
+                {
+                  "x": 1460,
+                  "y": 556
+                },
+                {
+                  "x": 1468,
+                  "y": 564
+                },
+                {
+                  "x": 1476,
+                  "y": 564
+                },
+                {
+                  "x": 1516,
+                  "y": 604
+                },
+                {
+                  "x": 1692,
+                  "y": 604
+                },
+                {
+                  "x": 1804,
+                  "y": 492
+                },
+                {
+                  "x": 1868,
+                  "y": 492
+                },
+                {
+                  "x": 1876,
+                  "y": 500
+                },
+                {
+                  "x": 1892,
+                  "y": 500
+                },
+                {
+                  "x": 1900,
+                  "y": 508
+                },
+                {
+                  "x": 1916,
+                  "y": 508
+                },
+                {
+                  "x": 1924,
+                  "y": 516
+                },
+                {
+                  "x": 1932,
+                  "y": 516
+                },
+                {
+                  "x": 1940,
+                  "y": 524
+                },
+                {
+                  "x": 1948,
+                  "y": 524
+                },
+                {
+                  "x": 1956,
+                  "y": 532
+                },
+                {
+                  "x": 1964,
+                  "y": 532
+                },
+                {
+                  "x": 1980,
+                  "y": 548
+                },
+                {
+                  "x": 1980,
+                  "y": 556
+                },
+                {
+                  "x": 1988,
+                  "y": 564
+                },
+                {
+                  "x": 1988,
+                  "y": 620
+                },
+                {
+                  "x": 1980,
+                  "y": 628
+                },
+                {
+                  "x": 1972,
+                  "y": 628
+                },
+                {
+                  "x": 1932,
+                  "y": 668
+                },
+                {
+                  "x": 1900,
+                  "y": 668
+                },
+                {
+                  "x": 1900,
+                  "y": 684
+                },
+                {
+                  "x": 1892,
+                  "y": 692
+                },
+                {
+                  "x": 1892,
+                  "y": 700
+                },
+                {
+                  "x": 1724,
+                  "y": 868
+                },
+                {
+                  "x": 1724,
+                  "y": 876
+                },
+                {
+                  "x": 1716,
+                  "y": 884
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 1420.6458864299489,
+              "cellCount": 150,
+              "segmentCount": 50,
+              "points": [
+                {
+                  "x": 1028,
+                  "y": 884
+                },
+                {
+                  "x": 1028,
+                  "y": 980
+                },
+                {
+                  "x": 1020,
+                  "y": 988
+                },
+                {
+                  "x": 1020,
+                  "y": 996
+                },
+                {
+                  "x": 1012,
+                  "y": 1004
+                },
+                {
+                  "x": 1012,
+                  "y": 1044
+                },
+                {
+                  "x": 1020,
+                  "y": 1052
+                },
+                {
+                  "x": 1028,
+                  "y": 1052
+                },
+                {
+                  "x": 1036,
+                  "y": 1060
+                },
+                {
+                  "x": 1044,
+                  "y": 1060
+                },
+                {
+                  "x": 1052,
+                  "y": 1068
+                },
+                {
+                  "x": 1060,
+                  "y": 1068
+                },
+                {
+                  "x": 1068,
+                  "y": 1076
+                },
+                {
+                  "x": 1076,
+                  "y": 1076
+                },
+                {
+                  "x": 1084,
+                  "y": 1084
+                },
+                {
+                  "x": 1092,
+                  "y": 1084
+                },
+                {
+                  "x": 1100,
+                  "y": 1092
+                },
+                {
+                  "x": 1108,
+                  "y": 1092
+                },
+                {
+                  "x": 1116,
+                  "y": 1100
+                },
+                {
+                  "x": 1164,
+                  "y": 1100
+                },
+                {
+                  "x": 1428,
+                  "y": 1364
+                },
+                {
+                  "x": 1436,
+                  "y": 1364
+                },
+                {
+                  "x": 1444,
+                  "y": 1372
+                },
+                {
+                  "x": 1516,
+                  "y": 1372
+                },
+                {
+                  "x": 1524,
+                  "y": 1364
+                },
+                {
+                  "x": 1540,
+                  "y": 1364
+                },
+                {
+                  "x": 1548,
+                  "y": 1356
+                },
+                {
+                  "x": 1556,
+                  "y": 1356
+                },
+                {
+                  "x": 1564,
+                  "y": 1348
+                },
+                {
+                  "x": 1572,
+                  "y": 1348
+                },
+                {
+                  "x": 1596,
+                  "y": 1324
+                },
+                {
+                  "x": 1604,
+                  "y": 1324
+                },
+                {
+                  "x": 1628,
+                  "y": 1300
+                },
+                {
+                  "x": 1628,
+                  "y": 1292
+                },
+                {
+                  "x": 1644,
+                  "y": 1276
+                },
+                {
+                  "x": 1644,
+                  "y": 1268
+                },
+                {
+                  "x": 1684,
+                  "y": 1228
+                },
+                {
+                  "x": 1684,
+                  "y": 1180
+                },
+                {
+                  "x": 1700,
+                  "y": 1164
+                },
+                {
+                  "x": 1700,
+                  "y": 1116
+                },
+                {
+                  "x": 1724,
+                  "y": 1092
+                },
+                {
+                  "x": 1724,
+                  "y": 1084
+                },
+                {
+                  "x": 1732,
+                  "y": 1076
+                },
+                {
+                  "x": 1732,
+                  "y": 1068
+                },
+                {
+                  "x": 1740,
+                  "y": 1060
+                },
+                {
+                  "x": 1740,
+                  "y": 964
+                },
+                {
+                  "x": 1732,
+                  "y": 956
+                },
+                {
+                  "x": 1732,
+                  "y": 924
+                },
+                {
+                  "x": 1724,
+                  "y": 916
+                },
+                {
+                  "x": 1724,
+                  "y": 892
+                },
+                {
+                  "x": 1716,
+                  "y": 884
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 3
+          },
+          {
+            "passed": true,
+            "group": {
+              "id": "solid-18762",
+              "kind": "solid",
+              "sourceSolidIds": [
+                13,
+                14
+              ],
+              "blockedCells": 1730,
+              "bounds": {
+                "x": 280,
+                "y": 520,
+                "width": 536,
+                "height": 392
+              },
+              "center": {
+                "x": 548,
+                "y": 716
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 716,
+              "from": {
+                "x": 292,
+                "y": 716
+              },
+              "to": {
+                "x": 692,
+                "y": 716
+              },
+              "straightPx": 400,
+              "directSweepFraction": 0.024999752499999993,
+              "groupHitCells": [
+                {
+                  "x": 324,
+                  "y": 716
+                },
+                {
+                  "x": 332,
+                  "y": 716
+                },
+                {
+                  "x": 340,
+                  "y": 716
+                },
+                {
+                  "x": 348,
+                  "y": 716
+                },
+                {
+                  "x": 356,
+                  "y": 716
+                },
+                {
+                  "x": 364,
+                  "y": 716
+                },
+                {
+                  "x": 372,
+                  "y": 716
+                },
+                {
+                  "x": 380,
+                  "y": 716
+                },
+                {
+                  "x": 388,
+                  "y": 716
+                },
+                {
+                  "x": 396,
+                  "y": 716
+                },
+                {
+                  "x": 404,
+                  "y": 716
+                },
+                {
+                  "x": 412,
+                  "y": 716
+                },
+                {
+                  "x": 420,
+                  "y": 716
+                },
+                {
+                  "x": 428,
+                  "y": 716
+                },
+                {
+                  "x": 436,
+                  "y": 716
+                },
+                {
+                  "x": 444,
+                  "y": 716
+                },
+                {
+                  "x": 452,
+                  "y": 716
+                },
+                {
+                  "x": 460,
+                  "y": 716
+                },
+                {
+                  "x": 468,
+                  "y": 716
+                },
+                {
+                  "x": 476,
+                  "y": 716
+                },
+                {
+                  "x": 484,
+                  "y": 716
+                },
+                {
+                  "x": 492,
+                  "y": 716
+                },
+                {
+                  "x": 500,
+                  "y": 716
+                },
+                {
+                  "x": 508,
+                  "y": 716
+                },
+                {
+                  "x": 516,
+                  "y": 716
+                },
+                {
+                  "x": 524,
+                  "y": 716
+                },
+                {
+                  "x": 532,
+                  "y": 716
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 709.352380466497,
+              "cellCount": 76,
+              "segmentCount": 20,
+              "points": [
+                {
+                  "x": 292,
+                  "y": 716
+                },
+                {
+                  "x": 292,
+                  "y": 700
+                },
+                {
+                  "x": 284,
+                  "y": 692
+                },
+                {
+                  "x": 284,
+                  "y": 684
+                },
+                {
+                  "x": 276,
+                  "y": 676
+                },
+                {
+                  "x": 276,
+                  "y": 652
+                },
+                {
+                  "x": 268,
+                  "y": 644
+                },
+                {
+                  "x": 268,
+                  "y": 548
+                },
+                {
+                  "x": 292,
+                  "y": 524
+                },
+                {
+                  "x": 300,
+                  "y": 524
+                },
+                {
+                  "x": 308,
+                  "y": 516
+                },
+                {
+                  "x": 316,
+                  "y": 516
+                },
+                {
+                  "x": 324,
+                  "y": 508
+                },
+                {
+                  "x": 396,
+                  "y": 508
+                },
+                {
+                  "x": 420,
+                  "y": 532
+                },
+                {
+                  "x": 428,
+                  "y": 532
+                },
+                {
+                  "x": 596,
+                  "y": 700
+                },
+                {
+                  "x": 668,
+                  "y": 700
+                },
+                {
+                  "x": 676,
+                  "y": 708
+                },
+                {
+                  "x": 692,
+                  "y": 708
+                },
+                {
+                  "x": 692,
+                  "y": 716
+                }
+              ],
+              "ratio": 1.7733809511662415,
+              "extraPx": 309.3523804664966
+            },
+            "negativeHalfPlane": {
+              "distancePx": 709.352380466497,
+              "cellCount": 76,
+              "segmentCount": 20,
+              "points": [
+                {
+                  "x": 292,
+                  "y": 716
+                },
+                {
+                  "x": 292,
+                  "y": 700
+                },
+                {
+                  "x": 284,
+                  "y": 692
+                },
+                {
+                  "x": 284,
+                  "y": 684
+                },
+                {
+                  "x": 276,
+                  "y": 676
+                },
+                {
+                  "x": 276,
+                  "y": 652
+                },
+                {
+                  "x": 268,
+                  "y": 644
+                },
+                {
+                  "x": 268,
+                  "y": 548
+                },
+                {
+                  "x": 292,
+                  "y": 524
+                },
+                {
+                  "x": 300,
+                  "y": 524
+                },
+                {
+                  "x": 308,
+                  "y": 516
+                },
+                {
+                  "x": 316,
+                  "y": 516
+                },
+                {
+                  "x": 324,
+                  "y": 508
+                },
+                {
+                  "x": 396,
+                  "y": 508
+                },
+                {
+                  "x": 420,
+                  "y": 532
+                },
+                {
+                  "x": 436,
+                  "y": 532
+                },
+                {
+                  "x": 604,
+                  "y": 700
+                },
+                {
+                  "x": 676,
+                  "y": 700
+                },
+                {
+                  "x": 684,
+                  "y": 708
+                },
+                {
+                  "x": 692,
+                  "y": 708
+                },
+                {
+                  "x": 692,
+                  "y": 716
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 1309.116882454314,
+              "cellCount": 146,
+              "segmentCount": 38,
+              "points": [
+                {
+                  "x": 292,
+                  "y": 716
+                },
+                {
+                  "x": 324,
+                  "y": 748
+                },
+                {
+                  "x": 324,
+                  "y": 756
+                },
+                {
+                  "x": 348,
+                  "y": 780
+                },
+                {
+                  "x": 348,
+                  "y": 876
+                },
+                {
+                  "x": 356,
+                  "y": 884
+                },
+                {
+                  "x": 364,
+                  "y": 884
+                },
+                {
+                  "x": 380,
+                  "y": 900
+                },
+                {
+                  "x": 396,
+                  "y": 900
+                },
+                {
+                  "x": 404,
+                  "y": 908
+                },
+                {
+                  "x": 412,
+                  "y": 908
+                },
+                {
+                  "x": 420,
+                  "y": 916
+                },
+                {
+                  "x": 452,
+                  "y": 916
+                },
+                {
+                  "x": 460,
+                  "y": 924
+                },
+                {
+                  "x": 804,
+                  "y": 924
+                },
+                {
+                  "x": 836,
+                  "y": 956
+                },
+                {
+                  "x": 844,
+                  "y": 956
+                },
+                {
+                  "x": 860,
+                  "y": 972
+                },
+                {
+                  "x": 876,
+                  "y": 972
+                },
+                {
+                  "x": 884,
+                  "y": 980
+                },
+                {
+                  "x": 964,
+                  "y": 980
+                },
+                {
+                  "x": 980,
+                  "y": 964
+                },
+                {
+                  "x": 980,
+                  "y": 956
+                },
+                {
+                  "x": 988,
+                  "y": 948
+                },
+                {
+                  "x": 988,
+                  "y": 908
+                },
+                {
+                  "x": 980,
+                  "y": 900
+                },
+                {
+                  "x": 980,
+                  "y": 892
+                },
+                {
+                  "x": 964,
+                  "y": 876
+                },
+                {
+                  "x": 964,
+                  "y": 868
+                },
+                {
+                  "x": 924,
+                  "y": 828
+                },
+                {
+                  "x": 900,
+                  "y": 828
+                },
+                {
+                  "x": 892,
+                  "y": 820
+                },
+                {
+                  "x": 852,
+                  "y": 820
+                },
+                {
+                  "x": 812,
+                  "y": 780
+                },
+                {
+                  "x": 804,
+                  "y": 780
+                },
+                {
+                  "x": 772,
+                  "y": 748
+                },
+                {
+                  "x": 764,
+                  "y": 748
+                },
+                {
+                  "x": 732,
+                  "y": 716
+                },
+                {
+                  "x": 692,
+                  "y": 716
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 0
+          }
+        ],
+        "rejectedGroups": [],
+        "measurementMs": 61.83583400000043
+      }
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "severe",
+      "requestedSeed": 20261010,
+      "effectiveSeed": 114481409,
+      "attempts": 4,
+      "generationMs": 4801.9913750000005,
+      "signature": "4bde3cba",
+      "recipeBytes": 11442,
+      "spawn": {
+        "x": 1260,
+        "y": 228
+      },
+      "extraction": {
+        "x": 292,
+        "y": 484
+      },
+      "extractionStraightPx": 1001.2791818469015,
+      "extractionRoutePx": 1134.9604614807101,
+      "terrainFill": 0.6479414682539683,
+      "solidRatio": 0.2911004784688995,
+      "reachableFraction": 0.9882647094406581,
+      "reachableSeats": 24506,
+      "instances": 26,
+      "patrolSegments": 20,
+      "spatial": {
+        "version": 1,
+        "worldId": "cinder-ridge",
+        "sourceHash": "d8f87bd88076b77157d9a2b6bc269879181e717e17c91261f0cbe22684034df1",
+        "organization": "authored-sectors",
+        "width": 2304,
+        "height": 1792,
+        "terrainFillRatio": 0.6479414682539683,
+        "solidTerrainRatio": 0.2911004784688995,
+        "bodyReachableRatio": 0.9882647094406581,
+        "unreachableBodySeats": 291,
+        "spawnIndex": 3,
+        "spawnRelocationPx": 2,
+        "extraction": {
+          "point": {
+            "x": 292,
+            "y": 484
+          },
+          "cell": 17316,
+          "pathDistancePx": 1134.9604614807101,
+          "interactionPathDistancePx": 1085.0193359837558,
+          "euclideanDistancePx": 1001.2791818469015,
+          "pathFraction": 0.5180848411653384,
+          "regionId": 0,
+          "distanceBand": 0,
+          "candidateCount": 10218,
+          "regionCount": 10
+        },
+        "extractionCandidateField": {
+          "reachableCount": 24506,
+          "maxPathDistancePx": 2190.684558397465,
+          "minCandidatePathDistancePx": 965.9209229614203,
+          "maxCandidatePathDistancePx": 2160.0571413994953,
+          "candidateCount": 10218,
+          "regionCount": 10,
+          "distanceBandCount": 3,
+          "regionCounts": {
+            "0": 926,
+            "3": 614,
+            "4": 1281,
+            "5": 598,
+            "6": 870,
+            "7": 643,
+            "8": 1140,
+            "9": 1789,
+            "10": 1258,
+            "11": 1099
+          },
+          "distanceBandCounts": {
+            "0": 4108,
+            "1": 4230,
+            "2": 1880
+          }
+        },
+        "solidObjectCount": 22
+      },
+      "expedition": {
+        "reachableBodySeats": 24506,
+        "extractionRoutePx": 1134.9604614807101,
+        "maximumExtraTravelPx": 3262.977197809144,
+        "directReturnRoutePx": 1085.0193359837558,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 86.96046148071036,
+            "approachRoutePx": 335.7645019878171,
+            "interactionSeats": 104,
+            "pollutionDistancePx": 204.97804760510328
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 46.62741699796952,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 245.69612529660117
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 508.31284194720706,
+            "approachRoutePx": 346.2741699796951,
+            "interactionSeats": 96,
+            "pollutionDistancePx": 17.182520563948003
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 510.39191898578724,
+            "approachRoutePx": 1390.156420973604,
+            "interactionSeats": 93,
+            "pollutionDistancePx": 245.69612529660117
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 502.0184694319778,
+            "approachRoutePx": 767.2935059634508,
+            "interactionSeats": 80,
+            "pollutionDistancePx": 165.21501142450705
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 994.9402589451765,
+            "approachRoutePx": 1440.7636354360409,
+            "interactionSeats": 69,
+            "pollutionDistancePx": 31.713553108736477
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 999.9595949289323,
+            "approachRoutePx": 1031.2935059634508,
+            "interactionSeats": 81,
+            "pollutionDistancePx": 21.607017003965517
+          },
+          {
+            "id": "contaminant/deep",
+            "minimumExtraTravelPx": 997.3523804664969,
+            "approachRoutePx": 1579.7442994522835,
+            "interactionSeats": 108,
+            "pollutionDistancePx": 68.0869154657707
+          },
+          {
+            "id": "contaminant/deep",
+            "minimumExtraTravelPx": 1008.9991334482229,
+            "approachRoutePx": 1508.3128419472077,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 28.153619241621193
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 1444,
+              "y": 500
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 212,
+              "y": 708
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 1012,
+              "y": 852
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-deep-1",
+            "seat": {
+              "x": 276,
+              "y": 996
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-2",
+            "seat": {
+              "x": 964,
+              "y": 1156
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 452,
+              "y": 1060
+            },
+            "startMs": 4900,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-deep-2",
+            "seat": {
+              "x": 372,
+              "y": 1060
+            },
+            "startMs": 5700,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 4,
+        "kindlingCount": 5,
+        "contaminantCount": 4
+      },
+      "obstruction": {
+        "world": "cinder-ridge",
+        "grade": "severe",
+        "requestedSeed": 20261010,
+        "effectiveSeed": 114481409,
+        "attempts": 4,
+        "organization": "authored-sectors",
+        "spatialSourceHash": "d8f87bd88076b77157d9a2b6bc269879181e717e17c91261f0cbe22684034df1",
+        "width": 2304,
+        "height": 1792,
+        "supportedSeats": 24797,
+        "reachableSeats": 24506,
+        "reachableFraction": 0.9882647094406581,
+        "solidRatio": 0.2911004784688995,
+        "extractionInteractionPx": 1085.0193359837558,
+        "candidateGroups": 25,
+        "groupsFound": 2,
+        "status": "passed",
+        "groups": [
+          {
+            "passed": true,
+            "group": {
+              "id": "solid-22102",
+              "kind": "solid",
+              "sourceSolidIds": [
+                19,
+                27,
+                31,
+                33
+              ],
+              "blockedCells": 2563,
+              "bounds": {
+                "x": 1360,
+                "y": 608,
+                "width": 480,
+                "height": 752
+              },
+              "center": {
+                "x": 1600,
+                "y": 984
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 876,
+              "from": {
+                "x": 1020,
+                "y": 876
+              },
+              "to": {
+                "x": 1676,
+                "y": 876
+              },
+              "straightPx": 656,
+              "directSweepFraction": 0.0030486295731707276,
+              "groupHitCells": [
+                {
+                  "x": 1460,
+                  "y": 876
+                },
+                {
+                  "x": 1468,
+                  "y": 876
+                },
+                {
+                  "x": 1476,
+                  "y": 876
+                },
+                {
+                  "x": 1484,
+                  "y": 876
+                },
+                {
+                  "x": 1492,
+                  "y": 876
+                },
+                {
+                  "x": 1500,
+                  "y": 876
+                },
+                {
+                  "x": 1508,
+                  "y": 876
+                },
+                {
+                  "x": 1516,
+                  "y": 876
+                },
+                {
+                  "x": 1524,
+                  "y": 876
+                },
+                {
+                  "x": 1532,
+                  "y": 876
+                },
+                {
+                  "x": 1540,
+                  "y": 876
+                },
+                {
+                  "x": 1548,
+                  "y": 876
+                },
+                {
+                  "x": 1556,
+                  "y": 876
+                },
+                {
+                  "x": 1564,
+                  "y": 876
+                },
+                {
+                  "x": 1572,
+                  "y": 876
+                },
+                {
+                  "x": 1580,
+                  "y": 876
+                },
+                {
+                  "x": 1588,
+                  "y": 876
+                },
+                {
+                  "x": 1596,
+                  "y": 876
+                },
+                {
+                  "x": 1604,
+                  "y": 876
+                },
+                {
+                  "x": 1612,
+                  "y": 876
+                },
+                {
+                  "x": 1620,
+                  "y": 876
+                },
+                {
+                  "x": 1628,
+                  "y": 876
+                },
+                {
+                  "x": 1636,
+                  "y": 876
+                },
+                {
+                  "x": 1644,
+                  "y": 876
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 1445.2144289248727,
+              "cellCount": 151,
+              "segmentCount": 48,
+              "points": [
+                {
+                  "x": 1020,
+                  "y": 876
+                },
+                {
+                  "x": 1020,
+                  "y": 996
+                },
+                {
+                  "x": 1012,
+                  "y": 1004
+                },
+                {
+                  "x": 1012,
+                  "y": 1044
+                },
+                {
+                  "x": 1020,
+                  "y": 1052
+                },
+                {
+                  "x": 1028,
+                  "y": 1052
+                },
+                {
+                  "x": 1036,
+                  "y": 1060
+                },
+                {
+                  "x": 1044,
+                  "y": 1060
+                },
+                {
+                  "x": 1052,
+                  "y": 1068
+                },
+                {
+                  "x": 1060,
+                  "y": 1068
+                },
+                {
+                  "x": 1068,
+                  "y": 1076
+                },
+                {
+                  "x": 1076,
+                  "y": 1076
+                },
+                {
+                  "x": 1084,
+                  "y": 1084
+                },
+                {
+                  "x": 1092,
+                  "y": 1084
+                },
+                {
+                  "x": 1100,
+                  "y": 1092
+                },
+                {
+                  "x": 1108,
+                  "y": 1092
+                },
+                {
+                  "x": 1116,
+                  "y": 1100
+                },
+                {
+                  "x": 1164,
+                  "y": 1100
+                },
+                {
+                  "x": 1428,
+                  "y": 1364
+                },
+                {
+                  "x": 1436,
+                  "y": 1364
+                },
+                {
+                  "x": 1444,
+                  "y": 1372
+                },
+                {
+                  "x": 1516,
+                  "y": 1372
+                },
+                {
+                  "x": 1524,
+                  "y": 1364
+                },
+                {
+                  "x": 1540,
+                  "y": 1364
+                },
+                {
+                  "x": 1548,
+                  "y": 1356
+                },
+                {
+                  "x": 1556,
+                  "y": 1356
+                },
+                {
+                  "x": 1572,
+                  "y": 1340
+                },
+                {
+                  "x": 1580,
+                  "y": 1340
+                },
+                {
+                  "x": 1628,
+                  "y": 1292
+                },
+                {
+                  "x": 1628,
+                  "y": 1284
+                },
+                {
+                  "x": 1644,
+                  "y": 1268
+                },
+                {
+                  "x": 1644,
+                  "y": 1260
+                },
+                {
+                  "x": 1652,
+                  "y": 1252
+                },
+                {
+                  "x": 1652,
+                  "y": 1244
+                },
+                {
+                  "x": 1660,
+                  "y": 1236
+                },
+                {
+                  "x": 1660,
+                  "y": 1228
+                },
+                {
+                  "x": 1668,
+                  "y": 1220
+                },
+                {
+                  "x": 1668,
+                  "y": 1212
+                },
+                {
+                  "x": 1676,
+                  "y": 1204
+                },
+                {
+                  "x": 1676,
+                  "y": 1196
+                },
+                {
+                  "x": 1684,
+                  "y": 1188
+                },
+                {
+                  "x": 1684,
+                  "y": 1132
+                },
+                {
+                  "x": 1724,
+                  "y": 1092
+                },
+                {
+                  "x": 1724,
+                  "y": 1084
+                },
+                {
+                  "x": 1732,
+                  "y": 1076
+                },
+                {
+                  "x": 1732,
+                  "y": 1060
+                },
+                {
+                  "x": 1740,
+                  "y": 1052
+                },
+                {
+                  "x": 1740,
+                  "y": 940
+                },
+                {
+                  "x": 1676,
+                  "y": 876
+                }
+              ],
+              "ratio": 2.203070775800111,
+              "extraPx": 789.2144289248729
+            },
+            "negativeHalfPlane": {
+              "distancePx": 1468.3128419472077,
+              "cellCount": 163,
+              "segmentCount": 51,
+              "points": [
+                {
+                  "x": 1020,
+                  "y": 876
+                },
+                {
+                  "x": 1012,
+                  "y": 868
+                },
+                {
+                  "x": 1012,
+                  "y": 828
+                },
+                {
+                  "x": 1028,
+                  "y": 812
+                },
+                {
+                  "x": 1028,
+                  "y": 676
+                },
+                {
+                  "x": 1036,
+                  "y": 668
+                },
+                {
+                  "x": 1044,
+                  "y": 668
+                },
+                {
+                  "x": 1052,
+                  "y": 660
+                },
+                {
+                  "x": 1060,
+                  "y": 660
+                },
+                {
+                  "x": 1076,
+                  "y": 644
+                },
+                {
+                  "x": 1084,
+                  "y": 644
+                },
+                {
+                  "x": 1092,
+                  "y": 636
+                },
+                {
+                  "x": 1100,
+                  "y": 636
+                },
+                {
+                  "x": 1116,
+                  "y": 620
+                },
+                {
+                  "x": 1124,
+                  "y": 620
+                },
+                {
+                  "x": 1140,
+                  "y": 604
+                },
+                {
+                  "x": 1148,
+                  "y": 604
+                },
+                {
+                  "x": 1156,
+                  "y": 596
+                },
+                {
+                  "x": 1164,
+                  "y": 596
+                },
+                {
+                  "x": 1180,
+                  "y": 580
+                },
+                {
+                  "x": 1188,
+                  "y": 580
+                },
+                {
+                  "x": 1196,
+                  "y": 572
+                },
+                {
+                  "x": 1204,
+                  "y": 572
+                },
+                {
+                  "x": 1212,
+                  "y": 564
+                },
+                {
+                  "x": 1220,
+                  "y": 564
+                },
+                {
+                  "x": 1228,
+                  "y": 556
+                },
+                {
+                  "x": 1236,
+                  "y": 556
+                },
+                {
+                  "x": 1244,
+                  "y": 548
+                },
+                {
+                  "x": 1260,
+                  "y": 548
+                },
+                {
+                  "x": 1268,
+                  "y": 540
+                },
+                {
+                  "x": 1412,
+                  "y": 540
+                },
+                {
+                  "x": 1420,
+                  "y": 548
+                },
+                {
+                  "x": 1436,
+                  "y": 548
+                },
+                {
+                  "x": 1444,
+                  "y": 556
+                },
+                {
+                  "x": 1460,
+                  "y": 556
+                },
+                {
+                  "x": 1468,
+                  "y": 564
+                },
+                {
+                  "x": 1476,
+                  "y": 564
+                },
+                {
+                  "x": 1516,
+                  "y": 604
+                },
+                {
+                  "x": 1692,
+                  "y": 604
+                },
+                {
+                  "x": 1700,
+                  "y": 596
+                },
+                {
+                  "x": 1828,
+                  "y": 596
+                },
+                {
+                  "x": 1828,
+                  "y": 604
+                },
+                {
+                  "x": 1836,
+                  "y": 604
+                },
+                {
+                  "x": 1844,
+                  "y": 612
+                },
+                {
+                  "x": 1844,
+                  "y": 636
+                },
+                {
+                  "x": 1852,
+                  "y": 644
+                },
+                {
+                  "x": 1852,
+                  "y": 700
+                },
+                {
+                  "x": 1844,
+                  "y": 708
+                },
+                {
+                  "x": 1844,
+                  "y": 716
+                },
+                {
+                  "x": 1796,
+                  "y": 764
+                },
+                {
+                  "x": 1788,
+                  "y": 764
+                },
+                {
+                  "x": 1676,
+                  "y": 876
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 1445.2144289248727,
+              "cellCount": 151,
+              "segmentCount": 48,
+              "points": [
+                {
+                  "x": 1020,
+                  "y": 876
+                },
+                {
+                  "x": 1020,
+                  "y": 996
+                },
+                {
+                  "x": 1012,
+                  "y": 1004
+                },
+                {
+                  "x": 1012,
+                  "y": 1044
+                },
+                {
+                  "x": 1020,
+                  "y": 1052
+                },
+                {
+                  "x": 1028,
+                  "y": 1052
+                },
+                {
+                  "x": 1036,
+                  "y": 1060
+                },
+                {
+                  "x": 1044,
+                  "y": 1060
+                },
+                {
+                  "x": 1052,
+                  "y": 1068
+                },
+                {
+                  "x": 1060,
+                  "y": 1068
+                },
+                {
+                  "x": 1068,
+                  "y": 1076
+                },
+                {
+                  "x": 1076,
+                  "y": 1076
+                },
+                {
+                  "x": 1084,
+                  "y": 1084
+                },
+                {
+                  "x": 1092,
+                  "y": 1084
+                },
+                {
+                  "x": 1100,
+                  "y": 1092
+                },
+                {
+                  "x": 1108,
+                  "y": 1092
+                },
+                {
+                  "x": 1116,
+                  "y": 1100
+                },
+                {
+                  "x": 1164,
+                  "y": 1100
+                },
+                {
+                  "x": 1428,
+                  "y": 1364
+                },
+                {
+                  "x": 1436,
+                  "y": 1364
+                },
+                {
+                  "x": 1444,
+                  "y": 1372
+                },
+                {
+                  "x": 1516,
+                  "y": 1372
+                },
+                {
+                  "x": 1524,
+                  "y": 1364
+                },
+                {
+                  "x": 1540,
+                  "y": 1364
+                },
+                {
+                  "x": 1548,
+                  "y": 1356
+                },
+                {
+                  "x": 1556,
+                  "y": 1356
+                },
+                {
+                  "x": 1572,
+                  "y": 1340
+                },
+                {
+                  "x": 1580,
+                  "y": 1340
+                },
+                {
+                  "x": 1628,
+                  "y": 1292
+                },
+                {
+                  "x": 1628,
+                  "y": 1284
+                },
+                {
+                  "x": 1644,
+                  "y": 1268
+                },
+                {
+                  "x": 1644,
+                  "y": 1260
+                },
+                {
+                  "x": 1652,
+                  "y": 1252
+                },
+                {
+                  "x": 1652,
+                  "y": 1244
+                },
+                {
+                  "x": 1660,
+                  "y": 1236
+                },
+                {
+                  "x": 1660,
+                  "y": 1228
+                },
+                {
+                  "x": 1668,
+                  "y": 1220
+                },
+                {
+                  "x": 1668,
+                  "y": 1212
+                },
+                {
+                  "x": 1676,
+                  "y": 1204
+                },
+                {
+                  "x": 1676,
+                  "y": 1196
+                },
+                {
+                  "x": 1684,
+                  "y": 1188
+                },
+                {
+                  "x": 1684,
+                  "y": 1132
+                },
+                {
+                  "x": 1724,
+                  "y": 1092
+                },
+                {
+                  "x": 1724,
+                  "y": 1084
+                },
+                {
+                  "x": 1732,
+                  "y": 1076
+                },
+                {
+                  "x": 1732,
+                  "y": 1060
+                },
+                {
+                  "x": 1740,
+                  "y": 1052
+                },
+                {
+                  "x": 1740,
+                  "y": 940
+                },
+                {
+                  "x": 1676,
+                  "y": 876
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 2
+          },
+          {
+            "passed": true,
+            "group": {
+              "id": "solid-18762",
+              "kind": "solid",
+              "sourceSolidIds": [
+                13,
+                14
+              ],
+              "blockedCells": 1745,
+              "bounds": {
+                "x": 280,
+                "y": 520,
+                "width": 536,
+                "height": 424
+              },
+              "center": {
+                "x": 548,
+                "y": 732
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 732,
+              "from": {
+                "x": 308,
+                "y": 732
+              },
+              "to": {
+                "x": 572,
+                "y": 732
+              },
+              "straightPx": 264,
+              "directSweepFraction": 0.03787841287878787,
+              "groupHitCells": [
+                {
+                  "x": 340,
+                  "y": 732
+                },
+                {
+                  "x": 348,
+                  "y": 732
+                },
+                {
+                  "x": 356,
+                  "y": 732
+                },
+                {
+                  "x": 364,
+                  "y": 732
+                },
+                {
+                  "x": 372,
+                  "y": 732
+                },
+                {
+                  "x": 380,
+                  "y": 732
+                },
+                {
+                  "x": 388,
+                  "y": 732
+                },
+                {
+                  "x": 396,
+                  "y": 732
+                },
+                {
+                  "x": 404,
+                  "y": 732
+                },
+                {
+                  "x": 412,
+                  "y": 732
+                },
+                {
+                  "x": 420,
+                  "y": 732
+                },
+                {
+                  "x": 428,
+                  "y": 732
+                },
+                {
+                  "x": 436,
+                  "y": 732
+                },
+                {
+                  "x": 444,
+                  "y": 732
+                },
+                {
+                  "x": 452,
+                  "y": 732
+                },
+                {
+                  "x": 460,
+                  "y": 732
+                },
+                {
+                  "x": 468,
+                  "y": 732
+                },
+                {
+                  "x": 476,
+                  "y": 732
+                },
+                {
+                  "x": 484,
+                  "y": 732
+                },
+                {
+                  "x": 492,
+                  "y": 732
+                },
+                {
+                  "x": 500,
+                  "y": 732
+                },
+                {
+                  "x": 508,
+                  "y": 732
+                },
+                {
+                  "x": 516,
+                  "y": 732
+                },
+                {
+                  "x": 524,
+                  "y": 732
+                },
+                {
+                  "x": 532,
+                  "y": 732
+                },
+                {
+                  "x": 540,
+                  "y": 732
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 646.7249634685276,
+              "cellCount": 69,
+              "segmentCount": 24,
+              "points": [
+                {
+                  "x": 308,
+                  "y": 732
+                },
+                {
+                  "x": 308,
+                  "y": 724
+                },
+                {
+                  "x": 300,
+                  "y": 716
+                },
+                {
+                  "x": 300,
+                  "y": 708
+                },
+                {
+                  "x": 292,
+                  "y": 700
+                },
+                {
+                  "x": 292,
+                  "y": 692
+                },
+                {
+                  "x": 284,
+                  "y": 684
+                },
+                {
+                  "x": 284,
+                  "y": 676
+                },
+                {
+                  "x": 276,
+                  "y": 668
+                },
+                {
+                  "x": 276,
+                  "y": 652
+                },
+                {
+                  "x": 268,
+                  "y": 644
+                },
+                {
+                  "x": 268,
+                  "y": 548
+                },
+                {
+                  "x": 292,
+                  "y": 524
+                },
+                {
+                  "x": 300,
+                  "y": 524
+                },
+                {
+                  "x": 308,
+                  "y": 516
+                },
+                {
+                  "x": 316,
+                  "y": 516
+                },
+                {
+                  "x": 324,
+                  "y": 508
+                },
+                {
+                  "x": 388,
+                  "y": 508
+                },
+                {
+                  "x": 396,
+                  "y": 516
+                },
+                {
+                  "x": 404,
+                  "y": 516
+                },
+                {
+                  "x": 420,
+                  "y": 532
+                },
+                {
+                  "x": 428,
+                  "y": 532
+                },
+                {
+                  "x": 556,
+                  "y": 660
+                },
+                {
+                  "x": 556,
+                  "y": 716
+                },
+                {
+                  "x": 572,
+                  "y": 732
+                }
+              ],
+              "ratio": 2.4497157707141177,
+              "extraPx": 382.7249634685271
+            },
+            "negativeHalfPlane": {
+              "distancePx": 646.7249634685276,
+              "cellCount": 69,
+              "segmentCount": 24,
+              "points": [
+                {
+                  "x": 308,
+                  "y": 732
+                },
+                {
+                  "x": 308,
+                  "y": 724
+                },
+                {
+                  "x": 300,
+                  "y": 716
+                },
+                {
+                  "x": 300,
+                  "y": 708
+                },
+                {
+                  "x": 292,
+                  "y": 700
+                },
+                {
+                  "x": 292,
+                  "y": 692
+                },
+                {
+                  "x": 284,
+                  "y": 684
+                },
+                {
+                  "x": 284,
+                  "y": 676
+                },
+                {
+                  "x": 276,
+                  "y": 668
+                },
+                {
+                  "x": 276,
+                  "y": 652
+                },
+                {
+                  "x": 268,
+                  "y": 644
+                },
+                {
+                  "x": 268,
+                  "y": 548
+                },
+                {
+                  "x": 292,
+                  "y": 524
+                },
+                {
+                  "x": 300,
+                  "y": 524
+                },
+                {
+                  "x": 308,
+                  "y": 516
+                },
+                {
+                  "x": 316,
+                  "y": 516
+                },
+                {
+                  "x": 324,
+                  "y": 508
+                },
+                {
+                  "x": 388,
+                  "y": 508
+                },
+                {
+                  "x": 396,
+                  "y": 516
+                },
+                {
+                  "x": 404,
+                  "y": 516
+                },
+                {
+                  "x": 420,
+                  "y": 532
+                },
+                {
+                  "x": 428,
+                  "y": 532
+                },
+                {
+                  "x": 556,
+                  "y": 660
+                },
+                {
+                  "x": 556,
+                  "y": 716
+                },
+                {
+                  "x": 572,
+                  "y": 732
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 1383.8620484583755,
+              "cellCount": 157,
+              "segmentCount": 38,
+              "points": [
+                {
+                  "x": 308,
+                  "y": 732
+                },
+                {
+                  "x": 356,
+                  "y": 780
+                },
+                {
+                  "x": 356,
+                  "y": 860
+                },
+                {
+                  "x": 396,
+                  "y": 900
+                },
+                {
+                  "x": 404,
+                  "y": 900
+                },
+                {
+                  "x": 428,
+                  "y": 924
+                },
+                {
+                  "x": 436,
+                  "y": 924
+                },
+                {
+                  "x": 444,
+                  "y": 932
+                },
+                {
+                  "x": 452,
+                  "y": 932
+                },
+                {
+                  "x": 460,
+                  "y": 940
+                },
+                {
+                  "x": 468,
+                  "y": 940
+                },
+                {
+                  "x": 476,
+                  "y": 948
+                },
+                {
+                  "x": 484,
+                  "y": 948
+                },
+                {
+                  "x": 492,
+                  "y": 956
+                },
+                {
+                  "x": 860,
+                  "y": 956
+                },
+                {
+                  "x": 868,
+                  "y": 964
+                },
+                {
+                  "x": 884,
+                  "y": 964
+                },
+                {
+                  "x": 892,
+                  "y": 972
+                },
+                {
+                  "x": 972,
+                  "y": 972
+                },
+                {
+                  "x": 988,
+                  "y": 956
+                },
+                {
+                  "x": 988,
+                  "y": 884
+                },
+                {
+                  "x": 924,
+                  "y": 820
+                },
+                {
+                  "x": 908,
+                  "y": 820
+                },
+                {
+                  "x": 892,
+                  "y": 804
+                },
+                {
+                  "x": 860,
+                  "y": 804
+                },
+                {
+                  "x": 844,
+                  "y": 788
+                },
+                {
+                  "x": 836,
+                  "y": 788
+                },
+                {
+                  "x": 820,
+                  "y": 772
+                },
+                {
+                  "x": 812,
+                  "y": 772
+                },
+                {
+                  "x": 804,
+                  "y": 764
+                },
+                {
+                  "x": 796,
+                  "y": 764
+                },
+                {
+                  "x": 788,
+                  "y": 756
+                },
+                {
+                  "x": 780,
+                  "y": 756
+                },
+                {
+                  "x": 772,
+                  "y": 748
+                },
+                {
+                  "x": 748,
+                  "y": 748
+                },
+                {
+                  "x": 740,
+                  "y": 740
+                },
+                {
+                  "x": 732,
+                  "y": 740
+                },
+                {
+                  "x": 724,
+                  "y": 732
+                },
+                {
+                  "x": 572,
+                  "y": 732
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 0
+          }
+        ],
+        "rejectedGroups": [],
+        "measurementMs": 56.47599999999875
+      }
+    }
+  ],
+  "failures": [],
+  "finishedAt": "2026-10-11T04:13:46.041Z"
+}
