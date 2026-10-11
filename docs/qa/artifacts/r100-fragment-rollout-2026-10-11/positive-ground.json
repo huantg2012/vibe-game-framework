@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "scope": "Controlled terrain/material/freeze contracts and legacy equivalence; no complete production, performance or visual acceptance.",
+  "baseline": "3e0821a7",
+  "comparedCells": 3072,
+  "partialCoarseCells": 46,
+  "fixtureInternalHoles": 8,
+  "malformedOutlines": 9,
+  "currentRepresentative": {
+    "worldId": "cinder-ridge",
+    "seed": 20261011,
+    "algorithmRevision": 8,
+    "shapeVersion": "rectilinear-fragment-v1",
+    "outerPoints": 80,
+    "internalHoles": 10
+  },
+  "historicalRecipe": {
+    "algorithmRevision": 7,
+    "internalHoles": 8,
+    "archivedValidationPassed": true,
+    "revisionRelabelRejected": true
+  },
+  "outerMaterialPixels": 7296,
+  "edgeColorPixels": 4848,
+  "legacyCases": 2,
+  "sources": {
+    "src/generation/world-study/r100-master-world.ts": "2b1335c815c6f3f588cf576e37c527e2cf89c9e104ff2e652fad6ec2fdab3258",
+    "src/generation/world-study/native-volume-erosion.ts": "32fb50764a8f9479bbd725a53b90a58a5bbd220199d5ad4da524a893fb9eaeec",
+    "src/generation/world-study/r100-spatial-world.ts": "0d7458a8016bb896f6608369c07e73e57e41436de2ec59ba9ae2e062d70d5137",
+    "src/generation/world-study/r100-spatial-types.ts": "ab09972625975a3512ad45364d012285ab1f6b6e06e04a3dd0d58c162762bb06",
+    "src/generation/world-study/r100-fragment-shape.ts": "3d77225f786e885459094b39a210d735c4972f89123139dcfeadb004d0ca6adb",
+    "src/generation/world-study/r100-package.ts": "eab2b732010631f85a26427f86d43acae980339bd196c11c28ca43a3022bb140",
+    "src/generation/legacy-r100-v7/executor-recovery.js": "7fb423629ae5fa826a16295c0e71accc2ad8979d6d21d8a339a9cfad7eade571",
+    "src/generation/legacy-r100-v7/executor-revision7.js": "55148b001bab48821ba7c16a6e970b019f50fadf1c5736c4f7fdd9019c9a8c8f",
+    "src/systems/r100-world/surface-fields.ts": "29da511c97b2ffc4d4b6d73526d853994432356cd5d9c70f9656f4e09fdf32a6",
+    "src/generated/r100-spatial-data.ts": "28bf9ce0f2f7a98aadecf9371a2406b73c71bd508933e30d8d63d98abb32098e",
+    "src/generated/r100-fragment-data.ts": "f84b6b041bc34dbed4fe3919b40598245bc11a4b0b22b84b70ab7d8d9392b1dd",
+    "tools/spatial-rollout/check-positive-ground.mjs": "0f29bd90466aa74364a55771e19401d01b44c4280add9b69dde558cab48cbf20"
+  }
+}

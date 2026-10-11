@@ -35,7 +35,7 @@ export interface R100SpatialMaterial {
 }
 /** Complete departure snapshot. Recovery never consults today's spatial CSV. */
 export interface R100SpatialPolicy {
-  readonly version: 1;
+  readonly version: 1 | 2;
   readonly worldId: string;
   readonly sourceHash: string;
   readonly organization: R100SpatialOrganization;
@@ -52,6 +52,8 @@ export interface R100SpatialPolicy {
   readonly erosion: readonly (readonly Readonly<Vector2>[])[];
   /** Positive ground ring; absent frozen policies retain their legacy terrain. */
   readonly terrainOutline?: readonly Readonly<Vector2>[];
+  /** Revision 8: exact authored layout, compiler identity and original-trip edge seed. */
+  readonly fragmentShape?: import('./r100-fragment-shape').R100FrozenFragmentShape;
   readonly spawnCandidates: readonly Readonly<Vector2>[];
   readonly extraction: SpatialExtractionPolicy;
   readonly deployment: R100SpatialDeploymentPolicy;

@@ -1,5 +1,7 @@
 /** Each admission is a complete production map. The report never means all seeds. */
 import assert from 'node:assert/strict';
+const expectedRevision = Number(process.env.QA_ALGORITHM_REVISION ?? 7);
+assert(Number.isSafeInteger(expectedRevision) && expectedRevision > 0, 'QA_ALGORITHM_REVISION must be a positive integer');
 import {readFileSync,writeFileSync,mkdirSync,existsSync,readdirSync} from 'node:fs';
 import {dirname} from 'node:path';
 import {createHash} from 'node:crypto';
@@ -23,6 +25,7 @@ const output=process.env.QA_REPORT??'docs/qa/artifacts/r100-spatial-rollout-2026
 assert(!existsSync(output),`Refusing to replace evidence: ${output}`);
 const paths=['src/generation/world-study/r100-spatial-world.ts','src/generated/r100-spatial-data.ts','src/generation/world-study/r100-package.ts','src/generation/world-study/r100-production-map.ts','src/generation/world-study/r100-master-world.ts','src/generation/world-study/r100-pollution.ts','src/generation/world-study/r100-expedition.ts','src/generation/world-study/spatial-extraction-selection.ts','src/generation/world-study/native-volume-ground-edge.ts','src/generation/world-study/r100-spatial-deployment.ts','src/generated/rift-spatial-deployment-data.ts','src/generation/world-study/r100-patrol-windows.ts','tools/spatial-rollout/route-obstruction.mjs','tools/spatial-rollout/check-production.mjs'];
 paths.push('src/generated/r100-package-manifest.ts','src/generation/world-study/native-volume-erosion.ts','src/generation/world-study/r100-spatial-types.ts',...readdirSync('data').filter(p=>p.startsWith('rift-spatial-')&&p.endsWith('.csv')).map(p=>`data/${p}`));
+paths.push('src/generated/r100-fragment-data.ts', 'src/generation/world-study/r100-fragment-shape.ts', ...readdirSync('src/generation/world-study/fragment-shape').filter(p => p.endsWith('.ts')).map(p => `src/generation/world-study/fragment-shape/${p}`));
 const hashes=Object.fromEntries(paths.map(p=>[p,createHash('sha256').update(readFileSync(p)).digest('hex')]));
 const report={status:'running',scope:'Complete production admissions at stated requested seed; quotas, real body support, patrol sweeps, geometry metrics and frozen recipe integrity. Optional independent worker-wire regeneration, not browser or human acceptance.',seed,recovery,sourceHashes:hashes,cases:[],failures:[]};
 mkdirSync(dirname(output),{recursive:true});
@@ -31,9 +34,9 @@ for(const id of worlds)for(const grade of grades){
  const start=performance.now();
  try{
  const recipe=createR100ProductionRecipe(id,seed,grade),frozen=JSON.stringify(recipe);
- assert.equal(recipe.package.algorithmRevision,7);assert(validR100ProductionRecipe(recipe));assert(recipe.spatialPolicy);
+ assert.equal(recipe.package.algorithmRevision,expectedRevision);assert(validR100ProductionRecipe(recipe));assert(recipe.spatialPolicy);
  const world=createR100ProductionMap(recipe),{layout,native}=world,grid=new TileGrid(layout.tileMap),budget=recipe.contentDefinition;
- assert(native&&native.algorithmRevision===7);assert.equal(grid.widthPx,2304);assert.equal(grid.heightPx,1792);
+ assert(native&&native.algorithmRevision===expectedRevision);assert.equal(grid.widthPx,2304);assert.equal(grid.heightPx,1792);
  assert.equal(grid.tileSize,8);assert.equal(world.hostTileMap.tileSize,32);
  assert.equal(layout.enemySpawns.length,budget.enemy_count);assert.equal(layout.enemySpawns.filter(x=>x.type==='rewriter').length,1);
  assert.equal(layout.kindlingNodes.reduce((n,x)=>n+x.value,0),({low:9,medium:13,severe:17})[grade]);

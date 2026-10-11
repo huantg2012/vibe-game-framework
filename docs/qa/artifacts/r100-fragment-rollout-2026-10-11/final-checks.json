@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-11T16:23:06.092Z",
+  "revision": "b2d737901ebe6e7ea61c4ea37be3470370d981a4+fragment-r8",
+  "finalSourceSnapshot": "2026-10-11T16:12:04.800Z",
+  "srcDataFilesCompared": 780,
+  "drift": [],
+  "checks": [
+    "npm run build: passed; existing large-chunk warning",
+    "npm run check:fragment-shape: passed, golden untouched",
+    "npm run check:fragment-authoring: passed",
+    "node tools/world-study/codegen-r100-spatial.mjs --check: passed",
+    "git diff --check: passed"
+  ],
+  "limitations": "Reports bind final src/data; source correction evidence without final suffix is historical. Not overall human acceptance."
+}

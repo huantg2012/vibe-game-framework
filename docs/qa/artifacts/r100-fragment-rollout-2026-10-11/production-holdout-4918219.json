@@ -1,0 +1,2778 @@
+{
+  "status": "passed",
+  "scope": "Complete production admissions at stated requested seed; quotas, real body support, patrol sweeps, geometry metrics and frozen recipe integrity. Optional independent worker-wire regeneration, not browser or human acceptance.",
+  "seed": 4918219,
+  "recovery": true,
+  "sourceHashes": {
+    "src/generation/world-study/r100-spatial-world.ts": "0d7458a8016bb896f6608369c07e73e57e41436de2ec59ba9ae2e062d70d5137",
+    "src/generated/r100-spatial-data.ts": "28bf9ce0f2f7a98aadecf9371a2406b73c71bd508933e30d8d63d98abb32098e",
+    "src/generation/world-study/r100-package.ts": "eab2b732010631f85a26427f86d43acae980339bd196c11c28ca43a3022bb140",
+    "src/generation/world-study/r100-production-map.ts": "d6a091ad3c75402e2601c0f67d8ab9b9feb56e30dfcd169f0e4921b721856a3f",
+    "src/generation/world-study/r100-master-world.ts": "2b1335c815c6f3f588cf576e37c527e2cf89c9e104ff2e652fad6ec2fdab3258",
+    "src/generation/world-study/r100-pollution.ts": "328804c3dd7423627fc31a4c119cff81cbe8078c0575094cc5c2c5d4eb1538dc",
+    "src/generation/world-study/r100-expedition.ts": "f55c7bc0e9f50878785f9a691b53cfb6bb5f7ea882265e3aebe0dd32d1d6b620",
+    "src/generation/world-study/spatial-extraction-selection.ts": "afccec7d982b52e5cbf1c2dd87d67e83d0eaffe4b87ce03b271645294a003308",
+    "src/generation/world-study/native-volume-ground-edge.ts": "698e5ab1b42a3dccd9b4a68fcfd52a462df039b39692c146d2e67c07a1aeeaab",
+    "src/generation/world-study/r100-spatial-deployment.ts": "cfd995473bde42450f8ffa0fbfb90119d20697ddce5458abb98db7982b916818",
+    "src/generated/rift-spatial-deployment-data.ts": "0a01b4a8eb97ef95c9365b0184a5f494d740ae1fd94647b59749bbfbb175aeb4",
+    "src/generation/world-study/r100-patrol-windows.ts": "9dfe9ba3ca1a8486c771b06590b9a8efa21ce5add55b32a94877f66b16d761ae",
+    "tools/spatial-rollout/route-obstruction.mjs": "d39a8c22dace665de7b5ea9311ac8164cdae8963715f6b7f36045fb1c1264360",
+    "tools/spatial-rollout/check-production.mjs": "2413474427cb3df18ef4ca431006fe761e1f8ae79b33ed6865032c972d653cde",
+    "src/generated/r100-package-manifest.ts": "8a24ead24e991e07c29114f2c1f546f5a3bf717d5a94be1fad39734eba3ebf9e",
+    "src/generation/world-study/native-volume-erosion.ts": "32fb50764a8f9479bbd725a53b90a58a5bbd220199d5ad4da524a893fb9eaeec",
+    "src/generation/world-study/r100-spatial-types.ts": "ab09972625975a3512ad45364d012285ab1f6b6e06e04a3dd0d58c162762bb06",
+    "data/rift-spatial-anchors.csv": "5b3859c55310182b43322574bced45fdf23557858b36802f218a70a645d7741a",
+    "data/rift-spatial-authored-erosion.csv": "0204471d847a5e7bac9e28a1c6e155fe79f0a00f6259324d16b22c127dc2e756",
+    "data/rift-spatial-authored-groups.csv": "7b3f87e5892d31c0fecc80cfd67053b9dfcffebe52628ebc716ea2f470522f17",
+    "data/rift-spatial-deployment.csv": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3",
+    "data/rift-spatial-erosion.csv": "3fc991148491ca06447f852582549a9626d42d8550d0ebffd4e0467dc30a92b4",
+    "data/rift-spatial-fragment-layouts.csv": "2b7a0067e3a095f38879d50b514d3c51876639968b51e897d01e57b23a80a154",
+    "data/rift-spatial-fragment-rectangles.csv": "21761df18bca06cac0a6ad81ef9d24bf3bdf863c8ece96558bfa819543c0c253",
+    "data/rift-spatial-fragment-worlds.csv": "13287ca6afe0411bed3f211df91497e08ec3d527822a30c956c6ae3f2313e05a",
+    "data/rift-spatial-land-outlines.csv": "7f0566736397c9db63a9e5effcf1bc3ba696bf6a1217c897171c5ba7502dc79b",
+    "data/rift-spatial-land-plates.csv": "83f953c5e65e691a7de81f63e8207a703e09222b5bf6c4861fcf21f639a0a459",
+    "data/rift-spatial-layouts.csv": "df60ea47965926ac405290d80275c2f9e3eaf4eec37031da4d950fe8421d1d57",
+    "data/rift-spatial-materials.csv": "1a63547da080ad5f4903acf34051b798ad43c13c47e402267e16dfc5207e3100",
+    "data/rift-spatial-organizations.csv": "90d427db727ca7033d578fd4f0e8d44fbd0cba45a49b828359b4f787c1695716",
+    "data/rift-spatial-policy.csv": "62744dd396971d1a222935452324b37e982a1ffaa42f005d7f9517723422549f",
+    "data/rift-spatial-prototype-anchors.csv": "d1536a87a69d32b0d2d753a3cc06aeba747c50789b06ccfea0bcc55a8f698d41",
+    "data/rift-spatial-prototype-erosion.csv": "49ba07c1826585ca6d267bc203f693b881e3fd4877fc6bf7a1899d84e0147770",
+    "data/rift-spatial-prototype-volumes.csv": "e2be402b400e08e7707da952b8ca452ec59e8ce5d6d8f207a9189ef02f238c3e",
+    "data/rift-spatial-prototype.csv": "33e9577bc3973eec241ca39d7a150085b889c236957fec44f00c14fee48b501f",
+    "data/rift-spatial-sector-anchors.csv": "2c51e14cc5fc6cefd9723952adb48becc64589fc4124952845f434c2276bce6e",
+    "data/rift-spatial-sector-cuts.csv": "d9c07e448ac9a107ff389bc485d212e381ece3f09f16c8d64d9c1a1eec1b5f95",
+    "data/rift-spatial-sector-layouts.csv": "c4f3910db4e702e9e7bff94dda2699b20ebd0ab4fee5faf90c4f95c2edee84ca",
+    "data/rift-spatial-sectors.csv": "e936851d090f2469e139b9ac04a277526672ef4b649312cf67e3838acb94a43d",
+    "data/rift-spatial-worlds.csv": "15cde729e97a3c6892c5606f10a0c7f8b2ae3bf65b7933e170e8018127c95734",
+    "src/generated/r100-fragment-data.ts": "f84b6b041bc34dbed4fe3919b40598245bc11a4b0b22b84b70ab7d8d9392b1dd",
+    "src/generation/world-study/r100-fragment-shape.ts": "3d77225f786e885459094b39a210d735c4972f89123139dcfeadb004d0ca6adb",
+    "src/generation/world-study/fragment-shape/index.ts": "360fec66eb098bd062ddb5515d65323a35e7aeeb1f6681ba3b18ce5eb8a008ab",
+    "src/generation/world-study/fragment-shape/rectilinear-fragment.ts": "3b865b938bb853a33e1a377ae806056d469f99b55cbfdaad47d73aeff2f6e754",
+    "src/generation/world-study/fragment-shape/types.ts": "ec3195b0389f261a9cd48b83de4468c97bc01708ee3e11eb8cefd0992c670a58",
+    "src/generation/world-study/fragment-shape/validation.ts": "0c6e580622a8a935afdc1a56508e5685fd3cf2e52066c8c0e0fc578ba2d9df35"
+  },
+  "cases": [
+    {
+      "world": "cinder-ridge",
+      "grade": "low",
+      "requestedSeed": 4918219,
+      "effectiveSeed": 4918219,
+      "attempts": 1,
+      "generationMs": 2380.9760420000002,
+      "signature": "4055a589",
+      "recipeBytes": 13875,
+      "spawn": {
+        "x": 300,
+        "y": 668
+      },
+      "extraction": {
+        "x": 1836,
+        "y": 860
+      },
+      "extractionStraightPx": 1547.9534876733214,
+      "extractionRoutePx": 1708.3128419472087,
+      "terrainFill": 0.4298735119047619,
+      "solidRatio": 0.19785807009952402,
+      "reachableFraction": 1,
+      "reachableSeats": 18689,
+      "instances": 26,
+      "patrolSegments": 10,
+      "spatial": {
+        "version": 2,
+        "worldId": "cinder-ridge",
+        "sourceHash": "6742f666d99d0d6b02209ca93e138466c66d52233e1f8487a6b2edafe30a0323",
+        "organization": "authored-sectors",
+        "width": 2304,
+        "height": 1792,
+        "terrainFillRatio": 0.4298735119047619,
+        "solidTerrainRatio": 0.19785807009952402,
+        "bodyReachableRatio": 1,
+        "unreachableBodySeats": 0,
+        "spawnIndex": 1,
+        "spawnRelocationPx": 2,
+        "extraction": {
+          "point": {
+            "x": 1836,
+            "y": 860
+          },
+          "cell": 31045,
+          "pathDistancePx": 1708.3128419472087,
+          "interactionPathDistancePx": 1658.371716450254,
+          "euclideanDistancePx": 1547.9534876733214,
+          "pathFraction": 0.8054283544990943,
+          "regionId": 7,
+          "distanceBand": 1,
+          "candidateCount": 5167,
+          "regionCount": 9
+        },
+        "extractionCandidateField": {
+          "reachableCount": 18689,
+          "maxPathDistancePx": 2120.9991334482247,
+          "minCandidatePathDistancePx": 965.6854249492374,
+          "maxCandidatePathDistancePx": 2077.68542494924,
+          "candidateCount": 5167,
+          "regionCount": 9,
+          "distanceBandCount": 3,
+          "regionCounts": {
+            "1": 17,
+            "2": 781,
+            "3": 73,
+            "5": 20,
+            "6": 1876,
+            "7": 536,
+            "8": 9,
+            "9": 1305,
+            "10": 550
+          },
+          "distanceBandCounts": {
+            "0": 3309,
+            "1": 1532,
+            "2": 326
+          }
+        },
+        "solidObjectCount": 22
+      },
+      "expedition": {
+        "reachableBodySeats": 18689,
+        "extractionRoutePx": 1708.3128419472087,
+        "maximumExtraTravelPx": 909.920922961418,
+        "directReturnRoutePx": 1658.3717164502555,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 26.176623509134515,
+            "approachRoutePx": 61.25483399593904,
+            "interactionSeats": 85,
+            "pollutionDistancePx": 569.5385412928127
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 46.39191898578338,
+            "approachRoutePx": 218.5096679918781,
+            "interactionSeats": 102,
+            "pollutionDistancePx": 414.3605821695194
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 510.3919189857852,
+            "approachRoutePx": 890.8427124746189,
+            "interactionSeats": 58,
+            "pollutionDistancePx": 92.06894502837527
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 500.8813844421288,
+            "approachRoutePx": 1346.4692629208116,
+            "interactionSeats": 63,
+            "pollutionDistancePx": 442.92183500024925
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 509.92092296141936,
+            "approachRoutePx": 1326.2539674441634,
+            "interactionSeats": 91,
+            "pollutionDistancePx": 680.1136271937933
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 890.2337649086262,
+            "approachRoutePx": 1140.8813844421306,
+            "interactionSeats": 57,
+            "pollutionDistancePx": 76.94153624668537
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 724,
+              "y": 1252
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 1348,
+              "y": 1348
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 828,
+              "y": 1628
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 1476,
+              "y": 156
+            },
+            "startMs": 2300,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 2,
+        "kindlingCount": 4,
+        "contaminantCount": 2
+      },
+      "obstruction": {
+        "world": "cinder-ridge",
+        "grade": "low",
+        "requestedSeed": 4918219,
+        "effectiveSeed": 4918219,
+        "attempts": 1,
+        "organization": "authored-sectors",
+        "spatialSourceHash": "6742f666d99d0d6b02209ca93e138466c66d52233e1f8487a6b2edafe30a0323",
+        "width": 2304,
+        "height": 1792,
+        "supportedSeats": 18689,
+        "reachableSeats": 18689,
+        "reachableFraction": 1,
+        "solidRatio": 0.19785807009952402,
+        "extractionInteractionPx": 1658.371716450254,
+        "candidateGroups": 32,
+        "groupsFound": 2,
+        "status": "passed",
+        "groups": [
+          {
+            "passed": true,
+            "group": {
+              "id": "void-33199",
+              "kind": "void",
+              "sourceSolidIds": [],
+              "blockedCells": 880,
+              "bounds": {
+                "x": 496,
+                "y": 920,
+                "width": 240,
+                "height": 312
+              },
+              "center": {
+                "x": 616,
+                "y": 1076
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 1076,
+              "from": {
+                "x": 468,
+                "y": 1076
+              },
+              "to": {
+                "x": 764,
+                "y": 1076
+              },
+              "straightPx": 296,
+              "directSweepFraction": 0.060810476351351346,
+              "groupHitCells": [
+                {
+                  "x": 500,
+                  "y": 1076
+                },
+                {
+                  "x": 508,
+                  "y": 1076
+                },
+                {
+                  "x": 516,
+                  "y": 1076
+                },
+                {
+                  "x": 524,
+                  "y": 1076
+                },
+                {
+                  "x": 532,
+                  "y": 1076
+                },
+                {
+                  "x": 540,
+                  "y": 1076
+                },
+                {
+                  "x": 548,
+                  "y": 1076
+                },
+                {
+                  "x": 556,
+                  "y": 1076
+                },
+                {
+                  "x": 564,
+                  "y": 1076
+                },
+                {
+                  "x": 572,
+                  "y": 1076
+                },
+                {
+                  "x": 580,
+                  "y": 1076
+                },
+                {
+                  "x": 588,
+                  "y": 1076
+                },
+                {
+                  "x": 596,
+                  "y": 1076
+                },
+                {
+                  "x": 604,
+                  "y": 1076
+                },
+                {
+                  "x": 612,
+                  "y": 1076
+                },
+                {
+                  "x": 620,
+                  "y": 1076
+                },
+                {
+                  "x": 628,
+                  "y": 1076
+                },
+                {
+                  "x": 636,
+                  "y": 1076
+                },
+                {
+                  "x": 644,
+                  "y": 1076
+                },
+                {
+                  "x": 652,
+                  "y": 1076
+                },
+                {
+                  "x": 660,
+                  "y": 1076
+                },
+                {
+                  "x": 668,
+                  "y": 1076
+                },
+                {
+                  "x": 676,
+                  "y": 1076
+                },
+                {
+                  "x": 684,
+                  "y": 1076
+                },
+                {
+                  "x": 692,
+                  "y": 1076
+                },
+                {
+                  "x": 700,
+                  "y": 1076
+                },
+                {
+                  "x": 708,
+                  "y": 1076
+                },
+                {
+                  "x": 716,
+                  "y": 1076
+                },
+                {
+                  "x": 724,
+                  "y": 1076
+                },
+                {
+                  "x": 732,
+                  "y": 1076
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 561.7056274847713,
+              "cellCount": 65,
+              "segmentCount": 14,
+              "points": [
+                {
+                  "x": 468,
+                  "y": 1076
+                },
+                {
+                  "x": 484,
+                  "y": 1092
+                },
+                {
+                  "x": 484,
+                  "y": 1244
+                },
+                {
+                  "x": 636,
+                  "y": 1244
+                },
+                {
+                  "x": 644,
+                  "y": 1236
+                },
+                {
+                  "x": 652,
+                  "y": 1236
+                },
+                {
+                  "x": 660,
+                  "y": 1228
+                },
+                {
+                  "x": 668,
+                  "y": 1228
+                },
+                {
+                  "x": 676,
+                  "y": 1220
+                },
+                {
+                  "x": 684,
+                  "y": 1220
+                },
+                {
+                  "x": 724,
+                  "y": 1180
+                },
+                {
+                  "x": 724,
+                  "y": 1132
+                },
+                {
+                  "x": 748,
+                  "y": 1108
+                },
+                {
+                  "x": 748,
+                  "y": 1092
+                },
+                {
+                  "x": 764,
+                  "y": 1076
+                }
+              ],
+              "ratio": 1.8976541469080108,
+              "extraPx": 265.7056274847712
+            },
+            "negativeHalfPlane": {
+              "distancePx": 561.7056274847713,
+              "cellCount": 65,
+              "segmentCount": 13,
+              "points": [
+                {
+                  "x": 468,
+                  "y": 1076
+                },
+                {
+                  "x": 484,
+                  "y": 1060
+                },
+                {
+                  "x": 484,
+                  "y": 988
+                },
+                {
+                  "x": 500,
+                  "y": 988
+                },
+                {
+                  "x": 508,
+                  "y": 980
+                },
+                {
+                  "x": 540,
+                  "y": 980
+                },
+                {
+                  "x": 604,
+                  "y": 916
+                },
+                {
+                  "x": 612,
+                  "y": 916
+                },
+                {
+                  "x": 620,
+                  "y": 908
+                },
+                {
+                  "x": 740,
+                  "y": 908
+                },
+                {
+                  "x": 740,
+                  "y": 924
+                },
+                {
+                  "x": 748,
+                  "y": 932
+                },
+                {
+                  "x": 748,
+                  "y": 1060
+                },
+                {
+                  "x": 764,
+                  "y": 1076
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 561.7056274847713,
+              "cellCount": 65,
+              "segmentCount": 14,
+              "points": [
+                {
+                  "x": 468,
+                  "y": 1076
+                },
+                {
+                  "x": 484,
+                  "y": 1092
+                },
+                {
+                  "x": 484,
+                  "y": 1244
+                },
+                {
+                  "x": 636,
+                  "y": 1244
+                },
+                {
+                  "x": 644,
+                  "y": 1236
+                },
+                {
+                  "x": 652,
+                  "y": 1236
+                },
+                {
+                  "x": 660,
+                  "y": 1228
+                },
+                {
+                  "x": 668,
+                  "y": 1228
+                },
+                {
+                  "x": 676,
+                  "y": 1220
+                },
+                {
+                  "x": 684,
+                  "y": 1220
+                },
+                {
+                  "x": 724,
+                  "y": 1180
+                },
+                {
+                  "x": 724,
+                  "y": 1132
+                },
+                {
+                  "x": 748,
+                  "y": 1108
+                },
+                {
+                  "x": 748,
+                  "y": 1092
+                },
+                {
+                  "x": 764,
+                  "y": 1076
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 0
+          },
+          {
+            "passed": true,
+            "group": {
+              "id": "void-12841",
+              "kind": "void",
+              "sourceSolidIds": [],
+              "blockedCells": 832,
+              "bounds": {
+                "x": 1200,
+                "y": 352,
+                "width": 288,
+                "height": 264
+              },
+              "center": {
+                "x": 1344,
+                "y": 484
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 484,
+              "from": {
+                "x": 1188,
+                "y": 484
+              },
+              "to": {
+                "x": 1516,
+                "y": 484
+              },
+              "straightPx": 328,
+              "directSweepFraction": 0.006097259146341802,
+              "groupHitCells": [
+                {
+                  "x": 1284,
+                  "y": 484
+                },
+                {
+                  "x": 1292,
+                  "y": 484
+                },
+                {
+                  "x": 1300,
+                  "y": 484
+                },
+                {
+                  "x": 1308,
+                  "y": 484
+                },
+                {
+                  "x": 1316,
+                  "y": 484
+                },
+                {
+                  "x": 1324,
+                  "y": 484
+                },
+                {
+                  "x": 1332,
+                  "y": 484
+                },
+                {
+                  "x": 1340,
+                  "y": 484
+                },
+                {
+                  "x": 1348,
+                  "y": 484
+                },
+                {
+                  "x": 1356,
+                  "y": 484
+                },
+                {
+                  "x": 1364,
+                  "y": 484
+                },
+                {
+                  "x": 1372,
+                  "y": 484
+                },
+                {
+                  "x": 1380,
+                  "y": 484
+                },
+                {
+                  "x": 1388,
+                  "y": 484
+                },
+                {
+                  "x": 1396,
+                  "y": 484
+                },
+                {
+                  "x": 1404,
+                  "y": 484
+                },
+                {
+                  "x": 1412,
+                  "y": 484
+                },
+                {
+                  "x": 1420,
+                  "y": 484
+                },
+                {
+                  "x": 1428,
+                  "y": 484
+                },
+                {
+                  "x": 1436,
+                  "y": 484
+                },
+                {
+                  "x": 1444,
+                  "y": 484
+                },
+                {
+                  "x": 1452,
+                  "y": 484
+                },
+                {
+                  "x": 1460,
+                  "y": 484
+                },
+                {
+                  "x": 1468,
+                  "y": 484
+                },
+                {
+                  "x": 1476,
+                  "y": 484
+                },
+                {
+                  "x": 1484,
+                  "y": 484
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 531.6467529817257,
+              "cellCount": 60,
+              "segmentCount": 12,
+              "points": [
+                {
+                  "x": 1188,
+                  "y": 484
+                },
+                {
+                  "x": 1188,
+                  "y": 476
+                },
+                {
+                  "x": 1284,
+                  "y": 380
+                },
+                {
+                  "x": 1284,
+                  "y": 372
+                },
+                {
+                  "x": 1292,
+                  "y": 372
+                },
+                {
+                  "x": 1300,
+                  "y": 364
+                },
+                {
+                  "x": 1308,
+                  "y": 364
+                },
+                {
+                  "x": 1324,
+                  "y": 348
+                },
+                {
+                  "x": 1332,
+                  "y": 348
+                },
+                {
+                  "x": 1340,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 468
+                },
+                {
+                  "x": 1516,
+                  "y": 484
+                }
+              ],
+              "ratio": 1.6208742468955053,
+              "extraPx": 203.64675298172574
+            },
+            "negativeHalfPlane": {
+              "distancePx": 531.6467529817257,
+              "cellCount": 60,
+              "segmentCount": 12,
+              "points": [
+                {
+                  "x": 1188,
+                  "y": 484
+                },
+                {
+                  "x": 1188,
+                  "y": 476
+                },
+                {
+                  "x": 1284,
+                  "y": 380
+                },
+                {
+                  "x": 1284,
+                  "y": 372
+                },
+                {
+                  "x": 1292,
+                  "y": 372
+                },
+                {
+                  "x": 1300,
+                  "y": 364
+                },
+                {
+                  "x": 1308,
+                  "y": 364
+                },
+                {
+                  "x": 1324,
+                  "y": 348
+                },
+                {
+                  "x": 1332,
+                  "y": 348
+                },
+                {
+                  "x": 1340,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 468
+                },
+                {
+                  "x": 1516,
+                  "y": 484
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 545.7056274847714,
+              "cellCount": 63,
+              "segmentCount": 9,
+              "points": [
+                {
+                  "x": 1188,
+                  "y": 484
+                },
+                {
+                  "x": 1188,
+                  "y": 628
+                },
+                {
+                  "x": 1380,
+                  "y": 628
+                },
+                {
+                  "x": 1388,
+                  "y": 620
+                },
+                {
+                  "x": 1396,
+                  "y": 620
+                },
+                {
+                  "x": 1412,
+                  "y": 604
+                },
+                {
+                  "x": 1420,
+                  "y": 604
+                },
+                {
+                  "x": 1500,
+                  "y": 524
+                },
+                {
+                  "x": 1500,
+                  "y": 500
+                },
+                {
+                  "x": 1516,
+                  "y": 484
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 0
+          }
+        ],
+        "rejectedGroups": [],
+        "measurementMs": 54.50233400000002
+      }
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "requestedSeed": 4918219,
+      "effectiveSeed": 4918219,
+      "attempts": 1,
+      "generationMs": 2758.0346669999994,
+      "signature": "6bcc93f9",
+      "recipeBytes": 13997,
+      "spawn": {
+        "x": 300,
+        "y": 668
+      },
+      "extraction": {
+        "x": 1836,
+        "y": 860
+      },
+      "extractionStraightPx": 1547.9534876733214,
+      "extractionRoutePx": 1708.3128419472087,
+      "terrainFill": 0.4298735119047619,
+      "solidRatio": 0.19735323813644887,
+      "reachableFraction": 1,
+      "reachableSeats": 18707,
+      "instances": 26,
+      "patrolSegments": 11,
+      "spatial": {
+        "version": 2,
+        "worldId": "cinder-ridge",
+        "sourceHash": "6742f666d99d0d6b02209ca93e138466c66d52233e1f8487a6b2edafe30a0323",
+        "organization": "authored-sectors",
+        "width": 2304,
+        "height": 1792,
+        "terrainFillRatio": 0.4298735119047619,
+        "solidTerrainRatio": 0.19735323813644887,
+        "bodyReachableRatio": 1,
+        "unreachableBodySeats": 0,
+        "spawnIndex": 1,
+        "spawnRelocationPx": 2,
+        "extraction": {
+          "point": {
+            "x": 1836,
+            "y": 860
+          },
+          "cell": 31045,
+          "pathDistancePx": 1708.3128419472087,
+          "interactionPathDistancePx": 1658.371716450254,
+          "euclideanDistancePx": 1547.9534876733214,
+          "pathFraction": 0.8054283544990943,
+          "regionId": 7,
+          "distanceBand": 1,
+          "candidateCount": 5164,
+          "regionCount": 9
+        },
+        "extractionCandidateField": {
+          "reachableCount": 18707,
+          "maxPathDistancePx": 2120.9991334482247,
+          "minCandidatePathDistancePx": 965.6854249492374,
+          "maxCandidatePathDistancePx": 2077.68542494924,
+          "candidateCount": 5164,
+          "regionCount": 9,
+          "distanceBandCount": 3,
+          "regionCounts": {
+            "1": 17,
+            "2": 787,
+            "3": 73,
+            "5": 20,
+            "6": 1866,
+            "7": 533,
+            "8": 10,
+            "9": 1306,
+            "10": 552
+          },
+          "distanceBandCounts": {
+            "0": 3308,
+            "1": 1533,
+            "2": 323
+          }
+        },
+        "solidObjectCount": 22
+      },
+      "expedition": {
+        "reachableBodySeats": 18707,
+        "extractionRoutePx": 1708.3128419472087,
+        "maximumExtraTravelPx": 905.2346314604029,
+        "directReturnRoutePx": 1658.3717164502555,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 26.176623509134515,
+            "approachRoutePx": 61.25483399593904,
+            "interactionSeats": 85,
+            "pollutionDistancePx": 469.9635614091387
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 46.39191898578338,
+            "approachRoutePx": 218.5096679918781,
+            "interactionSeats": 101,
+            "pollutionDistancePx": 399.23927662493327
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 512.6660889654781,
+            "approachRoutePx": 830.7249634685273,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 39.24555320336759
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 502.8225099390834,
+            "approachRoutePx": 1305.0966799187813,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 97.45781160551181
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 504.5685424949229,
+            "approachRoutePx": 1957.685424949239,
+            "interactionSeats": 48,
+            "pollutionDistancePx": 124.48568954616468
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 693.0193359837558,
+            "approachRoutePx": 565.0193359837559,
+            "interactionSeats": 57,
+            "pollutionDistancePx": 79.22790320451152
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 749.7829714197937,
+            "approachRoutePx": 1005.1168824543137,
+            "interactionSeats": 74,
+            "pollutionDistancePx": 92.06894502837527
+          },
+          {
+            "id": "contaminant/deep",
+            "minimumExtraTravelPx": 711.6265504461894,
+            "approachRoutePx": 885.3523804664968,
+            "interactionSeats": 96,
+            "pollutionDistancePx": 95.86659251017358
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 676,
+              "y": 1284
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 1300,
+              "y": 1364
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-2",
+            "seat": {
+              "x": 668,
+              "y": 1604
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 2164,
+              "y": 820
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-deep-1",
+            "seat": {
+              "x": 540,
+              "y": 1436
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 172,
+              "y": 1180
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 3,
+        "kindlingCount": 5,
+        "contaminantCount": 3
+      },
+      "obstruction": {
+        "world": "cinder-ridge",
+        "grade": "medium",
+        "requestedSeed": 4918219,
+        "effectiveSeed": 4918219,
+        "attempts": 1,
+        "organization": "authored-sectors",
+        "spatialSourceHash": "6742f666d99d0d6b02209ca93e138466c66d52233e1f8487a6b2edafe30a0323",
+        "width": 2304,
+        "height": 1792,
+        "supportedSeats": 18707,
+        "reachableSeats": 18707,
+        "reachableFraction": 1,
+        "solidRatio": 0.19735323813644887,
+        "extractionInteractionPx": 1658.371716450254,
+        "candidateGroups": 32,
+        "groupsFound": 2,
+        "status": "passed",
+        "groups": [
+          {
+            "passed": true,
+            "group": {
+              "id": "void-33199",
+              "kind": "void",
+              "sourceSolidIds": [],
+              "blockedCells": 880,
+              "bounds": {
+                "x": 496,
+                "y": 920,
+                "width": 240,
+                "height": 312
+              },
+              "center": {
+                "x": 616,
+                "y": 1076
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 1076,
+              "from": {
+                "x": 468,
+                "y": 1076
+              },
+              "to": {
+                "x": 764,
+                "y": 1076
+              },
+              "straightPx": 296,
+              "directSweepFraction": 0.060810476351351346,
+              "groupHitCells": [
+                {
+                  "x": 500,
+                  "y": 1076
+                },
+                {
+                  "x": 508,
+                  "y": 1076
+                },
+                {
+                  "x": 516,
+                  "y": 1076
+                },
+                {
+                  "x": 524,
+                  "y": 1076
+                },
+                {
+                  "x": 532,
+                  "y": 1076
+                },
+                {
+                  "x": 540,
+                  "y": 1076
+                },
+                {
+                  "x": 548,
+                  "y": 1076
+                },
+                {
+                  "x": 556,
+                  "y": 1076
+                },
+                {
+                  "x": 564,
+                  "y": 1076
+                },
+                {
+                  "x": 572,
+                  "y": 1076
+                },
+                {
+                  "x": 580,
+                  "y": 1076
+                },
+                {
+                  "x": 588,
+                  "y": 1076
+                },
+                {
+                  "x": 596,
+                  "y": 1076
+                },
+                {
+                  "x": 604,
+                  "y": 1076
+                },
+                {
+                  "x": 612,
+                  "y": 1076
+                },
+                {
+                  "x": 620,
+                  "y": 1076
+                },
+                {
+                  "x": 628,
+                  "y": 1076
+                },
+                {
+                  "x": 636,
+                  "y": 1076
+                },
+                {
+                  "x": 644,
+                  "y": 1076
+                },
+                {
+                  "x": 652,
+                  "y": 1076
+                },
+                {
+                  "x": 660,
+                  "y": 1076
+                },
+                {
+                  "x": 668,
+                  "y": 1076
+                },
+                {
+                  "x": 676,
+                  "y": 1076
+                },
+                {
+                  "x": 684,
+                  "y": 1076
+                },
+                {
+                  "x": 692,
+                  "y": 1076
+                },
+                {
+                  "x": 700,
+                  "y": 1076
+                },
+                {
+                  "x": 708,
+                  "y": 1076
+                },
+                {
+                  "x": 716,
+                  "y": 1076
+                },
+                {
+                  "x": 724,
+                  "y": 1076
+                },
+                {
+                  "x": 732,
+                  "y": 1076
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 561.7056274847713,
+              "cellCount": 65,
+              "segmentCount": 13,
+              "points": [
+                {
+                  "x": 468,
+                  "y": 1076
+                },
+                {
+                  "x": 484,
+                  "y": 1060
+                },
+                {
+                  "x": 484,
+                  "y": 988
+                },
+                {
+                  "x": 500,
+                  "y": 988
+                },
+                {
+                  "x": 508,
+                  "y": 980
+                },
+                {
+                  "x": 540,
+                  "y": 980
+                },
+                {
+                  "x": 604,
+                  "y": 916
+                },
+                {
+                  "x": 612,
+                  "y": 916
+                },
+                {
+                  "x": 620,
+                  "y": 908
+                },
+                {
+                  "x": 740,
+                  "y": 908
+                },
+                {
+                  "x": 740,
+                  "y": 924
+                },
+                {
+                  "x": 748,
+                  "y": 932
+                },
+                {
+                  "x": 748,
+                  "y": 1060
+                },
+                {
+                  "x": 764,
+                  "y": 1076
+                }
+              ],
+              "ratio": 1.8976541469080115,
+              "extraPx": 265.7056274847714
+            },
+            "negativeHalfPlane": {
+              "distancePx": 561.7056274847713,
+              "cellCount": 65,
+              "segmentCount": 13,
+              "points": [
+                {
+                  "x": 468,
+                  "y": 1076
+                },
+                {
+                  "x": 484,
+                  "y": 1060
+                },
+                {
+                  "x": 484,
+                  "y": 988
+                },
+                {
+                  "x": 500,
+                  "y": 988
+                },
+                {
+                  "x": 508,
+                  "y": 980
+                },
+                {
+                  "x": 540,
+                  "y": 980
+                },
+                {
+                  "x": 604,
+                  "y": 916
+                },
+                {
+                  "x": 612,
+                  "y": 916
+                },
+                {
+                  "x": 620,
+                  "y": 908
+                },
+                {
+                  "x": 740,
+                  "y": 908
+                },
+                {
+                  "x": 740,
+                  "y": 924
+                },
+                {
+                  "x": 748,
+                  "y": 932
+                },
+                {
+                  "x": 748,
+                  "y": 1060
+                },
+                {
+                  "x": 764,
+                  "y": 1076
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 561.7056274847713,
+              "cellCount": 65,
+              "segmentCount": 14,
+              "points": [
+                {
+                  "x": 468,
+                  "y": 1076
+                },
+                {
+                  "x": 484,
+                  "y": 1092
+                },
+                {
+                  "x": 484,
+                  "y": 1244
+                },
+                {
+                  "x": 636,
+                  "y": 1244
+                },
+                {
+                  "x": 644,
+                  "y": 1236
+                },
+                {
+                  "x": 652,
+                  "y": 1236
+                },
+                {
+                  "x": 660,
+                  "y": 1228
+                },
+                {
+                  "x": 668,
+                  "y": 1228
+                },
+                {
+                  "x": 676,
+                  "y": 1220
+                },
+                {
+                  "x": 684,
+                  "y": 1220
+                },
+                {
+                  "x": 724,
+                  "y": 1180
+                },
+                {
+                  "x": 724,
+                  "y": 1132
+                },
+                {
+                  "x": 748,
+                  "y": 1108
+                },
+                {
+                  "x": 748,
+                  "y": 1092
+                },
+                {
+                  "x": 764,
+                  "y": 1076
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 0
+          },
+          {
+            "passed": true,
+            "group": {
+              "id": "void-12841",
+              "kind": "void",
+              "sourceSolidIds": [],
+              "blockedCells": 832,
+              "bounds": {
+                "x": 1200,
+                "y": 352,
+                "width": 288,
+                "height": 264
+              },
+              "center": {
+                "x": 1344,
+                "y": 484
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 484,
+              "from": {
+                "x": 1188,
+                "y": 484
+              },
+              "to": {
+                "x": 1516,
+                "y": 484
+              },
+              "straightPx": 328,
+              "directSweepFraction": 0.006097259146341802,
+              "groupHitCells": [
+                {
+                  "x": 1284,
+                  "y": 484
+                },
+                {
+                  "x": 1292,
+                  "y": 484
+                },
+                {
+                  "x": 1300,
+                  "y": 484
+                },
+                {
+                  "x": 1308,
+                  "y": 484
+                },
+                {
+                  "x": 1316,
+                  "y": 484
+                },
+                {
+                  "x": 1324,
+                  "y": 484
+                },
+                {
+                  "x": 1332,
+                  "y": 484
+                },
+                {
+                  "x": 1340,
+                  "y": 484
+                },
+                {
+                  "x": 1348,
+                  "y": 484
+                },
+                {
+                  "x": 1356,
+                  "y": 484
+                },
+                {
+                  "x": 1364,
+                  "y": 484
+                },
+                {
+                  "x": 1372,
+                  "y": 484
+                },
+                {
+                  "x": 1380,
+                  "y": 484
+                },
+                {
+                  "x": 1388,
+                  "y": 484
+                },
+                {
+                  "x": 1396,
+                  "y": 484
+                },
+                {
+                  "x": 1404,
+                  "y": 484
+                },
+                {
+                  "x": 1412,
+                  "y": 484
+                },
+                {
+                  "x": 1420,
+                  "y": 484
+                },
+                {
+                  "x": 1428,
+                  "y": 484
+                },
+                {
+                  "x": 1436,
+                  "y": 484
+                },
+                {
+                  "x": 1444,
+                  "y": 484
+                },
+                {
+                  "x": 1452,
+                  "y": 484
+                },
+                {
+                  "x": 1460,
+                  "y": 484
+                },
+                {
+                  "x": 1468,
+                  "y": 484
+                },
+                {
+                  "x": 1476,
+                  "y": 484
+                },
+                {
+                  "x": 1484,
+                  "y": 484
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 531.6467529817257,
+              "cellCount": 60,
+              "segmentCount": 13,
+              "points": [
+                {
+                  "x": 1188,
+                  "y": 484
+                },
+                {
+                  "x": 1188,
+                  "y": 476
+                },
+                {
+                  "x": 1284,
+                  "y": 380
+                },
+                {
+                  "x": 1284,
+                  "y": 372
+                },
+                {
+                  "x": 1292,
+                  "y": 372
+                },
+                {
+                  "x": 1300,
+                  "y": 364
+                },
+                {
+                  "x": 1308,
+                  "y": 364
+                },
+                {
+                  "x": 1324,
+                  "y": 348
+                },
+                {
+                  "x": 1332,
+                  "y": 348
+                },
+                {
+                  "x": 1340,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 388
+                },
+                {
+                  "x": 1516,
+                  "y": 404
+                },
+                {
+                  "x": 1516,
+                  "y": 484
+                }
+              ],
+              "ratio": 1.6208742468955053,
+              "extraPx": 203.64675298172574
+            },
+            "negativeHalfPlane": {
+              "distancePx": 531.6467529817257,
+              "cellCount": 60,
+              "segmentCount": 12,
+              "points": [
+                {
+                  "x": 1188,
+                  "y": 484
+                },
+                {
+                  "x": 1188,
+                  "y": 476
+                },
+                {
+                  "x": 1284,
+                  "y": 380
+                },
+                {
+                  "x": 1284,
+                  "y": 372
+                },
+                {
+                  "x": 1292,
+                  "y": 372
+                },
+                {
+                  "x": 1300,
+                  "y": 364
+                },
+                {
+                  "x": 1308,
+                  "y": 364
+                },
+                {
+                  "x": 1324,
+                  "y": 348
+                },
+                {
+                  "x": 1332,
+                  "y": 348
+                },
+                {
+                  "x": 1340,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 468
+                },
+                {
+                  "x": 1516,
+                  "y": 484
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 545.7056274847714,
+              "cellCount": 63,
+              "segmentCount": 9,
+              "points": [
+                {
+                  "x": 1188,
+                  "y": 484
+                },
+                {
+                  "x": 1188,
+                  "y": 628
+                },
+                {
+                  "x": 1380,
+                  "y": 628
+                },
+                {
+                  "x": 1388,
+                  "y": 620
+                },
+                {
+                  "x": 1396,
+                  "y": 620
+                },
+                {
+                  "x": 1412,
+                  "y": 604
+                },
+                {
+                  "x": 1420,
+                  "y": 604
+                },
+                {
+                  "x": 1500,
+                  "y": 524
+                },
+                {
+                  "x": 1500,
+                  "y": 500
+                },
+                {
+                  "x": 1516,
+                  "y": 484
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 0
+          }
+        ],
+        "rejectedGroups": [],
+        "measurementMs": 55.1747919999998
+      }
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "severe",
+      "requestedSeed": 4918219,
+      "effectiveSeed": 4918219,
+      "attempts": 1,
+      "generationMs": 3469.7401660000005,
+      "signature": "145077ad",
+      "recipeBytes": 14198,
+      "spawn": {
+        "x": 300,
+        "y": 668
+      },
+      "extraction": {
+        "x": 1820,
+        "y": 860
+      },
+      "extractionStraightPx": 1532.0783269794008,
+      "extractionRoutePx": 1692.3128419472087,
+      "terrainFill": 0.4298735119047619,
+      "solidRatio": 0.19811048608106158,
+      "reachableFraction": 1,
+      "reachableSeats": 18673,
+      "instances": 26,
+      "patrolSegments": 13,
+      "spatial": {
+        "version": 2,
+        "worldId": "cinder-ridge",
+        "sourceHash": "6742f666d99d0d6b02209ca93e138466c66d52233e1f8487a6b2edafe30a0323",
+        "organization": "authored-sectors",
+        "width": 2304,
+        "height": 1792,
+        "terrainFillRatio": 0.4298735119047619,
+        "solidTerrainRatio": 0.19811048608106158,
+        "bodyReachableRatio": 1,
+        "unreachableBodySeats": 0,
+        "spawnIndex": 1,
+        "spawnRelocationPx": 2,
+        "extraction": {
+          "point": {
+            "x": 1820,
+            "y": 860
+          },
+          "cell": 31043,
+          "pathDistancePx": 1692.3128419472087,
+          "interactionPathDistancePx": 1642.371716450254,
+          "euclideanDistancePx": 1532.0783269794008,
+          "pathFraction": 0.7978847399130818,
+          "regionId": 7,
+          "distanceBand": 1,
+          "candidateCount": 5144,
+          "regionCount": 9
+        },
+        "extractionCandidateField": {
+          "reachableCount": 18673,
+          "maxPathDistancePx": 2120.9991334482247,
+          "minCandidatePathDistancePx": 965.6854249492374,
+          "maxCandidatePathDistancePx": 2077.68542494924,
+          "candidateCount": 5144,
+          "regionCount": 9,
+          "distanceBandCount": 3,
+          "regionCounts": {
+            "1": 9,
+            "2": 792,
+            "3": 73,
+            "5": 18,
+            "6": 1853,
+            "7": 533,
+            "8": 10,
+            "9": 1308,
+            "10": 548
+          },
+          "distanceBandCounts": {
+            "0": 3298,
+            "1": 1524,
+            "2": 322
+          }
+        },
+        "solidObjectCount": 22
+      },
+      "expedition": {
+        "reachableBodySeats": 18673,
+        "extractionRoutePx": 1692.3128419472087,
+        "maximumExtraTravelPx": 905.2346314604024,
+        "directReturnRoutePx": 1642.3717164502555,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 26.176623509134515,
+            "approachRoutePx": 61.25483399593904,
+            "interactionSeats": 85,
+            "pollutionDistancePx": 188
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 32.8040405071049,
+            "approachRoutePx": 186.5096679918781,
+            "interactionSeats": 80,
+            "pollutionDistancePx": 78.587530817554
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 512.6660889654781,
+            "approachRoutePx": 853.3523804664968,
+            "interactionSeats": 106,
+            "pollutionDistancePx": 20.181444068749045
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 495.52900397563326,
+            "approachRoutePx": 1303.6265504461937,
+            "interactionSeats": 89,
+            "pollutionDistancePx": 36.13318551349164
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 502.6274169979688,
+            "approachRoutePx": 439.76450198781697,
+            "interactionSeats": 74,
+            "pollutionDistancePx": 44.11754546370561
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 802.1362184380673,
+            "approachRoutePx": 930.6072144624358,
+            "interactionSeats": 63,
+            "pollutionDistancePx": 95.86659251017358
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 747.8418459228374,
+            "approachRoutePx": 1272.763635436039,
+            "interactionSeats": 112,
+            "pollutionDistancePx": 92.619037896906
+          },
+          {
+            "id": "contaminant/deep",
+            "minimumExtraTravelPx": 749.7829714197933,
+            "approachRoutePx": 1005.1168824543137,
+            "interactionSeats": 74,
+            "pollutionDistancePx": 92.06894502837527
+          },
+          {
+            "id": "contaminant/deep",
+            "minimumExtraTravelPx": 706.1362184380673,
+            "approachRoutePx": 906.0386719675121,
+            "interactionSeats": 63,
+            "pollutionDistancePx": 29.366656256505337
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 692,
+              "y": 1300
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 1460,
+              "y": 164
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-2",
+            "seat": {
+              "x": 1028,
+              "y": 1524
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 196,
+              "y": 1116
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 484,
+              "y": 1460
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-deep-2",
+            "seat": {
+              "x": 540,
+              "y": 1484
+            },
+            "startMs": 1700,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-deep-1",
+            "seat": {
+              "x": 660,
+              "y": 1620
+            },
+            "startMs": 3200,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 4,
+        "kindlingCount": 5,
+        "contaminantCount": 4
+      },
+      "obstruction": {
+        "world": "cinder-ridge",
+        "grade": "severe",
+        "requestedSeed": 4918219,
+        "effectiveSeed": 4918219,
+        "attempts": 1,
+        "organization": "authored-sectors",
+        "spatialSourceHash": "6742f666d99d0d6b02209ca93e138466c66d52233e1f8487a6b2edafe30a0323",
+        "width": 2304,
+        "height": 1792,
+        "supportedSeats": 18673,
+        "reachableSeats": 18673,
+        "reachableFraction": 1,
+        "solidRatio": 0.19811048608106158,
+        "extractionInteractionPx": 1642.371716450254,
+        "candidateGroups": 32,
+        "groupsFound": 2,
+        "status": "passed",
+        "groups": [
+          {
+            "passed": true,
+            "group": {
+              "id": "void-33199",
+              "kind": "void",
+              "sourceSolidIds": [],
+              "blockedCells": 880,
+              "bounds": {
+                "x": 496,
+                "y": 920,
+                "width": 240,
+                "height": 312
+              },
+              "center": {
+                "x": 616,
+                "y": 1076
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 1076,
+              "from": {
+                "x": 468,
+                "y": 1076
+              },
+              "to": {
+                "x": 764,
+                "y": 1076
+              },
+              "straightPx": 296,
+              "directSweepFraction": 0.060810476351351346,
+              "groupHitCells": [
+                {
+                  "x": 500,
+                  "y": 1076
+                },
+                {
+                  "x": 508,
+                  "y": 1076
+                },
+                {
+                  "x": 516,
+                  "y": 1076
+                },
+                {
+                  "x": 524,
+                  "y": 1076
+                },
+                {
+                  "x": 532,
+                  "y": 1076
+                },
+                {
+                  "x": 540,
+                  "y": 1076
+                },
+                {
+                  "x": 548,
+                  "y": 1076
+                },
+                {
+                  "x": 556,
+                  "y": 1076
+                },
+                {
+                  "x": 564,
+                  "y": 1076
+                },
+                {
+                  "x": 572,
+                  "y": 1076
+                },
+                {
+                  "x": 580,
+                  "y": 1076
+                },
+                {
+                  "x": 588,
+                  "y": 1076
+                },
+                {
+                  "x": 596,
+                  "y": 1076
+                },
+                {
+                  "x": 604,
+                  "y": 1076
+                },
+                {
+                  "x": 612,
+                  "y": 1076
+                },
+                {
+                  "x": 620,
+                  "y": 1076
+                },
+                {
+                  "x": 628,
+                  "y": 1076
+                },
+                {
+                  "x": 636,
+                  "y": 1076
+                },
+                {
+                  "x": 644,
+                  "y": 1076
+                },
+                {
+                  "x": 652,
+                  "y": 1076
+                },
+                {
+                  "x": 660,
+                  "y": 1076
+                },
+                {
+                  "x": 668,
+                  "y": 1076
+                },
+                {
+                  "x": 676,
+                  "y": 1076
+                },
+                {
+                  "x": 684,
+                  "y": 1076
+                },
+                {
+                  "x": 692,
+                  "y": 1076
+                },
+                {
+                  "x": 700,
+                  "y": 1076
+                },
+                {
+                  "x": 708,
+                  "y": 1076
+                },
+                {
+                  "x": 716,
+                  "y": 1076
+                },
+                {
+                  "x": 724,
+                  "y": 1076
+                },
+                {
+                  "x": 732,
+                  "y": 1076
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 561.7056274847713,
+              "cellCount": 65,
+              "segmentCount": 13,
+              "points": [
+                {
+                  "x": 468,
+                  "y": 1076
+                },
+                {
+                  "x": 484,
+                  "y": 1060
+                },
+                {
+                  "x": 484,
+                  "y": 988
+                },
+                {
+                  "x": 500,
+                  "y": 988
+                },
+                {
+                  "x": 508,
+                  "y": 980
+                },
+                {
+                  "x": 540,
+                  "y": 980
+                },
+                {
+                  "x": 604,
+                  "y": 916
+                },
+                {
+                  "x": 612,
+                  "y": 916
+                },
+                {
+                  "x": 620,
+                  "y": 908
+                },
+                {
+                  "x": 740,
+                  "y": 908
+                },
+                {
+                  "x": 740,
+                  "y": 924
+                },
+                {
+                  "x": 748,
+                  "y": 932
+                },
+                {
+                  "x": 748,
+                  "y": 1060
+                },
+                {
+                  "x": 764,
+                  "y": 1076
+                }
+              ],
+              "ratio": 1.8976541469080115,
+              "extraPx": 265.7056274847714
+            },
+            "negativeHalfPlane": {
+              "distancePx": 561.7056274847713,
+              "cellCount": 65,
+              "segmentCount": 13,
+              "points": [
+                {
+                  "x": 468,
+                  "y": 1076
+                },
+                {
+                  "x": 484,
+                  "y": 1060
+                },
+                {
+                  "x": 484,
+                  "y": 988
+                },
+                {
+                  "x": 500,
+                  "y": 988
+                },
+                {
+                  "x": 508,
+                  "y": 980
+                },
+                {
+                  "x": 540,
+                  "y": 980
+                },
+                {
+                  "x": 604,
+                  "y": 916
+                },
+                {
+                  "x": 612,
+                  "y": 916
+                },
+                {
+                  "x": 620,
+                  "y": 908
+                },
+                {
+                  "x": 740,
+                  "y": 908
+                },
+                {
+                  "x": 740,
+                  "y": 924
+                },
+                {
+                  "x": 748,
+                  "y": 932
+                },
+                {
+                  "x": 748,
+                  "y": 1060
+                },
+                {
+                  "x": 764,
+                  "y": 1076
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 561.7056274847713,
+              "cellCount": 65,
+              "segmentCount": 15,
+              "points": [
+                {
+                  "x": 468,
+                  "y": 1076
+                },
+                {
+                  "x": 484,
+                  "y": 1092
+                },
+                {
+                  "x": 484,
+                  "y": 1244
+                },
+                {
+                  "x": 636,
+                  "y": 1244
+                },
+                {
+                  "x": 644,
+                  "y": 1236
+                },
+                {
+                  "x": 652,
+                  "y": 1236
+                },
+                {
+                  "x": 660,
+                  "y": 1228
+                },
+                {
+                  "x": 668,
+                  "y": 1228
+                },
+                {
+                  "x": 676,
+                  "y": 1220
+                },
+                {
+                  "x": 684,
+                  "y": 1220
+                },
+                {
+                  "x": 724,
+                  "y": 1180
+                },
+                {
+                  "x": 724,
+                  "y": 1164
+                },
+                {
+                  "x": 756,
+                  "y": 1132
+                },
+                {
+                  "x": 756,
+                  "y": 1108
+                },
+                {
+                  "x": 764,
+                  "y": 1100
+                },
+                {
+                  "x": 764,
+                  "y": 1076
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 0
+          },
+          {
+            "passed": true,
+            "group": {
+              "id": "void-12841",
+              "kind": "void",
+              "sourceSolidIds": [],
+              "blockedCells": 832,
+              "bounds": {
+                "x": 1200,
+                "y": 352,
+                "width": 288,
+                "height": 264
+              },
+              "center": {
+                "x": 1344,
+                "y": 484
+              }
+            },
+            "probe": {
+              "axis": "horizontal",
+              "crossingLinePx": 484,
+              "from": {
+                "x": 1188,
+                "y": 484
+              },
+              "to": {
+                "x": 1516,
+                "y": 484
+              },
+              "straightPx": 328,
+              "directSweepFraction": 0.006097259146341802,
+              "groupHitCells": [
+                {
+                  "x": 1284,
+                  "y": 484
+                },
+                {
+                  "x": 1292,
+                  "y": 484
+                },
+                {
+                  "x": 1300,
+                  "y": 484
+                },
+                {
+                  "x": 1308,
+                  "y": 484
+                },
+                {
+                  "x": 1316,
+                  "y": 484
+                },
+                {
+                  "x": 1324,
+                  "y": 484
+                },
+                {
+                  "x": 1332,
+                  "y": 484
+                },
+                {
+                  "x": 1340,
+                  "y": 484
+                },
+                {
+                  "x": 1348,
+                  "y": 484
+                },
+                {
+                  "x": 1356,
+                  "y": 484
+                },
+                {
+                  "x": 1364,
+                  "y": 484
+                },
+                {
+                  "x": 1372,
+                  "y": 484
+                },
+                {
+                  "x": 1380,
+                  "y": 484
+                },
+                {
+                  "x": 1388,
+                  "y": 484
+                },
+                {
+                  "x": 1396,
+                  "y": 484
+                },
+                {
+                  "x": 1404,
+                  "y": 484
+                },
+                {
+                  "x": 1412,
+                  "y": 484
+                },
+                {
+                  "x": 1420,
+                  "y": 484
+                },
+                {
+                  "x": 1428,
+                  "y": 484
+                },
+                {
+                  "x": 1436,
+                  "y": 484
+                },
+                {
+                  "x": 1444,
+                  "y": 484
+                },
+                {
+                  "x": 1452,
+                  "y": 484
+                },
+                {
+                  "x": 1460,
+                  "y": 484
+                },
+                {
+                  "x": 1468,
+                  "y": 484
+                },
+                {
+                  "x": 1476,
+                  "y": 484
+                },
+                {
+                  "x": 1484,
+                  "y": 484
+                }
+              ]
+            },
+            "shortest": {
+              "distancePx": 531.6467529817257,
+              "cellCount": 60,
+              "segmentCount": 12,
+              "points": [
+                {
+                  "x": 1188,
+                  "y": 484
+                },
+                {
+                  "x": 1188,
+                  "y": 476
+                },
+                {
+                  "x": 1284,
+                  "y": 380
+                },
+                {
+                  "x": 1284,
+                  "y": 372
+                },
+                {
+                  "x": 1292,
+                  "y": 372
+                },
+                {
+                  "x": 1300,
+                  "y": 364
+                },
+                {
+                  "x": 1308,
+                  "y": 364
+                },
+                {
+                  "x": 1324,
+                  "y": 348
+                },
+                {
+                  "x": 1332,
+                  "y": 348
+                },
+                {
+                  "x": 1340,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 468
+                },
+                {
+                  "x": 1516,
+                  "y": 484
+                }
+              ],
+              "ratio": 1.6208742468955053,
+              "extraPx": 203.64675298172574
+            },
+            "negativeHalfPlane": {
+              "distancePx": 531.6467529817257,
+              "cellCount": 60,
+              "segmentCount": 12,
+              "points": [
+                {
+                  "x": 1188,
+                  "y": 484
+                },
+                {
+                  "x": 1188,
+                  "y": 476
+                },
+                {
+                  "x": 1284,
+                  "y": 380
+                },
+                {
+                  "x": 1284,
+                  "y": 372
+                },
+                {
+                  "x": 1292,
+                  "y": 372
+                },
+                {
+                  "x": 1300,
+                  "y": 364
+                },
+                {
+                  "x": 1308,
+                  "y": 364
+                },
+                {
+                  "x": 1324,
+                  "y": 348
+                },
+                {
+                  "x": 1332,
+                  "y": 348
+                },
+                {
+                  "x": 1340,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 340
+                },
+                {
+                  "x": 1500,
+                  "y": 468
+                },
+                {
+                  "x": 1516,
+                  "y": 484
+                }
+              ]
+            },
+            "positiveHalfPlane": {
+              "distancePx": 545.7056274847714,
+              "cellCount": 63,
+              "segmentCount": 9,
+              "points": [
+                {
+                  "x": 1188,
+                  "y": 484
+                },
+                {
+                  "x": 1188,
+                  "y": 628
+                },
+                {
+                  "x": 1380,
+                  "y": 628
+                },
+                {
+                  "x": 1388,
+                  "y": 620
+                },
+                {
+                  "x": 1396,
+                  "y": 620
+                },
+                {
+                  "x": 1412,
+                  "y": 604
+                },
+                {
+                  "x": 1420,
+                  "y": 604
+                },
+                {
+                  "x": 1500,
+                  "y": 524
+                },
+                {
+                  "x": 1500,
+                  "y": 500
+                },
+                {
+                  "x": 1516,
+                  "y": 484
+                }
+              ]
+            },
+            "sharedEdgesOnCrossingLine": 0,
+            "rejectedEarlierProbes": 0
+          }
+        ],
+        "rejectedGroups": [],
+        "measurementMs": 102.52641700000004
+      }
+    }
+  ],
+  "failures": [],
+  "finishedAt": "2026-10-11T16:12:17.143Z"
+}

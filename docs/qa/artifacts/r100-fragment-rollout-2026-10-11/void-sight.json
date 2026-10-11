@@ -1,0 +1,763 @@
+{
+  "status": "passed",
+  "startedAt": "2026-10-11T16:01:46.995Z",
+  "commit": "b2d737901ebe6e7ea61c4ea37be3470370d981a4",
+  "scope": "Actual complete production generation + native.sight DDA; three independent VOID reveal witnesses, real 8px support/20px native body sweeps. Measurements use zero-chaos forward-facing radius; do not prove human visual quality or ordinary browser movement.",
+  "requestedSeed": 20261011,
+  "maximumTargetDistancePx": 176,
+  "diagnosticMaximumTargetDistancePx": 208,
+  "sourceHashes": {
+    "src/generation/world-study/ground-material.ts": "9ee8325004cdfb826b8fa256d3cc5a9a3a167ea6a0eda2ee7f342736854e3b06",
+    "src/generation/world-study/layout.ts": "0658f1317e4deb12aa2266ab48a87a5d2bc67290c09b0e8a11875bb9a33ee23c",
+    "src/generation/world-study/light-field.ts": "fa4ed544ea636573293d765419c1d2afb519398a7d7d3762bffd5eb2e19ac7ae",
+    "src/generation/world-study/master-ground-field.ts": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783",
+    "src/generation/world-study/material-field.ts": "f3971a905e6dcddc2d67a9393df604e412fd2c1c08686bf01e84fd19ef23bc10",
+    "src/generation/world-study/material-forms.ts": "9d4a2ba692280afd5ea3aca767bb9211d74245903056584a7c3e24a8b843fe30",
+    "src/generation/world-study/material-light.ts": "d9ce19155e6cd05eb71fe9a80f856df3a6084cdbeea626aa1692d4b494ff29e3",
+    "src/generation/world-study/material-noise.ts": "e401a0d6289738fb030344f6d6c00027e690d778fe1faf8f280cc8754f4292d5",
+    "src/generation/world-study/material-response.ts": "848e9a05681a1d298cd26014550c2ba56cd5bba181d7b2ec0089ed0326f26647",
+    "src/generation/world-study/movement.ts": "c629b2497ef30684dedfce7e7ba7935207e41cafbccf764207deff86013694d3",
+    "src/generation/world-study/native-body-collision.ts": "1ed10631c73ed5f4acfcb0204aa232a37e18e94fcf706c7db50b172c258d5228",
+    "src/generation/world-study/native-volume-cellular.ts": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5",
+    "src/generation/world-study/native-volume-erosion.ts": "32fb50764a8f9479bbd725a53b90a58a5bbd220199d5ad4da524a893fb9eaeec",
+    "src/generation/world-study/native-volume-expansion.ts": "508b6dfaf744a63671035838c86ad36906b57be341ee26f1f1e55ed68e10d0b4",
+    "src/generation/world-study/native-volume-geometry.ts": "cd50791d2c18cbc25fc6bfa8818a35fd07cb6f14a05db1feb0bfc94ae2da2142",
+    "src/generation/world-study/native-volume-ground-edge.ts": "698e5ab1b42a3dccd9b4a68fcfd52a462df039b39692c146d2e67c07a1aeeaab",
+    "src/generation/world-study/native-volume-ground.ts": "b20a619d0df2d0def4ed2d6cdc66bbdd7ab64450fb7d4efc1abf46ad67761c24",
+    "src/generation/world-study/native-volume-organization.ts": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a",
+    "src/generation/world-study/native-volume-pleated-tear.ts": "a542f83a5da9b9d7b70ce35c37cfb0a09984bed56a6cec152af84c425e32eae1",
+    "src/generation/world-study/native-volume-raster.ts": "573768b2769ee8cae521e84e5997d17a676bf4bdde72b5c13cb024d181f4e32d",
+    "src/generation/world-study/native-volume-settled-projection.ts": "c3758e2dbf0639158c17ad3d9b4998fe8d9f341129ccf000f723e0b81e84ddb6",
+    "src/generation/world-study/native-volume-settled-sheet.ts": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925",
+    "src/generation/world-study/open-space.ts": "19fa36a60c12e7303572d2c6526d2b00d9085169bb3d2c01d338cee7f2ffefe4",
+    "src/generation/world-study/play-map.ts": "8436345000b69220a9bd82772288d2ad79a5a3f0fba485e61e0717847ac63653",
+    "src/generation/world-study/pollution-grade.ts": "6d4d009cce7cca97417fefd26137f42c297a51cbe50e9b7ad56aa1091d7483e0",
+    "src/generation/world-study/production-map.ts": "d48e0bd4f26462797ec89934082b0397516d12548511f63cb2b5104fb043cf82",
+    "src/generation/world-study/production-recipe.ts": "7e2c53d491d92816cc3e78dca2393f3163f3da5571c02d5b9f683f62a887e793",
+    "src/generation/world-study/profiles.ts": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d",
+    "src/generation/world-study/r100-expedition-v1.ts": "78b3811bf950b323e66b29bd3f8120808fc989a0d6d0149ab7ef1babfc246899",
+    "src/generation/world-study/r100-expedition.ts": "f55c7bc0e9f50878785f9a691b53cfb6bb5f7ea882265e3aebe0dd32d1d6b620",
+    "src/generation/world-study/r100-fragment-shape.ts": "3d77225f786e885459094b39a210d735c4972f89123139dcfeadb004d0ca6adb",
+    "src/generation/world-study/r100-generated-scenes.ts": "6b3c974c97025874e5cb7fa3e3dd29147a1397616d003852e52cde5685f57d73",
+    "src/generation/world-study/r100-master-world.ts": "2b1335c815c6f3f588cf576e37c527e2cf89c9e104ff2e652fad6ec2fdab3258",
+    "src/generation/world-study/r100-native-data.ts": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0",
+    "src/generation/world-study/r100-package.ts": "eab2b732010631f85a26427f86d43acae980339bd196c11c28ca43a3022bb140",
+    "src/generation/world-study/r100-patrol-windows.ts": "9dfe9ba3ca1a8486c771b06590b9a8efa21ce5add55b32a94877f66b16d761ae",
+    "src/generation/world-study/r100-pollution.ts": "328804c3dd7423627fc31a4c119cff81cbe8078c0575094cc5c2c5d4eb1538dc",
+    "src/generation/world-study/r100-production-map.ts": "d6a091ad3c75402e2601c0f67d8ab9b9feb56e30dfcd169f0e4921b721856a3f",
+    "src/generation/world-study/r100-spatial-deployment.ts": "cfd995473bde42450f8ffa0fbfb90119d20697ddce5458abb98db7982b916818",
+    "src/generation/world-study/r100-spatial-types.ts": "ab09972625975a3512ad45364d012285ab1f6b6e06e04a3dd0d58c162762bb06",
+    "src/generation/world-study/r100-spatial-world.ts": "0d7458a8016bb896f6608369c07e73e57e41436de2ec59ba9ae2e062d70d5137",
+    "src/generation/world-study/r100-world-appearance.ts": "71441ad19d1ef8702e737f46898abf05a7b0262de4916aede9bfddbe6fe04b59",
+    "src/generation/world-study/r100-world-selection.ts": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40",
+    "src/generation/world-study/raster.ts": "48f348198c1b1a0088f5b9bc6ff6fc8e21dfd2e2fb5efe9f560d0f89658c2766",
+    "src/generation/world-study/region-field.ts": "03e2256d3d0cf0d80e51d9f3af7f353884162445370e63aa27c63083f40ea4b7",
+    "src/generation/world-study/search-remains.ts": "03d1ba13b81af3a9a6ec8c548bc03542deb226994eed42bd96660aab7177713c",
+    "src/generation/world-study/semantic-deployment.ts": "4e339e6c006c7eaafe619e5d7c0494fc878a8e3b50bb912ad72e5ed58fc979bc",
+    "src/generation/world-study/shape.ts": "498f846e415e8aeec8f3a08464e2120fa45702d04a3b4cdaeb73862a94f06364",
+    "src/generation/world-study/space-profile.ts": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590",
+    "src/generation/world-study/space-quality.ts": "1c69fb82a366e5f57c7f92500b959d293da1d5bcb5daf768a68c2bd477893724",
+    "src/generation/world-study/spatial-extraction-selection.ts": "afccec7d982b52e5cbf1c2dd87d67e83d0eaffe4b87ce03b271645294a003308",
+    "src/generation/world-study/support.ts": "21c380b643339d80ae304ad5f9490d7c41bc11654404ac1f721e83f5e9f0bcc9",
+    "src/generation/world-study/surface-field.ts": "3027349a312cc085562751dc8cb9c71b3be18f226cc3855f4ca3a40533f3db91",
+    "src/generation/world-study/surface.ts": "63f6ca1e73d097f3eba75fcf330b30732efb027148632800f4947550c4947aba",
+    "src/generation/world-study/types.ts": "23c4f0c6b87f0ceda4fdc3ce10fd7364e3b3adbfa652cb48aae06eb52e3d609a",
+    "src/generation/world-study/world-conditions.ts": "c3f83782511fafebafbf6d6da2dbb5dc4e02a3a8a1942109e591d256d50fcccd",
+    "src/generation/world-study/world-material-pigment.ts": "fd524196627d38cc804379e4e1448c2707b557c395e0748038910fb507fc028a",
+    "src/generation/world-study/world-package.ts": "746c4eaedef5fcb3fa049f71470ab1477aaecf1bc12ba5df1019daee90b7b331",
+    "src/generation/world-study/world-scenery.ts": "171f1b193730d9cdd87ab42ecb349d9c2fe05594201ccfc08f3d269c0a396176",
+    "src/generated/r100-fragment-data.ts": "f84b6b041bc34dbed4fe3919b40598245bc11a4b0b22b84b70ab7d8d9392b1dd",
+    "src/generated/r100-material-organizations.ts": "173313d5b402e6c3f3a5ab81476821177560c82caeda3f8df2ab905d117df8fb",
+    "src/generated/r100-materials.ts": "defd1c289824cc9a4c7a3ee3870f289e72175d401931a5e3da09ca5a46876968",
+    "src/generated/r100-native-worlds.ts": "5ab3e1de06a5c5385a82dafbc5051bc54357ddf37ee0b1d2de253a20896dc2e8",
+    "src/generated/r100-package-manifest.ts": "8a24ead24e991e07c29114f2c1f546f5a3bf717d5a94be1fad39734eba3ebf9e",
+    "src/generated/r100-spatial-data.ts": "6acb8ff42bd3f12aa4a608272352f0029f6e0729860183c937c5851614e4683c",
+    "src/generated/r100-world-appearance.ts": "11b5690fc573f4a4085d3816b51fdbd6f7008b582b735bcdf7ecffb427c6e387",
+    "src/generated/r100-world-selection.ts": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182",
+    "src/generated/rift-spatial-deployment-data.ts": "0a01b4a8eb97ef95c9365b0184a5f494d740ae1fd94647b59749bbfbb175aeb4",
+    "src/generated/rift-spatial-prototype-data.ts": "966452b05e4b62fc2a83b9d43bcd08eff5f3541983fb20dfaec0360ee2b52ea6",
+    "data/rift-spatial-anchors.csv": "5b3859c55310182b43322574bced45fdf23557858b36802f218a70a645d7741a",
+    "data/rift-spatial-authored-erosion.csv": "0204471d847a5e7bac9e28a1c6e155fe79f0a00f6259324d16b22c127dc2e756",
+    "data/rift-spatial-authored-groups.csv": "7b3f87e5892d31c0fecc80cfd67053b9dfcffebe52628ebc716ea2f470522f17",
+    "data/rift-spatial-deployment.csv": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3",
+    "data/rift-spatial-erosion.csv": "3fc991148491ca06447f852582549a9626d42d8550d0ebffd4e0467dc30a92b4",
+    "data/rift-spatial-fragment-layouts.csv": "2b7a0067e3a095f38879d50b514d3c51876639968b51e897d01e57b23a80a154",
+    "data/rift-spatial-fragment-rectangles.csv": "21761df18bca06cac0a6ad81ef9d24bf3bdf863c8ece96558bfa819543c0c253",
+    "data/rift-spatial-fragment-worlds.csv": "13287ca6afe0411bed3f211df91497e08ec3d527822a30c956c6ae3f2313e05a",
+    "data/rift-spatial-land-outlines.csv": "7f0566736397c9db63a9e5effcf1bc3ba696bf6a1217c897171c5ba7502dc79b",
+    "data/rift-spatial-land-plates.csv": "83f953c5e65e691a7de81f63e8207a703e09222b5bf6c4861fcf21f639a0a459",
+    "data/rift-spatial-layouts.csv": "df60ea47965926ac405290d80275c2f9e3eaf4eec37031da4d950fe8421d1d57",
+    "data/rift-spatial-materials.csv": "1a63547da080ad5f4903acf34051b798ad43c13c47e402267e16dfc5207e3100",
+    "data/rift-spatial-organizations.csv": "90d427db727ca7033d578fd4f0e8d44fbd0cba45a49b828359b4f787c1695716",
+    "data/rift-spatial-policy.csv": "62744dd396971d1a222935452324b37e982a1ffaa42f005d7f9517723422549f",
+    "data/rift-spatial-prototype-anchors.csv": "d1536a87a69d32b0d2d753a3cc06aeba747c50789b06ccfea0bcc55a8f698d41",
+    "data/rift-spatial-prototype-erosion.csv": "49ba07c1826585ca6d267bc203f693b881e3fd4877fc6bf7a1899d84e0147770",
+    "data/rift-spatial-prototype-volumes.csv": "e2be402b400e08e7707da952b8ca452ec59e8ce5d6d8f207a9189ef02f238c3e",
+    "data/rift-spatial-prototype.csv": "33e9577bc3973eec241ca39d7a150085b889c236957fec44f00c14fee48b501f",
+    "data/rift-spatial-sector-anchors.csv": "2c51e14cc5fc6cefd9723952adb48becc64589fc4124952845f434c2276bce6e",
+    "data/rift-spatial-sector-cuts.csv": "d9c07e448ac9a107ff389bc485d212e381ece3f09f16c8d64d9c1a1eec1b5f95",
+    "data/rift-spatial-sector-layouts.csv": "c4f3910db4e702e9e7bff94dda2699b20ebd0ab4fee5faf90c4f95c2edee84ca",
+    "data/rift-spatial-sectors.csv": "e936851d090f2469e139b9ac04a277526672ef4b649312cf67e3838acb94a43d",
+    "data/rift-spatial-worlds.csv": "15cde729e97a3c6892c5606f10a0c7f8b2ae3bf65b7933e170e8018127c95734",
+    "src/config/constants.ts": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91",
+    "src/types/game-types.ts": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19",
+    "src/types/map-types.ts": "d9308149b3958f195749509b8e51065e671a59fdcf9c654b7575a18f07a3a00c",
+    "src/systems/tile-grid.ts": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2",
+    "src/systems/ai/physical-grid.ts": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab",
+    "src/utils/grid-raycast.ts": "de5b5e6e47ba34e08146ff372f3a6cd733b0311979a8838d5c23954129f5bd4e",
+    "tools/spatial-rollout/sight-obstruction.mjs": "ffbf46a6085443e133594a2f6d2c972ee30ae08a518a526c79c106372f531395",
+    "tools/spatial-rollout/check-sight-obstruction.mjs": "4ca53b23d6df3420459857793c51f6303875de42d5a2fb271851958dfbfa381b",
+    "src/generation/world-study/fragment-shape/index.ts": "360fec66eb098bd062ddb5515d65323a35e7aeeb1f6681ba3b18ce5eb8a008ab",
+    "src/generation/world-study/fragment-shape/rectilinear-fragment.ts": "3b865b938bb853a33e1a377ae806056d469f99b55cbfdaad47d73aeff2f6e754",
+    "src/generation/world-study/fragment-shape/types.ts": "ec3195b0389f261a9cd48b83de4468c97bc01708ee3e11eb8cefd0992c670a58",
+    "src/generation/world-study/fragment-shape/validation.ts": "0c6e580622a8a935afdc1a56508e5685fd3cf2e52066c8c0e0fc578ba2d9df35"
+  },
+  "cases": [
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "requestedSeed": 20261011,
+      "effectiveSeed": 20261011,
+      "attempt": 0,
+      "revision": 8,
+      "spatialSourceHash": "5a0d876c27c639aa05359b1dc90013a86a79b3f57a6fc310c261e3ea445a464c",
+      "geometryFingerprint": "9da93117",
+      "policy": {
+        "gridPx": 8,
+        "bodyPx": 20,
+        "minimumWitnesses": 3,
+        "witnessSeparationPx": 300,
+        "maximumTargetDistancePx": 176,
+        "minimumRevealDisplacementPx": 80,
+        "maximumRevealRoutePx": 720,
+        "observerStridePx": 24,
+        "diagnosticStridePx": 64,
+        "maximumProbesPerGroup": 72
+      },
+      "standardMaximumTargetDistancePx": 208,
+      "diagnosticMaximumTargetDistancePx": 208,
+      "referenceForwardRadiusPx": 224,
+      "searchScope": "Bounded deterministic observer/chord samples; failed means the required witnesses were not found in this search, not proof that no such viewpoints exist. Three witnesses establish mechanical examples, not adequate map-wide exploration density.",
+      "status": "passed",
+      "witnessCount": 3,
+      "witnesses": [
+        {
+          "observer": {
+            "x": 1428,
+            "y": 300
+          },
+          "target": {
+            "x": 1276,
+            "y": 388
+          },
+          "reveal": {
+            "x": 1340,
+            "y": 268
+          },
+          "route": [
+            {
+              "x": 1428,
+              "y": 300
+            },
+            {
+              "x": 1372,
+              "y": 300
+            },
+            {
+              "x": 1340,
+              "y": 268
+            }
+          ],
+          "distance": 175.6359872008012,
+          "revealDistance": 136,
+          "routeLength": 101.25483399593904,
+          "revealDisplacement": 93.637599285757,
+          "center": {
+            "x": 1352,
+            "y": 344
+          },
+          "facingRadians": {
+            "observer": 2.6167968819396856,
+            "reveal": 2.060753653048625
+          },
+          "group": {
+            "id": "interior-1",
+            "kind": "interior-void",
+            "component": 1,
+            "sourcePolygons": [
+              1
+            ],
+            "areaPx2": 54848,
+            "centroid": {
+              "x": 1350.0816802800466,
+              "y": 486.78179696616104
+            }
+          },
+          "controls": {
+            "actualBlocked": true,
+            "allVoidRemovedVisible": true,
+            "onlyThisVoidRemovedVisible": true,
+            "revealVisible": true,
+            "earliestRevealDisplacementPx": 93.637599285757
+          },
+          "spawnApproach": {
+            "route": [
+              {
+                "x": 972,
+                "y": 1460
+              },
+              {
+                "x": 1332,
+                "y": 1100
+              },
+              {
+                "x": 1380,
+                "y": 1100
+              },
+              {
+                "x": 1508,
+                "y": 972
+              },
+              {
+                "x": 1508,
+                "y": 356
+              },
+              {
+                "x": 1492,
+                "y": 340
+              },
+              {
+                "x": 1468,
+                "y": 340
+              },
+              {
+                "x": 1428,
+                "y": 300
+              }
+            ],
+            "routeLength": 1457.3321779309638,
+            "fullGridSteps": 154
+          },
+          "candidatesRejectedBefore": 5
+        },
+        {
+          "observer": {
+            "x": 1692,
+            "y": 444
+          },
+          "target": {
+            "x": 1780,
+            "y": 596
+          },
+          "reveal": {
+            "x": 1660,
+            "y": 524
+          },
+          "route": [
+            {
+              "x": 1692,
+              "y": 444
+            },
+            {
+              "x": 1692,
+              "y": 492
+            },
+            {
+              "x": 1660,
+              "y": 524
+            }
+          ],
+          "distance": 175.6359872008012,
+          "revealDistance": 139.9428454762872,
+          "routeLength": 93.25483399593904,
+          "revealDisplacement": 86.16263691415207,
+          "center": {
+            "x": 1736,
+            "y": 520
+          },
+          "facingRadians": {
+            "observer": 1.0460005551447893,
+            "reveal": 0.5404195002705842
+          },
+          "group": {
+            "id": "interior-2",
+            "kind": "interior-void",
+            "component": 2,
+            "sourcePolygons": [
+              9
+            ],
+            "areaPx2": 2496,
+            "centroid": {
+              "x": 1786.3589743589744,
+              "y": 561.3333333333334
+            }
+          },
+          "controls": {
+            "actualBlocked": true,
+            "allVoidRemovedVisible": true,
+            "onlyThisVoidRemovedVisible": true,
+            "revealVisible": true,
+            "earliestRevealDisplacementPx": 86.16263691415207
+          },
+          "spawnApproach": {
+            "route": [
+              {
+                "x": 972,
+                "y": 1460
+              },
+              {
+                "x": 1332,
+                "y": 1100
+              },
+              {
+                "x": 1380,
+                "y": 1100
+              },
+              {
+                "x": 1508,
+                "y": 972
+              },
+              {
+                "x": 1508,
+                "y": 660
+              },
+              {
+                "x": 1564,
+                "y": 604
+              },
+              {
+                "x": 1572,
+                "y": 604
+              },
+              {
+                "x": 1676,
+                "y": 500
+              },
+              {
+                "x": 1676,
+                "y": 492
+              },
+              {
+                "x": 1684,
+                "y": 484
+              },
+              {
+                "x": 1684,
+                "y": 452
+              },
+              {
+                "x": 1692,
+                "y": 444
+              }
+            ],
+            "routeLength": 1347.0378054157354,
+            "fullGridSteps": 134
+          },
+          "candidatesRejectedBefore": 0
+        },
+        {
+          "observer": {
+            "x": 900,
+            "y": 492
+          },
+          "target": {
+            "x": 948,
+            "y": 660
+          },
+          "reveal": {
+            "x": 844,
+            "y": 636
+          },
+          "route": [
+            {
+              "x": 900,
+              "y": 492
+            },
+            {
+              "x": 900,
+              "y": 524
+            },
+            {
+              "x": 844,
+              "y": 580
+            },
+            {
+              "x": 844,
+              "y": 636
+            }
+          ],
+          "distance": 174.72263734273244,
+          "revealDistance": 106.73331251301067,
+          "routeLength": 167.19595949289334,
+          "revealDisplacement": 154.50566332662373,
+          "center": {
+            "x": 924,
+            "y": 576
+          },
+          "facingRadians": {
+            "observer": 1.2924966677897853,
+            "reveal": 0.2267988480538859
+          },
+          "group": {
+            "id": "interior-3",
+            "kind": "interior-void",
+            "component": 3,
+            "sourcePolygons": [
+              5
+            ],
+            "areaPx2": 19840,
+            "centroid": {
+              "x": 1007.6903225806452,
+              "y": 617.6774193548387
+            }
+          },
+          "controls": {
+            "actualBlocked": true,
+            "allVoidRemovedVisible": true,
+            "onlyThisVoidRemovedVisible": true,
+            "revealVisible": true,
+            "earliestRevealDisplacementPx": 154.50566332662373
+          },
+          "spawnApproach": {
+            "route": [
+              {
+                "x": 972,
+                "y": 1460
+              },
+              {
+                "x": 972,
+                "y": 1228
+              },
+              {
+                "x": 876,
+                "y": 1132
+              },
+              {
+                "x": 876,
+                "y": 860
+              },
+              {
+                "x": 988,
+                "y": 748
+              },
+              {
+                "x": 988,
+                "y": 684
+              },
+              {
+                "x": 980,
+                "y": 676
+              },
+              {
+                "x": 884,
+                "y": 676
+              },
+              {
+                "x": 852,
+                "y": 644
+              },
+              {
+                "x": 852,
+                "y": 636
+              },
+              {
+                "x": 844,
+                "y": 628
+              },
+              {
+                "x": 844,
+                "y": 564
+              },
+              {
+                "x": 884,
+                "y": 524
+              },
+              {
+                "x": 884,
+                "y": 508
+              },
+              {
+                "x": 900,
+                "y": 492
+              }
+            ],
+            "routeLength": 1193.2346314604056,
+            "fullGridSteps": 133
+          },
+          "candidatesRejectedBefore": 2
+        }
+      ],
+      "rejectedGroups": [],
+      "reachableSeats": 18812,
+      "supportedSeats": 18816,
+      "reachableFraction": 0.9997874149659864,
+      "diagnostics": {
+        "scope": "Geometric, zero-chaos forward-facing LOS diagnostics; no reward placement or human exploration claim. Open-corridor samples are axis-aligned and not exhaustive.",
+        "internalVoid": {
+          "components": 10,
+          "cells": 3922,
+          "areaPx2": 251008,
+          "fractionOfCanvas": 0.06079489087301587
+        },
+        "externalVoid": {
+          "components": 1,
+          "cells": 32717,
+          "areaPx2": 2093888,
+          "fractionOfCanvas": 0.5071459573412699
+        },
+        "nearbyGroundPairs": 9043,
+        "voidBlockedPairs": 1038,
+        "voidBlockedPairFraction": 0.11478491651000775,
+        "regions": [
+          {
+            "region": 0,
+            "observers": 11,
+            "groundPairs": 312,
+            "voidBlockedPairs": 5,
+            "observersWithVoidLoss": 2,
+            "blockedPairFraction": 0.016025641025641024
+          },
+          {
+            "region": 1,
+            "observers": 28,
+            "groundPairs": 814,
+            "voidBlockedPairs": 59,
+            "observersWithVoidLoss": 15,
+            "blockedPairFraction": 0.07248157248157248
+          },
+          {
+            "region": 2,
+            "observers": 28,
+            "groundPairs": 671,
+            "voidBlockedPairs": 116,
+            "observersWithVoidLoss": 22,
+            "blockedPairFraction": 0.17287630402384502
+          },
+          {
+            "region": 3,
+            "observers": 5,
+            "groundPairs": 90,
+            "voidBlockedPairs": 35,
+            "observersWithVoidLoss": 5,
+            "blockedPairFraction": 0.3888888888888889
+          },
+          {
+            "region": 4,
+            "observers": 37,
+            "groundPairs": 1165,
+            "voidBlockedPairs": 26,
+            "observersWithVoidLoss": 7,
+            "blockedPairFraction": 0.022317596566523604
+          },
+          {
+            "region": 5,
+            "observers": 42,
+            "groundPairs": 1485,
+            "voidBlockedPairs": 150,
+            "observersWithVoidLoss": 20,
+            "blockedPairFraction": 0.10101010101010101
+          },
+          {
+            "region": 6,
+            "observers": 49,
+            "groundPairs": 1709,
+            "voidBlockedPairs": 376,
+            "observersWithVoidLoss": 45,
+            "blockedPairFraction": 0.22001170275014628
+          },
+          {
+            "region": 7,
+            "observers": 21,
+            "groundPairs": 435,
+            "voidBlockedPairs": 157,
+            "observersWithVoidLoss": 18,
+            "blockedPairFraction": 0.36091954022988504
+          },
+          {
+            "region": 8,
+            "observers": 17,
+            "groundPairs": 455,
+            "voidBlockedPairs": 23,
+            "observersWithVoidLoss": 9,
+            "blockedPairFraction": 0.05054945054945055
+          },
+          {
+            "region": 9,
+            "observers": 45,
+            "groundPairs": 1494,
+            "voidBlockedPairs": 20,
+            "observersWithVoidLoss": 6,
+            "blockedPairFraction": 0.013386880856760375
+          },
+          {
+            "region": 10,
+            "observers": 16,
+            "groundPairs": 413,
+            "voidBlockedPairs": 71,
+            "observersWithVoidLoss": 9,
+            "blockedPairFraction": 0.17191283292978207
+          },
+          {
+            "region": 11,
+            "observers": 0,
+            "groundPairs": 0,
+            "voidBlockedPairs": 0,
+            "observersWithVoidLoss": 0,
+            "blockedPairFraction": null
+          }
+        ],
+        "longestPeripheralOpenCorridors": [
+          {
+            "axis": "horizontal",
+            "from": {
+              "x": 332,
+              "y": 1484
+            },
+            "to": {
+              "x": 1156,
+              "y": 1484
+            },
+            "lengthPx": 824
+          },
+          {
+            "axis": "horizontal",
+            "from": {
+              "x": 748,
+              "y": 268
+            },
+            "to": {
+              "x": 1524,
+              "y": 268
+            },
+            "lengthPx": 776
+          },
+          {
+            "axis": "vertical",
+            "from": {
+              "x": 172,
+              "y": 612
+            },
+            "to": {
+              "x": 172,
+              "y": 1324
+            },
+            "lengthPx": 712
+          },
+          {
+            "axis": "vertical",
+            "from": {
+              "x": 204,
+              "y": 612
+            },
+            "to": {
+              "x": 204,
+              "y": 1324
+            },
+            "lengthPx": 712
+          },
+          {
+            "axis": "vertical",
+            "from": {
+              "x": 236,
+              "y": 612
+            },
+            "to": {
+              "x": 236,
+              "y": 1324
+            },
+            "lengthPx": 712
+          },
+          {
+            "axis": "horizontal",
+            "from": {
+              "x": 492,
+              "y": 1452
+            },
+            "to": {
+              "x": 1132,
+              "y": 1452
+            },
+            "lengthPx": 640
+          },
+          {
+            "axis": "vertical",
+            "from": {
+              "x": 460,
+              "y": 732
+            },
+            "to": {
+              "x": 460,
+              "y": 1340
+            },
+            "lengthPx": 608
+          },
+          {
+            "axis": "vertical",
+            "from": {
+              "x": 268,
+              "y": 836
+            },
+            "to": {
+              "x": 268,
+              "y": 1324
+            },
+            "lengthPx": 488
+          },
+          {
+            "axis": "horizontal",
+            "from": {
+              "x": 652,
+              "y": 1612
+            },
+            "to": {
+              "x": 1068,
+              "y": 1612
+            },
+            "lengthPx": 416
+          },
+          {
+            "axis": "horizontal",
+            "from": {
+              "x": 652,
+              "y": 1644
+            },
+            "to": {
+              "x": 1068,
+              "y": 1644
+            },
+            "lengthPx": 416
+          },
+          {
+            "axis": "vertical",
+            "from": {
+              "x": 396,
+              "y": 372
+            },
+            "to": {
+              "x": 396,
+              "y": 780
+            },
+            "lengthPx": 408
+          },
+          {
+            "axis": "horizontal",
+            "from": {
+              "x": 1148,
+              "y": 300
+            },
+            "to": {
+              "x": 1524,
+              "y": 300
+            },
+            "lengthPx": 376
+          }
+        ]
+      },
+      "measurementMs": 312.63645799999995,
+      "totalMs": 2522.7044589999996
+    }
+  ],
+  "failures": [],
+  "changedSourcesDuringRun": [],
+  "finishedAt": "2026-10-11T16:01:49.542Z"
+}

@@ -8,7 +8,9 @@ import { bodyHasSupport } from '@/systems/ai/physical-grid';
 import { TileGrid } from '@/systems/tile-grid';
 import { TileType, type Vector2 } from '@/types/game-types';
 import { createMasterWorld, type MasterDefinition, type MasterWorld } from './r100-master-world';
-import { validateNativeErosion, validateNativeTerrainOutline } from './native-volume-erosion';
+import { validateNativeErosion, validateNativeTerrainOutline, FRAGMENT_TERRAIN_BUDGET } from './native-volume-erosion';
+import { R100_FRAGMENT_AUTHORING, R100_FRAGMENT_SOURCE_HASH } from '@/generated/r100-fragment-data';
+import { compileR100FragmentShape, freezeR100FragmentShape } from './r100-fragment-shape';
 import type { PollutionGradeDefinition } from './pollution-grade';
 import type { WorldProfile } from './types';
 import { buildSpatialExtractionField, selectSpatialExtraction } from './spatial-extraction-selection';
@@ -16,7 +18,7 @@ import { getR100SpatialDeploymentPolicy, validateR100SpatialDeploymentPolicy } f
 import type { R100SpatialPolicy } from './r100-spatial-types';
 export type { R100SpatialPolicy } from './r100-spatial-types';
 
-export function createR100SpatialPolicy(worldId: string): R100SpatialPolicy {
+export function createR100SpatialPolicy(worldId: string, requestedSeed: number): R100SpatialPolicy {
   const world = R100_SPATIAL_WORLDS.find(row => row.worldId === worldId);
   if (!world) throw new Error(`No spatial arrangement for ${worldId}`);
   const organization = R100_SPATIAL_ORGANIZATIONS.find(row => row.organization === world.organization);
@@ -25,16 +27,19 @@ export function createR100SpatialPolicy(worldId: string): R100SpatialPolicy {
   const group = R100_SPATIAL_AUTHORED_GROUPS.find(row => row.worldId === worldId);
   const sectors = R100_SPATIAL_SECTORS.find(row => row.worldId === worldId);
   const terrainOutline = sectors && 'terrainOutline' in sectors ? sectors.terrainOutline : undefined;
+  const fragmentAuthoring = R100_FRAGMENT_AUTHORING.find(row => row.worldId === worldId);
+  const fragmentShape = fragmentAuthoring ? freezeR100FragmentShape(fragmentAuthoring, R100_FRAGMENT_SOURCE_HASH, requestedSeed) : undefined;
+  const fragment = fragmentShape ? compileR100FragmentShape(fragmentShape, requestedSeed) : undefined;
   const policy: R100SpatialPolicy = {
-    version: 1, worldId, sourceHash: R100_SPATIAL_SOURCE_HASH, organization: world.organization,
+    version: fragment ? 2 : 1, worldId, sourceHash: R100_SPATIAL_SOURCE_HASH, organization: world.organization,
     organizationRules: sectors?.organizationRules ?? (group ? { ...organizationRules, solidCount: group.solidCount, reliefCount: group.reliefCount } : organizationRules),
     groupTransform: group?.transform ?? null,
     cols: CONFIG.cols, rows: CONFIG.rows, mirrorX: world.mirrorX, mirrorY: world.mirrorY,
     placementJitterPx: sectors?.placementJitterPx ?? placementJitterPx,
     placements: sectors?.placements ?? group?.placements ?? R100_SPATIAL_PLACEMENTS.filter(row => row.organization === world.organization).map(({ organization: _organization, ...placement }) => placement),
     materials: R100_SPATIAL_MATERIALS,
-    erosion: sectors?.erosion ?? group?.erosion ?? R100_SPATIAL_EROSION.filter(row => row.organization === world.organization).map(row => row.points),
-    ...(terrainOutline === undefined ? {} : { terrainOutline }),
+    erosion: fragment?.erosion ?? sectors?.erosion ?? group?.erosion ?? R100_SPATIAL_EROSION.filter(row => row.organization === world.organization).map(row => row.points),
+    ...(fragment ? {terrainOutline: fragment.terrainOutline, fragmentShape} : terrainOutline === undefined ? {} : { terrainOutline }),
     spawnCandidates: sectors?.spawnCandidates ?? R100_SPATIAL_ANCHORS.filter(row => row.organization === world.organization).map(({ x, y }) => ({ x, y })),
     extraction: {
       minPathDistancePx: CONFIG.extraction_min_path_distance, minEuclideanDistancePx: CONFIG.extraction_min_euclidean_distance,
@@ -44,7 +49,7 @@ export function createR100SpatialPolicy(worldId: string): R100SpatialPolicy {
     },
     deployment: getR100SpatialDeploymentPolicy(),
   };
-  if (!validR100SpatialPolicy(policy, worldId)) throw new Error(`Invalid authored spatial policy for ${worldId}`);
+  if (!validR100SpatialPolicy(policy, worldId, requestedSeed)) throw new Error(`Invalid authored spatial policy for ${worldId}`);
   return structuredClone(policy);
 }
 const object = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -54,16 +59,25 @@ const integer = (value: unknown, lo: number, hi: number): value is number => ran
 
 /** Structural and bounded validation of the saved value only. Never compare a
  * frozen policy with current CSV contents, world assignments or source hashes. */
-export function validR100SpatialPolicy(value: unknown, worldId: string): value is R100SpatialPolicy {
+export function validR100SpatialPolicy(value: unknown, worldId: string, requestedSeed?: number): value is R100SpatialPolicy {
   try {
     if (!object(value) || !keysAre(value, ['version', 'worldId', 'sourceHash', 'organization', 'organizationRules', 'groupTransform', 'cols', 'rows', 'mirrorX', 'mirrorY', 'placementJitterPx', 'placements', 'materials', 'erosion', 'spawnCandidates', 'extraction', 'deployment',
-      ...(Object.prototype.hasOwnProperty.call(value, 'terrainOutline') ? ['terrainOutline'] : [])])
-      || value.version !== 1 || value.worldId !== worldId || !/^[a-z][a-z0-9-]+$/.test(worldId)
+      ...(Object.prototype.hasOwnProperty.call(value, 'terrainOutline') ? ['terrainOutline'] : []),
+      ...(Object.prototype.hasOwnProperty.call(value, 'fragmentShape') ? ['fragmentShape'] : [])])
+      || (value.version !== 1 && value.version !== 2) || value.worldId !== worldId || !/^[a-z][a-z0-9-]+$/.test(worldId)
       || typeof value.sourceHash !== 'string' || !/^[0-9a-f]{64}$/.test(value.sourceHash)
       || !['offset-divides', 'broken-bay', 'staggered-reaches', 'single-buttress', 'joined-quarters', 'authored-group', 'authored-sectors'].includes(value.organization as string)
       || !integer(value.cols, 48, 96) || !integer(value.rows, 36, 72) || value.cols * value.rows * 1024 > 4194304
       || typeof value.mirrorX !== 'boolean' || typeof value.mirrorY !== 'boolean' || !range(value.placementJitterPx, 0, 24)) return false;
     const width = value.cols * 32, height = value.rows * 32;
+    const hasFragment = Object.prototype.hasOwnProperty.call(value, 'fragmentShape');
+    if ((value.version === 2) !== hasFragment) return false;
+    const fragment = hasFragment ? compileR100FragmentShape(value.fragmentShape, requestedSeed) : undefined;
+    if (fragment && (value.organization !== 'authored-sectors' || value.mirrorX || value.mirrorY
+      || fragment.snapshot.layout.authoringFrame[0] * fragment.snapshot.layout.worldScale !== width
+      || fragment.snapshot.layout.authoringFrame[1] * fragment.snapshot.layout.worldScale !== height
+      || JSON.stringify(value.terrainOutline) !== JSON.stringify(fragment.terrainOutline)
+      || JSON.stringify(value.erosion) !== JSON.stringify(fragment.erosion))) return false;
     const rules = value.organizationRules;
     if (!object(rules) || !keysAre(rules, ['sourceMode', 'materialScaling', 'solidCount', 'reliefCount'])
       || !['repeat', 'source-once'].includes(rules.sourceMode as string) || typeof rules.materialScaling !== 'boolean'
@@ -80,7 +94,7 @@ export function validR100SpatialPolicy(value: unknown, worldId: string): value i
     if (!Array.isArray(value.placements) || value.placements.length !== rules.solidCount + rules.reliefCount || value.placements.length > 48
       || !Array.isArray(value.materials) || value.materials.length < 6 || value.materials.length > 32
       || !Array.isArray(value.spawnCandidates) || value.spawnCandidates.length < 6 || value.spawnCandidates.length > 32 || !value.spawnCandidates.every(point)
-      || !Array.isArray(value.erosion) || value.erosion.length < 4 || value.erosion.length > 12) return false;
+      || !Array.isArray(value.erosion) || (fragment ? value.erosion.length > FRAGMENT_TERRAIN_BUDGET.maxPolygons : value.erosion.length < 4 || value.erosion.length > 12)) return false;
     const ids = new Set<number>();
     for (const p of value.placements) {
       if (!object(p) || !keysAre(p, ['id', 'role', 'sourceIndex', 'x', 'y', 'rotation', 'length', 'width'])
@@ -101,11 +115,12 @@ export function validR100SpatialPolicy(value: unknown, worldId: string): value i
         || shapeKeys.has(m.key) || !range(m.lengthScale, .5, 2) || !range(m.widthScale, .5, 3)) return false;
       shapeKeys.add(m.key);
     }
-    if (value.erosion.some(polygon => !Array.isArray(polygon) || polygon.length < 3 || polygon.length > 32 || !polygon.every(point))) return false;
-    validateNativeErosion(value.erosion, width, height);
+    const budget = fragment ? FRAGMENT_TERRAIN_BUDGET : undefined;
+    if (value.erosion.some(polygon => !Array.isArray(polygon) || polygon.length < 3 || polygon.length > (budget?.maxPoints ?? 32) || !polygon.every(point))) return false;
+    validateNativeErosion(value.erosion, width, height, budget);
     if (Object.prototype.hasOwnProperty.call(value, 'terrainOutline')) {
       if (value.organization !== 'authored-sectors') return false;
-      validateNativeTerrainOutline(value.terrainOutline, width, height, value.erosion);
+      validateNativeTerrainOutline(value.terrainOutline, width, height, value.erosion, budget);
     }
     const e = value.extraction;
     if (!object(e) || !keysAre(e, ['minPathDistancePx', 'minEuclideanDistancePx', 'minPathFraction', 'maxPathFraction', 'clearanceHalfSize', 'regionCols', 'regionRows', 'distanceBands'])
@@ -118,7 +133,7 @@ export function validR100SpatialPolicy(value: unknown, worldId: string): value i
 }
 
 export function createR100SpatialDefinition(native: MasterDefinition, policy: R100SpatialPolicy, seed: number): { definition: MasterDefinition; spawnIndex: number } {
-  if (Object.prototype.hasOwnProperty.call(native, 'terrainOutline'))
+  if (Object.prototype.hasOwnProperty.call(native, 'terrainOutline') || Object.prototype.hasOwnProperty.call(native, 'fragmentShapeVersion'))
     throw new Error('The source mother form cannot override the frozen spatial terrain outline');
   const width = policy.cols * 32, height = policy.rows * 32;
   const transform = (p: Readonly<Vector2>): Vector2 => ({ x: policy.mirrorX ? width - p.x : p.x, y: policy.mirrorY ? height - p.y : p.y });
@@ -170,6 +185,7 @@ export function createR100SpatialDefinition(native: MasterDefinition, policy: R1
     search_x: search.x, search_y: search.y, enemy_x: enemy.x, enemy_y: enemy.y,
     instances, erosion: policy.erosion.map(polygon => polygon.map(transform)),
     ...(policy.terrainOutline === undefined ? {} : { terrainOutline: policy.terrainOutline.map(transform) }),
+    ...(policy.fragmentShape === undefined ? {} : {fragmentShapeVersion: policy.fragmentShape.algorithmVersion}),
   } };
 }
 
@@ -206,7 +222,7 @@ export function createR100SpatialWorld(native: MasterDefinition, policy: R100Spa
   const world = createMasterWorld({ ...definition, exit_x: extraction.point.x, exit_y: extraction.point.y }, seed, options);
   if (world.layout.extractionPoint.position.x !== extraction.point.x || world.layout.extractionPoint.position.y !== extraction.point.y)
     throw new Error('Spatial extraction moved during final physical deployment');
-  return { ...world, algorithmRevision: 7, diagnostics: { ...world.diagnostics,
+  return { ...world, algorithmRevision: 8, diagnostics: { ...world.diagnostics,
     spatial: { version: policy.version, worldId: policy.worldId, sourceHash: policy.sourceHash, organization: policy.organization,
       width: policy.cols * 32, height: policy.rows * 32, terrainFillRatio,
       solidTerrainRatio, bodyReachableRatio: reachable / supported, unreachableBodySeats: supported - reachable,

@@ -4,6 +4,13 @@ export interface NativeErosionPoint { readonly x: number; readonly y: number }
 export type NativeErosionPolygons = readonly (readonly NativeErosionPoint[])[];
 import type { MasterDefinition } from './r100-master-world';
 const EPSILON = 1e-7;
+export interface NativeTerrainBudget {
+  readonly minPolygons: number; readonly maxPolygons: number;
+  readonly maxPoints: number; readonly maxTotalPoints: number;
+}
+const LEGACY_TERRAIN_BUDGET: NativeTerrainBudget = {minPolygons: 1, maxPolygons: 12, maxPoints: 32, maxTotalPoints: 384};
+/** Explicit r8 contract. Never used by frozen r7 or the default authoring validators. */
+export const FRAGMENT_TERRAIN_BUDGET: NativeTerrainBudget = Object.freeze({minPolygons: 0, maxPolygons: 128, maxPoints: 2048, maxTotalPoints: 8192});
 const cross = (a: NativeErosionPoint, b: NativeErosionPoint, c: NativeErosionPoint): number =>
   (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
 function onSegment(a: NativeErosionPoint, b: NativeErosionPoint, p: NativeErosionPoint): boolean {
@@ -26,11 +33,12 @@ function contains(polygon: readonly NativeErosionPoint[], point: NativeErosionPo
 
 /** Shared by CSV compilation and current package recovery. Throws on malformed
  * data, including overlapping polygons whose union hides an accidental neck. */
-export function validateNativeErosion(value: unknown, width = 1024, height = 768): asserts value is NativeErosionPolygons {
+export function validateNativeErosion(value: unknown, width = 1024, height = 768, budget: NativeTerrainBudget = LEGACY_TERRAIN_BUDGET): asserts value is NativeErosionPolygons {
   if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0
-    || !Array.isArray(value) || value.length < 1 || value.length > 12) throw new Error('Native erosion must contain 1–12 polygons in a finite world');
+    || !Array.isArray(value) || value.length < budget.minPolygons || value.length > budget.maxPolygons) throw new Error('Native erosion polygon count exceeds its explicit terrain budget');
+  if (value.reduce((total, polygon) => total + (Array.isArray(polygon) ? polygon.length : 0), 0) > budget.maxTotalPoints) throw new Error('Native terrain total vertex budget exceeded');
   for (const polygon of value) {
-    if (!Array.isArray(polygon) || polygon.length < 3 || polygon.length > 32) throw new Error('Native erosion polygon requires 3–32 points');
+    if (!Array.isArray(polygon) || polygon.length < 3 || polygon.length > budget.maxPoints) throw new Error('Native terrain polygon point budget exceeded');
     for (const point of polygon) {
       if (!point || typeof point !== 'object' || Object.keys(point).sort().join(',') !== 'x,y'
         || !Number.isFinite(point.x) || !Number.isFinite(point.y) || point.x < 0 || point.x > width || point.y < 0 || point.y > height)
@@ -63,8 +71,8 @@ export function validateNativeErosion(value: unknown, width = 1024, height = 768
 /** Positive terrain is one bounded simple ring. Its optional absence is the
  * legacy rectangular terrain contract; null/undefined are not valid rings. */
 export function validateNativeTerrainOutline(value: unknown, width: number, height: number,
-  erosion: NativeErosionPolygons = []): asserts value is readonly NativeErosionPoint[] {
-  validateNativeErosion([value], width, height);
+  erosion: NativeErosionPolygons = [], budget: NativeTerrainBudget = LEGACY_TERRAIN_BUDGET): asserts value is readonly NativeErosionPoint[] {
+  validateNativeErosion([value], width, height, budget);
   const outline = value as readonly NativeErosionPoint[];
   for (const hole of erosion) {
     if (hole.some(point => !contains(outline, point))) throw new Error('Terrain erosion must remain inside the positive outline');
@@ -90,7 +98,7 @@ export function parseNativeErosionCell(text: string, constructionVersion: number
 
 /** Ownership survives serialization; presence of a polygon list alone cannot
  * distinguish the old grade default from an explicitly authored cut. */
-export function validateNativeGroundEdgeOwnership(definition: Pick<MasterDefinition, 'instances' | 'family' | 'authoredErosion' | 'erosion' | 'cols' | 'rows'>): void {
+export function validateNativeGroundEdgeOwnership(definition: Pick<MasterDefinition, 'instances' | 'family' | 'authoredErosion' | 'erosion' | 'cols' | 'rows'>, budget: NativeTerrainBudget = LEGACY_TERRAIN_BUDGET): void {
   if (definition.authoredErosion !== undefined && definition.authoredErosion !== true) throw new Error('Invalid authored erosion marker');
   if (definition.authoredErosion && definition.instances.some(instance => instance.constructionVersion !== 4)) throw new Error('Authored erosion requires construction 4');
   const holders = definition.instances.filter(instance => instance.groundEdgeWidth !== undefined);
@@ -99,5 +107,5 @@ export function validateNativeGroundEdgeOwnership(definition: Pick<MasterDefinit
   if (!definition.authoredErosion || holders.length !== 1 || holders[0] !== primaryRelief || holders[0]!.constructionVersion !== 4
     || holders[0]!.height > 6 || holders[0]!.groundEdgeWidth! < 8 || holders[0]!.groundEdgeWidth! > 24)
     throw new Error('Authored ground edge must belong to the unique first v4 low primary relief');
-  validateNativeErosion(definition.erosion, definition.cols * 32, definition.rows * 32);
+  validateNativeErosion(definition.erosion, definition.cols * 32, definition.rows * 32, budget);
 }

@@ -1,0 +1,559 @@
+{
+  "schemaVersion": 1,
+  "id": "r100-native-revision7-only",
+  "sourceRevision": "b2d737901ebe6e7ea61c4ea37be3470370d981a4",
+  "original": {
+    "path": "src/generation/legacy-r100-v7/executor.js",
+    "sha256": "70915d0a1892f02720348fbeb2765a30884a47228f185e5ac0c2f724eea4b87d",
+    "manifest": "src/generation/legacy-r100-v7/manifest.json",
+    "manifestSha256": "97fb9e274f273ee91a7dd8e6380206ac57061b95a59a7aacb420fa192396546b"
+  },
+  "admittedAlgorithmRevisions": [
+    7
+  ],
+  "rejectsOtherRevisions": true,
+  "derivation": "Only exact AST-selected old-version import/return nodes are removed; the surface fallback becomes an explicit revision7 guard. All current-v7 algorithm/data text is preserved. Public historical dispatch remains outside this artifact.",
+  "tool": {
+    "path": "tools/recovery/derive-native-r100-revision7.mjs",
+    "sha256": "155bce971d27b19a2d9d484c15cd3a40036231b8e4c626aad9b4d480c71ff19c"
+  },
+  "esbuildVersion": "0.21.5",
+  "typescriptVersion": "5.9.3",
+  "executorSha256": "55148b001bab48821ba7c16a6e970b019f50fadf1c5736c4f7fdd9019c9a8c8f",
+  "executorBytes": 2581221,
+  "entrySha256": "12632226fac4821083a0f8312f9601729fd062d7e5f30ccc2769f274297c8515",
+  "imports": [],
+  "transformations": [
+    {
+      "path": "src/generation/world-study/r100-package.ts",
+      "originalSha256": "0be1ac77e1c3b26fdf71cedbe5af315c0bbae0c6381b301c1df35f0552b442d6",
+      "derivedSha256": "b6df3a899a1e3e8bc7046b479ed9379437a6481863c4f298400777cdef306ccf",
+      "edits": [
+        {
+          "start": 172,
+          "end": 281,
+          "before": "import { validR100ProductionRecipe as validFrozenR100ProductionRecipe } from '../legacy-r100-v2/executor.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 282,
+          "end": 380,
+          "before": "import { validR100ProductionRecipe as validRevision3Recipe } from '../legacy-r100-v3/executor.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 489,
+          "end": 587,
+          "before": "import { validR100ProductionRecipe as validRevision4Recipe } from '../legacy-r100-v4/executor.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 381,
+          "end": 488,
+          "before": "import { validR100ProductionRecipe as validRevision5Recipe } from '../legacy-r100-v5/executor-recovery.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 588,
+          "end": 695,
+          "before": "import { validR100ProductionRecipe as validRevision6Recipe } from '../legacy-r100-v6/executor-recovery.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 6656,
+          "end": 6770,
+          "before": "if (pack?.algorithmRevision === 1 || pack?.algorithmRevision === 2) return validFrozenR100ProductionRecipe(value);",
+          "after": "",
+          "kind": "remove-unreachable-historical-route"
+        },
+        {
+          "start": 6775,
+          "end": 6845,
+          "before": "if (pack?.algorithmRevision === 3) return validRevision3Recipe(value);",
+          "after": "",
+          "kind": "remove-unreachable-historical-route"
+        },
+        {
+          "start": 6850,
+          "end": 6920,
+          "before": "if (pack?.algorithmRevision === 4) return validRevision4Recipe(value);",
+          "after": "",
+          "kind": "remove-unreachable-historical-route"
+        },
+        {
+          "start": 6925,
+          "end": 6995,
+          "before": "if (pack?.algorithmRevision === 5) return validRevision5Recipe(value);",
+          "after": "",
+          "kind": "remove-unreachable-historical-route"
+        },
+        {
+          "start": 7000,
+          "end": 7070,
+          "before": "if (pack?.algorithmRevision === 6) return validRevision6Recipe(value);",
+          "after": "",
+          "kind": "remove-unreachable-historical-route"
+        }
+      ]
+    },
+    {
+      "path": "src/generation/world-study/r100-production-map.ts",
+      "originalSha256": "ea8a7e0c5502559232615179c03270d5211ea175cb35b4674495619c6eff287c",
+      "derivedSha256": "8f141f8e71839a17ceaf89e2b4d33915e733056f9f7d2bdd7a7277ae47b2a14b",
+      "edits": [
+        {
+          "start": 208,
+          "end": 302,
+          "before": "import { createR100ProductionMap as createRevision4Map } from '../legacy-r100-v4/executor.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 303,
+          "end": 397,
+          "before": "import { createR100ProductionMap as createRevision3Map } from '../legacy-r100-v3/executor.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 719,
+          "end": 824,
+          "before": "import { createR100ProductionMap as createFrozenR100ProductionMap } from '../legacy-r100-v2/executor.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 104,
+          "end": 207,
+          "before": "import { createR100ProductionMap as createRevision5Map } from '../legacy-r100-v5/executor-recovery.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 0,
+          "end": 103,
+          "before": "import { createR100ProductionMap as createRevision6Map } from '../legacy-r100-v6/executor-recovery.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 1174,
+          "end": 1307,
+          "before": "if (recipe.package?.algorithmRevision === 1 || recipe.package?.algorithmRevision === 2) return createFrozenR100ProductionMap(recipe);",
+          "after": "",
+          "kind": "remove-unreachable-historical-route"
+        },
+        {
+          "start": 1310,
+          "end": 1389,
+          "before": "if (recipe.package?.algorithmRevision === 3) return createRevision3Map(recipe);",
+          "after": "",
+          "kind": "remove-unreachable-historical-route"
+        },
+        {
+          "start": 1392,
+          "end": 1471,
+          "before": "if (recipe.package?.algorithmRevision === 4) return createRevision4Map(recipe);",
+          "after": "",
+          "kind": "remove-unreachable-historical-route"
+        },
+        {
+          "start": 1474,
+          "end": 1553,
+          "before": "if (recipe.package?.algorithmRevision === 5) return createRevision5Map(recipe);",
+          "after": "",
+          "kind": "remove-unreachable-historical-route"
+        },
+        {
+          "start": 1556,
+          "end": 1635,
+          "before": "if (recipe.package?.algorithmRevision === 6) return createRevision6Map(recipe);",
+          "after": "",
+          "kind": "remove-unreachable-historical-route"
+        }
+      ]
+    },
+    {
+      "path": "src/systems/r100-world/surface-bake.ts",
+      "originalSha256": "ee15a75d5365978502da3e3e81d9e1c4128f04410825b64df8c58e704762c626",
+      "derivedSha256": "f1085d2a9a2167604186561381dad16682b8f887117e107c51e7f33bae828f5b",
+      "edits": [
+        {
+          "start": 230,
+          "end": 335,
+          "before": "import { bakeMasterWorldSurface as bakeRevision4Surface } from '@/generation/legacy-r100-v4/executor.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 422,
+          "end": 527,
+          "before": "import { bakeMasterWorldSurface as bakeRevision3Surface } from '@/generation/legacy-r100-v3/executor.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 115,
+          "end": 229,
+          "before": "import { bakeMasterWorldSurface as bakeRevision5Surface } from '@/generation/legacy-r100-v5/executor-recovery.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 0,
+          "end": 114,
+          "before": "import { bakeMasterWorldSurface as bakeRevision6Surface } from '@/generation/legacy-r100-v6/executor-recovery.js';",
+          "after": "",
+          "kind": "remove-unreachable-historical-import"
+        },
+        {
+          "start": 14504,
+          "end": 14569,
+          "before": "if(!world.appearance)return bakeRevision3Surface(world,painting);",
+          "after": "if (world.algorithmRevision !== 7 || !world.appearance) throw new Error('Revision 7 surface requires an explicit revision 7 world with appearance');",
+          "kind": "replace-historical-surface-route-with-revision7-guard"
+        },
+        {
+          "start": 14571,
+          "end": 14654,
+          "before": "if(world.algorithmRevision===undefined)return bakeRevision4Surface(world,painting);",
+          "after": "",
+          "kind": "replace-historical-surface-route-with-revision7-guard"
+        },
+        {
+          "start": 14656,
+          "end": 14731,
+          "before": "if(world.algorithmRevision===5)return bakeRevision5Surface(world,painting);",
+          "after": "",
+          "kind": "replace-historical-surface-route-with-revision7-guard"
+        },
+        {
+          "start": 14733,
+          "end": 14808,
+          "before": "if(world.algorithmRevision===6)return bakeRevision6Surface(world,painting);",
+          "after": "",
+          "kind": "replace-historical-surface-route-with-revision7-guard"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "src/config/constants.ts",
+      "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+    },
+    {
+      "path": "src/entities/form-renderers/d/environment-pixels.ts",
+      "sha256": "b909b584735ec5e11c498568cc91258141750d9e5ccb30e07757ea0872ed2278"
+    },
+    {
+      "path": "src/entities/form-renderers/d/fragment-ramp.ts",
+      "sha256": "45d7383b0810c75ccfad0853eabc4555812b15eb8d430a5439aff26acaf7f1b6"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/bake.ts",
+      "sha256": "2213687adf44d61292c6f62ed8a58f20cd94fca39422c59120798478f50ad551"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/material.ts",
+      "sha256": "f2ff8ee2ac4a06fe90e091a010a5ba8a5ac252e40efe2d36bada20069eda635f"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/topology.ts",
+      "sha256": "54742eb047b7b7966b71ad81a9711fd2d51e7129ab3f6d164347cd485dc1453e"
+    },
+    {
+      "path": "src/generated/build-lab-data.ts",
+      "sha256": "bdd7c9218b394e9f877207378e1b375138be8b024416f2c38334b7b704cde672"
+    },
+    {
+      "path": "src/generated/contamination-body-data.ts",
+      "sha256": "a8984167dfd2ee50397a5b8ff43827911d2f5d8203e2876ef7c47435d6acaa07"
+    },
+    {
+      "path": "src/generated/contamination-family-data.ts",
+      "sha256": "db513e4a958343a6ee744995cf430414a30411d962fdbfc39a70e7d9807b4c92"
+    },
+    {
+      "path": "src/generated/contamination-lexicon-data.ts",
+      "sha256": "487ef81032388393b937119a2f98b066cacd5c372e1b19d7f105315ecc12ada4"
+    },
+    {
+      "path": "src/generated/enemy-data.ts",
+      "sha256": "06861b2caba24f6cac050d5110a184d251d1f7e50f051243ea22bc94989231e2"
+    },
+    {
+      "path": "src/generated/r100-native-worlds.ts",
+      "sha256": "5ab3e1de06a5c5385a82dafbc5051bc54357ddf37ee0b1d2de253a20896dc2e8"
+    },
+    {
+      "path": "src/generated/r100-package-manifest.ts",
+      "sha256": "8a24ead24e991e07c29114f2c1f546f5a3bf717d5a94be1fad39734eba3ebf9e"
+    },
+    {
+      "path": "src/generated/r100-spatial-data.ts",
+      "sha256": "1c095869076a2d71788a79e8dcf17d48509da84621e6116a4464da95b41f476e"
+    },
+    {
+      "path": "src/generated/r100-world-appearance.ts",
+      "sha256": "11b5690fc573f4a4085d3816b51fdbd6f7008b582b735bcdf7ecffb427c6e387"
+    },
+    {
+      "path": "src/generated/r100-world-selection.ts",
+      "sha256": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182"
+    },
+    {
+      "path": "src/generated/rift-expedition-grade-data.ts",
+      "sha256": "8abb62cb1d601290e97edede8d190394664075e2ae0219bafe149ae6868daf71"
+    },
+    {
+      "path": "src/generated/rift-fragment-data.ts",
+      "sha256": "59c08d8ff70701065328fff7cbec26e4b971fefe0d0c2b0ed889209ecf725f2c"
+    },
+    {
+      "path": "src/generated/rift-pollution-grade-data.ts",
+      "sha256": "b0d255ab0efd5acdb3a5edb2d5b30017a7521b09de3b5a6c6852b77b9a63d69c"
+    },
+    {
+      "path": "src/generated/rift-spatial-deployment-data.ts",
+      "sha256": "0a01b4a8eb97ef95c9365b0184a5f494d740ae1fd94647b59749bbfbb175aeb4"
+    },
+    {
+      "path": "src/generated/rift-world-profile-data.ts",
+      "sha256": "9550a5faca9e262d2ccf7679d29fd4b0306e883785bf352b31f3007c13d39fe8"
+    },
+    {
+      "path": "src/generated/rift-world-space-data.ts",
+      "sha256": "310341f15599085f1130c14f3eec973cb3ad17575e1db82e715069f7dbd126b8"
+    },
+    {
+      "path": "src/generation/atmosphere.ts",
+      "sha256": "5069e1f84f3565b33b8c6a96c61ac1ee2d1177b123633fa37aa1ab98235f05b3"
+    },
+    {
+      "path": "src/generation/contamination-draw.ts",
+      "sha256": "780f7aa6f2d65d63e9ca71c9bde6aec05b5e4f8b39c66256c0207e583496231d"
+    },
+    {
+      "path": "src/generation/fragment-roll.ts",
+      "sha256": "6e1d92654bd723600ab510b8759a847bf47b50d4fd076db7a4b22858c2392ac0"
+    },
+    {
+      "path": "src/generation/legacy-rift-generation.ts",
+      "sha256": "4d77303290a1c083941e9ad38b87d411e6fe9a9142ef745b6eb459f0a1e31b33"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/arithmetic-executor.js",
+      "sha256": "7cb7efec95c81dc35415273b31e90ba6a5847f11225848e9f32c3c7bc2c9d6d5"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/binary64-fma.ts",
+      "sha256": "a6a356d4b722ac4268e922c5fd576fcda1f3ee77457b5594538a255aa5594ed1"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/executor.js",
+      "sha256": "330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/fdlibm-atan2.ts",
+      "sha256": "03f61c093cf96b72763971e1271173564cac7822863486aa5ecf49668bf8199c"
+    },
+    {
+      "path": "src/generation/outline-mask.ts",
+      "sha256": "8b51f2038709b788580e92ae975717eb564f8bde51669978bd71c1f766d461a3"
+    },
+    {
+      "path": "src/generation/palette-quantize.ts",
+      "sha256": "bafca232fcabc5e4bb10fdaf3805636036605bc2af08f985bde3e63fefdcb04e"
+    },
+    {
+      "path": "src/generation/preview-paint.ts",
+      "sha256": "4339b007e1d9ca9cefa689fa9c2d1ada7012b351b5b8266216ce92f5410222df"
+    },
+    {
+      "path": "src/generation/rift-generation-identity.ts",
+      "sha256": "3dc102724053672adc37d32b7f8aa3b502a229dbbe3f5508b8149d74cc654afd"
+    },
+    {
+      "path": "src/generation/seed-fork.ts",
+      "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+    },
+    {
+      "path": "src/generation/world-study/master-ground-field.ts",
+      "sha256": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783"
+    },
+    {
+      "path": "src/generation/world-study/material-noise.ts",
+      "sha256": "e401a0d6289738fb030344f6d6c00027e690d778fe1faf8f280cc8754f4292d5"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-cellular.ts",
+      "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-erosion.ts",
+      "sha256": "4ea1a9208f2f24a2b50f458035b9f46f66cb9081f0d24b8833fb0823a35dcd79"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-expansion.ts",
+      "sha256": "508b6dfaf744a63671035838c86ad36906b57be341ee26f1f1e55ed68e10d0b4"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "cd50791d2c18cbc25fc6bfa8818a35fd07cb6f14a05db1feb0bfc94ae2da2142"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground-edge.ts",
+      "sha256": "698e5ab1b42a3dccd9b4a68fcfd52a462df039b39692c146d2e67c07a1aeeaab"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground.ts",
+      "sha256": "b20a619d0df2d0def4ed2d6cdc66bbdd7ab64450fb7d4efc1abf46ad67761c24"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-organization.ts",
+      "sha256": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-pleated-tear.ts",
+      "sha256": "a542f83a5da9b9d7b70ce35c37cfb0a09984bed56a6cec152af84c425e32eae1"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-raster.ts",
+      "sha256": "573768b2769ee8cae521e84e5997d17a676bf4bdde72b5c13cb024d181f4e32d"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-settled-projection.ts",
+      "sha256": "c3758e2dbf0639158c17ad3d9b4998fe8d9f341129ccf000f723e0b81e84ddb6"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-settled-sheet.ts",
+      "sha256": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925"
+    },
+    {
+      "path": "src/generation/world-study/pollution-grade.ts",
+      "sha256": "6d4d009cce7cca97417fefd26137f42c297a51cbe50e9b7ad56aa1091d7483e0"
+    },
+    {
+      "path": "src/generation/world-study/profiles.ts",
+      "sha256": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d"
+    },
+    {
+      "path": "src/generation/world-study/r100-expedition.ts",
+      "sha256": "f55c7bc0e9f50878785f9a691b53cfb6bb5f7ea882265e3aebe0dd32d1d6b620"
+    },
+    {
+      "path": "src/generation/world-study/r100-generated-scenes.ts",
+      "sha256": "6b3c974c97025874e5cb7fa3e3dd29147a1397616d003852e52cde5685f57d73"
+    },
+    {
+      "path": "src/generation/world-study/r100-master-world.ts",
+      "sha256": "99e393d591ab528be60abe543d8da5ff0689f475b9889d8c05b096d2680d809d"
+    },
+    {
+      "path": "src/generation/world-study/r100-native-data.ts",
+      "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0"
+    },
+    {
+      "path": "src/generation/world-study/r100-package.ts",
+      "sha256": "b6df3a899a1e3e8bc7046b479ed9379437a6481863c4f298400777cdef306ccf"
+    },
+    {
+      "path": "src/generation/world-study/r100-patrol-windows.ts",
+      "sha256": "9dfe9ba3ca1a8486c771b06590b9a8efa21ce5add55b32a94877f66b16d761ae"
+    },
+    {
+      "path": "src/generation/world-study/r100-pollution.ts",
+      "sha256": "328804c3dd7423627fc31a4c119cff81cbe8078c0575094cc5c2c5d4eb1538dc"
+    },
+    {
+      "path": "src/generation/world-study/r100-production-map.ts",
+      "sha256": "8f141f8e71839a17ceaf89e2b4d33915e733056f9f7d2bdd7a7277ae47b2a14b"
+    },
+    {
+      "path": "src/generation/world-study/r100-spatial-deployment.ts",
+      "sha256": "cfd995473bde42450f8ffa0fbfb90119d20697ddce5458abb98db7982b916818"
+    },
+    {
+      "path": "src/generation/world-study/r100-spatial-world.ts",
+      "sha256": "b0fce58edb15f8e79be0eea846628c755db43cab038221fab8b2858e1d2ff693"
+    },
+    {
+      "path": "src/generation/world-study/r100-world-appearance.ts",
+      "sha256": "71441ad19d1ef8702e737f46898abf05a7b0262de4916aede9bfddbe6fe04b59"
+    },
+    {
+      "path": "src/generation/world-study/r100-world-selection.ts",
+      "sha256": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40"
+    },
+    {
+      "path": "src/generation/world-study/space-profile.ts",
+      "sha256": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590"
+    },
+    {
+      "path": "src/generation/world-study/spatial-extraction-selection.ts",
+      "sha256": "afccec7d982b52e5cbf1c2dd87d67e83d0eaffe4b87ce03b271645294a003308"
+    },
+    {
+      "path": "src/generation/world-study/world-material-pigment.ts",
+      "sha256": "fd524196627d38cc804379e4e1448c2707b557c395e0748038910fb507fc028a"
+    },
+    {
+      "path": "src/systems/ai/behaviors.ts",
+      "sha256": "f09a058a249d00a2acbd778f5a56b55ba7c6724d34481600ae705b8cbfc5d11d"
+    },
+    {
+      "path": "src/systems/ai/physical-grid.ts",
+      "sha256": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+    },
+    {
+      "path": "src/systems/r100-world/ground.ts",
+      "sha256": "36fc10eb24d9d111619c968367e937b82693d31d775a8d07800831794aa57f0d"
+    },
+    {
+      "path": "src/systems/r100-world/organization-sampling.ts",
+      "sha256": "06ca0558cf191b65559efd7c3fbfd19f1889d2d3ce0bb26cb9e9bc6cecc9506e"
+    },
+    {
+      "path": "src/systems/r100-world/surface-bake.ts",
+      "sha256": "f1085d2a9a2167604186561381dad16682b8f887117e107c51e7f33bae828f5b"
+    },
+    {
+      "path": "src/systems/r100-world/surface-fields.ts",
+      "sha256": "29da511c97b2ffc4d4b6d73526d853994432356cd5d9c70f9656f4e09fdf32a6"
+    },
+    {
+      "path": "src/systems/tile-grid.ts",
+      "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+    },
+    {
+      "path": "src/types/game-types.ts",
+      "sha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19"
+    },
+    {
+      "path": "src/types/rift-checkpoint.ts",
+      "sha256": "462c70371d977239fa9c0c93bb17c6e2fe7620bd56375b346e832e300e607621"
+    },
+    {
+      "path": "src/types/rift-world-history.ts",
+      "sha256": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80"
+    },
+    {
+      "path": "src/utils/grid-raycast.ts",
+      "sha256": "de5b5e6e47ba34e08146ff372f3a6cd733b0311979a8838d5c23954129f5bd4e"
+    },
+    {
+      "path": "src/utils/math.ts",
+      "sha256": "24f31531bd83174c96e9c41fc84b66c965aec3b016014779589f8c4e30936dad"
+    },
+    {
+      "path": "src/utils/random.ts",
+      "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
+    }
+  ]
+}

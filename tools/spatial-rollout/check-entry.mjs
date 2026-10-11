@@ -1,8 +1,10 @@
-/** r7 entrance integration through the current two-stage preparation controls.
+/** Version-pinned entrance integration through the current two-stage preparation controls.
  * Isolated browser storage; no seed/world, player, outcome, save or clock overrides.
  * Opening preparation uses its normal scene method, not physical haven navigation.
  * This is entrance/cold-recovery evidence, not a natural expedition playtest. */
 import assert from 'node:assert/strict';
+const expectedRevision = Number(process.env.QA_ALGORITHM_REVISION ?? 7);
+assert(Number.isSafeInteger(expectedRevision) && expectedRevision > 0, 'QA_ALGORITHM_REVISION must be a positive integer');
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -18,7 +20,7 @@ assert(!fs.existsSync(path.join(out,'report.json')),'Refusing to replace existin
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
 const report = {
-  startedAt: new Date().toISOString(), gameUrl, status: 'running', expectedRevision: 7,
+  startedAt: new Date().toISOString(), gameUrl, status: 'running', expectedRevision,
   scope: 'Formal homepage → new record → preparation scene entry → real grade choice → real equipment stage → Shift+Enter departure → Escape checkpoint → browser reload → real Continue. Isolated storage, naturally selected worlds; no seed/world/state/save/clock overrides. Preparation opening bypasses physical haven navigation. Not a natural expedition, economy, discovery-after-exploration, performance acceptance or complete visual review.',
   cases: [],
 };
@@ -105,7 +107,7 @@ try {
       result.departureMs = Date.now() - departureStarted;
       result.runtime = await readRuntime(page);
       assert.equal(result.runtime.grade, grade);
-      assert.equal(result.runtime.revision, 7);
+      assert.equal(result.runtime.revision, expectedRevision);
       assert.equal(result.runtime.width, 2304); assert.equal(result.runtime.height, 1792);
       assert.equal(result.runtime.bodyTileSize, 8);
       assert.deepEqual(result.runtime.player, result.runtime.spawn, 'no test movement or relocation occurred');
@@ -119,7 +121,7 @@ try {
       const identity = before.riftCheckpoint?.identity ?? before.riftDeparture?.identity;
       assert(identity?.generation?.spatialPolicy, 'the spatial policy is frozen inside the saved identity');
       assert.equal(identity.generation.version, 3);
-      assert.equal(identity.generation.package.algorithmRevision, 7);
+      assert.equal(identity.generation.package.algorithmRevision, expectedRevision);
       assert.equal(identity.generation.package.grade, grade);
       assert.equal(before.riftCheckpoint.state.minimap.extractionDiscovered, false);
       assert.equal(before.riftCheckpoint.state.world.bodyGeometryVersion, 1);
@@ -138,7 +140,7 @@ try {
       await waitForRift(page);
       result.restoreMs = Date.now() - restoreStarted;
       result.restoredRuntime = await readRuntime(page);
-      assert.equal(result.restoredRuntime.revision, 7);
+      assert.equal(result.restoredRuntime.revision, expectedRevision);
       assert.equal(result.restoredRuntime.extractionDiscovered, false);
       assert.deepEqual(result.restoredRuntime.extraction, result.runtime.extraction);
       const after = await pauseAndReadSave(page);
@@ -152,7 +154,7 @@ try {
       result.coldIdentityPreserved = true; result.coldBodyPositionPreserved = true; result.exactlyOneVisit = true;
       result.status = 'passed';
       await page.screenshot({ path: path.join(out, `${grade}-restored.png`) });
-      console.log(`${grade}: ${result.world}; r7 departure and cold recovery passed`);
+      console.log(`${grade}: ${result.world}; r${expectedRevision} departure and cold recovery passed`);
     } catch (error) {
       result.status = 'failed'; result.failure = String(error); process.exitCode = 1;
       await page.screenshot({ path: path.join(out, `${grade}-failure.png`) }).catch(() => {});

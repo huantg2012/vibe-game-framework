@@ -13,6 +13,8 @@ import { createMasterWorld } from '../../src/generation/world-study/r100-master-
 import { validateNativeTerrainOutline } from '../../src/generation/world-study/native-volume-erosion.ts';
 import { createR100SpatialPolicy, createR100SpatialDefinition, validR100SpatialPolicy } from '../../src/generation/world-study/r100-spatial-world.ts';
 import { createR100ProductionRecipe, validR100ProductionRecipe } from '../../src/generation/world-study/r100-package.ts';
+import { createR100ProductionRecipe as createRevision7Recipe } from '../../src/generation/legacy-r100-v7/executor-revision7.js';
+import { compileR100FragmentShape } from '../../src/generation/world-study/r100-fragment-shape.ts';
 import { serializeR100MasterWorld, hydrateR100MasterWorld } from '../../src/generation/world-study/r100-native-data.ts';
 import { buildMasterSurfaceFields } from '../../src/systems/r100-world/surface-fields.ts';
 import { POLLUTION_GRADE_DEFINITIONS } from '../../src/generated/rift-pollution-grade-data.ts';
@@ -75,18 +77,38 @@ assert.throws(() => validateNativeTerrainOutline(outline, 512, 384, [square(16, 
 assert.throws(() => validateNativeTerrainOutline(square(40, 40, 256), 512, 384, [square(40, 80)]), 'Touching hole');
 validateNativeTerrainOutline([...outline].reverse(), 512, 384, holes);
 
-const policy = createR100SpatialPolicy('cinder-ridge');
-assert(policy.terrainOutline && policy.erosion.length === 8, 'Current author input must opt in with eight internal holes');
-assert(validR100SpatialPolicy(JSON.parse(JSON.stringify(policy)), 'cinder-ridge'));
-for (const bad of malformed) assert(!validR100SpatialPolicy({ ...policy, terrainOutline: bad }, 'cinder-ridge'));
-assert(!validR100SpatialPolicy({ ...policy, terrainOutlines: policy.terrainOutline }, 'cinder-ridge'), 'Unknown field must reject');
-const recipe = createR100ProductionRecipe('cinder-ridge', 20261010, 'medium');
+// The eight-hole fixture above tests generic positive terrain. The current
+// cinder authoring contract is separate: derive its holes from the same frozen
+// rectangle compiler, never require a historical fixture's hole count.
+const productionSeed = 20261011;
+const policy = createR100SpatialPolicy('cinder-ridge', productionSeed);
+assert.equal(policy.version, 2);
+assert(policy.fragmentShape && policy.terrainOutline, 'Current representative must opt into the fragment compiler');
+const compiled = compileR100FragmentShape(policy.fragmentShape, productionSeed);
+assert.deepEqual(policy.terrainOutline, compiled.terrainOutline);
+assert.deepEqual(policy.erosion, compiled.erosion);
+assert(validR100SpatialPolicy(JSON.parse(JSON.stringify(policy)), 'cinder-ridge', productionSeed));
+for (const bad of malformed) assert(!validR100SpatialPolicy({ ...policy, terrainOutline: bad }, 'cinder-ridge', productionSeed));
+assert(!validR100SpatialPolicy({ ...policy, terrainOutlines: policy.terrainOutline }, 'cinder-ridge', productionSeed), 'Unknown field must reject');
+const recipe = createR100ProductionRecipe('cinder-ridge', productionSeed, 'medium');
+assert.equal(recipe.package.algorithmRevision, 8);
 assert(validR100ProductionRecipe(JSON.parse(JSON.stringify(recipe))), 'Outline survives frozen recipe roundtrip');
 const omitted = structuredClone(recipe); delete omitted.spatialPolicy.terrainOutline;
 assert(!validR100ProductionRecipe(omitted), 'Deleting frozen terrain must invalidate its receipt');
 const corruptNative = structuredClone(recipe); corruptNative.nativeDefinition.terrainOutline = null;
 assert(!validR100ProductionRecipe(corruptNative));
 assert.throws(() => createR100SpatialDefinition({ ...recipe.nativeDefinition, terrainOutline: square(64, 64, 256) }, recipe.spatialPolicy, seed), 'Source/world outline ambiguity must reject');
+
+// Historical r7 keeps its archived positive-outline rules. Its eight holes
+// belong to that frozen authoring, not to a new production-wide quota.
+const revision7Recipe = createRevision7Recipe('cinder-ridge', 20261010, 'medium');
+assert.equal(revision7Recipe.package.algorithmRevision, 7);
+assert.equal(revision7Recipe.spatialPolicy.version, 1);
+assert.equal(revision7Recipe.spatialPolicy.erosion.length, 8);
+assert(revision7Recipe.spatialPolicy.terrainOutline);
+assert(!Object.hasOwn(revision7Recipe.spatialPolicy, 'fragmentShape'));
+assert(validR100ProductionRecipe(structuredClone(revision7Recipe)), 'Frozen r7 outline recipe must still dispatch to its archived validator');
+assert(!validR100ProductionRecipe({ ...revision7Recipe, package: { ...revision7Recipe.package, algorithmRevision: 8 } }), 'An r7 recipe cannot be relabeled as r8');
 
 // Exercise actual ground-edge material ownership on a small v4 world. The
 // production context must include the outer ring, not merely the inner cut.
@@ -147,11 +169,18 @@ try {
 } finally { rmSync(temporary, { recursive: true, force: true }); }
 const files = ['src/generation/world-study/r100-master-world.ts', 'src/generation/world-study/native-volume-erosion.ts',
   'src/generation/world-study/r100-spatial-world.ts', 'src/generation/world-study/r100-spatial-types.ts',
-  'src/systems/r100-world/surface-fields.ts', 'src/generated/r100-spatial-data.ts', 'tools/spatial-rollout/check-positive-ground.mjs'];
+  'src/generation/world-study/r100-fragment-shape.ts', 'src/generation/world-study/r100-package.ts',
+  'src/generation/legacy-r100-v7/executor-recovery.js', 'src/generation/legacy-r100-v7/executor-revision7.js',
+  'src/systems/r100-world/surface-fields.ts', 'src/generated/r100-spatial-data.ts', 'src/generated/r100-fragment-data.ts',
+  'tools/spatial-rollout/check-positive-ground.mjs'];
 const report = { status: 'passed', scope: 'Controlled terrain/material/freeze contracts and legacy equivalence; no complete production, performance or visual acceptance.',
-  baseline, comparedCells, partialCoarseCells, internalHoles: holes.length, malformedOutlines: malformed.length,
+  baseline, comparedCells, partialCoarseCells, fixtureInternalHoles: holes.length, malformedOutlines: malformed.length,
+  currentRepresentative: { worldId: 'cinder-ridge', seed: productionSeed, algorithmRevision: recipe.package.algorithmRevision,
+    shapeVersion: policy.fragmentShape.algorithmVersion, outerPoints: policy.terrainOutline.length, internalHoles: policy.erosion.length },
+  historicalRecipe: { algorithmRevision: revision7Recipe.package.algorithmRevision, internalHoles: revision7Recipe.spatialPolicy.erosion.length,
+    archivedValidationPassed: true, revisionRelabelRejected: true },
   outerMaterialPixels, edgeColorPixels, legacyCases,
   sources: Object.fromEntries(files.map(file => [file, createHash('sha256').update(readFileSync(file)).digest('hex')])) };
 mkdirSync(path.dirname(output), { recursive: true });
 writeFileSync(output, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
-console.log(`PASS positive ground: ${comparedCells} 8px cells, 8 holes, real edge material, frozen validation, ${legacyCases} exact legacy worlds`);
+console.log(`PASS positive ground: ${comparedCells} 8px fixture cells / ${holes.length} fixture holes, r8 representative ${policy.erosion.length} derived holes, r7 archived validation, real edge material, ${legacyCases} exact pre-outline fixture worlds`);

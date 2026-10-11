@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "R100仍13/14，I14/P49开放。DEC-204用户认可矩形拼合的开放碎片构型大方向，要求自由打磨边角；三份新断缘样例完成限定几何检查，待人审，尚未接入游戏。DEC-202否决的正向地床仍是当前实现，旧技术证据保留原范围，另107待整改；弱设备豁免保持。"
+    "summary": "R100仍13/14，I14/P49开放。DEC-205认可矩形拼合开放碎片与自由断缘；DEC-206已完成r7归档和r8余烬脊首代表正式接入，三档有限生成/恢复/搜撤/实图及参考机预算通过。其他107世界待逐类推广，用户正式体验终验未提升；弱设备豁免且未测。"
   },
   "domains": [
     {
@@ -22,7 +22,7 @@
       "id": "world",
       "title": "地图、地表与探索",
       "coverage": "mapped",
-      "note": "r7大图与余烬脊正向地床仍是当前实现，整体曾被DEC-202否决。DEC-204用户认可矩形构型方向，新边角样例只做设计研究与几何诊断，待人审，未接入或实玩；另107待整改。"
+      "note": "新出发为r8，余烬脊接入认可的矩形拼合与自由断缘；身体、VOID视线、材质同源。限定生成/恢复、三档实景/按键搜撤及参考机预算已验，另107保留旧几何待整改；不代用户正式美术或自然探索终验。"
     },
     {
       "id": "encounters",
@@ -64,7 +64,7 @@
       "id": "persistence",
       "title": "存档、失败与恢复",
       "coverage": "mapped",
-      "note": "正式完整帧、拒写回滚、坏包处理与弃局保持；库存schema4访问历史同beginRun原子提交。修订1–6及更旧身份独立冻结，修订7保存完整空间/部署策略。旧324进入冷续与342浏览器等价仅归旧修订，新扩大图另验，不外推所有恢复组合。"
+      "note": "完整帧及原子保存保持。旧v1/v2与修订1–7由冻结执行器恢复；r8冻结完整矩形layout、原始请求seed及最终轮廓。r7有324配方/4完整地图及RGBA回归，新r8三档正式冷续与代表wire恢复各按样本记录，不外推所有历史/跨引擎异常。"
     },
     {
       "id": "accessibility",
@@ -76,7 +76,7 @@
       "id": "development",
       "title": "开发入口与退役方向",
       "coverage": "mapped",
-      "note": "r100-gym使用正式生成与RiftScene、隔离内存保存；rift-spatial-prototype仅保留已获用户认可的余烬脊参考。新修订7空间推广按专属任务/QA登记，原R100 I14有限技术资格不自动继承为扩大图或完整体验通过。"
+      "note": "r100-gym用正式生成/RiftScene和隔离内存保存，当前108世界目录不等于108世界新构型通过；cinder-ridge/medium/20261011可直接复看本批首代表。旧prototype及预览母版保留其历史/认可范围。"
     }
   ],
   "featureFiles": [
@@ -724,6 +724,21 @@
       "include": [
         "tools/world-study/*r100-i14*.mjs",
         "tools/qa/*r100-i14*.mjs"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "r100-fragment-r8",
+      "title": "矩形开放碎片生产桥及r7冻结恢复",
+      "include": [
+        "data/rift-spatial-fragment-*.csv",
+        "src/generated/r100-fragment-data.ts",
+        "src/generation/world-study/r100-fragment-shape.ts",
+        "src/generation/world-study/fragment-shape/*.ts",
+        "src/generation/legacy-r100-v7/*",
+        "tools/fragment-shape/*",
+        "tools/world-study/codegen-r100-fragments.mjs",
+        "tools/recovery/*native-r100-revision7*.mjs"
       ],
       "exclude": []
     }

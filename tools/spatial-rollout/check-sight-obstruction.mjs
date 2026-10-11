@@ -29,6 +29,7 @@ const paths = [
   'src/systems/tile-grid.ts', 'src/systems/ai/physical-grid.ts', 'src/utils/grid-raycast.ts',
   'tools/spatial-rollout/sight-obstruction.mjs', 'tools/spatial-rollout/check-sight-obstruction.mjs',
 ];
+paths.push('src/generated/r100-fragment-data.ts', 'src/generation/world-study/r100-fragment-shape.ts', ...readdirSync('src/generation/world-study/fragment-shape').filter(p => p.endsWith('.ts')).map(p => `src/generation/world-study/fragment-shape/${p}`));
 const sourceHashes = () => Object.fromEntries(paths.map(p => [p, createHash('sha256').update(readFileSync(p)).digest('hex')]));
 const source = sourceHashes();
 let commit = process.env.QA_SOURCE_COMMIT ?? null;

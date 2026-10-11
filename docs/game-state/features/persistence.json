@@ -3,7 +3,7 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "正式出发冻结身份，继续同趟不重抽、不离线推进；schema4最近8次世界历史仍与beginRun同事务。修订7冻结空间组织、作者组变换、缺地、出生候选、撤离及部署策略，恢复不读当前CSV重算；旧v1/v2及revision1–6由各自冻结执行器恢复。r6原324配方/8代表完整payload与RGBA及2例公开路由等价已验；r7三档正式浏览器冷续保持身份、身体位置及一次visit记账。",
+    "summary": "正式出发冻结身份、继续不重抽或离线推进；schema4世界历史与beginRun原子提交。旧v1/v2和修订1–7走独立封存闭包，r7从b2d73790冻结生成/校验/材质。r8冻结完整矩形layout、算法版本、原请求seed与最终轮廓，不读取当前CSV追改旧局。r7样本精确等价、r8破坏拒绝/恢复及三档正式冷续通过。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -357,6 +357,62 @@
       {
         "path": "docs/qa/rift-spatial-positive-ground-2026-10-11.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-2026-10-12.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-code-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-art.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor.d.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/manifest-recovery.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor-recovery.js",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor-recovery.d.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/manifest-revision7.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor.js",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/assets.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor-revision7.js",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor-revision7.d.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [],
@@ -388,7 +444,9 @@
       "COH-E191",
       "COH-E211",
       "COH-E212",
-      "COH-E220"
+      "COH-E220",
+      "COH-E231",
+      "COH-E232"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。",
@@ -396,7 +454,8 @@
       "生产烟测发现既有v2精确签名会受不同V8运行时的atan2末位差异影响（R100-P05）。当前浏览器DEV与dist等价不代表跨引擎/升级后的旧档恢复保证，冻结执行器与严格签名未放宽。",
       "历史修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10和用户终验仍待；弱设备补测已获豁免且未测。",
       "r7最终324配方与5代表隔离变更反例通过，三档正式新出发/浏览器刷新/继续保持完整身份、位置及一次visit。样本未穷尽跨引擎、全部存档异常或发现后跨刷新记忆；r6兼容和三档入口不代替r7自然旅程或长期恢复保证。",
-      "DEC-201正向外轮廓只冻在r7 spatialPolicy，原尺寸nativeDefinition禁止双源。小夹具/旧3份完整r7等价及前一实际配方几何重放通过；本轮没有浏览器冷续全流程或全历史保存枚举。"
+      "DEC-201正向外轮廓只冻在r7 spatialPolicy，原尺寸nativeDefinition禁止双源。小夹具/旧3份完整r7等价及前一实际配方几何重放通过；本轮没有浏览器冷续全流程或全历史保存枚举。",
+      "DEC-205已认可构型及边缘样片；DEC-206首代表已正式接入并完成限定内部检查。尚未验证全seed、自然未知搜索/深区决策、全库构型多样性或正式用户审美；另107世界、I14/P49仍开放。历史地下城候选及其技术证据保留原范围，不再描述为当前首代表。"
     ]
   },
   {

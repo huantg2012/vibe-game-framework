@@ -10,7 +10,7 @@ import type { ContaminationForm } from '@/generation/contamination-draw';
 import { measureOutline } from '@/generation/outline-mask';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import { buildNativeVolume, type NativeVolumeMesh, type NativeVolumeSpec, type NativeVolumeFamily } from '@/generation/world-study/native-volume-geometry';
-import { validateNativeGroundEdgeOwnership, validateNativeTerrainOutline } from './native-volume-erosion';
+import { validateNativeGroundEdgeOwnership, validateNativeTerrainOutline, FRAGMENT_TERRAIN_BUDGET } from './native-volume-erosion';
 import { compileNativeVolumeRaster } from '@/generation/world-study/native-volume-raster';
 import { worldProfileById } from '@/generation/world-study/profiles';
 import type { WorldSample } from '@/generation/world-study/types';
@@ -34,12 +34,14 @@ export interface MasterDefinition {
   readonly erosion:readonly (readonly Readonly<Vector2>[])[];
   /** Positive ground ring, before internal erosion; absent preserves old maps. */
   readonly terrainOutline?: readonly Readonly<Vector2>[];
+  /** Only expanded revision-8 terrain may opt into the compiled fragment budget. */
+  readonly fragmentShapeVersion?: 'rectilinear-fragment-v1';
   /** Present only when the author explicitly replaces the grade default. */
   readonly authoredErosion?: true;
 }
 export interface MasterWorld {
   /** New packages opt into current presentation; absence preserves frozen r4. */
-  readonly algorithmRevision?: 5 | 6 | 7;
+  readonly algorithmRevision?: 5 | 6 | 7 | 8;
   readonly spatialDeployment?: R100SpatialDeploymentPolicy;
   readonly appearance?: import('./r100-world-appearance').R100WorldAppearance;
   /** Production-only frozen dependency identity; DEV masters omit it. */
@@ -104,7 +106,9 @@ export function createMasterWorld(definition: MasterDefinition, seed: number, fr
   if (frozen?.spatialDeployment) validateR100SpatialDeploymentPolicy(frozen.spatialDeployment);
   const width = definition.cols * TILE, height = definition.rows * TILE;
   const positiveTerrain = Object.prototype.hasOwnProperty.call(definition, 'terrainOutline');
-  if (positiveTerrain) validateNativeTerrainOutline(definition.terrainOutline, width, height, definition.erosion);
+  if (definition.fragmentShapeVersion !== undefined && (definition.fragmentShapeVersion !== 'rectilinear-fragment-v1' || !positiveTerrain)) throw new Error('Invalid compiled fragment terrain identity');
+  const terrainBudget = definition.fragmentShapeVersion === 'rectilinear-fragment-v1' ? FRAGMENT_TERRAIN_BUDGET : undefined;
+  if (positiveTerrain) validateNativeTerrainOutline(definition.terrainOutline, width, height, definition.erosion, terrainBudget);
   const land = new Uint8Array(definition.cols * definition.rows), walls = new Uint8Array(land.length);
   const flowAngle = new Float32Array(land.length), deposition = new Float32Array(land.length);
   for (let row=0; row<definition.rows; row++) for (let col=0; col<definition.cols; col++) {
@@ -125,7 +129,7 @@ export function createMasterWorld(definition: MasterDefinition, seed: number, fr
     if (positiveTerrain && matter[index]) land[Math.floor(y / TILE) * definition.cols + Math.floor(x / TILE)] = 1;
   }
   const matterAt = (x:number,y:number): boolean => x>=0 && y>=0 && x<width && y<height && matter[Math.floor(y/SUPPORT)*cols+Math.floor(x/SUPPORT)]===1;
-  validateNativeGroundEdgeOwnership(definition);
+  validateNativeGroundEdgeOwnership(definition, terrainBudget);
   const terrainEdges = positiveTerrain ? [definition.terrainOutline!, ...definition.erosion] : definition.erosion;
   const roles = new Map<number, MasterPhysicalRole>();
   const meshes = definition.instances.map(instance => {

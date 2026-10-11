@@ -3,14 +3,14 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "正式新出发使用r100-native v3修订7与探索式唯一撤离。DEC-201用户再否决近矩形大轮廓，余烬脊改正向terrainOutline：宽板片联合成地床，8内部孔与22实体随形重排，8px支撑决定身体/视线/材料。旧无字段配方保持原路径；另107作者世界未改，当前有限证据不代签人审。 DEC-202用户否决当前整体仍像地下城；世界碎片构型设计推演完成但未实施，旧技术证据不代整体验收。",
+    "summary": "正式新出发使用r100-native v3修订8。余烬脊显式CSV矩形作者源经共享fragment-v1生成开放地床和自由断缘；原始请求seed固定地形，部署重试不重抽。三档完整准入、独立恢复及实际搜撤样本通过；其余107世界原几何输入保持，新构型推广尚未完成。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 裂隙备行 → 选择污染等级 → 等级内随机revision7大图世界",
+      "净化点 → 裂隙备行 → 选择污染等级 → 等级内随机revision8大图世界",
       "标题继续 → 原存档的v1/v2/v3执行器和冻结数据",
       "DEV rift-spatial-prototype.html → 余烬脊去雾地形、路线地点与实体占地",
-      "DEC-201当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261010 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
+      "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
     ],
     "sources": [
       {
@@ -662,6 +662,18 @@
       {
         "path": "docs/reviews/2026-10-11-world-fragment-conception.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-2026-10-12.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-code-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-art.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -724,7 +736,9 @@
       "COH-E219",
       "COH-E220",
       "COH-E221",
-      "COH-E222"
+      "COH-E222",
+      "COH-E231",
+      "COH-E232"
     ],
     "unknowns": [
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
@@ -733,19 +747,19 @@
       "4459d7c3余烬脊代表已获“pass，推广”；认可仅覆盖当时代表方向并授权实施，不代表108世界、所有种子或生产搜撤资格。旧代表1孤立支持格和单一几何1024选点抽样的限制保留；推广使用各世界自己的真实支持图另验。",
       "本轮108×3限定种子完整生产准入324/324通过：每图至少2组真实双侧绕行，最小身体可达99.284%、有效撤离交互路线923.176px，候选至少8区域/3距离层。有限种子不外推总体重试尾部、空间记忆或所有连续参数；旧图性能/收益资格不自动覆盖新图。",
       "原推广性能超门已在E212限定参考机修复；原规则外岸关闭结论被2026-10-11用户反馈重开。新岸线增加资源成本需单独实测，不继承旧图性能；108世界人审仍未完成。",
-      "E221用户否决f4989438仍像地下城，当前正向地床整体质量不通过。E222仅为世界碎片构型推演及三路知情审查：新方向未实施／人审，撤离局部征兆与外岸漂泊参照均为提案。8孔与实体减量是旧候选局部反馈，不是新构型定额；另107及I14/P49保持开放。"
+      "DEC-205已认可构型及边缘样片；DEC-206首代表已正式接入并完成限定内部检查。尚未验证全seed、自然未知搜索/深区决策、全库构型多样性或正式用户审美；另107世界、I14/P49仍开放。历史地下城候选及其技术证据保留原范围，不再描述为当前首代表。"
     ]
   },
   {
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "修订7的实体、可走低床、真实VOID分别承担身体绕行、地表形制与吞光遮视线。首批3世界已改为authored-sectors，允许在保源材料/构造/角色前提下重新组织实例、深湾与内部空洞；84作者组、19通用及2特殊世界保原组织。原14图审未解决用户指出的规则轮廓及负空间不足，2026-10-11重开；新的有限证据与人审分别登记。 DEC-201余烬脊外岸来自正向地床而非矩形底板减切条；材料边沿与8px物理同源，旧字段缺省路径保持。 DEC-202用户否决当前整体仍像地下城；世界碎片构型设计推演完成但未实施，旧技术证据不代整体验收。",
+    "summary": "余烬脊r8的最终外岸/内孔同源进入8px地面支撑、身体、VOID视线及材料断沿；22件solid和4块可走relief随新地床重排，保留原材质构造。认可seed20261011为80点外岸/10孔，数量不作全库定额。最终三档实图独立复核未见构型继承回归；正式美术用户终验仍待。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "正式新世界 Rift 地表；研究页可定向查看",
-      "DEC-201当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261010 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
+      "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
     ],
     "sources": [
       {
@@ -1196,6 +1210,18 @@
       {
         "path": "docs/reviews/2026-10-11-world-fragment-conception.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-2026-10-12.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-code-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-art.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -1247,30 +1273,32 @@
       "COH-E219",
       "COH-E220",
       "COH-E221",
-      "COH-E222"
+      "COH-E222",
+      "COH-E231",
+      "COH-E232"
     ],
     "unknowns": [
-      "旧v1/v2及v3修订1/2/3按各自封存身份恢复；历史修订4及当前修订7仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
+      "旧v1/v2及v3修订1/2/3按各自封存身份恢复；历史修订4/7及当前修订8仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
       "历史地表动效、支撑与暂停/清理检查保留原版本；新世界身份的正常帧、定点补图与边界操作只证明各自可见/实际采样范围，不能代签整图可记忆性或完整自然绕行。",
       "修订3的120正常视野与20近邻深走为历史记录，不自动覆盖修订4新构造；本批修订4视觉人审另列E159，实际声音听感与较弱设备预算仍未通过本批代验。",
       "本批视觉的人审“pass”不把有限作者配方和实图证据扩张成全种子、全边界、连续动效或完整自然旅程；低光、污染绿和可走/阻挡语义继续保持既有合同。",
       "历史修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10和用户终验仍待；弱设备补测已获豁免且未测。",
-      "通用逐实例循环破坏构图的首轮失败保留；258作者定义及最终324地图已通过。独立美术审查覆盖14代表的限定全图/入口与单柱前足、压纤低床近景，不代签全库或全部外壁近读。浅岸39点试验仅为历史，当前作者组最大14点、全库最大20点，所有尺寸仍受32点上限。",
-      "压纤低床本体与海岸UV域已分离，正常近景确认粗格块消除。旧mesh/raster/layout、normal/response/emission字节保持，albedo只影响woven owner1；15世界增加0.492MiB岸壁位图，当前资源抽测已过。新运行预算超门仍待定位；局部美术通过不代整体视听/长期体验。",
-      "E221用户否决f4989438仍像地下城，当前正向地床整体质量不通过。E222仅为世界碎片构型推演及三路知情审查：新方向未实施／人审，撤离局部征兆与外岸漂泊参照均为提案。8孔与实体减量是旧候选局部反馈，不是新构型定额；另107及I14/P49保持开放。"
+      "通用逐实例循环破坏构图的首轮失败保留；258作者定义及最终324地图已通过。独立美术审查覆盖14代表的限定全图/入口与单柱前足、压纤低床近景，不代签全库或全部外壁近读。浅岸39点试验仅为历史，原r7作者组最大14点、当时全库最大20点，均受32点上限；r8fragment使用显式新预算。",
+      "压纤低床本体与海岸UV域已分离，正常近景确认粗格块消除。旧mesh/raster/layout、normal/response/emission字节保持，albedo只影响woven owner1；15世界增加0.492MiB岸壁位图，当前资源抽测已过。旧轮运行预算问题不继承为本批结论；局部美术通过不代整体视听/长期体验。",
+      "DEC-205已认可构型及边缘样片；DEC-206首代表已正式接入并完成限定内部检查。尚未验证全seed、自然未知搜索/深区决策、全库构型多样性或正式用户审美；另107世界、I14/P49仍开放。历史地下城候选及其技术证据保留原范围，不再描述为当前首代表。"
     ]
   },
   {
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "修订7在扩大地图上先确定真实出生与探索式撤离，再重建污染和完整敌人/资源部署；配额与混乱规则沿用，新增冻结的空间部署策略约束入口保护、分散搜取与额外路程。撤离从全图可达候选按距离层/区域抽取，不绑定对岸或最远点。巡逻窗口只接纳出生连通分量内实际可操作站位。修订6的完整搜撤与收益记录保留历史范围，不作为新图经营验收。 DEC-202用户否决当前整体仍像地下城；世界碎片构型设计推演完成但未实施，旧技术证据不代整体验收。",
+    "summary": "r8先确定最终地形/实体及真实出生、探索式唯一撤离，再按原配额/混乱规则部署敌人、Host与资源。撤离继续分层分区抽选，不靠近出生、不固定对岸或最远点；巡逻窗口须在出生连通分量内。余烬脊三档safe搜取→发现→撤离普通输入样本通过，不代自然盲搜、深区取舍或长期经营。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "每次正式出击生成时自动部署",
       "DEV：rift-r100-masters.html → 九组作者地段原生Host投放",
-      "DEC-201当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261010 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
+      "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
     ],
     "sources": [
       {
@@ -1597,6 +1625,18 @@
       {
         "path": "docs/reviews/2026-10-11-world-fragment-conception.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-2026-10-12.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-code-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-art.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -1644,7 +1684,9 @@
       "COH-E219",
       "COH-E220",
       "COH-E221",
-      "COH-E222"
+      "COH-E222",
+      "COH-E231",
+      "COH-E232"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
@@ -1656,19 +1698,19 @@
       "修订3集中2×6深薪、旧90趟经营及三母版针对性准备的有限证据保留；修订4未改收益和巡逻合同，但几何影响实际搜索/撤离路径，完整自然流程及长期相对效率不能继承。",
       "历史修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10和用户终验仍待；弱设备补测已获豁免且未测。",
       "最终324完整地图已过配额、部署与至少两组真实双侧绕行；三代表低/中/重普通输入safe翻找、雾内发现及撤离终局均通过。导航预读静态全图，只证明流程接通；巡逻窗口孤岛反例与可达席位不证明动态追击安全、深区实际取舍或长期等级收益排序。",
-      "E221用户否决f4989438仍像地下城，当前正向地床整体质量不通过。E222仅为世界碎片构型推演及三路知情审查：新方向未实施／人审，撤离局部征兆与外岸漂泊参照均为提案。8孔与实体减量是旧候选局部反馈，不是新构型定额；另107及I14/P49保持开放。"
+      "DEC-205已认可构型及边缘样片；DEC-206首代表已正式接入并完成限定内部检查。尚未验证全seed、自然未知搜索/深区决策、全库构型多样性或正式用户审美；另107世界、I14/P49仍开放。历史地下城候选及其技术证据保留原范围，不再描述为当前首代表。"
     ]
   },
   {
     "id": "COH-F014",
     "title": "探索记忆、小地图与已知退路",
     "domain": "world",
-    "summary": "局部小地图记录实际观察地形，已识别撤离点才显示已知退路，探查仍为限时快照。修订7扩大图与全图候选撤离沿实际世界尺寸及冻结身份恢复；三档正式进入/冷续均保持未知出口不泄漏，三代表普通输入旅程从未知到实际发现出口并正常撤离已通过限定验证。 DEC-202用户否决当前整体仍像地下城；世界碎片构型设计推演完成但未实施，旧技术证据不代整体验收。",
+    "summary": "小地图记录实际观察；未知撤离不预先显示，走近后才记为退路。r8余烬脊三档正常入场未泄漏，三档按键旅程实际发现后撤离；三份自然选池r8正式冷续保持原未知状态与身份。预读地图的导航检查不代玩家自然发现能力。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "Rift 右下小地图；已识别撤离点或使用探查工具",
-      "DEC-201当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261010 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
+      "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
     ],
     "sources": [
       {
@@ -1802,6 +1844,18 @@
       {
         "path": "docs/reviews/2026-10-11-world-fragment-conception.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-2026-10-12.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-code-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-art.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -1825,19 +1879,21 @@
       "COH-E219",
       "COH-E220",
       "COH-E221",
-      "COH-E222"
+      "COH-E222",
+      "COH-E231",
+      "COH-E232"
     ],
     "unknowns": [
       "全图只读导航的测试不代表普通玩家可凭局部记忆顺利找到出口。",
       "三档正式进入/冷续验证未发现出口不泄漏；三代表普通输入旅程验证实际走近后发现并撤离。测试预读完整地图，不代表玩家仅凭局部记忆能顺利找到出口；发现后的跨刷新记忆未在这组三档入口冷续中独立覆盖。",
-      "E221用户否决f4989438仍像地下城，当前正向地床整体质量不通过。E222仅为世界碎片构型推演及三路知情审查：新方向未实施／人审，撤离局部征兆与外岸漂泊参照均为提案。8孔与实体减量是旧候选局部反馈，不是新构型定额；另107及I14/P49保持开放。"
+      "DEC-205已认可构型及边缘样片；DEC-206首代表已正式接入并完成限定内部检查。尚未验证全seed、自然未知搜索/深区决策、全库构型多样性或正式用户审美；另107世界、I14/P49仍开放。历史地下城候选及其技术证据保留原范围，不再描述为当前首代表。"
     ]
   },
   {
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100仍13/14，I14/P49开放。DEC-205用户认可ada26f43矩形拼合开放地面与自由断缘样例；已固化rectilinear-fragment-v1共享作者能力、三样例只读回归及推广合同。预览调用共享源，正式r7与保存未接入；其他107世界、真实材质/身体/LOS和自然搜撤仍待推广。此前地下城候选已否决，旧技术证据保留原范围，弱设备豁免且未测。",
+    "summary": "R100仍13/14，I14/P49开放。DEC-205认可矩形拼合开放碎片与自由断缘；DEC-206已完成r7归档和r8余烬脊首代表正式接入，三档有限生成/恢复/搜撤/实图及参考机预算通过。其他107世界待逐类推广，用户正式体验终验未提升；弱设备豁免且未测。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -3335,6 +3391,122 @@
       {
         "path": "docs/art/previews/world-fragment-open-field/consolidation-review.json",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-2026-10-12.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-code-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-fragment-rollout-art.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor.d.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/manifest-recovery.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor-recovery.js",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor-recovery.d.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/manifest-revision7.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor.js",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/assets.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor-revision7.js",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v7/executor-revision7.d.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision7-freezing.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/freeze-native-r100-revision7.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/derive-native-r100-revision7.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision7.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision7-recipes.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision7-live.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/project-native-r100-revision7.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/fragment-shape/check-r8.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/fragment-shape/check-r8-snapshots.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/generated/r100-fragment-data.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-fragment-shape.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-fragments.mjs",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-spatial-fragment-layouts.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-spatial-fragment-rectangles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-spatial-fragment-worlds.csv",
+        "role": "data"
       }
     ],
     "dependsOn": [
@@ -3441,7 +3613,9 @@
       "COH-E227",
       "COH-E228",
       "COH-E229",
-      "COH-E230"
+      "COH-E230",
+      "COH-E231",
+      "COH-E232"
     ],
     "unknowns": [
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
@@ -3457,9 +3631,8 @@
       "2026-10-09用户否决f9eea773总览/双列，新的先选污染→单列配置已通过8场景及真实背包交互对照、限定文字实景核；新审美待复看，P49仍open。旧report直接消费后world校验失败未重验，不冒称已修。",
       "2026-10-10自由选级已获用户明确接受；整体背景压力和A机制/B文学文案已规划并静态分审。三档视觉/听感/心理辨认及生命周期的新样板均未实施验证；现有production状态仅指旧有能力，不指计划已接入。",
       "空间推广最终324完整地图、14代表浏览器捕获、三档正式进入/冷续与三例普通输入搜撤已登记。全图诊断导航不证明自然未知搜索或长期经营；代表pass不代签108世界审美或I14/P49结案，新大图运行预算仍待本轮证据。",
-      "本轮构图、规则外岸及压纤低床粗格块均已在限定实图复核关闭。当前大图性能抽测出现超门，正在查证全图材质绘制/上传成本；E212暂partial，旧失败保留。有限图审不等于108世界人审。",
-      "E221用户否决f4989438仍像地下城，当前正向地床整体质量不通过。E222仅为世界碎片构型推演及三路知情审查：新方向未实施／人审，撤离局部征兆与外岸漂泊参照均为提案。8孔与实体减量是旧候选局部反馈，不是新构型定额；另107及I14/P49保持开放。",
-      "E229/DEC-205已认可矩形构型和自由断缘样例；E230只证明共享抽取、三母版精确保真、23拒例、其他布局与浏览器预览。新生成修订/CSV、r7冻结、80点轮廓预算、生产身体/LOS/材质及自然搜撤仍待；当前游戏尚未采用新图。"
+      "本轮构图、规则外岸及压纤低床粗格块均已在限定实图复核关闭。当时大图性能曾超门，E212后来按限定范围通过，旧失败保留；本批参考机预算见E232。有限图审不等于108世界人审。",
+      "DEC-205已认可构型及边缘样片；DEC-206首代表已正式接入并完成限定内部检查。尚未验证全seed、自然未知搜索/深区决策、全库构型多样性或正式用户审美；另107世界、I14/P49仍开放。历史地下城候选及其技术证据保留原范围，不再描述为当前首代表。"
     ]
   }
 ]

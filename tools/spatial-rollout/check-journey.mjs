@@ -1,6 +1,8 @@
 /** Bounded integration journey: full static geometry aids routing, actual keys
  * drive normal RiftScene. No health, time, loot, visibility or position edits. */
 import assert from 'node:assert/strict';
+const expectedRevision = Number(process.env.QA_ALGORITHM_REVISION ?? 7);
+assert(Number.isSafeInteger(expectedRevision) && expectedRevision > 0, 'QA_ALGORITHM_REVISION must be a positive integer');
 import fs from 'node:fs';
 import path from 'node:path';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
@@ -72,7 +74,7 @@ try{
   if(process.env.QA_FACE){assert(['w','a','s','d'].includes(process.env.QA_FACE));await hold([process.env.QA_FACE],75);}
   await page.waitForTimeout(350);report.nearState=await state();assert(!report.nearState.ended);await page.screenshot({path:path.join(out,'near.png')});assert.deepEqual(report.errors,[]);report.status='passed';
  }else{
- const target=await page.evaluate(()=>{const layout=window.__r100Gym.getLayout();return{node:layout.kindlingNodes.find(n=>n.tier==='safe'),exit:layout.extractionPoint.position,revision:window.__r100Gym.getState().recipe.package.algorithmRevision};});assert.equal(target.revision,7);
+ const target=await page.evaluate(()=>{const layout=window.__r100Gym.getLayout();return{node:layout.kindlingNodes.find(n=>n.tier==='safe'),exit:layout.extractionPoint.position,revision:window.__r100Gym.getState().recipe.package.algorithmRevision};});assert.equal(target.revision,expectedRevision);
  report.afterApproach=await go(target.node.position);
  // Face the visible remains using ordinary movement before the real search key.
  const dx=target.node.position.x-report.afterApproach.pos.x,dy=target.node.position.y-report.afterApproach.pos.y;

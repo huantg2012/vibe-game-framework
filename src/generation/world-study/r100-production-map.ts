@@ -1,4 +1,5 @@
 import { createR100ProductionMap as createRevision6Map } from '../legacy-r100-v6/executor-recovery.js';
+import { createR100ProductionMap as createRevision7Map } from '../legacy-r100-v7/executor-recovery.js';
 import { createR100ProductionMap as createRevision5Map } from '../legacy-r100-v5/executor-recovery.js';
 import { createR100ProductionMap as createRevision4Map } from '../legacy-r100-v4/executor.js';
 import { createR100ProductionMap as createRevision3Map } from '../legacy-r100-v3/executor.js';
@@ -19,6 +20,7 @@ export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldP
   if (recipe.package?.algorithmRevision === 4) return createRevision4Map(recipe);
   if (recipe.package?.algorithmRevision === 5) return createRevision5Map(recipe);
   if (recipe.package?.algorithmRevision === 6) return createRevision6Map(recipe);
+  if (recipe.package?.algorithmRevision === 7) return createRevision7Map(recipe);
   if (!validR100ProductionRecipe(recipe)) throw new Error('Invalid or unavailable native world package');
   const rejected: { seed: number; reason: string }[] = [];
   for (let attempt = 0; attempt < 8; attempt++) {
@@ -27,7 +29,7 @@ export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldP
   const master = createR100SpatialWorld(recipe.nativeDefinition, recipe.spatialPolicy!, seed,
     { grade: recipe.gradeDefinition, profile: recipe.profile });
   const deployed = deployR100Expedition(master, recipe.contentDefinition), layout = deployed.layout;
-  const native = serializeR100MasterWorld({ ...master, algorithmRevision: 7, appearance: recipe.appearance, layout, diagnostics: { ...master.diagnostics,
+  const native = serializeR100MasterWorld({ ...master, algorithmRevision: 8, appearance: recipe.appearance, layout, diagnostics: { ...master.diagnostics,
     qualification: 'v3-production-candidate', expedition: deployed.diagnostics } }, recipe.gradeDefinition, recipe.package.dependencyHash);
   return { sample: master.sample, layout, hostTileMap: master.hostTileMap, native,
     metadata: { world: recipe.package.id, space: recipe.nativeDefinition.id, contentFragmentTypeId: recipe.contentFragmentTypeId,

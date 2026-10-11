@@ -1,0 +1,67 @@
+{
+  "status": "pass",
+  "sourceRevision": "b2d737901ebe6e7ea61c4ea37be3470370d981a4",
+  "scope": "Fixed-Git native r7 archive reproduction and equality gates only. Public r8 dispatch/cold recovery remain separate.",
+  "stages": [
+    {
+      "manifest": "src/generation/legacy-r100-v7/manifest.json",
+      "executorSha256": "70915d0a1892f02720348fbeb2765a30884a47228f185e5ac0c2f724eea4b87d",
+      "executorBytes": 8845055,
+      "imports": [],
+      "reproducedWithoutWrite": true
+    },
+    {
+      "manifest": "src/generation/legacy-r100-v7/manifest-revision7.json",
+      "executorSha256": "55148b001bab48821ba7c16a6e970b019f50fadf1c5736c4f7fdd9019c9a8c8f",
+      "executorBytes": 2581221,
+      "imports": [],
+      "reproducedWithoutWrite": true
+    },
+    {
+      "manifest": "src/generation/legacy-r100-v7/manifest-recovery.json",
+      "executorSha256": "7fb423629ae5fa826a16295c0e71accc2ad8979d6d21d8a339a9cfad7eade571",
+      "executorBytes": 817880,
+      "imports": [],
+      "reproducedWithoutWrite": true
+    }
+  ],
+  "equalityReport": {
+    "path": "docs/qa/artifacts/r100-fragment-rollout-2026-10-11/revision7-freeze.json",
+    "sha256": "a0fd3326828b497397937baadd19acaa3afd3f7a45742859c67e0d6429725a79",
+    "checkedRecipes": 324,
+    "cases": [
+      {
+        "world": "cinder-ridge",
+        "grade": "low",
+        "terrainOutlineVertices": 17
+      },
+      {
+        "world": "cinder-ridge",
+        "grade": "medium",
+        "terrainOutlineVertices": 17
+      },
+      {
+        "world": "cinder-ridge",
+        "grade": "severe",
+        "terrainOutlineVertices": 17
+      },
+      {
+        "world": "quiet-spur",
+        "grade": "medium",
+        "terrainOutlineVertices": null
+      }
+    ]
+  },
+  "hydrationHelper": {
+    "path": "src/generation/world-study/r100-native-data.ts",
+    "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0",
+    "equalToFrozenRevision": true
+  },
+  "checks": {
+    "typecheck": "npm run typecheck passed",
+    "syntax": "All four tool scripts and three executor JavaScript files pass node --check",
+    "diff": "Owned tracked-file diff whitespace check passed",
+    "dev": "Existing Vite dev server GET / returned HTTP 200; no browser changes"
+  },
+  "failurePreserved": "revision7-freeze-attempt1.json: historical rejection worked; the initial harness expected only the added revision guard, omitting the original unknown-revision guard. Harness corrected, immutable artifacts unchanged."
+}

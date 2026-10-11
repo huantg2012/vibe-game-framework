@@ -1,5 +1,7 @@
 /** Real production worker + RiftScene; overview copies its actual material receiver below the independent fog layer. */
 import assert from 'node:assert/strict';
+const expectedRevision = Number(process.env.QA_ALGORITHM_REVISION ?? 7);
+assert(Number.isSafeInteger(expectedRevision) && expectedRevision > 0, 'QA_ALGORITHM_REVISION must be a positive integer');
 import fs from 'node:fs/promises';
 import path from 'node:path';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
@@ -19,7 +21,7 @@ try{for(const world of worlds){
  try{
  const started=Date.now();await page.goto(`${base}/r100-gym.html?world=${world}&grade=${grade}&seed=${seed}`);
  await page.waitForFunction(()=>window.__r100Gym?.getState().runtime.running||!document.getElementById('error')?.hidden,null,{timeout:120000});
- const state=await page.evaluate(()=>window.__r100Gym?.getState());assert(state?.runtime.running,await page.locator('#error').textContent());assert.equal(state.recipe.package.algorithmRevision,7);
+ const state=await page.evaluate(()=>window.__r100Gym?.getState());assert(state?.runtime.running,await page.locator('#error').textContent());assert.equal(state.recipe.package.algorithmRevision,expectedRevision);
  await page.waitForTimeout(500);
  const discovery=await page.evaluate(async()=>{
   const {audioManager}=await import('/src/managers/audio-manager.ts'),scene=audioManager.game.scene.getScene('RiftScene');
