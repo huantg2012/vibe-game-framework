@@ -1512,3 +1512,11 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 ### 余烬脊空间审阅入口（2026-10-10，DEV）
 
 `rift-spatial-prototype.html` / `src/dev/rift-spatial-prototype.ts` 仅在开发模式运行，专用 CSV 经 `tools/spatial-prototype/codegen.mjs` 编译后由 `rift-spatial-prototype-world.ts` 构造一个新空间样本。复用 MasterWorld、原生实体碰撞与 MasterSurfaceRenderer，完整地面烘焙不叠玩家视野迷雾；审阅路线/地点和碰撞是可关闭的第二张 canvas，不改变地形。无正式出征接线、保存读写、敌人/经济放大或玩家 HUD 改动。已烘焙帧静止展示，不启动游戏帧循环；重建与离页释放独立 GPU 上下文。范围见 `docs/tasks/cinder-spatial-prototype.md`。`spatial-extraction-selection.ts`在实际20px身体八向可达图上筛选全图撤离候选，按距离层/空间区/位置种子抽选；`rift-spatial-prototype-world.ts`用选定坐标重新部署MasterWorld，确保布局、污染排除和诊断使用同一撤离点。没有近侧配对或最远点回退；参数来自专用CSV，不改变正式冻结生成器。
+
+### 2026-10-11 · 正式空间作者分区与开放地面整改（DEC-198/199）
+
+`rift-spatial-sector-{cuts,layouts,anchors}.csv` 与 `rift-spatial-sectors.csv` 是 `authored-sectors` 的作者源；外岸/内部缺地经 `build-r100-authored-shores.py` 的严格并集写入 erosion CSV，再由 spatial/package codegen 编译。新r7配方冻结实际空间、部署策略和原生定义；旧在途配方继续消费冻结内容，不跟随当前CSV重建形状。原生实体阻身体，真实缺地阻视线，二者不混用。
+
+DEC-199当前只改余烬脊的作者数据；其余107世界保持基线。`check-production.mjs` 对作者分区仅记录地表fill，不再套非作者repeat的0.50–0.76筛查窗；完整身体连通、内容配额、巡逻、绕行和随机探索撤离门保持。`check-representative-scope.mjs` 支持明确的基线与世界白名单，并比较未改世界的完整作者分区。
+
+原DEV prototype使用独立CSV，不是这些正式改动的预览。当前材质/游戏取证走隔离内存 `r100-gym.html` 的正式worker与RiftScene；去雾图是实际已准入接收面副本，普通视野验证仍走真实玩家输入。证据与用户验收状态见[本次整改QA](qa/rift-spatial-open-damage-2026-10-11.md)，技术通过不提升地图质量状态。

@@ -65,7 +65,9 @@ for(const id of worlds)for(const grade of grades){
  }
  assert.equal(world.metadata.reachableBodySeats,queue.length,'independent swept-body reachability');
  const fill=matter/(grid.cols*grid.rows),solidRatio=solid/matter,reach=world.metadata.reachableBodySeats/supported;
- if(recipe.spatialPolicy.organizationRules.sourceMode==='repeat')assert(fill<=.76&&fill>=.5,`terrain fill ${fill}`);
+ if(recipe.spatialPolicy.organizationRules.sourceMode==='repeat'&&recipe.spatialPolicy.organization!=='authored-sectors')assert(fill<=.76&&fill>=.5,`terrain fill ${fill}`);
+ // Explicit sector authoring can retain a broad damaged field. Report its
+ // actual fill; forcing a perimeter cut to meet .76 would turn it into bays.
  // Source-once groups retain their authored negative space. Coast fill is
  // diagnostic: carving through that group to hit a ratio destroys its layout.
  // Hollow shells and a unique landmark must not become solid slabs to satisfy

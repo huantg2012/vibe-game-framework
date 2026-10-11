@@ -7,7 +7,7 @@ import path from 'node:path';
 
 const baseline = process.env.QA_BASELINE ?? 'fc5a5f2b';
 const output = process.env.QA_REPORT;
-const representatives = new Set(['cleft-tableland', 'pale-sail', 'cinder-ridge']);
+const representatives = new Set((process.env.QA_WORLDS ?? 'cleft-tableland,pale-sail,cinder-ridge').split(','));
 const sourcePath = 'src/generated/r100-spatial-data.ts';
 const oldSource = execFileSync('git', ['show', `${baseline}:${sourcePath}`], { encoding: 'utf8', maxBuffer: 10 * 1024 * 1024 });
 const currentSource = fs.readFileSync(sourcePath, 'utf8');
@@ -20,6 +20,8 @@ function constants(source) {
   return values;
 }
 const old = constants(oldSource), current = constants(currentSource);
+assert(representatives.size > 0 && [...representatives].every(id => old.R100_SPATIAL_WORLDS.some(row => row.worldId === id)), 'Unknown changed-world scope');
+assert.deepEqual(current.R100_SPATIAL_WORLDS.map(row => row.worldId), old.R100_SPATIAL_WORLDS.map(row => row.worldId), 'World catalog');
 for (const key of ['CONFIG', 'PLACEMENTS', 'EROSION', 'ANCHORS', 'MATERIALS']) {
   assert.deepEqual(current[`R100_SPATIAL_${key}`], old[`R100_SPATIAL_${key}`], key);
 }
@@ -27,23 +29,23 @@ const checked = [];
 for (const row of old.R100_SPATIAL_WORLDS) {
   if (representatives.has(row.worldId)) continue;
   assert.deepEqual(current.R100_SPATIAL_WORLDS.find(value => value.worldId === row.worldId), row, row.worldId);
+  for (const key of ['R100_SPATIAL_AUTHORED_GROUPS', 'R100_SPATIAL_SECTORS']) {
+    assert.deepEqual(current[key]?.find(value => value.worldId === row.worldId), old[key]?.find(value => value.worldId === row.worldId), `${row.worldId} ${key}`);
+  }
   checked.push(row.worldId);
-}
-for (const row of old.R100_SPATIAL_AUTHORED_GROUPS) {
-  if (!representatives.has(row.worldId)) assert.deepEqual(current.R100_SPATIAL_AUTHORED_GROUPS.find(value => value.worldId === row.worldId), row, row.worldId);
 }
 for (const row of old.R100_SPATIAL_ORGANIZATIONS) {
   assert.deepEqual(current.R100_SPATIAL_ORGANIZATIONS.find(value => value.organization === row.organization), row, row.organization);
 }
-assert.equal(checked.length, 105);
-assert.deepEqual(new Set(current.R100_SPATIAL_SECTORS.map(row => row.worldId)), representatives);
+assert.equal(checked.length, old.R100_SPATIAL_WORLDS.length - representatives.size);
+assert.deepEqual(new Set(current.R100_SPATIAL_SECTORS.map(row => row.worldId)), new Set(current.R100_SPATIAL_WORLDS.filter(row => row.organization === 'authored-sectors').map(row => row.worldId)));
 const report = {
   status: 'passed', baseline, baselineSourceHash: hash(oldSource), currentSourceHash: hash(currentSource),
-  scope: '105 unrelated worlds retain every placement, erosion, anchor, material and organization value; only three explicitly registered representatives change. Global CSV sourceHash advances. This is source-data scope verification, not visual or runtime acceptance.',
+  scope: `${checked.length} unrelated worlds retain every placement, erosion, anchor, material and organization value, including complete authored sector policies. Only the ${representatives.size} explicitly named representative worlds may change. Global CSV sourceHash advances. This is source-data scope verification, not visual or runtime acceptance.`,
   checkedWorlds: checked, representatives: [...representatives],
 };
 if (output) {
   fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.writeFileSync(output, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
 }
-console.log('PASS 105 unrelated worlds: all spatial authoring values unchanged; three representative sector layouts registered');
+console.log(`PASS ${checked.length} unrelated worlds: all spatial authoring values unchanged; ${representatives.size} named representative worlds may change`);

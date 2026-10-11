@@ -37,7 +37,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-spatial-authored-erosion.csv",
-      "sha256": "64409b764d1b79554fa1cfb0af7a36e8b6b909b213b6eee03c7b2b1006be1268"
+      "sha256": "064e2220e0244471370ca2055bd2dabbc4461fdfa9c56d0ea5310bbf0413c38a"
     },
     {
       "path": "data/rift-spatial-authored-groups.csv",
@@ -69,15 +69,15 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-spatial-sector-anchors.csv",
-      "sha256": "f5d05df8e627ecacc43413800baca5f1860ede86a0380eb51f8ed123e4f335c3"
+      "sha256": "78d2c0e647449607d4a6343de6d98c175494b2ffae8ae1251593ee3d74634ba2"
     },
     {
       "path": "data/rift-spatial-sector-cuts.csv",
-      "sha256": "2756d000dcc6eb65502cc00fa3ae021f8783c6f80b668f732d2a19622ba46dee"
+      "sha256": "30e68692ba55d3e8cadc2757f5dc90b5867f773bd6b02931746ee48cfede15d1"
     },
     {
       "path": "data/rift-spatial-sector-layouts.csv",
-      "sha256": "5a4c6908397a4a27ac3a869fd485160ea61a69fdbc3f27b25da999bb3c2cb6e8"
+      "sha256": "534f8f2b0683d880d13e1581e072162c51b3a2650577253bddec7436145aa22c"
     },
     {
       "path": "data/rift-spatial-sectors.csv",
@@ -169,7 +169,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generated/r100-spatial-data.ts",
-      "sha256": "c64879d98b6a5eb7077116a4688baa71c3c0ca186d43e0913677d21fd21c4a42"
+      "sha256": "3e9b16868bcdf26b4a27db4fa90ffba194323552e385d2bf3a8b8a654cc17374"
     },
     {
       "path": "src/generated/rift-spatial-deployment-data.ts",
@@ -324,7 +324,7 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "2a666f37f57aa8d74904f488cec644f7ced77187a5ee03c804258b529cadb862"
     }
   ],
-  "hash": "1a7c3cccd1f7a46b615bf7b011b8061a1edfe01490f1eab5086cc72c4b8731bb"
+  "hash": "9010cc628792a546ee102df160db80eefc7ea01cbe84083fe3e5296646d3664c"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {
