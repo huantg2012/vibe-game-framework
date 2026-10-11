@@ -37,11 +37,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-spatial-authored-erosion.csv",
-      "sha256": "b31ae54842029c1ae79b16b35f8a37eb049d505953a6215c2e9c4a53783505fc"
+      "sha256": "64409b764d1b79554fa1cfb0af7a36e8b6b909b213b6eee03c7b2b1006be1268"
     },
     {
       "path": "data/rift-spatial-authored-groups.csv",
-      "sha256": "96cb80e5e7ce4dd69e91003595aafd0c3dbf2975bf93285e2529ca9794dd68ad"
+      "sha256": "7b3f87e5892d31c0fecc80cfd67053b9dfcffebe52628ebc716ea2f470522f17"
     },
     {
       "path": "data/rift-spatial-deployment.csv",
@@ -61,15 +61,31 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-spatial-organizations.csv",
-      "sha256": "1efc9f8d123c073b2574b68162b132f20bd7fa8f747cfd76c949f821711083e2"
+      "sha256": "90d427db727ca7033d578fd4f0e8d44fbd0cba45a49b828359b4f787c1695716"
     },
     {
       "path": "data/rift-spatial-policy.csv",
       "sha256": "62744dd396971d1a222935452324b37e982a1ffaa42f005d7f9517723422549f"
     },
     {
+      "path": "data/rift-spatial-sector-anchors.csv",
+      "sha256": "f5d05df8e627ecacc43413800baca5f1860ede86a0380eb51f8ed123e4f335c3"
+    },
+    {
+      "path": "data/rift-spatial-sector-cuts.csv",
+      "sha256": "2756d000dcc6eb65502cc00fa3ae021f8783c6f80b668f732d2a19622ba46dee"
+    },
+    {
+      "path": "data/rift-spatial-sector-layouts.csv",
+      "sha256": "5a4c6908397a4a27ac3a869fd485160ea61a69fdbc3f27b25da999bb3c2cb6e8"
+    },
+    {
+      "path": "data/rift-spatial-sectors.csv",
+      "sha256": "e936851d090f2469e139b9ac04a277526672ef4b649312cf67e3838acb94a43d"
+    },
+    {
       "path": "data/rift-spatial-worlds.csv",
-      "sha256": "dee3de3c73f4c1c7c73f9993649504b1fb8b9f1e437b084cf381515ad9ea31d8"
+      "sha256": "15cde729e97a3c6892c5606f10a0c7f8b2ae3bf65b7933e170e8018127c95734"
     },
     {
       "path": "data/rift-world-appearance.csv",
@@ -153,7 +169,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generated/r100-spatial-data.ts",
-      "sha256": "7bcfe743e4673b9de5909a8b5360ff5d5fb6462af9f7983a44fff24a75cb8660"
+      "sha256": "c64879d98b6a5eb7077116a4688baa71c3c0ca186d43e0913677d21fd21c4a42"
     },
     {
       "path": "src/generated/rift-spatial-deployment-data.ts",
@@ -181,7 +197,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/native-volume-ground-edge.ts",
-      "sha256": "8119ee6b008a9ff1ad13ff6f3097be67050fbe144730dfe10c3f7db1721c03a5"
+      "sha256": "698e5ab1b42a3dccd9b4a68fcfd52a462df039b39692c146d2e67c07a1aeeaab"
     },
     {
       "path": "src/generation/world-study/native-volume-ground.ts",
@@ -249,11 +265,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-spatial-types.ts",
-      "sha256": "711d534288b6719e8c5ae9f2bf9dfd0f28094032ba1599f6c71412cd3e0233d8"
+      "sha256": "85fa9677e1040a3ad1ea40e781b923bfcff710fafa17da0b7b00c8577432270c"
     },
     {
       "path": "src/generation/world-study/r100-spatial-world.ts",
-      "sha256": "3c245eb1b92b46483a85be309b5adbacf832d2fc48a6ea90238fca7d04f859bc"
+      "sha256": "6e98a91499825af8a1451e553a0c6ad49a083d0be308b9488cac40d697d11ce0"
     },
     {
       "path": "src/generation/world-study/r100-world-appearance.ts",
@@ -297,18 +313,18 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "tools/world-study/build-r100-authored-shores.py",
-      "sha256": "6ed6a4158867916366e4ff98c334806f34c4e749be969a7ffc698a120c28c585"
+      "sha256": "1629298e34ccf636e684c519261404497735a55baef848f1cec2be15f4ea9a9f"
     },
     {
       "path": "tools/world-study/codegen-r100-spatial.mjs",
-      "sha256": "64d1c86490ff426292e6fd0876c30cc6f00e6b7b8fe48b5daa2997773fc9c7f0"
+      "sha256": "82a376a486eab9492aec14a7a108c73edd9d10ee7950f0af7614cbd42f025c0e"
     },
     {
       "path": "tools/world-study/generate-spatial-deployment.mjs",
       "sha256": "2a666f37f57aa8d74904f488cec644f7ced77187a5ee03c804258b529cadb862"
     }
   ],
-  "hash": "a602f2a38f37b9ed0f283b35ce624cc5b0edd1648db99d1ee64070023d687ccc"
+  "hash": "1a7c3cccd1f7a46b615bf7b011b8061a1edfe01490f1eab5086cc72c4b8731bb"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {

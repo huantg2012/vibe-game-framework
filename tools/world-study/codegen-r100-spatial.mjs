@@ -1,7 +1,7 @@
 /** Compile authored spatial arrangements. Runtime and recovery consume snapshots. */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-const names = ['policy', 'layouts', 'erosion', 'anchors', 'worlds', 'materials', 'organizations', 'authored-groups', 'authored-erosion'];
+const names = ['policy', 'layouts', 'erosion', 'anchors', 'worlds', 'materials', 'organizations', 'authored-groups', 'authored-erosion', 'sectors', 'sector-layouts', 'sector-cuts', 'sector-anchors'];
 const contents = names.map(name => readFileSync(new URL(`../../data/rift-spatial-${name}.csv`, import.meta.url), 'utf8'));
 function parse(source) {
   const [header, ...lines] = source.trim().split(/\r?\n/), keys = header.split(',');
@@ -12,7 +12,7 @@ function parse(source) {
     return Object.fromEntries(keys.map((key, index) => [key, values[index]]));
   });
 }
-const [configs, placements, erosion, anchors, worlds, materials, organizationRows, authoredGroups, authoredErosion] = contents.map(parse);
+const [configs, placements, erosion, anchors, worlds, materials, organizationRows, authoredGroups, authoredErosion, sectorRows, sectorLayouts, sectorCuts, sectorAnchors] = contents.map(parse);
 const nativeSource = readFileSync(new URL('../../data/rift-native-worlds.csv', import.meta.url), 'utf8');
 const nativeWorlds = parse(nativeSource);
 const organizations = organizationRows.map(row => row.organization);
@@ -32,7 +32,7 @@ for (const rows of [layouts, cuts, starts]) { unique(rows, row => `${row.organiz
 const rules = organizationRows.map(row => ({ organization: row.organization, sourceMode: row.source_mode, materialScaling: bool(row, 'material_scaling'), solidCount: number(row, 'solid_count'), reliefCount: number(row, 'relief_count'), placementJitterPx: number(row, 'placement_jitter_px') }));
 for (const rule of rules) {
   const { organization } = rule;
-  if (organization === 'authored-group') {
+  if (organization === 'authored-group' || organization === 'authored-sectors') {
     if (rule.sourceMode !== 'source-once' || rule.materialScaling || rule.solidCount !== 0 || rule.reliefCount !== 0 || rule.placementJitterPx !== 0) throw new Error('Invalid whole-group rules');
     continue;
   }
@@ -60,9 +60,33 @@ const groups = authoredGroups.map(row => {
   return { worldId: row.world_id, transform, solidCount: counts.solid, reliefCount: counts.relief, placements, erosion };
 });
 if (catalog.filter(row => row.organization === 'authored-group').length !== groups.length) throw new Error('Whole-group world registration mismatch');
+unique(sectorRows, row => row.world_id);
+for (const rows of [sectorLayouts, sectorCuts, sectorAnchors]) {
+  unique(rows, row => `${row.world_id}:${row.id}`);
+  if (rows.some(row => !sectorRows.some(sector => sector.world_id === row.world_id))) throw new Error('Unregistered sector authoring data');
+}
+const sectors = sectorRows.map(row => {
+  const world = catalog.find(world => world.worldId === row.world_id);
+  const native = nativeWorlds.find(world => world.world_id === row.world_id);
+  if (!native || world?.organization !== 'authored-sectors' || world.mirrorX || world.mirrorY) throw new Error(`Invalid sector source ${row.world_id}`);
+  const placements = sectorLayouts.filter(p => p.world_id === row.world_id).map(p => ({ id: number(p, 'id'), role: p.role, sourceIndex: number(p, 'source_index'), x: number(p, 'x'), y: number(p, 'y'), rotation: number(p, 'rotation'), length: number(p, 'length'), width: number(p, 'width') }));
+  const solidCount = placements.filter(p => p.role === 'solid').length, reliefCount = placements.filter(p => p.role === 'relief').length;
+  const organizationRules = { sourceMode: row.source_mode, materialScaling: bool(row, 'material_scaling'), solidCount, reliefCount };
+  if (!['repeat', 'source-once'].includes(row.source_mode) || solidCount < 1 || placements.some(p => !['solid', 'relief'].includes(p.role))) throw new Error('Invalid sector roles');
+  if (row.source_mode === 'source-once') for (const role of ['solid', 'relief']) {
+    const sources = native.instances.split('|').filter(cell => cell.split(':')[1] === role);
+    const selected = placements.filter(p => p.role === role);
+    if (selected.length !== sources.length || selected.some(p => !Number.isInteger(p.sourceIndex) || p.sourceIndex < 0 || p.sourceIndex >= sources.length) || new Set(selected.map(p => p.sourceIndex)).size !== sources.length) throw new Error(`Sector must preserve each source ${row.world_id}/${role}`);
+  }
+  const erosion = authoredErosion.filter(cut => cut.world_id === row.world_id).map(cut => cut.points.split('|').map(point => { const [x,y] = point.split(':').map(Number); return { x,y }; }));
+  const spawnCandidates = sectorAnchors.filter(p => p.world_id === row.world_id).map(p => ({ x: number(p, 'x'), y: number(p, 'y') }));
+  if (erosion.length < 4 || erosion.length > 12 || spawnCandidates.length < 6 || spawnCandidates.length > 32) throw new Error(`Incomplete sector arrangement ${row.world_id}`);
+  return { worldId: row.world_id, organizationRules, placementJitterPx: number(row, 'placement_jitter_px'), placements, erosion, spawnCandidates };
+});
+if (catalog.filter(row => row.organization === 'authored-sectors').length !== sectors.length) throw new Error('Sector world registration mismatch');
 const sourceHash = createHash('sha256').update([...contents, nativeSource].join('\n')).digest('hex');
 let output = '// GENERATED by tools/world-study/codegen-r100-spatial.mjs from data/rift-spatial-*.csv.\n';
-for (const [name, value] of Object.entries({ SOURCE_HASH: sourceHash, CONFIG: config, PLACEMENTS: layouts, EROSION: cuts, ANCHORS: starts, WORLDS: catalog, MATERIALS: shapes, ORGANIZATIONS: rules, AUTHORED_GROUPS: groups })) output += `export const R100_SPATIAL_${name} = ${JSON.stringify(value, null, 2)} as const;\n`;
+for (const [name, value] of Object.entries({ SOURCE_HASH: sourceHash, CONFIG: config, PLACEMENTS: layouts, EROSION: cuts, ANCHORS: starts, WORLDS: catalog, MATERIALS: shapes, ORGANIZATIONS: rules, AUTHORED_GROUPS: groups, SECTORS: sectors })) output += `export const R100_SPATIAL_${name} = ${JSON.stringify(value, null, 2)} as const;\n`;
 const target = new URL('../../src/generated/r100-spatial-data.ts', import.meta.url);
 if (process.argv.includes('--check')) { if (readFileSync(target, 'utf8') !== output) throw new Error('Generated spatial data is stale'); } else writeFileSync(target, output);
 console.log(`R100 spatial data ${process.argv.includes('--check') ? 'verified' : 'generated'}: ${catalog.length} worlds / ${organizations.length} arrangements`);

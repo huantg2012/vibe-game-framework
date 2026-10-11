@@ -194,3 +194,5 @@ I23-R8-VISUAL01交付回填：最新绘制式场景经正常实走与ROOT/QA原�
 
 
 - CANCELLED / ARCHIVED（DEC-169）：I23-R8-ORTHO01（2026-09-16）：共享actor透视深度修复后的额外正交入口极短冒烟中，真实相机/角色/移动与松键正常，pageerror0，但console有两条未定位资源404，smoke为passed:false。不推断为既有或与本次无关，也不标正交生产入口零错PASS。独立R8页面本轮所有资源/console检查0错；正交数值9+8检查通过。证据：vista-r8/2026-09-16T13-22-22-213Z/orthographic-smoke/evidence.json。
+
+- [ ] R100空间质量重开：外岸规则、solid障碍稀少规律、VOID遮蔽不足。先裂台/苍帆/余烬脊代表，再逐类推广；独立验证正常视野绕端揭示，不以两组solid绕行代签。（用户复核，2026-10-11；docs/tasks/rift-spatial-rollout.md）

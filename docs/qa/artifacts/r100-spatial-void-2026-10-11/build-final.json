@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "commands": [
+    "npm run build",
+    "node tools/world-study/codegen-r100-packages.mjs --check",
+    "git diff --check"
+  ],
+  "buildModules": 431,
+  "buildSeconds": 14.53,
+  "packageReceiptSources": 80,
+  "warnings": [
+    "Existing chunk size above500kB"
+  ],
+  "scope": "Final game source frozen in browser-final/source-snapshot.json; documentation edits followed. No standalone lint script configured."
+}

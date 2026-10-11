@@ -2,7 +2,7 @@ import type { Vector2 } from '@/types/game-types';
 import type { SpatialExtractionPolicy } from './spatial-extraction-selection';
 import type { R100SpatialDeploymentPolicy } from './r100-spatial-deployment';
 
-export type R100SpatialOrganization = 'offset-divides' | 'broken-bay' | 'staggered-reaches' | 'single-buttress' | 'joined-quarters' | 'authored-group';
+export type R100SpatialOrganization = 'offset-divides' | 'broken-bay' | 'staggered-reaches' | 'single-buttress' | 'joined-quarters' | 'authored-group' | 'authored-sectors';
 export interface R100SpatialGroupTransform {
   readonly scale: number;
   readonly sourceX: number;

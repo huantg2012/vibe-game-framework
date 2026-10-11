@@ -86,7 +86,9 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 ## 裂隙空间推广 · 修订7（DEC-197）
 
-`r100-spatial-world.ts` 读取冻结 `spatialPolicy`，输出2304×1792真实有地/VOID及实体几何。20个v1/v2成群材料世界使用CSV定义的三种宏观组织；88个v3/v4作者世界保留完整关系组，86个统一平面仿射、2个独立组合。`rift-spatial-authored-groups.csv`冻结整体变换与原实例对应，`rift-spatial-authored-erosion.csv`冻结保留原海口的新岸；离线Python工具只负责准确多边形并集，生成代码不依赖Python。`organizationRules`、`groupTransform`及全部placement/cut参与保存身份，恢复不读取今日表重算。扩大图以不等切角、错位侧湾与原海口形成真实边界，单polygon仍最多32顶点；多边形数量、无交/不接触与总像素预算保持。
+`r100-spatial-world.ts`读取冻结`spatialPolicy`，输出2304×1792真实地面/VOID及实体几何。首批裂台/苍帆/余烬新增`authored-sectors`组织，通过四份sector CSV分配世界独立布局、切口和出生候选；仅新配方选表改变，旧保存的organization和全部policy值不读取今日映射。剩余105世界布局值不变：19通用、84完整仿射、2特殊。完整仿射仍由`authored-groups`冻结，重编组允许逐件布置但保留源role和构造。离线Python精确并集将旧整组岸和新sector cuts写入`authored-erosion.csv`，生成代码不依赖Python。所有placement/cut/anchor仍参加保存身份。
+
+裂台最终两深切岸壁实测18,408三角（旧11,992），owner mesh typed buffers为2,032,690字节，较旧净增705,760字节。大图岸壁拒绝阈值由16,384增至20,480，小图2,048保持；8px支持、细分、顶点/三角顺序、UV与实际生成算法不变，已准入旧图输出不变。此资源预算调整需新地图实际运行测量，不继承旧预算通过。
 
 `spatial-extraction-selection.ts` 在完整身体八向图上按路程层、空间区、种子选唯一撤离；DEV原型仅重导出同一选择器。临时地形只用于求真实撤离候选，最终master以该点重建Host/内容与诊断，不把旧出生附近的部署坐标搬过来。`r100-spatial-deployment.ts` 校验冻结搜取路程与Host分布边界；新图巡逻窗口站位另需出生连通分量支持，未传策略的旧母版保持原行为。
 

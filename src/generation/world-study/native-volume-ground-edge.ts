@@ -27,7 +27,10 @@ export function appendNativeGroundEdges(b: Builder, context: NativeGroundEdgeCon
   // Keep the old source-world limit and bound expanded terrain separately.
   // This retains the exact 8px seam geometry; it does not coarsen the bank or
   // alter the native raster's 4,194,304-pixel allocation budget.
-  const triangleBudget = context.width <= 1280 && context.height <= 1024 ? 2048 : 16384;
+  // Interleaved shore bays and internal voids need a larger bounded edge mesh.
+  // This is only an admission ceiling: sampling, tessellation and every
+  // previously admitted mesh remain unchanged.
+  const triangleBudget = context.width <= 1280 && context.height <= 1024 ? 2048 : 20480;
   const cosine = Math.cos(b.spec.rotation), sine = Math.sin(b.spec.rotation);
   const local = (x: number, y: number, z: number): Point => {
     const dx = x - b.spec.x, dy = y - b.spec.y;

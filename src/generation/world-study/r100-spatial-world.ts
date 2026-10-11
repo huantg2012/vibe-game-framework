@@ -2,7 +2,7 @@
  * material constructions. Terrain and extraction are frozen departure inputs. */
 import { GAME_CONSTANTS } from '@/config/constants';
 import { R100_SPATIAL_CONFIG as CONFIG, R100_SPATIAL_PLACEMENTS, R100_SPATIAL_EROSION,
-  R100_SPATIAL_ANCHORS, R100_SPATIAL_WORLDS, R100_SPATIAL_MATERIALS, R100_SPATIAL_SOURCE_HASH, R100_SPATIAL_ORGANIZATIONS, R100_SPATIAL_AUTHORED_GROUPS } from '@/generated/r100-spatial-data';
+  R100_SPATIAL_ANCHORS, R100_SPATIAL_WORLDS, R100_SPATIAL_MATERIALS, R100_SPATIAL_SOURCE_HASH, R100_SPATIAL_ORGANIZATIONS, R100_SPATIAL_AUTHORED_GROUPS, R100_SPATIAL_SECTORS } from '@/generated/r100-spatial-data';
 import { mix32 } from '@/generation/seed-fork';
 import { bodyHasSupport } from '@/systems/ai/physical-grid';
 import { TileGrid } from '@/systems/tile-grid';
@@ -23,16 +23,17 @@ export function createR100SpatialPolicy(worldId: string): R100SpatialPolicy {
   if (!organization) throw new Error(`No spatial organization rules for ${world.organization}`);
   const { organization: _organization, placementJitterPx, ...organizationRules } = organization;
   const group = R100_SPATIAL_AUTHORED_GROUPS.find(row => row.worldId === worldId);
+  const sectors = R100_SPATIAL_SECTORS.find(row => row.worldId === worldId);
   const policy: R100SpatialPolicy = {
     version: 1, worldId, sourceHash: R100_SPATIAL_SOURCE_HASH, organization: world.organization,
-    organizationRules: group ? { ...organizationRules, solidCount: group.solidCount, reliefCount: group.reliefCount } : organizationRules,
+    organizationRules: sectors?.organizationRules ?? (group ? { ...organizationRules, solidCount: group.solidCount, reliefCount: group.reliefCount } : organizationRules),
     groupTransform: group?.transform ?? null,
     cols: CONFIG.cols, rows: CONFIG.rows, mirrorX: world.mirrorX, mirrorY: world.mirrorY,
-    placementJitterPx,
-    placements: group?.placements ?? R100_SPATIAL_PLACEMENTS.filter(row => row.organization === world.organization).map(({ organization: _organization, ...placement }) => placement),
+    placementJitterPx: sectors?.placementJitterPx ?? placementJitterPx,
+    placements: sectors?.placements ?? group?.placements ?? R100_SPATIAL_PLACEMENTS.filter(row => row.organization === world.organization).map(({ organization: _organization, ...placement }) => placement),
     materials: R100_SPATIAL_MATERIALS,
-    erosion: group?.erosion ?? R100_SPATIAL_EROSION.filter(row => row.organization === world.organization).map(row => row.points),
-    spawnCandidates: R100_SPATIAL_ANCHORS.filter(row => row.organization === world.organization).map(({ x, y }) => ({ x, y })),
+    erosion: sectors?.erosion ?? group?.erosion ?? R100_SPATIAL_EROSION.filter(row => row.organization === world.organization).map(row => row.points),
+    spawnCandidates: sectors?.spawnCandidates ?? R100_SPATIAL_ANCHORS.filter(row => row.organization === world.organization).map(({ x, y }) => ({ x, y })),
     extraction: {
       minPathDistancePx: CONFIG.extraction_min_path_distance, minEuclideanDistancePx: CONFIG.extraction_min_euclidean_distance,
       minPathFraction: CONFIG.extraction_min_path_fraction, maxPathFraction: CONFIG.extraction_max_path_fraction,
@@ -56,7 +57,7 @@ export function validR100SpatialPolicy(value: unknown, worldId: string): value i
     if (!object(value) || !keysAre(value, ['version', 'worldId', 'sourceHash', 'organization', 'organizationRules', 'groupTransform', 'cols', 'rows', 'mirrorX', 'mirrorY', 'placementJitterPx', 'placements', 'materials', 'erosion', 'spawnCandidates', 'extraction', 'deployment'])
       || value.version !== 1 || value.worldId !== worldId || !/^[a-z][a-z0-9-]+$/.test(worldId)
       || typeof value.sourceHash !== 'string' || !/^[0-9a-f]{64}$/.test(value.sourceHash)
-      || !['offset-divides', 'broken-bay', 'staggered-reaches', 'single-buttress', 'joined-quarters', 'authored-group'].includes(value.organization as string)
+      || !['offset-divides', 'broken-bay', 'staggered-reaches', 'single-buttress', 'joined-quarters', 'authored-group', 'authored-sectors'].includes(value.organization as string)
       || !integer(value.cols, 48, 96) || !integer(value.rows, 36, 72) || value.cols * value.rows * 1024 > 4194304
       || typeof value.mirrorX !== 'boolean' || typeof value.mirrorY !== 'boolean' || !range(value.placementJitterPx, 0, 24)) return false;
     const width = value.cols * 32, height = value.rows * 32;

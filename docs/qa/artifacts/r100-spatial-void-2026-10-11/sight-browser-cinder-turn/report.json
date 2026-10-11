@@ -1,0 +1,239 @@
+{
+  "status": "passed",
+  "sourceReport": "docs/qa/artifacts/r100-spatial-void-2026-10-11/sight-representatives-176-first.json",
+  "scope": "Controlled production memory gym; full map used only to plan normal WASD routes. Target is a real ground point, not spawned loot. No relocation, visibility, health or clock edits. Not blind player exploration.",
+  "cases": [
+    {
+      "world": "cinder-ridge",
+      "witness": {
+        "observer": {
+          "x": 1764,
+          "y": 540
+        },
+        "target": {
+          "x": 1852,
+          "y": 692
+        },
+        "reveal": {
+          "x": 1844,
+          "y": 540
+        },
+        "route": [
+          {
+            "x": 1764,
+            "y": 540
+          },
+          {
+            "x": 1844,
+            "y": 540
+          }
+        ],
+        "distance": 175.6359872008012,
+        "revealDistance": 152.21038072352357,
+        "routeLength": 80,
+        "revealDisplacement": 80,
+        "center": {
+          "x": 1808,
+          "y": 616
+        },
+        "facingRadians": {
+          "observer": 1.0460005551447893,
+          "reveal": 1.5182132651839548
+        },
+        "group": {
+          "id": "interior-1",
+          "kind": "interior-void",
+          "component": 1,
+          "sourcePolygons": [
+            1
+          ],
+          "areaPx2": 39616,
+          "centroid": {
+            "x": 1778.5008077544426,
+            "y": 807.4765751211631
+          }
+        },
+        "controls": {
+          "actualBlocked": true,
+          "allVoidRemovedVisible": true,
+          "onlyThisVoidRemovedVisible": true,
+          "revealVisible": true,
+          "earliestRevealDisplacementPx": 80
+        },
+        "spawnApproach": {
+          "route": [
+            {
+              "x": 1948,
+              "y": 396
+            },
+            {
+              "x": 1908,
+              "y": 396
+            },
+            {
+              "x": 1764,
+              "y": 540
+            }
+          ],
+          "routeLength": 243.6467529817257,
+          "fullGridSteps": 23
+        },
+        "candidatesRejectedBefore": 2
+      },
+      "events": [
+        {
+          "points": [
+            {
+              "x": 1948,
+              "y": 396
+            },
+            {
+              "x": 1812,
+              "y": 396
+            },
+            {
+              "x": 1812,
+              "y": 412
+            },
+            {
+              "x": 1764,
+              "y": 412
+            },
+            {
+              "x": 1764,
+              "y": 540
+            }
+          ],
+          "length": 328,
+          "elapsedWallMs": 4407,
+          "position": {
+            "x": 1764.5316865138627,
+            "y": 537.124943234852
+          },
+          "events": []
+        },
+        {
+          "points": [
+            {
+              "x": 1764,
+              "y": 556
+            },
+            {
+              "x": 1844,
+              "y": 556
+            },
+            {
+              "x": 1844,
+              "y": 540
+            }
+          ],
+          "length": 96,
+          "elapsedWallMs": 1355.5999999046326,
+          "position": {
+            "x": 1843.280647187499,
+            "y": 542.5174498690558
+          },
+          "events": []
+        },
+        {
+          "points": [
+            {
+              "x": 1844,
+              "y": 548
+            },
+            {
+              "x": 1764,
+              "y": 548
+            },
+            {
+              "x": 1764,
+              "y": 540
+            }
+          ],
+          "length": 88,
+          "elapsedWallMs": 1238.9000000953674,
+          "position": {
+            "x": 1763.1246389392036,
+            "y": 542.2058722084357
+          },
+          "events": []
+        }
+      ],
+      "errors": [],
+      "entry": {
+        "position": {
+          "x": 1948,
+          "y": 396
+        },
+        "target": {
+          "x": 1852,
+          "y": 692
+        },
+        "visibility": 0,
+        "unoccludedVisibility": 0,
+        "forwardRadius": 224,
+        "facingAngle": 0,
+        "targetDistance": 311.1784054204276,
+        "hp": 100,
+        "elapsedMs": 133.30000000000018,
+        "ended": false
+      },
+      "hidden": {
+        "position": {
+          "x": 1764.5316865138627,
+          "y": 558.9032099015192
+        },
+        "target": {
+          "x": 1852,
+          "y": 692
+        },
+        "visibility": 0,
+        "unoccludedVisibility": 1,
+        "forwardRadius": 224,
+        "facingAngle": 1.5707963267948966,
+        "targetDistance": 159.2653804146659,
+        "hp": 100,
+        "elapsedMs": 4849.700000000001,
+        "ended": false
+      },
+      "revealed": {
+        "position": {
+          "x": 1843.280647187499,
+          "y": 550.1309165357225
+        },
+        "target": {
+          "x": 1852,
+          "y": 692
+        },
+        "visibility": 1,
+        "unoccludedVisibility": 1,
+        "forwardRadius": 224,
+        "facingAngle": 1.5707963267948966,
+        "targetDistance": 142.1367790421009,
+        "hp": 100,
+        "elapsedMs": 6566.299999999999,
+        "ended": false
+      },
+      "returned": {
+        "position": {
+          "x": 1766.531557790085,
+          "y": 552.1543901690281
+        },
+        "target": {
+          "x": 1852,
+          "y": 692
+        },
+        "visibility": 0,
+        "unoccludedVisibility": 0.6,
+        "forwardRadius": 224,
+        "facingAngle": 1.5707963267948966,
+        "targetDistance": 163.89523849943293,
+        "hp": 100,
+        "elapsedMs": 8166.299999999999,
+        "ended": false
+      },
+      "status": "passed"
+    }
+  ],
+  "errors": []
+}

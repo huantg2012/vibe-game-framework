@@ -43,6 +43,8 @@ def polygon(points):
 
 
 groups = read('rift-spatial-authored-groups.csv')
+sectors = read('rift-spatial-sectors.csv')
+sector_cuts = read('rift-spatial-sector-cuts.csv')
 sources = {row['world_id']: row for row in read('rift-native-worlds.csv')}
 shores = {row['id']: polygon([tuple(map(float, pair.split(':'))) for pair in row['points'].split('|')])
           for row in read('rift-spatial-erosion.csv') if row['organization'] == 'authored-group'}
@@ -110,8 +112,38 @@ for group in groups:
     evidence.append({'worldId': world_id, 'sourceCutCount': len(original), 'boundaryEdges': sorted(edges),
                      'extensionCount': len(extensions), 'resultCutCount': len(polygons), 'lostSourceArea': lost_area,
                      'filledPeripheralPocketArea': peripheral_pocket_area, 'filledPeripheralPockets': peripheral_pockets})
+
+# Sector revisions are complete, explicit author input, not modifications of the
+# old common corner template. Their CSV is the only source of geometry. Union
+# permits a bay to cross a shore input while the runtime still receives simple,
+# pairwise-disjoint polygons. Never simplify or fill internal ground pockets.
+for sector in sectors:
+    world_id = sector['world_id']
+    source_rows = [row for row in sector_cuts if row['world_id'] == world_id]
+    assert source_rows, (world_id, 'missing sector cuts')
+    cuts = [polygon([tuple(map(float, point.split(':'))) for point in row['points'].split('|')]) for row in source_rows]
+    for cut in cuts:
+        assert cut.area >= 64 and box(0, 0, 2304, 1792).covers(cut), (world_id, 'invalid authored sector bounds')
+    union = unary_union(cuts)
+    polygons = list(union.geoms) if union.geom_type == 'MultiPolygon' else [union]
+    assert 4 <= len(polygons) <= 12, (world_id, 'sector polygon budget', len(polygons))
+    for index, poly in enumerate(polygons):
+        assert poly.is_valid and not poly.interiors, (world_id, 'sector polygon encloses unsupported ground island')
+        points = list(poly.exterior.coords)[:-1]
+        changed = True
+        while changed:
+            changed = False
+            for i in range(len(points)):
+                a, b, c = points[i-1], points[i], points[(i+1) % len(points)]
+                if abs((b[0]-a[0])*(c[1]-b[1])-(b[1]-a[1])*(c[0]-b[0])) < 1e-6:
+                    points.pop(i); changed = True; break
+        assert len(points) <= 32, (world_id, 'sector vertex budget', len(points))
+        rows.append({'world_id': world_id, 'id': index, 'points': '|'.join(f'{x:.6f}:{y:.6f}' for x, y in points)})
+    evidence.append({'worldId': world_id, 'authoring': 'sector-cuts CSV', 'sourceCutCount': len(cuts),
+                     'resultCutCount': len(polygons), 'sourceArea': sum(cut.area for cut in cuts),
+                     'unionArea': union.area, 'lostSourceArea': sum(cut.difference(union).area for cut in cuts)})
 write('rift-spatial-authored-erosion.csv', ['world_id', 'id', 'points'], rows)
 if not CHECK:
     REPORT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT.write_text(json.dumps({'worldCount': len(groups), 'method': 'exact polygon union; four asymmetric corner cuts, only collinear vertices removed', 'cases': evidence}, indent=2) + '\n')
-print(f'{"Verified" if CHECK else "Authored"} {len(groups)} world shores: {len(rows)} disjoint polygons')
+    REPORT.write_text(json.dumps({'worldCount': len(groups) + len(sectors), 'method': 'exact polygon union from CSV authoring; only collinear vertices removed', 'cases': evidence}, indent=2) + '\n')
+print(f'{"Verified" if CHECK else "Authored"} {len(groups) + len(sectors)} world shores: {len(rows)} disjoint polygons')

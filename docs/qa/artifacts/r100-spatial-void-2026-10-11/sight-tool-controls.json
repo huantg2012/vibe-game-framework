@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "scope": "Synthetic negative/positive controls for QA measurement, not production map admission. Identical three rectangular footprint coordinates are FLOOR, WALL or real VOID. Only VOID may satisfy sight witnesses.",
+  "method": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx docs/qa/artifacts/r100-spatial-void-2026-10-11/sight-tool-controls.mjs",
+  "cases": [
+    {
+      "type": "FLOOR",
+      "status": "failed",
+      "witnessCount": 0
+    },
+    {
+      "type": "WALL",
+      "status": "failed",
+      "witnessCount": 0
+    },
+    {
+      "type": "VOID",
+      "status": "passed",
+      "witnessCount": 3,
+      "earliestRevealDisplacements": [
+        96,
+        85.0411665018772,
+        129.2439553712281
+      ]
+    }
+  ],
+  "sourceHashes": {
+    "tools/spatial-rollout/sight-obstruction.mjs": "bda6c6db5c9bf455ccfb77a390f8dab793b00abc29aa544555238f9c7afb854a",
+    "docs/qa/artifacts/r100-spatial-void-2026-10-11/sight-tool-controls.mjs": "dd9713819621acae41c5102ea7c46a6ee575af33ed0e399f993e04e545861129"
+  }
+}

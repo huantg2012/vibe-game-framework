@@ -1,0 +1,30 @@
+{
+  "scope": "Offline counterfactual budget diagnostic before admitting the new shore. Temporary bundle changed only the large-map ceiling to measure actual triangle demand; production uses the independently approved 20480 ceiling. Not runtime frame-budget evidence.",
+  "current": {
+    "label": "new",
+    "geometry": "905f773c",
+    "totalTriangles": 17386,
+    "edgeTriangles": 17315,
+    "edgeVertices": 51945,
+    "totalMeshBuffersBytes": 1912460
+  },
+  "historical": {
+    "label": "old",
+    "geometry": "e6749924",
+    "totalTriangles": 12063,
+    "edgeTriangles": 11992,
+    "edgeVertices": 35976,
+    "totalMeshBuffersBytes": 1326930
+  },
+  "previousLargeMapCeiling": 16384,
+  "newLargeMapCeiling": 20480,
+  "smallMapCeiling": 2048,
+  "additionalEdgeTriangles": 5323,
+  "additionalMeshBufferBytes": 585530,
+  "sources": {
+    "src/generation/world-study/native-volume-ground-edge.ts": "1e73ee6ee26c18a327d34a210f7d6c5f194d3107d3b9ecff77bf7318ebea88ed",
+    "src/generated/r100-spatial-data.ts": "88af12fc9e142590d530ef5bc0649591e20cf64e1651c72ff8dc244ae6f133d0",
+    "docs/qa/artifacts/r100-spatial-void-2026-10-11/old-recipes.json": "b4265893d92176297234227a1e9e9028b71d879cca337f9bb522997fa5c9a3eb"
+  },
+  "oldOutputCompatibility": "Only the admission ceiling changed; actual historical recipe byte equality is checked separately by check-frozen-spatial.mjs."
+}

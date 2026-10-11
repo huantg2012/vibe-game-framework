@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "source": "docs/qa/artifacts/r100-spatial-void-2026-10-11/old-recipes.json",
+  "sourceHash": "b4265893d92176297234227a1e9e9028b71d879cca337f9bb522997fa5c9a3eb",
+  "scope": "Actual historical r7 recipes replayed after data correction: original geometry fingerprint, spawn and extraction; current full layout/native hashes available for exact before/after comparison. Not browser cold recovery.",
+  "cases": [
+    {
+      "world": "cleft-tableland",
+      "geometry": "e6749924",
+      "layoutHash": "ff4d5fe83cf29bc8016ba3f0e4d5fed62493e664dcbd9cc3b074438b80b59820",
+      "rasterHash": "aed2108a67a64a896ddeb384637520ec7d4d5f2d186f23835dde235980a82859",
+      "identity": "e0409bb8"
+    },
+    {
+      "world": "cinder-ridge",
+      "geometry": "949df36f",
+      "layoutHash": "d5dbcde75b03d1eb5617e67ff09d5ad7ff13b2f057eb71ffe8f1809a19becbe6",
+      "rasterHash": "70cf2f23e4081513012ab487fc4d334ac894346d28325a0ce6c657a6cd7a37c6",
+      "identity": "ad6fdcee"
+    },
+    {
+      "world": "pale-sail",
+      "geometry": "0ff2d52a",
+      "layoutHash": "8679add068e2adbffd37ae32af0113a07c66bde05245500ddae8b49e2136c743",
+      "rasterHash": "c15c48384751c7431d265b75f4eb1bdc38ac6f54a5f1906972cec2dde3da51c1",
+      "identity": "0491e39f"
+    }
+  ],
+  "comparedWith": "docs/qa/artifacts/r100-spatial-void-2026-10-11/frozen-before.json"
+}

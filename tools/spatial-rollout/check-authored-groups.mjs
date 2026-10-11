@@ -9,7 +9,11 @@ import { validateNativeErosion, validateNativeGroundEdgeOwnership } from '../../
 const output = process.env.QA_REPORT ?? 'docs/qa/artifacts/r100-spatial-rollout-2026-10-10/authored-group-identity.json';
 assert(!existsSync(output),`Refusing to replace evidence: ${output}`);
 const paths = ['data/rift-native-worlds.csv', 'data/rift-spatial-authored-groups.csv', 'data/rift-spatial-authored-erosion.csv', 'src/generated/r100-spatial-data.ts', 'src/generation/world-study/r100-spatial-world.ts', 'src/generation/world-study/native-volume-erosion.ts', 'tools/spatial-rollout/check-authored-groups.mjs'];
-const report = { status: 'running', sourceHashes: Object.fromEntries(paths.map(path => [path, createHash('sha256').update(readFileSync(path)).digest('hex')])), cases: [] };
+const report = { status: 'running', sourceHashes: Object.fromEntries(paths.map(path => [path, createHash('sha256').update(readFileSync(path)).digest('hex')])), cases: [], sectors: [] };
+for(const name of ['sectors','sector-layouts','sector-cuts','sector-anchors']) {
+  const path=`data/rift-spatial-${name}.csv`;
+  report.sourceHashes[path]=createHash('sha256').update(readFileSync(path)).digest('hex');
+}
 const joinedCoastBudget = [Array.from({length:39},(_,i)=>({x:512+100*Math.cos(i/39*Math.PI*2),y:384+100*Math.sin(i/39*Math.PI*2)}))];
 assert.throws(()=>validateNativeErosion(joinedCoastBudget),/3–32 points/);
 assert.throws(()=>validateNativeErosion(joinedCoastBudget,2048,1792),/3–32 points/);
@@ -25,6 +29,20 @@ const contains = (points, x, y) => {
 for (const world of R100_NATIVE_WORLDS) for (const grade of ['low','medium','severe']) {
   const recipe = createR100ProductionRecipe(world.id, 20261010, grade), policy = recipe.spatialPolicy;
   assert(validR100ProductionRecipe(recipe));
+  if (policy.organization === 'authored-sectors') {
+    const native=recipe.nativeDefinition, result=createR100SpatialDefinition(native,policy,20261010).definition;
+    validateNativeErosion(result.erosion,2304,1792);validateNativeGroundEdgeOwnership(result);
+    for(const role of ['solid','relief']) assert.equal(result.instances.filter(instance=>instance.role===role).length,policy.organizationRules[`${role}Count`],`${world.id}/${role} count`);
+    if(policy.organizationRules.sourceMode==='source-once') {
+      assert.equal(result.instances.length,native.instances.length);
+      for(const source of native.instances) {
+        const actual=result.instances.find(instance=>instance.id===source.id);assert(actual);
+        for(const key of ['role','family','height','thickness','fold','branches','opening','distortion','constructionVersion','shapeProfile','groundEdgeWidth'])assert.equal(actual[key],source[key],`${world.id}/${source.id}/${key}`);
+      }
+    }
+    report.sectors.push({world:world.id,grade,sourceMode:policy.organizationRules.sourceMode,instanceCount:result.instances.length,shoreCount:result.erosion.length,maxShoreVertices:Math.max(...result.erosion.map(p=>p.length))});
+    continue;
+  }
   if (!policy.groupTransform) continue;
   const native=recipe.nativeDefinition, result=createR100SpatialDefinition(native,policy,20261010).definition, group=policy.groupTransform;
   assert.equal(result.instances.length,native.instances.length);
@@ -57,6 +75,7 @@ for (const world of R100_NATIVE_WORLDS) for (const grade of ['low','medium','sev
   }
   report.cases.push({world:world.id,grade,sourceCount:native.instances.length,solidCount:policy.organizationRules.solidCount,reliefCount:policy.organizationRules.reliefCount,sourceErosionSeats,shoreCount:result.erosion.length,maxShoreVertices:Math.max(...result.erosion.map(p=>p.length))});
 }
-assert.equal(report.cases.length,258);
+assert.equal(report.cases.length,252);
+assert.equal(report.sectors.length,9);
 report.status='passed';writeFileSync(output,JSON.stringify(report,null,2)+'\n');
 console.log(`PASS ${report.cases.length} whole-group definitions: source identity, relative geometry, unique edge owner, source VOID inclusion and preserved open-sea mouths`);

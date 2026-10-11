@@ -1,0 +1,307 @@
+{
+  "status": "failed",
+  "sourceReport": "docs/qa/artifacts/r100-spatial-void-2026-10-11/sight-pale-final-176.json",
+  "scope": "Controlled production memory gym; full map used only to plan normal WASD routes. Target is a real ground point, not spawned loot. No relocation, visibility, health or clock edits. Not blind player exploration.",
+  "cases": [
+    {
+      "world": "pale-sail",
+      "grade": "medium",
+      "seed": 20261010,
+      "witness": {
+        "observer": {
+          "x": 1164,
+          "y": 732
+        },
+        "target": {
+          "x": 1252,
+          "y": 580
+        },
+        "reveal": {
+          "x": 1116,
+          "y": 668
+        },
+        "route": [
+          {
+            "x": 1164,
+            "y": 732
+          },
+          {
+            "x": 1156,
+            "y": 732
+          },
+          {
+            "x": 1156,
+            "y": 716
+          },
+          {
+            "x": 1148,
+            "y": 708
+          },
+          {
+            "x": 1148,
+            "y": 700
+          },
+          {
+            "x": 1116,
+            "y": 668
+          }
+        ],
+        "distance": 175.6359872008012,
+        "revealDistance": 161.9876538505327,
+        "routeLength": 88.5685424949238,
+        "revealDisplacement": 80,
+        "center": {
+          "x": 1208,
+          "y": 656
+        },
+        "facingRadians": {
+          "observer": -1.0460005551447893,
+          "reveal": -0.5743048301747018
+        },
+        "group": {
+          "id": "interior-2",
+          "kind": "interior-void",
+          "component": 2,
+          "sourcePolygons": [
+            2
+          ],
+          "areaPx2": 78208,
+          "centroid": {
+            "x": 1307.4238952536825,
+            "y": 770.8281505728314
+          }
+        },
+        "controls": {
+          "actualBlocked": true,
+          "allVoidRemovedVisible": true,
+          "onlyThisVoidRemovedVisible": true,
+          "revealVisible": true,
+          "earliestRevealDisplacementPx": 80
+        },
+        "spawnApproach": {
+          "route": [
+            {
+              "x": 1492,
+              "y": 1508
+            },
+            {
+              "x": 1492,
+              "y": 1204
+            },
+            {
+              "x": 1204,
+              "y": 916
+            },
+            {
+              "x": 1204,
+              "y": 892
+            },
+            {
+              "x": 1196,
+              "y": 884
+            },
+            {
+              "x": 1196,
+              "y": 860
+            },
+            {
+              "x": 1188,
+              "y": 852
+            },
+            {
+              "x": 1188,
+              "y": 828
+            },
+            {
+              "x": 1180,
+              "y": 820
+            },
+            {
+              "x": 1180,
+              "y": 796
+            },
+            {
+              "x": 1172,
+              "y": 788
+            },
+            {
+              "x": 1172,
+              "y": 764
+            },
+            {
+              "x": 1164,
+              "y": 756
+            },
+            {
+              "x": 1164,
+              "y": 732
+            }
+          ],
+          "routeLength": 911.8620484583752,
+          "fullGridSteps": 97
+        },
+        "candidatesRejectedBefore": 12
+      },
+      "events": [
+        {
+          "points": [
+            {
+              "x": 1492,
+              "y": 1508
+            },
+            {
+              "x": 1452,
+              "y": 1508
+            },
+            {
+              "x": 1452,
+              "y": 1308
+            },
+            {
+              "x": 1436,
+              "y": 1308
+            },
+            {
+              "x": 1436,
+              "y": 1300
+            },
+            {
+              "x": 1412,
+              "y": 1300
+            },
+            {
+              "x": 1412,
+              "y": 1292
+            },
+            {
+              "x": 1380,
+              "y": 1292
+            },
+            {
+              "x": 1380,
+              "y": 1284
+            },
+            {
+              "x": 1356,
+              "y": 1284
+            },
+            {
+              "x": 1356,
+              "y": 1276
+            },
+            {
+              "x": 1324,
+              "y": 1276
+            },
+            {
+              "x": 1324,
+              "y": 1268
+            },
+            {
+              "x": 1164,
+              "y": 1268
+            },
+            {
+              "x": 1164,
+              "y": 732
+            }
+          ],
+          "length": 1104,
+          "elapsedWallMs": 14739.5,
+          "position": {
+            "x": 1164.746098557671,
+            "y": 734.6077635225508
+          },
+          "events": []
+        },
+        {
+          "points": [
+            {
+              "x": 1164,
+              "y": 732
+            },
+            {
+              "x": 1116,
+              "y": 732
+            },
+            {
+              "x": 1116,
+              "y": 668
+            }
+          ],
+          "length": 112,
+          "elapsedWallMs": 1525.7999997138977,
+          "position": {
+            "x": 1116.6867148548097,
+            "y": 669.6296354709328
+          },
+          "events": []
+        }
+      ],
+      "errors": [],
+      "geometryFingerprint": "ee77617a",
+      "entry": {
+        "position": {
+          "x": 1492,
+          "y": 1508
+        },
+        "target": {
+          "x": 1252,
+          "y": 580
+        },
+        "visibility": 0,
+        "unoccludedVisibility": 0,
+        "forwardRadius": 224,
+        "facingAngle": 0,
+        "targetDistance": 958.5322112480102,
+        "hp": 100,
+        "elapsedMs": 149.90000000000055,
+        "ended": false
+      },
+      "hidden": {
+        "position": {
+          "x": 1164.746098557671,
+          "y": 730.0000999
+        },
+        "target": {
+          "x": 1252,
+          "y": 580
+        },
+        "visibility": 0,
+        "unoccludedVisibility": 0.6,
+        "forwardRadius": 224,
+        "facingAngle": -1.5707963267948966,
+        "targetDistance": 173.53176448972573,
+        "hp": 100,
+        "elapsedMs": 15199.3,
+        "ended": false
+      },
+      "revealed": {
+        "position": {
+          "x": 1133.2551259004288,
+          "y": 664.4199131832191
+        },
+        "target": {
+          "x": 1252,
+          "y": 580
+        },
+        "visibility": 0,
+        "unoccludedVisibility": 1,
+        "forwardRadius": 224,
+        "facingAngle": 0,
+        "targetDistance": 145.69511613909808,
+        "hp": 100,
+        "elapsedMs": 17082.6,
+        "ended": false
+      },
+      "status": "failed",
+      "failure": "AssertionError [ERR_ASSERTION]: Target not revealed after walking around VOID\n    at file:///Users/yilungao/coh/tools/spatial-rollout/capture-sight-journey.mjs:57:64\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:459:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)"
+    }
+  ],
+  "errors": [
+    {
+      "world": "pale-sail",
+      "error": "AssertionError [ERR_ASSERTION]: Target not revealed after walking around VOID\n    at file:///Users/yilungao/coh/tools/spatial-rollout/capture-sight-journey.mjs:57:64\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:459:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)"
+    }
+  ]
+}

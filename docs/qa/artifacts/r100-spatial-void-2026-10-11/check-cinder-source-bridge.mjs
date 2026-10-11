@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createR100ProductionRecipe} from '../../../../src/generation/world-study/r100-package.ts';
+const dir=new URL('./',import.meta.url),read=p=>JSON.parse(fs.readFileSync(new URL(p,dir),'utf8'));
+const original=read('browser-first/capture.json').cases.find(c=>c.world==='cinder-ridge');
+const current=createR100ProductionRecipe('cinder-ridge',20261010,'medium');
+const policy=p=>{const {sourceHash,...rest}=p;return rest;};
+assert.deepEqual(policy(original.recipe.spatialPolicy),policy(current.spatialPolicy));
+for(const key of ['nativeDefinition','profile','appearance'])assert.deepEqual(original.recipe[key],current[key],key);
+const prod=read('production-final.json').cases.find(c=>c.world==='cinder-ridge'&&c.grade==='medium');
+assert.deepEqual(prod.spawn,original.full.spawn);assert.deepEqual(prod.extraction,original.full.extraction);
+const first=read('browser-first/source-snapshot.json').files,final=read('browser-final/source-snapshot.json').files;
+const differences=Object.keys(final).filter(k=>first[k]!==final[k]);
+const allowed=['src/generated/r100-package-manifest.ts','src/generated/r100-spatial-data.ts','src/generation/world-study/native-volume-ground-edge.ts','data/rift-spatial-authored-erosion.csv','data/rift-spatial-sector-anchors.csv','data/rift-spatial-sector-cuts.csv','data/rift-spatial-sector-layouts.csv'];
+assert(differences.every(k=>allowed.includes(k)));
+const report={status:'passed',scope:'Cinder medium seed20261010 first actual full/entry pictures and turn-corrected normal FOV remain applicable. Exact native/profile/appearance and frozen spatial values excluding global sourceHash match final; final complete production spawn/exit match. Other 105 exact-scope evidence separate. Not all rendering outputs/all seeds proof.',geometry:original.full.geometry,differences,executionChange:'Ground-edge guard only 16384→20480; triangulation/UV unchanged, this cinder already admitted under 16384. Manifest/sourceHash changed due other worlds. No runtime FOV/render/material code changed.'};
+fs.writeFileSync(new URL('cinder-source-bridge.json',dir),JSON.stringify(report,null,2)+'\n');console.log('PASS cinder source bridge');

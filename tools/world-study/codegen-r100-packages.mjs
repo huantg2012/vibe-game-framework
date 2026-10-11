@@ -7,6 +7,7 @@ const paths = ['data/rift-spatial-policy.csv', 'data/rift-spatial-deployment.csv
   'src/generated/rift-spatial-deployment-data.ts', 'src/generation/world-study/r100-spatial-deployment.ts', 'data/rift-spatial-layouts.csv', 'data/rift-spatial-erosion.csv',
   'data/rift-spatial-anchors.csv', 'data/rift-spatial-worlds.csv', 'data/rift-spatial-materials.csv',
   'data/rift-spatial-organizations.csv', 'data/rift-spatial-authored-groups.csv', 'data/rift-spatial-authored-erosion.csv',
+  'data/rift-spatial-sectors.csv', 'data/rift-spatial-sector-layouts.csv', 'data/rift-spatial-sector-cuts.csv', 'data/rift-spatial-sector-anchors.csv',
   'tools/world-study/codegen-r100-spatial.mjs', 'tools/world-study/build-r100-authored-shores.py',
   'tools/world-study/generate-spatial-deployment.mjs',
   'src/generated/r100-spatial-data.ts', 'src/generation/world-study/r100-spatial-types.ts',

@@ -1,0 +1,330 @@
+{
+  "status": "passed",
+  "sourceReport": "docs/qa/artifacts/r100-spatial-void-2026-10-11/sight-pale-final-176.json",
+  "scope": "Controlled production memory gym; full map used only to plan normal WASD routes. Target is a real ground point, not spawned loot. No relocation, visibility, health or clock edits. Not blind player exploration.",
+  "cases": [
+    {
+      "world": "pale-sail",
+      "grade": "medium",
+      "seed": 20261010,
+      "witness": {
+        "observer": {
+          "x": 708,
+          "y": 1212
+        },
+        "target": {
+          "x": 556,
+          "y": 1300
+        },
+        "reveal": {
+          "x": 708,
+          "y": 1292
+        },
+        "route": [
+          {
+            "x": 708,
+            "y": 1212
+          },
+          {
+            "x": 708,
+            "y": 1292
+          }
+        ],
+        "distance": 175.6359872008012,
+        "revealDistance": 152.21038072352357,
+        "routeLength": 80,
+        "revealDisplacement": 80,
+        "center": {
+          "x": 632,
+          "y": 1256
+        },
+        "facingRadians": {
+          "observer": 2.6167968819396856,
+          "reveal": 3.0890095919788516
+        },
+        "group": {
+          "id": "interior-3",
+          "kind": "interior-void",
+          "component": 3,
+          "sourcePolygons": [
+            5
+          ],
+          "areaPx2": 81344,
+          "centroid": {
+            "x": 539.3894571203776,
+            "y": 1119.7010228166798
+          }
+        },
+        "controls": {
+          "actualBlocked": true,
+          "allVoidRemovedVisible": true,
+          "onlyThisVoidRemovedVisible": true,
+          "revealVisible": true,
+          "earliestRevealDisplacementPx": 80
+        },
+        "spawnApproach": {
+          "route": [
+            {
+              "x": 1492,
+              "y": 1508
+            },
+            {
+              "x": 1492,
+              "y": 1348
+            },
+            {
+              "x": 1452,
+              "y": 1308
+            },
+            {
+              "x": 1444,
+              "y": 1308
+            },
+            {
+              "x": 1436,
+              "y": 1300
+            },
+            {
+              "x": 1420,
+              "y": 1300
+            },
+            {
+              "x": 1412,
+              "y": 1292
+            },
+            {
+              "x": 1388,
+              "y": 1292
+            },
+            {
+              "x": 1380,
+              "y": 1284
+            },
+            {
+              "x": 1364,
+              "y": 1284
+            },
+            {
+              "x": 1356,
+              "y": 1276
+            },
+            {
+              "x": 1332,
+              "y": 1276
+            },
+            {
+              "x": 1324,
+              "y": 1268
+            },
+            {
+              "x": 764,
+              "y": 1268
+            },
+            {
+              "x": 708,
+              "y": 1212
+            }
+          ],
+          "routeLength": 1000.3330444827409,
+          "fullGridSteps": 118
+        },
+        "candidatesRejectedBefore": 17
+      },
+      "events": [
+        {
+          "points": [
+            {
+              "x": 1492,
+              "y": 1508
+            },
+            {
+              "x": 1452,
+              "y": 1508
+            },
+            {
+              "x": 1452,
+              "y": 1308
+            },
+            {
+              "x": 1436,
+              "y": 1308
+            },
+            {
+              "x": 1436,
+              "y": 1300
+            },
+            {
+              "x": 1412,
+              "y": 1300
+            },
+            {
+              "x": 1412,
+              "y": 1292
+            },
+            {
+              "x": 1380,
+              "y": 1292
+            },
+            {
+              "x": 1380,
+              "y": 1284
+            },
+            {
+              "x": 1356,
+              "y": 1284
+            },
+            {
+              "x": 1356,
+              "y": 1276
+            },
+            {
+              "x": 1324,
+              "y": 1276
+            },
+            {
+              "x": 1324,
+              "y": 1268
+            },
+            {
+              "x": 708,
+              "y": 1268
+            },
+            {
+              "x": 708,
+              "y": 1212
+            }
+          ],
+          "length": 1080,
+          "elapsedWallMs": 14432.5,
+          "position": {
+            "x": 707.1160601402078,
+            "y": 1214.4782454997285
+          },
+          "events": []
+        },
+        {
+          "points": [
+            {
+              "x": 700,
+              "y": 1212
+            },
+            {
+              "x": 708,
+              "y": 1212
+            },
+            {
+              "x": 708,
+              "y": 1292
+            }
+          ],
+          "length": 88,
+          "elapsedWallMs": 1294.3999996185303,
+          "position": {
+            "x": 707.3904896444374,
+            "y": 1290.3712910778006
+          },
+          "events": []
+        },
+        {
+          "points": [
+            {
+              "x": 692,
+              "y": 1292
+            },
+            {
+              "x": 708,
+              "y": 1292
+            },
+            {
+              "x": 708,
+              "y": 1212
+            }
+          ],
+          "length": 96,
+          "elapsedWallMs": 1439.4000000953674,
+          "position": {
+            "x": 707.5007308150874,
+            "y": 1214.0052408610904
+          },
+          "events": []
+        }
+      ],
+      "errors": [],
+      "geometryFingerprint": "ee77617a",
+      "entry": {
+        "position": {
+          "x": 1492,
+          "y": 1508
+        },
+        "target": {
+          "x": 556,
+          "y": 1300
+        },
+        "visibility": 0,
+        "unoccludedVisibility": 0,
+        "forwardRadius": 224,
+        "facingAngle": 0,
+        "targetDistance": 958.8326235584603,
+        "hp": 100,
+        "elapsedMs": 133.39999999999964,
+        "ended": false
+      },
+      "hidden": {
+        "position": {
+          "x": 698.0000999,
+          "y": 1210.000069571693
+        },
+        "target": {
+          "x": 556,
+          "y": 1300
+        },
+        "visibility": 0,
+        "unoccludedVisibility": 0.6,
+        "forwardRadius": 224,
+        "facingAngle": 3.141592653589793,
+        "targetDistance": 168.11905260472432,
+        "hp": 100,
+        "elapsedMs": 14882.900000000001,
+        "ended": false
+      },
+      "revealed": {
+        "position": {
+          "x": 690.8195013561565,
+          "y": 1295.5783027895197
+        },
+        "target": {
+          "x": 556,
+          "y": 1300
+        },
+        "visibility": 1,
+        "unoccludedVisibility": 1,
+        "forwardRadius": 224,
+        "facingAngle": 3.141592653589793,
+        "targetDistance": 134.8919914307141,
+        "hp": 100,
+        "elapsedMs": 16532.7,
+        "ended": false
+      },
+      "returned": {
+        "position": {
+          "x": 706.000058006975,
+          "y": 1207.4016269695928
+        },
+        "target": {
+          "x": 556,
+          "y": 1300
+        },
+        "visibility": 0,
+        "unoccludedVisibility": 0.6,
+        "forwardRadius": 224,
+        "facingAngle": 3.141592653589793,
+        "targetDistance": 176.27953962378703,
+        "hp": 100,
+        "elapsedMs": 18332.600000000002,
+        "ended": false
+      },
+      "status": "passed"
+    }
+  ],
+  "errors": []
+}
