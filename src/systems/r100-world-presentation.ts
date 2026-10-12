@@ -98,7 +98,7 @@ export async function prepareR100Presentation(recipe:WorldProductionRecipeV3,
   const result=await surfaceClient.prepare({native,layout:options.world.layout,painting:material},options.signal);
   await yieldPreparation(options.signal);
   if(preparations.get(surfaceKey)!==ticket)throw abortError();
-  renderer=new MasterSurfaceRenderer(hydrateR100MasterWorld(native,options.world.layout),undefined,undefined,material,result.surface);
+  renderer=new MasterSurfaceRenderer(hydrateR100MasterWorld(native,options.world.layout),undefined,undefined,material,result.surface,result.searchPatches);
   // Permit cancellation and UI paint after GPU creation, before publishing.
   await yieldPreparation(options.signal);
   if(preparations.get(surfaceKey)!==ticket)throw abortError();

@@ -6,6 +6,9 @@ import { validR100ProductionRecipe as validRevision5Recipe } from '../legacy-r10
 import { validR100ProductionRecipe as validRevision4Recipe } from '../legacy-r100-v4/executor.js';
 import { validR100ProductionRecipe as validRevision6Recipe } from '../legacy-r100-v6/executor-recovery.js';
 import { validR100ProductionRecipe as validRevision7Recipe } from '../legacy-r100-v7/executor-recovery.js';
+import { validR100ProductionRecipe as validRevision8Recipe } from '../legacy-r100-v8/executor-recovery.js';
+import { R100_SEARCH_SITE_POLICIES } from '@/generated/r100-search-sites';
+import { validSearchSitePolicy } from './search-site-placement';
 import { createR100SpatialPolicy, validR100SpatialPolicy } from './r100-spatial-world';
 import { R100_WORLD_APPEARANCES } from '@/generated/r100-world-appearance';
 import { profileWithWorldAppearance, validR100WorldAppearance, type R100WorldAppearance } from './r100-world-appearance';
@@ -27,7 +30,7 @@ export interface R100PackageIdentity {
   readonly algorithm: 'r100-native';
   readonly version: 3;
   /** Increment/freeze the executor before changing existing algorithm semantics. */
-  readonly algorithmRevision: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  readonly algorithmRevision: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   readonly dependencyHash: string;
   readonly materials: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>>;
   readonly grade: PollutionGrade;
@@ -51,10 +54,11 @@ function materialDependencies(definition: MasterDefinition, appearance: R100Worl
     return [name, dependency];
   }));
 }
-function dependencyHash(recipe: Omit<WorldProductionRecipeV3, 'package'>, materials: R100PackageIdentity['materials'], revision: 8 = 8): string {
+function dependencyHash(recipe: Omit<WorldProductionRecipeV3, 'package'>, materials: R100PackageIdentity['materials'], revision: 8 | 9): string {
   // Public copy is frozen for display, but does not redefine the map/loot algorithm.
   return fingerprint({ algorithm: `r100-native@3.${revision}`, native: recipe.nativeDefinition, profile: recipe.profile, space: recipe.space,
-    contentFragmentTypeId: recipe.contentFragmentTypeId, grade: recipe.gradeDefinition, contents: recipe.contentDefinition, spatialPolicy: recipe.spatialPolicy, appearance: recipe.appearance, materials });
+    contentFragmentTypeId: recipe.contentFragmentTypeId, grade: recipe.gradeDefinition, contents: recipe.contentDefinition, spatialPolicy: recipe.spatialPolicy, appearance: recipe.appearance, materials,
+    ...(revision === 9 ? { searchSitePolicy: recipe.searchSitePolicy } : {}) });
 }
 /** Explicit package selection is shared with qualification/gym; normal play only
  * calls selectR100ProductionRecipe and therefore respects the enabled pool. */
@@ -68,12 +72,15 @@ export function createR100ProductionRecipe(worldId: string, seed: number, grade:
   const gradeDefinition = POLLUTION_GRADE_DEFINITIONS.find(row => row.id === grade)!;
   const contentDefinition = R100_EXPEDITION_GRADES.find(row => row.grade_id === grade)!;
   const spatialPolicy = createR100SpatialPolicy(worldId, seed);
+  const searchSitePolicy = R100_SEARCH_SITE_POLICIES.find(row => row.worldId === worldId);
+  const algorithmRevision = searchSitePolicy ? 9 : 8;
   const frozen = { version: 3 as const, requestedSeed: seed, paintGeometryVersion: 2 as const,
-    profile: profileWithWorldAppearance(world.profile, appearance), appearance, space: SPACE_PROFILES[0]!, contentFragmentTypeId: 'frag-outdoor', nativeDefinition, gradeDefinition, contentDefinition, spatialPolicy };
+    profile: profileWithWorldAppearance(world.profile, appearance), appearance, space: SPACE_PROFILES[0]!, contentFragmentTypeId: 'frag-outdoor', nativeDefinition, gradeDefinition, contentDefinition, spatialPolicy,
+    ...(searchSitePolicy ? { searchSitePolicy } : {}) };
   if (contentDefinition.version !== 2) throw new Error('Revision 8 requires expedition definition version 2');
   const materials = materialDependencies(nativeDefinition, appearance);
-  return structuredClone({ ...frozen, package: { id: `r100-${worldId}`, algorithm: 'r100-native', version: 3, algorithmRevision: 8,
-    materials, dependencyHash: dependencyHash(frozen, materials), grade } });
+  return structuredClone({ ...frozen, package: { id: `r100-${worldId}`, algorithm: 'r100-native', version: 3, algorithmRevision,
+    materials, dependencyHash: dependencyHash(frozen, materials, algorithmRevision), grade } });
 }
 export function selectR100ProductionRecipe(seed: number, grade: PollutionGrade, history?: RiftWorldHistory): WorldProductionRecipeV3 {
   return createR100ProductionRecipe(selectR100WorldId(seed, history), seed, grade);
@@ -91,10 +98,11 @@ export function validR100ProductionRecipe(value: unknown): value is WorldProduct
     if (pack?.algorithmRevision === 5) return validRevision5Recipe(value);
     if (pack?.algorithmRevision === 6) return validRevision6Recipe(value);
     if (pack?.algorithmRevision === 7) return validRevision7Recipe(value);
+    if (pack?.algorithmRevision === 8) return validRevision8Recipe(value);
     if (recipe.version !== 3 || recipe.paintGeometryVersion !== 2 || !Number.isSafeInteger(recipe.requestedSeed)
       || recipe.requestedSeed < 0 || recipe.requestedSeed > 0xffffffff || !native || !isPollutionGrade(native.grade)
       || recipe.contentFragmentTypeId !== 'frag-outdoor' || !pack || pack.algorithm !== 'r100-native' || pack.version !== 3
-      || pack.algorithmRevision !== 8 || pack.grade !== native.grade || !/^r100-[a-z][a-z0-9-]+$/.test(pack.id)
+      || pack.algorithmRevision !== 9 || pack.grade !== native.grade || !/^r100-[a-z][a-z0-9-]+$/.test(pack.id)
       || !R100_NATIVE_WORLDS.some(world => `r100-${world.id}` === pack.id)
       || !Array.isArray(native.instances) || native.instances.length < 1 || native.instances.length > 32
       // The source-sized mother form cannot own a second world-sized outline.
@@ -104,6 +112,7 @@ export function validR100ProductionRecipe(value: unknown): value is WorldProduct
       || recipe.contentDefinition?.grade_id !== native.grade || recipe.contentDefinition.version !== 2
       || !validR100WorldAppearance(recipe.appearance) || `r100-${recipe.appearance.worldId}` !== pack.id
       || !validR100SpatialPolicy(recipe.spatialPolicy, recipe.appearance.worldId, recipe.requestedSeed)
+      || !validSearchSitePolicy(recipe.searchSitePolicy, recipe.appearance.worldId)
       || recipe.profile?.id !== native.profile || JSON.stringify(recipe).length > 60000) return false;
     validateNativeErosion(native.erosion, native.cols * 32, native.rows * 32);
     const ids = new Set<number>();

@@ -5,6 +5,8 @@ import type { NativeVolumeLighting, NativeVolumeLight } from '@/generation/world
 import type { MasterWorld } from '@/generation/world-study/r100-master-world';
 import type { PaintedMaterial } from './painted-material';
 import { bakeMasterSurface, type MasterSurfaceBake } from './surface-bake';
+import type { SearchSiteMaterialPatch } from './search-site-bake';
+import { SEARCH_SITE_CHANNELS } from './search-site-patches';
 const VERTEX=`#version 300 es
 in vec2 position;out vec2 uv;void main(){uv=position*.5+.5;gl_Position=vec4(position,0,1);}`;
 const FRAGMENT=`#version 300 es
@@ -91,7 +93,10 @@ export class MasterSurfaceRenderer {
  private readonly positions=new Float32Array(32);
  private readonly colors=new Float32Array(32);
  private destroyed=false;
- constructor(world:MasterWorld,ground:MasterGroundSurface|undefined,volume:NativeVolumeLighting|undefined,painting?:PaintedMaterial,prepared?:MasterSurfaceBake){
+ private readonly searchSites=new Map<string,{patch:SearchSiteMaterialPatch;collected:boolean}>();
+ private searchUploadCount=0;
+ private searchBufferBytes=0;
+ constructor(world:MasterWorld,ground:MasterGroundSurface|undefined,volume:NativeVolumeLighting|undefined,painting?:PaintedMaterial,prepared?:MasterSurfaceBake,searchPatches:readonly SearchSiteMaterialPatch[]=[]){
   const r=world.raster,w=r.width,h=r.height,size=w*h;
   this.canvas=document.createElement('canvas');this.canvas.width=w;this.canvas.height=h;
   const gl=this.canvas.getContext('webgl2',{alpha:false,antialias:false,depth:false,premultipliedAlpha:false,preserveDrawingBuffer:true});
@@ -108,6 +113,11 @@ export class MasterSurfaceRenderer {
   if(baked.width!==w||baked.height!==h)throw new Error('Prepared native surface dimensions do not match the world');
   const {albedo,normal,response,emission}=baked;
   this.surfaceDiagnostics=baked.diagnostics;
+  for(const patch of searchPatches){
+   if(this.searchSites.has(patch.nodeId))throw new Error('Duplicate native search patch');
+   this.searchSites.set(patch.nodeId,{patch,collected:false});
+   this.searchBufferBytes+=patch.width*patch.height*4*4*2;
+  }
   const names=['albedoMap','normalMap','responseMap','emissionMap'];
   for(const [unit,data]of [albedo,normal,response,emission].entries()){
    const texture=gl.createTexture();if(!texture)throw new Error('Material texture allocation failed');this.textures.push(texture);
@@ -115,13 +125,31 @@ export class MasterSurfaceRenderer {
    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,w,h,0,gl.RGBA,gl.UNSIGNED_BYTE,data);gl.uniform1i(gl.getUniformLocation(program,names[unit]!),unit);
   }
   for(const name of ['size','lights','lightColors','lightCount','mode','activity','seconds'])this.locations[name]=gl.getUniformLocation(program,name);
-  gl.uniform2f(this.locations.size!,w,h);gl.viewport(0,0,w,h);this.gpuBytes=size*4*6; // Four immutable inputs, GL target and Phaser copy; excludes driver overhead.
+  gl.uniform2f(this.locations.size!,w,h);gl.viewport(0,0,w,h);this.gpuBytes=size*4*6; // Four inputs, GL target and Phaser copy; no extra search texture/context.
   } catch(error) { gl.getExtension('WEBGL_lose_context')?.loseContext();this.canvas.width=1;this.canvas.height=1;throw error; }
+ }
+ /** Called before drawing from the search system's actual persisted state.
+  * Unchanged phases cost no upload and restoring never replays reveal effects. */
+ setSearchSiteCollected(nodeId:string,collected:boolean):void{
+  if(this.destroyed||this.searchSites.size===0)return;
+  const entry=this.searchSites.get(nodeId);
+  if(!entry)throw new Error('Search state has no admitted material patch');
+  if(entry.collected===collected)return;
+  const gl=this.gl,patch=entry.patch,state=collected?patch.searched:patch.intact;
+  for(const [unit,name] of SEARCH_SITE_CHANNELS.entries()){
+   gl.activeTexture(gl.TEXTURE0+unit);gl.bindTexture(gl.TEXTURE_2D,this.textures[unit]!);
+   gl.texSubImage2D(gl.TEXTURE_2D,0,patch.x,patch.y,patch.width,patch.height,gl.RGBA,gl.UNSIGNED_BYTE,state[name]);
+  }
+  entry.collected=collected;this.searchUploadCount++;
+ }
+ searchDiagnostics():Readonly<Record<string,unknown>>{
+  return {count:this.searchSites.size,cpuBytes:this.searchBufferBytes,stateUploads:this.searchUploadCount,
+   collected:[...this.searchSites].filter(([,entry])=>entry.collected).map(([id])=>id)};
  }
  draw(lights:readonly NativeVolumeLight[],activity:number,seconds:number,mode:number):void{
   if(this.destroyed)return;const gl=this.gl;if(gl.isContextLost())throw new Error('R100 WebGL2 material context was lost');gl.useProgram(this.program);const count=Math.min(8,lights.length);
   for(let i=0;i<count;i++){const l=lights[i]!,q=i*4;this.positions[q]=l.x;this.positions[q+1]=l.y;this.positions[q+2]=l.z;this.positions[q+3]=l.radius;this.colors[q]=l.color[0];this.colors[q+1]=l.color[1];this.colors[q+2]=l.color[2];this.colors[q+3]=l.intensity;}
   gl.uniform4fv(this.locations.lights!,this.positions);gl.uniform4fv(this.locations.lightColors!,this.colors);gl.uniform1i(this.locations.lightCount!,count);gl.uniform1f(this.locations.activity!,activity);gl.uniform1f(this.locations.seconds!,seconds);gl.uniform1i(this.locations.mode!,mode);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
  }
- destroy():void{if(this.destroyed)return;this.destroyed=true;const gl=this.gl;for(const texture of this.textures)gl.deleteTexture(texture);gl.deleteBuffer(this.buffer);gl.deleteProgram(this.program);gl.getExtension('WEBGL_lose_context')?.loseContext();this.canvas.width=1;this.canvas.height=1;}
+ destroy():void{if(this.destroyed)return;this.destroyed=true;this.searchSites.clear();this.searchBufferBytes=0;const gl=this.gl;for(const texture of this.textures)gl.deleteTexture(texture);gl.deleteBuffer(this.buffer);gl.deleteProgram(this.program);gl.getExtension('WEBGL_lose_context')?.loseContext();this.canvas.width=1;this.canvas.height=1;}
 }

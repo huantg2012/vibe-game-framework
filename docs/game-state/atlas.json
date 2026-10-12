@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "R100仍13/14，I14/P49开放。r8六张矩形碎片正式接入；用户已暂停其余102推广，转入六图重点打磨。当前翻找物实景审查确认来源落点、同场受光与局部残骸关系不足，仅调查未整改；旧B01技术证据保持，不代用户终验。"
+    "summary": "六图翻找残骸已在三路设计后接入r9：真实来源关系、地表同灯材质与翻后残迹。六图实景、留出seed/FOV、正式低档冷续及旧r8精确恢复有限定证据；用户审美和自然发现性仍开放。其余102世界推广暂停，I14仍13/14、P49开放。"
   },
   "domains": [
     {
@@ -22,7 +22,7 @@
       "id": "world",
       "title": "地图、地表与探索",
       "coverage": "mapped",
-      "note": "r8六个独立构型及旧B01限定技术证据保持。其余102世界按用户要求暂停推广，六图转入拾取/翻找物环境合理性打磨；本轮只有实景/管线审查，尚未整改。"
+      "note": "六图翻找残骸已在三路设计后接入r9：真实来源关系、地表同灯材质与翻后残迹。六图实景、留出seed/FOV、正式低档冷续及旧r8精确恢复有限定证据；用户审美和自然发现性仍开放。其余102世界推广暂停，I14仍13/14、P49开放。"
     },
     {
       "id": "encounters",
@@ -64,7 +64,7 @@
       "id": "persistence",
       "title": "存档、失败与恢复",
       "coverage": "mapped",
-      "note": "完整帧/原子保存保持。旧修订1–7冻结，r8完整冻结矩形作者输入及最终地形；B01固定Git旧r8八例完整结果/四RGBA精确重放及新五图wire恢复按范围验证，不外推所有历史或跨引擎异常。"
+      "note": "完整帧/原子保存保持。旧修订1–7冻结，r8完整冻结矩形作者输入及最终地形；B01固定Git旧r8八例完整结果/四RGBA精确重放及新五图wire恢复按范围验证，不外推所有历史或跨引擎异常。 六图新r9来源策略已冻结，旧r8完整执行器封存；六图旧地图/四RGBA及新局collected冷续保持，见E236限定范围。"
     },
     {
       "id": "accessibility",
@@ -739,6 +739,19 @@
         "tools/fragment-shape/*",
         "tools/world-study/codegen-r100-fragments.mjs",
         "tools/recovery/*native-r100-revision7*.mjs"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "r100-pickup-r9",
+      "title": "六图环境残骸与旧r8闭包",
+      "include": [
+        "src/generation/legacy-r100-v8/*",
+        "src/generation/world-study/search-site-*.ts",
+        "src/systems/r100-world/search-site-*.ts",
+        "src/generated/r100-search-sites.ts",
+        "tools/pickup-grounding/*",
+        "tools/recovery/*revision8.mjs"
       ],
       "exclude": []
     }

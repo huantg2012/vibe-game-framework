@@ -2,7 +2,7 @@ import { nativeRiftPlayerForRestore, NATIVE_BODY_GEOMETRY_VERSION } from '@/syst
 import { nativeBodyCollision, type NativeBodyCollision, type NativeBodyMotion } from '@/generation/world-study/native-body-collision';
 import { createR100WorldPresentation, getPreparedR100Presentation } from '@/systems/r100-world-presentation';
 import { createWorldPlaySurface, type WorldPlaySurface } from '@/systems/world-space-surface';
-import { createWorldSearchVisual } from '@/systems/world-search-presentation';
+import { createGroundedWorldSearchVisual, createWorldSearchVisual } from '@/systems/world-search-presentation';
 import { createR100ExtractionVisual } from '@/systems/r100-extraction-presentation';
 import { createContaminantSourceRegions } from '@/generation/contaminant-source-regions';
 import { createContaminantDropPlan } from '@/systems/contaminant-drop-plan';
@@ -592,7 +592,9 @@ export class RiftScene extends Phaser.Scene {
       fragmentTypeId: generated.fragmentTypeId,
       // Visual source is the restored world profile, not the gameplay loot-table fragment.
       createVisual: this.devFixture?.createSearchObjectVisual ?? (productionWorld
-        ? (scene, position, visualSeed, getPlayerPos) => createWorldSearchVisual(
+        ? (scene, position, visualSeed, getPlayerPos) => productionWorld.native?.searchSites
+          ? createGroundedWorldSearchVisual(scene, position, visualSeed, getPlayerPos, productionWorld.sample.profile)
+          : createWorldSearchVisual(
           scene, position, visualSeed, getPlayerPos, productionWorld.sample.profile, productionWorld.sample.seed,
           nativeRecipe ? getPreparedR100Presentation(nativeRecipe) : undefined,
         ) : undefined),

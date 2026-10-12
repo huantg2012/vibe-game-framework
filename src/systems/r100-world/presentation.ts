@@ -12,6 +12,8 @@ import type { PaintedMaterial } from './painted-material';
 import { audioManager } from '@/managers/audio-manager';
 import { r100MaterialPressure, r100PresentationIdentity, validR100PresentationState, type R100PresentationState } from './presentation-state';
 import { ActorOcclusionField } from './actor-occlusion-field';
+import { bakeSearchSitePatches } from './search-site-bake';
+import { applySearchSitePatch, validateSearchSitePatches } from './search-site-patches';
 export type MasterViewMode='normal'|'albedo'|'light'|'geometry';
 const mix=(a:Rgb,b:Rgb,t:number):Rgb=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
 let presentationSequence=0;
@@ -43,7 +45,14 @@ export class MasterPresentation implements RiftDevRuntime {
   this.pollutionColor=sourceColor.map(v=>v/Math.max(...sourceColor)) as unknown as Rgb;
   // Production passes an already baked/uploaded receiver. Synchronous baking
   // remains only for the explicitly independent art laboratory constructor.
-  this.renderer=preparedRenderer??new MasterSurfaceRenderer(world,undefined,undefined,painting,bakeMasterWorldSurface(world,painting));
+  if(preparedRenderer)this.renderer=preparedRenderer;
+  else{
+   const surface=bakeMasterWorldSurface(world,painting);
+   const patches=world.searchSites?bakeSearchSitePatches(world,surface,painting):undefined;
+   validateSearchSitePatches(world,patches);
+   for(const patch of patches??[])applySearchSitePatch(surface,patch,patch.intact);
+   this.renderer=new MasterSurfaceRenderer(world,undefined,undefined,painting,surface,patches);
+  }
   this.key=`r100-native-${world.definition.id}-${world.layout.seed}-${++presentationSequence}`;
   const rollback:Array<()=>void>=[()=>this.renderer.destroy()];
   try {
@@ -92,6 +101,7 @@ export class MasterPresentation implements RiftDevRuntime {
  update(elapsedMs:number,ended:boolean):void{const dt=Math.max(0,elapsedMs-this.lastElapsed);this.lastElapsed=elapsedMs;if(this.motion&&!ended)this.time+=dt;if(ended)this.audio.destroy();}
  afterUpdate():void{
   if(this.destroyed)return;const began=performance.now(),frame=this.context.readPresentationFrame();
+  if(this.world.searchSites)for(const node of frame.piles)this.renderer.setSearchSiteCollected(node.id,node.collected);
   this.lamp.x=frame.player.position.x;this.lamp.y=frame.player.position.y;
   const cycle=(this.time/1000%this.world.definition.motion_period)/this.world.definition.motion_period;
   const pressure=r100MaterialPressure(this.time,this.world.definition.motion_period);
@@ -166,7 +176,7 @@ export class MasterPresentation implements RiftDevRuntime {
   }
  }
  snapshot():Record<string,unknown>&{phase:string}{return{mode:this.mode,motion:this.motion,phase:this.phase,elapsedMs:this.time,activity:this.activity,lastRenderMs:this.renderMs,
-  renderer:'native-pixel WebGL2 material receiver under unchanged Rift fog',gpuBytes:this.renderer.gpuBytes,surfaces:this.renderer.surfaceDiagnostics,
+  renderer:'native-pixel WebGL2 material receiver under unchanged Rift fog',gpuBytes:this.renderer.gpuBytes,surfaces:this.renderer.surfaceDiagnostics,searchSites:this.renderer.searchDiagnostics(),
   shoulderLight:this.lamp,sourceLights:this.phaseSources,erosionLights:this.erosionSources,hostLights:[...this.hostSources.values()],activeLightCount:this.lights.length,geometryDiagnostics:this.world.diagnostics,
   surfaceVisibility:'native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility',
   occlusion:'explicit solid role masks foreground; walkable relief never clips actors',sounds:this.audio.snapshot()};}

@@ -31,6 +31,8 @@ export interface WorldProductionRecipeV3 extends Omit<WorldProductionRecipeV1, '
   readonly appearance?: import('./r100-world-appearance').R100WorldAppearance;
   /** Revision 7 freezes expansion/exploration policy; older records omit it. */
   readonly spatialPolicy?: import('./r100-spatial-world').R100SpatialPolicy;
+  /** Revision 9 freezes environmental search-site generation and visual provenance. */
+  readonly searchSitePolicy?: import('./search-site-types').R100SearchSitePolicy;
   readonly nativeDefinition: import('./r100-master-world').MasterDefinition;
   readonly gradeDefinition: import('./pollution-grade').PollutionGradeDefinition;
   readonly contentDefinition: import('./r100-expedition').R100ExpeditionDefinition;

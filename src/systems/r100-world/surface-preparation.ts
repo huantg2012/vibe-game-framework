@@ -14,11 +14,13 @@ import { bakePaintGenome } from '@/entities/form-renderers/d/paint-genome/bake';
 import { resolvePaintVeinVariant } from '@/entities/form-renderers/d/paint-genome/topology';
 import { paintGenomePreparationKey, type PreparedPaintGenome } from '@/entities/form-renderers/d/paint-genome/prepared';
 import { mix32 } from '@/generation/seed-fork';
+import { bakeSearchSitePatches, type SearchSiteMaterialPatch } from './search-site-bake';
+import { applySearchSitePatch, validateSearchSitePatches } from './search-site-patches';
 export interface R100SurfacePreparationInput {
  readonly native:R100NativeWorldData; readonly layout:GeneratedRiftLayout;
  readonly painting:PaintedMaterial;
 }
-export interface R100SurfacePreparationResult { readonly identity:string; readonly surface:MasterSurfaceBake; readonly paintHosts:readonly PreparedPaintGenome[]; readonly gameplay:R100PreparedGameplay }
+export interface R100SurfacePreparationResult { readonly identity:string; readonly surface:MasterSurfaceBake; readonly paintHosts:readonly PreparedPaintGenome[]; readonly gameplay:R100PreparedGameplay; readonly searchPatches?:readonly SearchSiteMaterialPatch[] }
 export interface R100SurfacePreparationRequest { readonly id:number; readonly input:R100SurfacePreparationInput }
 export type R100SurfacePreparationResponse={readonly id:number;readonly started:true}|{readonly id:number;readonly result:R100SurfacePreparationResult}|{readonly id:number;readonly error:string};
 export function executeR100SurfacePreparation(input:R100SurfacePreparationInput):R100SurfacePreparationResult {
@@ -31,7 +33,11 @@ export function executeR100SurfacePreparation(input:R100SurfacePreparationInput)
   sourceRegions:createContaminantSourceRegions({grid:new TileGrid(input.layout.tileMap),spawn:input.layout.spawnPoint,
    nodes:[...input.layout.kindlingNodes,...input.layout.contaminantNodes],seed:input.layout.seed}),
  };
- return {identity,surface:bakeMasterWorldSurface(world,input.painting),paintHosts,gameplay};
+ const surface=bakeMasterWorldSurface(world,input.painting);
+ const searchPatches=world.searchSites?bakeSearchSitePatches(world,surface,input.painting):undefined;
+ validateSearchSitePatches(world,searchPatches);
+ for(const patch of searchPatches??[])applySearchSitePatch(surface,patch,patch.intact);
+ return {identity,surface,paintHosts,gameplay,...(searchPatches?{searchPatches}:{})};
 }
 export function r100PaintHostRequests(layout:GeneratedRiftLayout) {
  return layout.contaminationDraw.forms.filter(form=>form.portfolio==='bing').map((form,index)=>{
@@ -46,6 +52,7 @@ export function validateR100SurfacePreparation(result:R100SurfacePreparationResu
  if(result.identity!==r100NativePreparationIdentity(input.native)||surface.width!==input.native.raster.width||surface.height!==input.native.raster.height
    ||![surface.albedo,surface.normal,surface.response,surface.emission].every(data=>data instanceof Uint8Array&&data.length===size))
   throw new Error('Prepared native surface does not match the admitted world');
+ validateSearchSitePatches(hydrateR100MasterWorld(input.native,input.layout),result.searchPatches);
  const requests=r100PaintHostRequests(input.layout);
  if(!Array.isArray(result.paintHosts)||result.paintHosts.length!==requests.length)throw new Error('Prepared paint Host count differs');
  for(let index=0;index<requests.length;index++){

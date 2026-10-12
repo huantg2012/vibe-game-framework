@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: director / design / code（修订8跨材料作者推广）
+last-modified-by: design（六图修订9来源部署已接入，限定内部验证完成／用户实景待复看）
 last-modified-date: 2026-10-12
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
 interface-changed: false
@@ -15,6 +15,7 @@ interfaces-with:
   - system-contamination-lexicon   # 交出墙缘折线 / 占漆地板格（贪婪薪柴路径） / 走廊包围盒 + 一份 contaminationDraw；菌落与场不得加墙
   - system-growth-tide             # 输出污染物节点；工具 abyss 不得再直读固定图薪柴坐标
 exposes:
+  - R100SearchSitePlacement（修订9六图：冻结来源/位置/视觉seed，不含隐藏奖励；native.searchSites与layout节点一一对应）
   - generateRectilinearFragment(request) → RectilinearFragmentResult（共享作者编译器；修订8余烬脊生成/恢复消费）
   - fragmentContoursToWorld(result)（同一作者结果到世界坐标的转换；经空间策略派生正式地形）
   - prepareProceduralDeparture({ signal?, pollutionGrade?, worldHistory? }?) → Promise<RiftCheckpoint.identity>（正式新出击，固定一次配方后后台生成）
@@ -34,7 +35,34 @@ exposes:
 
 # 系统设计：裂隙地图生成
 
-TL;DR：正式新出发使用修订8；显式注册的六个世界从独立CSV矩形骨架经固定v1断缘生成同源地形与部署，其他102世界几何不变。旧在途按原修订恢复；出生与唯一撤离分离，未知出口仍需探索发现。
+TL;DR：六图新出发已接入修订9的来源部署与同场材料翻找物，其他102世界新局保持修订8。六图仍使用原CSV矩形骨架及固定v1断缘；旧在途按原修订恢复。生成/恢复已有范围限定核查，限定内部验证完成／用户实景待复看，未知唯一撤离仍需探索发现。
+
+<a id="grounded-search-sites"></a>
+
+## 六世界翻找物来源部署（2026-10-12，已接入／限定内部验证完成／用户实景待复看）
+
+本节经D0内部设计复核后已接入生成、原生表现与恢复；膜/纤维首轮退回已在第二轮六图样本中修正，限定实景内部复核不代表用户视觉终验。范围仅余烬脊、无彩层原、纤维扇流、壳缘阶串、苍帆夹道、凝胶裹纤维；其他102世界保持原路径。设计依据与批次见[实施方案](../design-notes/pickup-grounding-plan.md)，材料形体与像素预算见[Art合同](../art/pickup-grounding.md)，交互与翻后状态归[翻找spec](system-chaos-scavenge-extract.md#grounded-search-sites)。
+
+### 来源与选点规则
+
+1. 先完成原最终地形、实体、真实出生/撤离和危险场；原节点配额、价值、风险档、20px身体、8px支撑、48px可见操作站位、路程/间距及巡逻窗口为硬约束。来源偏好只在原 `allowed` 合法候选内评分；不能先出点再向母体吸附，不能为美术关系减配额、改risk或补地。
+2. 支持三种来源关系：`detached` 母体断落、`surface-peel` 表层剥离、`ground-accumulation` 开放积留。它们不是奖励分类，不以内容物/tier/品质定形，也不硬塞每图固定比例。
+3. 母体断落必须引用附近实际存在、材料匹配的几何及有效接触侧；按实际轮廓而非包围盒/实体中心判断，来源与核心不得跨VOID假连接。表层剥离须有节点当地地床/可走relief的材料依据，不新增凹坑或碰撞。开放积留是独立合法的作者语法，用局部稀疏铺展与承托解释，不能把原孤立堆改名当兜底。
+4. 来源偏好有上限，不能让“最近母体”压倒原路程/分散逻辑；低实体密度世界不为凑母体关系大量拒绝合法图。仍允许宽地上的合法散落，不把所有点推向solid边/空洞边或形成沿边固定搜寻规律。
+5. 选择后冻结交互锚点与来源描述；可翻核心位置与节点位置完全一致，不能只搬视觉。外围只作低矮材料表现，全部像素遵从实际支撑/表面遮盖，不跨孔造假桥、不改变导航/视线。空间不足先裁外围，不得把核心裁没。
+6. 核心/散料/残留使用一份无奖励含义的视觉支流。来源关系读取实际局部材料，不能总用世界主材代替混材落点；渲染描述不交付kind/value/tier/rarity或dropPlan。调换隐藏奖励而保持来源描述时，所见形状、颜色及翻找前动作须相同。
+
+### 冻结数据、版本与接口
+
+实际合同为 `search-site-types.ts` 的 `R100SearchSitePlacement`，序列化在 `native.searchSites`，每layout节点恰好一条：`version:1`、`nodeId`、与layout完全相同的 `position`、独立 `visualSeed`、三类 `sourceKind`、`family`、可空 `sourceObjectId/sourceAnchor`、`axis`、`footprintProfile:'grounded-material-v1'`，另以 `groundFamily` 记录实际原生地床、`sourceDomain:'formation'|'ground'` 区分来源域。`nodeId` 仅作稳定引用，不能解析前缀猜奖励。`SearchSitePlanner` 只在原合法候选内附加有上限评分；来源查真实XY三角形及VOID LOS，地表来源不虚构实体锚点，接收端校验节点身份、材料、来源域和实际几何。
+
+修订9的 `searchSitePolicy` 从 `data/rift-search-sites.csv` 单向编译，冻结 `version`、`algorithm:'grounded-search-v1'`、`worldId`、`sourceHash`、`sourceReachPx`、`environmentScoreCap`、`peelPreference`、`footprintProfile` 并参与配方身份。仅六图新局升r9；其他102图新局继续r8，全部旧保存按原revision闭包恢复，包括原r8节点位置、完整地图与旧视觉。地形仍消费已锁矩形碎片v1，升级节点部署不改变作者构型。恢复从冻结策略确定性复建/核对来源描述，不向今日CSV或附近新母体重新选点；未知版本、缺失/重复节点来源或身份不符明确拒绝，不静默改用旧通用堆。
+
+来源描述由原生材料表现消费，F019及其保存接口不新增来源字段或状态。`MasterPresentation.afterUpdate` 在绘制前读取既有 `frame.piles` 的 `id/collected`，调用 `MasterSurfaceRenderer.setSearchSiteCollected`；首次恢复同样先同步再draw，不重放揭晓。Worker以 `bakeSearchSitePatches` 预备 `intact/searched` 两态的albedo/normal/response/emission四通道局部patch，共用原灯场与迷雾；只在collected实变时局部上传，不增加GL上下文、不每帧重烘上传、不独立维护第二个“已搜”存档位。patch运输矩形互不相交，VOID、前景solid和未覆盖地床保持原值。F044核对冻结身份与原节点状态，原奖励/揭晓事务不由本系统接管。
+
+### 本轮验证边界
+
+先三强反例（膜/胶/纤维）及灰层对照，再覆盖六图。必须有同seed旧版/新整合的正常相机实景、真实E翻前后、不同灯向/近远、开放地床与实体/表层关系、冷恢复和未调优seed；仅在排错必要时拆分来源/受光诊断，不额外维护四套渲染分支。程序核查包括各档原配额/风险/身体站位、来源真实性、隐藏奖励替换不影响外观、无VOID修改、旧r8完整地图与四RGBA精确恢复。数字覆盖不代替可发现性和接地审美，六图完成也不恢复102图推广。
 
 <a id="rectangle-fragment-authoring"></a>
 
@@ -817,6 +845,7 @@ interface FragmentRoll {
 - 从 **system-enemy-ai** 接收：WalkGrid、路点必须可走、过渡期 `EnemySpawnData.type` ∈ {infiltrator, rewriter}。向它提供本次 `enemySpawns`（每条带 `form`；过渡期恰好 1 个改写体）。另交墙缘折线 / 占漆地板格（贪婪薪柴路径） / 走廊包围盒，以及一份 `contaminationDraw` 给污染句法（宿主禁止二次抽卡）。
 - 从 **system-growth-tide** 接收：污染物节点契约。向它提供本次节点。工具 abyss 改读本次薪柴坐标，禁止 `import { RIFT_MAP }`。
 - 向 **RiftScene** 发送：整份 `GeneratedRiftLayout`。场景不再在 create 时写死 `RIFT_MAP`。
+- **修订9六图，已接入／限定内部验证完成／用户实景待复看：** 向native材料表现提供与layout节点一一对应的冻结 `R100SearchSitePlacement`，不含奖励；现有 `frame.piles` 的id/collected驱动材料前后态，不新增翻找系统或保存接口。完整策略参与配方身份，恢复按原revision核对，不读取今日CSV重选来源。合同见[六图来源部署](#grounded-search-sites)。
 - 向 **ExtractionSystem** 发送：恰好一个 `ExtractionPointDef`。规则仍是走近按 E。
 - 向 **Minimap** 发送：本次 tile 与撤离世界坐标。标记形状不新造。
 - 向 **VisibilitySystem** 发送：`setExtractionPosition` + glow source。虚空挡视线（DEC-106）。

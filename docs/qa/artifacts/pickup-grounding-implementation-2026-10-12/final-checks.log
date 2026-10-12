@@ -1,0 +1,20 @@
+
+> coh@0.1.0 check:pickup-grounding
+> node tools/pickup-grounding/codegen.mjs --check && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/pickup-grounding/check-bake.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/pickup-grounding/check-runtime.ts --production
+
+PASS grounded-search policy 6 worlds (checked)
+{"passed":true,"cases":216,"variants":{"folded-slab":36,"fibre-knot":36,"broken-shell":36,"granular-ridge":36,"membrane-rim":36,"gel-flow":36},"contracts":["determinism","receiver-readonly","disjoint-upload-windows","void-and-solid-clipping","real-height-normals","searched-relief","peripheral-exposure","reward-independent","legacy-isolation","parent-direction"]}
+{
+  "status": "pass",
+  "checks": [
+    "receiving contract rejects missing/duplicate/foreign patches, malformed channels and unsupported geometry",
+    "CPU patch composition changes exactly the transport rectangle and never mutates either phase",
+    "renderer uploads four bounded channels only on phase changes; release drops CPU/GPU ownership",
+    "restored collected frame is synchronized before the first draw; unchanged frames never upload",
+    "legacy presentation neither asks for grounded node state nor acquires patch buffers",
+    "surface-only visual has no shell/ambient shimmer; only actual rummage/reveal starts effects",
+    "real E interruption, durable refusal, overflow and cold restore preserve collected and one reward",
+    "actual r9 Worker result binds source provenance; rejects missing phase buffers or foreign world identity"
+  ],
+  "scope": "CPU runtime/transport contracts with fake GL and DOM; --production adds one real r9 preparation. No native GPU pixels, FOV image, browser budget or user aesthetic verdict."
+}

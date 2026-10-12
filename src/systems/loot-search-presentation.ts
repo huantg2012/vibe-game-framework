@@ -161,6 +161,16 @@ export function createTexturedSearchObjectVisual(
   return new PileVisual(scene, position.x, position.y, seed, '', slots, getPlayerPos, appearance);
 }
 
+/** The admitted native surface owns the body and its collected state. Keep the
+ * existing interaction/reward feedback without a second independently lit shell. */
+export function createSurfaceSearchObjectVisual(
+  scene: Phaser.Scene, position: Readonly<Vector2>, seed: number,
+  slots: PileSlots, getPlayerPos: () => Readonly<Vector2>,
+): SearchObjectVisual {
+  ensureRevealTextures(scene);
+  return new PileVisual(scene, position.x, position.y, seed, '', slots, getPlayerPos, undefined, true);
+}
+
 function namedHex(name: string): string {
   const hex = ART_DIRECTION_HEX[name];
   if (!hex || !PALETTE_HEX_SET.has(hex.toLowerCase())) {
@@ -185,7 +195,7 @@ class PileVisual implements SearchObjectVisual {
   readonly x: number;
   readonly y: number;
   private readonly scene: Phaser.Scene;
-  private readonly sprite: Phaser.GameObjects.Image;
+  private readonly sprite: Phaser.GameObjects.Image | null;
   private readonly chips: Phaser.GameObjects.Image[];
   private readonly reveal: Phaser.GameObjects.Image[];
   private readonly getPlayerPos: () => Readonly<Vector2>;
@@ -200,6 +210,7 @@ class PileVisual implements SearchObjectVisual {
   private debrisAcc = 0;
   private chipIndex = 0;
   private destroyed = false;
+  private revealed = false;
 
   constructor(
     scene: Phaser.Scene,
@@ -210,6 +221,7 @@ class PileVisual implements SearchObjectVisual {
     slots: PileSlots,
     getPlayerPos: () => Readonly<Vector2>,
     private readonly appearance?: SearchObjectAppearance,
+    private readonly surfaceBody = false,
   ) {
     this.scene = scene;
     this.x = x;
@@ -222,10 +234,10 @@ class PileVisual implements SearchObjectVisual {
     this.hz = 8 + ((seed >>> 16) % 5);
     this.phase = ((seed >>> 4) % 1000) / 1000 * Math.PI * 2;
 
-    this.sprite = scene.add.image(x, y, appearance?.textureKey ?? pileTextureKey(fragmentTypeId, variant));
-    if (appearance) this.sprite.setName(appearance.name);
-    this.sprite.setDepth(NODE_DEPTH);
-    this.sprite.setOrigin(0.5, 1);
+    this.sprite = surfaceBody ? null : scene.add.image(x, y, appearance?.textureKey ?? pileTextureKey(fragmentTypeId, variant));
+    if (appearance) this.sprite?.setName(appearance.name);
+    this.sprite?.setDepth(NODE_DEPTH);
+    this.sprite?.setOrigin(0.5, 1);
 
     this.chips = [];
     for (let i = 0; i < CHIP_POOL; i++) {
@@ -247,7 +259,7 @@ class PileVisual implements SearchObjectVisual {
 
   setVisibility(vis: number): void {
     this.vis = Math.max(0, Math.min(1, vis));
-    if (this.sprite.visible) this.sprite.setAlpha(this.vis);
+    if (this.sprite?.visible) this.sprite.setAlpha(this.vis);
     if (this.vis <= .02) {
       this.appearance?.ambient?.hide();
       for (const chip of this.chips) { this.scene.tweens.killTweensOf(chip); chip.setVisible(false); }
@@ -256,7 +268,7 @@ class PileVisual implements SearchObjectVisual {
 
   setRummaging(on: boolean): void {
     if (!on && this.rummaging) {
-      this.sprite.setPosition(this.x, this.y);
+      this.sprite?.setPosition(this.x, this.y);
       this.rummageClock = 0;
     }
     this.rummaging = on;
@@ -264,11 +276,11 @@ class PileVisual implements SearchObjectVisual {
   }
 
   update(deltaMs: number): void {
-    if (this.destroyed || !this.sprite.visible) return;
+    if (this.destroyed || this.revealed || (this.sprite && !this.sprite.visible)) return;
     const vis = this.vis;
-    this.sprite.setAlpha(vis);
-    this.appearance?.ambient?.update(deltaMs, vis, this.rummaging, this.sprite.x);
-    if (this.rummaging) {
+    this.sprite?.setAlpha(vis);
+    this.appearance?.ambient?.update(deltaMs, vis, this.rummaging, this.sprite?.x ?? this.x);
+    if (this.rummaging && this.sprite) {
       this.rummageClock += deltaMs;
       const t = this.rummageClock * 0.001;
       const wobble =
@@ -277,7 +289,7 @@ class PileVisual implements SearchObjectVisual {
       this.sprite.setX(this.x + wobble);
     }
     this.debrisAcc += deltaMs;
-    const interval = this.rummaging ? this.rummageMs : this.appearance?.ambient ? Infinity : this.idleMs;
+    const interval = this.rummaging ? this.rummageMs : this.appearance?.ambient || this.surfaceBody ? Infinity : this.idleMs;
     if (this.debrisAcc >= interval) {
       this.debrisAcc = 0;
       this.spawnDebris();
@@ -289,7 +301,8 @@ class PileVisual implements SearchObjectVisual {
     rarity?: ContaminantRarity;
     playerPos: Readonly<Vector2>;
   }): void {
-    this.sprite.setVisible(false);
+    this.revealed = true;
+    this.sprite?.setVisible(false);
     this.appearance?.ambient?.hide();
     for (const chip of this.chips) { this.scene.tweens.killTweensOf(chip); chip.setVisible(false); }
     this.rummaging = false;
@@ -324,8 +337,7 @@ class PileVisual implements SearchObjectVisual {
   destroy(): void {
     if (this.destroyed) return;
     this.destroyed = true;
-    this.scene.tweens.killTweensOf(this.sprite);
-    this.sprite.destroy();
+    if (this.sprite) { this.scene.tweens.killTweensOf(this.sprite); this.sprite.destroy(); }
     for (const img of [...this.chips, ...this.reveal]) {
       this.scene.tweens.killTweensOf(img);
       img.destroy();

@@ -1,0 +1,538 @@
+{
+  "scope": "One persistent Phaser Game; source-family warmups then configured identical and mixed native reconstructions. Two actual GC calls before each retained sample. Weak references never retain scene objects. No GPU driver byte/RSS claim; retained WebGL object/context ownership and main-isolate memory only.",
+  "samples": [
+    {
+      "label": "warmed-baseline",
+      "usage": {
+        "usedSize": 109439372,
+        "totalSize": 110985216,
+        "embedderHeapUsedSize": 3931592,
+        "backingStorageSize": 280131249
+      },
+      "objects": {
+        "Texture": {
+          "created": 617,
+          "live": 373,
+          "active": 373
+        },
+        "Framebuffer": {
+          "created": 83,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 83,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 39,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 78,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 18,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 8,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 0,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-1",
+      "usage": {
+        "usedSize": 109895892,
+        "totalSize": 111771648,
+        "embedderHeapUsedSize": 3952912,
+        "backingStorageSize": 280131249
+      },
+      "objects": {
+        "Texture": {
+          "created": 650,
+          "live": 373,
+          "active": 373
+        },
+        "Framebuffer": {
+          "created": 84,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 84,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 40,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 80,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 19,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 9,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 456520,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-2",
+      "usage": {
+        "usedSize": 110201552,
+        "totalSize": 111247360,
+        "embedderHeapUsedSize": 3879728,
+        "backingStorageSize": 280131249
+      },
+      "objects": {
+        "Texture": {
+          "created": 683,
+          "live": 373,
+          "active": 373
+        },
+        "Framebuffer": {
+          "created": 85,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 85,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 41,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 82,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 20,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 10,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 762180,
+      "backingGrowth": 0
+    },
+    {
+      "label": "after-mixed-6",
+      "usage": {
+        "usedSize": 110397652,
+        "totalSize": 112033792,
+        "embedderHeapUsedSize": 3929312,
+        "backingStorageSize": 280131255
+      },
+      "objects": {
+        "Texture": {
+          "created": 891,
+          "live": 373,
+          "active": 373
+        },
+        "Framebuffer": {
+          "created": 93,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 93,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 49,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 98,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 28,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 18,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 958280,
+      "backingGrowth": 6
+    }
+  ],
+  "mixedCoverage": [
+    {
+      "world": "ash-strata",
+      "grade": "low",
+      "seed": 20261012
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "low",
+      "seed": 20261013
+    },
+    {
+      "world": "splayed-fibres",
+      "grade": "low",
+      "seed": 20261014
+    },
+    {
+      "world": "shell-chain",
+      "grade": "low",
+      "seed": 20261015
+    },
+    {
+      "world": "pale-sail",
+      "grade": "low",
+      "seed": 20261016
+    },
+    {
+      "world": "gel-fibre",
+      "grade": "low",
+      "seed": 20261017
+    }
+  ],
+  "rebuildProgress": [
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "initial-load",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:03.833Z",
+      "finishedAt": "2026-10-12T08:29:10.776Z"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:10.777Z",
+      "finishedAt": "2026-10-12T08:29:15.589Z"
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 1,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:15.590Z",
+      "finishedAt": "2026-10-12T08:29:20.317Z"
+    },
+    {
+      "world": "splayed-fibres",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 2,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:20.317Z",
+      "finishedAt": "2026-10-12T08:29:24.784Z"
+    },
+    {
+      "world": "shell-chain",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 3,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:24.784Z",
+      "finishedAt": "2026-10-12T08:29:29.499Z"
+    },
+    {
+      "world": "pale-sail",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 4,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:29.499Z",
+      "finishedAt": "2026-10-12T08:29:33.550Z"
+    },
+    {
+      "world": "gel-fibre",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 5,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:33.550Z",
+      "finishedAt": "2026-10-12T08:29:37.915Z"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "baseline",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:37.915Z",
+      "finishedAt": "2026-10-12T08:29:43.139Z",
+      "sample": "warmed-baseline"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "identical",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:43.139Z",
+      "finishedAt": "2026-10-12T08:29:48.214Z",
+      "sample": "identical-1"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "identical",
+      "index": 1,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:48.214Z",
+      "finishedAt": "2026-10-12T08:29:53.330Z",
+      "sample": "identical-2"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "low",
+      "seed": 20261012,
+      "phase": "mixed",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:53.333Z",
+      "finishedAt": "2026-10-12T08:29:58.183Z"
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "low",
+      "seed": 20261013,
+      "phase": "mixed",
+      "index": 1,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:29:58.184Z",
+      "finishedAt": "2026-10-12T08:30:02.897Z"
+    },
+    {
+      "world": "splayed-fibres",
+      "grade": "low",
+      "seed": 20261014,
+      "phase": "mixed",
+      "index": 2,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:30:02.898Z",
+      "finishedAt": "2026-10-12T08:30:07.033Z"
+    },
+    {
+      "world": "shell-chain",
+      "grade": "low",
+      "seed": 20261015,
+      "phase": "mixed",
+      "index": 3,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:30:07.033Z",
+      "finishedAt": "2026-10-12T08:30:12.098Z"
+    },
+    {
+      "world": "pale-sail",
+      "grade": "low",
+      "seed": 20261016,
+      "phase": "mixed",
+      "index": 4,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:30:12.098Z",
+      "finishedAt": "2026-10-12T08:30:16.213Z"
+    },
+    {
+      "world": "gel-fibre",
+      "grade": "low",
+      "seed": 20261017,
+      "phase": "mixed",
+      "index": 5,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:30:16.214Z",
+      "finishedAt": "2026-10-12T08:30:21.297Z"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "after-mixed",
+      "index": 6,
+      "status": "completed",
+      "startedAt": "2026-10-12T08:30:21.298Z",
+      "finishedAt": "2026-10-12T08:30:30.447Z",
+      "sample": "after-mixed-6"
+    }
+  ],
+  "errors": [],
+  "status": "passed-bounded-lifecycle",
+  "currentStep": {
+    "world": "ash-strata",
+    "grade": "severe",
+    "seed": 20261012,
+    "phase": "after-mixed",
+    "index": 6,
+    "status": "completed",
+    "startedAt": "2026-10-12T08:30:21.298Z",
+    "finishedAt": "2026-10-12T08:30:30.447Z",
+    "sample": "after-mixed-6"
+  },
+  "catalogWorldIds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit",
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues",
+    "monolith-sill",
+    "bleached-court",
+    "split-rib-causeway",
+    "satin-fan",
+    "chalk-steps",
+    "porcelain-maw",
+    "amber-ribs",
+    "pale-sail",
+    "root-cistern",
+    "scab-islands",
+    "foam-trenches",
+    "resin-fall",
+    "tendon-shelves",
+    "felt-basin",
+    "cork-shelves",
+    "lacquer-court",
+    "ribbed-delta",
+    "bladder-weave",
+    "flake-thicket",
+    "resin-hollows",
+    "sentinel-mass",
+    "stepped-bowl",
+    "draped-bay",
+    "ember-cushions",
+    "splinter-rotunda",
+    "quilted-scars",
+    "silt-colonnade",
+    "shell-causeway",
+    "cleft-tableland",
+    "fallen-spines",
+    "clamped-shore",
+    "torn-reservoir",
+    "braided-seam",
+    "scalloped-reach",
+    "offset-pan",
+    "thin-delta",
+    "shard-switchback",
+    "hollow-wreckage",
+    "knotted-run",
+    "rolled-fragments",
+    "fibre-choke",
+    "buried-lamellae",
+    "pressed-rim",
+    "wedged-hide",
+    "quiet-spur",
+    "split-fall",
+    "three-shelves",
+    "frayed-outwash",
+    "short-fibre-mat",
+    "marrow-break",
+    "felt-wedges",
+    "pore-bank",
+    "staggered-cups",
+    "split-tows",
+    "curled-flats",
+    "pitch-forks",
+    "grain-weld",
+    "silk-catch",
+    "resin-sleeve",
+    "shell-threads",
+    "chalk-divide",
+    "red-vault-fragments",
+    "blue-fault",
+    "pale-pressure",
+    "notched-backwater",
+    "crossed-casings",
+    "fibre-stumpfield",
+    "sloughed-court",
+    "crushed-seam",
+    "husk-reef",
+    "fibre-scree",
+    "gel-rafts",
+    "double-return",
+    "offset-basins",
+    "pinched-fan",
+    "spliced-reaches",
+    "white-scarfield",
+    "black-lacuna",
+    "ochre-folds",
+    "violet-marrows",
+    "fractured-estuary",
+    "woven-quarters",
+    "shell-patchwork",
+    "last-shelf"
+  ],
+  "selectedWorldIds": [
+    "ash-strata",
+    "cinder-ridge",
+    "splayed-fibres",
+    "shell-chain",
+    "pale-sail",
+    "gel-fibre"
+  ],
+  "repetitions": 2,
+  "mixedRebuilds": 6
+}

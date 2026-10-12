@@ -2,10 +2,10 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: design / director（DEC-196：撤离探索约束）
-last-modified-date: 2026-10-10
+last-modified-by: design（六图环境状态已接入，限定内部验证完成／用户实景待复看）
+last-modified-date: 2026-10-12
 slice: 1 (extended in 5.5, 6, 7, 迭代 10)
-interface-changed: true
+interface-changed: false
 interfaces-with:
   - system-field-inventory     # R100-I03：备行能力/实际消费、等级冻结与恢复，保持死亡和供奉规则
   - system-contamination-lexicon # R100-I03：真实Host阶段与接触危险，不另加全局伤害周期
@@ -315,6 +315,22 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 外观输入只含世界来源、世界种子与节点视觉种子，不读内容类型、档位、数量或稀有度；同一种残骸仍可能翻出薪柴或污染物。`fragmentTypeId` 继续作为旧掉落与恢复身份，不能为了换外观篡改它。旧四类碎片保留各自已锁残骸，独立场景的专用视觉工厂优先。搜取范围、1200ms读条、打断、揭晓与结算复用原规则。新增世界必须声明来源形制；缺配置明确报错，不静默用通用土堆兜底。
 
 **可发现性补充（用户已认可来源风格）：** 保留四类残骸的全部轮廓和大小，通过更干净的新鲜断面、明确顶／侧面差异及接地暗部，与地表区分。闲置时只有少数实体内断面短暂反光，伴随一两片细碎残屑下落；各物件节奏错开，主体不漂浮、不整件呼吸闪烁，不产生光源、声音或绿色奖励提示。动效使用场景模拟时间，视野外隐藏，翻找／揭晓时退让，暂停冻结，系统减动偏好下只保留静态物件。外观和动效继续不读翻找内容。
+
+<a id="grounded-search-sites"></a>
+
+**2026-10-12六图环境融入合同（已接入，限定内部验证完成／用户实景待复看）：** 修订9新局仅对 `cinder-ridge`、`ash-strata`、`splayed-fibres`、`shell-chain`、`pale-sail`、`gel-fibre` 使用本段。生成、材料表面与原状态联结已接入；六图翻前/翻后及首轮形体整改已获限定内部复核，仍待用户实景复看。其余102世界和旧r8/更早在途保持原规则及原视觉，不把本段回灌旧记录。节点位置与来源描述由[地图生成合同](system-map-generation.md#grounded-search-sites)唯一提供；具体六材画法归[Art合同](../art/pickup-grounding.md)。
+
+一处翻找场所由**一个可翻核心＋低矮稀疏散料／薄层＋翻后残留**组成。核心仍是唯一E目标，原48px半径、1200ms、开始发声、打断、真实可见资格、产出数量与一次揭晓事务全部保持。外围不是额外可翻对象，不扩交互范围，不增碰撞、危险、记忆标记或独立光源。外观只读取冻结来源/局部材料/visual seed；不得读取隐藏内容、数量、tier、品质或dropPlan，不把同一奖励编码成特定材料。世界名称及来源关系也不决定所得。
+
+本新路径用native地表材料patch承接原灯向、灯色、距离衰减、表面阴影与真实迷雾。核心初样长边24–34px、外围至多80×64px且露底至少65%，材料比例不同；不借统一扩大或高亮描边恢复可发现性。保留原地床，从薄层到核心用实际承托与断面建立识别，取消上文旧sprite中无灯源依据的计时反光。散料/残留也须逐像素服从FOV/VOID，不因核心可见便照亮整个范围。
+
+**状态权威不新增。** 未翻为intact；按E期间保持静态地表，仅沿用原进度、声音和已有碎屑反馈，不新增地表微动或逐帧贴图上传。中断/拒写不得提前切after。实际原揭晓/库存入包或留地事务成功、原节点 `collected=true` 后，切为同源after：核心散平、叠隙消失，保留少量贴地材料和扰动痕迹。它不再接受E、不参与未翻计数/工具节点揭示，也不再触发引目反光。已有奖励揭晓动画仍可播放，不能用整处环境消失代替材料翻动。
+
+翻后形态由冻结来源描述＋原collected确定性派生；续局在首个可见帧之前恢复相同phase，不重新发声、揭晓或抽奖励；不另存可能分歧的searched标志。容量不足或玩家丢下的真实物件仍由原库存系统拥有，必须可见可拾，低矮残迹不能吞掉它、挡提示或抢E目标。当前局残迹不累积到新出击。
+
+实际接线沿既有 `frame.piles` 的id/collected，`MasterPresentation.afterUpdate` 在draw前调用renderer的 `setSearchSiteCollected`，无新的 `LootSearchSystem` API或存档字段；相同phase不上传，首帧恢复不重放粒子。RiftScene仅在当前native拥有 `searchSites` 时选择 `createGroundedWorldSearchVisual`，该工厂沿用原揭晓粒子/反馈且不创建旧残堆sprite；旧局继续原工厂。原 `R100SearchSitePlacement` 被生成与native表现消费，翻找规则不读取它作结算决策。
+
+本段覆盖规则15的“隐藏整堆sprite”在上述r9六图的表现含义，改为核心退出＋残迹保留；不改变该规则的结算事务。也覆盖规则17在新地表路径仅按sprite alpha显隐的实现描述，实际能否翻仍使用同一原可见性查询，地表表现服从原统一迷雾。验证须含正常相机旧/新整合对照、不同灯向与距离、真实E中断/完成、容量不足留地、原collected冷恢复及旧局精确恢复；文字与机器资格不代签用户视觉终验。
 
 14a. **翻找发声**：读条**开始时**经场景层调一次 `AISystem.reportNoise`（与战斗噪音同一钩子）：半径 `LOOT.SEARCH_NOISE_RADIUS`（96 px，与挥击噪音同级）、级别 `'suspicious'`。读条期间不持续发声；完成与打断不发声。理由：不发声则读条 = 强制停步，而停步对改写体几乎隐形（`system-enemy-ai` 停步听觉 ≤40 px 且察觉度封顶 0.20），翻找反而比走路更安全，「读条 = 风险决策」不成立；suspicious（非 alert）是因为翻找是搜刮基本动作（约 11 次/局），alert 会让听觉敌人成为搜刮的硬禁止而非风险权衡。读条期间玩家移动状态 = 停步（听觉连续填充按停步处理；视觉通道照常——在视锥内翻找照样被看见）。
 14b. **读条期间混乱值照常累积**：读条不暂停混乱值，也**不**加额外脉冲——翻找的混乱成本就是时间流逝本身（1200 ms × 0.5/s ≈ 0.6 点/次），与「混乱让时间变货币」一致，不加第二笔税。
@@ -761,6 +777,7 @@ interface RunControllerAPI {
 | `system-combat` | `PLAYER_DIED { cause }` | 事件 | 触发死亡结束路径 |
 | `system-combat` | `PLAYER_HEALTH_CHANGED { current, max }` | 事件 | HUD 生命值条 |
 | T6 固定地图 | `RiftLayoutData`（出生点 / 撤离点 / 薪柴节点） | 场景创建时注入 | 布点 |
+| `system-map-generation`（修订9六图；已接入） | 每节点冻结 `R100SearchSitePlacement`：ID/位置/来源/局部材料/visual seed，无奖励字段 | 场景联结native材料表现，非新增翻找入参 | 同源intact/searched表面；仅原collected控制状态，不改变翻找规则 |
 | `system-purification-impact`（Slice 7） | `SortieModifiers.startingChaos` | 场景 data / `getStartingChaos()` | 出击混乱初值。增长曲线不改 |
 | `system-movement-vision`（T1/T5） | `Player.getPosition()`、`VisibilitySystem.getVisibilityAt(p)` / `isPointVisible(p)`、`Player.getFacingAngle()` / `getFacing4()` | 同步查询，**经场景层** | 拾取判定、节点 sprite alpha；小地图已探索集合与玩家朝向。小地图不 import VisibilitySystem |
 
@@ -774,10 +791,11 @@ interface RunControllerAPI {
 | `system-combat`（T4） | `ChaosSystem.addChaos(source, amount)`——若 T4 需要新增其他"战斗代价"钩子，走这个统一入口而不是直接改 `value` | 经场景层调用 / 或 T4 emit 事件由本系统监听（**优先后者**） |
 | Slice 2 净化点 | `RIFT_EXITED { kindlingGained, survived }` | 事件 |
 | QA / 调试 | `getValue()` / `getRate()` / `getStage()` / `peakValue` | 同步查询 |
+| 原生材料表现／恢复（修订9六图；已接入） | 既有 `frame.piles` 的 `id/collected` | 绘制前调用 `renderer.setSearchSiteCollected`，状态实变时切patch；不增翻找API或存档字段 |
 
 ### 事件契约变更
 
-**迭代 10（读条翻找）无事件契约变更**：无新事件、无 payload 变更。读条开始 / 进行 / 打断不进事件总线——事件只代表「已发生的事实」，读条是进行中的过程，进度由场景层每帧查询驱动渲染（读条载体是三张抽卡的表现层差异点，渲染路径不能钉死在事件上）；读条完成 = 既有 `KINDLING_COLLECTED` / `CONTAMINANT_ACQUIRED`；打断无事实发生（无事件）。`interface-changed` 保持 false。
+**迭代 10（读条翻找）无事件契约变更**：无新事件、无 payload 变更。读条开始 / 进行 / 打断不进事件总线——事件只代表「已发生的事实」，读条是进行中的过程，进度由场景层每帧查询驱动渲染（读条载体是三张抽卡的表现层差异点，渲染路径不能钉死在事件上）；读条完成 = 既有 `KINDLING_COLLECTED` / `CONTAMINANT_ACQUIRED`；打断无事实发生（无事件）。2026-10-12来源描述与原collected到native表面的接口新增已由生成、原生接收/Worker、RiftScene、frame.piles及恢复消费方核对，frontmatter标记已清除；本轮仍不新增奖励事件或独立searched存档位。
 
 以 `src/types/events.ts` 现状为准。本 spec 需要的全部事件均已存在，**仅一处建议新增字段**：
 

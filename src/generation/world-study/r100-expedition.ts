@@ -11,6 +11,8 @@ import type { Vector2, TileCoord } from '@/types/game-types';
 import type { ContaminantNodeDef, EnemySpawnData, KindlingNodeDef, KindlingTier } from '@/types/map-types';
 import type { PollutionGrade } from './pollution-grade';
 import type { MasterWorld } from './r100-master-world';
+import { SearchSitePlanner } from './search-site-placement';
+import type { R100SearchSitePlacement, R100SearchSitePolicy } from './search-site-types';
 
 export interface R100ExpeditionDefinition {
   readonly grade_id: PollutionGrade;
@@ -89,10 +91,12 @@ function pathTo(grid: TileGrid, parent: Int32Array, cell: number): TileCoord[] {
     .map(value => ({ col: value % grid.cols, row: Math.floor(value / grid.cols) }));
 }
 
-export function deployR100Expedition(world: MasterWorld, definition: R100ExpeditionDefinition): {
+export function deployR100Expedition(world: MasterWorld, definition: R100ExpeditionDefinition, searchSitePolicy?: R100SearchSitePolicy): {
   readonly layout: GeneratedRiftLayout; readonly diagnostics: Readonly<Record<string, unknown>>;
+  readonly searchSites?: readonly R100SearchSitePlacement[];
 } {
   const base = world.layout, grid = new TileGrid(base.tileMap), start = cellOf(grid, base.spawnPoint), field = routes(grid, start);
+  const searchSites = searchSitePolicy ? new SearchSitePlanner(world, searchSitePolicy) : undefined;
   const safePoints = world.pollution.safeRoute;
   const exitSeats: number[] = [];
   for (let cell = 0; cell < field.seats.length; cell++) if (field.seats[cell]) {
@@ -155,6 +159,7 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
         + (tier === 'safe' ? Math.min(100, seat.pollutionDistance) * .5 : -Math.min(180, seat.pollutionDistance) * .45)
         + (spatial && chosen.length ? Math.min(600, ...chosen.map(other => Math.hypot(other.seat.position.x - seat.position.x, other.seat.position.y - seat.position.y))) * spatial.node_spread_weight : 0)
         - (spatial && tier === 'safe' ? seat.approachDistance * .2 : 0)
+        + (searchSites?.score(seat.position) ?? 0)
         + mix32(base.seed, `r100-content-${kind}-${tier}-${slot}-${seat.cell}`) / 0x100000000 * 64;
       allowed.sort((a, b) => score(b) - score(a) || a.cell - b.cell);
       const seat = allowed[0];
@@ -213,10 +218,12 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
   const layout: GeneratedRiftLayout = { ...base, recipeId: `r100-native-v3:${world.definition.id}`,
     kindlingNodes, contaminantNodes, enemySpawns: enemies,
     contaminationDraw: { forms: [...enemies.map(enemy => enemy.form!), ...world.pollution.forms], warnings: [] } };
-  return { layout, diagnostics: { reachableBodySeats: field.distance.reduce((sum, distance) => sum + Number(Number.isFinite(distance)), 0),
+  const placements = searchSites ? [...kindlingNodes, ...contaminantNodes].map(node => searchSites.placement(node.id, node.position)) : undefined;
+  return { layout, ...(placements ? { searchSites: placements } : {}), diagnostics: { reachableBodySeats: field.distance.reduce((sum, distance) => sum + Number(Number.isFinite(distance)), 0),
     extractionRoutePx: field.distance[cellOf(grid, base.extractionPoint.position)], maximumExtraTravelPx: maxDistance, directReturnRoutePx: directReturn,
     nodes: chosen.map(item => ({ id: `${item.kind}/${item.tier}`, minimumExtraTravelPx: item.seat.distance, approachRoutePx: item.seat.approachDistance, interactionSeats: item.seat.interactionSeats, pollutionDistancePx: item.seat.pollutionDistance })),
     patrolWindows, patrolWindowContract: '2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately',
     ...(spatial ? { spatialDeployment: spatial, searchExtraTravelCapPx: spatial.deep_max_extra_travel_px } : {}),
+    ...(placements ? { searchSites: placements.map(site => ({ nodeId: site.nodeId, sourceKind: site.sourceKind, family: site.family, sourceDomain: site.sourceDomain, sourceObjectId: site.sourceObjectId })), environmentScoreCap: searchSitePolicy!.environmentScoreCap } : {}),
     costBasis: 'all-body-safe-48px-interaction-seats', guaranteedSafeReturn: true, enemyCount: enemies.length, kindlingCount: kindlingNodes.length, contaminantCount: contaminantNodes.length } };
 }

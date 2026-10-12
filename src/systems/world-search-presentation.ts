@@ -3,10 +3,20 @@ import Phaser from 'phaser';
 import { createSearchRemainsPixels, type SearchRemainsMaterial } from '@/generation/world-study/search-remains';
 import type { WorldProfile } from '@/generation/world-study/types';
 import type { Vector2 } from '@/types/game-types';
-import { createTexturedSearchObjectVisual, type SearchObjectVisual } from './loot-search-presentation';
+import { createSurfaceSearchObjectVisual, createTexturedSearchObjectVisual, type SearchObjectVisual } from './loot-search-presentation';
 import { buildRemainsReflection, SearchRemainsAmbient } from './search-remains-ambient';
 
 const leases = new WeakMap<Phaser.Textures.TextureManager, Map<string, number>>();
+
+export function createGroundedWorldSearchVisual(
+  scene: Phaser.Scene, position: Readonly<Vector2>, seed: number,
+  getPlayerPos: () => Readonly<Vector2>, profile: WorldProfile,
+): SearchObjectVisual {
+  return createSurfaceSearchObjectVisual(scene, position, seed, {
+    shadow: profile.palette.shadow, stain: profile.palette.materialDark,
+    body: profile.palette.materialMid, highlight: profile.palette.faceLight,
+  }, getPlayerPos);
+}
 
 function fingerprint(pixels: Uint8ClampedArray): string {
   let hash = 2166136261;

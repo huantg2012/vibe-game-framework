@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "sourceRevision": "7c744d3dabdee45cafbafe375878f81bae328c1c",
+  "assets": 18,
+  "oldRecipesValidated": 324,
+  "relabelled9Rejected": true,
+  "executors": [
+    {
+      "path": "src/generation/legacy-r100-v8/executor-revision8.js",
+      "sha256": "cdbab8dd5fbb8e697577bfe8787981a51883d8511c14bc91dbb17a99d21ba57c"
+    },
+    {
+      "path": "src/generation/legacy-r100-v8/executor-recovery.js",
+      "sha256": "70ff1200c13c7fe5187c886f38e3680ddd952d76660cde267a6b2ea5e8b1aac8"
+    }
+  ],
+  "limitations": [
+    "Integrity, all historical recipe validation and immutable asset paths only; full-map/material replay and browser continuation use separate gates."
+  ]
+}

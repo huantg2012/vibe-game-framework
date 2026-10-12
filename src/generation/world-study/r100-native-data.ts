@@ -4,6 +4,7 @@ import type { MasterWorld, MasterPhysicalRole } from './r100-master-world';
 import type { PollutionGradeDefinition } from './pollution-grade';
 import { TileGrid } from '@/systems/tile-grid';
 import { TileType } from '@/types/game-types';
+import { validateSearchSites } from './search-site-placement';
 
 export type R100NativeWorldData = Omit<MasterWorld, 'layout' | 'sight' | 'combat' | 'matterAt' | 'roleAt'> & {
   readonly gradeDefinition: PollutionGradeDefinition;
@@ -23,7 +24,9 @@ export function hydrateR100MasterWorld(native: R100NativeWorldData, layout: Gene
   const roles = new Map<number, MasterPhysicalRole>(native.definition.instances.map(instance => [instance.id, instance.role]));
   const roleAt = (x: number, y: number): MasterPhysicalRole | null => !matterAt(x, y) ? null
     : roles.get(native.raster.objectId[Math.floor(y) * width + Math.floor(x)]!) ?? null;
-  return { ...native, layout, matterAt, roleAt, combat: new TileGrid(map),
+  const world: MasterWorld = { ...native, layout, matterAt, roleAt, combat: new TileGrid(map),
     sight: { cols: map.cols, rows: map.rows, tileSize: map.tileSize, version: 0,
       isOpaque: (col, row) => col < 0 || row < 0 || col >= map.cols || row >= map.rows || map.tiles[row]![col] === TileType.VOID } };
+  validateSearchSites(world);
+  return world;
 }
