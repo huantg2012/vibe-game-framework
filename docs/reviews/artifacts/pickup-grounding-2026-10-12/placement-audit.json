@@ -1,0 +1,1408 @@
+{
+  "commit": "dcb89630",
+  "requestedSeed": 20261012,
+  "grade": "medium",
+  "metric": "Exact distance to union of XY-projected formation triangles; zero means within projected material. Appended world shoreline triangles excluded via groundEdgeStart. This is formation proximity, NOT judgement of reasonable placement or navigation.",
+  "worlds": [
+    {
+      "id": "cinder-ridge",
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "width": 2304,
+      "height": 1792,
+      "profileId": "cinder-ridge",
+      "mainFamily": "granular-ridge",
+      "nodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 372,
+            "y": 596
+          },
+          "value": 1,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 35,
+            "family": "granular-ridge",
+            "role": "solid",
+            "distancePx": 48.5
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "relief",
+            "distancePx": 199.7
+          }
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 548,
+            "y": 1348
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 28,
+            "family": "granular-ridge",
+            "role": "solid",
+            "distancePx": 34.2
+          },
+          "nearestRelief": {
+            "id": 4,
+            "family": "granular-ridge",
+            "role": "relief",
+            "distancePx": 100.8
+          }
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 180,
+            "y": 1108
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 24,
+            "family": "granular-ridge",
+            "role": "solid",
+            "distancePx": 117.4
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "relief",
+            "distancePx": 332
+          }
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 628,
+            "y": 1524
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 40,
+            "family": "granular-ridge",
+            "role": "solid",
+            "distancePx": 138.2
+          },
+          "nearestRelief": {
+            "id": 4,
+            "family": "granular-ridge",
+            "role": "relief",
+            "distancePx": 94.2
+          }
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 516,
+            "y": 1476
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 28,
+            "family": "granular-ridge",
+            "role": "solid",
+            "distancePx": 50.5
+          },
+          "nearestRelief": {
+            "id": 4,
+            "family": "granular-ridge",
+            "role": "relief",
+            "distancePx": 140.1
+          }
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 532,
+            "y": 708
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 35,
+            "family": "granular-ridge",
+            "role": "solid",
+            "distancePx": 36.3
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "relief",
+            "distancePx": 24.6
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 1124,
+            "y": 1476
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 27,
+            "family": "granular-ridge",
+            "role": "solid",
+            "distancePx": 36.1
+          },
+          "nearestRelief": {
+            "id": 4,
+            "family": "granular-ridge",
+            "role": "relief",
+            "distancePx": 129
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 1284,
+            "y": 1508
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 27,
+            "family": "granular-ridge",
+            "role": "solid",
+            "distancePx": 56
+          },
+          "nearestRelief": {
+            "id": 4,
+            "family": "granular-ridge",
+            "role": "relief",
+            "distancePx": 291.9
+          }
+        }
+      ]
+    },
+    {
+      "id": "ash-strata",
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "width": 2304,
+      "height": 1792,
+      "profileId": "ash-strata",
+      "mainFamily": "folded-slab",
+      "nodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1492,
+            "y": 788
+          },
+          "value": 1,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 14,
+            "family": "folded-slab",
+            "role": "solid",
+            "distancePx": 30.2
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "relief",
+            "distancePx": 175.3
+          }
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 388,
+            "y": 1172
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 21,
+            "family": "folded-slab",
+            "role": "solid",
+            "distancePx": 40.9
+          },
+          "nearestRelief": {
+            "id": 3,
+            "family": "folded-slab",
+            "role": "relief",
+            "distancePx": 264.8
+          }
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1892,
+            "y": 1092
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 20,
+            "family": "folded-slab",
+            "role": "solid",
+            "distancePx": 22.1
+          },
+          "nearestRelief": {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "relief",
+            "distancePx": 431.3
+          }
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 948,
+            "y": 276
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 17,
+            "family": "folded-slab",
+            "role": "solid",
+            "distancePx": 42.5
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "relief",
+            "distancePx": 496.5
+          }
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 228,
+            "y": 660
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 22,
+            "family": "folded-slab",
+            "role": "solid",
+            "distancePx": 153.5
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "relief",
+            "distancePx": 535.3
+          }
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1572,
+            "y": 564
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 24,
+            "family": "folded-slab",
+            "role": "solid",
+            "distancePx": 44.3
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "relief",
+            "distancePx": 326.9
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 916,
+            "y": 1476
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 13,
+            "family": "folded-slab",
+            "role": "solid",
+            "distancePx": 164.3
+          },
+          "nearestRelief": {
+            "id": 3,
+            "family": "folded-slab",
+            "role": "relief",
+            "distancePx": 102.3
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 948,
+            "y": 372
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 23,
+            "family": "folded-slab",
+            "role": "solid",
+            "distancePx": 104.6
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "relief",
+            "distancePx": 401.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "splayed-fibres",
+      "effectiveSeed": 3956234173,
+      "attempt": 2,
+      "width": 2304,
+      "height": 1792,
+      "profileId": "splayed-fibres",
+      "mainFamily": "fibre-knot",
+      "nodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1140,
+            "y": 1188
+          },
+          "value": 1,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 11,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 162.9
+          },
+          "nearestRelief": {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "relief",
+            "distancePx": 315
+          }
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 1524,
+            "y": 708
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 17,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 173.6
+          },
+          "nearestRelief": {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "relief",
+            "distancePx": 248.2
+          }
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 484,
+            "y": 932
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 15,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 123.1
+          },
+          "nearestRelief": {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "relief",
+            "distancePx": 326.3
+          }
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 1332,
+            "y": 1604
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 19,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 199.5
+          },
+          "nearestRelief": {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "relief",
+            "distancePx": 500.4
+          }
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 1460,
+            "y": 1492
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 19,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 43.3
+          },
+          "nearestRelief": {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "relief",
+            "distancePx": 348.3
+          }
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1028,
+            "y": 1108
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 11,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 44.6
+          },
+          "nearestRelief": {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "relief",
+            "distancePx": 320.4
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 804,
+            "y": 1396
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 20,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 68.3
+          },
+          "nearestRelief": {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "relief",
+            "distancePx": 125.5
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 1748,
+            "y": 740
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 14,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 226.8
+          },
+          "nearestRelief": {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "relief",
+            "distancePx": 340.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "shell-chain",
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "width": 2304,
+      "height": 1792,
+      "profileId": "shell-chain",
+      "mainFamily": "broken-shell",
+      "nodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1236,
+            "y": 1556
+          },
+          "value": 1,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 5,
+            "family": "broken-shell",
+            "role": "solid",
+            "distancePx": 151.6
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "relief",
+            "distancePx": 260.7
+          }
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 228,
+            "y": 356
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "distancePx": 825.9
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "relief",
+            "distancePx": 994.3
+          }
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1764,
+            "y": 1108
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 4,
+            "family": "broken-shell",
+            "role": "solid",
+            "distancePx": 193.1
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "relief",
+            "distancePx": 425.2
+          }
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 2020,
+            "y": 964
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 4,
+            "family": "broken-shell",
+            "role": "solid",
+            "distancePx": 486.8
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "relief",
+            "distancePx": 663.8
+          }
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 1972,
+            "y": 1076
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 4,
+            "family": "broken-shell",
+            "role": "solid",
+            "distancePx": 391.6
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "relief",
+            "distancePx": 621.9
+          }
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1172,
+            "y": 1300
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 5,
+            "family": "broken-shell",
+            "role": "solid",
+            "distancePx": 36.3
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "relief",
+            "distancePx": 18.9
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 644,
+            "y": 1620
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 5,
+            "family": "broken-shell",
+            "role": "solid",
+            "distancePx": 522.7
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "relief",
+            "distancePx": 548.8
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 1924,
+            "y": 980
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 4,
+            "family": "broken-shell",
+            "role": "solid",
+            "distancePx": 396.5
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "relief",
+            "distancePx": 567.4
+          }
+        }
+      ]
+    },
+    {
+      "id": "pale-sail",
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "width": 2304,
+      "height": 1792,
+      "profileId": "pale-sail",
+      "mainFamily": "membrane-rim",
+      "nodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1060,
+            "y": 1300
+          },
+          "value": 1,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "distancePx": 373.4
+          },
+          "nearestRelief": null
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 1060,
+            "y": 196
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "distancePx": 437
+          },
+          "nearestRelief": null
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1364,
+            "y": 1140
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "distancePx": 101.5
+          },
+          "nearestRelief": null
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 1508,
+            "y": 356
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "distancePx": 265.5
+          },
+          "nearestRelief": null
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 1540,
+            "y": 612
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "distancePx": 18.9
+          },
+          "nearestRelief": null
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 660,
+            "y": 1236
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "distancePx": 234.9
+          },
+          "nearestRelief": null
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 1268,
+            "y": 612
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "distancePx": 84.5
+          },
+          "nearestRelief": null
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 1380,
+            "y": 244
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "distancePx": 403.4
+          },
+          "nearestRelief": null
+        }
+      ]
+    },
+    {
+      "id": "gel-fibre",
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "width": 2304,
+      "height": 1792,
+      "profileId": "gel-fibre",
+      "mainFamily": "gel-flow",
+      "nodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1236,
+            "y": 1556
+          },
+          "value": 1,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 4,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 434.4
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "distancePx": 365.9
+          }
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 532,
+            "y": 1300
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 485.5
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "distancePx": 349.1
+          }
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1540,
+            "y": 324
+          },
+          "value": 2,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 268.5
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "distancePx": 555.9
+          }
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 1524,
+            "y": 180
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 395.4
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "distancePx": 692.9
+          }
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 1428,
+            "y": 196
+          },
+          "value": 4,
+          "kind": "kindling",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 362.7
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "distancePx": 659.4
+          }
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1124,
+            "y": 1444
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 4,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 387.6
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "distancePx": 259.5
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 1988,
+            "y": 1364
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 4,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 296.3
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "distancePx": 476.6
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 452,
+            "y": 1364
+          },
+          "kind": "contaminant",
+          "local": {
+            "objectId": 0,
+            "materialId": 0,
+            "height": null,
+            "rasterMatter": 0,
+            "tile": 1
+          },
+          "nearestSolid": {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "distancePx": 583.5
+          },
+          "nearestRelief": {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "distancePx": 450
+          }
+        }
+      ]
+    }
+  ]
+}

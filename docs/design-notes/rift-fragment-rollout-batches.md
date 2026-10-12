@@ -1,5 +1,5 @@
 ---
-status: IN-PROGRESS
+status: PAUSED
 created-by: design
 created-date: 2026-10-12
 last-modified-date: 2026-10-12
@@ -8,6 +8,8 @@ scope: 矩形拼合碎片全库推广的作者批次与身份说明；不是另�
 ---
 
 # 矩形碎片推广：作者批次
+
+**2026-10-12用户暂停：** 已接入六图进入重点打磨，首先调查翻找物的环境合理性。余下102世界与下述后续队列暂停；历史推广授权不覆盖此次明确暂停。后续需用户恢复推广后继续。
 
 规则唯一正文为[地图生成规格](../specs/system-map-generation.md#rectangle-fragment-authoring)，实际资格归[推广任务](../tasks/rift-spatial-rollout.md)。本记录解释逐世界宽地、破坏与实体关系，不用内容行数代替质量。余烬脊的认可作者源和共享 `rectilinear-fragment-v1` 不在本轮修改范围内。
 
