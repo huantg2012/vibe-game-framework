@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: design（六图环境状态已接入，限定内部验证完成／用户实景待复看）
+last-modified-by: director（修订10环境状态与全库分批接入）
 last-modified-date: 2026-10-12
 slice: 1 (extended in 5.5, 6, 7, 迭代 10)
 interface-changed: false
@@ -318,7 +318,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
 <a id="grounded-search-sites"></a>
 
-**2026-10-12六图环境融入合同（已接入，限定内部验证完成／用户实景待复看）：** 修订9新局仅对 `cinder-ridge`、`ash-strata`、`splayed-fibres`、`shell-chain`、`pale-sail`、`gel-fibre` 使用本段。生成、材料表面与原状态联结已接入；六图翻前/翻后及首轮形体整改已获限定内部复核，仍待用户实景复看。其余102世界和旧r8/更早在途保持原规则及原视觉，不把本段回灌旧记录。节点位置与来源描述由[地图生成合同](system-map-generation.md#grounded-search-sites)唯一提供；具体六材画法归[Art合同](../art/pickup-grounding.md)。
+**2026-10-12环境融入合同（修订10注册世界）：** 修订10新局对data/rift-search-sites.csv显式注册世界使用本段；原六图为回归基线，现已按用户授权逐批覆盖全108世界。生成、材料表面与原状态联结已接入；六图翻前/翻后及首轮形体整改已获限定内部复核，仍待用户实景复看。旧r9/更早在途由各自封存执行器保持原规则及原视觉，不把本段回灌旧记录。节点位置与来源描述由[地图生成合同](system-map-generation.md#grounded-search-sites)唯一提供；具体六材画法归[Art合同](../art/pickup-grounding.md)。
 
 一处翻找场所由**一个可翻核心＋低矮稀疏散料／薄层＋翻后残留**组成。核心仍是唯一E目标，原48px半径、1200ms、开始发声、打断、真实可见资格、产出数量与一次揭晓事务全部保持。外围不是额外可翻对象，不扩交互范围，不增碰撞、危险、记忆标记或独立光源。外观只读取冻结来源/局部材料/visual seed；不得读取隐藏内容、数量、tier、品质或dropPlan，不把同一奖励编码成特定材料。世界名称及来源关系也不决定所得。
 
@@ -330,7 +330,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
 实际接线沿既有 `frame.piles` 的id/collected，`MasterPresentation.afterUpdate` 在draw前调用renderer的 `setSearchSiteCollected`，无新的 `LootSearchSystem` API或存档字段；相同phase不上传，首帧恢复不重放粒子。RiftScene仅在当前native拥有 `searchSites` 时选择 `createGroundedWorldSearchVisual`，该工厂沿用原揭晓粒子/反馈且不创建旧残堆sprite；旧局继续原工厂。原 `R100SearchSitePlacement` 被生成与native表现消费，翻找规则不读取它作结算决策。
 
-本段覆盖规则15的“隐藏整堆sprite”在上述r9六图的表现含义，改为核心退出＋残迹保留；不改变该规则的结算事务。也覆盖规则17在新地表路径仅按sprite alpha显隐的实现描述，实际能否翻仍使用同一原可见性查询，地表表现服从原统一迷雾。验证须含正常相机旧/新整合对照、不同灯向与距离、真实E中断/完成、容量不足留地、原collected冷恢复及旧局精确恢复；文字与机器资格不代签用户视觉终验。
+本段覆盖规则15的“隐藏整堆sprite”在上述r10注册世界的表现含义，改为核心退出＋残迹保留；不改变该规则的结算事务。也覆盖规则17在新地表路径仅按sprite alpha显隐的实现描述，实际能否翻仍使用同一原可见性查询，地表表现服从原统一迷雾。验证须含正常相机旧/新整合对照、不同灯向与距离、真实E中断/完成、容量不足留地、原collected冷恢复及旧局精确恢复；文字与机器资格不代签用户视觉终验。
 
 14a. **翻找发声**：读条**开始时**经场景层调一次 `AISystem.reportNoise`（与战斗噪音同一钩子）：半径 `LOOT.SEARCH_NOISE_RADIUS`（96 px，与挥击噪音同级）、级别 `'suspicious'`。读条期间不持续发声；完成与打断不发声。理由：不发声则读条 = 强制停步，而停步对改写体几乎隐形（`system-enemy-ai` 停步听觉 ≤40 px 且察觉度封顶 0.20），翻找反而比走路更安全，「读条 = 风险决策」不成立；suspicious（非 alert）是因为翻找是搜刮基本动作（约 11 次/局），alert 会让听觉敌人成为搜刮的硬禁止而非风险权衡。读条期间玩家移动状态 = 停步（听觉连续填充按停步处理；视觉通道照常——在视锥内翻找照样被看见）。
 14b. **读条期间混乱值照常累积**：读条不暂停混乱值，也**不**加额外脉冲——翻找的混乱成本就是时间流逝本身（1200 ms × 0.5/s ≈ 0.6 点/次），与「混乱让时间变货币」一致，不加第二笔税。
@@ -777,7 +777,7 @@ interface RunControllerAPI {
 | `system-combat` | `PLAYER_DIED { cause }` | 事件 | 触发死亡结束路径 |
 | `system-combat` | `PLAYER_HEALTH_CHANGED { current, max }` | 事件 | HUD 生命值条 |
 | T6 固定地图 | `RiftLayoutData`（出生点 / 撤离点 / 薪柴节点） | 场景创建时注入 | 布点 |
-| `system-map-generation`（修订9六图；已接入） | 每节点冻结 `R100SearchSitePlacement`：ID/位置/来源/局部材料/visual seed，无奖励字段 | 场景联结native材料表现，非新增翻找入参 | 同源intact/searched表面；仅原collected控制状态，不改变翻找规则 |
+| `system-map-generation`（修订10注册世界；分批接入） | 每节点冻结 `R100SearchSitePlacement`：ID/位置/来源/局部材料/visual seed，无奖励字段 | 场景联结native材料表现，非新增翻找入参 | 同源intact/searched表面；仅原collected控制状态，不改变翻找规则 |
 | `system-purification-impact`（Slice 7） | `SortieModifiers.startingChaos` | 场景 data / `getStartingChaos()` | 出击混乱初值。增长曲线不改 |
 | `system-movement-vision`（T1/T5） | `Player.getPosition()`、`VisibilitySystem.getVisibilityAt(p)` / `isPointVisible(p)`、`Player.getFacingAngle()` / `getFacing4()` | 同步查询，**经场景层** | 拾取判定、节点 sprite alpha；小地图已探索集合与玩家朝向。小地图不 import VisibilitySystem |
 
@@ -791,7 +791,7 @@ interface RunControllerAPI {
 | `system-combat`（T4） | `ChaosSystem.addChaos(source, amount)`——若 T4 需要新增其他"战斗代价"钩子，走这个统一入口而不是直接改 `value` | 经场景层调用 / 或 T4 emit 事件由本系统监听（**优先后者**） |
 | Slice 2 净化点 | `RIFT_EXITED { kindlingGained, survived }` | 事件 |
 | QA / 调试 | `getValue()` / `getRate()` / `getStage()` / `peakValue` | 同步查询 |
-| 原生材料表现／恢复（修订9六图；已接入） | 既有 `frame.piles` 的 `id/collected` | 绘制前调用 `renderer.setSearchSiteCollected`，状态实变时切patch；不增翻找API或存档字段 |
+| 原生材料表现／恢复（修订10注册世界；分批接入） | 既有 `frame.piles` 的 `id/collected` | 绘制前调用 `renderer.setSearchSiteCollected`，状态实变时切patch；不增翻找API或存档字段 |
 
 ### 事件契约变更
 

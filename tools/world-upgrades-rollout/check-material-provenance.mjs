@@ -1,0 +1,9 @@
+/** Additive provenance proof for receipts predating direct decoded-PNG hashes.
+ * Does not rewrite old receipts or claim that historical bytes were captured then. */
+import fs from 'node:fs';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';import {execFileSync} from 'node:child_process';
+import {PAINTED_MATERIALS} from '../../src/generated/r100-materials.ts';import {ORGANIZATION_MATERIALS} from '../../src/generated/r100-material-organizations.ts';
+const out=process.env.QA_OUTPUT_FILE;assert(out&&!fs.existsSync(out));const base=execFileSync('git',['rev-parse','17476a4e'],{encoding:'utf8'}).trim(),hash=b=>createHash('sha256').update(b).digest('hex');
+const definitions=['src/generated/r100-materials.ts','src/generated/r100-material-organizations.ts','src/generated/r100-world-appearance.ts','src/generated/r100-package-manifest.ts','src/generation/world-study/r100-world-appearance.ts'];
+const files=[...new Set([...PAINTED_MATERIALS,...ORGANIZATION_MATERIALS].flatMap(d=>[`public${d.source}`,`public${d.solid.source}`]))];
+const materialHashes={},definitionHashes={};for(const file of [...definitions,...files]){const current=hash(fs.readFileSync(file)),fixed=hash(execFileSync('git',['show',`${base}:${file}`],{maxBuffer:32*1024*1024}));assert.equal(current,fixed,`Material input differs from fixed rollout base: ${file}`);(files.includes(file)?materialHashes:definitionHashes)[file]=current;}
+fs.writeFileSync(out,JSON.stringify({status:'passed',base,scope:'Current decoded material sources and material/appearance definitions equal fixed pre-rollout Git bytes. Old batch source manifests separately bind the same definitions. This is additive source provenance, not invented historical capture.',materialHashes,definitionHashes},null,2));console.log(`PASS fixed material provenance: ${files.length} PNGs / ${definitions.length} definitions`);

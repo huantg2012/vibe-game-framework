@@ -1,6 +1,8 @@
 # 验证与质量记录
 
-2026-10-12 六图翻找残骸环境融入：[专项QA](pickup-grounding-2026-10-12.md) · [新旧实景对照](artifacts/pickup-grounding-implementation-2026-10-12/index.html)。先设计后接入r9，有限生成/旧局/真实E/冷续/FOV与内部图审完成；其余102推广暂停，用户视觉终验未代签。
+2026-10-12 两项地图优化全库接入：[专项QA](world-upgrades-rollout-2026-10-12.md) · [108世界三档图册](artifacts/world-upgrades-rollout-2026-10-12/index.html)。324份限定生成覆盖齐全，最终全源及实机复核分别记录；不代签用户审美或I14/P49。
+
+2026-10-12 六图翻找残骸环境融入：[专项QA](pickup-grounding-2026-10-12.md) · [新旧实景对照](artifacts/pickup-grounding-implementation-2026-10-12/index.html)。先设计后接入r9，有限生成/旧局/真实E/冷续/FOV与内部图审完成；当时其余102推广暂停；随后用户已授权全库推广，见上方当前专项。用户视觉终验未代签。
 
 当前R100 I14 P49继续整改：[先选污染、再配置行装](preparation-flow-2026-10-09.md)。用户否决上一版同屏总览、双列库存与文字层级；[上一轮QA](preparation-ui-2026-10-09.md)保留原图及旧版技术记录。旧RC本机与48趟限定回归见[I14 QA](rift-r100-i14.md)，较弱设备补测已由用户豁免；新UI、实际视听与终验未获认可，I14仍未结案。
 

@@ -1,0 +1,778 @@
+{
+  "scope": "One persistent Phaser Game; source-family warmups then configured identical and mixed native reconstructions. Two actual GC calls before each retained sample. Weak references never retain scene objects. No GPU driver byte/RSS claim; retained WebGL object/context ownership and main-isolate memory only.",
+  "samples": [
+    {
+      "label": "warmed-baseline",
+      "usage": {
+        "usedSize": 114944552,
+        "totalSize": 117014528,
+        "embedderHeapUsedSize": 3960800,
+        "backingStorageSize": 286249594
+      },
+      "objects": {
+        "Texture": {
+          "created": 617,
+          "live": 374,
+          "active": 374
+        },
+        "Framebuffer": {
+          "created": 83,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 83,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 39,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 78,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 18,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 8,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 0,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-1",
+      "usage": {
+        "usedSize": 115453992,
+        "totalSize": 117014528,
+        "embedderHeapUsedSize": 3931296,
+        "backingStorageSize": 286249594
+      },
+      "objects": {
+        "Texture": {
+          "created": 650,
+          "live": 374,
+          "active": 374
+        },
+        "Framebuffer": {
+          "created": 84,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 84,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 40,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 80,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 19,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 9,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 509440,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-2",
+      "usage": {
+        "usedSize": 115545136,
+        "totalSize": 117538816,
+        "embedderHeapUsedSize": 3863576,
+        "backingStorageSize": 286249594
+      },
+      "objects": {
+        "Texture": {
+          "created": 683,
+          "live": 374,
+          "active": 374
+        },
+        "Framebuffer": {
+          "created": 85,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 85,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 41,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 82,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 20,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 10,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 600584,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-3",
+      "usage": {
+        "usedSize": 115741620,
+        "totalSize": 117276672,
+        "embedderHeapUsedSize": 3887208,
+        "backingStorageSize": 286249594
+      },
+      "objects": {
+        "Texture": {
+          "created": 716,
+          "live": 374,
+          "active": 374
+        },
+        "Framebuffer": {
+          "created": 86,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 86,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 42,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 84,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 21,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 11,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 797068,
+      "backingGrowth": 0
+    },
+    {
+      "label": "after-mixed-18",
+      "usage": {
+        "usedSize": 116402592,
+        "totalSize": 118587392,
+        "embedderHeapUsedSize": 3859856,
+        "backingStorageSize": 286249665
+      },
+      "objects": {
+        "Texture": {
+          "created": 1358,
+          "live": 373,
+          "active": 373
+        },
+        "Framebuffer": {
+          "created": 108,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 108,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 64,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 128,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 43,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 33,
+          "live": 1,
+          "active": 1
+        }
+      }
+    }
+  ],
+  "mixedCoverage": [
+    {
+      "world": "crystal-fibre",
+      "grade": "low",
+      "seed": 20261012
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "low",
+      "seed": 20261013
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "low",
+      "seed": 20261014
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "low",
+      "seed": 20261015
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "low",
+      "seed": 20261016
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "low",
+      "seed": 20261017
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "medium",
+      "seed": 20261018
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "medium",
+      "seed": 20261019
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "medium",
+      "seed": 20261020
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "medium",
+      "seed": 20261021
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "medium",
+      "seed": 20261022
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "medium",
+      "seed": 20261023
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "severe",
+      "seed": 20261024
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "severe",
+      "seed": 20261025
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "severe",
+      "seed": 20261026
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "severe",
+      "seed": 20261027
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 20261028
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "severe",
+      "seed": 20261029
+    }
+  ],
+  "rebuildProgress": [
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "initial-load",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:07.547Z",
+      "finishedAt": "2026-10-12T11:52:13.579Z"
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:13.579Z",
+      "finishedAt": "2026-10-12T11:52:17.924Z"
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 1,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:17.925Z",
+      "finishedAt": "2026-10-12T11:52:22.502Z"
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 2,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:22.502Z",
+      "finishedAt": "2026-10-12T11:52:26.318Z"
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 3,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:26.318Z",
+      "finishedAt": "2026-10-12T11:52:30.253Z"
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 4,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:30.253Z",
+      "finishedAt": "2026-10-12T11:52:34.353Z"
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "warmup",
+      "index": 5,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:34.353Z",
+      "finishedAt": "2026-10-12T11:52:38.002Z"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "baseline",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:38.003Z",
+      "finishedAt": "2026-10-12T11:52:42.796Z",
+      "sample": "warmed-baseline"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "identical",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:42.796Z",
+      "finishedAt": "2026-10-12T11:52:47.613Z",
+      "sample": "identical-1"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "identical",
+      "index": 1,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:47.613Z",
+      "finishedAt": "2026-10-12T11:52:52.462Z",
+      "sample": "identical-2"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "identical",
+      "index": 2,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:52.462Z",
+      "finishedAt": "2026-10-12T11:52:57.296Z",
+      "sample": "identical-3"
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "low",
+      "seed": 20261012,
+      "phase": "mixed",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:52:57.299Z",
+      "finishedAt": "2026-10-12T11:53:05.136Z"
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "low",
+      "seed": 20261013,
+      "phase": "mixed",
+      "index": 1,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:05.136Z",
+      "finishedAt": "2026-10-12T11:53:09.471Z"
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "low",
+      "seed": 20261014,
+      "phase": "mixed",
+      "index": 2,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:09.472Z",
+      "finishedAt": "2026-10-12T11:53:13.136Z"
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "low",
+      "seed": 20261015,
+      "phase": "mixed",
+      "index": 3,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:13.136Z",
+      "finishedAt": "2026-10-12T11:53:18.570Z"
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "low",
+      "seed": 20261016,
+      "phase": "mixed",
+      "index": 4,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:18.570Z",
+      "finishedAt": "2026-10-12T11:53:22.469Z"
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "low",
+      "seed": 20261017,
+      "phase": "mixed",
+      "index": 5,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:22.470Z",
+      "finishedAt": "2026-10-12T11:53:26.735Z"
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "medium",
+      "seed": 20261018,
+      "phase": "mixed",
+      "index": 6,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:26.736Z",
+      "finishedAt": "2026-10-12T11:53:34.268Z"
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "medium",
+      "seed": 20261019,
+      "phase": "mixed",
+      "index": 7,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:34.268Z",
+      "finishedAt": "2026-10-12T11:53:38.634Z"
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "medium",
+      "seed": 20261020,
+      "phase": "mixed",
+      "index": 8,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:38.635Z",
+      "finishedAt": "2026-10-12T11:53:42.352Z"
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "medium",
+      "seed": 20261021,
+      "phase": "mixed",
+      "index": 9,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:42.352Z",
+      "finishedAt": "2026-10-12T11:53:46.116Z"
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "medium",
+      "seed": 20261022,
+      "phase": "mixed",
+      "index": 10,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:46.117Z",
+      "finishedAt": "2026-10-12T11:53:50.050Z"
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "medium",
+      "seed": 20261023,
+      "phase": "mixed",
+      "index": 11,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:50.051Z",
+      "finishedAt": "2026-10-12T11:53:53.533Z"
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "severe",
+      "seed": 20261024,
+      "phase": "mixed",
+      "index": 12,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:53:53.533Z",
+      "finishedAt": "2026-10-12T11:54:01.601Z"
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "severe",
+      "seed": 20261025,
+      "phase": "mixed",
+      "index": 13,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:54:01.601Z",
+      "finishedAt": "2026-10-12T11:54:06.151Z"
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "severe",
+      "seed": 20261026,
+      "phase": "mixed",
+      "index": 14,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:54:06.151Z",
+      "finishedAt": "2026-10-12T11:54:10.017Z"
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "severe",
+      "seed": 20261027,
+      "phase": "mixed",
+      "index": 15,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:54:10.017Z",
+      "finishedAt": "2026-10-12T11:54:13.801Z"
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 20261028,
+      "phase": "mixed",
+      "index": 16,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:54:13.801Z",
+      "finishedAt": "2026-10-12T11:54:17.783Z"
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "severe",
+      "seed": 20261029,
+      "phase": "mixed",
+      "index": 17,
+      "status": "completed",
+      "startedAt": "2026-10-12T11:54:17.784Z",
+      "finishedAt": "2026-10-12T11:54:21.367Z"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261012,
+      "phase": "after-mixed",
+      "index": 18,
+      "status": "failed",
+      "startedAt": "2026-10-12T11:54:21.367Z",
+      "finishedAt": "2026-10-12T11:54:26.078Z",
+      "sample": "after-mixed-18",
+      "failure": "AssertionError [ERR_ASSERTION]: Texture active resource count after same-world return\n\n373 !== 374\n\n    at file:///Users/yilungao/coh/tools/qa/check-r100-gym-lifecycle.mjs:73:88"
+    }
+  ],
+  "errors": [],
+  "status": "failed",
+  "currentStep": {
+    "world": "ash-strata",
+    "grade": "severe",
+    "seed": 20261012,
+    "phase": "after-mixed",
+    "index": 18,
+    "status": "failed",
+    "startedAt": "2026-10-12T11:54:21.367Z",
+    "finishedAt": "2026-10-12T11:54:26.078Z",
+    "sample": "after-mixed-18",
+    "failure": "AssertionError [ERR_ASSERTION]: Texture active resource count after same-world return\n\n373 !== 374\n\n    at file:///Users/yilungao/coh/tools/qa/check-r100-gym-lifecycle.mjs:73:88"
+  },
+  "catalogWorldIds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit",
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues",
+    "monolith-sill",
+    "bleached-court",
+    "split-rib-causeway",
+    "satin-fan",
+    "chalk-steps",
+    "porcelain-maw",
+    "amber-ribs",
+    "pale-sail",
+    "root-cistern",
+    "scab-islands",
+    "foam-trenches",
+    "resin-fall",
+    "tendon-shelves",
+    "felt-basin",
+    "cork-shelves",
+    "lacquer-court",
+    "ribbed-delta",
+    "bladder-weave",
+    "flake-thicket",
+    "resin-hollows",
+    "sentinel-mass",
+    "stepped-bowl",
+    "draped-bay",
+    "ember-cushions",
+    "splinter-rotunda",
+    "quilted-scars",
+    "silt-colonnade",
+    "shell-causeway",
+    "cleft-tableland",
+    "fallen-spines",
+    "clamped-shore",
+    "torn-reservoir",
+    "braided-seam",
+    "scalloped-reach",
+    "offset-pan",
+    "thin-delta",
+    "shard-switchback",
+    "hollow-wreckage",
+    "knotted-run",
+    "rolled-fragments",
+    "fibre-choke",
+    "buried-lamellae",
+    "pressed-rim",
+    "wedged-hide",
+    "quiet-spur",
+    "split-fall",
+    "three-shelves",
+    "frayed-outwash",
+    "short-fibre-mat",
+    "marrow-break",
+    "felt-wedges",
+    "pore-bank",
+    "staggered-cups",
+    "split-tows",
+    "curled-flats",
+    "pitch-forks",
+    "grain-weld",
+    "silk-catch",
+    "resin-sleeve",
+    "shell-threads",
+    "chalk-divide",
+    "red-vault-fragments",
+    "blue-fault",
+    "pale-pressure",
+    "notched-backwater",
+    "crossed-casings",
+    "fibre-stumpfield",
+    "sloughed-court",
+    "crushed-seam",
+    "husk-reef",
+    "fibre-scree",
+    "gel-rafts",
+    "double-return",
+    "offset-basins",
+    "pinched-fan",
+    "spliced-reaches",
+    "white-scarfield",
+    "black-lacuna",
+    "ochre-folds",
+    "violet-marrows",
+    "fractured-estuary",
+    "woven-quarters",
+    "shell-patchwork",
+    "last-shelf"
+  ],
+  "selectedWorldIds": [
+    "crystal-fibre",
+    "ivory-basin",
+    "porcelain-maw",
+    "pleated-hide",
+    "pressed-dunes",
+    "wax-tongues"
+  ],
+  "repetitions": 3,
+  "mixedRebuilds": 18,
+  "failure": "AssertionError [ERR_ASSERTION]: Texture active resource count after same-world return\n\n373 !== 374\n\n    at file:///Users/yilungao/coh/tools/qa/check-r100-gym-lifecycle.mjs:73:88"
+}

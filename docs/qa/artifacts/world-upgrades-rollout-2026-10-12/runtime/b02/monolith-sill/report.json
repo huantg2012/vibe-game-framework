@@ -1,0 +1,6695 @@
+{
+  "status": "passed",
+  "world": "monolith-sill",
+  "grade": "medium",
+  "seed": 20261012,
+  "scope": "Diagnostic normal-camera pickup samples, controlled world/seed in isolated memory gym. Static full-body route to selected searchable node (first safe by default; QA_NODE_ID explicit when set). Ordinary keyboard input; no health, time, loot, visibility or position writes. Not a natural first-time discovery or full expedition.",
+  "events": [
+    {
+      "route": {
+        "points": [
+          {
+            "x": 1076,
+            "y": 420
+          },
+          {
+            "x": 1132,
+            "y": 420
+          },
+          {
+            "x": 1132,
+            "y": 516
+          }
+        ],
+        "distance": 152,
+        "entry": {
+          "actual": {
+            "x": 1076,
+            "y": 420
+          },
+          "snappedCenter": {
+            "x": 1076,
+            "y": 420
+          },
+          "selectedCenter": {
+            "x": 1076,
+            "y": 420
+          },
+          "actualGridSupported": true,
+          "actualNativeSupported": true,
+          "seedCount": 1,
+          "nativeSweep": 1
+        },
+        "edgeChecks": 785,
+        "segments": [
+          {
+            "from": {
+              "x": 1076,
+              "y": 420
+            },
+            "to": {
+              "x": 1132,
+              "y": 420
+            },
+            "gridFraction": 1,
+            "nativeFraction": 1
+          },
+          {
+            "from": {
+              "x": 1132,
+              "y": 420
+            },
+            "to": {
+              "x": 1132,
+              "y": 516
+            },
+            "gridFraction": 1,
+            "nativeFraction": 1
+          }
+        ]
+      },
+      "target": {
+        "x": 1140,
+        "y": 544
+      }
+    },
+    {
+      "frameNavigation": {
+        "status": "passed",
+        "failure": null,
+        "events": [
+          {
+            "key": "d",
+            "down": true,
+            "at": 6370.699999809265
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 7103.099999904633
+          },
+          {
+            "key": "s",
+            "down": true,
+            "at": 7120.699999809265
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 7137.5
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 7286.299999713898
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 7319.199999809265
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 7403.599999904633
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 7435.599999904633
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 7519.900000095367
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 7553.099999904633
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 7635.799999713898
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 7669.799999713898
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 7752.400000095367
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 7786.799999713898
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 7870.099999904633
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 7903.299999713898
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 7986.5
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 8019.299999713898
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 8103.299999713898
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 8136.5
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 8219.400000095367
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 8253.299999713898
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 8336.599999904633
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 8369.900000095367
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 8452.699999809265
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 8486.5
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 8570.099999904633
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 8603.299999713898
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 8685.799999713898
+          },
+          {
+            "key": "s",
+            "down": false,
+            "at": 8720
+          }
+        ],
+        "arrivalTolerance": 1.5,
+        "axisDeadzone": 0.65,
+        "elapsedWallMs": 2370.800000190735,
+        "position": {
+          "x": 1130.8726602634345,
+          "y": 515.5853170117509
+        }
+      }
+    },
+    {
+      "face": {
+        "key": "w",
+        "elapsedMs": 161.7999997138977,
+        "facing": -1.5707963267948966,
+        "position": {
+          "x": 1128.7027649447234,
+          "y": 514.8228753248887
+        }
+      }
+    },
+    {
+      "route": {
+        "points": [
+          {
+            "x": 1132,
+            "y": 508
+          },
+          {
+            "x": 1132,
+            "y": 428
+          }
+        ],
+        "distance": 83.93952343319549,
+        "entry": {
+          "actual": {
+            "x": 1128.7027649447234,
+            "y": 510.1559419915553
+          },
+          "snappedCenter": {
+            "x": 1132,
+            "y": 508
+          },
+          "selectedCenter": {
+            "x": 1132,
+            "y": 508
+          },
+          "actualGridSupported": true,
+          "actualNativeSupported": true,
+          "seedCount": 1,
+          "nativeSweep": 1
+        },
+        "edgeChecks": 263,
+        "segments": [
+          {
+            "from": {
+              "x": 1132,
+              "y": 508
+            },
+            "to": {
+              "x": 1132,
+              "y": 428
+            },
+            "gridFraction": 1,
+            "nativeFraction": 1
+          }
+        ]
+      },
+      "target": {
+        "x": 1140,
+        "y": 404
+      }
+    },
+    {
+      "frameNavigation": {
+        "status": "passed",
+        "failure": null,
+        "events": [
+          {
+            "key": "d",
+            "down": true,
+            "at": 9502.400000095367
+          },
+          {
+            "key": "w",
+            "down": true,
+            "at": 9502.400000095367
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 9586.699999809265
+          },
+          {
+            "key": "w",
+            "down": false,
+            "at": 9586.699999809265
+          },
+          {
+            "key": "w",
+            "down": true,
+            "at": 9603.299999713898
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 9636.699999809265
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 9702.599999904633
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 9736.599999904633
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 9803.400000095367
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 9820
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 9920
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 9936.5
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 10053.5
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 10070.099999904633
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 10186.400000095367
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 10203.099999904633
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 10320.099999904633
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 10336.799999713898
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 10453.299999713898
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 10469.900000095367
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 10586.599999904633
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 10603.400000095367
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 10719.699999809265
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 10736.5
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 10853.400000095367
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 10869.299999713898
+          },
+          {
+            "key": "w",
+            "down": false,
+            "at": 10918.799999713898
+          },
+          {
+            "key": "s",
+            "down": true,
+            "at": 10936.299999713898
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 10986.400000095367
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 11036.400000095367
+          },
+          {
+            "key": "s",
+            "down": false,
+            "at": 11053.099999904633
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 11053.099999904633
+          }
+        ],
+        "arrivalTolerance": 1.5,
+        "axisDeadzone": 0.65,
+        "elapsedWallMs": 1565.5999999046326,
+        "position": {
+          "x": 1130.8428010683247,
+          "y": 427.07886879115813
+        }
+      }
+    },
+    {
+      "face": {
+        "key": "w",
+        "elapsedMs": 162.30000019073486,
+        "facing": -1.5707963267948966,
+        "position": {
+          "x": 1130.8387760829044,
+          "y": 422.8710541163168
+        }
+      }
+    },
+    {
+      "face": {
+        "key": "s",
+        "elapsedMs": 165,
+        "facing": 1.570482167529538,
+        "position": {
+          "x": 1130.8387760829044,
+          "y": 427.6479541163168
+        }
+      }
+    },
+    {
+      "face": {
+        "key": "w",
+        "elapsedMs": 166.5,
+        "facing": -1.5707963267948966,
+        "position": {
+          "x": 1130.8387760829044,
+          "y": 422.87045411631686
+        }
+      }
+    },
+    {
+      "keys": [
+        "e"
+      ],
+      "ms": 1650,
+      "at": 1791801494659
+    },
+    {
+      "route": {
+        "points": [
+          {
+            "x": 1132,
+            "y": 420
+          },
+          {
+            "x": 1132,
+            "y": 516
+          }
+        ],
+        "distance": 98.13921893262687,
+        "entry": {
+          "actual": {
+            "x": 1130.8387760829044,
+            "y": 418.2033874496502
+          },
+          "snappedCenter": {
+            "x": 1132,
+            "y": 420
+          },
+          "selectedCenter": {
+            "x": 1132,
+            "y": 420
+          },
+          "actualGridSupported": true,
+          "actualNativeSupported": true,
+          "seedCount": 1,
+          "nativeSweep": 1
+        },
+        "edgeChecks": 362,
+        "segments": [
+          {
+            "from": {
+              "x": 1132,
+              "y": 420
+            },
+            "to": {
+              "x": 1132,
+              "y": 516
+            },
+            "gridFraction": 1,
+            "nativeFraction": 1
+          }
+        ]
+      },
+      "target": {
+        "x": 1140,
+        "y": 544
+      }
+    },
+    {
+      "frameNavigation": {
+        "status": "passed",
+        "failure": null,
+        "events": [
+          {
+            "key": "d",
+            "down": true,
+            "at": 14419.5
+          },
+          {
+            "key": "s",
+            "down": true,
+            "at": 14419.5
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 14469.799999713898
+          },
+          {
+            "key": "s",
+            "down": false,
+            "at": 14469.799999713898
+          },
+          {
+            "key": "s",
+            "down": true,
+            "at": 14486.599999904633
+          },
+          {
+            "key": "a",
+            "down": true,
+            "at": 14519.799999713898
+          },
+          {
+            "key": "a",
+            "down": false,
+            "at": 14568.900000095367
+          },
+          {
+            "key": "d",
+            "down": true,
+            "at": 14619.099999904633
+          },
+          {
+            "key": "d",
+            "down": false,
+            "at": 14652.599999904633
+          },
+          {
+            "key": "s",
+            "down": false,
+            "at": 15736.5
+          }
+        ],
+        "arrivalTolerance": 1.5,
+        "axisDeadzone": 0.65,
+        "elapsedWallMs": 1319.7000002861023,
+        "position": {
+          "x": 1132.319726563195,
+          "y": 515.4693659890668
+        }
+      }
+    },
+    {
+      "face": {
+        "key": "w",
+        "elapsedMs": 159.5,
+        "facing": -1.570293671970325,
+        "position": {
+          "x": 1132.319726563195,
+          "y": 516.3053659890668
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "recipe": {
+    "version": 3,
+    "requestedSeed": 20261012,
+    "paintGeometryVersion": 2,
+    "profile": {
+      "id": "monolith-sill",
+      "label": "单柱旷地",
+      "description": "单柱旷地的原生材料与完整搜撤地段",
+      "material": "strata",
+      "surface": {
+        "substrate": "strata",
+        "coating": "strata",
+        "organization": "patches",
+        "coverage": 0.46,
+        "wear": 0.52,
+        "deposits": 0.52,
+        "scale": 1.1,
+        "relief": 0.52,
+        "contrast": 0.75,
+        "regionScale": 1.15,
+        "quietness": 0.48,
+        "formScale": 1.3,
+        "fragmentation": 0.65,
+        "accentCoverage": 0.02
+      },
+      "palette": {
+        "void": 592137,
+        "shadow": 1381653,
+        "floorDeep": 4207163,
+        "floor": 9469829,
+        "floorLight": 12957110,
+        "materialDark": 1319479,
+        "materialMid": 2705252,
+        "materialLight": 6523040,
+        "faceLight": 12372944,
+        "accentDim": 5395026,
+        "accent": 11184810,
+        "accentLight": 13421772,
+        "peak": 15658734,
+        "actorDark": 1842204,
+        "actorMid": 12237498,
+        "actorLight": 16777215,
+        "ground": 9469829,
+        "groundLight": 12957110,
+        "groundDark": 4207163,
+        "wall": 2705252,
+        "wallLight": 6523040,
+        "wallDark": 1319479
+      }
+    },
+    "appearance": {
+      "version": 1,
+      "worldId": "monolith-sill",
+      "ground": {
+        "dark": 4207163,
+        "mid": 9469829,
+        "light": 12957110
+      },
+      "solid": {
+        "dark": 1319479,
+        "mid": 2705252,
+        "light": 6523040
+      },
+      "cleaved": {
+        "dark": 3426392,
+        "mid": 7507099,
+        "light": 12372944
+      },
+      "secondary": {
+        "dark": 5056830,
+        "mid": 9917551,
+        "light": 13209757
+      },
+      "groundPattern": "strata",
+      "patternScale": 256,
+      "patternStrength": 0.35,
+      "secondaryCoverage": 0.12,
+      "textureContrast": 1.08,
+      "quietCoverage": 0.64
+    },
+    "space": {
+      "id": "open-scars",
+      "label": "疏落蚀坑",
+      "voidFraction": 0.09,
+      "crackFraction": 0.2,
+      "holeScale": 1,
+      "directionality": 0.2,
+      "clustering": 0.25
+    },
+    "contentFragmentTypeId": "frag-outdoor",
+    "nativeDefinition": {
+      "id": "monolith-sill-medium",
+      "family": "folded-slab",
+      "grade": "medium",
+      "label": "单柱旷地",
+      "profile": "monolith-sill",
+      "cols": 32,
+      "rows": 24,
+      "seed": 20261002,
+      "spawn_x": 196,
+      "spawn_y": 588,
+      "exit_x": 148,
+      "exit_y": 664,
+      "search_x": 516,
+      "search_y": 580,
+      "enemy_x": 840,
+      "enemy_y": 172,
+      "axis": 0.1,
+      "light_radius": 132,
+      "emission": 0.55,
+      "motion_period": 16,
+      "ground_quietness": 0.84,
+      "ground_contrast": 0.5,
+      "ground_coverage": 0.26,
+      "ground_material_blend": 0.32,
+      "instances": [
+        {
+          "id": 1,
+          "family": "folded-slab",
+          "role": "solid",
+          "x": 680,
+          "y": 350,
+          "rotation": -0.1,
+          "length": 470,
+          "width": 380,
+          "height": 105,
+          "thickness": 18,
+          "fold": 0.56,
+          "branches": 2,
+          "opening": 0.88,
+          "distortion": 0.65,
+          "constructionVersion": 3,
+          "shapeProfile": "monolith-buttress"
+        }
+      ],
+      "erosion": [
+        [
+          {
+            "x": 632,
+            "y": 424
+          },
+          {
+            "x": 696,
+            "y": 400
+          },
+          {
+            "x": 776,
+            "y": 424
+          },
+          {
+            "x": 804,
+            "y": 464
+          },
+          {
+            "x": 764,
+            "y": 488
+          },
+          {
+            "x": 700,
+            "y": 460
+          },
+          {
+            "x": 656,
+            "y": 464
+          }
+        ],
+        [
+          {
+            "x": 216,
+            "y": 200
+          },
+          {
+            "x": 288,
+            "y": 176
+          },
+          {
+            "x": 332,
+            "y": 200
+          },
+          {
+            "x": 316,
+            "y": 232
+          },
+          {
+            "x": 248,
+            "y": 240
+          }
+        ]
+      ]
+    },
+    "gradeDefinition": {
+      "id": "medium",
+      "version": 1,
+      "label": "中污染",
+      "status": "dev-masters",
+      "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+      "paintCount": 4,
+      "paintSubstrate": "oil_film",
+      "paintContinuity": "monolith",
+      "paintCoverage": "rewrite",
+      "volumeCount": 2,
+      "volumeSubstrate": "gas_mass",
+      "volumeCoverage": "rewrite",
+      "volumeCols": 4,
+      "volumeRows": 3,
+      "chaosStartRate": 0.42,
+      "chaosEndRate": 0.6,
+      "chaosRampStartSeconds": 60,
+      "chaosRampEndSeconds": 180
+    },
+    "contentDefinition": {
+      "grade_id": "medium",
+      "version": 2,
+      "status": "production-candidate",
+      "label": "中污染",
+      "public_risk": "侵蚀更广，久留代价更高",
+      "public_preparation": "按行装选择绕行或穿越",
+      "public_reward": "更多收获在较深处",
+      "enemy_count": 3,
+      "kindling_safe_count": 1,
+      "kindling_contested_count": 2,
+      "kindling_deep_count": 2,
+      "kindling_safe_value": 1,
+      "kindling_contested_value": 2,
+      "kindling_deep_value": 4,
+      "contaminant_safe_count": 1,
+      "contaminant_contested_count": 1,
+      "contaminant_deep_count": 1
+    },
+    "spatialPolicy": {
+      "version": 2,
+      "worldId": "monolith-sill",
+      "sourceHash": "c883388745f253546033ed40d12751201f623eccc38b9f117a2376c865f8abc4",
+      "organization": "authored-sectors",
+      "organizationRules": {
+        "sourceMode": "source-once",
+        "materialScaling": false,
+        "solidCount": 1,
+        "reliefCount": 0
+      },
+      "groupTransform": null,
+      "cols": 72,
+      "rows": 56,
+      "mirrorX": false,
+      "mirrorY": false,
+      "placementJitterPx": 0,
+      "placements": [
+        {
+          "id": 1,
+          "role": "solid",
+          "sourceIndex": 0,
+          "x": 1430,
+          "y": 1010,
+          "rotation": -0.1,
+          "length": 587.5,
+          "width": 475
+        }
+      ],
+      "materials": [
+        {
+          "key": "folded-slab",
+          "lengthScale": 1.08,
+          "widthScale": 1.03
+        },
+        {
+          "key": "fibre-knot",
+          "lengthScale": 1.04,
+          "widthScale": 1.5
+        },
+        {
+          "key": "broken-shell",
+          "lengthScale": 0.8,
+          "widthScale": 1.2
+        },
+        {
+          "key": "granular-ridge",
+          "lengthScale": 1,
+          "widthScale": 1
+        },
+        {
+          "key": "membrane-rim",
+          "lengthScale": 1,
+          "widthScale": 0.9
+        },
+        {
+          "key": "gel-flow",
+          "lengthScale": 0.86,
+          "widthScale": 0.78
+        },
+        {
+          "key": "rib-vault",
+          "lengthScale": 1.1,
+          "widthScale": 1.5
+        },
+        {
+          "key": "pleated-sheet",
+          "lengthScale": 1.1,
+          "widthScale": 1.1
+        },
+        {
+          "key": "cellular-shell",
+          "lengthScale": 1.08,
+          "widthScale": 2.65
+        },
+        {
+          "key": "lobed-cushion",
+          "lengthScale": 1,
+          "widthScale": 1.7
+        },
+        {
+          "key": "monolith-buttress",
+          "lengthScale": 0.85,
+          "widthScale": 1.5
+        },
+        {
+          "key": "terrace-shelf",
+          "lengthScale": 1.05,
+          "widthScale": 1.05
+        },
+        {
+          "key": "fracture-fan",
+          "lengthScale": 0.97,
+          "widthScale": 1.2
+        },
+        {
+          "key": "fallen-bundle",
+          "lengthScale": 0.8,
+          "widthScale": 1.37
+        },
+        {
+          "key": "clamp-bank",
+          "lengthScale": 0.93,
+          "widthScale": 0.9
+        },
+        {
+          "key": "torn-sheet",
+          "lengthScale": 1.1,
+          "widthScale": 1.15
+        },
+        {
+          "key": "compressed-wedge",
+          "lengthScale": 0.9,
+          "widthScale": 0.98
+        },
+        {
+          "key": "porous-break",
+          "lengthScale": 0.82,
+          "widthScale": 1.18
+        },
+        {
+          "key": "pleated-tear",
+          "lengthScale": 1.1,
+          "widthScale": 1.1
+        }
+      ],
+      "erosion": [
+        [
+          {
+            "x": 900,
+            "y": 459.52
+          },
+          {
+            "x": 854,
+            "y": 420
+          },
+          {
+            "x": 700,
+            "y": 420
+          },
+          {
+            "x": 700,
+            "y": 560
+          },
+          {
+            "x": 868.68,
+            "y": 560
+          },
+          {
+            "x": 900,
+            "y": 523.54
+          }
+        ],
+        [
+          {
+            "x": 1855.58,
+            "y": 1070
+          },
+          {
+            "x": 1820,
+            "y": 1111.4
+          },
+          {
+            "x": 1820,
+            "y": 1215.62
+          },
+          {
+            "x": 1822.7,
+            "y": 1233.08
+          },
+          {
+            "x": 1831.2,
+            "y": 1236.78
+          },
+          {
+            "x": 1835.96,
+            "y": 1262.68
+          },
+          {
+            "x": 1845.78,
+            "y": 1270
+          },
+          {
+            "x": 1905.8,
+            "y": 1270
+          },
+          {
+            "x": 1918.24,
+            "y": 1264.8
+          },
+          {
+            "x": 1924.68,
+            "y": 1258.08
+          },
+          {
+            "x": 1941.74,
+            "y": 1254.2
+          },
+          {
+            "x": 1950,
+            "y": 1243.94
+          },
+          {
+            "x": 1950,
+            "y": 1070
+          }
+        ],
+        [
+          {
+            "x": 1140,
+            "y": 1320
+          },
+          {
+            "x": 940,
+            "y": 1320
+          },
+          {
+            "x": 940,
+            "y": 1405.8
+          },
+          {
+            "x": 945.44,
+            "y": 1419.86
+          },
+          {
+            "x": 957.06,
+            "y": 1438.1
+          },
+          {
+            "x": 961.16,
+            "y": 1450
+          },
+          {
+            "x": 1106.24,
+            "y": 1450
+          },
+          {
+            "x": 1115.36,
+            "y": 1448.78
+          },
+          {
+            "x": 1121.3,
+            "y": 1441.8
+          },
+          {
+            "x": 1131.56,
+            "y": 1439.82
+          },
+          {
+            "x": 1140,
+            "y": 1434
+          }
+        ],
+        [
+          {
+            "x": 520,
+            "y": 900
+          },
+          {
+            "x": 397.08,
+            "y": 900
+          },
+          {
+            "x": 387.54,
+            "y": 915.8
+          },
+          {
+            "x": 369,
+            "y": 943.28
+          },
+          {
+            "x": 360,
+            "y": 951
+          },
+          {
+            "x": 360,
+            "y": 1050
+          },
+          {
+            "x": 520,
+            "y": 1050
+          }
+        ],
+        [
+          {
+            "x": 1740.38,
+            "y": 460
+          },
+          {
+            "x": 1720,
+            "y": 494
+          },
+          {
+            "x": 1720,
+            "y": 535.08
+          },
+          {
+            "x": 1734.1,
+            "y": 540.14
+          },
+          {
+            "x": 1766.4,
+            "y": 552.92
+          },
+          {
+            "x": 1777.8,
+            "y": 560
+          },
+          {
+            "x": 1850.54,
+            "y": 560
+          },
+          {
+            "x": 1890,
+            "y": 526
+          },
+          {
+            "x": 1890,
+            "y": 492.02
+          },
+          {
+            "x": 1852.74,
+            "y": 460
+          }
+        ],
+        [
+          {
+            "x": 1260,
+            "y": 694
+          },
+          {
+            "x": 1219.2,
+            "y": 660
+          },
+          {
+            "x": 1174.12,
+            "y": 660
+          },
+          {
+            "x": 1140,
+            "y": 694
+          },
+          {
+            "x": 1140,
+            "y": 760
+          },
+          {
+            "x": 1260,
+            "y": 760
+          }
+        ]
+      ],
+      "terrainOutline": [
+        {
+          "x": 560,
+          "y": 259.82
+        },
+        {
+          "x": 629.62,
+          "y": 200
+        },
+        {
+          "x": 1150.9,
+          "y": 200
+        },
+        {
+          "x": 1187.58,
+          "y": 209.04
+        },
+        {
+          "x": 1201.66,
+          "y": 249.22
+        },
+        {
+          "x": 1235.16,
+          "y": 270.98
+        },
+        {
+          "x": 1260,
+          "y": 308.8
+        },
+        {
+          "x": 1260,
+          "y": 467.78
+        },
+        {
+          "x": 1270.78,
+          "y": 483.8
+        },
+        {
+          "x": 1286.02,
+          "y": 488.86
+        },
+        {
+          "x": 1294.2,
+          "y": 514.26
+        },
+        {
+          "x": 1320.78,
+          "y": 520
+        },
+        {
+          "x": 1530,
+          "y": 520
+        },
+        {
+          "x": 1540,
+          "y": 533.6
+        },
+        {
+          "x": 1540,
+          "y": 549.34
+        },
+        {
+          "x": 1523,
+          "y": 560
+        },
+        {
+          "x": 1503.88,
+          "y": 560
+        },
+        {
+          "x": 1499.12,
+          "y": 562.36
+        },
+        {
+          "x": 1497.32,
+          "y": 566
+        },
+        {
+          "x": 1491.54,
+          "y": 568.78
+        },
+        {
+          "x": 1490,
+          "y": 573.6
+        },
+        {
+          "x": 1490,
+          "y": 586.4
+        },
+        {
+          "x": 1484.7,
+          "y": 590.5
+        },
+        {
+          "x": 1476.48,
+          "y": 595.72
+        },
+        {
+          "x": 1472.58,
+          "y": 600
+        },
+        {
+          "x": 1392.64,
+          "y": 600
+        },
+        {
+          "x": 1383.64,
+          "y": 607.68
+        },
+        {
+          "x": 1377.14,
+          "y": 618.68
+        },
+        {
+          "x": 1367.2,
+          "y": 622.98
+        },
+        {
+          "x": 1360,
+          "y": 638
+        },
+        {
+          "x": 1360,
+          "y": 721.78
+        },
+        {
+          "x": 1404.48,
+          "y": 760
+        },
+        {
+          "x": 1552.72,
+          "y": 760
+        },
+        {
+          "x": 1590,
+          "y": 732.8
+        },
+        {
+          "x": 1590,
+          "y": 680
+        },
+        {
+          "x": 1616.4,
+          "y": 680
+        },
+        {
+          "x": 1620.4,
+          "y": 674.7
+        },
+        {
+          "x": 1625.96,
+          "y": 662.36
+        },
+        {
+          "x": 1630,
+          "y": 657.82
+        },
+        {
+          "x": 1630,
+          "y": 576.44
+        },
+        {
+          "x": 1613,
+          "y": 560
+        },
+        {
+          "x": 1591.04,
+          "y": 560
+        },
+        {
+          "x": 1580,
+          "y": 532.16
+        },
+        {
+          "x": 1580,
+          "y": 360
+        },
+        {
+          "x": 1699.86,
+          "y": 360
+        },
+        {
+          "x": 1728.28,
+          "y": 372.96
+        },
+        {
+          "x": 1766.48,
+          "y": 378
+        },
+        {
+          "x": 1788.68,
+          "y": 360
+        },
+        {
+          "x": 1994.52,
+          "y": 360
+        },
+        {
+          "x": 2040,
+          "y": 412.92
+        },
+        {
+          "x": 2040,
+          "y": 600
+        },
+        {
+          "x": 2083,
+          "y": 600
+        },
+        {
+          "x": 2100,
+          "y": 619.78
+        },
+        {
+          "x": 2100,
+          "y": 895.76
+        },
+        {
+          "x": 2128.2,
+          "y": 920
+        },
+        {
+          "x": 2170.74,
+          "y": 920
+        },
+        {
+          "x": 2177.82,
+          "y": 923.74
+        },
+        {
+          "x": 2181.9,
+          "y": 937.2
+        },
+        {
+          "x": 2193.9,
+          "y": 940.36
+        },
+        {
+          "x": 2200,
+          "y": 954.04
+        },
+        {
+          "x": 2200,
+          "y": 1220
+        },
+        {
+          "x": 2100,
+          "y": 1220
+        },
+        {
+          "x": 2100,
+          "y": 1312.4
+        },
+        {
+          "x": 2095.34,
+          "y": 1329.06
+        },
+        {
+          "x": 2081.04,
+          "y": 1330.7
+        },
+        {
+          "x": 2077.68,
+          "y": 1348.12
+        },
+        {
+          "x": 2065.74,
+          "y": 1360
+        },
+        {
+          "x": 1931.82,
+          "y": 1360
+        },
+        {
+          "x": 1914.1,
+          "y": 1348.34
+        },
+        {
+          "x": 1890.32,
+          "y": 1343.8
+        },
+        {
+          "x": 1876.48,
+          "y": 1360
+        },
+        {
+          "x": 1760,
+          "y": 1360
+        },
+        {
+          "x": 1760,
+          "y": 1439.2
+        },
+        {
+          "x": 1752.74,
+          "y": 1451.9
+        },
+        {
+          "x": 1741.04,
+          "y": 1456.92
+        },
+        {
+          "x": 1734.16,
+          "y": 1470.02
+        },
+        {
+          "x": 1720.94,
+          "y": 1480
+        },
+        {
+          "x": 1540,
+          "y": 1480
+        },
+        {
+          "x": 1540,
+          "y": 1506.4
+        },
+        {
+          "x": 1538.74,
+          "y": 1510.36
+        },
+        {
+          "x": 1533.5,
+          "y": 1511.78
+        },
+        {
+          "x": 1532,
+          "y": 1518.04
+        },
+        {
+          "x": 1527.94,
+          "y": 1520
+        },
+        {
+          "x": 1373.88,
+          "y": 1520
+        },
+        {
+          "x": 1351.92,
+          "y": 1496.02
+        },
+        {
+          "x": 1322.42,
+          "y": 1486.7
+        },
+        {
+          "x": 1305.26,
+          "y": 1520
+        },
+        {
+          "x": 1182.1,
+          "y": 1520
+        },
+        {
+          "x": 1140,
+          "y": 1539.96
+        },
+        {
+          "x": 1140,
+          "y": 1680
+        },
+        {
+          "x": 360,
+          "y": 1680
+        },
+        {
+          "x": 360,
+          "y": 1564.06
+        },
+        {
+          "x": 347.38,
+          "y": 1553.48
+        },
+        {
+          "x": 325.34,
+          "y": 1534.44
+        },
+        {
+          "x": 319.2,
+          "y": 1520
+        },
+        {
+          "x": 280.8,
+          "y": 1520
+        },
+        {
+          "x": 268.02,
+          "y": 1512.22
+        },
+        {
+          "x": 264.5,
+          "y": 1487.98
+        },
+        {
+          "x": 245.88,
+          "y": 1479.06
+        },
+        {
+          "x": 240,
+          "y": 1458.8
+        },
+        {
+          "x": 240,
+          "y": 1378.4
+        },
+        {
+          "x": 227.5,
+          "y": 1368.28
+        },
+        {
+          "x": 197.44,
+          "y": 1349.2
+        },
+        {
+          "x": 185.6,
+          "y": 1340
+        },
+        {
+          "x": 125.28,
+          "y": 1340
+        },
+        {
+          "x": 116.1,
+          "y": 1324.76
+        },
+        {
+          "x": 93.38,
+          "y": 1290.08
+        },
+        {
+          "x": 80,
+          "y": 1273.48
+        },
+        {
+          "x": 80,
+          "y": 793.24
+        },
+        {
+          "x": 128.84,
+          "y": 760
+        },
+        {
+          "x": 240,
+          "y": 760
+        },
+        {
+          "x": 240,
+          "y": 584.08
+        },
+        {
+          "x": 314.6,
+          "y": 520
+        },
+        {
+          "x": 560,
+          "y": 520
+        }
+      ],
+      "fragmentShape": {
+        "algorithmVersion": "rectilinear-fragment-v1",
+        "layoutId": "monolith-broken-southwest-v1",
+        "sourceHash": "72deed1c79a738ee9eda3ed1d2328907cffdc7bfa31b94009fa12cb05e6217a5",
+        "seedMode": "run-seed",
+        "seedSalt": 0,
+        "edgeSeed": 20261012,
+        "layout": {
+          "authoringFrame": [
+            1152,
+            896
+          ],
+          "worldScale": 2,
+          "landRects": [
+            [
+              120,
+              260,
+              650,
+              500
+            ],
+            [
+              40,
+              380,
+              240,
+              290
+            ],
+            [
+              180,
+              640,
+              390,
+              200
+            ],
+            [
+              280,
+              100,
+              350,
+              260
+            ],
+            [
+              650,
+              300,
+              400,
+              380
+            ],
+            [
+              790,
+              180,
+              230,
+              180
+            ],
+            [
+              950,
+              460,
+              150,
+              150
+            ],
+            [
+              650,
+              600,
+              230,
+              140
+            ]
+          ],
+          "voidRects": [
+            [
+              680,
+              300,
+              115,
+              80
+            ],
+            [
+              745,
+              280,
+              70,
+              60
+            ],
+            [
+              180,
+              450,
+              80,
+              75
+            ],
+            [
+              470,
+              660,
+              100,
+              65
+            ],
+            [
+              350,
+              210,
+              100,
+              70
+            ],
+            [
+              910,
+              535,
+              65,
+              100
+            ],
+            [
+              860,
+              230,
+              85,
+              50
+            ],
+            [
+              570,
+              330,
+              60,
+              50
+            ]
+          ]
+        }
+      },
+      "spawnCandidates": [
+        {
+          "x": 350,
+          "y": 750
+        },
+        {
+          "x": 450,
+          "y": 1250
+        },
+        {
+          "x": 800,
+          "y": 1520
+        },
+        {
+          "x": 1250,
+          "y": 1270
+        },
+        {
+          "x": 1950,
+          "y": 870
+        },
+        {
+          "x": 1750,
+          "y": 730
+        },
+        {
+          "x": 1080,
+          "y": 420
+        },
+        {
+          "x": 680,
+          "y": 660
+        }
+      ],
+      "extraction": {
+        "minPathDistancePx": 920,
+        "minEuclideanDistancePx": 560,
+        "minPathFraction": 0.28,
+        "maxPathFraction": 1,
+        "clearanceHalfSize": 28,
+        "regionCols": 4,
+        "regionRows": 3,
+        "distanceBands": 3
+      },
+      "deployment": {
+        "version": 1,
+        "safe_max_extra_travel_px": 180,
+        "safe_max_approach_px": 480,
+        "contested_min_extra_travel_px": 180,
+        "contested_max_extra_travel_px": 840,
+        "deep_min_extra_travel_px": 600,
+        "deep_max_extra_travel_px": 1400,
+        "max_search_approach_px": 2600,
+        "node_spacing_px": 96,
+        "node_spread_weight": 0.25,
+        "host_min_approach_px": 160,
+        "host_max_approach_px": 2600,
+        "host_region_cols": 4,
+        "host_region_rows": 3,
+        "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+      }
+    },
+    "searchSitePolicy": {
+      "version": 1,
+      "algorithm": "grounded-search-v1",
+      "worldId": "monolith-sill",
+      "sourceHash": "2d2f62262dd689ae5235f2a5fbbb988bf4b692f6e74e19c5f65b44aab0818a6d",
+      "sourceReachPx": 72,
+      "environmentScoreCap": 12,
+      "peelPreference": 0.65,
+      "footprintProfile": "grounded-material-v1"
+    },
+    "package": {
+      "id": "r100-monolith-sill",
+      "algorithm": "r100-native",
+      "version": 3,
+      "algorithmRevision": 10,
+      "materials": {
+        "folded-slab": {
+          "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+          "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+          "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+        }
+      },
+      "dependencyHash": "e72cf053",
+      "grade": "medium"
+    }
+  },
+  "metadata": {
+    "world": "r100-monolith-sill",
+    "space": "monolith-sill-medium",
+    "contentFragmentTypeId": "frag-outdoor",
+    "requestedSeed": 20261012,
+    "effectiveSeed": 3991160799,
+    "attempt": 1,
+    "rejected": [
+      {
+        "seed": 20261012,
+        "reason": "Cannot admit kindling/deep/1 with a full native route"
+      }
+    ],
+    "signature": "8d3886ae",
+    "bodySize": 20,
+    "supportTileSize": 8,
+    "hostTileSize": 32,
+    "reachableBodySeats": 28970,
+    "extractionRoutePx": 1389.9209229614212
+  },
+  "entry": {
+    "pos": {
+      "x": 1076,
+      "y": 420
+    },
+    "hp": 100,
+    "chaos": 15.016586682,
+    "elapsedMs": 133.29999999999927,
+    "ended": false,
+    "known": false,
+    "carried": 0,
+    "prompt": null,
+    "nodes": [
+      {
+        "id": "r100-kindling-safe-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-deep-2",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-safe-1",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-deep-1",
+        "collected": false
+      }
+    ],
+    "canExtract": false
+  },
+  "target": {
+    "id": "r100-kindling-safe-1",
+    "tier": "safe",
+    "position": {
+      "x": 1140,
+      "y": 404
+    },
+    "value": 1
+  },
+  "standOffSeat": {
+    "x": 1140,
+    "y": 544
+  },
+  "inputMode": "Animation-frame DOM keyboard events through normal Phaser input; diagnostic routing only, no player/physics/time/state writes",
+  "afterApproach": {
+    "pos": {
+      "x": 1130.8726602634345,
+      "y": 515.5853170117509
+    },
+    "hp": 100,
+    "chaos": 15.807342395999973,
+    "elapsedMs": 2516.6000000000004,
+    "ended": false,
+    "known": false,
+    "carried": 0,
+    "prompt": null,
+    "nodes": [
+      {
+        "id": "r100-kindling-safe-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-deep-2",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-safe-1",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-deep-1",
+        "collected": false
+      }
+    ],
+    "canExtract": false
+  },
+  "before": {
+    "target": {
+      "id": "r100-kindling-safe-1",
+      "kind": "kindling",
+      "tier": "safe",
+      "position": {
+        "x": 1140,
+        "y": 404
+      },
+      "collected": false,
+      "visibility": 1,
+      "representation": "native-material-patch",
+      "site": {
+        "nodeId": "r100-kindling-safe-1",
+        "version": 1,
+        "position": {
+          "x": 1140,
+          "y": 404
+        },
+        "visualSeed": 3889645369,
+        "sourceKind": "ground-accumulation",
+        "family": "folded-slab",
+        "groundFamily": "folded-slab",
+        "sourceObjectId": null,
+        "sourceAnchor": null,
+        "sourceDomain": "ground",
+        "axis": 0.09999999999999964,
+        "footprintProfile": "grounded-material-v1"
+      },
+      "spriteVisible": false,
+      "screenFoot": {
+        "x": 893.3,
+        "y": 301.25181884765624
+      },
+      "screenBounds": {
+        "topLeft": {
+          "x": 822.3,
+          "y": 244.45220947265625
+        },
+        "bottomRight": {
+          "x": 964.3,
+          "y": 358.0514282226562
+        }
+      },
+      "bodySupportedAtAnchor": true,
+      "materialRuntime": {
+        "count": 8,
+        "cpuBytes": 1310720,
+        "stateUploads": 0,
+        "collected": []
+      }
+    },
+    "nodes": [
+      {
+        "id": "r100-kindling-safe-1",
+        "kind": "kindling",
+        "tier": "safe",
+        "position": {
+          "x": 1140,
+          "y": 404
+        },
+        "collected": false,
+        "visibility": 1,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-safe-1",
+          "version": 1,
+          "position": {
+            "x": 1140,
+            "y": 404
+          },
+          "visualSeed": 3889645369,
+          "sourceKind": "ground-accumulation",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 893.3,
+          "y": 301.25181884765624
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 822.3,
+            "y": 244.45220947265625
+          },
+          "bottomRight": {
+            "x": 964.3,
+            "y": 358.0514282226562
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "kind": "kindling",
+        "tier": "contested",
+        "position": {
+          "x": 564,
+          "y": 724
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-contested-1",
+          "version": 1,
+          "position": {
+            "x": 564,
+            "y": 724
+          },
+          "visualSeed": 3877534160,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -129.10000000000002,
+          "y": 869.2479125976563
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -200.10000000000002,
+            "y": 812.4483032226562
+          },
+          "bottomRight": {
+            "x": -58.10000000000002,
+            "y": 926.0475219726562
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "kind": "kindling",
+        "tier": "contested",
+        "position": {
+          "x": 1924,
+          "y": 1300
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-contested-2",
+          "version": 1,
+          "position": {
+            "x": 1924,
+            "y": 1300
+          },
+          "visualSeed": 3970611123,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 2284.9,
+          "y": 1891.6408813476562
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 2213.9,
+            "y": 1834.8412719726562
+          },
+          "bottomRight": {
+            "x": 2355.9,
+            "y": 1948.4404907226562
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "kind": "kindling",
+        "tier": "deep",
+        "position": {
+          "x": 356,
+          "y": 1204
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-deep-1",
+          "version": 1,
+          "position": {
+            "x": 356,
+            "y": 1204
+          },
+          "visualSeed": 2433865813,
+          "sourceKind": "ground-accumulation",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -498.29999999999995,
+          "y": 1721.2420532226563
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -569.3,
+            "y": 1664.4424438476562
+          },
+          "bottomRight": {
+            "x": -427.29999999999995,
+            "y": 1778.0416625976563
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-deep-2",
+        "kind": "kindling",
+        "tier": "deep",
+        "position": {
+          "x": 324,
+          "y": 596
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-deep-2",
+          "version": 1,
+          "position": {
+            "x": 324,
+            "y": 596
+          },
+          "visualSeed": 2246623778,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -555.1,
+          "y": 642.0494750976562
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -626.1,
+            "y": 585.2498657226563
+          },
+          "bottomRight": {
+            "x": -484.1,
+            "y": 698.8490844726563
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-safe-1",
+        "kind": "contaminant",
+        "tier": "safe",
+        "position": {
+          "x": 1124,
+          "y": 820
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-safe-1",
+          "version": 1,
+          "position": {
+            "x": 1124,
+            "y": 820
+          },
+          "visualSeed": 2415881331,
+          "sourceKind": "detached",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": 1,
+          "sourceAnchor": {
+            "x": 1141.183349609375,
+            "y": 838.4766235351562
+          },
+          "sourceDomain": "formation",
+          "axis": 6.183185307179587,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 864.9,
+          "y": 1039.6467407226562
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 793.9,
+            "y": 982.8471313476563
+          },
+          "bottomRight": {
+            "x": 935.9,
+            "y": 1096.4463500976562
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "kind": "contaminant",
+        "tier": "contested",
+        "position": {
+          "x": 884,
+          "y": 1540
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-contested-1",
+          "version": 1,
+          "position": {
+            "x": 884,
+            "y": 1540
+          },
+          "visualSeed": 1314600207,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 438.9,
+          "y": 2317.6379516601564
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 367.9,
+            "y": 2260.838342285156
+          },
+          "bottomRight": {
+            "x": 509.9,
+            "y": 2374.4375610351562
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-deep-1",
+        "kind": "contaminant",
+        "tier": "deep",
+        "position": {
+          "x": 2036,
+          "y": 1044
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-deep-1",
+          "version": 1,
+          "position": {
+            "x": 2036,
+            "y": 1044
+          },
+          "visualSeed": 1232438663,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 2483.7,
+          "y": 1437.2440063476563
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 2412.7,
+            "y": 1380.4443969726562
+          },
+          "bottomRight": {
+            "x": 2554.7,
+            "y": 1494.0436157226563
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      }
+    ],
+    "player": {
+      "position": {
+        "x": 1128.7027649447234,
+        "y": 510.1559419915553
+      },
+      "health": 100,
+      "chaos": 16.03959575999996
+    },
+    "camera": {
+      "scrollX": 648,
+      "scrollY": 190,
+      "zoom": 1.5,
+      "worldView": {
+        "x": 808,
+        "y": 297,
+        "width": 640,
+        "height": 427
+      },
+      "viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 960,
+        "height": 640
+      },
+      "canvas": {
+        "width": 960,
+        "height": 640,
+        "client": {
+          "x": 304,
+          "y": 111.328125,
+          "width": 1136,
+          "height": 757.328125
+        }
+      }
+    },
+    "nativeKeys": [
+      "spatialDeployment",
+      "definition",
+      "meshes",
+      "raster",
+      "sample",
+      "hostTileMap",
+      "pollution",
+      "diagnostics",
+      "algorithmRevision",
+      "searchSites",
+      "appearance",
+      "gradeDefinition",
+      "packageHash"
+    ],
+    "nativeIdentity": {
+      "diagnostics": {
+        "identity": "monolith-sill-medium",
+        "family": "folded-slab",
+        "grade": "medium",
+        "seed": 3991160799,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "328fa103",
+        "qualification": "v3-production-candidate",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 77,
+        "reachableBodySeats": 28970,
+        "spawnPoint": {
+          "x": 1076,
+          "y": 420
+        },
+        "exitPoint": {
+          "x": 1628,
+          "y": 1436
+        },
+        "searchPoint": {
+          "x": 1148,
+          "y": 1220
+        },
+        "enemyPoint": {
+          "x": 1612,
+          "y": 996
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 1972,
+        "solidCells": 2688,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": true,
+        "paintHosts": 4,
+        "volumeHosts": 2,
+        "paintContactAreaPx": 30720,
+        "volumeBoundsAreaPx": 24576,
+        "chaosRateStart": 0.42,
+        "chaosRateEnd": 0.6,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately",
+        "spatial": {
+          "version": 2,
+          "worldId": "monolith-sill",
+          "sourceHash": "c883388745f253546033ed40d12751201f623eccc38b9f117a2376c865f8abc4",
+          "organization": "authored-sectors",
+          "width": 2304,
+          "height": 1792,
+          "terrainFillRatio": 0.5202132936507936,
+          "solidTerrainRatio": 0.0800953516090584,
+          "bodyReachableRatio": 1,
+          "unreachableBodySeats": 0,
+          "spawnIndex": 6,
+          "spawnRelocationPx": 4,
+          "extraction": {
+            "point": {
+              "x": 1628,
+              "y": 1436
+            },
+            "cell": 51755,
+            "pathDistancePx": 1389.9209229614212,
+            "interactionPathDistancePx": 1339.9797974644666,
+            "euclideanDistancePx": 1156.2698646942245,
+            "pathFraction": 0.6143700103244926,
+            "regionId": 10,
+            "distanceBand": 1,
+            "candidateCount": 13710,
+            "regionCount": 10
+          },
+          "extractionCandidateField": {
+            "reachableCount": 28970,
+            "maxPathDistancePx": 2262.3515139147253,
+            "minCandidatePathDistancePx": 967.1555544218252,
+            "maxCandidatePathDistancePx": 2239.7240969167556,
+            "candidateCount": 13710,
+            "regionCount": 10,
+            "distanceBandCount": 3,
+            "regionCounts": {
+              "2": 239,
+              "3": 519,
+              "4": 1631,
+              "5": 2,
+              "6": 609,
+              "7": 3153,
+              "8": 2261,
+              "9": 2725,
+              "10": 2092,
+              "11": 479
+            },
+            "distanceBandCounts": {
+              "0": 8115,
+              "1": 2895,
+              "2": 2700
+            }
+          },
+          "solidObjectCount": 1
+        },
+        "expedition": {
+          "reachableBodySeats": 28970,
+          "extractionRoutePx": 1389.9209229614212,
+          "maximumExtraTravelPx": 1985.6652224137101,
+          "directReturnRoutePx": 1339.9797974644657,
+          "nodes": [
+            {
+              "id": "kindling/safe",
+              "minimumExtraTravelPx": 9.372583002030524,
+              "approachRoutePx": 22.627416997969522,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 419.44108966129875
+            },
+            {
+              "id": "contaminant/safe",
+              "minimumExtraTravelPx": 0,
+              "approachRoutePx": 369.9411254969542,
+              "interactionSeats": 90,
+              "pollutionDistancePx": 95.33147112141037
+            },
+            {
+              "id": "kindling/contested",
+              "minimumExtraTravelPx": 510.9200564096441,
+              "approachRoutePx": 587.9797974644663,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 118.79393923933999
+            },
+            {
+              "id": "kindling/contested",
+              "minimumExtraTravelPx": 496.0000000000007,
+              "approachRoutePx": 1581.5878784786796,
+              "interactionSeats": 91,
+              "pollutionDistancePx": 88.54377448471463
+            },
+            {
+              "id": "contaminant/contested",
+              "minimumExtraTravelPx": 506.17662350913724,
+              "approachRoutePx": 1149.5878784786796,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 455.0991546642511
+            },
+            {
+              "id": "kindling/deep",
+              "minimumExtraTravelPx": 992.5281374238562,
+              "approachRoutePx": 1051.0378054157336,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 28.153619241621193
+            },
+            {
+              "id": "kindling/deep",
+              "minimumExtraTravelPx": 990.9200564096459,
+              "approachRoutePx": 774.9604614807106,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 28
+            },
+            {
+              "id": "contaminant/deep",
+              "minimumExtraTravelPx": 1002.0386719675148,
+              "approachRoutePx": 1773.1168824543163,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 76
+            }
+          ],
+          "patrolWindows": [
+            {
+              "id": "r100-kindling-contested-1",
+              "seat": {
+                "x": 564,
+                "y": 676
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-contested-2",
+              "seat": {
+                "x": 1932,
+                "y": 1268
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-deep-1",
+              "seat": {
+                "x": 356,
+                "y": 1156
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-contaminant-contested-1",
+              "seat": {
+                "x": 860,
+                "y": 1500
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-deep-2",
+              "seat": {
+                "x": 324,
+                "y": 548
+              },
+              "startMs": 100,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-contaminant-deep-1",
+              "seat": {
+                "x": 2004,
+                "y": 1012
+              },
+              "startMs": 100,
+              "durationMs": 2400
+            }
+          ],
+          "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+          "spatialDeployment": {
+            "version": 1,
+            "safe_max_extra_travel_px": 180,
+            "safe_max_approach_px": 480,
+            "contested_min_extra_travel_px": 180,
+            "contested_max_extra_travel_px": 840,
+            "deep_min_extra_travel_px": 600,
+            "deep_max_extra_travel_px": 1400,
+            "max_search_approach_px": 2600,
+            "node_spacing_px": 96,
+            "node_spread_weight": 0.25,
+            "host_min_approach_px": 160,
+            "host_max_approach_px": 2600,
+            "host_region_cols": 4,
+            "host_region_rows": 3,
+            "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+          },
+          "searchExtraTravelCapPx": 1400,
+          "searchSites": [
+            {
+              "nodeId": "r100-kindling-safe-1",
+              "sourceKind": "ground-accumulation",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-contested-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-contested-2",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-deep-1",
+              "sourceKind": "ground-accumulation",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-deep-2",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-contaminant-safe-1",
+              "sourceKind": "detached",
+              "family": "folded-slab",
+              "sourceDomain": "formation",
+              "sourceObjectId": 1
+            },
+            {
+              "nodeId": "r100-contaminant-contested-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-contaminant-deep-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            }
+          ],
+          "environmentScoreCap": 12,
+          "costBasis": "all-body-safe-48px-interaction-seats",
+          "guaranteedSafeReturn": true,
+          "enemyCount": 3,
+          "kindlingCount": 5,
+          "contaminantCount": 3
+        }
+      }
+    },
+    "layoutSummary": {
+      "seed": 3991160799,
+      "spawn": {
+        "x": 1076,
+        "y": 420
+      },
+      "kindlingNodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1140,
+            "y": 404
+          },
+          "value": 1
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 564,
+            "y": 724
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1924,
+            "y": 1300
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 356,
+            "y": 1204
+          },
+          "value": 4
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 324,
+            "y": 596
+          },
+          "value": 4
+        }
+      ],
+      "contaminantNodes": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1124,
+            "y": 820
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 884,
+            "y": 1540
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 2036,
+            "y": 1044
+          }
+        }
+      ]
+    }
+  },
+  "searchApproach": {
+    "pos": {
+      "x": 1130.8428010683247,
+      "y": 427.07886879115813
+    },
+    "hp": 100,
+    "chaos": 16.581511427999864,
+    "elapsedMs": 4849.799999999999,
+    "ended": false,
+    "known": false,
+    "carried": 0,
+    "prompt": "search",
+    "nodes": [
+      {
+        "id": "r100-kindling-safe-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-deep-2",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-safe-1",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-deep-1",
+        "collected": false
+      }
+    ],
+    "canExtract": false
+  },
+  "near": {
+    "target": {
+      "id": "r100-kindling-safe-1",
+      "kind": "kindling",
+      "tier": "safe",
+      "position": {
+        "x": 1140,
+        "y": 404
+      },
+      "collected": false,
+      "visibility": 1,
+      "representation": "native-material-patch",
+      "site": {
+        "nodeId": "r100-kindling-safe-1",
+        "version": 1,
+        "position": {
+          "x": 1140,
+          "y": 404
+        },
+        "visualSeed": 3889645369,
+        "sourceKind": "ground-accumulation",
+        "family": "folded-slab",
+        "groundFamily": "folded-slab",
+        "sourceObjectId": null,
+        "sourceAnchor": null,
+        "sourceDomain": "ground",
+        "axis": 0.09999999999999964,
+        "footprintProfile": "grounded-material-v1"
+      },
+      "spriteVisible": false,
+      "screenFoot": {
+        "x": 889.75,
+        "y": 464.5506958007812
+      },
+      "screenBounds": {
+        "topLeft": {
+          "x": 818.75,
+          "y": 407.75108642578124
+        },
+        "bottomRight": {
+          "x": 960.75,
+          "y": 521.3503051757813
+        }
+      },
+      "bodySupportedAtAnchor": true,
+      "materialRuntime": {
+        "count": 8,
+        "cpuBytes": 1310720,
+        "stateUploads": 0,
+        "collected": []
+      }
+    },
+    "nodes": [
+      {
+        "id": "r100-kindling-safe-1",
+        "kind": "kindling",
+        "tier": "safe",
+        "position": {
+          "x": 1140,
+          "y": 404
+        },
+        "collected": false,
+        "visibility": 1,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-safe-1",
+          "version": 1,
+          "position": {
+            "x": 1140,
+            "y": 404
+          },
+          "visualSeed": 3889645369,
+          "sourceKind": "ground-accumulation",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 889.75,
+          "y": 464.5506958007812
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 818.75,
+            "y": 407.75108642578124
+          },
+          "bottomRight": {
+            "x": 960.75,
+            "y": 521.3503051757813
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "kind": "kindling",
+        "tier": "contested",
+        "position": {
+          "x": 564,
+          "y": 724
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-contested-1",
+          "version": 1,
+          "position": {
+            "x": 564,
+            "y": 724
+          },
+          "visualSeed": 3877534160,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -132.64999999999998,
+          "y": 1032.5467895507813
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -203.64999999999998,
+            "y": 975.7471801757813
+          },
+          "bottomRight": {
+            "x": -61.64999999999998,
+            "y": 1089.3463989257812
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "kind": "kindling",
+        "tier": "contested",
+        "position": {
+          "x": 1924,
+          "y": 1300
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-contested-2",
+          "version": 1,
+          "position": {
+            "x": 1924,
+            "y": 1300
+          },
+          "visualSeed": 3970611123,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 2281.35,
+          "y": 2054.9397583007812
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 2210.35,
+            "y": 1998.1401489257812
+          },
+          "bottomRight": {
+            "x": 2352.35,
+            "y": 2111.739367675781
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "kind": "kindling",
+        "tier": "deep",
+        "position": {
+          "x": 356,
+          "y": 1204
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-deep-1",
+          "version": 1,
+          "position": {
+            "x": 356,
+            "y": 1204
+          },
+          "visualSeed": 2433865813,
+          "sourceKind": "ground-accumulation",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -501.85,
+          "y": 1884.5409301757813
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -572.85,
+            "y": 1827.7413208007813
+          },
+          "bottomRight": {
+            "x": -430.85,
+            "y": 1941.3405395507812
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-deep-2",
+        "kind": "kindling",
+        "tier": "deep",
+        "position": {
+          "x": 324,
+          "y": 596
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-deep-2",
+          "version": 1,
+          "position": {
+            "x": 324,
+            "y": 596
+          },
+          "visualSeed": 2246623778,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -558.65,
+          "y": 805.3483520507813
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -629.65,
+            "y": 748.5487426757812
+          },
+          "bottomRight": {
+            "x": -487.65,
+            "y": 862.1479614257812
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-safe-1",
+        "kind": "contaminant",
+        "tier": "safe",
+        "position": {
+          "x": 1124,
+          "y": 820
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-safe-1",
+          "version": 1,
+          "position": {
+            "x": 1124,
+            "y": 820
+          },
+          "visualSeed": 2415881331,
+          "sourceKind": "detached",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": 1,
+          "sourceAnchor": {
+            "x": 1141.183349609375,
+            "y": 838.4766235351562
+          },
+          "sourceDomain": "formation",
+          "axis": 6.183185307179587,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 861.35,
+          "y": 1202.9456176757812
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 790.35,
+            "y": 1146.1460083007812
+          },
+          "bottomRight": {
+            "x": 932.35,
+            "y": 1259.7452270507813
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "kind": "contaminant",
+        "tier": "contested",
+        "position": {
+          "x": 884,
+          "y": 1540
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-contested-1",
+          "version": 1,
+          "position": {
+            "x": 884,
+            "y": 1540
+          },
+          "visualSeed": 1314600207,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 435.35,
+          "y": 2480.9368286132812
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 364.35,
+            "y": 2424.1372192382814
+          },
+          "bottomRight": {
+            "x": 506.35,
+            "y": 2537.736437988281
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-deep-1",
+        "kind": "contaminant",
+        "tier": "deep",
+        "position": {
+          "x": 2036,
+          "y": 1044
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-deep-1",
+          "version": 1,
+          "position": {
+            "x": 2036,
+            "y": 1044
+          },
+          "visualSeed": 1232438663,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 2480.15,
+          "y": 1600.5428833007813
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 2409.15,
+            "y": 1543.7432739257813
+          },
+          "bottomRight": {
+            "x": 2551.15,
+            "y": 1657.3424926757812
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      }
+    ],
+    "player": {
+      "position": {
+        "x": 1130.8387760829044,
+        "y": 418.2041207829835
+      },
+      "health": 100,
+      "chaos": 16.69763479199985
+    },
+    "camera": {
+      "scrollX": 650,
+      "scrollY": 98,
+      "zoom": 1.5,
+      "worldView": {
+        "x": 810,
+        "y": 205,
+        "width": 640,
+        "height": 427
+      },
+      "viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 960,
+        "height": 640
+      },
+      "canvas": {
+        "width": 960,
+        "height": 640,
+        "client": {
+          "x": 304,
+          "y": 111.328125,
+          "width": 1136,
+          "height": 757.328125
+        }
+      }
+    },
+    "nativeKeys": [
+      "spatialDeployment",
+      "definition",
+      "meshes",
+      "raster",
+      "sample",
+      "hostTileMap",
+      "pollution",
+      "diagnostics",
+      "algorithmRevision",
+      "searchSites",
+      "appearance",
+      "gradeDefinition",
+      "packageHash"
+    ],
+    "nativeIdentity": {
+      "diagnostics": {
+        "identity": "monolith-sill-medium",
+        "family": "folded-slab",
+        "grade": "medium",
+        "seed": 3991160799,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "328fa103",
+        "qualification": "v3-production-candidate",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 77,
+        "reachableBodySeats": 28970,
+        "spawnPoint": {
+          "x": 1076,
+          "y": 420
+        },
+        "exitPoint": {
+          "x": 1628,
+          "y": 1436
+        },
+        "searchPoint": {
+          "x": 1148,
+          "y": 1220
+        },
+        "enemyPoint": {
+          "x": 1612,
+          "y": 996
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 1972,
+        "solidCells": 2688,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": true,
+        "paintHosts": 4,
+        "volumeHosts": 2,
+        "paintContactAreaPx": 30720,
+        "volumeBoundsAreaPx": 24576,
+        "chaosRateStart": 0.42,
+        "chaosRateEnd": 0.6,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately",
+        "spatial": {
+          "version": 2,
+          "worldId": "monolith-sill",
+          "sourceHash": "c883388745f253546033ed40d12751201f623eccc38b9f117a2376c865f8abc4",
+          "organization": "authored-sectors",
+          "width": 2304,
+          "height": 1792,
+          "terrainFillRatio": 0.5202132936507936,
+          "solidTerrainRatio": 0.0800953516090584,
+          "bodyReachableRatio": 1,
+          "unreachableBodySeats": 0,
+          "spawnIndex": 6,
+          "spawnRelocationPx": 4,
+          "extraction": {
+            "point": {
+              "x": 1628,
+              "y": 1436
+            },
+            "cell": 51755,
+            "pathDistancePx": 1389.9209229614212,
+            "interactionPathDistancePx": 1339.9797974644666,
+            "euclideanDistancePx": 1156.2698646942245,
+            "pathFraction": 0.6143700103244926,
+            "regionId": 10,
+            "distanceBand": 1,
+            "candidateCount": 13710,
+            "regionCount": 10
+          },
+          "extractionCandidateField": {
+            "reachableCount": 28970,
+            "maxPathDistancePx": 2262.3515139147253,
+            "minCandidatePathDistancePx": 967.1555544218252,
+            "maxCandidatePathDistancePx": 2239.7240969167556,
+            "candidateCount": 13710,
+            "regionCount": 10,
+            "distanceBandCount": 3,
+            "regionCounts": {
+              "2": 239,
+              "3": 519,
+              "4": 1631,
+              "5": 2,
+              "6": 609,
+              "7": 3153,
+              "8": 2261,
+              "9": 2725,
+              "10": 2092,
+              "11": 479
+            },
+            "distanceBandCounts": {
+              "0": 8115,
+              "1": 2895,
+              "2": 2700
+            }
+          },
+          "solidObjectCount": 1
+        },
+        "expedition": {
+          "reachableBodySeats": 28970,
+          "extractionRoutePx": 1389.9209229614212,
+          "maximumExtraTravelPx": 1985.6652224137101,
+          "directReturnRoutePx": 1339.9797974644657,
+          "nodes": [
+            {
+              "id": "kindling/safe",
+              "minimumExtraTravelPx": 9.372583002030524,
+              "approachRoutePx": 22.627416997969522,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 419.44108966129875
+            },
+            {
+              "id": "contaminant/safe",
+              "minimumExtraTravelPx": 0,
+              "approachRoutePx": 369.9411254969542,
+              "interactionSeats": 90,
+              "pollutionDistancePx": 95.33147112141037
+            },
+            {
+              "id": "kindling/contested",
+              "minimumExtraTravelPx": 510.9200564096441,
+              "approachRoutePx": 587.9797974644663,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 118.79393923933999
+            },
+            {
+              "id": "kindling/contested",
+              "minimumExtraTravelPx": 496.0000000000007,
+              "approachRoutePx": 1581.5878784786796,
+              "interactionSeats": 91,
+              "pollutionDistancePx": 88.54377448471463
+            },
+            {
+              "id": "contaminant/contested",
+              "minimumExtraTravelPx": 506.17662350913724,
+              "approachRoutePx": 1149.5878784786796,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 455.0991546642511
+            },
+            {
+              "id": "kindling/deep",
+              "minimumExtraTravelPx": 992.5281374238562,
+              "approachRoutePx": 1051.0378054157336,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 28.153619241621193
+            },
+            {
+              "id": "kindling/deep",
+              "minimumExtraTravelPx": 990.9200564096459,
+              "approachRoutePx": 774.9604614807106,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 28
+            },
+            {
+              "id": "contaminant/deep",
+              "minimumExtraTravelPx": 1002.0386719675148,
+              "approachRoutePx": 1773.1168824543163,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 76
+            }
+          ],
+          "patrolWindows": [
+            {
+              "id": "r100-kindling-contested-1",
+              "seat": {
+                "x": 564,
+                "y": 676
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-contested-2",
+              "seat": {
+                "x": 1932,
+                "y": 1268
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-deep-1",
+              "seat": {
+                "x": 356,
+                "y": 1156
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-contaminant-contested-1",
+              "seat": {
+                "x": 860,
+                "y": 1500
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-deep-2",
+              "seat": {
+                "x": 324,
+                "y": 548
+              },
+              "startMs": 100,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-contaminant-deep-1",
+              "seat": {
+                "x": 2004,
+                "y": 1012
+              },
+              "startMs": 100,
+              "durationMs": 2400
+            }
+          ],
+          "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+          "spatialDeployment": {
+            "version": 1,
+            "safe_max_extra_travel_px": 180,
+            "safe_max_approach_px": 480,
+            "contested_min_extra_travel_px": 180,
+            "contested_max_extra_travel_px": 840,
+            "deep_min_extra_travel_px": 600,
+            "deep_max_extra_travel_px": 1400,
+            "max_search_approach_px": 2600,
+            "node_spacing_px": 96,
+            "node_spread_weight": 0.25,
+            "host_min_approach_px": 160,
+            "host_max_approach_px": 2600,
+            "host_region_cols": 4,
+            "host_region_rows": 3,
+            "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+          },
+          "searchExtraTravelCapPx": 1400,
+          "searchSites": [
+            {
+              "nodeId": "r100-kindling-safe-1",
+              "sourceKind": "ground-accumulation",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-contested-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-contested-2",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-deep-1",
+              "sourceKind": "ground-accumulation",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-deep-2",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-contaminant-safe-1",
+              "sourceKind": "detached",
+              "family": "folded-slab",
+              "sourceDomain": "formation",
+              "sourceObjectId": 1
+            },
+            {
+              "nodeId": "r100-contaminant-contested-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-contaminant-deep-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            }
+          ],
+          "environmentScoreCap": 12,
+          "costBasis": "all-body-safe-48px-interaction-seats",
+          "guaranteedSafeReturn": true,
+          "enemyCount": 3,
+          "kindlingCount": 5,
+          "contaminantCount": 3
+        }
+      }
+    },
+    "layoutSummary": {
+      "seed": 3991160799,
+      "spawn": {
+        "x": 1076,
+        "y": 420
+      },
+      "kindlingNodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1140,
+            "y": 404
+          },
+          "value": 1
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 564,
+            "y": 724
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1924,
+            "y": 1300
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 356,
+            "y": 1204
+          },
+          "value": 4
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 324,
+            "y": 596
+          },
+          "value": 4
+        }
+      ],
+      "contaminantNodes": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1124,
+            "y": 820
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 884,
+            "y": 1540
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 2036,
+            "y": 1044
+          }
+        }
+      ]
+    }
+  },
+  "turnedAway": {
+    "target": {
+      "id": "r100-kindling-safe-1",
+      "kind": "kindling",
+      "tier": "safe",
+      "position": {
+        "x": 1140,
+        "y": 404
+      },
+      "collected": false,
+      "visibility": 1,
+      "representation": "native-material-patch",
+      "site": {
+        "nodeId": "r100-kindling-safe-1",
+        "version": 1,
+        "position": {
+          "x": 1140,
+          "y": 404
+        },
+        "visualSeed": 3889645369,
+        "sourceKind": "ground-accumulation",
+        "family": "folded-slab",
+        "groundFamily": "folded-slab",
+        "sourceObjectId": null,
+        "sourceAnchor": null,
+        "sourceDomain": "ground",
+        "axis": 0.09999999999999964,
+        "footprintProfile": "grounded-material-v1"
+      },
+      "spriteVisible": false,
+      "screenFoot": {
+        "x": 889.75,
+        "y": 439.70086669921875
+      },
+      "screenBounds": {
+        "topLeft": {
+          "x": 818.75,
+          "y": 382.90125732421876
+        },
+        "bottomRight": {
+          "x": 960.75,
+          "y": 496.50047607421874
+        }
+      },
+      "bodySupportedAtAnchor": true,
+      "materialRuntime": {
+        "count": 8,
+        "cpuBytes": 1310720,
+        "stateUploads": 0,
+        "collected": []
+      }
+    },
+    "nodes": [
+      {
+        "id": "r100-kindling-safe-1",
+        "kind": "kindling",
+        "tier": "safe",
+        "position": {
+          "x": 1140,
+          "y": 404
+        },
+        "collected": false,
+        "visibility": 1,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-safe-1",
+          "version": 1,
+          "position": {
+            "x": 1140,
+            "y": 404
+          },
+          "visualSeed": 3889645369,
+          "sourceKind": "ground-accumulation",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 889.75,
+          "y": 439.70086669921875
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 818.75,
+            "y": 382.90125732421876
+          },
+          "bottomRight": {
+            "x": 960.75,
+            "y": 496.50047607421874
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "kind": "kindling",
+        "tier": "contested",
+        "position": {
+          "x": 564,
+          "y": 724
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-contested-1",
+          "version": 1,
+          "position": {
+            "x": 564,
+            "y": 724
+          },
+          "visualSeed": 3877534160,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -132.64999999999998,
+          "y": 1007.6969604492188
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -203.64999999999998,
+            "y": 950.8973510742187
+          },
+          "bottomRight": {
+            "x": -61.64999999999998,
+            "y": 1064.4965698242188
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "kind": "kindling",
+        "tier": "contested",
+        "position": {
+          "x": 1924,
+          "y": 1300
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-contested-2",
+          "version": 1,
+          "position": {
+            "x": 1924,
+            "y": 1300
+          },
+          "visualSeed": 3970611123,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 2281.35,
+          "y": 2030.0899291992187
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 2210.35,
+            "y": 1973.2903198242188
+          },
+          "bottomRight": {
+            "x": 2352.35,
+            "y": 2086.889538574219
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "kind": "kindling",
+        "tier": "deep",
+        "position": {
+          "x": 356,
+          "y": 1204
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-deep-1",
+          "version": 1,
+          "position": {
+            "x": 356,
+            "y": 1204
+          },
+          "visualSeed": 2433865813,
+          "sourceKind": "ground-accumulation",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -501.85,
+          "y": 1859.6911010742188
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -572.85,
+            "y": 1802.8914916992187
+          },
+          "bottomRight": {
+            "x": -430.85,
+            "y": 1916.4907104492188
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-deep-2",
+        "kind": "kindling",
+        "tier": "deep",
+        "position": {
+          "x": 324,
+          "y": 596
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-deep-2",
+          "version": 1,
+          "position": {
+            "x": 324,
+            "y": 596
+          },
+          "visualSeed": 2246623778,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -558.65,
+          "y": 780.4985229492188
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -629.65,
+            "y": 723.6989135742188
+          },
+          "bottomRight": {
+            "x": -487.65,
+            "y": 837.2981323242187
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-safe-1",
+        "kind": "contaminant",
+        "tier": "safe",
+        "position": {
+          "x": 1124,
+          "y": 820
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-safe-1",
+          "version": 1,
+          "position": {
+            "x": 1124,
+            "y": 820
+          },
+          "visualSeed": 2415881331,
+          "sourceKind": "detached",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": 1,
+          "sourceAnchor": {
+            "x": 1141.183349609375,
+            "y": 838.4766235351562
+          },
+          "sourceDomain": "formation",
+          "axis": 6.183185307179587,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 861.35,
+          "y": 1178.0957885742187
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 790.35,
+            "y": 1121.2961791992188
+          },
+          "bottomRight": {
+            "x": 932.35,
+            "y": 1234.8953979492187
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "kind": "contaminant",
+        "tier": "contested",
+        "position": {
+          "x": 884,
+          "y": 1540
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-contested-1",
+          "version": 1,
+          "position": {
+            "x": 884,
+            "y": 1540
+          },
+          "visualSeed": 1314600207,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 435.35,
+          "y": 2456.0869995117187
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 364.35,
+            "y": 2399.287390136719
+          },
+          "bottomRight": {
+            "x": 506.35,
+            "y": 2512.886608886719
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-deep-1",
+        "kind": "contaminant",
+        "tier": "deep",
+        "position": {
+          "x": 2036,
+          "y": 1044
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-deep-1",
+          "version": 1,
+          "position": {
+            "x": 2036,
+            "y": 1044
+          },
+          "visualSeed": 1232438663,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 2480.15,
+          "y": 1575.6930541992188
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 2409.15,
+            "y": 1518.8934448242187
+          },
+          "bottomRight": {
+            "x": 2551.15,
+            "y": 1632.4926635742188
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      }
+    ],
+    "player": {
+      "position": {
+        "x": 1130.8387760829044,
+        "y": 432.3146207829834
+      },
+      "health": 100,
+      "chaos": 16.835882579999833
+    },
+    "camera": {
+      "scrollX": 650,
+      "scrollY": 112,
+      "zoom": 1.5,
+      "worldView": {
+        "x": 810,
+        "y": 219,
+        "width": 640,
+        "height": 427
+      },
+      "viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 960,
+        "height": 640
+      },
+      "canvas": {
+        "width": 960,
+        "height": 640,
+        "client": {
+          "x": 304,
+          "y": 111.328125,
+          "width": 1136,
+          "height": 757.328125
+        }
+      }
+    },
+    "nativeKeys": [
+      "spatialDeployment",
+      "definition",
+      "meshes",
+      "raster",
+      "sample",
+      "hostTileMap",
+      "pollution",
+      "diagnostics",
+      "algorithmRevision",
+      "searchSites",
+      "appearance",
+      "gradeDefinition",
+      "packageHash"
+    ],
+    "nativeIdentity": {
+      "diagnostics": {
+        "identity": "monolith-sill-medium",
+        "family": "folded-slab",
+        "grade": "medium",
+        "seed": 3991160799,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "328fa103",
+        "qualification": "v3-production-candidate",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 77,
+        "reachableBodySeats": 28970,
+        "spawnPoint": {
+          "x": 1076,
+          "y": 420
+        },
+        "exitPoint": {
+          "x": 1628,
+          "y": 1436
+        },
+        "searchPoint": {
+          "x": 1148,
+          "y": 1220
+        },
+        "enemyPoint": {
+          "x": 1612,
+          "y": 996
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 1972,
+        "solidCells": 2688,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": true,
+        "paintHosts": 4,
+        "volumeHosts": 2,
+        "paintContactAreaPx": 30720,
+        "volumeBoundsAreaPx": 24576,
+        "chaosRateStart": 0.42,
+        "chaosRateEnd": 0.6,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately",
+        "spatial": {
+          "version": 2,
+          "worldId": "monolith-sill",
+          "sourceHash": "c883388745f253546033ed40d12751201f623eccc38b9f117a2376c865f8abc4",
+          "organization": "authored-sectors",
+          "width": 2304,
+          "height": 1792,
+          "terrainFillRatio": 0.5202132936507936,
+          "solidTerrainRatio": 0.0800953516090584,
+          "bodyReachableRatio": 1,
+          "unreachableBodySeats": 0,
+          "spawnIndex": 6,
+          "spawnRelocationPx": 4,
+          "extraction": {
+            "point": {
+              "x": 1628,
+              "y": 1436
+            },
+            "cell": 51755,
+            "pathDistancePx": 1389.9209229614212,
+            "interactionPathDistancePx": 1339.9797974644666,
+            "euclideanDistancePx": 1156.2698646942245,
+            "pathFraction": 0.6143700103244926,
+            "regionId": 10,
+            "distanceBand": 1,
+            "candidateCount": 13710,
+            "regionCount": 10
+          },
+          "extractionCandidateField": {
+            "reachableCount": 28970,
+            "maxPathDistancePx": 2262.3515139147253,
+            "minCandidatePathDistancePx": 967.1555544218252,
+            "maxCandidatePathDistancePx": 2239.7240969167556,
+            "candidateCount": 13710,
+            "regionCount": 10,
+            "distanceBandCount": 3,
+            "regionCounts": {
+              "2": 239,
+              "3": 519,
+              "4": 1631,
+              "5": 2,
+              "6": 609,
+              "7": 3153,
+              "8": 2261,
+              "9": 2725,
+              "10": 2092,
+              "11": 479
+            },
+            "distanceBandCounts": {
+              "0": 8115,
+              "1": 2895,
+              "2": 2700
+            }
+          },
+          "solidObjectCount": 1
+        },
+        "expedition": {
+          "reachableBodySeats": 28970,
+          "extractionRoutePx": 1389.9209229614212,
+          "maximumExtraTravelPx": 1985.6652224137101,
+          "directReturnRoutePx": 1339.9797974644657,
+          "nodes": [
+            {
+              "id": "kindling/safe",
+              "minimumExtraTravelPx": 9.372583002030524,
+              "approachRoutePx": 22.627416997969522,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 419.44108966129875
+            },
+            {
+              "id": "contaminant/safe",
+              "minimumExtraTravelPx": 0,
+              "approachRoutePx": 369.9411254969542,
+              "interactionSeats": 90,
+              "pollutionDistancePx": 95.33147112141037
+            },
+            {
+              "id": "kindling/contested",
+              "minimumExtraTravelPx": 510.9200564096441,
+              "approachRoutePx": 587.9797974644663,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 118.79393923933999
+            },
+            {
+              "id": "kindling/contested",
+              "minimumExtraTravelPx": 496.0000000000007,
+              "approachRoutePx": 1581.5878784786796,
+              "interactionSeats": 91,
+              "pollutionDistancePx": 88.54377448471463
+            },
+            {
+              "id": "contaminant/contested",
+              "minimumExtraTravelPx": 506.17662350913724,
+              "approachRoutePx": 1149.5878784786796,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 455.0991546642511
+            },
+            {
+              "id": "kindling/deep",
+              "minimumExtraTravelPx": 992.5281374238562,
+              "approachRoutePx": 1051.0378054157336,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 28.153619241621193
+            },
+            {
+              "id": "kindling/deep",
+              "minimumExtraTravelPx": 990.9200564096459,
+              "approachRoutePx": 774.9604614807106,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 28
+            },
+            {
+              "id": "contaminant/deep",
+              "minimumExtraTravelPx": 1002.0386719675148,
+              "approachRoutePx": 1773.1168824543163,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 76
+            }
+          ],
+          "patrolWindows": [
+            {
+              "id": "r100-kindling-contested-1",
+              "seat": {
+                "x": 564,
+                "y": 676
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-contested-2",
+              "seat": {
+                "x": 1932,
+                "y": 1268
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-deep-1",
+              "seat": {
+                "x": 356,
+                "y": 1156
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-contaminant-contested-1",
+              "seat": {
+                "x": 860,
+                "y": 1500
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-deep-2",
+              "seat": {
+                "x": 324,
+                "y": 548
+              },
+              "startMs": 100,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-contaminant-deep-1",
+              "seat": {
+                "x": 2004,
+                "y": 1012
+              },
+              "startMs": 100,
+              "durationMs": 2400
+            }
+          ],
+          "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+          "spatialDeployment": {
+            "version": 1,
+            "safe_max_extra_travel_px": 180,
+            "safe_max_approach_px": 480,
+            "contested_min_extra_travel_px": 180,
+            "contested_max_extra_travel_px": 840,
+            "deep_min_extra_travel_px": 600,
+            "deep_max_extra_travel_px": 1400,
+            "max_search_approach_px": 2600,
+            "node_spacing_px": 96,
+            "node_spread_weight": 0.25,
+            "host_min_approach_px": 160,
+            "host_max_approach_px": 2600,
+            "host_region_cols": 4,
+            "host_region_rows": 3,
+            "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+          },
+          "searchExtraTravelCapPx": 1400,
+          "searchSites": [
+            {
+              "nodeId": "r100-kindling-safe-1",
+              "sourceKind": "ground-accumulation",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-contested-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-contested-2",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-deep-1",
+              "sourceKind": "ground-accumulation",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-deep-2",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-contaminant-safe-1",
+              "sourceKind": "detached",
+              "family": "folded-slab",
+              "sourceDomain": "formation",
+              "sourceObjectId": 1
+            },
+            {
+              "nodeId": "r100-contaminant-contested-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-contaminant-deep-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            }
+          ],
+          "environmentScoreCap": 12,
+          "costBasis": "all-body-safe-48px-interaction-seats",
+          "guaranteedSafeReturn": true,
+          "enemyCount": 3,
+          "kindlingCount": 5,
+          "contaminantCount": 3
+        }
+      }
+    },
+    "layoutSummary": {
+      "seed": 3991160799,
+      "spawn": {
+        "x": 1076,
+        "y": 420
+      },
+      "kindlingNodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1140,
+            "y": 404
+          },
+          "value": 1
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 564,
+            "y": 724
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1924,
+            "y": 1300
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 356,
+            "y": 1204
+          },
+          "value": 4
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 324,
+            "y": 596
+          },
+          "value": 4
+        }
+      ],
+      "contaminantNodes": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1124,
+            "y": 820
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 884,
+            "y": 1540
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 2036,
+            "y": 1044
+          }
+        }
+      ]
+    }
+  },
+  "returnedView": {
+    "target": {
+      "id": "r100-kindling-safe-1",
+      "kind": "kindling",
+      "tier": "safe",
+      "position": {
+        "x": 1140,
+        "y": 404
+      },
+      "collected": false,
+      "visibility": 1,
+      "representation": "native-material-patch",
+      "site": {
+        "nodeId": "r100-kindling-safe-1",
+        "version": 1,
+        "position": {
+          "x": 1140,
+          "y": 404
+        },
+        "visualSeed": 3889645369,
+        "sourceKind": "ground-accumulation",
+        "family": "folded-slab",
+        "groundFamily": "folded-slab",
+        "sourceObjectId": null,
+        "sourceAnchor": null,
+        "sourceDomain": "ground",
+        "axis": 0.09999999999999964,
+        "footprintProfile": "grounded-material-v1"
+      },
+      "spriteVisible": false,
+      "screenFoot": {
+        "x": 889.75,
+        "y": 464.5506958007812
+      },
+      "screenBounds": {
+        "topLeft": {
+          "x": 818.75,
+          "y": 407.75108642578124
+        },
+        "bottomRight": {
+          "x": 960.75,
+          "y": 521.3503051757813
+        }
+      },
+      "bodySupportedAtAnchor": true,
+      "materialRuntime": {
+        "count": 8,
+        "cpuBytes": 1310720,
+        "stateUploads": 0,
+        "collected": []
+      }
+    },
+    "nodes": [
+      {
+        "id": "r100-kindling-safe-1",
+        "kind": "kindling",
+        "tier": "safe",
+        "position": {
+          "x": 1140,
+          "y": 404
+        },
+        "collected": false,
+        "visibility": 1,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-safe-1",
+          "version": 1,
+          "position": {
+            "x": 1140,
+            "y": 404
+          },
+          "visualSeed": 3889645369,
+          "sourceKind": "ground-accumulation",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 889.75,
+          "y": 464.5506958007812
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 818.75,
+            "y": 407.75108642578124
+          },
+          "bottomRight": {
+            "x": 960.75,
+            "y": 521.3503051757813
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "kind": "kindling",
+        "tier": "contested",
+        "position": {
+          "x": 564,
+          "y": 724
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-contested-1",
+          "version": 1,
+          "position": {
+            "x": 564,
+            "y": 724
+          },
+          "visualSeed": 3877534160,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -132.64999999999998,
+          "y": 1032.5467895507813
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -203.64999999999998,
+            "y": 975.7471801757813
+          },
+          "bottomRight": {
+            "x": -61.64999999999998,
+            "y": 1089.3463989257812
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "kind": "kindling",
+        "tier": "contested",
+        "position": {
+          "x": 1924,
+          "y": 1300
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-contested-2",
+          "version": 1,
+          "position": {
+            "x": 1924,
+            "y": 1300
+          },
+          "visualSeed": 3970611123,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 2281.35,
+          "y": 2054.9397583007812
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 2210.35,
+            "y": 1998.1401489257812
+          },
+          "bottomRight": {
+            "x": 2352.35,
+            "y": 2111.739367675781
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "kind": "kindling",
+        "tier": "deep",
+        "position": {
+          "x": 356,
+          "y": 1204
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-deep-1",
+          "version": 1,
+          "position": {
+            "x": 356,
+            "y": 1204
+          },
+          "visualSeed": 2433865813,
+          "sourceKind": "ground-accumulation",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -501.85,
+          "y": 1884.5409301757813
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -572.85,
+            "y": 1827.7413208007813
+          },
+          "bottomRight": {
+            "x": -430.85,
+            "y": 1941.3405395507812
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-kindling-deep-2",
+        "kind": "kindling",
+        "tier": "deep",
+        "position": {
+          "x": 324,
+          "y": 596
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-deep-2",
+          "version": 1,
+          "position": {
+            "x": 324,
+            "y": 596
+          },
+          "visualSeed": 2246623778,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -558.65,
+          "y": 805.3483520507813
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -629.65,
+            "y": 748.5487426757812
+          },
+          "bottomRight": {
+            "x": -487.65,
+            "y": 862.1479614257812
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-safe-1",
+        "kind": "contaminant",
+        "tier": "safe",
+        "position": {
+          "x": 1124,
+          "y": 820
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-safe-1",
+          "version": 1,
+          "position": {
+            "x": 1124,
+            "y": 820
+          },
+          "visualSeed": 2415881331,
+          "sourceKind": "detached",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": 1,
+          "sourceAnchor": {
+            "x": 1141.183349609375,
+            "y": 838.4766235351562
+          },
+          "sourceDomain": "formation",
+          "axis": 6.183185307179587,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 861.35,
+          "y": 1202.9456176757812
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 790.35,
+            "y": 1146.1460083007812
+          },
+          "bottomRight": {
+            "x": 932.35,
+            "y": 1259.7452270507813
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "kind": "contaminant",
+        "tier": "contested",
+        "position": {
+          "x": 884,
+          "y": 1540
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-contested-1",
+          "version": 1,
+          "position": {
+            "x": 884,
+            "y": 1540
+          },
+          "visualSeed": 1314600207,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 435.35,
+          "y": 2480.9368286132812
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 364.35,
+            "y": 2424.1372192382814
+          },
+          "bottomRight": {
+            "x": 506.35,
+            "y": 2537.736437988281
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      },
+      {
+        "id": "r100-contaminant-deep-1",
+        "kind": "contaminant",
+        "tier": "deep",
+        "position": {
+          "x": 2036,
+          "y": 1044
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-deep-1",
+          "version": 1,
+          "position": {
+            "x": 2036,
+            "y": 1044
+          },
+          "visualSeed": 1232438663,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 2480.15,
+          "y": 1600.5428833007813
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 2409.15,
+            "y": 1543.7432739257813
+          },
+          "bottomRight": {
+            "x": 2551.15,
+            "y": 1657.3424926757812
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 0,
+          "collected": []
+        }
+      }
+    ],
+    "player": {
+      "position": {
+        "x": 1130.8387760829044,
+        "y": 418.2033874496502
+      },
+      "health": 100,
+      "chaos": 16.974123731999818
+    },
+    "camera": {
+      "scrollX": 650,
+      "scrollY": 98,
+      "zoom": 1.5,
+      "worldView": {
+        "x": 810,
+        "y": 205,
+        "width": 640,
+        "height": 427
+      },
+      "viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 960,
+        "height": 640
+      },
+      "canvas": {
+        "width": 960,
+        "height": 640,
+        "client": {
+          "x": 304,
+          "y": 111.328125,
+          "width": 1136,
+          "height": 757.328125
+        }
+      }
+    },
+    "nativeKeys": [
+      "spatialDeployment",
+      "definition",
+      "meshes",
+      "raster",
+      "sample",
+      "hostTileMap",
+      "pollution",
+      "diagnostics",
+      "algorithmRevision",
+      "searchSites",
+      "appearance",
+      "gradeDefinition",
+      "packageHash"
+    ],
+    "nativeIdentity": {
+      "diagnostics": {
+        "identity": "monolith-sill-medium",
+        "family": "folded-slab",
+        "grade": "medium",
+        "seed": 3991160799,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "328fa103",
+        "qualification": "v3-production-candidate",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 77,
+        "reachableBodySeats": 28970,
+        "spawnPoint": {
+          "x": 1076,
+          "y": 420
+        },
+        "exitPoint": {
+          "x": 1628,
+          "y": 1436
+        },
+        "searchPoint": {
+          "x": 1148,
+          "y": 1220
+        },
+        "enemyPoint": {
+          "x": 1612,
+          "y": 996
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 1972,
+        "solidCells": 2688,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": true,
+        "paintHosts": 4,
+        "volumeHosts": 2,
+        "paintContactAreaPx": 30720,
+        "volumeBoundsAreaPx": 24576,
+        "chaosRateStart": 0.42,
+        "chaosRateEnd": 0.6,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately",
+        "spatial": {
+          "version": 2,
+          "worldId": "monolith-sill",
+          "sourceHash": "c883388745f253546033ed40d12751201f623eccc38b9f117a2376c865f8abc4",
+          "organization": "authored-sectors",
+          "width": 2304,
+          "height": 1792,
+          "terrainFillRatio": 0.5202132936507936,
+          "solidTerrainRatio": 0.0800953516090584,
+          "bodyReachableRatio": 1,
+          "unreachableBodySeats": 0,
+          "spawnIndex": 6,
+          "spawnRelocationPx": 4,
+          "extraction": {
+            "point": {
+              "x": 1628,
+              "y": 1436
+            },
+            "cell": 51755,
+            "pathDistancePx": 1389.9209229614212,
+            "interactionPathDistancePx": 1339.9797974644666,
+            "euclideanDistancePx": 1156.2698646942245,
+            "pathFraction": 0.6143700103244926,
+            "regionId": 10,
+            "distanceBand": 1,
+            "candidateCount": 13710,
+            "regionCount": 10
+          },
+          "extractionCandidateField": {
+            "reachableCount": 28970,
+            "maxPathDistancePx": 2262.3515139147253,
+            "minCandidatePathDistancePx": 967.1555544218252,
+            "maxCandidatePathDistancePx": 2239.7240969167556,
+            "candidateCount": 13710,
+            "regionCount": 10,
+            "distanceBandCount": 3,
+            "regionCounts": {
+              "2": 239,
+              "3": 519,
+              "4": 1631,
+              "5": 2,
+              "6": 609,
+              "7": 3153,
+              "8": 2261,
+              "9": 2725,
+              "10": 2092,
+              "11": 479
+            },
+            "distanceBandCounts": {
+              "0": 8115,
+              "1": 2895,
+              "2": 2700
+            }
+          },
+          "solidObjectCount": 1
+        },
+        "expedition": {
+          "reachableBodySeats": 28970,
+          "extractionRoutePx": 1389.9209229614212,
+          "maximumExtraTravelPx": 1985.6652224137101,
+          "directReturnRoutePx": 1339.9797974644657,
+          "nodes": [
+            {
+              "id": "kindling/safe",
+              "minimumExtraTravelPx": 9.372583002030524,
+              "approachRoutePx": 22.627416997969522,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 419.44108966129875
+            },
+            {
+              "id": "contaminant/safe",
+              "minimumExtraTravelPx": 0,
+              "approachRoutePx": 369.9411254969542,
+              "interactionSeats": 90,
+              "pollutionDistancePx": 95.33147112141037
+            },
+            {
+              "id": "kindling/contested",
+              "minimumExtraTravelPx": 510.9200564096441,
+              "approachRoutePx": 587.9797974644663,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 118.79393923933999
+            },
+            {
+              "id": "kindling/contested",
+              "minimumExtraTravelPx": 496.0000000000007,
+              "approachRoutePx": 1581.5878784786796,
+              "interactionSeats": 91,
+              "pollutionDistancePx": 88.54377448471463
+            },
+            {
+              "id": "contaminant/contested",
+              "minimumExtraTravelPx": 506.17662350913724,
+              "approachRoutePx": 1149.5878784786796,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 455.0991546642511
+            },
+            {
+              "id": "kindling/deep",
+              "minimumExtraTravelPx": 992.5281374238562,
+              "approachRoutePx": 1051.0378054157336,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 28.153619241621193
+            },
+            {
+              "id": "kindling/deep",
+              "minimumExtraTravelPx": 990.9200564096459,
+              "approachRoutePx": 774.9604614807106,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 28
+            },
+            {
+              "id": "contaminant/deep",
+              "minimumExtraTravelPx": 1002.0386719675148,
+              "approachRoutePx": 1773.1168824543163,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 76
+            }
+          ],
+          "patrolWindows": [
+            {
+              "id": "r100-kindling-contested-1",
+              "seat": {
+                "x": 564,
+                "y": 676
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-contested-2",
+              "seat": {
+                "x": 1932,
+                "y": 1268
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-deep-1",
+              "seat": {
+                "x": 356,
+                "y": 1156
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-contaminant-contested-1",
+              "seat": {
+                "x": 860,
+                "y": 1500
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-deep-2",
+              "seat": {
+                "x": 324,
+                "y": 548
+              },
+              "startMs": 100,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-contaminant-deep-1",
+              "seat": {
+                "x": 2004,
+                "y": 1012
+              },
+              "startMs": 100,
+              "durationMs": 2400
+            }
+          ],
+          "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+          "spatialDeployment": {
+            "version": 1,
+            "safe_max_extra_travel_px": 180,
+            "safe_max_approach_px": 480,
+            "contested_min_extra_travel_px": 180,
+            "contested_max_extra_travel_px": 840,
+            "deep_min_extra_travel_px": 600,
+            "deep_max_extra_travel_px": 1400,
+            "max_search_approach_px": 2600,
+            "node_spacing_px": 96,
+            "node_spread_weight": 0.25,
+            "host_min_approach_px": 160,
+            "host_max_approach_px": 2600,
+            "host_region_cols": 4,
+            "host_region_rows": 3,
+            "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+          },
+          "searchExtraTravelCapPx": 1400,
+          "searchSites": [
+            {
+              "nodeId": "r100-kindling-safe-1",
+              "sourceKind": "ground-accumulation",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-contested-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-contested-2",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-deep-1",
+              "sourceKind": "ground-accumulation",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-deep-2",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-contaminant-safe-1",
+              "sourceKind": "detached",
+              "family": "folded-slab",
+              "sourceDomain": "formation",
+              "sourceObjectId": 1
+            },
+            {
+              "nodeId": "r100-contaminant-contested-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-contaminant-deep-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            }
+          ],
+          "environmentScoreCap": 12,
+          "costBasis": "all-body-safe-48px-interaction-seats",
+          "guaranteedSafeReturn": true,
+          "enemyCount": 3,
+          "kindlingCount": 5,
+          "contaminantCount": 3
+        }
+      }
+    },
+    "layoutSummary": {
+      "seed": 3991160799,
+      "spawn": {
+        "x": 1076,
+        "y": 420
+      },
+      "kindlingNodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1140,
+            "y": 404
+          },
+          "value": 1
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 564,
+            "y": 724
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1924,
+            "y": 1300
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 356,
+            "y": 1204
+          },
+          "value": 4
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 324,
+            "y": 596
+          },
+          "value": 4
+        }
+      ],
+      "contaminantNodes": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1124,
+            "y": 820
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 884,
+            "y": 1540
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 2036,
+            "y": 1044
+          }
+        }
+      ]
+    }
+  },
+  "afterSearch": {
+    "pos": {
+      "x": 1130.8387760829044,
+      "y": 418.2033874496502
+    },
+    "hp": 100,
+    "chaos": 17.692994975999753,
+    "elapsedMs": 8199.699999999999,
+    "ended": false,
+    "known": false,
+    "carried": 1,
+    "prompt": null,
+    "nodes": [
+      {
+        "id": "r100-kindling-safe-1",
+        "collected": true
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "collected": false
+      },
+      {
+        "id": "r100-kindling-deep-2",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-safe-1",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "collected": false
+      },
+      {
+        "id": "r100-contaminant-deep-1",
+        "collected": false
+      }
+    ],
+    "canExtract": false
+  },
+  "after": {
+    "target": {
+      "id": "r100-kindling-safe-1",
+      "kind": "kindling",
+      "tier": "safe",
+      "position": {
+        "x": 1140,
+        "y": 404
+      },
+      "collected": true,
+      "visibility": 1,
+      "representation": "native-material-patch",
+      "site": {
+        "nodeId": "r100-kindling-safe-1",
+        "version": 1,
+        "position": {
+          "x": 1140,
+          "y": 404
+        },
+        "visualSeed": 3889645369,
+        "sourceKind": "ground-accumulation",
+        "family": "folded-slab",
+        "groundFamily": "folded-slab",
+        "sourceObjectId": null,
+        "sourceAnchor": null,
+        "sourceDomain": "ground",
+        "axis": 0.09999999999999964,
+        "footprintProfile": "grounded-material-v1"
+      },
+      "spriteVisible": false,
+      "screenFoot": {
+        "x": 886.2,
+        "y": 299.4768310546875
+      },
+      "screenBounds": {
+        "topLeft": {
+          "x": 815.2,
+          "y": 242.6772216796875
+        },
+        "bottomRight": {
+          "x": 957.2,
+          "y": 356.2764404296875
+        }
+      },
+      "bodySupportedAtAnchor": true,
+      "materialRuntime": {
+        "count": 8,
+        "cpuBytes": 1310720,
+        "stateUploads": 1,
+        "collected": [
+          "r100-kindling-safe-1"
+        ]
+      }
+    },
+    "nodes": [
+      {
+        "id": "r100-kindling-safe-1",
+        "kind": "kindling",
+        "tier": "safe",
+        "position": {
+          "x": 1140,
+          "y": 404
+        },
+        "collected": true,
+        "visibility": 1,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-safe-1",
+          "version": 1,
+          "position": {
+            "x": 1140,
+            "y": 404
+          },
+          "visualSeed": 3889645369,
+          "sourceKind": "ground-accumulation",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 886.2,
+          "y": 299.4768310546875
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 815.2,
+            "y": 242.6772216796875
+          },
+          "bottomRight": {
+            "x": 957.2,
+            "y": 356.2764404296875
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 1,
+          "collected": [
+            "r100-kindling-safe-1"
+          ]
+        }
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "kind": "kindling",
+        "tier": "contested",
+        "position": {
+          "x": 564,
+          "y": 724
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-contested-1",
+          "version": 1,
+          "position": {
+            "x": 564,
+            "y": 724
+          },
+          "visualSeed": 3877534160,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -136.2,
+          "y": 867.4729248046875
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -207.2,
+            "y": 810.6733154296875
+          },
+          "bottomRight": {
+            "x": -65.19999999999999,
+            "y": 924.2725341796875
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 1,
+          "collected": [
+            "r100-kindling-safe-1"
+          ]
+        }
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "kind": "kindling",
+        "tier": "contested",
+        "position": {
+          "x": 1924,
+          "y": 1300
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-contested-2",
+          "version": 1,
+          "position": {
+            "x": 1924,
+            "y": 1300
+          },
+          "visualSeed": 3970611123,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 2277.8,
+          "y": 1889.8658935546875
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 2206.8,
+            "y": 1833.0662841796875
+          },
+          "bottomRight": {
+            "x": 2348.8,
+            "y": 1946.6655029296876
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 1,
+          "collected": [
+            "r100-kindling-safe-1"
+          ]
+        }
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "kind": "kindling",
+        "tier": "deep",
+        "position": {
+          "x": 356,
+          "y": 1204
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-deep-1",
+          "version": 1,
+          "position": {
+            "x": 356,
+            "y": 1204
+          },
+          "visualSeed": 2433865813,
+          "sourceKind": "ground-accumulation",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -505.4,
+          "y": 1719.4670654296874
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -576.4,
+            "y": 1662.6674560546876
+          },
+          "bottomRight": {
+            "x": -434.4,
+            "y": 1776.2666748046875
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 1,
+          "collected": [
+            "r100-kindling-safe-1"
+          ]
+        }
+      },
+      {
+        "id": "r100-kindling-deep-2",
+        "kind": "kindling",
+        "tier": "deep",
+        "position": {
+          "x": 324,
+          "y": 596
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-kindling-deep-2",
+          "version": 1,
+          "position": {
+            "x": 324,
+            "y": 596
+          },
+          "visualSeed": 2246623778,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": -562.2,
+          "y": 640.2744873046875
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": -633.2,
+            "y": 583.4748779296875
+          },
+          "bottomRight": {
+            "x": -491.20000000000005,
+            "y": 697.0740966796875
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 1,
+          "collected": [
+            "r100-kindling-safe-1"
+          ]
+        }
+      },
+      {
+        "id": "r100-contaminant-safe-1",
+        "kind": "contaminant",
+        "tier": "safe",
+        "position": {
+          "x": 1124,
+          "y": 820
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-safe-1",
+          "version": 1,
+          "position": {
+            "x": 1124,
+            "y": 820
+          },
+          "visualSeed": 2415881331,
+          "sourceKind": "detached",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": 1,
+          "sourceAnchor": {
+            "x": 1141.183349609375,
+            "y": 838.4766235351562
+          },
+          "sourceDomain": "formation",
+          "axis": 6.183185307179587,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 857.8,
+          "y": 1037.8717529296875
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 786.8,
+            "y": 981.0721435546875
+          },
+          "bottomRight": {
+            "x": 928.8,
+            "y": 1094.6713623046876
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 1,
+          "collected": [
+            "r100-kindling-safe-1"
+          ]
+        }
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "kind": "contaminant",
+        "tier": "contested",
+        "position": {
+          "x": 884,
+          "y": 1540
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-contested-1",
+          "version": 1,
+          "position": {
+            "x": 884,
+            "y": 1540
+          },
+          "visualSeed": 1314600207,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 431.8,
+          "y": 2315.8629638671873
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 360.8,
+            "y": 2259.0633544921875
+          },
+          "bottomRight": {
+            "x": 502.8,
+            "y": 2372.6625732421876
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 1,
+          "collected": [
+            "r100-kindling-safe-1"
+          ]
+        }
+      },
+      {
+        "id": "r100-contaminant-deep-1",
+        "kind": "contaminant",
+        "tier": "deep",
+        "position": {
+          "x": 2036,
+          "y": 1044
+        },
+        "collected": false,
+        "visibility": 0,
+        "representation": "native-material-patch",
+        "site": {
+          "nodeId": "r100-contaminant-deep-1",
+          "version": 1,
+          "position": {
+            "x": 2036,
+            "y": 1044
+          },
+          "visualSeed": 1232438663,
+          "sourceKind": "surface-peel",
+          "family": "folded-slab",
+          "groundFamily": "folded-slab",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.09999999999999964,
+          "footprintProfile": "grounded-material-v1"
+        },
+        "spriteVisible": false,
+        "screenFoot": {
+          "x": 2476.6,
+          "y": 1435.4690185546874
+        },
+        "screenBounds": {
+          "topLeft": {
+            "x": 2405.6,
+            "y": 1378.6694091796876
+          },
+          "bottomRight": {
+            "x": 2547.6,
+            "y": 1492.2686279296875
+          }
+        },
+        "bodySupportedAtAnchor": true,
+        "materialRuntime": {
+          "count": 8,
+          "cpuBytes": 1310720,
+          "stateUploads": 1,
+          "collected": [
+            "r100-kindling-safe-1"
+          ]
+        }
+      }
+    ],
+    "player": {
+      "position": {
+        "x": 1132.319726563195,
+        "y": 511.63896598906706
+      },
+      "health": 100,
+      "chaos": 18.31787391599969
+    },
+    "camera": {
+      "scrollX": 652,
+      "scrollY": 191,
+      "zoom": 1.5,
+      "worldView": {
+        "x": 812,
+        "y": 298,
+        "width": 640,
+        "height": 427
+      },
+      "viewport": {
+        "x": 0,
+        "y": 0,
+        "width": 960,
+        "height": 640
+      },
+      "canvas": {
+        "width": 960,
+        "height": 640,
+        "client": {
+          "x": 304,
+          "y": 111.328125,
+          "width": 1136,
+          "height": 757.328125
+        }
+      }
+    },
+    "nativeKeys": [
+      "spatialDeployment",
+      "definition",
+      "meshes",
+      "raster",
+      "sample",
+      "hostTileMap",
+      "pollution",
+      "diagnostics",
+      "algorithmRevision",
+      "searchSites",
+      "appearance",
+      "gradeDefinition",
+      "packageHash"
+    ],
+    "nativeIdentity": {
+      "diagnostics": {
+        "identity": "monolith-sill-medium",
+        "family": "folded-slab",
+        "grade": "medium",
+        "seed": 3991160799,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "328fa103",
+        "qualification": "v3-production-candidate",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 77,
+        "reachableBodySeats": 28970,
+        "spawnPoint": {
+          "x": 1076,
+          "y": 420
+        },
+        "exitPoint": {
+          "x": 1628,
+          "y": 1436
+        },
+        "searchPoint": {
+          "x": 1148,
+          "y": 1220
+        },
+        "enemyPoint": {
+          "x": 1612,
+          "y": 996
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 1972,
+        "solidCells": 2688,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": true,
+        "paintHosts": 4,
+        "volumeHosts": 2,
+        "paintContactAreaPx": 30720,
+        "volumeBoundsAreaPx": 24576,
+        "chaosRateStart": 0.42,
+        "chaosRateEnd": 0.6,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately",
+        "spatial": {
+          "version": 2,
+          "worldId": "monolith-sill",
+          "sourceHash": "c883388745f253546033ed40d12751201f623eccc38b9f117a2376c865f8abc4",
+          "organization": "authored-sectors",
+          "width": 2304,
+          "height": 1792,
+          "terrainFillRatio": 0.5202132936507936,
+          "solidTerrainRatio": 0.0800953516090584,
+          "bodyReachableRatio": 1,
+          "unreachableBodySeats": 0,
+          "spawnIndex": 6,
+          "spawnRelocationPx": 4,
+          "extraction": {
+            "point": {
+              "x": 1628,
+              "y": 1436
+            },
+            "cell": 51755,
+            "pathDistancePx": 1389.9209229614212,
+            "interactionPathDistancePx": 1339.9797974644666,
+            "euclideanDistancePx": 1156.2698646942245,
+            "pathFraction": 0.6143700103244926,
+            "regionId": 10,
+            "distanceBand": 1,
+            "candidateCount": 13710,
+            "regionCount": 10
+          },
+          "extractionCandidateField": {
+            "reachableCount": 28970,
+            "maxPathDistancePx": 2262.3515139147253,
+            "minCandidatePathDistancePx": 967.1555544218252,
+            "maxCandidatePathDistancePx": 2239.7240969167556,
+            "candidateCount": 13710,
+            "regionCount": 10,
+            "distanceBandCount": 3,
+            "regionCounts": {
+              "2": 239,
+              "3": 519,
+              "4": 1631,
+              "5": 2,
+              "6": 609,
+              "7": 3153,
+              "8": 2261,
+              "9": 2725,
+              "10": 2092,
+              "11": 479
+            },
+            "distanceBandCounts": {
+              "0": 8115,
+              "1": 2895,
+              "2": 2700
+            }
+          },
+          "solidObjectCount": 1
+        },
+        "expedition": {
+          "reachableBodySeats": 28970,
+          "extractionRoutePx": 1389.9209229614212,
+          "maximumExtraTravelPx": 1985.6652224137101,
+          "directReturnRoutePx": 1339.9797974644657,
+          "nodes": [
+            {
+              "id": "kindling/safe",
+              "minimumExtraTravelPx": 9.372583002030524,
+              "approachRoutePx": 22.627416997969522,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 419.44108966129875
+            },
+            {
+              "id": "contaminant/safe",
+              "minimumExtraTravelPx": 0,
+              "approachRoutePx": 369.9411254969542,
+              "interactionSeats": 90,
+              "pollutionDistancePx": 95.33147112141037
+            },
+            {
+              "id": "kindling/contested",
+              "minimumExtraTravelPx": 510.9200564096441,
+              "approachRoutePx": 587.9797974644663,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 118.79393923933999
+            },
+            {
+              "id": "kindling/contested",
+              "minimumExtraTravelPx": 496.0000000000007,
+              "approachRoutePx": 1581.5878784786796,
+              "interactionSeats": 91,
+              "pollutionDistancePx": 88.54377448471463
+            },
+            {
+              "id": "contaminant/contested",
+              "minimumExtraTravelPx": 506.17662350913724,
+              "approachRoutePx": 1149.5878784786796,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 455.0991546642511
+            },
+            {
+              "id": "kindling/deep",
+              "minimumExtraTravelPx": 992.5281374238562,
+              "approachRoutePx": 1051.0378054157336,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 28.153619241621193
+            },
+            {
+              "id": "kindling/deep",
+              "minimumExtraTravelPx": 990.9200564096459,
+              "approachRoutePx": 774.9604614807106,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 28
+            },
+            {
+              "id": "contaminant/deep",
+              "minimumExtraTravelPx": 1002.0386719675148,
+              "approachRoutePx": 1773.1168824543163,
+              "interactionSeats": 113,
+              "pollutionDistancePx": 76
+            }
+          ],
+          "patrolWindows": [
+            {
+              "id": "r100-kindling-contested-1",
+              "seat": {
+                "x": 564,
+                "y": 676
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-contested-2",
+              "seat": {
+                "x": 1932,
+                "y": 1268
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-deep-1",
+              "seat": {
+                "x": 356,
+                "y": 1156
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-contaminant-contested-1",
+              "seat": {
+                "x": 860,
+                "y": 1500
+              },
+              "startMs": 0,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-kindling-deep-2",
+              "seat": {
+                "x": 324,
+                "y": 548
+              },
+              "startMs": 100,
+              "durationMs": 2400
+            },
+            {
+              "id": "r100-contaminant-deep-1",
+              "seat": {
+                "x": 2004,
+                "y": 1012
+              },
+              "startMs": 100,
+              "durationMs": 2400
+            }
+          ],
+          "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+          "spatialDeployment": {
+            "version": 1,
+            "safe_max_extra_travel_px": 180,
+            "safe_max_approach_px": 480,
+            "contested_min_extra_travel_px": 180,
+            "contested_max_extra_travel_px": 840,
+            "deep_min_extra_travel_px": 600,
+            "deep_max_extra_travel_px": 1400,
+            "max_search_approach_px": 2600,
+            "node_spacing_px": 96,
+            "node_spread_weight": 0.25,
+            "host_min_approach_px": 160,
+            "host_max_approach_px": 2600,
+            "host_region_cols": 4,
+            "host_region_rows": 3,
+            "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+          },
+          "searchExtraTravelCapPx": 1400,
+          "searchSites": [
+            {
+              "nodeId": "r100-kindling-safe-1",
+              "sourceKind": "ground-accumulation",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-contested-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-contested-2",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-deep-1",
+              "sourceKind": "ground-accumulation",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-kindling-deep-2",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-contaminant-safe-1",
+              "sourceKind": "detached",
+              "family": "folded-slab",
+              "sourceDomain": "formation",
+              "sourceObjectId": 1
+            },
+            {
+              "nodeId": "r100-contaminant-contested-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            },
+            {
+              "nodeId": "r100-contaminant-deep-1",
+              "sourceKind": "surface-peel",
+              "family": "folded-slab",
+              "sourceDomain": "ground",
+              "sourceObjectId": null
+            }
+          ],
+          "environmentScoreCap": 12,
+          "costBasis": "all-body-safe-48px-interaction-seats",
+          "guaranteedSafeReturn": true,
+          "enemyCount": 3,
+          "kindlingCount": 5,
+          "contaminantCount": 3
+        }
+      }
+    },
+    "layoutSummary": {
+      "seed": 3991160799,
+      "spawn": {
+        "x": 1076,
+        "y": 420
+      },
+      "kindlingNodes": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1140,
+            "y": 404
+          },
+          "value": 1
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 564,
+            "y": 724
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1924,
+            "y": 1300
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 356,
+            "y": 1204
+          },
+          "value": 4
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "position": {
+            "x": 324,
+            "y": 596
+          },
+          "value": 4
+        }
+      ],
+      "contaminantNodes": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1124,
+            "y": 820
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 884,
+            "y": 1540
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 2036,
+            "y": 1044
+          }
+        }
+      ]
+    }
+  }
+}

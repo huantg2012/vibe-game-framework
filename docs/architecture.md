@@ -24,13 +24,13 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 翻找物显著性增量：`search-remains-ambient.ts` 从已有物体像素生成最多15个像素的局部受光覆盖，普通alpha混合，不注册灯或放大轮廓。每物件1个反光Image＋至多2个碎屑Rectangle；模拟delta驱动、不新建每帧Tween，跟随FOV、翻找与揭晓生命周期，并尊重系统减动。反光纹理与主体共用租约释放；旧碎片专用外观不强加新动效。
 
-## 六世界环境残骸接入（2026-10-12）
+## 世界环境残骸接入（2026-10-12）
 
-`data/rift-search-sites.csv` → `generated/r100-search-sites.ts` 冻结六图的来源策略；`search-site-types.ts` 定义 `R100SearchSitePolicy` / `R100SearchSitePlacement`。`search-site-placement.ts` 的 `SearchSitePlanner` 只在原合法候选中附加有上限的环境评分，`validateSearchSites` 核一节点一来源、真实三角形/材料与VOID视线。策略进入 `recipe.searchSitePolicy` 和身份，静态来源进入 `native.searchSites`；六图新出发为修订9，其他102仍为8，历史1–8按封存执行器恢复。`legacy-r100-v8` 由固定 `7c744d3d` 的完整oracle派生无可变import恢复闭包，基线与投影合同见[专项QA](qa/pickup-grounding-2026-10-12.md)。
+`data/rift-search-sites.csv` → `generated/r100-search-sites.ts` 冻结显式注册世界的来源策略；`search-site-types.ts` 定义 `R100SearchSitePolicy` / `R100SearchSitePlacement`。`search-site-placement.ts` 的 `SearchSitePlanner` 只在原合法候选中附加有上限的环境评分，`validateSearchSites` 核一节点一来源、真实三角形/材料与VOID视线。策略进入 `recipe.searchSitePolicy` 和身份，静态来源进入 `native.searchSites`；注册世界新出发为修订10，未注册项仍为8，历史1–9按封存执行器恢复。`legacy-r100-v8` 由固定 `7c744d3d` 的完整oracle派生无可变import恢复闭包，基线与投影合同见[专项QA](qa/pickup-grounding-2026-10-12.md)。
 
 `r100-world/search-site-shapes.ts` 生成六材低矮几何；`search-site-bake.ts` 在Worker准备翻前/翻后四通道局部patch。`search-site-patches.ts` 校验身份、尺寸、不相交运输矩形和VOID裁切并组合初始态，`surface-preparation.ts` 传纯typed arrays；准备缓存身份包含来源描述摘要。`surface-renderer.ts` 持有两态buffer，`setSearchSiteCollected` 仅在状态变化时四次 `texSubImage2D`，`destroy` 释放；不新建GL上下文、不逐帧烘焙或上传。材料主体沿原地表shader接受实际灯场、遮挡与视野。
 
-`MasterPresentation.afterUpdate` 在draw前以已有 `frame.piles` 的id/collected同步，续局首帧同样先同步；`RiftScene` 仅对 `native.searchSites` 启用 `createGroundedWorldSearchVisual`，无旧sprite主体或独立计时反光，只复用原翻动与揭晓粒子。`LootSearchSystem` API、存档collected和奖励事务保持。已揭晓掉落物仍沿F023。该接入记录不代表用户视觉终验；其余102世界推广仍暂停。
+`MasterPresentation.afterUpdate` 在draw前以已有 `frame.piles` 的id/collected同步，续局首帧同样先同步；`RiftScene` 仅对 `native.searchSites` 启用 `createGroundedWorldSearchVisual`，无旧sprite主体或独立计时反光，只复用原翻动与揭晓粒子。`LootSearchSystem` API、存档collected和奖励事务保持。已揭晓掉落物仍沿F023。该接入记录不代表用户视觉终验；全108世界推广已获用户授权，逐批验证范围归专项QA。
 
 ## R100 工程前置：正式出击与冷续局的异步准备
 
@@ -56,7 +56,7 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `native-body-collision.ts` 为正式v3角色提供独立于保守导航格的20×20身体查询：所有solid同源XY三角形参与连续扫掠，VOID仍用原8px支撑，浮雕不擦除实体。静态三角AABB按64px桶构建CSR索引；查询完整身体或整段扫掠AABB，以复用bitset去重后按原三角顺序执行原SAT，保留同距法线、豁免、SEPARATION与4轮滑动。索引与布局沿原WeakMap生命周期释放，不写入存档；本轮实测额外常驻最大338,348字节。WASD、敌人推挤后的校正、工具扫掠与存档准入共用该查询；不改变旧v1/v2、生成器保守寻路或Host的32px投放。斜面接触保留切向运动；技能Body.reset后同步offset与前帧坐标，不能留下同帧身体偏移。详细契约归[移动规格](specs/system-movement-vision.md#r100-v3--实体足边与完整身体2026-10-04)。
 
-当前新出发使用 v3（六图环境残骸为 `algorithmRevision: 9`，其他102世界为8）与内容定义 version 2；新碎片桥用于显式注册的余烬脊及B01五图，其余102世界保持原几何，见下方[矩形碎片生产桥](#rectangle-fragment-production)。新增形体与选择合同见“I07—I09”，原材料与构造合同见“R100 世界区分度 · 修订4”；以下保留早期修订的巡路与恢复合同。`legacy-r100-v2/executor.js` 从 a089bf7 封存完整 50 项依赖闭包（无可变 import），统一保护原修订 1／2 的几何、部署和校验；`freeze-native-r100-revision2.mjs` 可从固定提交逐字重建，旧记录按保存修订分派，不使用当前世界 CSV。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
+当前新出发使用 v3（已注册环境残骸为 `algorithmRevision: 10`，未注册项为8）与内容定义 version 2；新碎片桥用于显式注册世界，独立作者批次逐项扩展，见下方[矩形碎片生产桥](#rectangle-fragment-production)。新增形体与选择合同见“I07—I09”，原材料与构造合同见“R100 世界区分度 · 修订4”；以下保留早期修订的巡路与恢复合同。`legacy-r100-v2/executor.js` 从 a089bf7 封存完整 50 项依赖闭包（无可变 import），统一保护原修订 1／2 的几何、部署和校验；`freeze-native-r100-revision2.mjs` 可从固定提交逐字重建，旧记录按保存修订分派，不使用当前世界 CSV。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
 
 `systems/r100-world-presentation.ts` 持有正式表现准备，DEV 母版只保留兼容导出。`surface-preparation-client.ts` / `surface-preparation-worker.ts` 是专用可终止准备 Worker：接收已准入的原生数据及共享解码像素，执行地表、材质光照、侵蚀字段和 `surface-bake.ts` 的四张 RGBA 烘焙，以 transferable 返回。等待期间提前创建并上传 WebGL 材质接收器；`MasterPresentation` 建场消费一次，正式路径缺准备时抛错，绝不临时同步补烤。异步取消、迟到响应、替换与两份上限的 LRU 均释放未消费的 GPU 资源；已消费资源由场景销毁。准备身份包含包身份、实际种子、构造 ID 和尺寸，源图片像素缓存与一次性 GPU 资源分离。
 
@@ -128,7 +128,7 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `native-volume-geometry.ts`按显式`constructionVersion`执行两套兼容构造；默认版本1保留，版本2提供六族深化形状。数据编译器校验CSV字段并写入各实例，碰撞、可走破口、面与材质坐标均来自同一网格。新角色色、HUD和污染数值不属于本次变更。
 
-`legacy-r100-v3/executor.js`从固定`5788ef07`封存生成、配方校验、表面预烤闭包；`freeze-native-r100-revision3.mjs --check`核对摘要，旧修订3不导入当前材料与几何实现。`r100-production-map.ts`和`r100-world-presentation.ts`按revision路由。该节记录revision4的材料管线；I10的revision6及DEC-197的revision7现均已封存，DEC-206的碎片桥为revision8；当前六图环境残骸升级为revision9、其他102保持8，revision1–8封存继续保留。验证与未覆盖范围见[本轮QA](qa/rift-r100-world-identity.md)。
+`legacy-r100-v3/executor.js`从固定`5788ef07`封存生成、配方校验、表面预烤闭包；`freeze-native-r100-revision3.mjs --check`核对摘要，旧修订3不导入当前材料与几何实现。`r100-production-map.ts`和`r100-world-presentation.ts`按revision路由。该节记录revision4的材料管线；I10的revision6及DEC-197的revision7现均已封存，DEC-206的碎片桥为revision8；108个已注册世界的环境残骸新局现均使用revision10；revision1–9封存保留。revision9从17476a4e固定来源封存生成、配方校验、hydrate、地表与残骸两态补丁，修订10仅增加真实主体表面来源确认，避免附加岸沿共用relief对象ID造成虚构母体。两项优化按作者批推广至108世界，实际完成与验证范围见[全库推广QA](qa/world-upgrades-rollout-2026-10-12.md)。验证与未覆盖范围见[本轮QA](qa/rift-r100-world-identity.md)。
 
 ## R100 I01：持久生成版本与DEV资格底座
 
@@ -1547,7 +1547,7 @@ DEC-199当前只改余烬脊的作者数据；其余107世界保持基线。`che
 
 独立预览 `docs/art/previews/world-fragment-open-field/edge-treatment.mjs` 适配旧展示数据并调用同源实现，浏览器经esbuild打包；Node检查使用 `--import tsx`。`tools/fragment-shape/accepted-v1.json`锁定ada26f43获认可母版，`check.mjs`只读比较，不自刷基准。冻结策略不代表自动完成宏观关卡编排。
 
-生产作者源为 `data/rift-spatial-fragment-{layouts,rectangles,worlds}.csv` → `tools/world-study/codegen-r100-fragments.mjs` → `generated/r100-fragment-data.ts`，分别声明布局/单位、land与void矩形次序、世界绑定与seed策略。当前注册 `cinder-ridge` 及B01的 `ash-strata`、`splayed-fibres`、`shell-chain`、`pale-sail`、`gel-fibre` 六图，各有独立layout；认可研究的1152×896作者画布和2倍换算保持，sector CSV继续拥有实体布置与出生候选。其余102世界不导入该构型，保持原空间策略版本1及几何输入。注册数不代替完整地图、材质或探索体验验收。`codegen-r100-spatial.mjs` 读取fragment绑定表并计入sourceHash，只对显式注册条目跳过已被最终fragment替代的旧erosion数量前置，其余世界原检查保持。
+生产作者源为 `data/rift-spatial-fragment-{layouts,rectangles,worlds}.csv` → `tools/world-study/codegen-r100-fragments.mjs` → `generated/r100-fragment-data.ts`，分别声明布局/单位、land与void矩形次序、世界绑定与seed策略。原六图为已认可构型回归基线，后续世界逐项注册独立layout；认可研究的1152×896作者画布和2倍换算保持，sector CSV继续拥有实体布置与出生候选。108世界现已逐项注册；旧保存保持原策略，当前全库验证范围见专项QA。注册数不代替完整地图、材质或探索体验验收。`codegen-r100-spatial.mjs` 读取fragment绑定表并计入sourceHash，只对显式注册条目跳过已被最终fragment替代的旧erosion数量前置，其余世界原检查保持。
 
 `r100-fragment-shape.ts` 负责生产冻结桥：`createR100SpatialPolicy(worldId, requestedSeed)` 把完整layout、算法版本、layoutId、来源hash、seed策略/salt及edgeSeed冻结为 `fragmentShape`，新策略版本为2，并保存同源编译出的 `terrainOutline` / `erosion`。edgeSeed固定为 `(requestedSeed + seedSalt) >>> 0`，三档共享同一请求seed的外岸与孔；部署的至多8个候选只变化其内容/实例seed，不重新选边缘。恢复校验精确新增字段与版本、重新编译保存的作者输入，并逐点核对保存轮廓，随后核验包依赖回执；不与当前CSV逐值比较，不从当前表补字段。未知算法/缺字段/seed漂移/轮廓漂移明确拒绝。
 

@@ -1,0 +1,95 @@
+{
+  "note": "Local production combat grid body support sample at 2px intervals; no terrain mutation",
+  "cases": [
+    {
+      "grade": "low",
+      "region": {
+        "x": [
+          1130,
+          1170
+        ],
+        "y": [
+          310,
+          380
+        ]
+      },
+      "bodyHalfSize": 10,
+      "supportedSeats": [],
+      "nearbySearchSites": [],
+      "spawn": {
+        "x": 1116,
+        "y": 1436
+      },
+      "extraction": {
+        "x": 612,
+        "y": 300
+      }
+    },
+    {
+      "grade": "medium",
+      "region": {
+        "x": [
+          1130,
+          1170
+        ],
+        "y": [
+          310,
+          380
+        ]
+      },
+      "bodyHalfSize": 10,
+      "supportedSeats": [],
+      "nearbySearchSites": [],
+      "spawn": {
+        "x": 1116,
+        "y": 1436
+      },
+      "extraction": {
+        "x": 612,
+        "y": 300
+      }
+    },
+    {
+      "grade": "severe",
+      "region": {
+        "x": [
+          1130,
+          1170
+        ],
+        "y": [
+          310,
+          380
+        ]
+      },
+      "bodyHalfSize": 10,
+      "supportedSeats": [],
+      "nearbySearchSites": [
+        {
+          "nodeId": "r100-contaminant-contested-1",
+          "version": 1,
+          "position": {
+            "x": 1140,
+            "y": 276
+          },
+          "visualSeed": 1293905156,
+          "sourceKind": "ground-accumulation",
+          "family": "fibre-knot",
+          "groundFamily": "fibre-knot",
+          "sourceObjectId": null,
+          "sourceAnchor": null,
+          "sourceDomain": "ground",
+          "axis": 0.41999999999999993,
+          "footprintProfile": "grounded-material-v1"
+        }
+      ],
+      "spawn": {
+        "x": 1116,
+        "y": 1436
+      },
+      "extraction": {
+        "x": 612,
+        "y": 300
+      }
+    }
+  ]
+}

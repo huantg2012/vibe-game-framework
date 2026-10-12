@@ -1,0 +1,1026 @@
+{
+  "version": 3,
+  "requestedSeed": 20261012,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "ember-cushions",
+    "label": "赤垫裂原",
+    "description": "赤垫裂原的原生材料与完整搜撤地段",
+    "material": "gel",
+    "surface": {
+      "substrate": "gel",
+      "coating": "gel",
+      "organization": "patches",
+      "coverage": 0.66,
+      "wear": 0.43,
+      "deposits": 0.42,
+      "scale": 0.95,
+      "relief": 0.58,
+      "contrast": 0.85,
+      "regionScale": 1.1,
+      "quietness": 0.5,
+      "formScale": 1.5,
+      "fragmentation": 0.32,
+      "accentCoverage": 0.18
+    },
+    "palette": {
+      "void": 856090,
+      "shadow": 1449000,
+      "floorDeep": 3947333,
+      "floor": 9736347,
+      "floorLight": 13485777,
+      "materialDark": 6301995,
+      "materialMid": 12144207,
+      "materialLight": 14849667,
+      "faceLight": 12099783,
+      "accentDim": 5326174,
+      "accent": 7956100,
+      "accentLight": 11444401,
+      "peak": 14476773,
+      "actorDark": 2433318,
+      "actorMid": 11702376,
+      "actorLight": 15584925,
+      "ground": 9736347,
+      "groundLight": 13485777,
+      "groundDark": 3947333,
+      "wall": 12144207,
+      "wallLight": 14849667,
+      "wallDark": 6301995
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "ember-cushions",
+    "ground": {
+      "dark": 3947333,
+      "mid": 9736347,
+      "light": 13485777
+    },
+    "solid": {
+      "dark": 6301995,
+      "mid": 12144207,
+      "light": 14849667
+    },
+    "cleaved": {
+      "dark": 4731473,
+      "mid": 9003667,
+      "light": 12099783
+    },
+    "secondary": {
+      "dark": 5065026,
+      "mid": 9143412,
+      "light": 12235682
+    },
+    "groundPattern": "flow",
+    "patternScale": 208,
+    "patternStrength": 0.51,
+    "secondaryCoverage": 0.16,
+    "textureContrast": 1.1,
+    "quietCoverage": 0.55
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "ember-cushions-low",
+    "family": "gel-flow",
+    "grade": "low",
+    "label": "赤垫裂原",
+    "profile": "ember-cushions",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 112,
+    "emission": 0.35,
+    "motion_period": 22,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 340,
+        "y": 270,
+        "rotation": 0.4,
+        "length": 260,
+        "width": 180,
+        "height": 42,
+        "thickness": 11,
+        "fold": 0.2992,
+        "branches": 3,
+        "opening": 0.92,
+        "distortion": 0.5808,
+        "constructionVersion": 3,
+        "shapeProfile": "lobed-cushion"
+      },
+      {
+        "id": 2,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 700,
+        "y": 230,
+        "rotation": 2.4,
+        "length": 330,
+        "width": 190,
+        "height": 58,
+        "thickness": 14,
+        "fold": 0.3696,
+        "branches": 3,
+        "opening": 0.9,
+        "distortion": 0.6335999999999999,
+        "constructionVersion": 3,
+        "shapeProfile": "lobed-cushion"
+      },
+      {
+        "id": 3,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 780,
+        "y": 540,
+        "rotation": -1.1,
+        "length": 300,
+        "width": 210,
+        "height": 48,
+        "thickness": 12,
+        "fold": 0.33440000000000003,
+        "branches": 3,
+        "opening": 0.94,
+        "distortion": 0.5632,
+        "constructionVersion": 3,
+        "shapeProfile": "lobed-cushion"
+      },
+      {
+        "id": 4,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 430,
+        "y": 590,
+        "rotation": 0.9,
+        "length": 240,
+        "width": 170,
+        "height": 36,
+        "thickness": 10,
+        "fold": 0.264,
+        "branches": 3,
+        "opening": 0.92,
+        "distortion": 0.528,
+        "constructionVersion": 3,
+        "shapeProfile": "lobed-cushion"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 668,
+          "y": 424
+        },
+        {
+          "x": 704,
+          "y": 416
+        },
+        {
+          "x": 752,
+          "y": 440
+        },
+        {
+          "x": 744,
+          "y": 464
+        },
+        {
+          "x": 692,
+          "y": 454
+        }
+      ]
+    ]
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0
+  },
+  "spatialPolicy": {
+    "version": 2,
+    "worldId": "ember-cushions",
+    "sourceHash": "48d8c6c3a10f4f39d63bfd660bbd19fd527d72d7d5e72ac465fffb6b5328385c",
+    "organization": "authored-sectors",
+    "organizationRules": {
+      "sourceMode": "source-once",
+      "materialScaling": false,
+      "solidCount": 4,
+      "reliefCount": 0
+    },
+    "groupTransform": null,
+    "cols": 72,
+    "rows": 56,
+    "mirrorX": false,
+    "mirrorY": false,
+    "placementJitterPx": 0,
+    "placements": [
+      {
+        "id": 1,
+        "role": "solid",
+        "sourceIndex": 0,
+        "x": 1006,
+        "y": 582,
+        "rotation": 0.4,
+        "length": 312,
+        "width": 216
+      },
+      {
+        "id": 2,
+        "role": "solid",
+        "sourceIndex": 1,
+        "x": 1438,
+        "y": 534,
+        "rotation": 2.4,
+        "length": 396,
+        "width": 228
+      },
+      {
+        "id": 3,
+        "role": "solid",
+        "sourceIndex": 2,
+        "x": 1534,
+        "y": 906,
+        "rotation": -1.1,
+        "length": 360,
+        "width": 252
+      },
+      {
+        "id": 4,
+        "role": "solid",
+        "sourceIndex": 3,
+        "x": 1114,
+        "y": 966,
+        "rotation": 0.9,
+        "length": 288,
+        "width": 204
+      }
+    ],
+    "materials": [
+      {
+        "key": "folded-slab",
+        "lengthScale": 1.08,
+        "widthScale": 1.03
+      },
+      {
+        "key": "fibre-knot",
+        "lengthScale": 1.04,
+        "widthScale": 1.5
+      },
+      {
+        "key": "broken-shell",
+        "lengthScale": 0.8,
+        "widthScale": 1.2
+      },
+      {
+        "key": "granular-ridge",
+        "lengthScale": 1,
+        "widthScale": 1
+      },
+      {
+        "key": "membrane-rim",
+        "lengthScale": 1,
+        "widthScale": 0.9
+      },
+      {
+        "key": "gel-flow",
+        "lengthScale": 0.86,
+        "widthScale": 0.78
+      },
+      {
+        "key": "rib-vault",
+        "lengthScale": 1.1,
+        "widthScale": 1.5
+      },
+      {
+        "key": "pleated-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      },
+      {
+        "key": "cellular-shell",
+        "lengthScale": 1.08,
+        "widthScale": 2.65
+      },
+      {
+        "key": "lobed-cushion",
+        "lengthScale": 1,
+        "widthScale": 1.7
+      },
+      {
+        "key": "monolith-buttress",
+        "lengthScale": 0.85,
+        "widthScale": 1.5
+      },
+      {
+        "key": "terrace-shelf",
+        "lengthScale": 1.05,
+        "widthScale": 1.05
+      },
+      {
+        "key": "fracture-fan",
+        "lengthScale": 0.97,
+        "widthScale": 1.2
+      },
+      {
+        "key": "fallen-bundle",
+        "lengthScale": 0.8,
+        "widthScale": 1.37
+      },
+      {
+        "key": "clamp-bank",
+        "lengthScale": 0.93,
+        "widthScale": 0.9
+      },
+      {
+        "key": "torn-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.15
+      },
+      {
+        "key": "compressed-wedge",
+        "lengthScale": 0.9,
+        "widthScale": 0.98
+      },
+      {
+        "key": "porous-break",
+        "lengthScale": 0.82,
+        "widthScale": 1.18
+      },
+      {
+        "key": "pleated-tear",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 601.76,
+          "y": 400
+        },
+        {
+          "x": 560,
+          "y": 461.36
+        },
+        {
+          "x": 560,
+          "y": 630
+        },
+        {
+          "x": 734.6,
+          "y": 630
+        },
+        {
+          "x": 743.78,
+          "y": 614.72
+        },
+        {
+          "x": 766.58,
+          "y": 579.94
+        },
+        {
+          "x": 780,
+          "y": 563.28
+        },
+        {
+          "x": 780,
+          "y": 417.82
+        },
+        {
+          "x": 753.8,
+          "y": 400
+        }
+      ],
+      [
+        {
+          "x": 1680,
+          "y": 380
+        },
+        {
+          "x": 1680,
+          "y": 580
+        },
+        {
+          "x": 1853.32,
+          "y": 580
+        },
+        {
+          "x": 1910,
+          "y": 514.04
+        },
+        {
+          "x": 1910,
+          "y": 429.28
+        },
+        {
+          "x": 1852.64,
+          "y": 380
+        }
+      ],
+      [
+        {
+          "x": 860,
+          "y": 200
+        },
+        {
+          "x": 860,
+          "y": 370
+        },
+        {
+          "x": 1050,
+          "y": 370
+        },
+        {
+          "x": 1050,
+          "y": 210.38
+        },
+        {
+          "x": 1047.22,
+          "y": 207.16
+        },
+        {
+          "x": 1040.42,
+          "y": 203.16
+        },
+        {
+          "x": 1037.92,
+          "y": 200
+        }
+      ]
+    ],
+    "terrainOutline": [
+      {
+        "x": 160,
+        "y": 201.74
+      },
+      {
+        "x": 188.94,
+        "y": 189.4
+      },
+      {
+        "x": 231.72,
+        "y": 153.56
+      },
+      {
+        "x": 250.74,
+        "y": 140
+      },
+      {
+        "x": 1120,
+        "y": 140
+      },
+      {
+        "x": 1120,
+        "y": 400
+      },
+      {
+        "x": 1540,
+        "y": 400
+      },
+      {
+        "x": 1540,
+        "y": 240
+      },
+      {
+        "x": 1763.84,
+        "y": 240
+      },
+      {
+        "x": 1794.56,
+        "y": 253.56
+      },
+      {
+        "x": 1835.84,
+        "y": 258.82
+      },
+      {
+        "x": 1859.84,
+        "y": 240
+      },
+      {
+        "x": 2007.98,
+        "y": 240
+      },
+      {
+        "x": 2080,
+        "y": 323.82
+      },
+      {
+        "x": 2080,
+        "y": 603.08
+      },
+      {
+        "x": 2060.34,
+        "y": 629.12
+      },
+      {
+        "x": 2052.68,
+        "y": 664.12
+      },
+      {
+        "x": 2080,
+        "y": 684.48
+      },
+      {
+        "x": 2080,
+        "y": 803.82
+      },
+      {
+        "x": 2063.16,
+        "y": 827.38
+      },
+      {
+        "x": 2040.02,
+        "y": 849.44
+      },
+      {
+        "x": 2018,
+        "y": 889.06
+      },
+      {
+        "x": 1984.8,
+        "y": 900
+      },
+      {
+        "x": 1817.38,
+        "y": 900
+      },
+      {
+        "x": 1800,
+        "y": 920.4
+      },
+      {
+        "x": 1800,
+        "y": 946.48
+      },
+      {
+        "x": 1795.36,
+        "y": 950.34
+      },
+      {
+        "x": 1784.82,
+        "y": 956.38
+      },
+      {
+        "x": 1779.6,
+        "y": 960
+      },
+      {
+        "x": 1752.24,
+        "y": 960
+      },
+      {
+        "x": 1740,
+        "y": 980.4
+      },
+      {
+        "x": 1740,
+        "y": 1002.46
+      },
+      {
+        "x": 1716.2,
+        "y": 1020
+      },
+      {
+        "x": 1670,
+        "y": 1020
+      },
+      {
+        "x": 1670,
+        "y": 1153.56
+      },
+      {
+        "x": 1615.94,
+        "y": 1200
+      },
+      {
+        "x": 1141.12,
+        "y": 1200
+      },
+      {
+        "x": 1114.68,
+        "y": 1203.9
+      },
+      {
+        "x": 1097.28,
+        "y": 1223.9
+      },
+      {
+        "x": 1065.42,
+        "y": 1227.1
+      },
+      {
+        "x": 1040,
+        "y": 1247.92
+      },
+      {
+        "x": 1040,
+        "y": 1424.4
+      },
+      {
+        "x": 1031.62,
+        "y": 1452.86
+      },
+      {
+        "x": 1010.46,
+        "y": 1470.44
+      },
+      {
+        "x": 1005.82,
+        "y": 1513.02
+      },
+      {
+        "x": 981.32,
+        "y": 1540
+      },
+      {
+        "x": 826.84,
+        "y": 1540
+      },
+      {
+        "x": 796.12,
+        "y": 1521.66
+      },
+      {
+        "x": 754.84,
+        "y": 1514.54
+      },
+      {
+        "x": 730.84,
+        "y": 1540
+      },
+      {
+        "x": 400,
+        "y": 1540
+      },
+      {
+        "x": 400,
+        "y": 1500
+      },
+      {
+        "x": 294.4,
+        "y": 1500
+      },
+      {
+        "x": 278.36,
+        "y": 1484.96
+      },
+      {
+        "x": 256.18,
+        "y": 1450.02
+      },
+      {
+        "x": 240,
+        "y": 1437.14
+      },
+      {
+        "x": 240,
+        "y": 1241.64
+      },
+      {
+        "x": 255.94,
+        "y": 1225.66
+      },
+      {
+        "x": 280.74,
+        "y": 1186.14
+      },
+      {
+        "x": 294.4,
+        "y": 1160
+      },
+      {
+        "x": 374.3,
+        "y": 1160
+      },
+      {
+        "x": 382.08,
+        "y": 1151.86
+      },
+      {
+        "x": 393.74,
+        "y": 1138.38
+      },
+      {
+        "x": 400,
+        "y": 1132.8
+      },
+      {
+        "x": 400,
+        "y": 1104.52
+      },
+      {
+        "x": 410.46,
+        "y": 1099.74
+      },
+      {
+        "x": 428.98,
+        "y": 1085.72
+      },
+      {
+        "x": 436.04,
+        "y": 1080
+      },
+      {
+        "x": 580.52,
+        "y": 1080
+      },
+      {
+        "x": 594.86,
+        "y": 1056.62
+      },
+      {
+        "x": 625.22,
+        "y": 1022.04
+      },
+      {
+        "x": 640,
+        "y": 1001.8
+      },
+      {
+        "x": 640,
+        "y": 850
+      },
+      {
+        "x": 421.96,
+        "y": 850
+      },
+      {
+        "x": 408.9,
+        "y": 860.36
+      },
+      {
+        "x": 394.02,
+        "y": 881.58
+      },
+      {
+        "x": 380,
+        "y": 887.4
+      },
+      {
+        "x": 380,
+        "y": 922.6
+      },
+      {
+        "x": 361.62,
+        "y": 931.4
+      },
+      {
+        "x": 324.2,
+        "y": 950.82
+      },
+      {
+        "x": 312.7,
+        "y": 960
+      },
+      {
+        "x": 234.8,
+        "y": 960
+      },
+      {
+        "x": 219.82,
+        "y": 933
+      },
+      {
+        "x": 183.68,
+        "y": 872.02
+      },
+      {
+        "x": 160,
+        "y": 845.44
+      }
+    ],
+    "fragmentShape": {
+      "algorithmVersion": "rectilinear-fragment-v1",
+      "layoutId": "ember-eastern-loss-v1",
+      "sourceHash": "5ff3f447def9a485e3cf81e254833f01319bd2b211f1c8e3e6b80876a92b55b1",
+      "seedMode": "run-seed",
+      "seedSalt": 0,
+      "edgeSeed": 20261012,
+      "layout": {
+        "authoringFrame": [
+          1152,
+          896
+        ],
+        "worldScale": 2,
+        "landRects": [
+          [
+            200,
+            200,
+            670,
+            570
+          ],
+          [
+            80,
+            70,
+            480,
+            410
+          ],
+          [
+            770,
+            120,
+            270,
+            360
+          ],
+          [
+            550,
+            650,
+            370,
+            180
+          ],
+          [
+            120,
+            580,
+            270,
+            170
+          ]
+        ],
+        "voidRects": [
+          [
+            835,
+            510,
+            317,
+            386
+          ],
+          [
+            900,
+            450,
+            252,
+            130
+          ],
+          [
+            280,
+            200,
+            110,
+            115
+          ],
+          [
+            190,
+            425,
+            130,
+            115
+          ],
+          [
+            430,
+            100,
+            95,
+            85
+          ],
+          [
+            520,
+            600,
+            315,
+            296
+          ],
+          [
+            840,
+            190,
+            115,
+            100
+          ]
+        ]
+      }
+    },
+    "spawnCandidates": [
+      {
+        "x": 350,
+        "y": 240
+      },
+      {
+        "x": 780,
+        "y": 350
+      },
+      {
+        "x": 1900,
+        "y": 700
+      },
+      {
+        "x": 1630,
+        "y": 930
+      },
+      {
+        "x": 1550,
+        "y": 1260
+      },
+      {
+        "x": 1100,
+        "y": 1400
+      },
+      {
+        "x": 650,
+        "y": 1300
+      },
+      {
+        "x": 440,
+        "y": 1120
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "ember-cushions",
+    "sourceHash": "649312a71f54268ddf5ec5229f69130429d54c76c0f3e12565488dbf2b4706e3",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.4,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "package": {
+    "id": "r100-ember-cushions",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 10,
+    "materials": {
+      "gel-flow": {
+        "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+        "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+        "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+      }
+    },
+    "dependencyHash": "e3fb5550",
+    "grade": "low"
+  }
+}

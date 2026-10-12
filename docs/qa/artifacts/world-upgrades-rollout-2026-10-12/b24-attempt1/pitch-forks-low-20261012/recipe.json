@@ -1,0 +1,973 @@
+{
+  "version": 3,
+  "requestedSeed": 20261012,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "pitch-forks",
+    "label": "凝脂岔口",
+    "description": "凝脂岔口的原生材料与完整搜撤地段",
+    "material": "gel",
+    "surface": {
+      "substrate": "gel",
+      "coating": "gel",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 2501943,
+      "floor": 5726830,
+      "floorLight": 9740717,
+      "materialDark": 2366507,
+      "materialMid": 4864089,
+      "materialLight": 9008525,
+      "faceLight": 14333887,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 5726830,
+      "groundLight": 9740717,
+      "groundDark": 2501943,
+      "wall": 4864089,
+      "wallLight": 9008525,
+      "wallDark": 2366507
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "pitch-forks",
+    "ground": {
+      "dark": 2501943,
+      "mid": 5726830,
+      "light": 9740717
+    },
+    "solid": {
+      "dark": 2366507,
+      "mid": 4864089,
+      "light": 9008525
+    },
+    "cleaved": {
+      "dark": 6701647,
+      "mid": 11764883,
+      "light": 14333887
+    },
+    "secondary": {
+      "dark": 3161160,
+      "mid": 7243672,
+      "light": 10992584
+    },
+    "groundPattern": "flow",
+    "patternScale": 248,
+    "patternStrength": 0.37,
+    "secondaryCoverage": 0.14,
+    "textureContrast": 1.17,
+    "quietCoverage": 0.6
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "pitch-forks-low",
+    "family": "gel-flow",
+    "grade": "low",
+    "label": "凝脂岔口",
+    "profile": "pitch-forks",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 112,
+    "emission": 0.35,
+    "motion_period": 22,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 567,
+        "y": 257,
+        "rotation": -0.22,
+        "length": 285,
+        "width": 148,
+        "height": 64,
+        "thickness": 14,
+        "fold": 0.6072,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 2,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 454,
+        "y": 360,
+        "rotation": 0.98,
+        "length": 251,
+        "width": 102,
+        "height": 47,
+        "thickness": 12,
+        "fold": 0.4752,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 3,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 686,
+        "y": 338,
+        "rotation": 1.86,
+        "length": 216,
+        "width": 111,
+        "height": 42,
+        "thickness": 12,
+        "fold": 0.5367999999999999,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 4,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 730,
+        "y": 545,
+        "rotation": 0.86,
+        "length": 227,
+        "width": 118,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.2728,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0
+  },
+  "spatialPolicy": {
+    "version": 2,
+    "worldId": "pitch-forks",
+    "sourceHash": "ecf0c200d68a3313968518ff6febd238f2c9fddb17ccdaf44c638fb8dcc3b6ff",
+    "organization": "authored-sectors",
+    "organizationRules": {
+      "sourceMode": "source-once",
+      "materialScaling": false,
+      "solidCount": 3,
+      "reliefCount": 1
+    },
+    "groupTransform": null,
+    "cols": 72,
+    "rows": 56,
+    "mirrorX": false,
+    "mirrorY": false,
+    "placementJitterPx": 0,
+    "placements": [
+      {
+        "id": 1,
+        "role": "solid",
+        "sourceIndex": 0,
+        "x": 1368.25,
+        "y": 797.12,
+        "rotation": -0.22,
+        "length": 361.95,
+        "width": 187.96
+      },
+      {
+        "id": 2,
+        "role": "solid",
+        "sourceIndex": 1,
+        "x": 1224.74,
+        "y": 927.93,
+        "rotation": 0.98,
+        "length": 318.77,
+        "width": 129.54
+      },
+      {
+        "id": 3,
+        "role": "solid",
+        "sourceIndex": 2,
+        "x": 1519.38,
+        "y": 899.99,
+        "rotation": 1.86,
+        "length": 274.32,
+        "width": 140.97
+      },
+      {
+        "id": 4,
+        "role": "relief",
+        "sourceIndex": 0,
+        "x": 1575.26,
+        "y": 1162.88,
+        "rotation": 0.86,
+        "length": 288.29,
+        "width": 149.86
+      }
+    ],
+    "materials": [
+      {
+        "key": "folded-slab",
+        "lengthScale": 1.08,
+        "widthScale": 1.03
+      },
+      {
+        "key": "fibre-knot",
+        "lengthScale": 1.04,
+        "widthScale": 1.5
+      },
+      {
+        "key": "broken-shell",
+        "lengthScale": 0.8,
+        "widthScale": 1.2
+      },
+      {
+        "key": "granular-ridge",
+        "lengthScale": 1,
+        "widthScale": 1
+      },
+      {
+        "key": "membrane-rim",
+        "lengthScale": 1,
+        "widthScale": 0.9
+      },
+      {
+        "key": "gel-flow",
+        "lengthScale": 0.86,
+        "widthScale": 0.78
+      },
+      {
+        "key": "rib-vault",
+        "lengthScale": 1.1,
+        "widthScale": 1.5
+      },
+      {
+        "key": "pleated-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      },
+      {
+        "key": "cellular-shell",
+        "lengthScale": 1.08,
+        "widthScale": 2.65
+      },
+      {
+        "key": "lobed-cushion",
+        "lengthScale": 1,
+        "widthScale": 1.7
+      },
+      {
+        "key": "monolith-buttress",
+        "lengthScale": 0.85,
+        "widthScale": 1.5
+      },
+      {
+        "key": "terrace-shelf",
+        "lengthScale": 1.05,
+        "widthScale": 1.05
+      },
+      {
+        "key": "fracture-fan",
+        "lengthScale": 0.97,
+        "widthScale": 1.2
+      },
+      {
+        "key": "fallen-bundle",
+        "lengthScale": 0.8,
+        "widthScale": 1.37
+      },
+      {
+        "key": "clamp-bank",
+        "lengthScale": 0.93,
+        "widthScale": 0.9
+      },
+      {
+        "key": "torn-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.15
+      },
+      {
+        "key": "compressed-wedge",
+        "lengthScale": 0.9,
+        "widthScale": 0.98
+      },
+      {
+        "key": "porous-break",
+        "lengthScale": 0.82,
+        "widthScale": 1.18
+      },
+      {
+        "key": "pleated-tear",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 740,
+          "y": 496.7
+        },
+        {
+          "x": 715.62,
+          "y": 483.04
+        },
+        {
+          "x": 679.52,
+          "y": 454.1
+        },
+        {
+          "x": 658.4,
+          "y": 440
+        },
+        {
+          "x": 548.32,
+          "y": 440
+        },
+        {
+          "x": 535.14,
+          "y": 455.5
+        },
+        {
+          "x": 512.86,
+          "y": 497.44
+        },
+        {
+          "x": 500,
+          "y": 508
+        },
+        {
+          "x": 500,
+          "y": 572
+        },
+        {
+          "x": 524.76,
+          "y": 592.78
+        },
+        {
+          "x": 563.88,
+          "y": 620.2
+        },
+        {
+          "x": 581.6,
+          "y": 640
+        },
+        {
+          "x": 661.72,
+          "y": 640
+        },
+        {
+          "x": 682.04,
+          "y": 617.72
+        },
+        {
+          "x": 714.24,
+          "y": 589.3
+        },
+        {
+          "x": 740,
+          "y": 572
+        }
+      ],
+      [
+        {
+          "x": 1270,
+          "y": 1240
+        },
+        {
+          "x": 1148.58,
+          "y": 1240
+        },
+        {
+          "x": 1135.42,
+          "y": 1247.22
+        },
+        {
+          "x": 1110.9,
+          "y": 1257.52
+        },
+        {
+          "x": 1100,
+          "y": 1263.02
+        },
+        {
+          "x": 1100,
+          "y": 1370
+        },
+        {
+          "x": 1270,
+          "y": 1370
+        }
+      ],
+      [
+        {
+          "x": 1774.3,
+          "y": 700
+        },
+        {
+          "x": 1730,
+          "y": 751
+        },
+        {
+          "x": 1730,
+          "y": 802.78
+        },
+        {
+          "x": 1736.04,
+          "y": 817.56
+        },
+        {
+          "x": 1754.9,
+          "y": 821.64
+        },
+        {
+          "x": 1761.84,
+          "y": 843.2
+        },
+        {
+          "x": 1777.6,
+          "y": 850
+        },
+        {
+          "x": 1848.62,
+          "y": 850
+        },
+        {
+          "x": 1870,
+          "y": 825.12
+        },
+        {
+          "x": 1870,
+          "y": 700
+        }
+      ],
+      [
+        {
+          "x": 1926.36,
+          "y": 1400
+        },
+        {
+          "x": 1900,
+          "y": 1444.2
+        },
+        {
+          "x": 1900,
+          "y": 1530
+        },
+        {
+          "x": 1975.06,
+          "y": 1530
+        },
+        {
+          "x": 2010,
+          "y": 1489.34
+        },
+        {
+          "x": 2010,
+          "y": 1414.14
+        },
+        {
+          "x": 1974.34,
+          "y": 1400
+        }
+      ]
+    ],
+    "terrainOutline": [
+      {
+        "x": 310,
+        "y": 383.84
+      },
+      {
+        "x": 339.92,
+        "y": 371.08
+      },
+      {
+        "x": 384.14,
+        "y": 334.02
+      },
+      {
+        "x": 403.82,
+        "y": 320
+      },
+      {
+        "x": 688.2,
+        "y": 320
+      },
+      {
+        "x": 718.92,
+        "y": 341.72
+      },
+      {
+        "x": 760.2,
+        "y": 350.16
+      },
+      {
+        "x": 784.2,
+        "y": 320
+      },
+      {
+        "x": 1310,
+        "y": 320
+      },
+      {
+        "x": 1310,
+        "y": 540
+      },
+      {
+        "x": 1960,
+        "y": 540
+      },
+      {
+        "x": 1960,
+        "y": 1010.18
+      },
+      {
+        "x": 1943.96,
+        "y": 1040.9
+      },
+      {
+        "x": 1937.72,
+        "y": 1082.18
+      },
+      {
+        "x": 1960,
+        "y": 1106.18
+      },
+      {
+        "x": 1960,
+        "y": 1330
+      },
+      {
+        "x": 2072.2,
+        "y": 1330
+      },
+      {
+        "x": 2130,
+        "y": 1406.48
+      },
+      {
+        "x": 2130,
+        "y": 1605.92
+      },
+      {
+        "x": 2118.86,
+        "y": 1619.16
+      },
+      {
+        "x": 2103.56,
+        "y": 1631.56
+      },
+      {
+        "x": 2089,
+        "y": 1653.84
+      },
+      {
+        "x": 2067.04,
+        "y": 1660
+      },
+      {
+        "x": 1642.54,
+        "y": 1660
+      },
+      {
+        "x": 1633.8,
+        "y": 1658.5
+      },
+      {
+        "x": 1627.84,
+        "y": 1651.54
+      },
+      {
+        "x": 1614.86,
+        "y": 1651.26
+      },
+      {
+        "x": 1610,
+        "y": 1644.58
+      },
+      {
+        "x": 1610,
+        "y": 1627
+      },
+      {
+        "x": 1608.98,
+        "y": 1621.06
+      },
+      {
+        "x": 1604.08,
+        "y": 1618.86
+      },
+      {
+        "x": 1603.24,
+        "y": 1613.92
+      },
+      {
+        "x": 1598.78,
+        "y": 1610
+      },
+      {
+        "x": 1508.24,
+        "y": 1610
+      },
+      {
+        "x": 1487.56,
+        "y": 1590.64
+      },
+      {
+        "x": 1459.78,
+        "y": 1583.1
+      },
+      {
+        "x": 1443.62,
+        "y": 1610
+      },
+      {
+        "x": 1300,
+        "y": 1610
+      },
+      {
+        "x": 1300,
+        "y": 1451.22
+      },
+      {
+        "x": 1298.18,
+        "y": 1443.8
+      },
+      {
+        "x": 1292.42,
+        "y": 1438.3
+      },
+      {
+        "x": 1290.96,
+        "y": 1423.82
+      },
+      {
+        "x": 1285.2,
+        "y": 1420
+      },
+      {
+        "x": 1085.5,
+        "y": 1420
+      },
+      {
+        "x": 1069.14,
+        "y": 1416.06
+      },
+      {
+        "x": 1059.04,
+        "y": 1404.7
+      },
+      {
+        "x": 1035.24,
+        "y": 1400.58
+      },
+      {
+        "x": 1020,
+        "y": 1388.96
+      },
+      {
+        "x": 1020,
+        "y": 891.54
+      },
+      {
+        "x": 914.88,
+        "y": 820
+      },
+      {
+        "x": 382.42,
+        "y": 820
+      },
+      {
+        "x": 361.06,
+        "y": 794.52
+      },
+      {
+        "x": 331.52,
+        "y": 735.4
+      },
+      {
+        "x": 310,
+        "y": 713.6
+      }
+    ],
+    "fragmentShape": {
+      "algorithmVersion": "rectilinear-fragment-v1",
+      "layoutId": "pitch-forks-hanging-branch-v1",
+      "sourceHash": "48770a699cc4db5b60787f9905349222628b39b5610ecae6fda7c3b517e6d368",
+      "seedMode": "run-seed",
+      "seedSalt": 0,
+      "edgeSeed": 20261012,
+      "layout": {
+        "authoringFrame": [
+          1152,
+          896
+        ],
+        "worldScale": 2,
+        "landRects": [
+          [
+            510,
+            270,
+            470,
+            460
+          ],
+          [
+            155,
+            160,
+            500,
+            250
+          ],
+          [
+            805,
+            665,
+            260,
+            165
+          ],
+          [
+            540,
+            640,
+            370,
+            165
+          ]
+        ],
+        "voidRects": [
+          [
+            0,
+            410,
+            510,
+            486
+          ],
+          [
+            0,
+            710,
+            650,
+            186
+          ],
+          [
+            700,
+            0,
+            452,
+            250
+          ],
+          [
+            1030,
+            400,
+            122,
+            250
+          ],
+          [
+            250,
+            220,
+            120,
+            100
+          ],
+          [
+            550,
+            620,
+            85,
+            65
+          ],
+          [
+            865,
+            350,
+            70,
+            75
+          ],
+          [
+            950,
+            700,
+            55,
+            65
+          ]
+        ]
+      }
+    },
+    "spawnCandidates": [
+      {
+        "x": 410,
+        "y": 480
+      },
+      {
+        "x": 880,
+        "y": 470
+      },
+      {
+        "x": 1230,
+        "y": 520
+      },
+      {
+        "x": 1860,
+        "y": 610
+      },
+      {
+        "x": 1880,
+        "y": 1080
+      },
+      {
+        "x": 2060,
+        "y": 1560
+      },
+      {
+        "x": 1500,
+        "y": 1530
+      },
+      {
+        "x": 1360,
+        "y": 1260
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "pitch-forks",
+    "sourceHash": "3867589095170dbaf08004bd5b97c761b52ac7950866e2a0df7b95f6399c6f22",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.4,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "package": {
+    "id": "r100-pitch-forks",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 10,
+    "materials": {
+      "gel-flow": {
+        "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+        "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+        "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+      }
+    },
+    "dependencyHash": "2cc88bd2",
+    "grade": "low"
+  }
+}

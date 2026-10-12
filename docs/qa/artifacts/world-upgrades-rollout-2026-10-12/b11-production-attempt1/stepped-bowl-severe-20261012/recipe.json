@@ -1,0 +1,1072 @@
+{
+  "version": 3,
+  "requestedSeed": 20261012,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "stepped-bowl",
+    "label": "退阶环洼",
+    "description": "退阶环洼的原生材料与完整搜撤地段",
+    "material": "glaze",
+    "surface": {
+      "substrate": "glaze",
+      "coating": "glaze",
+      "organization": "clusters",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 3225924,
+      "floor": 7832977,
+      "floorLight": 12175053,
+      "materialDark": 6304324,
+      "materialMid": 11955073,
+      "materialLight": 14527411,
+      "faceLight": 10862286,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 7832977,
+      "groundLight": 12175053,
+      "groundDark": 3225924,
+      "wall": 11955073,
+      "wallLight": 14527411,
+      "wallDark": 6304324
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "stepped-bowl",
+    "ground": {
+      "dark": 3225924,
+      "mid": 7832977,
+      "light": 12175053
+    },
+    "solid": {
+      "dark": 6304324,
+      "mid": 11955073,
+      "light": 14527411
+    },
+    "cleaved": {
+      "dark": 2703192,
+      "mid": 6193564,
+      "light": 10862286
+    },
+    "secondary": {
+      "dark": 5327683,
+      "mid": 10392967,
+      "light": 13617079
+    },
+    "groundPattern": "plates",
+    "patternScale": 240,
+    "patternStrength": 0.39,
+    "secondaryCoverage": 0.2,
+    "textureContrast": 1.08,
+    "quietCoverage": 0.6
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "stepped-bowl-severe",
+    "family": "broken-shell",
+    "grade": "severe",
+    "label": "退阶环洼",
+    "profile": "stepped-bowl",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.42,
+    "light_radius": 155,
+    "emission": 0.72,
+    "motion_period": 17,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 420,
+        "y": 280,
+        "rotation": -0.65,
+        "length": 500,
+        "width": 220,
+        "height": 80,
+        "thickness": 17,
+        "fold": 0.638,
+        "branches": 3,
+        "opening": 0.92,
+        "distortion": 0.7480000000000001,
+        "constructionVersion": 3,
+        "shapeProfile": "terrace-shelf"
+      },
+      {
+        "id": 2,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 690,
+        "y": 485,
+        "rotation": 2.5,
+        "length": 410,
+        "width": 240,
+        "height": 56,
+        "thickness": 14,
+        "fold": 0.5060000000000001,
+        "branches": 2,
+        "opening": 0.9,
+        "distortion": 0.682,
+        "constructionVersion": 3,
+        "shapeProfile": "terrace-shelf"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 632,
+          "y": 424
+        },
+        {
+          "x": 712,
+          "y": 392
+        },
+        {
+          "x": 824,
+          "y": 424
+        },
+        {
+          "x": 864,
+          "y": 480
+        },
+        {
+          "x": 800,
+          "y": 520
+        },
+        {
+          "x": 712,
+          "y": 480
+        },
+        {
+          "x": 664,
+          "y": 504
+        },
+        {
+          "x": 616,
+          "y": 472
+        }
+      ],
+      [
+        {
+          "x": 176,
+          "y": 176
+        },
+        {
+          "x": 256,
+          "y": 152
+        },
+        {
+          "x": 344,
+          "y": 184
+        },
+        {
+          "x": 352,
+          "y": 224
+        },
+        {
+          "x": 288,
+          "y": 248
+        },
+        {
+          "x": 224,
+          "y": 232
+        },
+        {
+          "x": 160,
+          "y": 216
+        }
+      ],
+      [
+        {
+          "x": 384,
+          "y": 560
+        },
+        {
+          "x": 456,
+          "y": 544
+        },
+        {
+          "x": 528,
+          "y": 576
+        },
+        {
+          "x": 520,
+          "y": 612
+        },
+        {
+          "x": 448,
+          "y": 620
+        },
+        {
+          "x": 392,
+          "y": 592
+        }
+      ]
+    ]
+  },
+  "gradeDefinition": {
+    "id": "severe",
+    "version": 1,
+    "label": "重度污染",
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
+  },
+  "contentDefinition": {
+    "grade_id": "severe",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "重度污染",
+    "public_risk": "地面与空气受侵占，混乱增长快",
+    "public_preparation": "备好脱身工具，留出归途",
+    "public_reward": "更多收获在深处，入口无加成",
+    "enemy_count": 4,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 6,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 2
+  },
+  "spatialPolicy": {
+    "version": 2,
+    "worldId": "stepped-bowl",
+    "sourceHash": "f5bcd872e5f2037df0b863e014bfde2da254ec0bf06ce165cfa855c6845983aa",
+    "organization": "authored-sectors",
+    "organizationRules": {
+      "sourceMode": "source-once",
+      "materialScaling": false,
+      "solidCount": 2,
+      "reliefCount": 0
+    },
+    "groupTransform": null,
+    "cols": 72,
+    "rows": 56,
+    "mirrorX": false,
+    "mirrorY": false,
+    "placementJitterPx": 0,
+    "placements": [
+      {
+        "id": 1,
+        "role": "solid",
+        "sourceIndex": 0,
+        "x": 1379.9,
+        "y": 760.85,
+        "rotation": -0.65,
+        "length": 630,
+        "width": 277.2
+      },
+      {
+        "id": 2,
+        "role": "solid",
+        "sourceIndex": 1,
+        "x": 1720.1,
+        "y": 1019.15,
+        "rotation": 2.5,
+        "length": 516.6,
+        "width": 302.4
+      }
+    ],
+    "materials": [
+      {
+        "key": "folded-slab",
+        "lengthScale": 1.08,
+        "widthScale": 1.03
+      },
+      {
+        "key": "fibre-knot",
+        "lengthScale": 1.04,
+        "widthScale": 1.5
+      },
+      {
+        "key": "broken-shell",
+        "lengthScale": 0.8,
+        "widthScale": 1.2
+      },
+      {
+        "key": "granular-ridge",
+        "lengthScale": 1,
+        "widthScale": 1
+      },
+      {
+        "key": "membrane-rim",
+        "lengthScale": 1,
+        "widthScale": 0.9
+      },
+      {
+        "key": "gel-flow",
+        "lengthScale": 0.86,
+        "widthScale": 0.78
+      },
+      {
+        "key": "rib-vault",
+        "lengthScale": 1.1,
+        "widthScale": 1.5
+      },
+      {
+        "key": "pleated-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      },
+      {
+        "key": "cellular-shell",
+        "lengthScale": 1.08,
+        "widthScale": 2.65
+      },
+      {
+        "key": "lobed-cushion",
+        "lengthScale": 1,
+        "widthScale": 1.7
+      },
+      {
+        "key": "monolith-buttress",
+        "lengthScale": 0.85,
+        "widthScale": 1.5
+      },
+      {
+        "key": "terrace-shelf",
+        "lengthScale": 1.05,
+        "widthScale": 1.05
+      },
+      {
+        "key": "fracture-fan",
+        "lengthScale": 0.97,
+        "widthScale": 1.2
+      },
+      {
+        "key": "fallen-bundle",
+        "lengthScale": 0.8,
+        "widthScale": 1.37
+      },
+      {
+        "key": "clamp-bank",
+        "lengthScale": 0.93,
+        "widthScale": 0.9
+      },
+      {
+        "key": "torn-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.15
+      },
+      {
+        "key": "compressed-wedge",
+        "lengthScale": 0.9,
+        "widthScale": 0.98
+      },
+      {
+        "key": "porous-break",
+        "lengthScale": 0.82,
+        "widthScale": 1.18
+      },
+      {
+        "key": "pleated-tear",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 543,
+          "y": 1310
+        },
+        {
+          "x": 520.14,
+          "y": 1314.4
+        },
+        {
+          "x": 513.82,
+          "y": 1328.1
+        },
+        {
+          "x": 480.52,
+          "y": 1333.14
+        },
+        {
+          "x": 470,
+          "y": 1344.6
+        },
+        {
+          "x": 470,
+          "y": 1442
+        },
+        {
+          "x": 473.46,
+          "y": 1462.04
+        },
+        {
+          "x": 490.42,
+          "y": 1472.7
+        },
+        {
+          "x": 496.32,
+          "y": 1493.78
+        },
+        {
+          "x": 512.48,
+          "y": 1510
+        },
+        {
+          "x": 647.44,
+          "y": 1510
+        },
+        {
+          "x": 663.1,
+          "y": 1518.44
+        },
+        {
+          "x": 684.44,
+          "y": 1528.46
+        },
+        {
+          "x": 700,
+          "y": 1534.9
+        },
+        {
+          "x": 700,
+          "y": 1600
+        },
+        {
+          "x": 880,
+          "y": 1600
+        },
+        {
+          "x": 880,
+          "y": 1474.06
+        },
+        {
+          "x": 870.32,
+          "y": 1461.2
+        },
+        {
+          "x": 850.92,
+          "y": 1443.84
+        },
+        {
+          "x": 842.6,
+          "y": 1430
+        },
+        {
+          "x": 805.98,
+          "y": 1430
+        },
+        {
+          "x": 797.7,
+          "y": 1420.18
+        },
+        {
+          "x": 781.18,
+          "y": 1396.9
+        },
+        {
+          "x": 770,
+          "y": 1389.2
+        },
+        {
+          "x": 770,
+          "y": 1310
+        }
+      ],
+      [
+        {
+          "x": 2080,
+          "y": 440
+        },
+        {
+          "x": 1932.76,
+          "y": 440
+        },
+        {
+          "x": 1900,
+          "y": 478.12
+        },
+        {
+          "x": 1900,
+          "y": 522.86
+        },
+        {
+          "x": 1908.68,
+          "y": 534.34
+        },
+        {
+          "x": 1922.68,
+          "y": 537.08
+        },
+        {
+          "x": 1926.5,
+          "y": 554.3
+        },
+        {
+          "x": 1943.24,
+          "y": 560
+        },
+        {
+          "x": 2080,
+          "y": 560
+        }
+      ],
+      [
+        {
+          "x": 1480,
+          "y": 1400
+        },
+        {
+          "x": 1480,
+          "y": 1500
+        },
+        {
+          "x": 1648.28,
+          "y": 1500
+        },
+        {
+          "x": 1660,
+          "y": 1486.36
+        },
+        {
+          "x": 1660,
+          "y": 1427.22
+        },
+        {
+          "x": 1628.32,
+          "y": 1400
+        }
+      ]
+    ],
+    "terrainOutline": [
+      {
+        "x": 1520,
+        "y": 257.38
+      },
+      {
+        "x": 1563.52,
+        "y": 220
+      },
+      {
+        "x": 2075.4,
+        "y": 220
+      },
+      {
+        "x": 2090.4,
+        "y": 224.32
+      },
+      {
+        "x": 2096.14,
+        "y": 243.48
+      },
+      {
+        "x": 2109.84,
+        "y": 253.88
+      },
+      {
+        "x": 2120,
+        "y": 271.92
+      },
+      {
+        "x": 2120,
+        "y": 357.92
+      },
+      {
+        "x": 2124.56,
+        "y": 364.68
+      },
+      {
+        "x": 2131,
+        "y": 366.84
+      },
+      {
+        "x": 2134.46,
+        "y": 377.58
+      },
+      {
+        "x": 2145.7,
+        "y": 380
+      },
+      {
+        "x": 2201.28,
+        "y": 380
+      },
+      {
+        "x": 2230,
+        "y": 413.42
+      },
+      {
+        "x": 2230,
+        "y": 601.86
+      },
+      {
+        "x": 2213.32,
+        "y": 628.56
+      },
+      {
+        "x": 2206.82,
+        "y": 664.44
+      },
+      {
+        "x": 2230,
+        "y": 685.28
+      },
+      {
+        "x": 2230,
+        "y": 840.78
+      },
+      {
+        "x": 2179,
+        "y": 900
+      },
+      {
+        "x": 2130.68,
+        "y": 900
+      },
+      {
+        "x": 2113.3,
+        "y": 910.24
+      },
+      {
+        "x": 2106.7,
+        "y": 926
+      },
+      {
+        "x": 2085.66,
+        "y": 938.06
+      },
+      {
+        "x": 2080,
+        "y": 958.98
+      },
+      {
+        "x": 2080,
+        "y": 1082.32
+      },
+      {
+        "x": 2095.5,
+        "y": 1093.7
+      },
+      {
+        "x": 2119.56,
+        "y": 1108.14
+      },
+      {
+        "x": 2131,
+        "y": 1120
+      },
+      {
+        "x": 2179,
+        "y": 1120
+      },
+      {
+        "x": 2193.06,
+        "y": 1134.98
+      },
+      {
+        "x": 2203.22,
+        "y": 1156.46
+      },
+      {
+        "x": 2218.76,
+        "y": 1164.84
+      },
+      {
+        "x": 2230,
+        "y": 1194.16
+      },
+      {
+        "x": 2230,
+        "y": 1359.06
+      },
+      {
+        "x": 2100.88,
+        "y": 1470
+      },
+      {
+        "x": 1899.48,
+        "y": 1470
+      },
+      {
+        "x": 1870.24,
+        "y": 1451.2
+      },
+      {
+        "x": 1830.94,
+        "y": 1443.9
+      },
+      {
+        "x": 1808.1,
+        "y": 1470
+      },
+      {
+        "x": 1714.54,
+        "y": 1470
+      },
+      {
+        "x": 1700,
+        "y": 1486.92
+      },
+      {
+        "x": 1700,
+        "y": 1570
+      },
+      {
+        "x": 1237.92,
+        "y": 1570
+      },
+      {
+        "x": 1226.74,
+        "y": 1580.58
+      },
+      {
+        "x": 1211.28,
+        "y": 1605.14
+      },
+      {
+        "x": 1200,
+        "y": 1614.2
+      },
+      {
+        "x": 1200,
+        "y": 1664.94
+      },
+      {
+        "x": 1184.9,
+        "y": 1671.8
+      },
+      {
+        "x": 1161.42,
+        "y": 1688.78
+      },
+      {
+        "x": 1148.48,
+        "y": 1700
+      },
+      {
+        "x": 430.6,
+        "y": 1700
+      },
+      {
+        "x": 376.02,
+        "y": 1687.66
+      },
+      {
+        "x": 358.48,
+        "y": 1662.26
+      },
+      {
+        "x": 299.22,
+        "y": 1656.46
+      },
+      {
+        "x": 270,
+        "y": 1623.88
+      },
+      {
+        "x": 270,
+        "y": 1453.9
+      },
+      {
+        "x": 293.96,
+        "y": 1423.6
+      },
+      {
+        "x": 303.28,
+        "y": 1382.86
+      },
+      {
+        "x": 270,
+        "y": 1359.18
+      },
+      {
+        "x": 270,
+        "y": 1272.58
+      },
+      {
+        "x": 280.56,
+        "y": 1226.36
+      },
+      {
+        "x": 301.1,
+        "y": 1215.36
+      },
+      {
+        "x": 312.36,
+        "y": 1166.8
+      },
+      {
+        "x": 337.58,
+        "y": 1130
+      },
+      {
+        "x": 792.74,
+        "y": 1130
+      },
+      {
+        "x": 800,
+        "y": 1123.2
+      },
+      {
+        "x": 800,
+        "y": 1116.8
+      },
+      {
+        "x": 803.84,
+        "y": 1114.68
+      },
+      {
+        "x": 811.72,
+        "y": 1112.28
+      },
+      {
+        "x": 813.88,
+        "y": 1110
+      },
+      {
+        "x": 892.4,
+        "y": 1110
+      },
+      {
+        "x": 903.6,
+        "y": 1082.96
+      },
+      {
+        "x": 928.32,
+        "y": 1027.88
+      },
+      {
+        "x": 940,
+        "y": 1010.96
+      },
+      {
+        "x": 940,
+        "y": 380
+      },
+      {
+        "x": 1520,
+        "y": 380
+      }
+    ],
+    "fragmentShape": {
+      "algorithmVersion": "rectilinear-fragment-v1",
+      "layoutId": "stepped-southwest-wide-retreat-v1",
+      "sourceHash": "a05d3e4e7b6c23285b00840675b292b80849fbf14ea05bc73bcdfd6842882e93",
+      "seedMode": "run-seed",
+      "seedSalt": 0,
+      "edgeSeed": 20261012,
+      "layout": {
+        "authoringFrame": [
+          1152,
+          896
+        ],
+        "worldScale": 2,
+        "landRects": [
+          [
+            470,
+            190,
+            645,
+            595
+          ],
+          [
+            135,
+            565,
+            465,
+            285
+          ],
+          [
+            760,
+            110,
+            300,
+            200
+          ],
+          [
+            400,
+            555,
+            305,
+            210
+          ]
+        ],
+        "voidRects": [
+          [
+            0,
+            375,
+            470,
+            180
+          ],
+          [
+            850,
+            735,
+            302,
+            161
+          ],
+          [
+            235,
+            655,
+            150,
+            100
+          ],
+          [
+            350,
+            715,
+            90,
+            85
+          ],
+          [
+            950,
+            220,
+            90,
+            60
+          ],
+          [
+            740,
+            700,
+            90,
+            50
+          ],
+          [
+            1040,
+            450,
+            112,
+            110
+          ]
+        ]
+      }
+    },
+    "spawnCandidates": [
+      {
+        "x": 1060,
+        "y": 520
+      },
+      {
+        "x": 1850,
+        "y": 310
+      },
+      {
+        "x": 2140,
+        "y": 620
+      },
+      {
+        "x": 1860,
+        "y": 640
+      },
+      {
+        "x": 2100,
+        "y": 1220
+      },
+      {
+        "x": 1380,
+        "y": 1470
+      },
+      {
+        "x": 360,
+        "y": 1220
+      },
+      {
+        "x": 990,
+        "y": 1610
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "stepped-bowl",
+    "sourceHash": "050a1753a450b093322523b4b6518a5e46726f8cfdeb4d0c54e1160bfb0491d4",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.25,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "package": {
+    "id": "r100-stepped-bowl",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 10,
+    "materials": {
+      "broken-shell": {
+        "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+        "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+        "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+      }
+    },
+    "dependencyHash": "6dc073e1",
+    "grade": "severe"
+  }
+}

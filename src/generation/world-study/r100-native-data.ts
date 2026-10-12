@@ -1,3 +1,4 @@
+import { hydrateR100MasterWorld as hydrateRevision9World } from '../legacy-r100-v9/executor-recovery.js';
 /** Pure transferable native world payload; methods are rebuilt on the receiving thread. */
 import type { GeneratedRiftLayout } from '@/generation/types';
 import type { MasterWorld, MasterPhysicalRole } from './r100-master-world';
@@ -15,6 +16,7 @@ export function serializeR100MasterWorld(world: MasterWorld, gradeDefinition: Po
   return { ...data, gradeDefinition, packageHash };
 }
 export function hydrateR100MasterWorld(native: R100NativeWorldData, layout: GeneratedRiftLayout): MasterWorld {
+  if (native.algorithmRevision === 9) return hydrateRevision9World(native, layout);
   const map = layout.tileMap, width = map.cols * map.tileSize, height = map.rows * map.tileSize;
   if (map.tileSize !== 8 || native.hostTileMap.tileSize !== 32 || native.raster.width !== width
     || native.raster.height !== height || native.raster.objectId.length !== width * height)

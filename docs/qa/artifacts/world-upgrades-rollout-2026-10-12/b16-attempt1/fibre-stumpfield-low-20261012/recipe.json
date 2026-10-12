@@ -1,0 +1,1121 @@
+{
+  "version": 3,
+  "requestedSeed": 20261012,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "fibre-stumpfield",
+    "label": "断纤矮林",
+    "description": "断纤矮林的原生材料与完整搜撤地段",
+    "material": "crystal",
+    "surface": {
+      "substrate": "crystal",
+      "coating": "crystal",
+      "organization": "clusters",
+      "coverage": 0.66,
+      "wear": 0.43,
+      "deposits": 0.42,
+      "scale": 0.95,
+      "relief": 0.58,
+      "contrast": 0.85,
+      "regionScale": 1.1,
+      "quietness": 0.5,
+      "formScale": 1.5,
+      "fragmentation": 0.32,
+      "accentCoverage": 0.18
+    },
+    "palette": {
+      "void": 856090,
+      "shadow": 1449000,
+      "floorDeep": 2502974,
+      "floor": 5795971,
+      "floorLight": 10071998,
+      "materialDark": 5521461,
+      "materialMid": 10780509,
+      "materialLight": 13808779,
+      "faceLight": 13141138,
+      "accentDim": 5326174,
+      "accent": 7956100,
+      "accentLight": 11444401,
+      "peak": 14476773,
+      "actorDark": 2433318,
+      "actorMid": 11702376,
+      "actorLight": 15584925,
+      "ground": 5795971,
+      "groundLight": 10071998,
+      "groundDark": 2502974,
+      "wall": 10780509,
+      "wallLight": 13808779,
+      "wallDark": 5521461
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "fibre-stumpfield",
+    "ground": {
+      "dark": 2502974,
+      "mid": 5795971,
+      "light": 10071998
+    },
+    "solid": {
+      "dark": 5521461,
+      "mid": 10780509,
+      "light": 13808779
+    },
+    "cleaved": {
+      "dark": 4597298,
+      "mid": 9258326,
+      "light": 13141138
+    },
+    "secondary": {
+      "dark": 3682367,
+      "mid": 8086917,
+      "light": 11376057
+    },
+    "groundPattern": "veins",
+    "patternScale": 228,
+    "patternStrength": 0.44,
+    "secondaryCoverage": 0.15,
+    "textureContrast": 1.14,
+    "quietCoverage": 0.58
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "fibre-stumpfield-low",
+    "family": "fibre-knot",
+    "grade": "low",
+    "label": "断纤矮林",
+    "profile": "fibre-stumpfield",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.42,
+    "light_radius": 112,
+    "emission": 0.35,
+    "motion_period": 22,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 380,
+        "y": 497,
+        "rotation": 0.53,
+        "length": 118,
+        "width": 126,
+        "height": 48,
+        "thickness": 12,
+        "fold": 0.5544,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 2,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 532,
+        "y": 522,
+        "rotation": -0.84,
+        "length": 104,
+        "width": 115,
+        "height": 37,
+        "thickness": 10,
+        "fold": 0.4224,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 3,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 440,
+        "y": 346,
+        "rotation": 1.24,
+        "length": 132,
+        "width": 126,
+        "height": 60,
+        "thickness": 14,
+        "fold": 0.5984,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 4,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 626,
+        "y": 393,
+        "rotation": -0.16,
+        "length": 118,
+        "width": 112,
+        "height": 46,
+        "thickness": 11,
+        "fold": 0.5192,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 5,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 359,
+        "y": 197,
+        "rotation": 2.37,
+        "length": 99,
+        "width": 105,
+        "height": 30,
+        "thickness": 8,
+        "fold": 0.3872,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 6,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 590,
+        "y": 216,
+        "rotation": -0.46,
+        "length": 111,
+        "width": 130,
+        "height": 54,
+        "thickness": 12,
+        "fold": 0.5632,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 7,
+        "family": "fibre-knot",
+        "role": "relief",
+        "x": 444,
+        "y": 460,
+        "rotation": -0.92,
+        "length": 345,
+        "width": 89,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.264,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 8,
+        "family": "fibre-knot",
+        "role": "relief",
+        "x": 543,
+        "y": 312,
+        "rotation": 0.58,
+        "length": 286,
+        "width": 78,
+        "height": 3,
+        "thickness": 1,
+        "fold": 0.3256,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0
+  },
+  "spatialPolicy": {
+    "version": 2,
+    "worldId": "fibre-stumpfield",
+    "sourceHash": "3f4046ebcae995e5967160b90a16da45460a62b6d74f3722e43c1da59029ed28",
+    "organization": "authored-sectors",
+    "organizationRules": {
+      "sourceMode": "source-once",
+      "materialScaling": false,
+      "solidCount": 6,
+      "reliefCount": 2
+    },
+    "groupTransform": null,
+    "cols": 72,
+    "rows": 56,
+    "mirrorX": false,
+    "mirrorY": false,
+    "placementJitterPx": 0,
+    "placements": [
+      {
+        "id": 1,
+        "role": "solid",
+        "sourceIndex": 0,
+        "x": 1467.25,
+        "y": 1242.25,
+        "rotation": 0.53,
+        "length": 139.24,
+        "width": 148.68
+      },
+      {
+        "id": 2,
+        "role": "solid",
+        "sourceIndex": 1,
+        "x": 1646.61,
+        "y": 1271.75,
+        "rotation": -0.84,
+        "length": 122.72,
+        "width": 135.7
+      },
+      {
+        "id": 3,
+        "role": "solid",
+        "sourceIndex": 2,
+        "x": 1538.05,
+        "y": 1064.07,
+        "rotation": 1.24,
+        "length": 155.76,
+        "width": 148.68
+      },
+      {
+        "id": 4,
+        "role": "solid",
+        "sourceIndex": 3,
+        "x": 1757.53,
+        "y": 1119.53,
+        "rotation": -0.16,
+        "length": 139.24,
+        "width": 132.16
+      },
+      {
+        "id": 5,
+        "role": "solid",
+        "sourceIndex": 4,
+        "x": 1442.47,
+        "y": 888.25,
+        "rotation": 2.37,
+        "length": 116.82,
+        "width": 123.9
+      },
+      {
+        "id": 6,
+        "role": "solid",
+        "sourceIndex": 5,
+        "x": 1715.05,
+        "y": 910.67,
+        "rotation": -0.46,
+        "length": 130.98,
+        "width": 153.4
+      },
+      {
+        "id": 7,
+        "role": "relief",
+        "sourceIndex": 0,
+        "x": 1542.77,
+        "y": 1198.59,
+        "rotation": -0.92,
+        "length": 407.1,
+        "width": 105.02
+      },
+      {
+        "id": 8,
+        "role": "relief",
+        "sourceIndex": 1,
+        "x": 1659.59,
+        "y": 1023.95,
+        "rotation": 0.58,
+        "length": 337.48,
+        "width": 92.04
+      }
+    ],
+    "materials": [
+      {
+        "key": "folded-slab",
+        "lengthScale": 1.08,
+        "widthScale": 1.03
+      },
+      {
+        "key": "fibre-knot",
+        "lengthScale": 1.04,
+        "widthScale": 1.5
+      },
+      {
+        "key": "broken-shell",
+        "lengthScale": 0.8,
+        "widthScale": 1.2
+      },
+      {
+        "key": "granular-ridge",
+        "lengthScale": 1,
+        "widthScale": 1
+      },
+      {
+        "key": "membrane-rim",
+        "lengthScale": 1,
+        "widthScale": 0.9
+      },
+      {
+        "key": "gel-flow",
+        "lengthScale": 0.86,
+        "widthScale": 0.78
+      },
+      {
+        "key": "rib-vault",
+        "lengthScale": 1.1,
+        "widthScale": 1.5
+      },
+      {
+        "key": "pleated-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      },
+      {
+        "key": "cellular-shell",
+        "lengthScale": 1.08,
+        "widthScale": 2.65
+      },
+      {
+        "key": "lobed-cushion",
+        "lengthScale": 1,
+        "widthScale": 1.7
+      },
+      {
+        "key": "monolith-buttress",
+        "lengthScale": 0.85,
+        "widthScale": 1.5
+      },
+      {
+        "key": "terrace-shelf",
+        "lengthScale": 1.05,
+        "widthScale": 1.05
+      },
+      {
+        "key": "fracture-fan",
+        "lengthScale": 0.97,
+        "widthScale": 1.2
+      },
+      {
+        "key": "fallen-bundle",
+        "lengthScale": 0.8,
+        "widthScale": 1.37
+      },
+      {
+        "key": "clamp-bank",
+        "lengthScale": 0.93,
+        "widthScale": 0.9
+      },
+      {
+        "key": "torn-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.15
+      },
+      {
+        "key": "compressed-wedge",
+        "lengthScale": 0.9,
+        "widthScale": 0.98
+      },
+      {
+        "key": "porous-break",
+        "lengthScale": 0.82,
+        "widthScale": 1.18
+      },
+      {
+        "key": "pleated-tear",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 660,
+          "y": 797.34
+        },
+        {
+          "x": 645.24,
+          "y": 786.9
+        },
+        {
+          "x": 615.08,
+          "y": 771.68
+        },
+        {
+          "x": 605.12,
+          "y": 760
+        },
+        {
+          "x": 440,
+          "y": 760
+        },
+        {
+          "x": 440,
+          "y": 891.98
+        },
+        {
+          "x": 457.18,
+          "y": 907.26
+        },
+        {
+          "x": 498.5,
+          "y": 936.08
+        },
+        {
+          "x": 514.8,
+          "y": 950
+        },
+        {
+          "x": 619.94,
+          "y": 950
+        },
+        {
+          "x": 628.06,
+          "y": 936.52
+        },
+        {
+          "x": 648.16,
+          "y": 905.84
+        },
+        {
+          "x": 660,
+          "y": 891.14
+        }
+      ],
+      [
+        {
+          "x": 1150,
+          "y": 320
+        },
+        {
+          "x": 977.22,
+          "y": 320
+        },
+        {
+          "x": 940,
+          "y": 363.34
+        },
+        {
+          "x": 940,
+          "y": 510
+        },
+        {
+          "x": 1150,
+          "y": 510
+        }
+      ],
+      [
+        {
+          "x": 1694.74,
+          "y": 1340
+        },
+        {
+          "x": 1682.04,
+          "y": 1354.62
+        },
+        {
+          "x": 1653.58,
+          "y": 1388.46
+        },
+        {
+          "x": 1640,
+          "y": 1403.72
+        },
+        {
+          "x": 1640,
+          "y": 1530
+        },
+        {
+          "x": 1819.42,
+          "y": 1530
+        },
+        {
+          "x": 1825.8,
+          "y": 1524.5
+        },
+        {
+          "x": 1833.74,
+          "y": 1511.02
+        },
+        {
+          "x": 1840,
+          "y": 1506.04
+        },
+        {
+          "x": 1840,
+          "y": 1340
+        }
+      ]
+    ],
+    "terrainOutline": [
+      {
+        "x": 820,
+        "y": 207.74
+      },
+      {
+        "x": 875.58,
+        "y": 160
+      },
+      {
+        "x": 1524.62,
+        "y": 160
+      },
+      {
+        "x": 1563.4,
+        "y": 168.48
+      },
+      {
+        "x": 1578.3,
+        "y": 206.14
+      },
+      {
+        "x": 1613.74,
+        "y": 226.54
+      },
+      {
+        "x": 1640,
+        "y": 262
+      },
+      {
+        "x": 1640,
+        "y": 388.5
+      },
+      {
+        "x": 1654.76,
+        "y": 410.42
+      },
+      {
+        "x": 1675.62,
+        "y": 417.36
+      },
+      {
+        "x": 1686.84,
+        "y": 452.14
+      },
+      {
+        "x": 1723.24,
+        "y": 460
+      },
+      {
+        "x": 1867.26,
+        "y": 460
+      },
+      {
+        "x": 1920,
+        "y": 507.6
+      },
+      {
+        "x": 1920,
+        "y": 552.4
+      },
+      {
+        "x": 1853.8,
+        "y": 600
+      },
+      {
+        "x": 1759.92,
+        "y": 600
+      },
+      {
+        "x": 1742.8,
+        "y": 610.1
+      },
+      {
+        "x": 1736.3,
+        "y": 625.62
+      },
+      {
+        "x": 1715.58,
+        "y": 637.5
+      },
+      {
+        "x": 1710,
+        "y": 658.1
+      },
+      {
+        "x": 1710,
+        "y": 809.68
+      },
+      {
+        "x": 1748.22,
+        "y": 830.92
+      },
+      {
+        "x": 1807.58,
+        "y": 857.88
+      },
+      {
+        "x": 1835.8,
+        "y": 880
+      },
+      {
+        "x": 1968.74,
+        "y": 880
+      },
+      {
+        "x": 1999.42,
+        "y": 906.16
+      },
+      {
+        "x": 2021.58,
+        "y": 943.66
+      },
+      {
+        "x": 2055.48,
+        "y": 958.3
+      },
+      {
+        "x": 2080,
+        "y": 1009.52
+      },
+      {
+        "x": 2080,
+        "y": 1580.46
+      },
+      {
+        "x": 2010.68,
+        "y": 1640
+      },
+      {
+        "x": 1422.06,
+        "y": 1640
+      },
+      {
+        "x": 1340,
+        "y": 1544.48
+      },
+      {
+        "x": 1340,
+        "y": 980
+      },
+      {
+        "x": 819.4,
+        "y": 980
+      },
+      {
+        "x": 807.78,
+        "y": 993.86
+      },
+      {
+        "x": 791.72,
+        "y": 1026.02
+      },
+      {
+        "x": 780,
+        "y": 1037.88
+      },
+      {
+        "x": 780,
+        "y": 1212.34
+      },
+      {
+        "x": 765.34,
+        "y": 1237.06
+      },
+      {
+        "x": 759.66,
+        "y": 1270.28
+      },
+      {
+        "x": 780,
+        "y": 1289.58
+      },
+      {
+        "x": 780,
+        "y": 1433.54
+      },
+      {
+        "x": 767.76,
+        "y": 1469.62
+      },
+      {
+        "x": 745.14,
+        "y": 1499.14
+      },
+      {
+        "x": 734.44,
+        "y": 1559.06
+      },
+      {
+        "x": 701.1,
+        "y": 1600
+      },
+      {
+        "x": 534.48,
+        "y": 1600
+      },
+      {
+        "x": 510.3,
+        "y": 1578.5
+      },
+      {
+        "x": 477.78,
+        "y": 1570.14
+      },
+      {
+        "x": 458.88,
+        "y": 1600
+      },
+      {
+        "x": 381.48,
+        "y": 1600
+      },
+      {
+        "x": 324.58,
+        "y": 1587.46
+      },
+      {
+        "x": 303.06,
+        "y": 1562.58
+      },
+      {
+        "x": 234,
+        "y": 1542.76
+      },
+      {
+        "x": 200,
+        "y": 1514
+      },
+      {
+        "x": 200,
+        "y": 1257.32
+      },
+      {
+        "x": 221.76,
+        "y": 1226.6
+      },
+      {
+        "x": 230.22,
+        "y": 1185.32
+      },
+      {
+        "x": 200,
+        "y": 1161.32
+      },
+      {
+        "x": 200,
+        "y": 1021.54
+      },
+      {
+        "x": 210.38,
+        "y": 1012.5
+      },
+      {
+        "x": 232.76,
+        "y": 994.06
+      },
+      {
+        "x": 240.8,
+        "y": 980
+      },
+      {
+        "x": 279.2,
+        "y": 980
+      },
+      {
+        "x": 320,
+        "y": 912.74
+      },
+      {
+        "x": 320,
+        "y": 672.3
+      },
+      {
+        "x": 349.4,
+        "y": 649.78
+      },
+      {
+        "x": 409.7,
+        "y": 624.14
+      },
+      {
+        "x": 426.24,
+        "y": 600
+      },
+      {
+        "x": 612.88,
+        "y": 600
+      },
+      {
+        "x": 623.98,
+        "y": 581.1
+      },
+      {
+        "x": 648.44,
+        "y": 542.6
+      },
+      {
+        "x": 660,
+        "y": 530.76
+      },
+      {
+        "x": 660,
+        "y": 360
+      },
+      {
+        "x": 820,
+        "y": 360
+      }
+    ],
+    "fragmentShape": {
+      "algorithmVersion": "rectilinear-fragment-v1",
+      "layoutId": "stumps-south-absence-v1",
+      "sourceHash": "9b420db9b76481e6cf1fa5302ac6a0ef88b7c5408f83557dbb6f80879762fefc",
+      "seedMode": "run-seed",
+      "seedSalt": 0,
+      "edgeSeed": 20261012,
+      "layout": {
+        "authoringFrame": [
+          1152,
+          896
+        ],
+        "worldScale": 2,
+        "landRects": [
+          [
+            160,
+            180,
+            800,
+            430
+          ],
+          [
+            100,
+            490,
+            330,
+            310
+          ],
+          [
+            630,
+            440,
+            410,
+            380
+          ],
+          [
+            410,
+            80,
+            410,
+            280
+          ]
+        ],
+        "voidRects": [
+          [
+            390,
+            490,
+            280,
+            406
+          ],
+          [
+            0,
+            0,
+            330,
+            300
+          ],
+          [
+            820,
+            0,
+            332,
+            230
+          ],
+          [
+            470,
+            160,
+            105,
+            95
+          ],
+          [
+            220,
+            380,
+            110,
+            95
+          ],
+          [
+            855,
+            300,
+            105,
+            140
+          ],
+          [
+            820,
+            670,
+            100,
+            95
+          ]
+        ]
+      }
+    },
+    "spawnCandidates": [
+      {
+        "x": 790,
+        "y": 440
+      },
+      {
+        "x": 1390,
+        "y": 290
+      },
+      {
+        "x": 1640,
+        "y": 570
+      },
+      {
+        "x": 1980,
+        "y": 1030
+      },
+      {
+        "x": 1530,
+        "y": 1430
+      },
+      {
+        "x": 720,
+        "y": 1120
+      },
+      {
+        "x": 420,
+        "y": 1510
+      },
+      {
+        "x": 350,
+        "y": 1100
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "fibre-stumpfield",
+    "sourceHash": "127991a121dfc4a9239751eb9d8ae0595ba8e0aeea006bd626acb2dda8df8013",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.45,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "package": {
+    "id": "r100-fibre-stumpfield",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 10,
+    "materials": {
+      "fibre-knot": {
+        "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+        "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+        "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+      }
+    },
+    "dependencyHash": "c03a35ab",
+    "grade": "low"
+  }
+}

@@ -1,3 +1,4 @@
+import { bakeSearchSitePatches as bakeRevision9SearchSites } from '@/generation/legacy-r100-v9/executor-recovery.js';
 /** Preparation-worker material patches. A node replaces only its disjoint native
  * upload rectangle; both states retain the exact receiver everywhere else. */
 import type { MasterWorld } from '@/generation/world-study/r100-master-world';
@@ -143,9 +144,10 @@ function bakeState(world: MasterWorld, base: MasterSurfaceBake, painting: Painte
 
 export function bakeSearchSitePatches(world: MasterWorld, baseSurface: MasterSurfaceBake,
   painting?: PaintedMaterial): SearchSiteMaterialPatch[] {
-  if (world.algorithmRevision !== 9) return [];
+  if (world.algorithmRevision === 9) return bakeRevision9SearchSites(world, baseSurface, painting);
+  if (world.algorithmRevision !== 10) return [];
   const sites = world.searchSites;
-  if (!sites) throw new Error('Revision 9 native world has no frozen search sites');
+  if (!sites) throw new Error('Revision 10 native world has no frozen search sites');
   if (baseSurface.width !== world.raster.width || baseSurface.height !== world.raster.height) throw new Error('Search-site receiver dimensions differ from native world');
   if (new Set(sites.map(site => site.nodeId)).size !== sites.length) throw new Error('Duplicate grounded search-site node');
   const boxes = siteBounds(sites, baseSurface.width, baseSurface.height), ranges = new Map<PaintedSurface, PaintedToneRange>();

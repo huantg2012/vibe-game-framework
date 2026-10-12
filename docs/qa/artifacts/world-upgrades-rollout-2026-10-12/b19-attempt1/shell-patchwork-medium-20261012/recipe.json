@@ -1,0 +1,986 @@
+{
+  "version": 3,
+  "requestedSeed": 20261012,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "shell-patchwork",
+    "label": "拼裂壳皮",
+    "description": "拼裂壳皮的原生材料与完整搜撤地段",
+    "material": "glaze",
+    "surface": {
+      "substrate": "glaze",
+      "coating": "glaze",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 2701127,
+      "floor": 6454935,
+      "floorLight": 10729674,
+      "materialDark": 5789275,
+      "materialMid": 11184045,
+      "materialLight": 14538968,
+      "faceLight": 14535121,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 6454935,
+      "groundLight": 10729674,
+      "groundDark": 2701127,
+      "wall": 11184045,
+      "wallLight": 14538968,
+      "wallDark": 5789275
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "shell-patchwork",
+    "ground": {
+      "dark": 2701127,
+      "mid": 6454935,
+      "light": 10729674
+    },
+    "solid": {
+      "dark": 5789275,
+      "mid": 11184045,
+      "light": 14538968
+    },
+    "cleaved": {
+      "dark": 6575711,
+      "mid": 11705000,
+      "light": 14535121
+    },
+    "secondary": {
+      "dark": 4334893,
+      "mid": 9584460,
+      "light": 13074062
+    },
+    "groundPattern": "plates",
+    "patternScale": 240,
+    "patternStrength": 0.35,
+    "secondaryCoverage": 0.15,
+    "textureContrast": 1.14,
+    "quietCoverage": 0.62
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "shell-patchwork-medium",
+    "family": "broken-shell",
+    "grade": "medium",
+    "label": "拼裂壳皮",
+    "profile": "shell-patchwork",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 134,
+    "emission": 0.55,
+    "motion_period": 20,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "broken-shell",
+        "role": "relief",
+        "x": 367,
+        "y": 381,
+        "rotation": -0.4,
+        "length": 360,
+        "width": 255,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.48,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 2,
+        "family": "broken-shell",
+        "role": "relief",
+        "x": 765,
+        "y": 405,
+        "rotation": 0.45,
+        "length": 385,
+        "width": 270,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.4,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 3,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 539,
+        "y": 255,
+        "rotation": -0.2,
+        "length": 170,
+        "width": 102,
+        "height": 46,
+        "thickness": 12,
+        "fold": 0.64,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 4,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 613,
+        "y": 487,
+        "rotation": 0.6,
+        "length": 190,
+        "width": 112,
+        "height": 52,
+        "thickness": 13,
+        "fold": 0.72,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 5,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 473,
+        "y": 309,
+        "rotation": 0.44,
+        "length": 170,
+        "width": 120,
+        "height": 32,
+        "thickness": 9,
+        "fold": 0.7,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "torn-sheet"
+      },
+      {
+        "id": 6,
+        "family": "membrane-rim",
+        "role": "relief",
+        "x": 705,
+        "y": 520,
+        "rotation": -0.55,
+        "length": 180,
+        "width": 130,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.52,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-sheet"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "medium",
+    "version": 1,
+    "label": "中污染",
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
+  },
+  "contentDefinition": {
+    "grade_id": "medium",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "中污染",
+    "public_risk": "侵蚀更广，久留代价更高",
+    "public_preparation": "按行装选择绕行或穿越",
+    "public_reward": "更多收获在较深处",
+    "enemy_count": 3,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 1
+  },
+  "spatialPolicy": {
+    "version": 2,
+    "worldId": "shell-patchwork",
+    "sourceHash": "d1d0b914907cb25b850d4e412d10df835246b4bf882d192622422bedf2d9c077",
+    "organization": "authored-sectors",
+    "organizationRules": {
+      "sourceMode": "source-once",
+      "materialScaling": false,
+      "solidCount": 3,
+      "reliefCount": 3
+    },
+    "groupTransform": null,
+    "cols": 72,
+    "rows": 56,
+    "mirrorX": false,
+    "mirrorY": false,
+    "placementJitterPx": 0,
+    "placements": [
+      {
+        "id": 1,
+        "role": "relief",
+        "sourceIndex": 0,
+        "x": 1083.24,
+        "y": 1071.94,
+        "rotation": -0.4,
+        "length": 446.4,
+        "width": 316.2
+      },
+      {
+        "id": 2,
+        "role": "relief",
+        "sourceIndex": 1,
+        "x": 1576.76,
+        "y": 1101.7,
+        "rotation": 0.45,
+        "length": 477.4,
+        "width": 334.8
+      },
+      {
+        "id": 3,
+        "role": "solid",
+        "sourceIndex": 0,
+        "x": 1296.52,
+        "y": 915.7,
+        "rotation": -0.2,
+        "length": 210.8,
+        "width": 126.48
+      },
+      {
+        "id": 4,
+        "role": "solid",
+        "sourceIndex": 1,
+        "x": 1388.28,
+        "y": 1203.38,
+        "rotation": 0.6,
+        "length": 235.6,
+        "width": 138.88
+      },
+      {
+        "id": 5,
+        "role": "solid",
+        "sourceIndex": 2,
+        "x": 1214.68,
+        "y": 982.66,
+        "rotation": 0.44,
+        "length": 210.8,
+        "width": 148.8
+      },
+      {
+        "id": 6,
+        "role": "relief",
+        "sourceIndex": 2,
+        "x": 1502.36,
+        "y": 1244.3,
+        "rotation": -0.55,
+        "length": 223.2,
+        "width": 161.2
+      }
+    ],
+    "materials": [
+      {
+        "key": "folded-slab",
+        "lengthScale": 1.08,
+        "widthScale": 1.03
+      },
+      {
+        "key": "fibre-knot",
+        "lengthScale": 1.04,
+        "widthScale": 1.5
+      },
+      {
+        "key": "broken-shell",
+        "lengthScale": 0.8,
+        "widthScale": 1.2
+      },
+      {
+        "key": "granular-ridge",
+        "lengthScale": 1,
+        "widthScale": 1
+      },
+      {
+        "key": "membrane-rim",
+        "lengthScale": 1,
+        "widthScale": 0.9
+      },
+      {
+        "key": "gel-flow",
+        "lengthScale": 0.86,
+        "widthScale": 0.78
+      },
+      {
+        "key": "rib-vault",
+        "lengthScale": 1.1,
+        "widthScale": 1.5
+      },
+      {
+        "key": "pleated-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      },
+      {
+        "key": "cellular-shell",
+        "lengthScale": 1.08,
+        "widthScale": 2.65
+      },
+      {
+        "key": "lobed-cushion",
+        "lengthScale": 1,
+        "widthScale": 1.7
+      },
+      {
+        "key": "monolith-buttress",
+        "lengthScale": 0.85,
+        "widthScale": 1.5
+      },
+      {
+        "key": "terrace-shelf",
+        "lengthScale": 1.05,
+        "widthScale": 1.05
+      },
+      {
+        "key": "fracture-fan",
+        "lengthScale": 0.97,
+        "widthScale": 1.2
+      },
+      {
+        "key": "fallen-bundle",
+        "lengthScale": 0.8,
+        "widthScale": 1.37
+      },
+      {
+        "key": "clamp-bank",
+        "lengthScale": 0.93,
+        "widthScale": 0.9
+      },
+      {
+        "key": "torn-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.15
+      },
+      {
+        "key": "compressed-wedge",
+        "lengthScale": 0.9,
+        "widthScale": 0.98
+      },
+      {
+        "key": "porous-break",
+        "lengthScale": 0.82,
+        "widthScale": 1.18
+      },
+      {
+        "key": "pleated-tear",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 1831.2,
+          "y": 340
+        },
+        {
+          "x": 1780,
+          "y": 399.58
+        },
+        {
+          "x": 1780,
+          "y": 574.14
+        },
+        {
+          "x": 1833.38,
+          "y": 620
+        },
+        {
+          "x": 1956.52,
+          "y": 620
+        },
+        {
+          "x": 1965.24,
+          "y": 609.26
+        },
+        {
+          "x": 1979.1,
+          "y": 587.24
+        },
+        {
+          "x": 1990,
+          "y": 581.02
+        },
+        {
+          "x": 1990,
+          "y": 340
+        }
+      ],
+      [
+        {
+          "x": 920,
+          "y": 558.04
+        },
+        {
+          "x": 911.16,
+          "y": 552.8
+        },
+        {
+          "x": 898.18,
+          "y": 544.56
+        },
+        {
+          "x": 893.5,
+          "y": 540
+        },
+        {
+          "x": 700,
+          "y": 540
+        },
+        {
+          "x": 700,
+          "y": 760
+        },
+        {
+          "x": 920,
+          "y": 760
+        }
+      ],
+      [
+        {
+          "x": 1016.16,
+          "y": 1360
+        },
+        {
+          "x": 960,
+          "y": 1425.36
+        },
+        {
+          "x": 960,
+          "y": 1582.8
+        },
+        {
+          "x": 980.02,
+          "y": 1600
+        },
+        {
+          "x": 1160,
+          "y": 1600
+        },
+        {
+          "x": 1160,
+          "y": 1412.18
+        },
+        {
+          "x": 1099.26,
+          "y": 1360
+        }
+      ]
+    ],
+    "terrainOutline": [
+      {
+        "x": 1520,
+        "y": 225.38
+      },
+      {
+        "x": 1550.64,
+        "y": 212.3
+      },
+      {
+        "x": 1595.92,
+        "y": 174.36
+      },
+      {
+        "x": 1616.06,
+        "y": 160
+      },
+      {
+        "x": 2120,
+        "y": 160
+      },
+      {
+        "x": 2120,
+        "y": 1080
+      },
+      {
+        "x": 2060,
+        "y": 1080
+      },
+      {
+        "x": 2060,
+        "y": 1320
+      },
+      {
+        "x": 1875.2,
+        "y": 1320
+      },
+      {
+        "x": 1780,
+        "y": 1435.6
+      },
+      {
+        "x": 1780,
+        "y": 1588.46
+      },
+      {
+        "x": 1748.08,
+        "y": 1605.98
+      },
+      {
+        "x": 1704.22,
+        "y": 1622.38
+      },
+      {
+        "x": 1662.52,
+        "y": 1651.86
+      },
+      {
+        "x": 1599.58,
+        "y": 1660
+      },
+      {
+        "x": 500,
+        "y": 1660
+      },
+      {
+        "x": 500,
+        "y": 1234.14
+      },
+      {
+        "x": 505.28,
+        "y": 1229.98
+      },
+      {
+        "x": 515.84,
+        "y": 1224.66
+      },
+      {
+        "x": 520.8,
+        "y": 1220
+      },
+      {
+        "x": 570,
+        "y": 1220
+      },
+      {
+        "x": 570,
+        "y": 897.6
+      },
+      {
+        "x": 556.86,
+        "y": 885.92
+      },
+      {
+        "x": 524.52,
+        "y": 867.58
+      },
+      {
+        "x": 514.74,
+        "y": 860
+      },
+      {
+        "x": 316.92,
+        "y": 860
+      },
+      {
+        "x": 281.6,
+        "y": 843.16
+      },
+      {
+        "x": 236.78,
+        "y": 817.02
+      },
+      {
+        "x": 200,
+        "y": 804.58
+      },
+      {
+        "x": 200,
+        "y": 617.14
+      },
+      {
+        "x": 219.4,
+        "y": 595.32
+      },
+      {
+        "x": 226.94,
+        "y": 566
+      },
+      {
+        "x": 200,
+        "y": 548.94
+      },
+      {
+        "x": 200,
+        "y": 424.4
+      },
+      {
+        "x": 222.92,
+        "y": 362.54
+      },
+      {
+        "x": 255.78,
+        "y": 317.82
+      },
+      {
+        "x": 268.6,
+        "y": 249.44
+      },
+      {
+        "x": 313.46,
+        "y": 200
+      },
+      {
+        "x": 878.26,
+        "y": 200
+      },
+      {
+        "x": 898.08,
+        "y": 238.28
+      },
+      {
+        "x": 941.32,
+        "y": 288.88
+      },
+      {
+        "x": 960,
+        "y": 320.1
+      },
+      {
+        "x": 960,
+        "y": 444.36
+      },
+      {
+        "x": 953.52,
+        "y": 475.08
+      },
+      {
+        "x": 951,
+        "y": 516.36
+      },
+      {
+        "x": 960,
+        "y": 540.36
+      },
+      {
+        "x": 960,
+        "y": 700
+      },
+      {
+        "x": 1030.4,
+        "y": 700
+      },
+      {
+        "x": 1033.24,
+        "y": 701.62
+      },
+      {
+        "x": 1037.14,
+        "y": 705.4
+      },
+      {
+        "x": 1040,
+        "y": 706.8
+      },
+      {
+        "x": 1040,
+        "y": 713.2
+      },
+      {
+        "x": 1044.32,
+        "y": 714.54
+      },
+      {
+        "x": 1051.04,
+        "y": 717.82
+      },
+      {
+        "x": 1054.74,
+        "y": 720
+      },
+      {
+        "x": 1221.58,
+        "y": 720
+      },
+      {
+        "x": 1240.6,
+        "y": 741.36
+      },
+      {
+        "x": 1266.18,
+        "y": 749.66
+      },
+      {
+        "x": 1281.04,
+        "y": 720
+      },
+      {
+        "x": 1455.14,
+        "y": 720
+      },
+      {
+        "x": 1520,
+        "y": 644.52
+      }
+    ],
+    "fragmentShape": {
+      "algorithmVersion": "rectilinear-fragment-v1",
+      "layoutId": "patchwork-north-incision-v1",
+      "sourceHash": "d294a81de71592e495fc3a5b14eaa93de6bc1b9e92200aeb412da46afa04a272",
+      "seedMode": "run-seed",
+      "seedSalt": 0,
+      "edgeSeed": 20261012,
+      "layout": {
+        "authoringFrame": [
+          1152,
+          896
+        ],
+        "worldScale": 2,
+        "landRects": [
+          [
+            100,
+            100,
+            420,
+            580
+          ],
+          [
+            460,
+            360,
+            570,
+            440
+          ],
+          [
+            760,
+            80,
+            300,
+            460
+          ],
+          [
+            250,
+            600,
+            660,
+            230
+          ]
+        ],
+        "voidRects": [
+          [
+            480,
+            0,
+            280,
+            350
+          ],
+          [
+            0,
+            430,
+            285,
+            180
+          ],
+          [
+            890,
+            170,
+            105,
+            140
+          ],
+          [
+            350,
+            270,
+            110,
+            110
+          ],
+          [
+            480,
+            680,
+            100,
+            120
+          ],
+          [
+            890,
+            660,
+            262,
+            236
+          ],
+          [
+            0,
+            580,
+            250,
+            100
+          ]
+        ]
+      }
+    },
+    "spawnCandidates": [
+      {
+        "x": 350,
+        "y": 420
+      },
+      {
+        "x": 830,
+        "y": 420
+      },
+      {
+        "x": 1560,
+        "y": 380
+      },
+      {
+        "x": 2060,
+        "y": 870
+      },
+      {
+        "x": 1670,
+        "y": 1240
+      },
+      {
+        "x": 1310,
+        "y": 1510
+      },
+      {
+        "x": 830,
+        "y": 1410
+      },
+      {
+        "x": 610,
+        "y": 1020
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "shell-patchwork",
+    "sourceHash": "f4a3620b7df08dd8f5f39e864aa77c11cc40dfe8c54fdf79b7b778d672703bef",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.33,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "package": {
+    "id": "r100-shell-patchwork",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 10,
+    "materials": {
+      "broken-shell": {
+        "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+        "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+        "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+      },
+      "membrane-rim": {
+        "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+        "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+        "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+      }
+    },
+    "dependencyHash": "655472ad",
+    "grade": "medium"
+  }
+}

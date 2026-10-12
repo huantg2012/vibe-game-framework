@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "log": "build-final.log",
+      "note": "Typecheck plus Vite production build; existing large chunk advisory remains."
+    },
+    {
+      "command": "node --import tsx tools/world-study/codegen-r100-spatial.mjs --check",
+      "exitCode": 0,
+      "result": "108 worlds / 7 arrangements"
+    },
+    {
+      "command": "node --import tsx tools/world-study/codegen-r100-fragments.mjs --check",
+      "exitCode": 0,
+      "result": "108 explicitly registered"
+    },
+    {
+      "command": "node tools/pickup-grounding/codegen.mjs --check",
+      "exitCode": 0,
+      "result": "108 grounded-search policies"
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-upgrades-rollout/check-gallery.mjs",
+      "exitCode": 0,
+      "result": "missing assets/cases, source totals, duplicates, explicit failure resolution and containment checked"
+    }
+  ]
+}

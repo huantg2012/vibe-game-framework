@@ -1,3 +1,4 @@
+import { validR100ProductionRecipe as validRevision9Recipe } from '../legacy-r100-v9/executor-recovery.js';
 /** A departure freezes the exact native geometry/rules. Adding catalog rows does
  * not invalidate previously frozen v3 departures. Existing asset paths are immutable. */
 import { validR100ProductionRecipe as validFrozenR100ProductionRecipe } from '../legacy-r100-v2/executor.js';
@@ -30,7 +31,7 @@ export interface R100PackageIdentity {
   readonly algorithm: 'r100-native';
   readonly version: 3;
   /** Increment/freeze the executor before changing existing algorithm semantics. */
-  readonly algorithmRevision: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  readonly algorithmRevision: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
   readonly dependencyHash: string;
   readonly materials: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>>;
   readonly grade: PollutionGrade;
@@ -54,11 +55,11 @@ function materialDependencies(definition: MasterDefinition, appearance: R100Worl
     return [name, dependency];
   }));
 }
-function dependencyHash(recipe: Omit<WorldProductionRecipeV3, 'package'>, materials: R100PackageIdentity['materials'], revision: 8 | 9): string {
+function dependencyHash(recipe: Omit<WorldProductionRecipeV3, 'package'>, materials: R100PackageIdentity['materials'], revision: 8 | 10): string {
   // Public copy is frozen for display, but does not redefine the map/loot algorithm.
   return fingerprint({ algorithm: `r100-native@3.${revision}`, native: recipe.nativeDefinition, profile: recipe.profile, space: recipe.space,
     contentFragmentTypeId: recipe.contentFragmentTypeId, grade: recipe.gradeDefinition, contents: recipe.contentDefinition, spatialPolicy: recipe.spatialPolicy, appearance: recipe.appearance, materials,
-    ...(revision === 9 ? { searchSitePolicy: recipe.searchSitePolicy } : {}) });
+    ...(revision === 10 ? { searchSitePolicy: recipe.searchSitePolicy } : {}) });
 }
 /** Explicit package selection is shared with qualification/gym; normal play only
  * calls selectR100ProductionRecipe and therefore respects the enabled pool. */
@@ -73,7 +74,7 @@ export function createR100ProductionRecipe(worldId: string, seed: number, grade:
   const contentDefinition = R100_EXPEDITION_GRADES.find(row => row.grade_id === grade)!;
   const spatialPolicy = createR100SpatialPolicy(worldId, seed);
   const searchSitePolicy = R100_SEARCH_SITE_POLICIES.find(row => row.worldId === worldId);
-  const algorithmRevision = searchSitePolicy ? 9 : 8;
+  const algorithmRevision = searchSitePolicy ? 10 : 8;
   const frozen = { version: 3 as const, requestedSeed: seed, paintGeometryVersion: 2 as const,
     profile: profileWithWorldAppearance(world.profile, appearance), appearance, space: SPACE_PROFILES[0]!, contentFragmentTypeId: 'frag-outdoor', nativeDefinition, gradeDefinition, contentDefinition, spatialPolicy,
     ...(searchSitePolicy ? { searchSitePolicy } : {}) };
@@ -99,10 +100,11 @@ export function validR100ProductionRecipe(value: unknown): value is WorldProduct
     if (pack?.algorithmRevision === 6) return validRevision6Recipe(value);
     if (pack?.algorithmRevision === 7) return validRevision7Recipe(value);
     if (pack?.algorithmRevision === 8) return validRevision8Recipe(value);
+    if (pack?.algorithmRevision === 9) return validRevision9Recipe(value);
     if (recipe.version !== 3 || recipe.paintGeometryVersion !== 2 || !Number.isSafeInteger(recipe.requestedSeed)
       || recipe.requestedSeed < 0 || recipe.requestedSeed > 0xffffffff || !native || !isPollutionGrade(native.grade)
       || recipe.contentFragmentTypeId !== 'frag-outdoor' || !pack || pack.algorithm !== 'r100-native' || pack.version !== 3
-      || pack.algorithmRevision !== 9 || pack.grade !== native.grade || !/^r100-[a-z][a-z0-9-]+$/.test(pack.id)
+      || pack.algorithmRevision !== 10 || pack.grade !== native.grade || !/^r100-[a-z][a-z0-9-]+$/.test(pack.id)
       || !R100_NATIVE_WORLDS.some(world => `r100-${world.id}` === pack.id)
       || !Array.isArray(native.instances) || native.instances.length < 1 || native.instances.length > 32
       // The source-sized mother form cannot own a second world-sized outline.

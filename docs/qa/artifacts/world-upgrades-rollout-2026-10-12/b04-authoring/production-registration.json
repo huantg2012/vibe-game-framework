@@ -1,0 +1,275 @@
+{
+  "kind": "B04 root-directed correction then source-once registration",
+  "worlds": [
+    "schist-shear",
+    "laminate-shell",
+    "film-laminate"
+  ],
+  "anchorsAuthor": {
+    "schist-shear": [
+      [
+        170,
+        770
+      ],
+      [
+        480,
+        785
+      ],
+      [
+        735,
+        715
+      ],
+      [
+        1010,
+        465
+      ],
+      [
+        865,
+        215
+      ],
+      [
+        555,
+        285
+      ],
+      [
+        300,
+        375
+      ],
+      [
+        465,
+        650
+      ]
+    ],
+    "laminate-shell": [
+      [
+        160,
+        410
+      ],
+      [
+        330,
+        320
+      ],
+      [
+        545,
+        245
+      ],
+      [
+        765,
+        195
+      ],
+      [
+        995,
+        200
+      ],
+      [
+        1020,
+        360
+      ],
+      [
+        940,
+        655
+      ],
+      [
+        765,
+        795
+      ]
+    ],
+    "film-laminate": [
+      [
+        220,
+        255
+      ],
+      [
+        510,
+        235
+      ],
+      [
+        545,
+        335
+      ],
+      [
+        255,
+        710
+      ],
+      [
+        320,
+        785
+      ],
+      [
+        545,
+        705
+      ],
+      [
+        760,
+        800
+      ],
+      [
+        1020,
+        675
+      ]
+    ]
+  },
+  "transforms": {
+    "schist-shear": {
+      "batch_id": "B04",
+      "world_id": "schist-shear",
+      "status": "authoring-intent-unvalidated",
+      "coordinate_space": "world-px",
+      "frame_width_px": "2400",
+      "frame_height_px": "1900",
+      "main_center_x_px": "1320",
+      "main_center_y_px": "960",
+      "main_width_px": "1550",
+      "main_height_px": "850",
+      "secondary_center_x_px": "730",
+      "secondary_center_y_px": "1400",
+      "secondary_width_px": "850",
+      "secondary_height_px": "570",
+      "damage_side": "NW",
+      "main_notch_width_px": "830",
+      "main_notch_depth_px": "630",
+      "interior_void_tendency": "west_shear;southeast_offset",
+      "native_mapping": "source-once",
+      "native_source_center_x_px": "598.0",
+      "native_source_center_y_px": "422.5",
+      "native_target_center_x_px": "1320",
+      "native_target_center_y_px": "960",
+      "native_uniform_scale": "1.30",
+      "native_rotation_delta_rad": "0",
+      "native_role_counts": "relief:1;solid:2",
+      "native_shape_profiles": "bands",
+      "native_families": "folded-slab",
+      "relationship_to_preserve": "\u5c42\u7247\u4e3b\u5411\u6a2a\u5207\u5bbd\u5e8a\uff1b\u7f3a\u5730\u504f\u79bb\u7247\u95f4\u901a\u8def",
+      "peel_preference": "0.65",
+      "source_reach_px": "72",
+      "environment_score_cap": "12",
+      "authoring_guard": "independent-land-and-void-authoring;no-template-rotation;preserve-native-group;no-void-at-join;retain-broad-open-ground"
+    },
+    "laminate-shell": {
+      "batch_id": "B04",
+      "world_id": "laminate-shell",
+      "status": "authoring-intent-unvalidated",
+      "coordinate_space": "world-px",
+      "frame_width_px": "2400",
+      "frame_height_px": "1900",
+      "main_center_x_px": "1190",
+      "main_center_y_px": "1050",
+      "main_width_px": "1370",
+      "main_height_px": "1080",
+      "secondary_center_x_px": "1800",
+      "secondary_center_y_px": "800",
+      "secondary_width_px": "610",
+      "secondary_height_px": "760",
+      "damage_side": "SW",
+      "main_notch_width_px": "730",
+      "main_notch_depth_px": "490",
+      "interior_void_tendency": "south_cluster;northeast_pair",
+      "native_mapping": "source-once",
+      "native_source_center_x_px": "561.5",
+      "native_source_center_y_px": "422.5",
+      "native_target_center_x_px": "1190",
+      "native_target_center_y_px": "1050",
+      "native_uniform_scale": "1.25",
+      "native_rotation_delta_rad": "0",
+      "native_role_counts": "relief:1;solid:3",
+      "native_shape_profiles": "bands",
+      "native_families": "folded-slab|broken-shell",
+      "relationship_to_preserve": "\u5d4c\u58f3\u53e0\u7247\u6574\u7ec4\uff1b\u53f3\u4e0a\u539a\u80a9\u4e0d\u505a\u72ed\u6865",
+      "peel_preference": "0.65",
+      "source_reach_px": "72",
+      "environment_score_cap": "12",
+      "authoring_guard": "independent-land-and-void-authoring;no-template-rotation;preserve-native-group;no-void-at-join;retain-broad-open-ground"
+    },
+    "film-laminate": {
+      "batch_id": "B04",
+      "world_id": "film-laminate",
+      "status": "authoring-intent-unvalidated",
+      "coordinate_space": "world-px",
+      "frame_width_px": "2400",
+      "frame_height_px": "1900",
+      "main_center_x_px": "1270",
+      "main_center_y_px": "1140",
+      "main_width_px": "1580",
+      "main_height_px": "860",
+      "secondary_center_x_px": "800",
+      "secondary_center_y_px": "600",
+      "secondary_width_px": "920",
+      "secondary_height_px": "510",
+      "damage_side": "NE",
+      "main_notch_width_px": "830",
+      "main_notch_depth_px": "590",
+      "interior_void_tendency": "east_group;west_small",
+      "native_mapping": "source-once",
+      "native_source_center_x_px": "618.0",
+      "native_source_center_y_px": "410.0",
+      "native_target_center_x_px": "1270",
+      "native_target_center_y_px": "1140",
+      "native_uniform_scale": "1.30",
+      "native_rotation_delta_rad": "0",
+      "native_role_counts": "relief:2;solid:2",
+      "native_shape_profiles": "bands",
+      "native_families": "folded-slab|membrane-rim",
+      "relationship_to_preserve": "\u819c\u8986\u677f\u4f4e\u9762\u4fdd\u7559\uff1b\u5317\u897f\u5bbd\u5e8a\u4e0e\u4e3b\u573a\u5927\u7247\u91cd\u53e0",
+      "peel_preference": "0.65",
+      "source_reach_px": "72",
+      "environment_score_cap": "12",
+      "authoring_guard": "independent-land-and-void-authoring;no-template-rotation;preserve-native-group;no-void-at-join;retain-broad-open-ground"
+    }
+  },
+  "tables": {
+    "rift-spatial-worlds.csv": {
+      "replaced": 3,
+      "inserted": 3,
+      "beforeHash": "51e63e7a1994e57d234a67c6b67254d4e9680a90e70ea3960d92d7bfdb3a30f1",
+      "afterHash": "9a7747c0a2f487983502d287261bfaebcdc4bc59309b5040df5b8dcbca7362a0"
+    },
+    "rift-spatial-fragment-layouts.csv": {
+      "replaced": 0,
+      "inserted": 3,
+      "beforeHash": "28cbdd64e4bc9a0ba5b9cf50d8f0f6a1a15a370d51a50c61b53d09ffa620c5d4",
+      "afterHash": "7ca4ab8317815e4b3791ee163e6bafdd38046ae596feac146f2fa273ec95ee21"
+    },
+    "rift-spatial-fragment-rectangles.csv": {
+      "replaced": 0,
+      "inserted": 54,
+      "beforeHash": "0b1288ef05f0b88fd5fc33941c4f0675e5f765a5707a9a7c89a77172115f76f4",
+      "afterHash": "67d45502cbab8331924a108e1950d77483a13407c59661b5aff78e51bc2b5ac3"
+    },
+    "rift-spatial-fragment-worlds.csv": {
+      "replaced": 0,
+      "inserted": 3,
+      "beforeHash": "44ad41099809744df0eac6446902c927a00d4995ca3a7992161584c0cf8e11ef",
+      "afterHash": "4107613c3662db17f8c14b9d87be3ac883dccb280f25ee6b997f22bd7dbef8de"
+    },
+    "rift-spatial-sectors.csv": {
+      "replaced": 0,
+      "inserted": 3,
+      "beforeHash": "3d619ffa6988bf76e63ad251c391b3470a5d4193c658654df2c0d86a516ddeb0",
+      "afterHash": "535edd46316fcf827842f2857e7c99a37037257b154ac5647e6b291e27c44ccd"
+    },
+    "rift-spatial-sector-layouts.csv": {
+      "replaced": 0,
+      "inserted": 11,
+      "beforeHash": "6d5427c6ab57e9b7f4be6f7c82551f7501d0cda55f45cef9e8ecd55edd6ecb4c",
+      "afterHash": "7da9f35d87b4310416a0305712711054b000cd628b8e22ac78db2548335a6767"
+    },
+    "rift-spatial-sector-anchors.csv": {
+      "replaced": 0,
+      "inserted": 24,
+      "beforeHash": "7fab5860172f094bea0f5eabdf796dc555255798b47a233af85821508b02f228",
+      "afterHash": "25180e5069e33e99ddf74b861312e3c357be13477ff2323ec99312294c459396"
+    },
+    "rift-spatial-authored-groups.csv": {
+      "replaced": 0,
+      "inserted": 0,
+      "beforeHash": "46bbcd9c5b6e58740f4f89788c42cd03c7dbc433aeb8f5f19f3b3b6b69cf8920",
+      "afterHash": "46bbcd9c5b6e58740f4f89788c42cd03c7dbc433aeb8f5f19f3b3b6b69cf8920"
+    },
+    "rift-search-sites.csv": {
+      "replaced": 0,
+      "inserted": 3,
+      "beforeHash": "440572158cb2efb01d94454c1c0179334491e8bc75478773b96178b39e030e3a",
+      "afterHash": "c60bdcf2039f5b96e2e92e8b4064129b5599502a94d33e99a4a34c9e3a52f654"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "status": "diagnosed-strict-gate-failure-retained",
+  "missingTemporary": [
+    {
+      "id": 3,
+      "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLRenderer2.createTemporaryTextures (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:100472:44)\n    at WebGLRenderer2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:100308:26)\n    at new WebGLRenderer2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:100227:26)\n    at CreateRenderer (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:8386:39)\n    at Game2.boot (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:8550:21)\n    at DOMContentLoaded (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:16257:21)\n    at new Game2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:8529:21)"
+    }
+  ],
+  "before": {
+    "phaserKeys": 287,
+    "temporary": 14,
+    "nativeMaterial": 4,
+    "wrapped": 356
+  },
+  "after": {
+    "phaserKeys": 287,
+    "temporary": 13,
+    "nativeMaterial": 4,
+    "wrapped": 356
+  },
+  "source": "node_modules/phaser/src/renderer/webgl/WebGLRenderer.js:1122",
+  "interpretation": "Phaser 1x1 temporary texture bound to a texture unit during boot; not stored by Phaser in a JS owner. Replacing the binding lets this resource become unreachable. All texture-manager keys, native material texture count and wrapped texture count remain equal. This bounded run does not show a retained leak or missing owned game texture; original strict gate remains failed."
+}

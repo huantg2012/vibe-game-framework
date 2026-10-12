@@ -1,0 +1,9 @@
+import fs from 'node:fs';import path from 'node:path';import sharp from 'sharp';
+const root='docs/qa/artifacts/world-upgrades-rollout-2026-10-12',out=path.join(root,'art-final-review');
+const dirs=['runtime/b02/monolith-sill','runtime/b02/woven-quarters',...fs.readdirSync(path.join(root,'runtime/six-families'),{withFileTypes:true}).filter(e=>e.isDirectory()).map(e=>'runtime/six-families/'+e.name)];
+let manifest=[];for(const dir of dirs){const r=JSON.parse(fs.readFileSync(path.join(root,dir,'report.json'))),parts=[];
+for(const [i,[field,file]]of[['before','before'],['near','near'],['turnedAway','turned-away'],['after','after']].entries()){
+ const p=r[field].target.screenFoot,meta=await sharp(path.join(root,dir,file+'.png')).metadata(),x=Math.max(0,Math.min(meta.width-320,Math.round(p.x-160))),y=Math.max(0,Math.min(meta.height-280,Math.round(p.y-140)));
+ parts.push({input:await sharp(path.join(root,dir,file+'.png')).extract({left:x,top:y,width:320,height:280}).png().toBuffer(),left:i*320,top:30});parts.push({input:Buffer.from(`<svg width="320" height="30"><text x="8" y="20" fill="white" font-size="15">${file}</text></svg>`),left:i*320,top:0});}
+ const filename=r.world+'-runtime-panel.png';await sharp({create:{width:1280,height:310,channels:3,background:'#111'}}).composite(parts).png().toFile(path.join(out,filename));manifest.push({world:r.world,grade:r.grade,dir,panel:filename,site:r.before.target.site,visibility:['before','near','turnedAway','after'].map(k=>r[k].target.visibility)});}
+fs.writeFileSync(path.join(out,'runtime-panel-manifest.json'),JSON.stringify({scope:'1:1 crops from existing captured PNG only; no color/contrast modifications. Full before images reviewed separately.',worlds:manifest},null,2));console.log(manifest.map(x=>({world:x.world,site:x.site.sourceKind,family:x.site.family,visibility:x.visibility})));

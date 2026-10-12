@@ -1,3 +1,4 @@
+import { bakeMasterWorldSurface as bakeRevision9Surface } from '@/generation/legacy-r100-v9/executor-recovery.js';
 import { bakeMasterWorldSurface as bakeRevision6Surface } from '@/generation/legacy-r100-v6/executor-recovery.js';
 import { bakeMasterWorldSurface as bakeRevision7Surface } from '@/generation/legacy-r100-v7/executor-recovery.js';
 import { bakeMasterWorldSurface as bakeRevision8Surface } from '@/generation/legacy-r100-v8/executor-recovery.js';
@@ -192,7 +193,7 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
 }
 export function bakeMasterWorldSurface(world:MasterWorld,painting?:PaintedMaterial):MasterSurfaceBake {
  const revision=world.algorithmRevision;
- if(revision!==undefined&&revision!==5&&revision!==6&&revision!==7&&revision!==8&&revision!==9)throw new Error('Unknown native surface algorithm revision');
+ if(revision!==undefined&&revision!==5&&revision!==6&&revision!==7&&revision!==8&&revision!==9&&revision!==10)throw new Error('Unknown native surface algorithm revision');
  if(revision!==undefined&&!world.appearance)throw new Error('Explicit native surface revision requires frozen appearance');
  if(!world.appearance)return bakeRevision3Surface(world,painting);
  if(world.algorithmRevision===undefined)return bakeRevision4Surface(world,painting);
@@ -200,5 +201,6 @@ export function bakeMasterWorldSurface(world:MasterWorld,painting?:PaintedMateri
  if(world.algorithmRevision===6)return bakeRevision6Surface(world,painting);
  if(world.algorithmRevision===7)return bakeRevision7Surface(world,painting);
  if(world.algorithmRevision===8)return bakeRevision8Surface(world,painting);
+ if(world.algorithmRevision===9)return bakeRevision9Surface(world,painting);
  return bakeMasterSurface(world,paintMasterGround(world),new NativeVolumeLighting(world.raster,masterVolumePalette(world),{seed:world.sample.seed,axis:world.definition.axis}),painting);
 }

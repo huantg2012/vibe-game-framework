@@ -33,6 +33,44 @@ export interface R100SpatialMaterial {
   readonly lengthScale: number;
   readonly widthScale: number;
 }
+/** CSV table schemas remain stable even when a strategy has no current rows. */
+export interface R100SpatialAuthoringTables {
+  readonly WORLDS: readonly {
+    readonly worldId: string;
+    readonly organization: R100SpatialOrganization;
+    readonly mirrorX: boolean;
+    readonly mirrorY: boolean;
+  }[];
+  readonly PLACEMENTS: readonly (R100SpatialPlacement & { readonly organization: R100SpatialOrganization })[];
+  readonly EROSION: readonly {
+    readonly organization: R100SpatialOrganization;
+    readonly id: string;
+    readonly points: readonly Readonly<Vector2>[];
+  }[];
+  readonly ANCHORS: readonly (Readonly<Vector2> & { readonly organization: R100SpatialOrganization; readonly id: number })[];
+  readonly MATERIALS: readonly R100SpatialMaterial[];
+  readonly ORGANIZATIONS: readonly (R100SpatialOrganizationRules & {
+    readonly organization: R100SpatialOrganization;
+    readonly placementJitterPx: number;
+  })[];
+  readonly AUTHORED_GROUPS: readonly {
+    readonly worldId: string;
+    readonly transform: R100SpatialGroupTransform;
+    readonly solidCount: number;
+    readonly reliefCount: number;
+    readonly placements: readonly R100SpatialPlacement[];
+    readonly erosion: readonly (readonly Readonly<Vector2>[])[];
+  }[];
+  readonly SECTORS: readonly {
+    readonly worldId: string;
+    readonly organizationRules: R100SpatialOrganizationRules;
+    readonly placementJitterPx: number;
+    readonly placements: readonly R100SpatialPlacement[];
+    readonly erosion: readonly (readonly Readonly<Vector2>[])[];
+    readonly spawnCandidates: readonly Readonly<Vector2>[];
+    readonly terrainOutline?: readonly Readonly<Vector2>[];
+  }[];
+}
 /** Complete departure snapshot. Recovery never consults today's spatial CSV. */
 export interface R100SpatialPolicy {
   readonly version: 1 | 2;

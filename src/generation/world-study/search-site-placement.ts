@@ -1,3 +1,4 @@
+import { validateSearchSites as validateRevision9SearchSites } from '../legacy-r100-v9/executor-recovery.js';
 /** Environmental context is ranked only after the expedition's physical/risk admission. */
 import {mix32} from '@/generation/seed-fork';
 import {hasLineOfSight} from '@/utils/grid-raycast';
@@ -73,7 +74,9 @@ export class SearchSitePlanner {
     const visualSeed=mix32(world.sample.seed,`grounded-search-v1:${key}`);
     const unit=mix32(visualSeed,'environment-relation')/0x100000000;
     const i=Math.floor(position.y)*r.width+Math.floor(position.x);
-    const local=world.roleAt(position.x,position.y)==='relief'?this.meshes.get(r.objectId[i]!):undefined;
+    const rasterLocal=world.roleAt(position.x,position.y)==='relief'?this.meshes.get(r.objectId[i]!):undefined;
+    // Shore geometry shares its owner's raster ID but is not the original formation.
+    const local=rasterLocal ? nearestFormation(world,position,.001,rasterLocal.spec.id)?.mesh : undefined;
     const nearby=local?null:nearestFormation(world,position,policy.sourceReachPx);
     const detached=nearby && unit < 1-nearby.distance/policy.sourceReachPx ? nearby : null;
     const formation=local??detached?.mesh;
@@ -92,7 +95,8 @@ export class SearchSitePlanner {
 }
 /** Small receiving-thread validation: no generation, material baking or reward reads. */
 export function validateSearchSites(world: MasterWorld): void {
-  if(world.algorithmRevision!==9){if(world.searchSites!==undefined)throw new Error('Historical world cannot acquire grounded search sites');return;}
+  if(world.algorithmRevision===9){validateRevision9SearchSites(world);return;}
+  if(world.algorithmRevision!==10){if(world.searchSites!==undefined)throw new Error('Historical world cannot acquire grounded search sites');return;}
   const nodes=[...world.layout.kindlingNodes,...world.layout.contaminantNodes],sites=world.searchSites;
   if(!sites||sites.length!==nodes.length)throw new Error('Grounded search sites must cover every admitted node');
   const ids=new Set<string>(),instances=new Map(world.meshes.map(mesh=>[mesh.spec.id,mesh]));

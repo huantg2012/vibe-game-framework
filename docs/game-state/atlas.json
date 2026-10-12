@@ -22,7 +22,7 @@
       "id": "world",
       "title": "地图、地表与探索",
       "coverage": "mapped",
-      "note": "六图翻找残骸已在三路设计后接入r9：真实来源关系、地表同灯材质与翻后残迹。六图实景、留出seed/FOV、正式低档冷续及旧r8精确恢复有限定证据；用户审美和自然发现性仍开放。其余102世界推广暂停，I14仍13/14、P49开放。"
+      "note": "矩形开放世界碎片与环境翻找残骸已推广至全部108世界的新局，逐批独立作者并登记三档有限验证。用户已授权推广，未代签108世界审美、自然搜索与长程经营；I14仍13/14、P49开放。"
     },
     {
       "id": "encounters",
@@ -64,7 +64,7 @@
       "id": "persistence",
       "title": "存档、失败与恢复",
       "coverage": "mapped",
-      "note": "完整帧/原子保存保持。旧修订1–7冻结，r8完整冻结矩形作者输入及最终地形；B01固定Git旧r8八例完整结果/四RGBA精确重放及新五图wire恢复按范围验证，不外推所有历史或跨引擎异常。 六图新r9来源策略已冻结，旧r8完整执行器封存；六图旧地图/四RGBA及新局collected冷续保持，见E236限定范围。"
+      "note": "108世界新出发冻结修订10完整地形/部署/翻找来源身份，冷续不重抽。旧修订1–9闭包隔离；r9从固定17476a4e封存生成、验证、hydrate、表面及残骸两态。六r9加两r8完整地图与四RGBA精确回放；代表正式新局冷续保持收入及翻后状态。"
     },
     {
       "id": "accessibility",
@@ -76,7 +76,7 @@
       "id": "development",
       "title": "开发入口与退役方向",
       "coverage": "mapped",
-      "note": "r100-gym复用正式生成/RiftScene与隔离内存存储。108世界目录中六图已注册独立新构型，B01可用五个world ID与seed20261012复看，余下102未完成。新注册/恢复/作者批输入复用工具只做技术核查。"
+      "note": "r100-gym复用正式生成/RiftScene与隔离内存存储。108世界均有独立矩形碎片与环境翻找策略；全图诊断图册与正常镜头证据分别记录，不以DEV图册代签体验。"
     }
   ],
   "featureFiles": [
@@ -752,6 +752,20 @@
         "src/generated/r100-search-sites.ts",
         "tools/pickup-grounding/*",
         "tools/recovery/*revision8.mjs"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "r100-world-upgrades-r10",
+      "title": "108世界碎片与环境残骸全库推广及r9冻结恢复",
+      "include": [
+        "src/generation/legacy-r100-v9/*",
+        "tools/world-upgrades-rollout/*",
+        "tools/recovery/*revision9.mjs",
+        "tools/recovery/*revision10.mjs",
+        "tools/recovery/diagnose-revision9-site.mjs",
+        "data/world-upgrades-authoring-plan.csv",
+        "tools/qa/diagnose-r100-gym-texture-lifecycle.mjs"
       ],
       "exclude": []
     }

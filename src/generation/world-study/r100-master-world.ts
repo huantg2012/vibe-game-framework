@@ -41,8 +41,8 @@ export interface MasterDefinition {
 }
 export interface MasterWorld {
   /** New packages opt into current presentation; absence preserves frozen r4. */
-  readonly algorithmRevision?: 5 | 6 | 7 | 8 | 9;
-  /** Present only in revision 9 grounded-search packages; no reward identity. */
+  readonly algorithmRevision?: 5 | 6 | 7 | 8 | 9 | 10;
+  /** Present from revision 9 grounded-search packages; no reward identity. */
   readonly searchSites?: readonly import('./search-site-types').R100SearchSitePlacement[];
   readonly spatialDeployment?: R100SpatialDeploymentPolicy;
   readonly appearance?: import('./r100-world-appearance').R100WorldAppearance;

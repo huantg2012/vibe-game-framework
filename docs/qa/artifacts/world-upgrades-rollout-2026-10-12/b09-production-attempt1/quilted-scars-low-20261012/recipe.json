@@ -1,0 +1,1168 @@
+{
+  "version": 3,
+  "requestedSeed": 20261012,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "quilted-scars",
+    "label": "缀膜伤原",
+    "description": "缀膜伤原的原生材料与完整搜撤地段",
+    "material": "membrane",
+    "surface": {
+      "substrate": "membrane",
+      "coating": "membrane",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 2635840,
+      "floor": 6455184,
+      "floorLight": 10796747,
+      "materialDark": 5648201,
+      "materialMid": 10508674,
+      "materialLight": 14260146,
+      "faceLight": 14143711,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 6455184,
+      "groundLight": 10796747,
+      "groundDark": 2635840,
+      "wall": 10508674,
+      "wallLight": 14260146,
+      "wallDark": 5648201
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "quilted-scars",
+    "ground": {
+      "dark": 2635840,
+      "mid": 6455184,
+      "light": 10796747
+    },
+    "solid": {
+      "dark": 5648201,
+      "mid": 10508674,
+      "light": 14260146
+    },
+    "cleaved": {
+      "dark": 5854567,
+      "mid": 10919350,
+      "light": 14143711
+    },
+    "secondary": {
+      "dark": 4798528,
+      "mid": 8875129,
+      "light": 11770795
+    },
+    "groundPattern": "tension",
+    "patternScale": 192,
+    "patternStrength": 0.47,
+    "secondaryCoverage": 0.19,
+    "textureContrast": 1.12,
+    "quietCoverage": 0.47
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "quilted-scars-low",
+    "family": "membrane-rim",
+    "grade": "low",
+    "label": "缀膜伤原",
+    "profile": "quilted-scars",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 108,
+    "emission": 0.35,
+    "motion_period": 24,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "membrane-rim",
+        "role": "relief",
+        "x": 500,
+        "y": 350,
+        "rotation": 0.5,
+        "length": 310,
+        "width": 140,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.2112,
+        "branches": 3,
+        "opening": 0.94,
+        "distortion": 0.528,
+        "constructionVersion": 3,
+        "shapeProfile": "lobed-cushion"
+      },
+      {
+        "id": 2,
+        "family": "membrane-rim",
+        "role": "relief",
+        "x": 600,
+        "y": 490,
+        "rotation": -0.55,
+        "length": 300,
+        "width": 150,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.2288,
+        "branches": 3,
+        "opening": 0.92,
+        "distortion": 0.5808,
+        "constructionVersion": 3,
+        "shapeProfile": "lobed-cushion"
+      },
+      {
+        "id": 3,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 360,
+        "y": 280,
+        "rotation": 0.4,
+        "length": 230,
+        "width": 160,
+        "height": 30,
+        "thickness": 9,
+        "fold": 0.2816,
+        "branches": 3,
+        "opening": 0.94,
+        "distortion": 0.5456,
+        "constructionVersion": 3,
+        "shapeProfile": "lobed-cushion"
+      },
+      {
+        "id": 4,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 650,
+        "y": 280,
+        "rotation": 2.2,
+        "length": 290,
+        "width": 180,
+        "height": 48,
+        "thickness": 12,
+        "fold": 0.35200000000000004,
+        "branches": 3,
+        "opening": 0.92,
+        "distortion": 0.616,
+        "constructionVersion": 3,
+        "shapeProfile": "lobed-cushion"
+      },
+      {
+        "id": 5,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 760,
+        "y": 535,
+        "rotation": -0.8,
+        "length": 250,
+        "width": 180,
+        "height": 36,
+        "thickness": 10,
+        "fold": 0.2992,
+        "branches": 3,
+        "opening": 0.9,
+        "distortion": 0.5632,
+        "constructionVersion": 3,
+        "shapeProfile": "lobed-cushion"
+      },
+      {
+        "id": 6,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 435,
+        "y": 560,
+        "rotation": 0.7,
+        "length": 320,
+        "width": 190,
+        "height": 42,
+        "thickness": 11,
+        "fold": 0.33440000000000003,
+        "branches": 3,
+        "opening": 0.94,
+        "distortion": 0.5984,
+        "constructionVersion": 3,
+        "shapeProfile": "lobed-cushion"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 668,
+          "y": 424
+        },
+        {
+          "x": 704,
+          "y": 416
+        },
+        {
+          "x": 752,
+          "y": 440
+        },
+        {
+          "x": 744,
+          "y": 464
+        },
+        {
+          "x": 692,
+          "y": 454
+        }
+      ]
+    ]
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0
+  },
+  "spatialPolicy": {
+    "version": 2,
+    "worldId": "quilted-scars",
+    "sourceHash": "39098058a17a043222685b571b3b296448706902f1d7b992533f4a8a4a2ec52a",
+    "organization": "authored-sectors",
+    "organizationRules": {
+      "sourceMode": "source-once",
+      "materialScaling": false,
+      "solidCount": 4,
+      "reliefCount": 2
+    },
+    "groupTransform": null,
+    "cols": 72,
+    "rows": 56,
+    "mirrorX": false,
+    "mirrorY": false,
+    "placementJitterPx": 0,
+    "placements": [
+      {
+        "id": 1,
+        "role": "relief",
+        "sourceIndex": 0,
+        "x": 1240,
+        "y": 770,
+        "rotation": 0.5,
+        "length": 310,
+        "width": 140
+      },
+      {
+        "id": 2,
+        "role": "relief",
+        "sourceIndex": 1,
+        "x": 1340,
+        "y": 910,
+        "rotation": -0.55,
+        "length": 300,
+        "width": 150
+      },
+      {
+        "id": 3,
+        "role": "solid",
+        "sourceIndex": 0,
+        "x": 1100,
+        "y": 700,
+        "rotation": 0.4,
+        "length": 230,
+        "width": 160
+      },
+      {
+        "id": 4,
+        "role": "solid",
+        "sourceIndex": 1,
+        "x": 1390,
+        "y": 700,
+        "rotation": 2.2,
+        "length": 290,
+        "width": 180
+      },
+      {
+        "id": 5,
+        "role": "solid",
+        "sourceIndex": 2,
+        "x": 1500,
+        "y": 955,
+        "rotation": -0.8,
+        "length": 250,
+        "width": 180
+      },
+      {
+        "id": 6,
+        "role": "solid",
+        "sourceIndex": 3,
+        "x": 1175,
+        "y": 980,
+        "rotation": 0.7,
+        "length": 320,
+        "width": 190
+      }
+    ],
+    "materials": [
+      {
+        "key": "folded-slab",
+        "lengthScale": 1.08,
+        "widthScale": 1.03
+      },
+      {
+        "key": "fibre-knot",
+        "lengthScale": 1.04,
+        "widthScale": 1.5
+      },
+      {
+        "key": "broken-shell",
+        "lengthScale": 0.8,
+        "widthScale": 1.2
+      },
+      {
+        "key": "granular-ridge",
+        "lengthScale": 1,
+        "widthScale": 1
+      },
+      {
+        "key": "membrane-rim",
+        "lengthScale": 1,
+        "widthScale": 0.9
+      },
+      {
+        "key": "gel-flow",
+        "lengthScale": 0.86,
+        "widthScale": 0.78
+      },
+      {
+        "key": "rib-vault",
+        "lengthScale": 1.1,
+        "widthScale": 1.5
+      },
+      {
+        "key": "pleated-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      },
+      {
+        "key": "cellular-shell",
+        "lengthScale": 1.08,
+        "widthScale": 2.65
+      },
+      {
+        "key": "lobed-cushion",
+        "lengthScale": 1,
+        "widthScale": 1.7
+      },
+      {
+        "key": "monolith-buttress",
+        "lengthScale": 0.85,
+        "widthScale": 1.5
+      },
+      {
+        "key": "terrace-shelf",
+        "lengthScale": 1.05,
+        "widthScale": 1.05
+      },
+      {
+        "key": "fracture-fan",
+        "lengthScale": 0.97,
+        "widthScale": 1.2
+      },
+      {
+        "key": "fallen-bundle",
+        "lengthScale": 0.8,
+        "widthScale": 1.37
+      },
+      {
+        "key": "clamp-bank",
+        "lengthScale": 0.93,
+        "widthScale": 0.9
+      },
+      {
+        "key": "torn-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.15
+      },
+      {
+        "key": "compressed-wedge",
+        "lengthScale": 0.9,
+        "widthScale": 0.98
+      },
+      {
+        "key": "porous-break",
+        "lengthScale": 0.82,
+        "widthScale": 1.18
+      },
+      {
+        "key": "pleated-tear",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 590,
+          "y": 700
+        },
+        {
+          "x": 590,
+          "y": 865
+        },
+        {
+          "x": 594.14,
+          "y": 886.8
+        },
+        {
+          "x": 612.58,
+          "y": 899.08
+        },
+        {
+          "x": 616.24,
+          "y": 939.64
+        },
+        {
+          "x": 633.9,
+          "y": 950
+        },
+        {
+          "x": 780,
+          "y": 950
+        },
+        {
+          "x": 780,
+          "y": 700
+        }
+      ],
+      [
+        {
+          "x": 650,
+          "y": 520
+        },
+        {
+          "x": 650,
+          "y": 680
+        },
+        {
+          "x": 821.74,
+          "y": 680
+        },
+        {
+          "x": 850,
+          "y": 666.6
+        },
+        {
+          "x": 850,
+          "y": 560.4
+        },
+        {
+          "x": 840.56,
+          "y": 547.92
+        },
+        {
+          "x": 825.34,
+          "y": 544.94
+        },
+        {
+          "x": 821.18,
+          "y": 526.18
+        },
+        {
+          "x": 802.98,
+          "y": 520
+        }
+      ],
+      [
+        {
+          "x": 2010,
+          "y": 1212.34
+        },
+        {
+          "x": 2005.88,
+          "y": 1205.8
+        },
+        {
+          "x": 1996.76,
+          "y": 1203.56
+        },
+        {
+          "x": 1994.64,
+          "y": 1195.04
+        },
+        {
+          "x": 1984,
+          "y": 1190
+        },
+        {
+          "x": 1917.6,
+          "y": 1190
+        },
+        {
+          "x": 1905.82,
+          "y": 1202.36
+        },
+        {
+          "x": 1884.38,
+          "y": 1231.32
+        },
+        {
+          "x": 1870,
+          "y": 1241
+        },
+        {
+          "x": 1870,
+          "y": 1312.82
+        },
+        {
+          "x": 1901.64,
+          "y": 1340
+        },
+        {
+          "x": 1984.36,
+          "y": 1340
+        },
+        {
+          "x": 2010,
+          "y": 1310.16
+        }
+      ]
+    ],
+    "terrainOutline": [
+      {
+        "x": 690,
+        "y": 261.04
+      },
+      {
+        "x": 772.7,
+        "y": 190
+      },
+      {
+        "x": 1610.64,
+        "y": 190
+      },
+      {
+        "x": 1650.78,
+        "y": 199.9
+      },
+      {
+        "x": 1666.18,
+        "y": 243.82
+      },
+      {
+        "x": 1702.84,
+        "y": 267.64
+      },
+      {
+        "x": 1730,
+        "y": 309
+      },
+      {
+        "x": 1730,
+        "y": 484.56
+      },
+      {
+        "x": 1719.74,
+        "y": 501.56
+      },
+      {
+        "x": 1705.26,
+        "y": 506.94
+      },
+      {
+        "x": 1697.48,
+        "y": 533.9
+      },
+      {
+        "x": 1672.2,
+        "y": 540
+      },
+      {
+        "x": 1617.8,
+        "y": 540
+      },
+      {
+        "x": 1560,
+        "y": 594.4
+      },
+      {
+        "x": 1560,
+        "y": 645.6
+      },
+      {
+        "x": 1617.8,
+        "y": 700
+      },
+      {
+        "x": 1715.76,
+        "y": 700
+      },
+      {
+        "x": 1720.64,
+        "y": 697.64
+      },
+      {
+        "x": 1722.5,
+        "y": 694
+      },
+      {
+        "x": 1728.42,
+        "y": 691.22
+      },
+      {
+        "x": 1730,
+        "y": 686.4
+      },
+      {
+        "x": 1730,
+        "y": 673.6
+      },
+      {
+        "x": 1735.4,
+        "y": 669.5
+      },
+      {
+        "x": 1743.78,
+        "y": 664.28
+      },
+      {
+        "x": 1747.76,
+        "y": 660
+      },
+      {
+        "x": 2003.08,
+        "y": 660
+      },
+      {
+        "x": 2010.5,
+        "y": 666.86
+      },
+      {
+        "x": 2015.86,
+        "y": 676.72
+      },
+      {
+        "x": 2024.06,
+        "y": 680.56
+      },
+      {
+        "x": 2030,
+        "y": 694
+      },
+      {
+        "x": 2030,
+        "y": 741.18
+      },
+      {
+        "x": 2053.8,
+        "y": 760
+      },
+      {
+        "x": 2079.04,
+        "y": 760
+      },
+      {
+        "x": 2100,
+        "y": 812.86
+      },
+      {
+        "x": 2100,
+        "y": 1460
+      },
+      {
+        "x": 1858.8,
+        "y": 1460
+      },
+      {
+        "x": 1847.36,
+        "y": 1470.82
+      },
+      {
+        "x": 1831.54,
+        "y": 1495.92
+      },
+      {
+        "x": 1820,
+        "y": 1505.18
+      },
+      {
+        "x": 1820,
+        "y": 1603.22
+      },
+      {
+        "x": 1753.9,
+        "y": 1660
+      },
+      {
+        "x": 1577.9,
+        "y": 1660
+      },
+      {
+        "x": 1549.66,
+        "y": 1647.04
+      },
+      {
+        "x": 1511.74,
+        "y": 1642
+      },
+      {
+        "x": 1489.7,
+        "y": 1660
+      },
+      {
+        "x": 1421.2,
+        "y": 1660
+      },
+      {
+        "x": 1363.6,
+        "y": 1644.02
+      },
+      {
+        "x": 1341.74,
+        "y": 1615.02
+      },
+      {
+        "x": 1272.28,
+        "y": 1608.7
+      },
+      {
+        "x": 1250,
+        "y": 1578.86
+      },
+      {
+        "x": 1250,
+        "y": 1343.2
+      },
+      {
+        "x": 1238.64,
+        "y": 1287.1
+      },
+      {
+        "x": 1209.86,
+        "y": 1280.5
+      },
+      {
+        "x": 1199.82,
+        "y": 1203.8
+      },
+      {
+        "x": 1170.08,
+        "y": 1180
+      },
+      {
+        "x": 1058.6,
+        "y": 1180
+      },
+      {
+        "x": 1032.08,
+        "y": 1187.72
+      },
+      {
+        "x": 1014.68,
+        "y": 1200.66
+      },
+      {
+        "x": 975.32,
+        "y": 1210.62
+      },
+      {
+        "x": 960,
+        "y": 1227.7
+      },
+      {
+        "x": 960,
+        "y": 1292.2
+      },
+      {
+        "x": 949.28,
+        "y": 1304.72
+      },
+      {
+        "x": 931.74,
+        "y": 1314.56
+      },
+      {
+        "x": 926.46,
+        "y": 1342.68
+      },
+      {
+        "x": 907.32,
+        "y": 1350
+      },
+      {
+        "x": 718.88,
+        "y": 1350
+      },
+      {
+        "x": 688.16,
+        "y": 1328.62
+      },
+      {
+        "x": 646.88,
+        "y": 1320.3
+      },
+      {
+        "x": 622.88,
+        "y": 1350
+      },
+      {
+        "x": 322.04,
+        "y": 1350
+      },
+      {
+        "x": 318.9,
+        "y": 1347.18
+      },
+      {
+        "x": 313.92,
+        "y": 1341.42
+      },
+      {
+        "x": 310,
+        "y": 1339.8
+      },
+      {
+        "x": 310,
+        "y": 1320
+      },
+      {
+        "x": 224.2,
+        "y": 1320
+      },
+      {
+        "x": 212.68,
+        "y": 1302.86
+      },
+      {
+        "x": 194.02,
+        "y": 1262.96
+      },
+      {
+        "x": 180,
+        "y": 1251.48
+      },
+      {
+        "x": 180,
+        "y": 885.94
+      },
+      {
+        "x": 196.38,
+        "y": 855.22
+      },
+      {
+        "x": 202.74,
+        "y": 813.94
+      },
+      {
+        "x": 180,
+        "y": 789.94
+      },
+      {
+        "x": 180,
+        "y": 570
+      },
+      {
+        "x": 468.2,
+        "y": 570
+      },
+      {
+        "x": 475.48,
+        "y": 568.9
+      },
+      {
+        "x": 478.52,
+        "y": 565.46
+      },
+      {
+        "x": 486.7,
+        "y": 563.76
+      },
+      {
+        "x": 490,
+        "y": 559.66
+      },
+      {
+        "x": 490,
+        "y": 500
+      },
+      {
+        "x": 682.5,
+        "y": 500
+      },
+      {
+        "x": 684.08,
+        "y": 499.32
+      },
+      {
+        "x": 685.46,
+        "y": 498.46
+      },
+      {
+        "x": 688.54,
+        "y": 497.88
+      },
+      {
+        "x": 690,
+        "y": 496.44
+      }
+    ],
+    "fragmentShape": {
+      "algorithmVersion": "rectilinear-fragment-v1",
+      "layoutId": "quilted-long-scarbed-v1",
+      "sourceHash": "3dbbc2f433ccd2237aa960bfbca9d30fc3333823e2385d8d3d32bffc190eff67",
+      "seedMode": "run-seed",
+      "seedSalt": 0,
+      "edgeSeed": 20261012,
+      "layout": {
+        "authoringFrame": [
+          1152,
+          896
+        ],
+        "worldScale": 2,
+        "landRects": [
+          [
+            245,
+            95,
+            620,
+            635
+          ],
+          [
+            90,
+            285,
+            520,
+            375
+          ],
+          [
+            650,
+            380,
+            400,
+            350
+          ],
+          [
+            340,
+            620,
+            570,
+            210
+          ],
+          [
+            155,
+            490,
+            260,
+            250
+          ],
+          [
+            760,
+            180,
+            255,
+            295
+          ]
+        ],
+        "voidRects": [
+          [
+            865,
+            0,
+            287,
+            330
+          ],
+          [
+            0,
+            0,
+            345,
+            250
+          ],
+          [
+            0,
+            675,
+            480,
+            221
+          ],
+          [
+            325,
+            260,
+            100,
+            80
+          ],
+          [
+            295,
+            350,
+            95,
+            125
+          ],
+          [
+            780,
+            270,
+            85,
+            80
+          ],
+          [
+            480,
+            700,
+            120,
+            55
+          ],
+          [
+            935,
+            595,
+            70,
+            75
+          ],
+          [
+            480,
+            590,
+            145,
+            306
+          ]
+        ]
+      }
+    },
+    "spawnCandidates": [
+      {
+        "x": 950,
+        "y": 480
+      },
+      {
+        "x": 410,
+        "y": 880
+      },
+      {
+        "x": 400,
+        "y": 1280
+      },
+      {
+        "x": 940,
+        "y": 1560
+      },
+      {
+        "x": 1640,
+        "y": 1530
+      },
+      {
+        "x": 2020,
+        "y": 1050
+      },
+      {
+        "x": 1840,
+        "y": 760
+      },
+      {
+        "x": 1510,
+        "y": 405
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "quilted-scars",
+    "sourceHash": "b2030305cc04967dcb18891c2cea4c23df22e8ae2da471a53571c13e37e3650b",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.7,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "package": {
+    "id": "r100-quilted-scars",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 10,
+    "materials": {
+      "membrane-rim": {
+        "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+        "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+        "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+      }
+    },
+    "dependencyHash": "ff421c67",
+    "grade": "low"
+  }
+}

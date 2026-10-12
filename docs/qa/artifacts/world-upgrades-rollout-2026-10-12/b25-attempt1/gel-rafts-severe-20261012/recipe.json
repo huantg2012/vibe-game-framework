@@ -1,0 +1,1043 @@
+{
+  "version": 3,
+  "requestedSeed": 20261012,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "gel-rafts",
+    "label": "断脂浅片",
+    "description": "断脂浅片的原生材料与完整搜撤地段",
+    "material": "gel",
+    "surface": {
+      "substrate": "gel",
+      "coating": "gel",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 2437959,
+      "floor": 6321807,
+      "floorLight": 10465989,
+      "materialDark": 5456203,
+      "materialMid": 11242652,
+      "materialLight": 14205899,
+      "faceLight": 11372199,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 6321807,
+      "groundLight": 10465989,
+      "groundDark": 2437959,
+      "wall": 11242652,
+      "wallLight": 14205899,
+      "wallDark": 5456203
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "gel-rafts",
+    "ground": {
+      "dark": 2437959,
+      "mid": 6321807,
+      "light": 10465989
+    },
+    "solid": {
+      "dark": 5456203,
+      "mid": 11242652,
+      "light": 14205899
+    },
+    "cleaved": {
+      "dark": 3350584,
+      "mid": 7358578,
+      "light": 11372199
+    },
+    "secondary": {
+      "dark": 4209478,
+      "mid": 9339534,
+      "light": 12628413
+    },
+    "groundPattern": "flow",
+    "patternScale": 256,
+    "patternStrength": 0.3,
+    "secondaryCoverage": 0.1,
+    "textureContrast": 1.12,
+    "quietCoverage": 0.65
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "gel-rafts-severe",
+    "family": "gel-flow",
+    "grade": "severe",
+    "label": "断脂浅片",
+    "profile": "gel-rafts",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 154,
+    "emission": 0.72,
+    "motion_period": 16,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 350,
+        "y": 400,
+        "rotation": -0.45,
+        "length": 230,
+        "width": 170,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.49500000000000005,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-clamp"
+      },
+      {
+        "id": 2,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 352,
+        "y": 525,
+        "rotation": 0.2,
+        "length": 190,
+        "width": 140,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.638,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-clamp"
+      },
+      {
+        "id": 3,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 439,
+        "y": 314,
+        "rotation": -0.65,
+        "length": 160,
+        "width": 130,
+        "height": 35,
+        "thickness": 10,
+        "fold": 0.7040000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 4,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 700,
+        "y": 365,
+        "rotation": 0.5,
+        "length": 260,
+        "width": 155,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.47300000000000003,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-clamp"
+      },
+      {
+        "id": 5,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 786,
+        "y": 510,
+        "rotation": -0.5,
+        "length": 200,
+        "width": 120,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.35200000000000004,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-clamp"
+      },
+      {
+        "id": 6,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 709,
+        "y": 565,
+        "rotation": 0.3,
+        "length": 155,
+        "width": 115,
+        "height": 45,
+        "thickness": 12,
+        "fold": 0.7370000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "severe",
+    "version": 1,
+    "label": "重度污染",
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
+  },
+  "contentDefinition": {
+    "grade_id": "severe",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "重度污染",
+    "public_risk": "地面与空气受侵占，混乱增长快",
+    "public_preparation": "备好脱身工具，留出归途",
+    "public_reward": "更多收获在深处，入口无加成",
+    "enemy_count": 4,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 6,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 2
+  },
+  "spatialPolicy": {
+    "version": 2,
+    "worldId": "gel-rafts",
+    "sourceHash": "abf65149657b92f036e1ee687352f0b38e6d2c7a78378f91554ce4085233c099",
+    "organization": "authored-sectors",
+    "organizationRules": {
+      "sourceMode": "source-once",
+      "materialScaling": false,
+      "solidCount": 2,
+      "reliefCount": 4
+    },
+    "groupTransform": null,
+    "cols": 72,
+    "rows": 56,
+    "mirrorX": false,
+    "mirrorY": false,
+    "placementJitterPx": 0,
+    "placements": [
+      {
+        "id": 1,
+        "role": "relief",
+        "sourceIndex": 0,
+        "x": 947.5,
+        "y": 920.625,
+        "rotation": -0.45,
+        "length": 287.5,
+        "width": 212.5
+      },
+      {
+        "id": 2,
+        "role": "relief",
+        "sourceIndex": 1,
+        "x": 950,
+        "y": 1076.875,
+        "rotation": 0.2,
+        "length": 237.5,
+        "width": 175
+      },
+      {
+        "id": 3,
+        "role": "solid",
+        "sourceIndex": 0,
+        "x": 1058.75,
+        "y": 813.125,
+        "rotation": -0.65,
+        "length": 200,
+        "width": 162.5
+      },
+      {
+        "id": 4,
+        "role": "relief",
+        "sourceIndex": 2,
+        "x": 1385,
+        "y": 876.875,
+        "rotation": 0.5,
+        "length": 325,
+        "width": 193.75
+      },
+      {
+        "id": 5,
+        "role": "relief",
+        "sourceIndex": 3,
+        "x": 1492.5,
+        "y": 1058.125,
+        "rotation": -0.5,
+        "length": 250,
+        "width": 150
+      },
+      {
+        "id": 6,
+        "role": "solid",
+        "sourceIndex": 1,
+        "x": 1396.25,
+        "y": 1126.875,
+        "rotation": 0.3,
+        "length": 193.75,
+        "width": 143.75
+      }
+    ],
+    "materials": [
+      {
+        "key": "folded-slab",
+        "lengthScale": 1.08,
+        "widthScale": 1.03
+      },
+      {
+        "key": "fibre-knot",
+        "lengthScale": 1.04,
+        "widthScale": 1.5
+      },
+      {
+        "key": "broken-shell",
+        "lengthScale": 0.8,
+        "widthScale": 1.2
+      },
+      {
+        "key": "granular-ridge",
+        "lengthScale": 1,
+        "widthScale": 1
+      },
+      {
+        "key": "membrane-rim",
+        "lengthScale": 1,
+        "widthScale": 0.9
+      },
+      {
+        "key": "gel-flow",
+        "lengthScale": 0.86,
+        "widthScale": 0.78
+      },
+      {
+        "key": "rib-vault",
+        "lengthScale": 1.1,
+        "widthScale": 1.5
+      },
+      {
+        "key": "pleated-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      },
+      {
+        "key": "cellular-shell",
+        "lengthScale": 1.08,
+        "widthScale": 2.65
+      },
+      {
+        "key": "lobed-cushion",
+        "lengthScale": 1,
+        "widthScale": 1.7
+      },
+      {
+        "key": "monolith-buttress",
+        "lengthScale": 0.85,
+        "widthScale": 1.5
+      },
+      {
+        "key": "terrace-shelf",
+        "lengthScale": 1.05,
+        "widthScale": 1.05
+      },
+      {
+        "key": "fracture-fan",
+        "lengthScale": 0.97,
+        "widthScale": 1.2
+      },
+      {
+        "key": "fallen-bundle",
+        "lengthScale": 0.8,
+        "widthScale": 1.37
+      },
+      {
+        "key": "clamp-bank",
+        "lengthScale": 0.93,
+        "widthScale": 0.9
+      },
+      {
+        "key": "torn-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.15
+      },
+      {
+        "key": "compressed-wedge",
+        "lengthScale": 0.9,
+        "widthScale": 0.98
+      },
+      {
+        "key": "porous-break",
+        "lengthScale": 0.82,
+        "widthScale": 1.18
+      },
+      {
+        "key": "pleated-tear",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 1731.54,
+          "y": 810
+        },
+        {
+          "x": 1717.06,
+          "y": 828.56
+        },
+        {
+          "x": 1685.1,
+          "y": 866.38
+        },
+        {
+          "x": 1670,
+          "y": 878
+        },
+        {
+          "x": 1670,
+          "y": 947.2
+        },
+        {
+          "x": 1743.1,
+          "y": 1010
+        },
+        {
+          "x": 1844.28,
+          "y": 1010
+        },
+        {
+          "x": 1890,
+          "y": 956.78
+        },
+        {
+          "x": 1890,
+          "y": 810
+        }
+      ],
+      [
+        {
+          "x": 494.72,
+          "y": 880
+        },
+        {
+          "x": 485.3,
+          "y": 896
+        },
+        {
+          "x": 467.78,
+          "y": 918.82
+        },
+        {
+          "x": 460,
+          "y": 931.02
+        },
+        {
+          "x": 460,
+          "y": 1080
+        },
+        {
+          "x": 670,
+          "y": 1080
+        },
+        {
+          "x": 670,
+          "y": 948
+        },
+        {
+          "x": 647.94,
+          "y": 931.66
+        },
+        {
+          "x": 609.34,
+          "y": 902.26
+        },
+        {
+          "x": 598.6,
+          "y": 880
+        }
+      ],
+      [
+        {
+          "x": 1730,
+          "y": 1270
+        },
+        {
+          "x": 1730,
+          "y": 1460
+        },
+        {
+          "x": 1918.88,
+          "y": 1460
+        },
+        {
+          "x": 1923.08,
+          "y": 1454.44
+        },
+        {
+          "x": 1932.86,
+          "y": 1440.76
+        },
+        {
+          "x": 1940,
+          "y": 1435.42
+        },
+        {
+          "x": 1940,
+          "y": 1270
+        }
+      ],
+      [
+        {
+          "x": 402.62,
+          "y": 1300
+        },
+        {
+          "x": 386.94,
+          "y": 1320.76
+        },
+        {
+          "x": 365.58,
+          "y": 1345.36
+        },
+        {
+          "x": 350,
+          "y": 1361.2
+        },
+        {
+          "x": 350,
+          "y": 1480
+        },
+        {
+          "x": 570,
+          "y": 1480
+        },
+        {
+          "x": 570,
+          "y": 1361.2
+        },
+        {
+          "x": 564.02,
+          "y": 1341.16
+        },
+        {
+          "x": 545.36,
+          "y": 1336.8
+        },
+        {
+          "x": 536.98,
+          "y": 1315.82
+        },
+        {
+          "x": 518.14,
+          "y": 1300
+        }
+      ]
+    ],
+    "terrainOutline": [
+      {
+        "x": 500,
+        "y": 276.14
+      },
+      {
+        "x": 535.68,
+        "y": 260.9
+      },
+      {
+        "x": 588.42,
+        "y": 216.72
+      },
+      {
+        "x": 611.88,
+        "y": 200
+      },
+      {
+        "x": 1100,
+        "y": 200
+      },
+      {
+        "x": 1100,
+        "y": 640
+      },
+      {
+        "x": 2040,
+        "y": 640
+      },
+      {
+        "x": 2040,
+        "y": 756.9
+      },
+      {
+        "x": 2020.56,
+        "y": 786.54
+      },
+      {
+        "x": 2013,
+        "y": 826.4
+      },
+      {
+        "x": 2040,
+        "y": 849.58
+      },
+      {
+        "x": 2040,
+        "y": 1000
+      },
+      {
+        "x": 2122.62,
+        "y": 1000
+      },
+      {
+        "x": 2160,
+        "y": 1094.26
+      },
+      {
+        "x": 2160,
+        "y": 1459.52
+      },
+      {
+        "x": 2147.54,
+        "y": 1474.34
+      },
+      {
+        "x": 2130.42,
+        "y": 1488.2
+      },
+      {
+        "x": 2114.16,
+        "y": 1513.12
+      },
+      {
+        "x": 2089.6,
+        "y": 1520
+      },
+      {
+        "x": 1561.4,
+        "y": 1520
+      },
+      {
+        "x": 1528.84,
+        "y": 1514.42
+      },
+      {
+        "x": 1506.58,
+        "y": 1488.42
+      },
+      {
+        "x": 1458.16,
+        "y": 1487.4
+      },
+      {
+        "x": 1440,
+        "y": 1462.46
+      },
+      {
+        "x": 1440,
+        "y": 1359.8
+      },
+      {
+        "x": 1436.56,
+        "y": 1331.9
+      },
+      {
+        "x": 1420.02,
+        "y": 1321.58
+      },
+      {
+        "x": 1417.22,
+        "y": 1298.36
+      },
+      {
+        "x": 1402.18,
+        "y": 1280
+      },
+      {
+        "x": 920,
+        "y": 1280
+      },
+      {
+        "x": 920,
+        "y": 1491.2
+      },
+      {
+        "x": 909.38,
+        "y": 1517.02
+      },
+      {
+        "x": 875.88,
+        "y": 1536.22
+      },
+      {
+        "x": 867.34,
+        "y": 1586.72
+      },
+      {
+        "x": 833.82,
+        "y": 1600
+      },
+      {
+        "x": 594.22,
+        "y": 1600
+      },
+      {
+        "x": 566.9,
+        "y": 1584.44
+      },
+      {
+        "x": 530.18,
+        "y": 1578.4
+      },
+      {
+        "x": 508.82,
+        "y": 1600
+      },
+      {
+        "x": 258.8,
+        "y": 1600
+      },
+      {
+        "x": 234.14,
+        "y": 1594.06
+      },
+      {
+        "x": 218.88,
+        "y": 1576.92
+      },
+      {
+        "x": 182.98,
+        "y": 1570.7
+      },
+      {
+        "x": 160,
+        "y": 1553.18
+      },
+      {
+        "x": 160,
+        "y": 1127.32
+      },
+      {
+        "x": 200.16,
+        "y": 1100
+      },
+      {
+        "x": 239.2,
+        "y": 1100
+      },
+      {
+        "x": 251.22,
+        "y": 1085.18
+      },
+      {
+        "x": 267.88,
+        "y": 1050.76
+      },
+      {
+        "x": 280,
+        "y": 1038.08
+      },
+      {
+        "x": 280,
+        "y": 873.24
+      },
+      {
+        "x": 301.9,
+        "y": 854.98
+      },
+      {
+        "x": 336.02,
+        "y": 809.86
+      },
+      {
+        "x": 354.8,
+        "y": 780
+      },
+      {
+        "x": 465.74,
+        "y": 780
+      },
+      {
+        "x": 476.1,
+        "y": 764.94
+      },
+      {
+        "x": 491.66,
+        "y": 739.98
+      },
+      {
+        "x": 500,
+        "y": 729.64
+      },
+      {
+        "x": 500,
+        "y": 481.12
+      },
+      {
+        "x": 521.94,
+        "y": 450.4
+      },
+      {
+        "x": 530.48,
+        "y": 409.12
+      },
+      {
+        "x": 500,
+        "y": 385.12
+      }
+    ],
+    "fragmentShape": {
+      "algorithmVersion": "rectilinear-fragment-v1",
+      "layoutId": "rafts-northern-break-v1",
+      "sourceHash": "ad12bfbb10b4fba7fa419baedfa096f3ea7a6c8e2f6cf3a7191d4980e90a1c74",
+      "seedMode": "run-seed",
+      "seedSalt": 0,
+      "edgeSeed": 20261012,
+      "layout": {
+        "authoringFrame": [
+          1152,
+          896
+        ],
+        "worldScale": 2,
+        "landRects": [
+          [
+            140,
+            320,
+            880,
+            360
+          ],
+          [
+            80,
+            550,
+            530,
+            250
+          ],
+          [
+            720,
+            500,
+            360,
+            260
+          ],
+          [
+            250,
+            100,
+            300,
+            330
+          ]
+        ],
+        "voidRects": [
+          [
+            550,
+            0,
+            602,
+            320
+          ],
+          [
+            0,
+            0,
+            250,
+            390
+          ],
+          [
+            460,
+            640,
+            260,
+            256
+          ],
+          [
+            230,
+            440,
+            105,
+            100
+          ],
+          [
+            835,
+            405,
+            110,
+            100
+          ],
+          [
+            865,
+            635,
+            105,
+            95
+          ],
+          [
+            175,
+            650,
+            110,
+            90
+          ]
+        ]
+      }
+    },
+    "spawnCandidates": [
+      {
+        "x": 660,
+        "y": 400
+      },
+      {
+        "x": 1090,
+        "y": 820
+      },
+      {
+        "x": 1910,
+        "y": 710
+      },
+      {
+        "x": 1960,
+        "y": 1100
+      },
+      {
+        "x": 1490,
+        "y": 1170
+      },
+      {
+        "x": 720,
+        "y": 1200
+      },
+      {
+        "x": 630,
+        "y": 1520
+      },
+      {
+        "x": 300,
+        "y": 1020
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "gel-rafts",
+    "sourceHash": "1de67a612d41433c1942fc190a81ed5ddb4c87c4461e7b72afb017dd42ff11ce",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.48,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "package": {
+    "id": "r100-gel-rafts",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 10,
+    "materials": {
+      "gel-flow": {
+        "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+        "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+        "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+      }
+    },
+    "dependencyHash": "b88a4503",
+    "grade": "severe"
+  }
+}

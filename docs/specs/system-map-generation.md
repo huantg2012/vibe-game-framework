@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: design（六图修订9来源部署已接入，限定内部验证完成／用户实景待复看）
+last-modified-by: design（修订10来源部署与碎片作者全库分批推广中）
 last-modified-date: 2026-10-12
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
 interface-changed: false
@@ -15,7 +15,7 @@ interfaces-with:
   - system-contamination-lexicon   # 交出墙缘折线 / 占漆地板格（贪婪薪柴路径） / 走廊包围盒 + 一份 contaminationDraw；菌落与场不得加墙
   - system-growth-tide             # 输出污染物节点；工具 abyss 不得再直读固定图薪柴坐标
 exposes:
-  - R100SearchSitePlacement（修订9六图：冻结来源/位置/视觉seed，不含隐藏奖励；native.searchSites与layout节点一一对应）
+  - R100SearchSitePlacement（修订10注册世界：冻结来源/位置/视觉seed，不含隐藏奖励；native.searchSites与layout节点一一对应）
   - generateRectilinearFragment(request) → RectilinearFragmentResult（共享作者编译器；修订8余烬脊生成/恢复消费）
   - fragmentContoursToWorld(result)（同一作者结果到世界坐标的转换；经空间策略派生正式地形）
   - prepareProceduralDeparture({ signal?, pollutionGrade?, worldHistory? }?) → Promise<RiftCheckpoint.identity>（正式新出击，固定一次配方后后台生成）
@@ -35,13 +35,13 @@ exposes:
 
 # 系统设计：裂隙地图生成
 
-TL;DR：六图新出发已接入修订9的来源部署与同场材料翻找物，其他102世界新局保持修订8。六图仍使用原CSV矩形骨架及固定v1断缘；旧在途按原修订恢复。生成/恢复已有范围限定核查，限定内部验证完成／用户实景待复看，未知唯一撤离仍需探索发现。
+TL;DR：显式注册的世界新出发使用修订10来源部署、同场材料翻找物与CSV矩形骨架/固定v1断缘，现按批推广至全108世界；未注册项仍沿原路径。旧在途按冻结配方及原修订恢复，未知唯一撤离仍需探索发现。实际完成数量与验证范围见推广任务。
 
 <a id="grounded-search-sites"></a>
 
-## 六世界翻找物来源部署（2026-10-12，已接入／限定内部验证完成／用户实景待复看）
+## 翻找物来源部署（2026-10-12，修订10注册世界）
 
-本节经D0内部设计复核后已接入生成、原生表现与恢复；膜/纤维首轮退回已在第二轮六图样本中修正，限定实景内部复核不代表用户视觉终验。范围仅余烬脊、无彩层原、纤维扇流、壳缘阶串、苍帆夹道、凝胶裹纤维；其他102世界保持原路径。设计依据与批次见[实施方案](../design-notes/pickup-grounding-plan.md)，材料形体与像素预算见[Art合同](../art/pickup-grounding.md)，交互与翻后状态归[翻找spec](system-chaos-scavenge-extract.md#grounded-search-sites)。
+本节经D0内部设计复核后已接入生成、原生表现与恢复；膜/纤维首轮退回已在第二轮六图样本中修正，限定实景内部复核不代表用户视觉终验。原六图为先导与回归对照；用户已授权其余102世界分批推广，适用范围由data/rift-search-sites.csv显式注册，实际验证另记。设计依据与批次见[实施方案](../design-notes/pickup-grounding-plan.md)，材料形体与像素预算见[Art合同](../art/pickup-grounding.md)，交互与翻后状态归[翻找spec](system-chaos-scavenge-extract.md#grounded-search-sites)。
 
 ### 来源与选点规则
 
@@ -56,19 +56,19 @@ TL;DR：六图新出发已接入修订9的来源部署与同场材料翻找物�
 
 实际合同为 `search-site-types.ts` 的 `R100SearchSitePlacement`，序列化在 `native.searchSites`，每layout节点恰好一条：`version:1`、`nodeId`、与layout完全相同的 `position`、独立 `visualSeed`、三类 `sourceKind`、`family`、可空 `sourceObjectId/sourceAnchor`、`axis`、`footprintProfile:'grounded-material-v1'`，另以 `groundFamily` 记录实际原生地床、`sourceDomain:'formation'|'ground'` 区分来源域。`nodeId` 仅作稳定引用，不能解析前缀猜奖励。`SearchSitePlanner` 只在原合法候选内附加有上限评分；来源查真实XY三角形及VOID LOS，地表来源不虚构实体锚点，接收端校验节点身份、材料、来源域和实际几何。
 
-修订9的 `searchSitePolicy` 从 `data/rift-search-sites.csv` 单向编译，冻结 `version`、`algorithm:'grounded-search-v1'`、`worldId`、`sourceHash`、`sourceReachPx`、`environmentScoreCap`、`peelPreference`、`footprintProfile` 并参与配方身份。仅六图新局升r9；其他102图新局继续r8，全部旧保存按原revision闭包恢复，包括原r8节点位置、完整地图与旧视觉。地形仍消费已锁矩形碎片v1，升级节点部署不改变作者构型。恢复从冻结策略确定性复建/核对来源描述，不向今日CSV或附近新母体重新选点；未知版本、缺失/重复节点来源或身份不符明确拒绝，不静默改用旧通用堆。
+修订10的 `searchSitePolicy` 从 `data/rift-search-sites.csv` 单向编译，冻结 `version`、`algorithm:'grounded-search-v1'`、`worldId`、`sourceHash`、`sourceReachPx`、`environmentScoreCap`、`peelPreference`、`footprintProfile` 并参与配方身份。注册世界新局升r10；尚未注册世界新局继续r8，全部旧保存按原revision及冻结配方恢复，包括原r8节点位置、完整地图与旧视觉。地形仍消费已锁矩形碎片v1，升级节点部署不改变作者构型。修订10修正低面来源识别：raster中的relief对象ID必须经不含groundEdge的真实主体三角面覆盖确认，否则走既有附近母体/地面来源分支；不得把附加岸沿认成远处母体。修订9执行器、接收重建、材质与两态补丁从17476a4e冻结，已有r9配方保持精确恢复。恢复从冻结策略确定性复建/核对来源描述，不向今日CSV或附近新母体重新选点；未知版本、缺失/重复节点来源或身份不符明确拒绝，不静默改用旧通用堆。
 
 来源描述由原生材料表现消费，F019及其保存接口不新增来源字段或状态。`MasterPresentation.afterUpdate` 在绘制前读取既有 `frame.piles` 的 `id/collected`，调用 `MasterSurfaceRenderer.setSearchSiteCollected`；首次恢复同样先同步再draw，不重放揭晓。Worker以 `bakeSearchSitePatches` 预备 `intact/searched` 两态的albedo/normal/response/emission四通道局部patch，共用原灯场与迷雾；只在collected实变时局部上传，不增加GL上下文、不每帧重烘上传、不独立维护第二个“已搜”存档位。patch运输矩形互不相交，VOID、前景solid和未覆盖地床保持原值。F044核对冻结身份与原节点状态，原奖励/揭晓事务不由本系统接管。
 
 ### 本轮验证边界
 
-先三强反例（膜/胶/纤维）及灰层对照，再覆盖六图。必须有同seed旧版/新整合的正常相机实景、真实E翻前后、不同灯向/近远、开放地床与实体/表层关系、冷恢复和未调优seed；仅在排错必要时拆分来源/受光诊断，不额外维护四套渲染分支。程序核查包括各档原配额/风险/身体站位、来源真实性、隐藏奖励替换不影响外观、无VOID修改、旧r8完整地图与四RGBA精确恢复。数字覆盖不代替可发现性和接地审美，六图完成也不恢复102图推广。
+先三强反例（膜/胶/纤维）及灰层对照，再覆盖六图。必须有同seed旧版/新整合的正常相机实景、真实E翻前后、不同灯向/近远、开放地床与实体/表层关系、冷恢复和未调优seed；仅在排错必要时拆分来源/受光诊断，不额外维护四套渲染分支。程序核查包括各档原配额/风险/身体站位、来源真实性、隐藏奖励替换不影响外观、无VOID修改、旧r8完整地图与四RGBA精确恢复。数字覆盖不代替可发现性和接地审美，原六图证据不自动覆盖新增作者；102图推广已有独立用户授权，须逐批补证。
 
 <a id="rectangle-fragment-authoring"></a>
 
 ## 已认可作者机制：矩形拼合与自由断缘（2026-10-12，首代表已接生产）
 
-用户认可 `ada26f43` 的[矩形骨架及三份断缘样例](../art/previews/world-fragment-open-field/index.html)，并授权正式推广。共享机制现由修订8的余烬脊及B01五张独立作者图消费；其余102世界保持原有几何，下文修订7的历史合同继续约束旧局。普通solid仍只阻挡身体和近战；空间空洞仍是真实缺地，同时阻挡身体与视线。样例的人审不自动覆盖正式成品、其他布局、108世界或自然搜撤。作者组织及推广步骤归[设计依据](../design-notes/rift-world-space.md#rectangle-fragment-authoring)。
+用户认可 `ada26f43` 的[矩形骨架及三份断缘样例](../art/previews/world-fragment-open-field/index.html)，并授权正式推广。共享机制由显式注册的独立作者图消费，原六图为对照，新增项逐批接入；未注册世界保持原有几何，下文修订7的历史合同继续约束旧局。普通solid仍只阻挡身体和近战；空间空洞仍是真实缺地，同时阻挡身体与视线。样例的人审不自动覆盖正式成品、其他布局、108世界或自然搜撤。作者组织及推广步骤归[设计依据](../design-notes/rift-world-space.md#rectangle-fragment-authoring)。
 
 ### 输入、所有权与版本
 
@@ -90,6 +90,8 @@ type RequestV1 = {
 以上为字段示意，实际类型与预算由同目录 `types.ts` / `validation.ts` 定义。输入矩形使用作者坐标；v1固定一作者单位等于2世界像素。输出的 `contours`、`pathD` 仍是作者坐标，`fragmentContoursToWorld(result)` 统一转换世界坐标，不得消费方各乘一次或遗漏缩放。`contourKinds` 区分外岸与内孔；结果同时携带算法版本、`worldScale`、规范化seed与诊断 `stats`。SVG路径和统计不是可直接出击的地图，也不包含出生、撤离、敌人或奖励。
 
 作者负责矩形编排及内容身份：哪里保留宽地、哪里集中破坏、尺度层次与外岸偏置。算法只编译**给定的layout**并处理其局部边缘，不会自己生成已通过人审的宽面组织或全库构型多样性。预览 `geometry.json` 是获认可研究夹具；正式世界作者数据仍须来自 `data/*.csv` 单向编译，不能将这张图硬编码进运行时再复制到所有世界。
+
+新增作者图还须核对实际原生主体三角与最终外岸/孔的交叉，不能只核矩形包络或顶点。需要挪让时优先整组平移或统一比例，保留实例相对接合，不为旧坐标回填主要缺失；本次推广的新增图要求固定验收seed三档主体无意截断为零。附加groundEdge不算主体，原六图已认可的接岸保留并单列回归。不可容纳20px身体的残余细地条直接删除/连孔，不以8px中心有地宣称可走。
 
 v1冻结局部处理的概率、尺度限制、关联破坏区和样式规则；对外只选明确的布局与seed，没有任意噪声强度、圆角半径或每世界私有权重。改变策略需要显式新版本和母版对照，不以保持旧版本号的方式改变已保存结果。同版本、同完整layout、同seed须精确复现且不修改输入；不承诺编辑layout后其他边角仍局部不变。修订8已将算法版本、完整布局、来源与种子纳入正式身份；恢复只消费冻结快照并核对重新编译的轮廓，不读取今日CSV。未来改算法仍须保留旧执行器或等价编译产物，不能在v1名下追改旧局。
 
@@ -118,13 +120,13 @@ v1冻结局部处理的概率、尺度限制、关联破坏区和样式规则；
 
 若构型仍读作房间走廊、矩形大盘或外围跑道，回到layout层；若只是边角趋同或噪声均匀，回到策略层。不能通过扩大像素点数、增加孔数、降低身体尺寸或缩短视距替代问题定位。
 
-### 首代表生产合同：余烬脊（修订8）
+### 首代表作者基线：余烬脊（当时修订8）
 
-首个代表将余烬脊注册到矩形碎片能力，其认可作者源仍保持；后续注册范围见下节，不将同一骨架复制到108世界。新出击默认修订8，首代表正式地形、内容生成与恢复已经接线；浏览器实际进入、预算和体验证据按本次[推广任务](../tasks/rift-spatial-rollout.md)分别收口，不因源码接入便提升I14或全库验收。
+首个代表将余烬脊注册到矩形碎片能力，其认可作者源仍保持；后续注册范围见下节，不将同一骨架复制到108世界。首代表当时以修订8接线；当前全库新出击为修订10，浏览器实际进入、预算和体验证据按本次[推广任务](../tasks/rift-spatial-rollout.md)分别收口，不因源码接入便提升I14或全库验收。
 
 - `rift-spatial-fragment-layouts.csv` 定义 `cinder-open-field-v1` 的算法版本、1152×896作者画布和2倍世界换算。
 - `rift-spatial-fragment-rectangles.csv` 直接迁移 `ada26f43` 认可研究的10个地面矩形、17个缺地矩形，分别保留数组次序为 `ordinal`。这是原作者输入迁移，未从生成轮廓逆推数据；矩形数量不等于并集后的孔数，也不是今后定额。
-- `rift-spatial-fragment-worlds.csv` 中只有 `cinder-ridge` 绑定该布局，其他世界必须声明自己的布局。`edge_seed_mode=run-seed`，`seed_salt=0`；断缘种子为 `(requestedRunSeed + seedSalt) >>> 0`，使用本趟请求种子，后续部署候选重试不得换断缘。相同请求seed的三档共享骨架及断缘，不通过污染级别暗中改变孔位或缩窄地面。
+- `rift-spatial-fragment-worlds.csv` 中 `cinder-ridge` 独占该布局，其他107世界各自声明独立布局。`edge_seed_mode=run-seed`，`seed_salt=0`；断缘种子为 `(requestedRunSeed + seedSalt) >>> 0`，使用本趟请求种子，后续部署候选重试不得换断缘。相同请求seed的三档共享骨架及断缘，不通过污染级别暗中改变孔位或缩窄地面。
 - 生产适配使用独立修订8及空间策略版本2，冻结 `fragmentShape` 的版本、布局ID、来源hash、seed策略、edgeSeed和矩形layout，并保存由共享v1派生的最终外岸/内孔。请求seed `20261011`形成80点外环、10个内孔；其他种子可以改变点数，不能将80点写成定额。旧r7从 `b2d73790` 的完整闭包封存到 `legacy-r100-v7` 恢复；旧保存身份不读当前作者CSV。新轮廓预算与同源查询由版本代码显式适配，不改共享v1或压回旧32顶点。
 
 **实体随新地床重排。** 本次 `rift-spatial-sector-layouts.csv` 仍为22件solid、4块relief，沿用余烬脊的材料、构造及source映射，修改中心、平面尺寸与方向。三个较大脊放在西侧宽面、北侧厚地和中央偏南宽面；其余中小件错位分组，东侧裂带只放少量短件，不把每个空洞边缘围满。22是沿用上一轮减量后的数量基准，不是全库要求。纯矩形名义足迹总和由744320降为384875px²，降低约48%；它只描述作者长宽乘积，不代表真实solid投影占比。4块低床收至能容纳它们的宽地，不让低床跨孔提供虚假的可走表面。
@@ -135,12 +137,12 @@ v1冻结局部处理的概率、尺度限制、关联破坏区和样式规则；
 
 ### 跨材料作者推广（2026-10-12，DEC-206续行）
 
-当前注册为 `cinder-ridge`、`ash-strata`、`splayed-fibres`、`shell-chain`、`pale-sail`、`gel-fibre` 六图，各自拥有独立layout；其余102仍为空间策略v1。B01新增五图的具体宽地主次、破坏区域及实体关系见[作者批次](../design-notes/rift-fragment-rollout-batches.md)。注册与三档技术通过不等于构型、美术或未知探索验收，实际状态归[推广任务](../tasks/rift-spatial-rollout.md)。
+注册权威为data/rift-spatial-fragment-worlds.csv，当前108世界各自拥有独立layout；注册项采用空间策略v2，未注册项保持空间策略v1。B01新增五图的具体宽地主次、破坏区域及实体关系见[作者批次](../design-notes/rift-fragment-rollout-batches.md)。注册与三档技术通过不等于构型、美术或未知探索验收，实际状态归[推广任务](../tasks/rift-spatial-rollout.md)。
 
 - CSV同时拥有地床、空洞、实体及出生候选。Ash与Splayed使用原成群材料的repeat能力；Pale保双幕source-once，Shell/Gel恢复原母版完整关系组各一次，不能为提高实体密度复制唯一构造。实例数量不是全库配额；敌人、Host、资源及身体通路门保持。
 - spatial codegen将fragment绑定表纳入输入和来源hash。只有显式注册者可以跳过被fragment最终轮廓替代的旧erosion数量前置；未注册世界保持原检查。布局、矩形、绑定的唯一性/完整性及非法注册继续拒绝。
-- 本批只扩展作者数据及构建/验证工具，不变更共享v1或r8运行时语义，不另开修订。保存的r8空间策略/native定义/作者layout完整自包含；新增注册不得让旧策略v1自动升级，恢复不得读取新作者表补字段。固定 `c0b71d93` 的八份旧r8完整结果与四层材质用于变更前后精确比较，独立固定Git配置捕获与当前源恢复分开记录。
-- 每作者批最多五图；原始失败与修正后的证据分开保存，退回宏形须改地床面积与位置，不能只加边角噪声。后续单柱与压纤四角的临时草案尚未注册，不计入六图。
+- 原B01批只扩展作者数据及构建/验证工具；全库批共享v1不变，新局使用修订10环境来源校验，旧r8/r9各按封存执行器恢复。保存的r8空间策略/native定义/作者layout完整自包含；新增注册不得让旧策略v1自动升级，恢复不得读取新作者表补字段。固定 `c0b71d93` 的八份旧r8完整结果与四层材质用于变更前后精确比较，独立固定Git配置捕获与当前源恢复分开记录。
+- 每作者批最多五图；原始失败与修正后的证据分开保存，退回宏形须改地床面积与位置，不能只加边角噪声。新增作者是否注册与通过以本轮CSV及独立批次证据为准。
 
 ## 修订7空间基础与历史适用范围（DEC-197，2026-10-10）
 
@@ -179,7 +181,7 @@ v1冻结局部处理的概率、尺度限制、关联破坏区和样式规则；
 
 **选择和身份。** 备行选择低/中/重污染，目的世界在该等级已可用的包中随机；不能指定精确世界，不强迫选择重档，不把某件工具作为入场钥匙。一次踏入请求先冻结请求种子、包ID/版本/依赖、等级及等级规则版本、具体材料/形体配置、内容预算及其版本，再后台生成；有限候选和后备仅改变同一冻结合同内部允许的布局，不静默换世界/等级、减敌人或减奖励配额。用户取消未提交准备后可以重新选择；这不允许已经提交的出击、冷续局或保存重试重抽身份。冻结合同/来源不完整、签名不合、未知能力、生成耗尽则明确拒绝，原行装与记录沿库存事务保存。
 
-**v3 部署修订隔离。** 当前新出发使用 `algorithmRevision=8`，配方version=3、内容定义version=2保持；revision 1–7均以冻结执行器供原身份恢复。修订8只对显式注册的六个世界采用fragment空间策略v2；另102世界几何、内容和外观输入保持，仍使用空间策略v1，包修订与来源回执按新版本变化。修订7从 `b2d73790` 封存完整生成、材质与恢复闭包，禁止把r7包改标r8或用当前CSV重建。修订7当时增加冻结空间策略，扩大地形并按真实新出撤点重布内容；修订6的完整闭包从 `4459d7c3` 封存，包含作者材料及组织图。修订6增加显式构造版本4及作者缺失地面，不修改既有污染、巡逻或收益合同。修订5增加显式构造版本3及形体配置；原20世界作者定义与外观保持不变，并逐档检查旧新几何及预烤RGBA等价。修订4改变世界材料配方与派生实体构造，保留修订3的污染、敌人与资源合同。修订3只改变重度深薪预算的集中方式，保留修订2的巡逻/操作窗口合同；不得用当前CSV重算旧布局与收益。revision 1找不到巡逻终点时退为静止守卫的问题不能靠读取新算法悄悄改变旧存档。revision 2 在挑选巡逻起点时同时验证可形成真实往返巡路，不允许失败后静默退成 `static`。新初始朝向量化至百万分之一度，减少新修订三角函数跨运行时差异；这不追改旧 v2 或 revision 1 的签名承诺。
+**v3 部署修订隔离。** 当前显式注册环境来源的世界新出发使用 `algorithmRevision=10`；配方version=3、内容定义version=2保持。revision 1–9按固定闭包恢复，未注册环境来源的世界仍走r8。r10使用独立作者fragment空间策略v2并确认真实母体表面来源；r9原六图的来源选择与表现由17476a4e冻结，r8完整闭包由7c744d3d冻结。旧局不能读今日CSV重布或升级修订。修订7从 `b2d73790` 封存完整生成、材质与恢复闭包，禁止把r7包改标r8或用当前CSV重建。修订7当时增加冻结空间策略，扩大地形并按真实新出撤点重布内容；修订6的完整闭包从 `4459d7c3` 封存，包含作者材料及组织图。修订6增加显式构造版本4及作者缺失地面，不修改既有污染、巡逻或收益合同。修订5增加显式构造版本3及形体配置；原20世界作者定义与外观保持不变，并逐档检查旧新几何及预烤RGBA等价。修订4改变世界材料配方与派生实体构造，保留修订3的污染、敌人与资源合同。修订3只改变重度深薪预算的集中方式，保留修订2的巡逻/操作窗口合同；不得用当前CSV重算旧布局与收益。revision 1找不到巡逻终点时退为静止守卫的问题不能靠读取新算法悄悄改变旧存档。revision 2 在挑选巡逻起点时同时验证可形成真实往返巡路，不允许失败后静默退成 `static`。新初始朝向量化至百万分之一度，减少新修订三角函数跨运行时差异；这不追改旧 v2 或 revision 1 的签名承诺。
 
 **世界的材料与构造（2026-10-05）。** `rift-world-appearance.csv` 是逐世界外观的唯一数据来源，地面、实体表皮、断面、次材料各有暗／中／亮色阶，另给地表组织方式、尺度、强度、覆盖、笔触反差和静区。它编入并冻结在新包内；旧身份不读取当前配色。色阶连续映射既有源图的明暗和细节，表面粗糙度、法线、接触暗部与真实光照仍各自参与；不能用全屏滤色或统一增饱和代替不同材料。普通材料的本色与局部污染绿分开；浅浮雕虽然可走，仍属于其物质来源，不能因碰撞为空被洗成底床颜色。翻找残骸继承同一世界色阶而保留形制、识别边界、动效与未揭晓内容。
 
@@ -845,7 +847,7 @@ interface FragmentRoll {
 - 从 **system-enemy-ai** 接收：WalkGrid、路点必须可走、过渡期 `EnemySpawnData.type` ∈ {infiltrator, rewriter}。向它提供本次 `enemySpawns`（每条带 `form`；过渡期恰好 1 个改写体）。另交墙缘折线 / 占漆地板格（贪婪薪柴路径） / 走廊包围盒，以及一份 `contaminationDraw` 给污染句法（宿主禁止二次抽卡）。
 - 从 **system-growth-tide** 接收：污染物节点契约。向它提供本次节点。工具 abyss 改读本次薪柴坐标，禁止 `import { RIFT_MAP }`。
 - 向 **RiftScene** 发送：整份 `GeneratedRiftLayout`。场景不再在 create 时写死 `RIFT_MAP`。
-- **修订9六图，已接入／限定内部验证完成／用户实景待复看：** 向native材料表现提供与layout节点一一对应的冻结 `R100SearchSitePlacement`，不含奖励；现有 `frame.piles` 的id/collected驱动材料前后态，不新增翻找系统或保存接口。完整策略参与配方身份，恢复按原revision核对，不读取今日CSV重选来源。合同见[六图来源部署](#grounded-search-sites)。
+- **修订10注册世界：** 向native材料表现提供与layout节点一一对应的冻结 `R100SearchSitePlacement`，不含奖励；现有 `frame.piles` 的id/collected驱动材料前后态，不新增翻找系统或保存接口。完整策略参与配方身份，恢复按原revision核对，不读取今日CSV重选来源。合同见[来源部署](#grounded-search-sites)。
 - 向 **ExtractionSystem** 发送：恰好一个 `ExtractionPointDef`。规则仍是走近按 E。
 - 向 **Minimap** 发送：本次 tile 与撤离世界坐标。标记形状不新造。
 - 向 **VisibilitySystem** 发送：`setExtractionPosition` + glow source。虚空挡视线（DEC-106）。

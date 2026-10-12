@@ -1,0 +1,961 @@
+{
+  "definition": {
+    "id": "shell-threads-medium",
+    "family": "broken-shell",
+    "grade": "medium",
+    "label": "碎壳穿束",
+    "profile": "shell-threads",
+    "cols": 72,
+    "rows": 56,
+    "seed": 20261012,
+    "spawn_x": 670,
+    "spawn_y": 980,
+    "exit_x": 1980,
+    "exit_y": 1172,
+    "search_x": 1152,
+    "search_y": 1218.5600000000002,
+    "enemy_x": 1612.8,
+    "enemy_y": 985.6000000000001,
+    "axis": 0.42,
+    "light_radius": 134,
+    "emission": 0.55,
+    "motion_period": 20,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "broken-shell",
+        "role": "relief",
+        "x": 1227.8,
+        "y": 952.1,
+        "rotation": 0.34,
+        "length": 288.75,
+        "width": 197.4,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.55,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 2,
+        "family": "broken-shell",
+        "role": "relief",
+        "x": 1570.1,
+        "y": 965.75,
+        "rotation": -0.36,
+        "length": 325.5,
+        "width": 207.9,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.67,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 3,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 1236.2,
+        "y": 943.7,
+        "rotation": 1.11,
+        "length": 252,
+        "width": 103.95,
+        "height": 46,
+        "thickness": 11,
+        "fold": 0.64,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 4,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 1572.2,
+        "y": 934.25,
+        "rotation": -0.98,
+        "length": 229.95,
+        "width": 121.8,
+        "height": 56,
+        "thickness": 13,
+        "fold": 0.59,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 630,
+          "y": 868
+        },
+        {
+          "x": 618.02,
+          "y": 846.08
+        },
+        {
+          "x": 601.06,
+          "y": 841.16
+        },
+        {
+          "x": 591.54,
+          "y": 817.16
+        },
+        {
+          "x": 566.04,
+          "y": 800
+        },
+        {
+          "x": 491.4,
+          "y": 800
+        },
+        {
+          "x": 420,
+          "y": 845.78
+        },
+        {
+          "x": 420,
+          "y": 1000
+        },
+        {
+          "x": 630,
+          "y": 1000
+        }
+      ],
+      [
+        {
+          "x": 1342.28,
+          "y": 360
+        },
+        {
+          "x": 1300,
+          "y": 409.22
+        },
+        {
+          "x": 1300,
+          "y": 497.86
+        },
+        {
+          "x": 1337.42,
+          "y": 530
+        },
+        {
+          "x": 1480,
+          "y": 530
+        },
+        {
+          "x": 1480,
+          "y": 360
+        }
+      ],
+      [
+        {
+          "x": 1841.58,
+          "y": 1260
+        },
+        {
+          "x": 1800,
+          "y": 1308.4
+        },
+        {
+          "x": 1800,
+          "y": 1390.36
+        },
+        {
+          "x": 1806.74,
+          "y": 1399.54
+        },
+        {
+          "x": 1825.22,
+          "y": 1406.34
+        },
+        {
+          "x": 1829.3,
+          "y": 1425.2
+        },
+        {
+          "x": 1846.14,
+          "y": 1430
+        },
+        {
+          "x": 1940,
+          "y": 1430
+        },
+        {
+          "x": 1940,
+          "y": 1310.74
+        },
+        {
+          "x": 1892.4,
+          "y": 1260
+        }
+      ]
+    ],
+    "authoredErosion": true,
+    "terrainOutline": [
+      {
+        "x": 980,
+        "y": 290.74
+      },
+      {
+        "x": 987.1,
+        "y": 272.84
+      },
+      {
+        "x": 998.76,
+        "y": 253.12
+      },
+      {
+        "x": 1001.82,
+        "y": 220.8
+      },
+      {
+        "x": 1018.26,
+        "y": 210
+      },
+      {
+        "x": 1680,
+        "y": 210
+      },
+      {
+        "x": 1680,
+        "y": 520
+      },
+      {
+        "x": 1774.38,
+        "y": 520
+      },
+      {
+        "x": 1820,
+        "y": 567.6
+      },
+      {
+        "x": 1820,
+        "y": 623.2
+      },
+      {
+        "x": 1827.58,
+        "y": 632.22
+      },
+      {
+        "x": 1838,
+        "y": 640.66
+      },
+      {
+        "x": 1847.9,
+        "y": 655.82
+      },
+      {
+        "x": 1862.84,
+        "y": 660
+      },
+      {
+        "x": 1938.8,
+        "y": 660
+      },
+      {
+        "x": 2000,
+        "y": 734.06
+      },
+      {
+        "x": 2000,
+        "y": 887.52
+      },
+      {
+        "x": 1978.8,
+        "y": 912.72
+      },
+      {
+        "x": 1970.56,
+        "y": 946.58
+      },
+      {
+        "x": 2000,
+        "y": 966.26
+      },
+      {
+        "x": 2000,
+        "y": 1129.2
+      },
+      {
+        "x": 2006.96,
+        "y": 1138
+      },
+      {
+        "x": 2022.76,
+        "y": 1151.76
+      },
+      {
+        "x": 2030.6,
+        "y": 1160
+      },
+      {
+        "x": 2061.72,
+        "y": 1160
+      },
+      {
+        "x": 2090,
+        "y": 1192.92
+      },
+      {
+        "x": 2090,
+        "y": 1507.16
+      },
+      {
+        "x": 1931.56,
+        "y": 1570
+      },
+      {
+        "x": 1460,
+        "y": 1570
+      },
+      {
+        "x": 1460,
+        "y": 1476.1
+      },
+      {
+        "x": 1429.62,
+        "y": 1450
+      },
+      {
+        "x": 1377.82,
+        "y": 1450
+      },
+      {
+        "x": 1350,
+        "y": 1417.62
+      },
+      {
+        "x": 1350,
+        "y": 1216.76
+      },
+      {
+        "x": 1272.3,
+        "y": 1150
+      },
+      {
+        "x": 770,
+        "y": 1150
+      },
+      {
+        "x": 770,
+        "y": 1140
+      },
+      {
+        "x": 489.94,
+        "y": 1140
+      },
+      {
+        "x": 459.22,
+        "y": 1121.86
+      },
+      {
+        "x": 417.94,
+        "y": 1114.8
+      },
+      {
+        "x": 393.94,
+        "y": 1140
+      },
+      {
+        "x": 260,
+        "y": 1140
+      },
+      {
+        "x": 260,
+        "y": 893.54
+      },
+      {
+        "x": 258.54,
+        "y": 887.74
+      },
+      {
+        "x": 254.86,
+        "y": 884.16
+      },
+      {
+        "x": 254.06,
+        "y": 875.5
+      },
+      {
+        "x": 249.8,
+        "y": 870
+      },
+      {
+        "x": 230,
+        "y": 870
+      },
+      {
+        "x": 230,
+        "y": 645.44
+      },
+      {
+        "x": 254.94,
+        "y": 624.34
+      },
+      {
+        "x": 264.64,
+        "y": 596
+      },
+      {
+        "x": 230,
+        "y": 579.54
+      },
+      {
+        "x": 230,
+        "y": 450
+      },
+      {
+        "x": 625.5,
+        "y": 450
+      },
+      {
+        "x": 641.56,
+        "y": 456.18
+      },
+      {
+        "x": 663.8,
+        "y": 470.54
+      },
+      {
+        "x": 680,
+        "y": 475.82
+      },
+      {
+        "x": 680,
+        "y": 522.6
+      },
+      {
+        "x": 684.56,
+        "y": 530.7
+      },
+      {
+        "x": 692.98,
+        "y": 537.34
+      },
+      {
+        "x": 696.96,
+        "y": 550.8
+      },
+      {
+        "x": 709.36,
+        "y": 560
+      },
+      {
+        "x": 937.98,
+        "y": 560
+      },
+      {
+        "x": 948.02,
+        "y": 557.78
+      },
+      {
+        "x": 951.82,
+        "y": 553.4
+      },
+      {
+        "x": 964,
+        "y": 549.9
+      },
+      {
+        "x": 970,
+        "y": 544.82
+      },
+      {
+        "x": 970,
+        "y": 450
+      },
+      {
+        "x": 980,
+        "y": 450
+      }
+    ],
+    "fragmentShapeVersion": "rectilinear-fragment-v1"
+  },
+  "spawn": {
+    "x": 668,
+    "y": 980
+  },
+  "extraction": {
+    "x": 1980,
+    "y": 1172
+  },
+  "searchSites": [
+    {
+      "nodeId": "r100-kindling-safe-1",
+      "version": 1,
+      "position": {
+        "x": 1028,
+        "y": 980
+      },
+      "visualSeed": 4054347577,
+      "sourceKind": "surface-peel",
+      "family": "broken-shell",
+      "groundFamily": "broken-shell",
+      "sourceObjectId": null,
+      "sourceAnchor": null,
+      "sourceDomain": "ground",
+      "axis": 0.41999999999999993,
+      "footprintProfile": "grounded-material-v1"
+    },
+    {
+      "nodeId": "r100-kindling-contested-1",
+      "version": 1,
+      "position": {
+        "x": 1204,
+        "y": 372
+      },
+      "visualSeed": 2330663763,
+      "sourceKind": "surface-peel",
+      "family": "broken-shell",
+      "groundFamily": "broken-shell",
+      "sourceObjectId": null,
+      "sourceAnchor": null,
+      "sourceDomain": "ground",
+      "axis": 0.41999999999999993,
+      "footprintProfile": "grounded-material-v1"
+    },
+    {
+      "nodeId": "r100-kindling-contested-2",
+      "version": 1,
+      "position": {
+        "x": 2068,
+        "y": 1492
+      },
+      "visualSeed": 2855135207,
+      "sourceKind": "surface-peel",
+      "family": "broken-shell",
+      "groundFamily": "broken-shell",
+      "sourceObjectId": null,
+      "sourceAnchor": null,
+      "sourceDomain": "ground",
+      "axis": 0.41999999999999993,
+      "footprintProfile": "grounded-material-v1"
+    },
+    {
+      "nodeId": "r100-kindling-deep-1",
+      "version": 1,
+      "position": {
+        "x": 1668,
+        "y": 228
+      },
+      "visualSeed": 2364185443,
+      "sourceKind": "surface-peel",
+      "family": "broken-shell",
+      "groundFamily": "broken-shell",
+      "sourceObjectId": null,
+      "sourceAnchor": null,
+      "sourceDomain": "ground",
+      "axis": 0.41999999999999993,
+      "footprintProfile": "grounded-material-v1"
+    },
+    {
+      "nodeId": "r100-kindling-deep-2",
+      "version": 1,
+      "position": {
+        "x": 1572,
+        "y": 228
+      },
+      "visualSeed": 1220774306,
+      "sourceKind": "surface-peel",
+      "family": "broken-shell",
+      "groundFamily": "broken-shell",
+      "sourceObjectId": null,
+      "sourceAnchor": null,
+      "sourceDomain": "ground",
+      "axis": 0.41999999999999993,
+      "footprintProfile": "grounded-material-v1"
+    },
+    {
+      "nodeId": "r100-contaminant-safe-1",
+      "version": 1,
+      "position": {
+        "x": 1156,
+        "y": 1060
+      },
+      "visualSeed": 4010754320,
+      "sourceKind": "detached",
+      "family": "broken-shell",
+      "groundFamily": "broken-shell",
+      "sourceObjectId": 1,
+      "sourceAnchor": {
+        "x": 1156.0160299025727,
+        "y": 1059.4005283365623
+      },
+      "sourceDomain": "formation",
+      "axis": 0.33999999999999986,
+      "footprintProfile": "grounded-material-v1"
+    },
+    {
+      "nodeId": "r100-contaminant-contested-1",
+      "version": 1,
+      "position": {
+        "x": 484,
+        "y": 772
+      },
+      "visualSeed": 3490368209,
+      "sourceKind": "surface-peel",
+      "family": "broken-shell",
+      "groundFamily": "broken-shell",
+      "sourceObjectId": null,
+      "sourceAnchor": null,
+      "sourceDomain": "ground",
+      "axis": 0.41999999999999993,
+      "footprintProfile": "grounded-material-v1"
+    },
+    {
+      "nodeId": "r100-contaminant-deep-1",
+      "version": 1,
+      "position": {
+        "x": 1444,
+        "y": 228
+      },
+      "visualSeed": 2775761806,
+      "sourceKind": "surface-peel",
+      "family": "broken-shell",
+      "groundFamily": "broken-shell",
+      "sourceObjectId": null,
+      "sourceAnchor": null,
+      "sourceDomain": "ground",
+      "axis": 0.41999999999999993,
+      "footprintProfile": "grounded-material-v1"
+    }
+  ],
+  "diagnostics": {
+    "identity": "shell-threads-medium",
+    "family": "broken-shell",
+    "grade": "medium",
+    "seed": 20261012,
+    "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+    "geometryFingerprint": "fd5d8ce3",
+    "qualification": "v3-production-candidate",
+    "projection": "native XY topdown; height projection 0",
+    "nativeCanvas": [
+      960,
+      640
+    ],
+    "cameraZoom": 1.5,
+    "actorBody": 20,
+    "movementPxPerSecond": 80,
+    "supportCell": 8,
+    "triangles": 1408,
+    "reachableBodySeats": 21574,
+    "spawnPoint": {
+      "x": 668,
+      "y": 980
+    },
+    "exitPoint": {
+      "x": 1980,
+      "y": 1172
+    },
+    "searchPoint": {
+      "x": 1148,
+      "y": 1140
+    },
+    "enemyPoint": {
+      "x": 1620,
+      "y": 988
+    },
+    "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+    "erosionCells": 1388,
+    "solidCells": 689,
+    "physicalRoles": [
+      {
+        "id": 1,
+        "role": "relief"
+      },
+      {
+        "id": 2,
+        "role": "relief"
+      },
+      {
+        "id": 3,
+        "role": "solid"
+      },
+      {
+        "id": 4,
+        "role": "solid"
+      }
+    ],
+    "geometryBeforeDeployment": true,
+    "dynamicTopology": false,
+    "gradeMechanics": true,
+    "paintHosts": 4,
+    "volumeHosts": 2,
+    "paintContactAreaPx": 32768,
+    "volumeBoundsAreaPx": 24576,
+    "chaosRateStart": 0.42,
+    "chaosRateEnd": 0.6,
+    "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately",
+    "spatial": {
+      "version": 2,
+      "worldId": "shell-threads",
+      "sourceHash": "3f4046ebcae995e5967160b90a16da45460a62b6d74f3722e43c1da59029ed28",
+      "organization": "authored-sectors",
+      "width": 2304,
+      "height": 1792,
+      "terrainFillRatio": 0.366241939484127,
+      "solidTerrainRatio": 0.02916155246116731,
+      "bodyReachableRatio": 1,
+      "unreachableBodySeats": 0,
+      "spawnIndex": 1,
+      "spawnRelocationPx": 2,
+      "extraction": {
+        "point": {
+          "x": 1980,
+          "y": 1172
+        },
+        "cell": 42295,
+        "pathDistancePx": 1391.5290039756337,
+        "interactionPathDistancePx": 1341.5878784786796,
+        "euclideanDistancePx": 1325.9743587264422,
+        "pathFraction": 0.8571742476276822,
+        "regionId": 7,
+        "distanceBand": 2,
+        "candidateCount": 7157,
+        "regionCount": 6
+      },
+      "extractionCandidateField": {
+        "reachableCount": 21574,
+        "maxPathDistancePx": 1623.39105243401,
+        "minCandidatePathDistancePx": 966.4894654563437,
+        "maxCandidatePathDistancePx": 1600.7636354360402,
+        "candidateCount": 7157,
+        "regionCount": 6,
+        "distanceBandCount": 3,
+        "regionCounts": {
+          "2": 1274,
+          "3": 41,
+          "6": 1267,
+          "7": 2010,
+          "10": 1383,
+          "11": 1182
+        },
+        "distanceBandCounts": {
+          "0": 2898,
+          "1": 3510,
+          "2": 749
+        }
+      },
+      "solidObjectCount": 2
+    },
+    "expedition": {
+      "reachableBodySeats": 21574,
+      "extractionRoutePx": 1391.5290039756337,
+      "maximumExtraTravelPx": 1237.8805178903572,
+      "directReturnRoutePx": 1341.5878784786796,
+      "nodes": [
+        {
+          "id": "kindling/safe",
+          "minimumExtraTravelPx": 0,
+          "approachRoutePx": 312,
+          "interactionSeats": 113,
+          "pollutionDistancePx": 176.87807247183554
+        },
+        {
+          "id": "contaminant/safe",
+          "minimumExtraTravelPx": 0,
+          "approachRoutePx": 471.19595949289317,
+          "interactionSeats": 113,
+          "pollutionDistancePx": 307.058907144937
+        },
+        {
+          "id": "kindling/contested",
+          "minimumExtraTravelPx": 520.1546878700478,
+          "approachRoutePx": 780.0773439350237,
+          "interactionSeats": 113,
+          "pollutionDistancePx": 20
+        },
+        {
+          "id": "kindling/contested",
+          "minimumExtraTravelPx": 486.489465456345,
+          "approachRoutePx": 1562.1362184380705,
+          "interactionSeats": 54,
+          "pollutionDistancePx": 44.11754546370561
+        },
+        {
+          "id": "contaminant/contested",
+          "minimumExtraTravelPx": 509.9209229614214,
+          "approachRoutePx": 287.7645019878171,
+          "interactionSeats": 92,
+          "pollutionDistancePx": 372.18177646126026
+        },
+        {
+          "id": "kindling/deep",
+          "minimumExtraTravelPx": 922.5668093913673,
+          "approachRoutePx": 1261.547473407612,
+          "interactionSeats": 41,
+          "pollutionDistancePx": 44.11754546370561
+        },
+        {
+          "id": "kindling/deep",
+          "minimumExtraTravelPx": 866.3313113791842,
+          "approachRoutePx": 1165.547473407612,
+          "interactionSeats": 74,
+          "pollutionDistancePx": 21.607017003965517
+        },
+        {
+          "id": "contaminant/deep",
+          "minimumExtraTravelPx": 791.3506473629409,
+          "approachRoutePx": 1037.547473407612,
+          "interactionSeats": 74,
+          "pollutionDistancePx": 92.61903789690601
+        }
+      ],
+      "patrolWindows": [
+        {
+          "id": "r100-kindling-contested-1",
+          "seat": {
+            "x": 1204,
+            "y": 324
+          },
+          "startMs": 0,
+          "durationMs": 2400
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "seat": {
+            "x": 2068,
+            "y": 1444
+          },
+          "startMs": 0,
+          "durationMs": 2400
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "seat": {
+            "x": 1572,
+            "y": 220
+          },
+          "startMs": 0,
+          "durationMs": 2400
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "seat": {
+            "x": 508,
+            "y": 732
+          },
+          "startMs": 0,
+          "durationMs": 2400
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "seat": {
+            "x": 1628,
+            "y": 220
+          },
+          "startMs": 100,
+          "durationMs": 2400
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "seat": {
+            "x": 1412,
+            "y": 220
+          },
+          "startMs": 3000,
+          "durationMs": 2400
+        }
+      ],
+      "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+      "spatialDeployment": {
+        "version": 1,
+        "safe_max_extra_travel_px": 180,
+        "safe_max_approach_px": 480,
+        "contested_min_extra_travel_px": 180,
+        "contested_max_extra_travel_px": 840,
+        "deep_min_extra_travel_px": 600,
+        "deep_max_extra_travel_px": 1400,
+        "max_search_approach_px": 2600,
+        "node_spacing_px": 96,
+        "node_spread_weight": 0.25,
+        "host_min_approach_px": 160,
+        "host_max_approach_px": 2600,
+        "host_region_cols": 4,
+        "host_region_rows": 3,
+        "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+      },
+      "searchExtraTravelCapPx": 1400,
+      "searchSites": [
+        {
+          "nodeId": "r100-kindling-safe-1",
+          "sourceKind": "surface-peel",
+          "family": "broken-shell",
+          "sourceDomain": "ground",
+          "sourceObjectId": null
+        },
+        {
+          "nodeId": "r100-kindling-contested-1",
+          "sourceKind": "surface-peel",
+          "family": "broken-shell",
+          "sourceDomain": "ground",
+          "sourceObjectId": null
+        },
+        {
+          "nodeId": "r100-kindling-contested-2",
+          "sourceKind": "surface-peel",
+          "family": "broken-shell",
+          "sourceDomain": "ground",
+          "sourceObjectId": null
+        },
+        {
+          "nodeId": "r100-kindling-deep-1",
+          "sourceKind": "surface-peel",
+          "family": "broken-shell",
+          "sourceDomain": "ground",
+          "sourceObjectId": null
+        },
+        {
+          "nodeId": "r100-kindling-deep-2",
+          "sourceKind": "surface-peel",
+          "family": "broken-shell",
+          "sourceDomain": "ground",
+          "sourceObjectId": null
+        },
+        {
+          "nodeId": "r100-contaminant-safe-1",
+          "sourceKind": "detached",
+          "family": "broken-shell",
+          "sourceDomain": "formation",
+          "sourceObjectId": 1
+        },
+        {
+          "nodeId": "r100-contaminant-contested-1",
+          "sourceKind": "surface-peel",
+          "family": "broken-shell",
+          "sourceDomain": "ground",
+          "sourceObjectId": null
+        },
+        {
+          "nodeId": "r100-contaminant-deep-1",
+          "sourceKind": "surface-peel",
+          "family": "broken-shell",
+          "sourceDomain": "ground",
+          "sourceObjectId": null
+        }
+      ],
+      "environmentScoreCap": 12,
+      "costBasis": "all-body-safe-48px-interaction-seats",
+      "guaranteedSafeReturn": true,
+      "enemyCount": 3,
+      "kindlingCount": 5,
+      "contaminantCount": 3
+    }
+  }
+}

@@ -1,7 +1,7 @@
 /** Grounded-search runtime contracts. Real modules; only browser/GL/DOM ports are
  * adapted. This is not a GPU pixel, browser performance or art-quality verdict.
  * TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/pickup-grounding/check-runtime.ts
- * Add --production for one actual r9 Worker preparation/transfer fixture. */
+ * Add --production for one actual r10 Worker preparation/transfer fixture. */
 import assert from 'node:assert/strict';
 import type { MasterWorld } from '../../src/generation/world-study/r100-master-world';
 import type { R100SearchSitePlacement } from '../../src/generation/world-study/search-site-types';
@@ -29,7 +29,7 @@ function patch(nodeId = 'site-a', x = 14, y = 14): SearchSiteMaterialPatch {
   return { nodeId, x, y, width: 4, height: 4, intact: channels(4, 4, 41), searched: channels(4, 4, 11) };
 }
 function tinyWorld(sites: readonly R100SearchSitePlacement[] | undefined = [site()]): MasterWorld {
-  return { algorithmRevision: sites ? 9 : 8, packageHash: 'test-receiver',
+  return { algorithmRevision: sites ? 10 : 8, packageHash: 'test-receiver',
     raster: { width: 64, height: 64 }, searchSites: sites, matterAt: () => true, roleAt: () => null,
     layout: { seed: 23, spawnPoint: { x: 16, y: 16 }, tileMap: { cols: 2, rows: 2, tileSize: 32 } },
     definition: { id: 'test-receiver', family: 'folded-slab', grade: 'medium', axis: 0, erosion: [], motion_period: 30 },
@@ -283,7 +283,7 @@ if (process.argv.includes('--production')) {
   const { createR100ProductionMap } = await import('../../src/generation/world-study/r100-production-map');
   const { executeR100SurfacePreparation, validateR100SurfacePreparation } = await import('../../src/systems/r100-world/surface-preparation');
   const recipe = createR100ProductionRecipe('pale-sail', 20261012, 'medium');
-  assert.equal(recipe.package.algorithmRevision, 9);
+  assert.equal(recipe.package.algorithmRevision, 10);
   const map = createR100ProductionMap(recipe), native = map.native!;
   const pixels = new Uint8ClampedArray(16 * 16 * 4).fill(96);
   for (let q = 3; q < pixels.length; q += 4) pixels[q] = 255;
@@ -292,7 +292,7 @@ if (process.argv.includes('--production')) {
       skinRoughness: .8, cutRoughness: .9, gain: 1, cutGain: 1 } };
   const input = { native, layout: map.layout, painting };
   const prepared = executeR100SurfacePreparation(input);
-  check('actual r9 Worker result binds source provenance; rejects missing phase buffers or foreign world identity', () => {
+  check('actual r10 Worker result binds source provenance; rejects missing phase buffers or foreign world identity', () => {
     validateR100SurfacePreparation(prepared, input); assert(prepared.searchPatches?.length);
     const originalIdentity = r100NativePreparationIdentity(native);
     const changed = structuredClone(native); (changed.searchSites![0] as { visualSeed: number }).visualSeed ^= 123;
@@ -320,4 +320,4 @@ if (process.argv.includes('--production')) {
     assert(native.raster.objectId.byteLength > 0, 'caller native input is never detached');
   });
 }
-console.log(JSON.stringify({ status: 'pass', checks, scope: 'CPU runtime/transport contracts with fake GL and DOM; --production adds one real r9 preparation. No native GPU pixels, FOV image, browser budget or user aesthetic verdict.' }, null, 2));
+console.log(JSON.stringify({ status: 'pass', checks, scope: 'CPU runtime/transport contracts with fake GL and DOM; --production adds one real r10 preparation. No native GPU pixels, FOV image, browser budget or user aesthetic verdict.' }, null, 2));
