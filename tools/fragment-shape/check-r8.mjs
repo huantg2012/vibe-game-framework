@@ -1,4 +1,4 @@
-/** Real r8 cinder admission and terrain agreement. Historical r7 is tested separately. */
+/** Real r8 fragment admission and terrain agreement. Historical r7 is tested separately. */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -16,15 +16,31 @@ import {compileR100FragmentShape} from '../../src/generation/world-study/r100-fr
 import {bakeMasterWorldSurface} from '../../src/systems/r100-world/surface-bake.ts';
 import {TileType} from '../../src/types/game-types.ts';
 
-const grades = ['low', 'medium', 'severe'];
-const seeds = [20261011, 20261027, 20261109];
+const allGrades = ['low', 'medium', 'severe'];
+const registered = new Set(R100_FRAGMENT_AUTHORING.map(row => row.worldId));
+const worlds = (process.env.QA_WORLDS ?? [...registered].join(',')).split(',');
+const grades = (process.env.QA_GRADES ?? allGrades.join(',')).split(',');
+const seedTokens = (process.env.QA_SEEDS ?? '20261011,20261027,20261109').split(',');
+assert(seedTokens.every(token => /^\d+$/.test(token)), 'QA_SEEDS must use nonempty decimal uint32 values');
+const seeds = seedTokens.map(Number);
+assert(worlds.length && new Set(worlds).size === worlds.length && worlds.every(world => registered.has(world)), 'QA_WORLDS must list unique registered fragment worlds');
+assert(grades.length && new Set(grades).size === grades.length && grades.every(grade => allGrades.includes(grade)), 'QA_GRADES must list unique supported grades');
+assert(seeds.length && new Set(seeds).size === seeds.length && seeds.every(seed => Number.isInteger(seed) && seed >= 0 && seed <= 0xffffffff), 'QA_SEEDS must list unique uint32 seeds');
+const sourceHashes = {};
+for (const prefix of ['src', 'data']) {
+  const walk = directory => {for (const entry of fs.readdirSync(directory, {withFileTypes: true})) {
+    const file = `${directory}/${entry.name}`;
+    if (entry.isDirectory()) walk(file);
+    else if (entry.isFile()) sourceHashes[file] = createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+  }};
+  walk(prefix);
+}
 const hash = value => createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex');
 const reportAt = process.argv.indexOf('--report');
 const destination = reportAt >= 0 ? process.argv[reportAt + 1] : undefined;
 if (destination) assert(!fs.existsSync(destination), 'Do not overwrite previous evidence');
 let checkedRecipes = 0;
-const registered = new Set(R100_FRAGMENT_AUTHORING.map(row => row.worldId));
-for (const row of R100_NATIVE_WORLDS) for (const grade of grades) {
+for (const row of R100_NATIVE_WORLDS) for (const grade of allGrades) {
   const recipe = createR100ProductionRecipe(row.id, seeds[0], grade);
   assert.equal(recipe.package.algorithmRevision, 8);
   assert(validR100ProductionRecipe(recipe), `${row.id}/${grade}`);
@@ -48,7 +64,7 @@ for (const mutate of [
 }
 // Even valid alternate compiled contours cannot claim a different original edge seed.
 const wrongOrigin = structuredClone(source.spatialPolicy);
-wrongOrigin.fragmentShape.edgeSeed++;
+wrongOrigin.fragmentShape.edgeSeed = (wrongOrigin.fragmentShape.edgeSeed + 1) >>> 0;
 const compiled = compileR100FragmentShape(wrongOrigin.fragmentShape);
 wrongOrigin.terrainOutline = compiled.terrainOutline; wrongOrigin.erosion = compiled.erosion;
 assert(!validR100SpatialPolicy(wrongOrigin, 'cinder-ridge', source.requestedSeed)); rejectionCases++;
@@ -97,8 +113,8 @@ async function painting(recipe) {
   for (const name of new Set([family, ...recipe.nativeDefinition.instances.map(row => row.family ?? family)])) families[name] = name === family ? primary : await read(PAINTED_MATERIALS.find(row => row.family === name));
   return {...primary, families, appearance: recipe.appearance};
 }
-async function verifyCase(grade, seed) {
-  const recipe = createR100ProductionRecipe('cinder-ridge', seed, grade);
+async function verifyCase(worldId, grade, seed) {
+  const recipe = createR100ProductionRecipe(worldId, seed, grade);
   const started = performance.now(), result = createR100ProductionMap(recipe);
   const generatedMs = performance.now() - started;
   assert.equal(result.native.algorithmRevision, 8);
@@ -140,7 +156,7 @@ async function verifyCase(grade, seed) {
     checkedSurfacePixels++;
   }
   const spatial = result.native.diagnostics.spatial;
-  return {grade, seed, effectiveSeed: result.metadata.effectiveSeed, attempt: result.metadata.attempt, rejected: result.metadata.rejected,
+  return {worldId, grade, seed, effectiveSeed: result.metadata.effectiveSeed, attempt: result.metadata.attempt, rejected: result.metadata.rejected,
     shapeHash: hash({terrainOutline, erosion}), supportHash: createHash('sha256').update(matter).digest('hex'),
     outlineVertices: terrainOutline.length, holes: erosion.length, rasterHoles, checkedSupportCells, transparentSolidCells, partialMaterialCells, checkedSurfacePixels,
     bodies: {bodySize: result.metadata.bodySize, reachableRatio: spatial.bodyReachableRatio, unreachableSeats: spatial.unreachableBodySeats},
@@ -149,15 +165,25 @@ async function verifyCase(grade, seed) {
     geometryFingerprint: result.native.diagnostics.geometryFingerprint, generatedMs, surfaceMs,
     rgbaHashes: Object.fromEntries(['albedo', 'normal', 'response', 'emission'].map(key => [key, createHash('sha256').update(surface[key]).digest('hex')]))};
 }
-const cases = [];
-for (const seed of seeds) for (const grade of grades) {
-  const item = await verifyCase(grade, seed); cases.push(item);
-  global.gc?.();
-  console.log(`PASS r8 cinder ${seed}/${grade}: attempt ${item.attempt}, ${item.outlineVertices} outer vertices, ${item.rasterHoles} holes, route ${item.extractionRoutePx.toFixed(1)}px`);
+const cases = [], failures = [];
+for (const worldId of worlds) for (const seed of seeds) for (const grade of grades) {
+  try {
+    const item = await verifyCase(worldId, grade, seed); cases.push(item);
+    console.log(`PASS r8 ${worldId} ${seed}/${grade}: attempt ${item.attempt}, ${item.outlineVertices} outer vertices, ${item.rasterHoles} holes, route ${item.extractionRoutePx.toFixed(1)}px`);
+  } catch (error) {
+    failures.push({worldId, seed, grade, error: error.stack ?? String(error)});
+    console.error(`FAIL r8 ${worldId} ${seed}/${grade}: ${error.message}`);
+  } finally {global.gc?.();}
 }
-for (const seed of seeds) assert.equal(new Set(cases.filter(item => item.seed === seed).map(item => item.supportHash)).size, 1, 'Grade selection changed same-seed terrain');
-const report = {status: 'passed', algorithmRevision: 8, algorithm: 'rectilinear-fragment-v1', registeredWorlds: [...registered], checkedRecipes, rejectionCases, retryKeepsEdgeSeedAndTerrain: true,
-  cases, scope: '9 full cinder maps with complete deployment, actual material baking, frozen polygon / 8px matter / transferred LOS / coarse material support / every RGBA alpha pixel agreement. Other 107 worlds checked as recipes only.',
-  limitations: ['Node timings are not browser Worker timings or FPS.', 'This checks opaque cells, not natural navigation, shoulder-light observation or visual approval.', 'Old r7 replay and browser continuation have independent evidence.']};
+for (const worldId of worlds) for (const seed of seeds) {
+  const matches = cases.filter(item => item.worldId === worldId && item.seed === seed);
+  if (matches.length !== grades.length) continue;
+  assert.equal(new Set(matches.map(item => item.supportHash)).size, 1, `${worldId}/${seed}: grade selection changed terrain`);
+  assert.equal(new Set(matches.map(item => item.shapeHash)).size, 1, `${worldId}/${seed}: grade selection changed frozen contours`);
+}
+const report = {status: failures.length ? 'failed' : 'passed', algorithmRevision: 8, algorithm: 'rectilinear-fragment-v1', registeredWorlds: [...registered], selectedWorlds: worlds, selectedSeeds: seeds, selectedGrades: grades, sourceHashes, checkedRecipes, rejectionCases, retryKeepsEdgeSeedAndTerrain: true,
+  cases, failures, scope: `${cases.length} full maps for ${worlds.length} selected fragment worlds, ${seeds.length} seeds and ${grades.length} grades; complete deployment, actual material baking, frozen polygon / 8px matter / transferred LOS / coarse material support / every RGBA alpha pixel agreement. All ${R100_NATIVE_WORLDS.length} worlds also checked as recipes across all three grades.`,
+  limitations: ['Node timings are not browser Worker timings or FPS.', 'This checks opaque cells, not natural navigation, shoulder-light observation or visual approval.', 'Cross-grade terrain agreement applies only to selected grades and is grouped independently by world and seed.', 'Old r7 replay, pre-expansion saved r8 replay and browser continuation have independent evidence.']};
 if (destination) {fs.mkdirSync(path.dirname(destination), {recursive: true}); fs.writeFileSync(destination, `${JSON.stringify(report, null, 2)}\n`, {flag: 'wx'});}
-console.log(JSON.stringify({status: report.status, checkedRecipes, rejectionCases, maps: cases.length, report: destination ?? null}));
+console.log(JSON.stringify({status: report.status, checkedRecipes, rejectionCases, maps: cases.length, failures: failures.length, report: destination ?? null}));
+if (failures.length) process.exitCode = 1;

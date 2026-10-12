@@ -15,6 +15,19 @@ function parse(source) {
 const [configs, placements, erosion, anchors, worlds, materials, organizationRows, authoredGroups, authoredErosion, sectorRows, sectorLayouts, sectorCuts, sectorAnchors, landPlates, landOutlines] = contents.map(parse);
 const nativeSource = readFileSync(new URL('../../data/rift-native-worlds.csv', import.meta.url), 'utf8');
 const nativeWorlds = parse(nativeSource);
+// Fragment registration is a build input; final terrain is compiled by the shared
+// v1 compiler and supersedes the legacy shore only for these explicit worlds.
+const fragmentSources = ['worlds', 'layouts', 'rectangles'].map(name => readFileSync(new URL(`../../data/rift-spatial-fragment-${name}.csv`, import.meta.url), 'utf8'));
+const [fragmentRows, fragmentLayouts, fragmentRectangles] = fragmentSources.map(parse);
+const fragmentColumns = [
+  ['world_id', 'layout_id', 'edge_seed_mode', 'seed_salt'],
+  ['id', 'algorithm_version', 'authoring_width', 'authoring_height', 'world_scale'],
+  ['layout_id', 'id', 'kind', 'ordinal', 'x', 'y', 'width', 'height'],
+];
+for (const [index, content] of fragmentSources.entries()) {
+  const actual = content.trim().split(/\r?\n/, 1)[0].split(',').sort();
+  if (JSON.stringify(actual) !== JSON.stringify([...fragmentColumns[index]].sort())) throw new Error('Unexpected fragment CSV columns');
+}
 const organizations = organizationRows.map(row => row.organization);
 if (new Set(organizations).size !== organizations.length) throw new Error('Duplicate spatial organization');
 const number = (row, key) => { const value = Number(row[key]); if (row[key] === '' || !Number.isFinite(value)) throw new Error(`Invalid spatial number ${key}`); return value; };
@@ -41,6 +54,23 @@ for (const rule of rules) {
 unique(catalog, row => row.worldId); unique(shapes, row => row.key);
 const sourceWorldIds = nativeWorlds.map(row => row.world_id);
 if (catalog.length !== sourceWorldIds.length || catalog.some(row => !sourceWorldIds.includes(row.worldId) || !organizations.includes(row.organization))) throw new Error('Spatial assignments must cover the native catalog exactly');
+unique(fragmentRows, row => row.world_id);
+unique(fragmentLayouts, row => row.id);
+unique(fragmentRectangles, row => `${row.layout_id}:${row.id}`);
+const fragmentWorlds = new Set(fragmentRows.map(row => row.world_id));
+for (const row of fragmentRows) {
+  const world = catalog.find(world => world.worldId === row.world_id), layout = fragmentLayouts.find(layout => layout.id === row.layout_id);
+  const salt = number(row, 'seed_salt');
+  if (!world || world.organization !== 'authored-sectors' || world.mirrorX || world.mirrorY || !sectorRows.some(sector => sector.world_id === row.world_id)
+    || !layout || !/^[a-z][a-z0-9-]{0,95}$/.test(layout.id) || row.edge_seed_mode !== 'run-seed' || !Number.isInteger(salt) || salt < 0 || salt > 0xffffffff
+    || layout.algorithm_version !== 'rectilinear-fragment-v1' || number(layout, 'world_scale') !== 2
+    || number(layout, 'authoring_width') * 2 !== config.cols * 32 || number(layout, 'authoring_height') * 2 !== config.rows * 32)
+    throw new Error(`Invalid fragment spatial registration ${row.world_id}`);
+}
+for (const layout of fragmentLayouts) {
+  if (!fragmentRows.some(row => row.layout_id === layout.id) || !fragmentRectangles.some(row => row.layout_id === layout.id && row.kind === 'land')) throw new Error(`Incomplete fragment layout registration ${layout.id}`);
+}
+for (const rectangle of fragmentRectangles) if (!fragmentLayouts.some(layout => layout.id === rectangle.layout_id) || !['land', 'void'].includes(rectangle.kind)) throw new Error('Unknown fragment rectangle registration');
 unique(authoredGroups, row => row.world_id);
 const groups = authoredGroups.map(row => {
   const native = nativeWorlds.find(world => world.world_id === row.world_id);
@@ -85,7 +115,7 @@ const sectors = sectorRows.map(row => {
   }
   const erosion = authoredErosion.filter(cut => cut.world_id === row.world_id).map(cut => cut.points.split('|').map(point => { const [x,y] = point.split(':').map(Number); return { x,y }; }));
   const spawnCandidates = sectorAnchors.filter(p => p.world_id === row.world_id).map(p => ({ x: number(p, 'x'), y: number(p, 'y') }));
-  if (erosion.length < 4 || erosion.length > 12 || spawnCandidates.length < 6 || spawnCandidates.length > 32) throw new Error(`Incomplete sector arrangement ${row.world_id}`);
+  if ((!fragmentWorlds.has(row.world_id) && (erosion.length < 4 || erosion.length > 12)) || spawnCandidates.length < 6 || spawnCandidates.length > 32) throw new Error(`Incomplete sector arrangement ${row.world_id}`);
   const outline = landOutlines.find(p => p.world_id === row.world_id);
   const terrainOutline = outline?.points.split('|').map(pair => {
     const values = pair.split(':').map(Number);
@@ -97,7 +127,7 @@ const sectors = sectorRows.map(row => {
     ...(terrainOutline ? { terrainOutline } : {}) };
 });
 if (catalog.filter(row => row.organization === 'authored-sectors').length !== sectors.length) throw new Error('Sector world registration mismatch');
-const sourceHash = createHash('sha256').update([...contents, nativeSource].join('\n')).digest('hex');
+const sourceHash = createHash('sha256').update([...contents, nativeSource, ...fragmentSources].join('\n')).digest('hex');
 let output = '// GENERATED by tools/world-study/codegen-r100-spatial.mjs from data/rift-spatial-*.csv.\n';
 for (const [name, value] of Object.entries({ SOURCE_HASH: sourceHash, CONFIG: config, PLACEMENTS: layouts, EROSION: cuts, ANCHORS: starts, WORLDS: catalog, MATERIALS: shapes, ORGANIZATIONS: rules, AUTHORED_GROUPS: groups, SECTORS: sectors })) output += `export const R100_SPATIAL_${name} = ${JSON.stringify(value, null, 2)} as const;\n`;
 const target = new URL('../../src/generated/r100-spatial-data.ts', import.meta.url);

@@ -1,23 +1,26 @@
 /** Identity/erosion checks on every frozen whole-group definition. */
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { R100_SPATIAL_WORLDS } from '../../src/generated/r100-spatial-data.ts';
+import { R100_FRAGMENT_AUTHORING } from '../../src/generated/r100-fragment-data.ts';
 import { R100_NATIVE_WORLDS } from '../../src/generated/r100-native-worlds.ts';
 import { createR100ProductionRecipe, validR100ProductionRecipe } from '../../src/generation/world-study/r100-package.ts';
 import { createR100SpatialDefinition } from '../../src/generation/world-study/r100-spatial-world.ts';
-import { validateNativeErosion, validateNativeGroundEdgeOwnership } from '../../src/generation/world-study/native-volume-erosion.ts';
+import { validateNativeErosion, validateNativeGroundEdgeOwnership, FRAGMENT_TERRAIN_BUDGET } from '../../src/generation/world-study/native-volume-erosion.ts';
 const output = process.env.QA_REPORT ?? 'docs/qa/artifacts/r100-spatial-rollout-2026-10-10/authored-group-identity.json';
 assert(!existsSync(output),`Refusing to replace evidence: ${output}`);
-const paths = ['data/rift-native-worlds.csv', 'data/rift-spatial-authored-groups.csv', 'data/rift-spatial-authored-erosion.csv', 'src/generated/r100-spatial-data.ts', 'src/generation/world-study/r100-spatial-world.ts', 'src/generation/world-study/native-volume-erosion.ts', 'tools/spatial-rollout/check-authored-groups.mjs'];
+const paths = ['data/rift-native-worlds.csv', 'data/rift-spatial-authored-groups.csv', 'data/rift-spatial-authored-erosion.csv', 'src/generated/r100-spatial-data.ts', 'src/generation/world-study/r100-spatial-world.ts', 'src/generation/world-study/native-volume-erosion.ts', 'tools/spatial-rollout/check-authored-groups.mjs', 'src/generated/r100-fragment-data.ts', 'src/generation/world-study/r100-fragment-shape.ts'];
 const report = { status: 'running', sourceHashes: Object.fromEntries(paths.map(path => [path, createHash('sha256').update(readFileSync(path)).digest('hex')])), cases: [], sectors: [] };
-for(const name of ['sectors','sector-layouts','sector-cuts','sector-anchors']) {
+for(const name of ['sectors','sector-layouts','sector-cuts','sector-anchors','fragment-layouts','fragment-worlds','fragment-rectangles']) {
   const path=`data/rift-spatial-${name}.csv`;
   report.sourceHashes[path]=createHash('sha256').update(readFileSync(path)).digest('hex');
 }
 const joinedCoastBudget = [Array.from({length:39},(_,i)=>({x:512+100*Math.cos(i/39*Math.PI*2),y:384+100*Math.sin(i/39*Math.PI*2)}))];
-assert.throws(()=>validateNativeErosion(joinedCoastBudget),/3–32 points/);
-assert.throws(()=>validateNativeErosion(joinedCoastBudget,2048,1792),/3–32 points/);
-assert.throws(()=>validateNativeErosion(joinedCoastBudget,2304,1792),/3–32 points/);
+assert.throws(()=>validateNativeErosion(joinedCoastBudget),/point budget exceeded/);
+assert.throws(()=>validateNativeErosion(joinedCoastBudget,2048,1792),/point budget exceeded/);
+assert.throws(()=>validateNativeErosion(joinedCoastBudget,2304,1792),/point budget exceeded/);
 const contains = (points, x, y) => {
   let inside = false;
   for(let i=0,j=points.length-1;i<points.length;j=i++) {
@@ -31,7 +34,7 @@ for (const world of R100_NATIVE_WORLDS) for (const grade of ['low','medium','sev
   assert(validR100ProductionRecipe(recipe));
   if (policy.organization === 'authored-sectors') {
     const native=recipe.nativeDefinition, result=createR100SpatialDefinition(native,policy,20261010).definition;
-    validateNativeErosion(result.erosion,2304,1792);validateNativeGroundEdgeOwnership(result);
+    validateNativeErosion(result.erosion,2304,1792,policy.fragmentShape ? FRAGMENT_TERRAIN_BUDGET : undefined);validateNativeGroundEdgeOwnership(result);
     for(const role of ['solid','relief']) assert.equal(result.instances.filter(instance=>instance.role===role).length,policy.organizationRules[`${role}Count`],`${world.id}/${role} count`);
     if(policy.organizationRules.sourceMode==='source-once') {
       assert.equal(result.instances.length,native.instances.length);
@@ -40,7 +43,7 @@ for (const world of R100_NATIVE_WORLDS) for (const grade of ['low','medium','sev
         for(const key of ['role','family','height','thickness','fold','branches','opening','distortion','constructionVersion','shapeProfile','groundEdgeWidth'])assert.equal(actual[key],source[key],`${world.id}/${source.id}/${key}`);
       }
     }
-    report.sectors.push({world:world.id,grade,sourceMode:policy.organizationRules.sourceMode,instanceCount:result.instances.length,shoreCount:result.erosion.length,maxShoreVertices:Math.max(...result.erosion.map(p=>p.length))});
+    report.sectors.push({world:world.id,grade,fragment: Boolean(policy.fragmentShape),sourceMode:policy.organizationRules.sourceMode,instanceCount:result.instances.length,shoreCount:result.erosion.length,maxShoreVertices:Math.max(...result.erosion.map(p=>p.length))});
     continue;
   }
   if (!policy.groupTransform) continue;
@@ -75,7 +78,8 @@ for (const world of R100_NATIVE_WORLDS) for (const grade of ['low','medium','sev
   }
   report.cases.push({world:world.id,grade,sourceCount:native.instances.length,solidCount:policy.organizationRules.solidCount,reliefCount:policy.organizationRules.reliefCount,sourceErosionSeats,shoreCount:result.erosion.length,maxShoreVertices:Math.max(...result.erosion.map(p=>p.length))});
 }
-assert.equal(report.cases.length,252);
-assert.equal(report.sectors.length,9);
-report.status='passed';writeFileSync(output,JSON.stringify(report,null,2)+'\n');
+assert.equal(report.cases.length,R100_SPATIAL_WORLDS.filter(world => world.organization === 'authored-group').length * 3);
+assert.equal(report.sectors.length,R100_SPATIAL_WORLDS.filter(world => world.organization === 'authored-sectors').length * 3);
+assert.equal(report.sectors.filter(item => item.fragment).length,R100_FRAGMENT_AUTHORING.length * 3);
+report.status='passed';mkdirSync(path.dirname(output),{recursive:true});writeFileSync(output,JSON.stringify(report,null,2)+'\n');
 console.log(`PASS ${report.cases.length} whole-group definitions: source identity, relative geometry, unique edge owner, source VOID inclusion and preserved open-sea mouths`);

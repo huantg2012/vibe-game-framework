@@ -80,10 +80,48 @@ try{for(const item of cases){
     finally{change([]);}return{points,length:entry.distancePx+(raw.length-1)*8,entry,elapsedWallMs:performance.now()-started,position:{...s.player.getPosition()},events};
    },target);row.events.push(navigation);save();
   };
-  const face=async()=>{const s=await state(),dx=w.target.x-s.position.x,dy=w.target.y-s.position.y;const key=Math.abs(dx)>Math.abs(dy)?(dx>0?'d':'a'):(dy>0?'s':'w');await page.keyboard.down(key);await page.waitForTimeout(220);await page.keyboard.up(key);await page.waitForTimeout(80);};
-  await page.locator('#game-container').focus();row.entry=await state();await walk(w.observer);await face();row.hidden=await state();assert(row.hidden.unoccludedVisibility>0,'Target outside actual facing/range: not a valid VOID witness');assert.equal(row.hidden.visibility,0,'Ground across VOID is not hidden');await page.screenshot({path:path.join(dir,'before.png')});
-  await walk(w.reveal);await face();row.revealed=await state();assert(row.revealed.visibility>0,'Target not revealed after walking around VOID');assert(!row.revealed.ended);await page.screenshot({path:path.join(dir,'after.png')});
-  await walk(w.observer);await face();row.returned=await state();assert(row.returned.unoccludedVisibility>0,'Return target outside actual facing/range');assert.equal(row.returned.visibility,0,'Current FOV must hide target again when returning');await page.screenshot({path:path.join(dir,'returned.png')});assert.deepEqual(row.errors,[]);row.status='passed';
+  // Facing follows actual motion with a turn rate. A long tap overshoots a
+  // corner; a short tap can stop before turning. Approach the measured seat
+  // from behind with a checked body sweep, then read the real resulting FOV.
+  const face=async seat=>{
+   const approach=await page.evaluate(({seat,target})=>{
+    const {g,physical,bodyHasSupport}=window.__sightJourney;
+    const dx=target.x-seat.x,dy=target.y-seat.y;
+    const direction=Math.abs(dx)>Math.abs(dy)?{x:Math.sign(dx),y:0}:{x:0,y:Math.sign(dy)};
+    const behind={x:seat.x-direction.x*32,y:seat.y-direction.y*32};
+    if(!bodyHasSupport(g,behind,10,10)||!physical.supports(behind,10,10)
+      ||physical.displacementFraction(behind,10,10,seat.x-behind.x,seat.y-behind.y)!==1)
+     throw Error('Witness has no supported 32px facing approach; choose a more robust diagnostic seat');
+    return behind;
+   },{seat,target:w.target});
+   row.facingApproaches??=[];row.facingApproaches.push({approach,seat});
+   await walk(approach);await walk(seat);await page.waitForTimeout(80);
+  };
+  // The offline witness deliberately records the EARLIEST reveal. Exact DDA
+  // corner grazing can change with <3px real movement tolerance. Keep that
+  // earliest result as evidence, but demonstrate FOV from a nearby stable seat.
+  row.browserRevealSeat=await page.evaluate(async({earliest,target})=>{
+   const {hasLineOfSight}=await import('/src/utils/grid-raycast.ts');
+   const {s,g,physical,bodyHasSupport}=window.__sightJourney,candidates=[];
+   for(let dy=-32;dy<=32;dy+=8)for(let dx=-32;dx<=32;dx+=8){
+    if(Math.hypot(dx,dy)>32)continue;
+    const seat={x:earliest.x+dx,y:earliest.y+dy};
+    if(!bodyHasSupport(g,seat,10,10)||!physical.supports(seat,10,10))continue;
+    const tx=target.x-seat.x,ty=target.y-seat.y;
+    const direction=Math.abs(tx)>Math.abs(ty)?{x:Math.sign(tx),y:0}:{x:0,y:Math.sign(ty)};
+    const behind={x:seat.x-direction.x*32,y:seat.y-direction.y*32};
+    if(!bodyHasSupport(g,behind,10,10)||!physical.supports(behind,10,10)
+      ||physical.displacementFraction(behind,10,10,seat.x-behind.x,seat.y-behind.y)!==1)continue;
+    if([-4,0,4].every(y=>[-4,0,4].every(x=>hasLineOfSight(s.visibility.occluders,{x:seat.x+x,y:seat.y+y},target))))
+     candidates.push({seat,offsetPx:Math.hypot(dx,dy),lineOfSightMarginPx:4});
+   }
+   candidates.sort((a,b)=>a.offsetPx-b.offsetPx);
+   if(!candidates.length)throw Error('Earliest reveal has no stable nearby body-supported seat');
+   return candidates[0];
+  },{earliest:w.reveal,target:w.target});
+  await page.locator('#game-container').focus();row.entry=await state();await walk(w.observer);await face(w.observer);row.hidden=await state();assert(row.hidden.unoccludedVisibility>0,'Target outside actual facing/range: not a valid VOID witness');assert.equal(row.hidden.visibility,0,'Ground across VOID is not hidden');await page.screenshot({path:path.join(dir,'before.png')});
+  await walk(row.browserRevealSeat.seat);await face(row.browserRevealSeat.seat);row.revealed=await state();assert(row.revealed.visibility>0,'Target not revealed after walking around VOID');assert(!row.revealed.ended);await page.screenshot({path:path.join(dir,'after.png')});
+  await walk(w.observer);await face(w.observer);row.returned=await state();assert(row.returned.unoccludedVisibility>0,'Return target outside actual facing/range');assert.equal(row.returned.visibility,0,'Current FOV must hide target again when returning');await page.screenshot({path:path.join(dir,'returned.png')});assert.deepEqual(row.errors,[]);row.status='passed';
  }catch(error){row.status='failed';row.failure=String(error.stack??error);report.errors.push({world:item.world,error:row.failure});console.log(`FAIL ${item.world}: ${error.message}`);}
  finally{await context.close();save();}console.log(`${row.status} sight journey ${item.world}`);
 }report.status=report.errors.length?'failed':'passed';save();if(report.errors.length)process.exitCode=1;}

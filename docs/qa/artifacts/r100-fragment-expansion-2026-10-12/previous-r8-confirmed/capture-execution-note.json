@@ -1,0 +1,20 @@
+{
+  "kind": "retrospective-agent-execution-note",
+  "createdAt": "2026-10-12T02:02:15.847Z",
+  "scope": "Clarifies actual second capture command observed in the tool transcript; not a fabricated automatic process log and does not modify baseline.json.",
+  "command": "QA_SOURCE_ROOT=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r8-c0b71d93-g_znxr9w QA_SOURCE_COMMIT=c0b71d93 QA_BASELINE_DIR=docs/qa/artifacts/r100-fragment-expansion-2026-10-12/previous-r8-confirmed TSX_TSCONFIG_PATH=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r8-c0b71d93-g_znxr9w/tools/contam-preview/tsconfig.json node --expose-gc --import tsx tools/fragment-shape/check-r8-previous.mjs capture",
+  "captureGuard": "Before the second process started, the tool required realpath(TSX_TSCONFIG_PATH) to equal realpath(QA_SOURCE_ROOT/tools/contam-preview/tsconfig.json), before loading production modules.",
+  "configSource": "Both config and phaser-stub.ts were extracted by git show c0b71d93:<path> into the fixed Git source directory before capture.",
+  "configHashes": {
+    "tools/contam-preview/tsconfig.json": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3",
+    "tools/contam-preview/phaser-stub.ts": "3c2cd48b23caf46274ce924d5b36ae161159534ca60aef916c3dcc069fc21be7"
+  },
+  "missingEnvironmentField": "The environment/node/sharp/aliasConfig report field was added to the tool only after this capture process had started. Thus baseline.json lacks the field, while subsequent expanded-replay.json contains it. The alias guard and source-hash inclusion preceded the confirmed capture.",
+  "outcome": "8 complete maps and four material layers captured; fixed config/stub and all src/data hashes checked against c0b71d93; capture-comparison.json records exact agreement with all 8 first-attempt outcomes.",
+  "evidence": [
+    "baseline.json",
+    "capture-comparison.json",
+    "expanded-replay.json",
+    "../../../../../tools/fragment-shape/check-r8-previous.mjs"
+  ]
+}

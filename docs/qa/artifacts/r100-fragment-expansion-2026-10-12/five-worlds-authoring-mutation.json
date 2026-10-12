@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "algorithmRevision": 8,
+  "unchangedWorldCount": 102,
+  "unchangedRecipeCount": 306,
+  "unchangedScope": "Exact native/spatial geometry, grade, content, appearance and profile inputs; source receipt and package revision intentionally differ. Not full-map requalification of these worlds.",
+  "r7ValidAndRelabelTo8Rejected": true,
+  "authoringMutation": {
+    "scope": "Process-local generated authoring rows simulate future CSV changes, including an invalid current rectangle; no source file edits.",
+    "changed": [
+      "land rectangle",
+      "edge seed salt",
+      "solid/relief placement"
+    ],
+    "savedR8AndR7RemainValid": true,
+    "cases": [
+      {
+        "worldId": "ash-strata",
+        "seed": 20261012,
+        "grade": "medium",
+        "futureIdentityChanged": true,
+        "savedInputUnchanged": true,
+        "fullMapHashBefore": "d4fadb87be002c6e7fb0e0276e33a7e45edac41759d5fd42b61ed9b9770050b6",
+        "fullMapHashAfter": "d4fadb87be002c6e7fb0e0276e33a7e45edac41759d5fd42b61ed9b9770050b6",
+        "exactMapEqual": true,
+        "originalAuthoringRestored": true
+      },
+      {
+        "worldId": "splayed-fibres",
+        "seed": 20261012,
+        "grade": "medium",
+        "futureIdentityChanged": true,
+        "savedInputUnchanged": true,
+        "fullMapHashBefore": "76a6b8d17e6c413a0aee6b18310812a2a42f34bc1559e376b404bd1ea57bc0c2",
+        "fullMapHashAfter": "76a6b8d17e6c413a0aee6b18310812a2a42f34bc1559e376b404bd1ea57bc0c2",
+        "exactMapEqual": true,
+        "originalAuthoringRestored": true
+      },
+      {
+        "worldId": "shell-chain",
+        "seed": 20261012,
+        "grade": "medium",
+        "futureIdentityChanged": true,
+        "savedInputUnchanged": true,
+        "fullMapHashBefore": "108e4c4e3bfdeeb590a4909cf9a2ce454e9fde341fb61b6a8446cccd38eddace",
+        "fullMapHashAfter": "108e4c4e3bfdeeb590a4909cf9a2ce454e9fde341fb61b6a8446cccd38eddace",
+        "exactMapEqual": true,
+        "originalAuthoringRestored": true
+      },
+      {
+        "worldId": "pale-sail",
+        "seed": 20261012,
+        "grade": "medium",
+        "futureIdentityChanged": true,
+        "savedInputUnchanged": true,
+        "fullMapHashBefore": "6d3efb2fff32c20e0baf275aaf55c16480b12a6321085b66ce1ec6611e6e74ea",
+        "fullMapHashAfter": "6d3efb2fff32c20e0baf275aaf55c16480b12a6321085b66ce1ec6611e6e74ea",
+        "exactMapEqual": true,
+        "originalAuthoringRestored": true
+      },
+      {
+        "worldId": "gel-fibre",
+        "seed": 20261012,
+        "grade": "medium",
+        "futureIdentityChanged": true,
+        "savedInputUnchanged": true,
+        "fullMapHashBefore": "b2c2596c84bea2d67e46d8c5177db483f0f8bfdd97e1aa920c746e96a9a1d040",
+        "fullMapHashAfter": "b2c2596c84bea2d67e46d8c5177db483f0f8bfdd97e1aa920c746e96a9a1d040",
+        "exactMapEqual": true,
+        "originalAuthoringRestored": true
+      }
+    ]
+  },
+  "limitations": [
+    "These recipes are created from current data before a process-local mutation. Genuine pre-expansion r8 preservation is tested independently by tools/fragment-shape/check-r8-previous.mjs using fixed Git recipes/full maps/material hashes.",
+    "Browser cold continuation and frozen r7 rendering are covered by separate evidence."
+  ]
+}

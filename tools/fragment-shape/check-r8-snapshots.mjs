@@ -41,39 +41,55 @@ function exactHash(value) {
   }
   visit(value); return digest.digest('hex');
 }
-const saved = createR100ProductionRecipe('cinder-ridge', seed, 'medium');
-const receipt = JSON.stringify(saved);
-let before = createR100ProductionMap(saved);
-const expectedHash = exactHash(before);
-before = null; global.gc?.();
-const authoring = R100_FRAGMENT_AUTHORING.find(row => row.worldId === 'cinder-ridge');
-const sector = R100_SPATIAL_SECTORS.find(row => row.worldId === 'cinder-ridge');
-const originalLand = authoring.layout.landRects[0][0], originalSalt = authoring.seedSalt, originalPlacement = sector.placements[0].x;
-let recoveredHash, futureIdentityChanged;
-try {
-  // Process-local future CSV/codegen simulation. No source files are modified.
-  authoring.layout.landRects[0][0] += 8;
-  authoring.seedSalt = (authoring.seedSalt + 1) >>> 0;
-  sector.placements[0].x += 16;
-  assert(validR100ProductionRecipe(saved), 'Saved recipe began consulting current authoring data');
-  assert(validR100ProductionRecipe(r7), 'Old r7 validator began consulting current authoring data');
-  assert.equal(JSON.stringify(saved), receipt, 'Saved snapshot aliases current authoring rows');
-  const nextDeparture = createR100ProductionRecipe('cinder-ridge', seed, 'medium');
-  futureIdentityChanged = nextDeparture.package.dependencyHash !== saved.package.dependencyHash;
-  assert(futureIdentityChanged, 'New source did not change new departure identity');
-  recoveredHash = exactHash(createR100ProductionMap(saved));
-  assert.equal(recoveredHash, expectedHash, 'Frozen complete r8 map changed after current authoring mutation');
-} finally {
-  authoring.layout.landRects[0][0] = originalLand;
-  authoring.seedSalt = originalSalt;
-  sector.placements[0].x = originalPlacement;
+const selectedWorlds = (process.env.QA_WORLDS ?? [...migrated].join(',')).split(',');
+const seedTokens = (process.env.QA_SEEDS ?? '20261011').split(',');
+assert(seedTokens.every(token => /^\d+$/.test(token)), 'QA_SEEDS must use nonempty decimal uint32 values');
+const selectedSeeds = seedTokens.map(Number);
+const selectedGrades = (process.env.QA_GRADES ?? 'medium').split(',');
+assert(selectedWorlds.length && new Set(selectedWorlds).size === selectedWorlds.length && selectedWorlds.every(world => migrated.has(world)), 'QA_WORLDS must select registered fragment worlds');
+assert(selectedSeeds.length && new Set(selectedSeeds).size === selectedSeeds.length && selectedSeeds.every(value => Number.isInteger(value) && value >= 0 && value <= 0xffffffff), 'QA_SEEDS must select uint32 seeds');
+assert(selectedGrades.length && new Set(selectedGrades).size === selectedGrades.length && selectedGrades.every(value => ['low', 'medium', 'severe'].includes(value)), 'QA_GRADES must select supported grades');
+const cases = [];
+for (const worldId of selectedWorlds) for (const currentSeed of selectedSeeds) for (const grade of selectedGrades) {
+  const saved = createR100ProductionRecipe(worldId, currentSeed, grade);
+  const receipt = JSON.stringify(saved);
+  let before = createR100ProductionMap(saved);
+  const expectedHash = exactHash(before);
+  before = null; global.gc?.();
+  const authoring = R100_FRAGMENT_AUTHORING.find(row => row.worldId === worldId);
+  const sector = R100_SPATIAL_SECTORS.find(row => row.worldId === worldId);
+  assert(authoring && sector);
+  const originalLand = authoring.layout.landRects[0][0], originalSalt = authoring.seedSalt, originalPlacement = sector.placements[0].x;
+  let recoveredHash, futureIdentityChanged;
+  try {
+    // Deliberately invalid current authoring must not poison an already saved run.
+    // All mutations are process-local and restored even on assertion failure.
+    authoring.layout.landRects[0][0] = NaN;
+    authoring.seedSalt = (authoring.seedSalt + 1) >>> 0;
+    sector.placements[0].x += 1;
+    assert(validR100ProductionRecipe(saved), 'Saved recipe began consulting current authoring data');
+    assert(validR100ProductionRecipe(r7), 'Old r7 validator began consulting current authoring data');
+    assert.equal(JSON.stringify(saved), receipt, 'Saved snapshot aliases current authoring rows');
+    recoveredHash = exactHash(createR100ProductionMap(saved));
+    assert.equal(recoveredHash, expectedHash, 'Frozen complete r8 map changed after current authoring mutation');
+    authoring.layout.landRects[0][0] = originalLand;
+    const nextDeparture = createR100ProductionRecipe(worldId, currentSeed, grade);
+    futureIdentityChanged = nextDeparture.package.dependencyHash !== saved.package.dependencyHash;
+    assert(futureIdentityChanged, 'New source did not change new departure identity');
+  } finally {
+    authoring.layout.landRects[0][0] = originalLand;
+    authoring.seedSalt = originalSalt;
+    sector.placements[0].x = originalPlacement;
+  }
+  assert.equal(JSON.stringify(createR100ProductionRecipe(worldId, currentSeed, grade)), receipt, 'Authoring mutation was not restored');
+  cases.push({worldId, seed: currentSeed, grade, futureIdentityChanged, savedInputUnchanged: true, fullMapHashBefore: expectedHash, fullMapHashAfter: recoveredHash, exactMapEqual: expectedHash === recoveredHash, originalAuthoringRestored: true});
+  console.log(`PASS current r8 snapshot mutation ${worldId}/${currentSeed}/${grade}`);
+  global.gc?.();
 }
-assert.equal(JSON.stringify(createR100ProductionRecipe('cinder-ridge', seed, 'medium')), receipt, 'Authoring mutation was not restored');
 const report = {status: 'passed', algorithmRevision: 8, unchangedWorldCount: R100_NATIVE_WORLDS.length - migrated.size, unchangedRecipeCount: unchangedRecipes,
   unchangedScope: 'Exact native/spatial geometry, grade, content, appearance and profile inputs; source receipt and package revision intentionally differ. Not full-map requalification of these worlds.',
   r7ValidAndRelabelTo8Rejected: true,
-  authoringMutation: {scope: 'Process-local generated authoring rows simulate future CSV changes; no source file edits.', changed: ['land rectangle', 'edge seed salt', 'solid/relief placement'], savedR8AndR7RemainValid: true, futureIdentityChanged,
-    savedInputUnchanged: true, fullMapHashBefore: expectedHash, fullMapHashAfter: recoveredHash, exactMapEqual: expectedHash === recoveredHash, originalAuthoringRestored: true},
-  limitation: 'Browser cold continuation and frozen r7 rendering are covered by separate evidence.'};
+  authoringMutation: {scope: 'Process-local generated authoring rows simulate future CSV changes, including an invalid current rectangle; no source file edits.', changed: ['land rectangle', 'edge seed salt', 'solid/relief placement'], savedR8AndR7RemainValid: true, cases},
+  limitations: ['These recipes are created from current data before a process-local mutation. Genuine pre-expansion r8 preservation is tested independently by tools/fragment-shape/check-r8-previous.mjs using fixed Git recipes/full maps/material hashes.', 'Browser cold continuation and frozen r7 rendering are covered by separate evidence.']};
 if (destination) {fs.mkdirSync(path.dirname(destination), {recursive: true}); fs.writeFileSync(destination, `${JSON.stringify(report, null, 2)}\n`, {flag: 'wx'});}
-console.log(JSON.stringify(report, null, 2));
+console.log(JSON.stringify({status: report.status, unchangedRecipeCount: unchangedRecipes, checkedSnapshots: cases.length, report: destination ?? null}));

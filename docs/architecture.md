@@ -48,7 +48,7 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `native-body-collision.ts` 为正式v3角色提供独立于保守导航格的20×20身体查询：所有solid同源XY三角形参与连续扫掠，VOID仍用原8px支撑，浮雕不擦除实体。静态三角AABB按64px桶构建CSR索引；查询完整身体或整段扫掠AABB，以复用bitset去重后按原三角顺序执行原SAT，保留同距法线、豁免、SEPARATION与4轮滑动。索引与布局沿原WeakMap生命周期释放，不写入存档；本轮实测额外常驻最大338,348字节。WASD、敌人推挤后的校正、工具扫掠与存档准入共用该查询；不改变旧v1/v2、生成器保守寻路或Host的32px投放。斜面接触保留切向运动；技能Body.reset后同步offset与前帧坐标，不能留下同帧身体偏移。详细契约归[移动规格](specs/system-movement-vision.md#r100-v3--实体足边与完整身体2026-10-04)。
 
-当前新出发使用 v3 `algorithmRevision: 8` 与内容定义 version 2；新碎片桥仅用于显式注册的余烬脊，其余107世界保持原几何，见下方[矩形碎片生产桥](#rectangle-fragment-production)。新增形体与选择合同见“I07—I09”，原材料与构造合同见“R100 世界区分度 · 修订4”；以下保留早期修订的巡路与恢复合同。`legacy-r100-v2/executor.js` 从 a089bf7 封存完整 50 项依赖闭包（无可变 import），统一保护原修订 1／2 的几何、部署和校验；`freeze-native-r100-revision2.mjs` 可从固定提交逐字重建，旧记录按保存修订分派，不使用当前世界 CSV。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
+当前新出发使用 v3 `algorithmRevision: 8` 与内容定义 version 2；新碎片桥用于显式注册的余烬脊及B01五图，其余102世界保持原几何，见下方[矩形碎片生产桥](#rectangle-fragment-production)。新增形体与选择合同见“I07—I09”，原材料与构造合同见“R100 世界区分度 · 修订4”；以下保留早期修订的巡路与恢复合同。`legacy-r100-v2/executor.js` 从 a089bf7 封存完整 50 项依赖闭包（无可变 import），统一保护原修订 1／2 的几何、部署和校验；`freeze-native-r100-revision2.mjs` 可从固定提交逐字重建，旧记录按保存修订分派，不使用当前世界 CSV。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
 
 `systems/r100-world-presentation.ts` 持有正式表现准备，DEV 母版只保留兼容导出。`surface-preparation-client.ts` / `surface-preparation-worker.ts` 是专用可终止准备 Worker：接收已准入的原生数据及共享解码像素，执行地表、材质光照、侵蚀字段和 `surface-bake.ts` 的四张 RGBA 烘焙，以 transferable 返回。等待期间提前创建并上传 WebGL 材质接收器；`MasterPresentation` 建场消费一次，正式路径缺准备时抛错，绝不临时同步补烤。异步取消、迟到响应、替换与两份上限的 LRU 均释放未消费的 GPU 资源；已消费资源由场景销毁。准备身份包含包身份、实际种子、构造 ID 和尺寸，源图片像素缓存与一次性 GPU 资源分离。
 
@@ -1539,7 +1539,7 @@ DEC-199当前只改余烬脊的作者数据；其余107世界保持基线。`che
 
 独立预览 `docs/art/previews/world-fragment-open-field/edge-treatment.mjs` 适配旧展示数据并调用同源实现，浏览器经esbuild打包；Node检查使用 `--import tsx`。`tools/fragment-shape/accepted-v1.json`锁定ada26f43获认可母版，`check.mjs`只读比较，不自刷基准。冻结策略不代表自动完成宏观关卡编排。
 
-生产作者源为 `data/rift-spatial-fragment-{layouts,rectangles,worlds}.csv` → `tools/world-study/codegen-r100-fragments.mjs` → `generated/r100-fragment-data.ts`，分别声明布局/单位、land与void矩形次序、世界绑定与seed策略。首批只注册 `cinder-ridge`；布局为认可研究的1152×896作者画布和2倍换算，已有sector CSV继续拥有实体布置与出生候选。其余107世界不导入该构型、不复制该骨架，保持原空间策略版本1及几何输入；新包的算法修订统一为8，不等于107世界已迁移或通过新构型验收。
+生产作者源为 `data/rift-spatial-fragment-{layouts,rectangles,worlds}.csv` → `tools/world-study/codegen-r100-fragments.mjs` → `generated/r100-fragment-data.ts`，分别声明布局/单位、land与void矩形次序、世界绑定与seed策略。当前注册 `cinder-ridge` 及B01的 `ash-strata`、`splayed-fibres`、`shell-chain`、`pale-sail`、`gel-fibre` 六图，各有独立layout；认可研究的1152×896作者画布和2倍换算保持，sector CSV继续拥有实体布置与出生候选。其余102世界不导入该构型，保持原空间策略版本1及几何输入。注册数不代替完整地图、材质或探索体验验收。`codegen-r100-spatial.mjs` 读取fragment绑定表并计入sourceHash，只对显式注册条目跳过已被最终fragment替代的旧erosion数量前置，其余世界原检查保持。
 
 `r100-fragment-shape.ts` 负责生产冻结桥：`createR100SpatialPolicy(worldId, requestedSeed)` 把完整layout、算法版本、layoutId、来源hash、seed策略/salt及edgeSeed冻结为 `fragmentShape`，新策略版本为2，并保存同源编译出的 `terrainOutline` / `erosion`。edgeSeed固定为 `(requestedSeed + seedSalt) >>> 0`，三档共享同一请求seed的外岸与孔；部署的至多8个候选只变化其内容/实例seed，不重新选边缘。恢复校验精确新增字段与版本、重新编译保存的作者输入，并逐点核对保存轮廓，随后核验包依赖回执；不与当前CSV逐值比较，不从当前表补字段。未知算法/缺字段/seed漂移/轮廓漂移明确拒绝。
 
@@ -1547,4 +1547,7 @@ DEC-199当前只改余烬脊的作者数据；其余107世界保持基线。`che
 
 `legacy-r100-v7` 从固定 `b2d73790` 以三阶段保留历史闭包：`freeze-native-r100-revision7.mjs` 生成完整oracle，`derive-native-r100-revision7.mjs` 仅剥除已由公开入口分派的修订1–6，`project-native-r100-revision7.mjs` 再按经证明的ID成员用途精简恢复目录并移除新配方工厂。原始、派生和recovery执行器及manifest均保留，零可变外部import。公开 `r100-package.ts` / `r100-production-map.ts` / `surface-bake.ts` 的修订7校验、生成和材质分别进入归档 `executor-recovery.js`；修订8沿新桥，首次发包与恢复共用该分派，不重编旧局。
 
-本节记录实际接入与兼容边界；完整准入、旧局等价、运行预算及玩家终审分别记录在[推广任务](tasks/rift-spatial-rollout.md)与[独立代码复核](qa/rift-fragment-rollout-code-review.md)。生成/表面Worker的60秒截止、2304×1792画布、4,194,304像素预算及原搜撤配额不变；机制接入不提升I14/P49或其余107世界的质量状态。
+本节记录实际接入与兼容边界；完整准入、旧局等价、运行预算及玩家终审分别记录在[推广任务](tasks/rift-spatial-rollout.md)与[独立代码复核](qa/rift-fragment-rollout-code-review.md)。生成/表面Worker的60秒截止、2304×1792画布、4,194,304像素预算及原搜撤配额不变；机制接入不提升I14/P49或其余102世界的质量状态。
+
+
+**跨材料验证工具（DEC-206续行）**：`tools/fragment-shape/check-r8.mjs` 按world/seed/grade参数检查完整地图与材质同源；`check-r8-snapshots.mjs` 按当前绑定集合验证保存不受作者表变化影响。`check-r8-previous.mjs` 从固定Git入口、同提交tsconfig及Phaser stub捕获旧配方/完整结果/四层RGBA，当前代码只重放旧配方并精确比较；大二进制结果可由固定源再生，公开hash/recipe保留。`check-spatial-registration.mjs` 在临时CSV沙盒测试非法绑定、重复/孤立矩形及未注册世界的旧约束，不修改生产表。新增作者不变更r8执行器语义；实际验证与失败范围见[跨材料QA](qa/rift-fragment-expansion-2026-10-12.md)。
