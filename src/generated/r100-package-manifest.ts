@@ -301,7 +301,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/spatial-augmentation-candidates.ts",
-      "sha256": "540c410a93da337951e8ea8c1d1d757d3f6605edff7e981ed7a1462203580dd8"
+      "sha256": "53102104173071f580e7d4f14acab2c46bfdced8824350d3f14b64ef13dbe2b0"
     },
     {
       "path": "src/generation/world-study/spatial-augmentation-measure.ts",
@@ -372,7 +372,7 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "2a666f37f57aa8d74904f488cec644f7ced77187a5ee03c804258b529cadb862"
     }
   ],
-  "hash": "7492eb6870ce48c1add8fe65971099eeb9a75655b4ba3f96aee255d20976e3fd"
+  "hash": "928123d5c1308b74c6028518aa323c1f60652b3e4ec8f6c45f84b8bba056a077"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {

@@ -61,7 +61,7 @@ export function* spatialCandidateAttempts(current:SpatialTerrainPlan,hotspots:re
       let solidCenter={...hotspot.point},voidCenter={...hotspot.point};
       const newSolidIds:number[]=[];
       if(addSolid) {
-        
+
         const profile=profiles[Math.floor(random('profile')*profiles.length)%profiles.length]!,newId=Math.max(0,...instances.map(item=>item.id))+1;
         const between=(min:number,max:number,label:string):number=>min+(max-min)*random(label);
         let instance:MasterDefinition['instances'][number]={id:newId,role:'solid',family:profile.family,...solidCenter,
