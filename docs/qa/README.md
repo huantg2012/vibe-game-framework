@@ -1,5 +1,7 @@
 # 验证与质量记录
 
+2026-10-13 中尺度障碍首批三图：[专项QA](stealth-obstacles-2026-10-13.md) · [真实前后图册](artifacts/stealth-obstacles-2026-10-13/root-owned/index.html)。追加17件，18例生产/9旧配方及原几何保持通过；局部正常镜头已复看，实体不挡视线，全库与真实敌人潜行仍开放。
+
 2026-10-12 两项地图优化全库接入：[专项QA](world-upgrades-rollout-2026-10-12.md) · [108世界三档图册](artifacts/world-upgrades-rollout-2026-10-12/index.html)。324份限定生成覆盖齐全，最终全源及实机复核分别记录；不代签用户审美或I14/P49。
 
 2026-10-12 六图翻找残骸环境融入：[专项QA](pickup-grounding-2026-10-12.md) · [新旧实景对照](artifacts/pickup-grounding-implementation-2026-10-12/index.html)。先设计后接入r9，有限生成/旧局/真实E/冷续/FOV与内部图审完成；当时其余102推广暂停；随后用户已授权全库推广，见上方当前专项。用户视觉终验未代签。

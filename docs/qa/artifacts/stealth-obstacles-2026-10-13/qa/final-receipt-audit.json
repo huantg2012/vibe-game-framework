@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "checkedAt": "2026-10-13T07:46:20.630460+00:00",
+  "sourceHashesMatchCurrentWorktree": true,
+  "productionCases": 18,
+  "requestedSeeds": [
+    20261012,
+    0
+  ],
+  "completeCartesianProduct": true,
+  "minimumReachableBodyRatio": 0.9998993153443415,
+  "minimumPatrolWindowMs": 2400,
+  "oldRecipeMapReplays": 9,
+  "mediumMaterialFourChannelAndSearchPatchReplays": 3,
+  "routeFailureStatusFixed": true,
+  "falseTwoSidedCounterexampleFixed": true,
+  "receipts": {
+    "root-owned/production-final/report.json": "25f4865d8e62e84afdfafb00f211c36544895aa8d2c64e5c01210f461aa38066",
+    "code/after-final-old-replay.json": "f4b3bf750e19851f9f457e2a498922ecb91e562fd552b03d36ef2316e9413f7b",
+    "qa/authoring-preservation-final.json": "d7f7aaf6b12f2053faf1eef3aa03b7b6a9952fac9f3a4d940408a9fcb9436403",
+    "qa/final-geometry-and-player-void.json": "ae4ed0c8191bc4b1845b89645c2b91af6560150cc56834c4d678cdd2ed258650",
+    "qa/negative-route-after/summary.json": "aeee51c029f20d10fd3757012ec7bf4c0e54674c96e92e1afb4b7682cd768867",
+    "qa/detour-counterexample-before.json": "05e79e5a52c060b0453a755863e7da1905f56aad71a11494f9037d2321e0534e",
+    "qa/detour-counterexample-after.json": "9f6f3dd53b570697adb5c5c183e8fce64656b8ee65d37387c4ac67fd385cca86"
+  },
+  "limits": [
+    "Receipt audit of parent/code executions, not a second independent run of all 18 cases or build.",
+    "Nine map replays do not mean all nine have four-channel byte replay; only the three medium cases do.",
+    "Static/current data/source evidence is not browser runtime, enemy stealth, performance or human visual acceptance."
+  ]
+}

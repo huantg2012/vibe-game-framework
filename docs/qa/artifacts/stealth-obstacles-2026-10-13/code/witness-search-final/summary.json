@@ -1,0 +1,41 @@
+{
+  "status": "completed-search",
+  "cases": [
+    {
+      "worldId": "split-rib-causeway",
+      "objectCount": 5,
+      "objectsWithWitness": 3,
+      "missingObjectIds": [
+        4,
+        7
+      ],
+      "routeFailures": []
+    },
+    {
+      "worldId": "gel-rafts",
+      "objectCount": 6,
+      "objectsWithWitness": 4,
+      "missingObjectIds": [
+        8,
+        12
+      ],
+      "routeFailures": [
+        {
+          "id": "art:southwest-low-pair",
+          "reason": "Requested endpoint/via lacks a supported connection to the sampled component within 8√2px"
+        },
+        {
+          "id": "art:east-staggered-pair",
+          "reason": "Requested endpoint/via lacks a supported connection to the sampled component within 8√2px"
+        }
+      ]
+    },
+    {
+      "worldId": "sloughed-court",
+      "objectCount": 6,
+      "objectsWithWitness": 6,
+      "missingObjectIds": [],
+      "routeFailures": []
+    }
+  ]
+}

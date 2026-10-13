@@ -1,0 +1,140 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "worldId": "split-rib-causeway",
+      "diagnosticSha256": "1718d9fce9eb19f71ccb87b188a3c6914cd2100a76f1c7486506f98b135c5a4d",
+      "verifiedDetours": [
+        {
+          "id": "object-3:horizontal:24:0.5",
+          "objectId": 3,
+          "verifiedSegments": 146,
+          "closedLoopWinding": 0.9999999999999997,
+          "sideALengthPx": 576,
+          "sideBLengthPx": 592
+        },
+        {
+          "id": "object-5:horizontal:24:0.5",
+          "objectId": 5,
+          "verifiedSegments": 142,
+          "closedLoopWinding": 1.0000000000000002,
+          "sideALengthPx": 560,
+          "sideBLengthPx": 576
+        },
+        {
+          "id": "object-6:horizontal:24:0.5",
+          "objectId": 6,
+          "verifiedSegments": 120,
+          "closedLoopWinding": 0.9999999999999999,
+          "sideALengthPx": 480,
+          "sideBLengthPx": 480
+        }
+      ],
+      "addedObjectIdsWithoutEstablishedWitness": [
+        4,
+        7
+      ]
+    },
+    {
+      "worldId": "gel-rafts",
+      "diagnosticSha256": "f550fadf8351c999b6aa2e75ae62ef7839705b002c80c890b90da4f46ac82103",
+      "verifiedDetours": [
+        {
+          "id": "object-7:horizontal:24:0.5",
+          "objectId": 7,
+          "verifiedSegments": 142,
+          "closedLoopWinding": 1.0000000000000002,
+          "sideALengthPx": 568,
+          "sideBLengthPx": 568
+        },
+        {
+          "id": "object-9:horizontal:24:0.5",
+          "objectId": 9,
+          "verifiedSegments": 136,
+          "closedLoopWinding": 1.0000000000000002,
+          "sideALengthPx": 552,
+          "sideBLengthPx": 536
+        },
+        {
+          "id": "object-10:horizontal:24:0.5",
+          "objectId": 10,
+          "verifiedSegments": 126,
+          "closedLoopWinding": 0.9999999999999994,
+          "sideALengthPx": 504,
+          "sideBLengthPx": 504
+        },
+        {
+          "id": "object-11:horizontal:24:0.5",
+          "objectId": 11,
+          "verifiedSegments": 126,
+          "closedLoopWinding": 0.9999999999999997,
+          "sideALengthPx": 504,
+          "sideBLengthPx": 504
+        }
+      ],
+      "addedObjectIdsWithoutEstablishedWitness": [
+        8,
+        12
+      ]
+    },
+    {
+      "worldId": "sloughed-court",
+      "diagnosticSha256": "8b9b05e312a7c5b08eaf9b683796df7a3c88086367994525b750f4b8c6634577",
+      "verifiedDetours": [
+        {
+          "id": "object-4:horizontal:24:0.5",
+          "objectId": 4,
+          "verifiedSegments": 120,
+          "closedLoopWinding": 0.9999999999999999,
+          "sideALengthPx": 472,
+          "sideBLengthPx": 488
+        },
+        {
+          "id": "object-5:horizontal:24:0.5",
+          "objectId": 5,
+          "verifiedSegments": 116,
+          "closedLoopWinding": 0.9999999999999999,
+          "sideALengthPx": 456,
+          "sideBLengthPx": 472
+        },
+        {
+          "id": "object-6:horizontal:24:0.5",
+          "objectId": 6,
+          "verifiedSegments": 130,
+          "closedLoopWinding": 1,
+          "sideALengthPx": 520,
+          "sideBLengthPx": 520
+        },
+        {
+          "id": "object-7:horizontal:24:0.5",
+          "objectId": 7,
+          "verifiedSegments": 106,
+          "closedLoopWinding": 1.0000000000000002,
+          "sideALengthPx": 416,
+          "sideBLengthPx": 432
+        },
+        {
+          "id": "object-8:horizontal:24:0.5",
+          "objectId": 8,
+          "verifiedSegments": 128,
+          "closedLoopWinding": 0.9999999999999997,
+          "sideALengthPx": 520,
+          "sideBLengthPx": 504
+        },
+        {
+          "id": "object-9:horizontal:24:0.5",
+          "objectId": 9,
+          "verifiedSegments": 110,
+          "closedLoopWinding": 0.9999999999999999,
+          "sideALengthPx": 440,
+          "sideBLengthPx": 440
+        }
+      ],
+      "addedObjectIdsWithoutEstablishedWitness": []
+    }
+  ],
+  "limitations": [
+    "Consumes code-selected witness paths; independent continuous collision recheck, not an independent path search.",
+    "Only supplied 13 successful object witnesses; absent object witnesses remain unverified. No player input or enemy simulation."
+  ]
+}

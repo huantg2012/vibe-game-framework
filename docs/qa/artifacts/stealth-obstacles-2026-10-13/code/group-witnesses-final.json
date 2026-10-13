@@ -1,0 +1,123 @@
+{
+  "status": "passed",
+  "definition": "Each of eight authored relationship groups has at least one actual two-sided 20x20 no-backtracking witness. This does not pass every new object.",
+  "cases": [
+    {
+      "worldId": "split-rib-causeway",
+      "groups": [
+        {
+          "id": "northeast-short-ribs",
+          "objects": [
+            3,
+            4
+          ],
+          "verifiedObjectIds": [
+            3
+          ],
+          "unverifiedObjectIds": [
+            4
+          ]
+        },
+        {
+          "id": "southwest-fallen-ribs",
+          "objects": [
+            5,
+            6,
+            7
+          ],
+          "verifiedObjectIds": [
+            5,
+            6
+          ],
+          "unverifiedObjectIds": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "gel-rafts",
+      "groups": [
+        {
+          "id": "north-folded-pair",
+          "objects": [
+            7,
+            8
+          ],
+          "verifiedObjectIds": [
+            7
+          ],
+          "unverifiedObjectIds": [
+            8
+          ]
+        },
+        {
+          "id": "southwest-low-pair",
+          "objects": [
+            9,
+            10
+          ],
+          "verifiedObjectIds": [
+            9,
+            10
+          ],
+          "unverifiedObjectIds": []
+        },
+        {
+          "id": "east-staggered-pair",
+          "objects": [
+            11,
+            12
+          ],
+          "verifiedObjectIds": [
+            11
+          ],
+          "unverifiedObjectIds": [
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "sloughed-court",
+      "groups": [
+        {
+          "id": "west-torn-pair",
+          "objects": [
+            4,
+            5
+          ],
+          "verifiedObjectIds": [
+            4,
+            5
+          ],
+          "unverifiedObjectIds": []
+        },
+        {
+          "id": "northeast-torn-pair",
+          "objects": [
+            6,
+            7
+          ],
+          "verifiedObjectIds": [
+            6,
+            7
+          ],
+          "unverifiedObjectIds": []
+        },
+        {
+          "id": "south-folded-pair",
+          "objects": [
+            8,
+            9
+          ],
+          "verifiedObjectIds": [
+            8,
+            9
+          ],
+          "unverifiedObjectIds": []
+        }
+      ]
+    }
+  ]
+}

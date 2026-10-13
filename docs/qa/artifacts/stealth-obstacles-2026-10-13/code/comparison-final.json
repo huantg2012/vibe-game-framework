@@ -1,0 +1,660 @@
+{
+  "status": "passed",
+  "definitions": "Distances use true solid footprint; VOID and solid remain separate. Current-domain distributions change their sample denominator when new solids remove body support. Common-domain distributions isolate distance changes on identical reachable body centers.",
+  "cases": [
+    {
+      "worldId": "split-rib-causeway",
+      "seed": 20261012,
+      "grade": "medium",
+      "originalInstancesEqual": true,
+      "originalMeshesEqual": true,
+      "terrainVoidMaskEqual": true,
+      "commonCenterVoidDistanceEqual": true,
+      "originalObjectCount": 2,
+      "newObjectCount": 5,
+      "before": {
+        "samples": 26692,
+        "solidP50Px": 289.9378672702645,
+        "solidP90Px": 569.9985958579953,
+        "maxSolidDistancePx": 858.2378424434343,
+        "farFromSolidRatio224": 0.6139292671961637,
+        "voidP50Px": 92,
+        "voidP90Px": 237.92435772740882,
+        "maxVoidDistancePx": 396.50472884948044,
+        "farFromVoidRatio224": 0.11936160647384984,
+        "clearRadiusP90Px": 159.29846201391902,
+        "maxClearRadiusPx": 268
+      },
+      "after": {
+        "samples": 24975,
+        "solidP50Px": 124.28001123137601,
+        "solidP90Px": 474.7833128933252,
+        "maxSolidDistancePx": 858.2378424434343,
+        "farFromSolidRatio224": 0.3329329329329329,
+        "voidP50Px": 90.68627239003708,
+        "voidP90Px": 233.85465571589546,
+        "maxVoidDistancePx": 396.50472884948044,
+        "farFromVoidRatio224": 0.11115115115115115,
+        "clearRadiusP90Px": 116,
+        "maxClearRadiusPx": 204.35263639111682
+      },
+      "regions": [
+        {
+          "id": "northeast-short-ribs",
+          "bounds": [
+            1195,
+            280,
+            1930,
+            650
+          ],
+          "before": {
+            "samples": 3695,
+            "solidP50Px": 418.43215677991105,
+            "solidP90Px": 587.5046905794011,
+            "maxSolidDistancePx": 720.5337666714415,
+            "farFromSolidRatio224": 0.9166441136671177,
+            "voidP50Px": 98.79271228182775,
+            "voidP90Px": 180,
+            "maxVoidDistancePx": 238.46173697262208,
+            "farFromVoidRatio224": 0.0070365358592692825,
+            "clearRadiusP90Px": 178.61690849412886,
+            "maxClearRadiusPx": 238.46173697262208
+          },
+          "after": {
+            "samples": 2977,
+            "solidP50Px": 63.263669833334326,
+            "solidP90Px": 120.73064038294434,
+            "maxSolidDistancePx": 196.75801659685044,
+            "farFromSolidRatio224": 0,
+            "voidP50Px": 92,
+            "voidP90Px": 181.10770276274835,
+            "maxVoidDistancePx": 238.46173697262208,
+            "farFromVoidRatio224": 0.008733624454148471,
+            "clearRadiusP90Px": 92.0869154657707,
+            "maxClearRadiusPx": 137.95009313492864
+          }
+        },
+        {
+          "id": "southwest-fallen-ribs",
+          "bounds": [
+            300,
+            1100,
+            1080,
+            1580
+          ],
+          "before": {
+            "samples": 5811,
+            "solidP50Px": 280.75729767314203,
+            "solidP90Px": 453.22549428875664,
+            "maxSolidDistancePx": 605.2182893591785,
+            "farFromSolidRatio224": 0.623128549303046,
+            "voidP50Px": 169.799882214329,
+            "voidP90Px": 288.4995667241114,
+            "maxVoidDistancePx": 352.95325469529246,
+            "farFromVoidRatio224": 0.2970228876269145,
+            "clearRadiusP90Px": 210.53264397974078,
+            "maxClearRadiusPx": 268
+          },
+          "after": {
+            "samples": 4812,
+            "solidP50Px": 64.56703348208232,
+            "solidP90Px": 158.21161871963298,
+            "maxSolidDistancePx": 305.2826695445384,
+            "farFromSolidRatio224": 0.03345802161263508,
+            "voidP50Px": 157.2768260107,
+            "voidP90Px": 278.10789273229915,
+            "maxVoidDistancePx": 334.90297102295165,
+            "farFromVoidRatio224": 0.2734829592684954,
+            "clearRadiusP90Px": 124.04277743514139,
+            "maxClearRadiusPx": 202.78066969018522
+          }
+        },
+        {
+          "id": "south-residual-open-bed",
+          "bounds": [
+            1400,
+            1410,
+            1750,
+            1640
+          ],
+          "before": {
+            "samples": 1276,
+            "solidP50Px": 406.3799562125772,
+            "solidP90Px": 518.4415638617926,
+            "maxSolidDistancePx": 599.2568679717707,
+            "farFromSolidRatio224": 0.9866771159874608,
+            "voidP50Px": 100.71742649611338,
+            "voidP90Px": 164,
+            "maxVoidDistancePx": 204.35263639111682,
+            "farFromVoidRatio224": 0,
+            "clearRadiusP90Px": 164,
+            "maxClearRadiusPx": 204.35263639111682
+          },
+          "after": {
+            "samples": 1276,
+            "solidP50Px": 406.3799562125772,
+            "solidP90Px": 518.4415638617926,
+            "maxSolidDistancePx": 599.2568679717707,
+            "farFromSolidRatio224": 0.9866771159874608,
+            "voidP50Px": 100.71742649611338,
+            "voidP90Px": 164,
+            "maxVoidDistancePx": 204.35263639111682,
+            "farFromVoidRatio224": 0,
+            "clearRadiusP90Px": 164,
+            "maxClearRadiusPx": 204.35263639111682
+          }
+        }
+      ],
+      "commonReachableCenters": {
+        "solidBefore": {
+          "samples": 24975,
+          "p50Px": 285.29329902327913,
+          "p90Px": 571.7213205930938,
+          "maxPx": 858.2378424434343,
+          "ratioAbove224": 0.6014414414414414
+        },
+        "solidAfter": {
+          "samples": 24975,
+          "p50Px": 124.28001123137601,
+          "p90Px": 474.7833128933252,
+          "maxPx": 858.2378424434343,
+          "ratioAbove224": 0.3329329329329329
+        },
+        "voidBefore": {
+          "samples": 24975,
+          "p50Px": 90.68627239003708,
+          "p90Px": 233.85465571589546,
+          "maxPx": 396.50472884948044,
+          "ratioAbove224": 0.11115115115115115
+        },
+        "voidAfter": {
+          "samples": 24975,
+          "p50Px": 90.68627239003708,
+          "p90Px": 233.85465571589546,
+          "maxPx": 396.50472884948044,
+          "ratioAbove224": 0.11115115115115115
+        }
+      },
+      "openComponents": {
+        "before": [
+          {
+            "clearRadiusThresholdPx": 112,
+            "componentCount": 7,
+            "largestSampleCount": 4729,
+            "largestSampleCellAreaPx2": 302656,
+            "representativePoint": {
+              "x": 420,
+              "y": 1036
+            }
+          },
+          {
+            "clearRadiusThresholdPx": 224,
+            "componentCount": 2,
+            "largestSampleCount": 321,
+            "largestSampleCellAreaPx2": 20544,
+            "representativePoint": {
+              "x": 468,
+              "y": 1180
+            }
+          }
+        ],
+        "after": [
+          {
+            "clearRadiusThresholdPx": 112,
+            "componentCount": 7,
+            "largestSampleCount": 1465,
+            "largestSampleCellAreaPx2": 93760,
+            "representativePoint": {
+              "x": 1444,
+              "y": 1076
+            }
+          },
+          {
+            "clearRadiusThresholdPx": 224,
+            "componentCount": 0,
+            "largestSampleCount": 0,
+            "largestSampleCellAreaPx2": 0,
+            "representativePoint": null
+          }
+        ]
+      }
+    },
+    {
+      "worldId": "gel-rafts",
+      "seed": 20261012,
+      "grade": "medium",
+      "originalInstancesEqual": true,
+      "originalMeshesEqual": true,
+      "terrainVoidMaskEqual": true,
+      "commonCenterVoidDistanceEqual": true,
+      "originalObjectCount": 6,
+      "newObjectCount": 6,
+      "before": {
+        "samples": 23469,
+        "solidP50Px": 371.00042195954137,
+        "solidP90Px": 668.6398268461372,
+        "maxSolidDistancePx": 1051.9995314873665,
+        "farFromSolidRatio224": 0.7045038135412672,
+        "voidP50Px": 84,
+        "voidP90Px": 225.21101216414795,
+        "maxVoidDistancePx": 324,
+        "farFromVoidRatio224": 0.1003877455366654,
+        "clearRadiusP90Px": 158.6383917484356,
+        "maxClearRadiusPx": 290.9295447354909
+      },
+      "after": {
+        "samples": 19913,
+        "solidP50Px": 127.32339430720366,
+        "solidP90Px": 332.9897189854925,
+        "maxSolidDistancePx": 476.16823535220175,
+        "farFromSolidRatio224": 0.2673630291769196,
+        "voidP50Px": 76,
+        "voidP90Px": 228,
+        "maxVoidDistancePx": 324,
+        "farFromVoidRatio224": 0.10746748355345755,
+        "clearRadiusP90Px": 123.1407219008839,
+        "maxClearRadiusPx": 209.17575284977676
+      },
+      "regions": [
+        {
+          "id": "north-folded-pair",
+          "bounds": [
+            500,
+            200,
+            1100,
+            810
+          ],
+          "before": {
+            "samples": 5236,
+            "solidP50Px": 369.19961960914617,
+            "solidP90Px": 551.1963956172185,
+            "maxSolidDistancePx": 672.9908076589436,
+            "farFromSolidRatio224": 0.774446142093201,
+            "voidP50Px": 123.54756169184401,
+            "voidP90Px": 244,
+            "maxVoidDistancePx": 300,
+            "farFromVoidRatio224": 0.15240641711229946,
+            "clearRadiusP90Px": 220,
+            "maxClearRadiusPx": 290.9295447354909
+          },
+          "after": {
+            "samples": 4009,
+            "solidP50Px": 97.01022611536897,
+            "solidP90Px": 219.53597123565672,
+            "maxSolidDistancePx": 328.30414111404855,
+            "farFromSolidRatio224": 0.09229234222998253,
+            "voidP50Px": 100,
+            "voidP90Px": 244,
+            "maxVoidDistancePx": 300,
+            "farFromVoidRatio224": 0.1451733599401347,
+            "clearRadiusP90Px": 116.61903789690601,
+            "maxClearRadiusPx": 162.70280156635292
+          }
+        },
+        {
+          "id": "southwest-low-pair",
+          "bounds": [
+            300,
+            1080,
+            910,
+            1570
+          ],
+          "before": {
+            "samples": 3952,
+            "solidP50Px": 569.6355908175702,
+            "solidP90Px": 794.4192254666821,
+            "maxSolidDistancePx": 965.7434032426304,
+            "farFromSolidRatio224": 0.9969635627530364,
+            "voidP50Px": 76,
+            "voidP90Px": 148,
+            "maxVoidDistancePx": 200.8780724718355,
+            "farFromVoidRatio224": 0,
+            "clearRadiusP90Px": 148,
+            "maxClearRadiusPx": 200.8780724718355
+          },
+          "after": {
+            "samples": 2715,
+            "solidP50Px": 73.23120619084445,
+            "solidP90Px": 263.00212058695365,
+            "maxSolidDistancePx": 351.50233496156153,
+            "farFromSolidRatio224": 0.17900552486187846,
+            "voidP50Px": 53.36665625650534,
+            "voidP90Px": 120.9297316626478,
+            "maxVoidDistancePx": 200.8780724718355,
+            "farFromVoidRatio224": 0,
+            "clearRadiusP90Px": 84,
+            "maxClearRadiusPx": 131.5750736271882
+          }
+        },
+        {
+          "id": "east-staggered-pair",
+          "bounds": [
+            1445,
+            1000,
+            2130,
+            1500
+          ],
+          "before": {
+            "samples": 4482,
+            "solidP50Px": 321.99994189416617,
+            "solidP90Px": 603.0728137021864,
+            "maxSolidDistancePx": 707.7530675060137,
+            "farFromSolidRatio224": 0.6885319053993753,
+            "voidP50Px": 76,
+            "voidP90Px": 143.22011031974526,
+            "maxVoidDistancePx": 238.46173697262208,
+            "farFromVoidRatio224": 0.0033467202141900937,
+            "clearRadiusP90Px": 121.16744239036339,
+            "maxClearRadiusPx": 152.31546211727817
+          },
+          "after": {
+            "samples": 3390,
+            "solidP50Px": 75.73283353499491,
+            "solidP90Px": 241.79963622850707,
+            "maxSolidDistancePx": 364.06867701058593,
+            "farFromSolidRatio224": 0.12035398230088495,
+            "voidP50Px": 68,
+            "voidP90Px": 155.64061166674975,
+            "maxVoidDistancePx": 238.46173697262208,
+            "farFromVoidRatio224": 0.004424778761061947,
+            "clearRadiusP90Px": 92,
+            "maxClearRadiusPx": 127.12198865656563
+          }
+        }
+      ],
+      "commonReachableCenters": {
+        "solidBefore": {
+          "samples": 19913,
+          "p50Px": 362.58307768183533,
+          "p90Px": 690.434454590442,
+          "maxPx": 1051.9995314873665,
+          "ratioAbove224": 0.68809320544368
+        },
+        "solidAfter": {
+          "samples": 19913,
+          "p50Px": 127.32339430720366,
+          "p90Px": 332.9897189854925,
+          "maxPx": 476.16823535220175,
+          "ratioAbove224": 0.2673630291769196
+        },
+        "voidBefore": {
+          "samples": 19913,
+          "p50Px": 76,
+          "p90Px": 228,
+          "maxPx": 324,
+          "ratioAbove224": 0.10746748355345755
+        },
+        "voidAfter": {
+          "samples": 19913,
+          "p50Px": 76,
+          "p90Px": 228,
+          "maxPx": 324,
+          "ratioAbove224": 0.10746748355345755
+        }
+      },
+      "openComponents": {
+        "before": [
+          {
+            "clearRadiusThresholdPx": 112,
+            "componentCount": 2,
+            "largestSampleCount": 6407,
+            "largestSampleCellAreaPx2": 410048,
+            "representativePoint": {
+              "x": 652,
+              "y": 316
+            }
+          },
+          {
+            "clearRadiusThresholdPx": 224,
+            "componentCount": 1,
+            "largestSampleCount": 469,
+            "largestSampleCellAreaPx2": 30016,
+            "representativePoint": {
+              "x": 756,
+              "y": 428
+            }
+          }
+        ],
+        "after": [
+          {
+            "clearRadiusThresholdPx": 112,
+            "componentCount": 4,
+            "largestSampleCount": 2330,
+            "largestSampleCellAreaPx2": 149120,
+            "representativePoint": {
+              "x": 612,
+              "y": 676
+            }
+          },
+          {
+            "clearRadiusThresholdPx": 224,
+            "componentCount": 0,
+            "largestSampleCount": 0,
+            "largestSampleCellAreaPx2": 0,
+            "representativePoint": null
+          }
+        ]
+      }
+    },
+    {
+      "worldId": "sloughed-court",
+      "seed": 20261012,
+      "grade": "medium",
+      "originalInstancesEqual": true,
+      "originalMeshesEqual": true,
+      "terrainVoidMaskEqual": true,
+      "commonCenterVoidDistanceEqual": true,
+      "originalObjectCount": 3,
+      "newObjectCount": 6,
+      "before": {
+        "samples": 23939,
+        "solidP50Px": 572.9038399961478,
+        "solidP90Px": 1135.7916185316537,
+        "maxSolidDistancePx": 1547.5112588222569,
+        "farFromSolidRatio224": 0.8187058774384895,
+        "voidP50Px": 92,
+        "voidP90Px": 236,
+        "maxVoidDistancePx": 367.8695420933894,
+        "farFromVoidRatio224": 0.11550190066418814,
+        "clearRadiusP90Px": 199.2786993132984,
+        "maxClearRadiusPx": 316.0253154416589
+      },
+      "after": {
+        "samples": 21278,
+        "solidP50Px": 135.69364508897198,
+        "solidP90Px": 328.46636715987,
+        "maxSolidDistancePx": 551.8156059727381,
+        "farFromSolidRatio224": 0.24471284895196918,
+        "voidP50Px": 84,
+        "voidP90Px": 244,
+        "maxVoidDistancePx": 367.8695420933894,
+        "farFromVoidRatio224": 0.1298994266378419,
+        "clearRadiusP90Px": 149.34523762075577,
+        "maxClearRadiusPx": 267.500248839862
+      },
+      "regions": [
+        {
+          "id": "west-torn-pair",
+          "bounds": [
+            330,
+            600,
+            1080,
+            1105
+          ],
+          "before": {
+            "samples": 4923,
+            "solidP50Px": 605.7374164560347,
+            "solidP90Px": 783.6359985616451,
+            "maxSolidDistancePx": 884.3651745917911,
+            "farFromSolidRatio224": 1,
+            "voidP50Px": 76,
+            "voidP90Px": 187.01871564097536,
+            "maxVoidDistancePx": 287.3882391469769,
+            "farFromVoidRatio224": 0.043266301035953685,
+            "clearRadiusP90Px": 187.01871564097536,
+            "maxClearRadiusPx": 286.904628651906
+          },
+          "after": {
+            "samples": 4063,
+            "solidP50Px": 99.6498191587014,
+            "solidP90Px": 214.8239346698808,
+            "maxSolidDistancePx": 314.0158464366077,
+            "farFromSolidRatio224": 0.08269751415210436,
+            "voidP50Px": 68,
+            "voidP90Px": 192.4162155328911,
+            "maxVoidDistancePx": 287.3882391469769,
+            "farFromVoidRatio224": 0.05242431700713758,
+            "clearRadiusP90Px": 108,
+            "maxClearRadiusPx": 244.81843418791487
+          }
+        },
+        {
+          "id": "northeast-torn-pair",
+          "bounds": [
+            1580,
+            740,
+            2140,
+            1230
+          ],
+          "before": {
+            "samples": 4383,
+            "solidP50Px": 914.4614445340238,
+            "solidP90Px": 1115.7399683163762,
+            "maxSolidDistancePx": 1269.1987495901217,
+            "farFromSolidRatio224": 1,
+            "voidP50Px": 108,
+            "voidP90Px": 196,
+            "maxVoidDistancePx": 253.55078386784766,
+            "farFromVoidRatio224": 0.034679443303673285,
+            "clearRadiusP90Px": 196,
+            "maxClearRadiusPx": 253.55078386784766
+          },
+          "after": {
+            "samples": 3481,
+            "solidP50Px": 76.2043601312394,
+            "solidP90Px": 180.63026162019298,
+            "maxSolidDistancePx": 246.12832582499277,
+            "farFromSolidRatio224": 0.008043665613329504,
+            "voidP50Px": 94.14881836751856,
+            "voidP90Px": 199.9199839935968,
+            "maxVoidDistancePx": 253.55078386784766,
+            "farFromVoidRatio224": 0.043665613329503014,
+            "clearRadiusP90Px": 124.3405086766593,
+            "maxClearRadiusPx": 185.29975715040752
+          }
+        },
+        {
+          "id": "south-folded-pair",
+          "bounds": [
+            1170,
+            1270,
+            1810,
+            1750
+          ],
+          "before": {
+            "samples": 4704,
+            "solidP50Px": 364.43046521436156,
+            "solidP90Px": 606.2858535984725,
+            "maxSolidDistancePx": 709.7543198014039,
+            "farFromSolidRatio224": 0.747874149659864,
+            "voidP50Px": 164.43843832875572,
+            "voidP90Px": 284,
+            "maxVoidDistancePx": 343.02186519229355,
+            "farFromVoidRatio224": 0.28528911564625853,
+            "clearRadiusP90Px": 244,
+            "maxClearRadiusPx": 316.0253154416589
+          },
+          "after": {
+            "samples": 3805,
+            "solidP50Px": 88.05626881421405,
+            "solidP90Px": 196.48805139230086,
+            "maxSolidDistancePx": 297.9851895487995,
+            "farFromSolidRatio224": 0.05492772667542707,
+            "voidP50Px": 182.1647605877712,
+            "voidP90Px": 292,
+            "maxVoidDistancePx": 343.02186519229355,
+            "farFromVoidRatio224": 0.352431011826544,
+            "clearRadiusP90Px": 178.39682809024748,
+            "maxClearRadiusPx": 228.0350850198276
+          }
+        }
+      ],
+      "commonReachableCenters": {
+        "solidBefore": {
+          "samples": 21278,
+          "p50Px": 576.0809007790299,
+          "p90Px": 1168.0030330019497,
+          "maxPx": 1547.5112588222569,
+          "ratioAbove224": 0.8087226243067958
+        },
+        "solidAfter": {
+          "samples": 21278,
+          "p50Px": 135.69364508897198,
+          "p90Px": 328.46636715987,
+          "maxPx": 551.8156059727381,
+          "ratioAbove224": 0.24471284895196918
+        },
+        "voidBefore": {
+          "samples": 21278,
+          "p50Px": 84,
+          "p90Px": 244,
+          "maxPx": 367.8695420933894,
+          "ratioAbove224": 0.1298994266378419
+        },
+        "voidAfter": {
+          "samples": 21278,
+          "p50Px": 84,
+          "p90Px": 244,
+          "maxPx": 367.8695420933894,
+          "ratioAbove224": 0.1298994266378419
+        }
+      },
+      "openComponents": {
+        "before": [
+          {
+            "clearRadiusThresholdPx": 112,
+            "componentCount": 7,
+            "largestSampleCount": 8192,
+            "largestSampleCellAreaPx2": 524288,
+            "representativePoint": {
+              "x": 908,
+              "y": 692
+            }
+          },
+          {
+            "clearRadiusThresholdPx": 224,
+            "componentCount": 3,
+            "largestSampleCount": 744,
+            "largestSampleCellAreaPx2": 47616,
+            "representativePoint": {
+              "x": 1604,
+              "y": 1316
+            }
+          }
+        ],
+        "after": [
+          {
+            "clearRadiusThresholdPx": 112,
+            "componentCount": 6,
+            "largestSampleCount": 3733,
+            "largestSampleCellAreaPx2": 238912,
+            "representativePoint": {
+              "x": 1044,
+              "y": 916
+            }
+          },
+          {
+            "clearRadiusThresholdPx": 224,
+            "componentCount": 2,
+            "largestSampleCount": 198,
+            "largestSampleCellAreaPx2": 12672,
+            "representativePoint": {
+              "x": 1076,
+              "y": 1076
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

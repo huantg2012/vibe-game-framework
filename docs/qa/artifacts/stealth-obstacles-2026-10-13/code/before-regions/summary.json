@@ -1,0 +1,370 @@
+{
+  "status": "passed",
+  "sourceBaseline": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before",
+  "baselineSha256": "9181ce89702849c8847261b7d5d7df003c0bc90b88968b468aa08c87b356c280",
+  "cases": [
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "medium",
+      "seed": 20261012,
+      "metrics": {
+        "samples": 26692,
+        "solidP50Px": 289.9378672702645,
+        "solidP90Px": 569.9985958579953,
+        "maxSolidDistancePx": 858.2378424434343,
+        "farFromSolidRatio224": 0.6139292671961637,
+        "voidP50Px": 92,
+        "voidP90Px": 237.92435772740882,
+        "maxVoidDistancePx": 396.50472884948044,
+        "farFromVoidRatio224": 0.11936160647384984,
+        "clearRadiusP90Px": 159.29846201391902,
+        "maxClearRadiusPx": 268
+      },
+      "regions": [
+        {
+          "id": "northeast-short-ribs",
+          "bounds": [
+            1195,
+            280,
+            1930,
+            650
+          ],
+          "metrics": {
+            "samples": 3695,
+            "solidP50Px": 418.43215677991105,
+            "solidP90Px": 587.5046905794011,
+            "maxSolidDistancePx": 720.5337666714415,
+            "farFromSolidRatio224": 0.9166441136671177,
+            "voidP50Px": 98.79271228182775,
+            "voidP90Px": 180,
+            "maxVoidDistancePx": 238.46173697262208,
+            "farFromVoidRatio224": 0.0070365358592692825,
+            "clearRadiusP90Px": 178.61690849412886,
+            "maxClearRadiusPx": 238.46173697262208
+          }
+        },
+        {
+          "id": "southwest-fallen-ribs",
+          "bounds": [
+            300,
+            1100,
+            1080,
+            1580
+          ],
+          "metrics": {
+            "samples": 5811,
+            "solidP50Px": 280.75729767314203,
+            "solidP90Px": 453.22549428875664,
+            "maxSolidDistancePx": 605.2182893591785,
+            "farFromSolidRatio224": 0.623128549303046,
+            "voidP50Px": 169.799882214329,
+            "voidP90Px": 288.4995667241114,
+            "maxVoidDistancePx": 352.95325469529246,
+            "farFromVoidRatio224": 0.2970228876269145,
+            "clearRadiusP90Px": 210.53264397974078,
+            "maxClearRadiusPx": 268
+          }
+        },
+        {
+          "id": "south-residual-open-bed",
+          "bounds": [
+            1400,
+            1410,
+            1750,
+            1640
+          ],
+          "metrics": {
+            "samples": 1276,
+            "solidP50Px": 406.3799562125772,
+            "solidP90Px": 518.4415638617926,
+            "maxSolidDistancePx": 599.2568679717707,
+            "farFromSolidRatio224": 0.9866771159874608,
+            "voidP50Px": 100.71742649611338,
+            "voidP90Px": 164,
+            "maxVoidDistancePx": 204.35263639111682,
+            "farFromVoidRatio224": 0,
+            "clearRadiusP90Px": 164,
+            "maxClearRadiusPx": 204.35263639111682
+          }
+        }
+      ],
+      "clearPeaks": [
+        {
+          "x": 508,
+          "y": 1292,
+          "solidDistancePx": 269.56869856049735,
+          "voidDistancePx": 268,
+          "clearRadiusPx": 268
+        },
+        {
+          "x": 788,
+          "y": 1348,
+          "solidDistancePx": 244.11626486278556,
+          "voidDistancePx": 244,
+          "clearRadiusPx": 244
+        },
+        {
+          "x": 1436,
+          "y": 468,
+          "solidDistancePx": 347.89903001533406,
+          "voidDistancePx": 238.46173697262208,
+          "clearRadiusPx": 238.46173697262208
+        },
+        {
+          "x": 1596,
+          "y": 1460,
+          "solidDistancePx": 372.19425484897823,
+          "voidDistancePx": 204.35263639111682,
+          "clearRadiusPx": 204.35263639111682
+        }
+      ],
+      "routePasses": 1,
+      "routeFailures": [],
+      "detourPasses": 0,
+      "detourFailures": [],
+      "output": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before-regions/split-rib-causeway-medium-20261012"
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "medium",
+      "seed": 20261012,
+      "metrics": {
+        "samples": 23469,
+        "solidP50Px": 371.00042195954137,
+        "solidP90Px": 668.6398268461372,
+        "maxSolidDistancePx": 1051.9995314873665,
+        "farFromSolidRatio224": 0.7045038135412672,
+        "voidP50Px": 84,
+        "voidP90Px": 225.21101216414795,
+        "maxVoidDistancePx": 324,
+        "farFromVoidRatio224": 0.1003877455366654,
+        "clearRadiusP90Px": 158.6383917484356,
+        "maxClearRadiusPx": 290.9295447354909
+      },
+      "regions": [
+        {
+          "id": "north-folded-pair",
+          "bounds": [
+            500,
+            200,
+            1100,
+            810
+          ],
+          "metrics": {
+            "samples": 5236,
+            "solidP50Px": 369.19961960914617,
+            "solidP90Px": 551.1963956172185,
+            "maxSolidDistancePx": 672.9908076589436,
+            "farFromSolidRatio224": 0.774446142093201,
+            "voidP50Px": 123.54756169184401,
+            "voidP90Px": 244,
+            "maxVoidDistancePx": 300,
+            "farFromVoidRatio224": 0.15240641711229946,
+            "clearRadiusP90Px": 220,
+            "maxClearRadiusPx": 290.9295447354909
+          }
+        },
+        {
+          "id": "southwest-low-pair",
+          "bounds": [
+            300,
+            1080,
+            910,
+            1570
+          ],
+          "metrics": {
+            "samples": 3952,
+            "solidP50Px": 569.6355908175702,
+            "solidP90Px": 794.4192254666821,
+            "maxSolidDistancePx": 965.7434032426304,
+            "farFromSolidRatio224": 0.9969635627530364,
+            "voidP50Px": 76,
+            "voidP90Px": 148,
+            "maxVoidDistancePx": 200.8780724718355,
+            "farFromVoidRatio224": 0,
+            "clearRadiusP90Px": 148,
+            "maxClearRadiusPx": 200.8780724718355
+          }
+        },
+        {
+          "id": "east-staggered-pair",
+          "bounds": [
+            1445,
+            1000,
+            2130,
+            1500
+          ],
+          "metrics": {
+            "samples": 4482,
+            "solidP50Px": 321.99994189416617,
+            "solidP90Px": 603.0728137021864,
+            "maxSolidDistancePx": 707.7530675060137,
+            "farFromSolidRatio224": 0.6885319053993753,
+            "voidP50Px": 76,
+            "voidP90Px": 143.22011031974526,
+            "maxVoidDistancePx": 238.46173697262208,
+            "farFromVoidRatio224": 0.0033467202141900937,
+            "clearRadiusP90Px": 121.16744239036339,
+            "maxClearRadiusPx": 152.31546211727817
+          }
+        }
+      ],
+      "clearPeaks": [
+        {
+          "x": 804,
+          "y": 532,
+          "solidDistancePx": 296.15339428714026,
+          "voidDistancePx": 290.9295447354909,
+          "clearRadiusPx": 290.9295447354909
+        },
+        {
+          "x": 1460,
+          "y": 852,
+          "solidDistancePx": 209.17575284977676,
+          "voidDistancePx": 212,
+          "clearRadiusPx": 209.17575284977676
+        },
+        {
+          "x": 884,
+          "y": 1076,
+          "solidDistancePx": 209.20862701522427,
+          "voidDistancePx": 207.15211801958483,
+          "clearRadiusPx": 207.15211801958483
+        },
+        {
+          "x": 756,
+          "y": 756,
+          "solidDistancePx": 200.9232935921527,
+          "voidDistancePx": 198.31288409984865,
+          "clearRadiusPx": 198.31288409984865
+        }
+      ],
+      "routePasses": 1,
+      "routeFailures": [],
+      "detourPasses": 0,
+      "detourFailures": [],
+      "output": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before-regions/gel-rafts-medium-20261012"
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "medium",
+      "seed": 20261012,
+      "metrics": {
+        "samples": 23939,
+        "solidP50Px": 572.9038399961478,
+        "solidP90Px": 1135.7916185316537,
+        "maxSolidDistancePx": 1547.5112588222569,
+        "farFromSolidRatio224": 0.8187058774384895,
+        "voidP50Px": 92,
+        "voidP90Px": 236,
+        "maxVoidDistancePx": 367.8695420933894,
+        "farFromVoidRatio224": 0.11550190066418814,
+        "clearRadiusP90Px": 199.2786993132984,
+        "maxClearRadiusPx": 316.0253154416589
+      },
+      "regions": [
+        {
+          "id": "west-torn-pair",
+          "bounds": [
+            330,
+            600,
+            1080,
+            1105
+          ],
+          "metrics": {
+            "samples": 4923,
+            "solidP50Px": 605.7374164560347,
+            "solidP90Px": 783.6359985616451,
+            "maxSolidDistancePx": 884.3651745917911,
+            "farFromSolidRatio224": 1,
+            "voidP50Px": 76,
+            "voidP90Px": 187.01871564097536,
+            "maxVoidDistancePx": 287.3882391469769,
+            "farFromVoidRatio224": 0.043266301035953685,
+            "clearRadiusP90Px": 187.01871564097536,
+            "maxClearRadiusPx": 286.904628651906
+          }
+        },
+        {
+          "id": "northeast-torn-pair",
+          "bounds": [
+            1580,
+            740,
+            2140,
+            1230
+          ],
+          "metrics": {
+            "samples": 4383,
+            "solidP50Px": 914.4614445340238,
+            "solidP90Px": 1115.7399683163762,
+            "maxSolidDistancePx": 1269.1987495901217,
+            "farFromSolidRatio224": 1,
+            "voidP50Px": 108,
+            "voidP90Px": 196,
+            "maxVoidDistancePx": 253.55078386784766,
+            "farFromVoidRatio224": 0.034679443303673285,
+            "clearRadiusP90Px": 196,
+            "maxClearRadiusPx": 253.55078386784766
+          }
+        },
+        {
+          "id": "south-folded-pair",
+          "bounds": [
+            1170,
+            1270,
+            1810,
+            1750
+          ],
+          "metrics": {
+            "samples": 4704,
+            "solidP50Px": 364.43046521436156,
+            "solidP90Px": 606.2858535984725,
+            "maxSolidDistancePx": 709.7543198014039,
+            "farFromSolidRatio224": 0.747874149659864,
+            "voidP50Px": 164.43843832875572,
+            "voidP90Px": 284,
+            "maxVoidDistancePx": 343.02186519229355,
+            "farFromVoidRatio224": 0.28528911564625853,
+            "clearRadiusP90Px": 244,
+            "maxClearRadiusPx": 316.0253154416589
+          }
+        }
+      ],
+      "clearPeaks": [
+        {
+          "x": 1484,
+          "y": 1444,
+          "solidDistancePx": 355.1767621443983,
+          "voidDistancePx": 316.0253154416589,
+          "clearRadiusPx": 316.0253154416589
+        },
+        {
+          "x": 1012,
+          "y": 1100,
+          "solidDistancePx": 286.904628651906,
+          "voidDistancePx": 287.3882391469769,
+          "clearRadiusPx": 286.904628651906
+        },
+        {
+          "x": 1812,
+          "y": 980,
+          "solidDistancePx": 862.989735929984,
+          "voidDistancePx": 253.55078386784766,
+          "clearRadiusPx": 253.55078386784766
+        },
+        {
+          "x": 1276,
+          "y": 1340,
+          "solidDistancePx": 223.52062409867378,
+          "voidDistancePx": 225.21101216414795,
+          "clearRadiusPx": 223.52062409867378
+        }
+      ],
+      "routePasses": 1,
+      "routeFailures": [],
+      "detourPasses": 0,
+      "detourFailures": [],
+      "output": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before-regions/sloughed-court-medium-20261012"
+    }
+  ]
+}

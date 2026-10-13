@@ -1,0 +1,300 @@
+{
+  "kind": "synthetic negative control, not a production world",
+  "generatedAt": "2026-10-13T07:37:16.732Z",
+  "diagnosticSourceSha256": "6cca4937f1b1d68f9451ded6111c299e6e927ee60f8bc196d7b9a921a7edb430",
+  "setup": "Solid rectangle x=144..176,y=0..176 touches north boundary; any 20x20 crossing must use y>=186 below it. Both waypoints lie west of wall, opposite sides of endpoint axis y=124.",
+  "observed": {
+    "reportedPassed": false,
+    "oppositeSideWaypoints": true,
+    "straightLineHitsSolid": true,
+    "sideACrossings": [],
+    "sideBCrossings": [
+      {
+        "x": 148,
+        "y": 188
+      },
+      {
+        "x": 156,
+        "y": 188
+      },
+      {
+        "x": 164,
+        "y": 188
+      },
+      {
+        "x": 172,
+        "y": 188
+      }
+    ],
+    "sideALengthPx": 0,
+    "sideBLengthPx": 328
+  },
+  "expected": "A two-sided obstacle-bypass claim must fail: north bypass is impossible. Both route requests are individually valid body paths.",
+  "detour": {
+    "id": "north-closed-wall",
+    "objectId": 1,
+    "passed": false,
+    "oppositeSideWaypoints": true,
+    "straightLineHitsSolid": true,
+    "solidInteriorAnchor": {
+      "x": 171.27272727272728,
+      "y": 124
+    },
+    "sideAAngleRadians": null,
+    "sideBAngleRadians": -3.1415926535897927,
+    "closedLoopWinding": null,
+    "sideA": {
+      "id": "north-closed-wall:a",
+      "requestedPoints": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 84
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "snappedPoints": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 84
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "bodySizePx": 20,
+      "sampleStepPx": 8,
+      "passed": false,
+      "reason": "No full-body route in the sampled four-neighbour graph",
+      "path": [],
+      "lengthPx": 0,
+      "minSolidDistancePx": null,
+      "minVoidDistancePx": null,
+      "minClearRadiusPx": null,
+      "minContinuousClearRadiusLowerBoundPx": null,
+      "sweptSegments": 0
+    },
+    "sideB": {
+      "id": "north-closed-wall:b",
+      "requestedPoints": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 164
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "snappedPoints": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 164
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "bodySizePx": 20,
+      "sampleStepPx": 8,
+      "passed": true,
+      "path": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 132
+        },
+        {
+          "x": 60,
+          "y": 140
+        },
+        {
+          "x": 60,
+          "y": 148
+        },
+        {
+          "x": 60,
+          "y": 156
+        },
+        {
+          "x": 60,
+          "y": 164
+        },
+        {
+          "x": 68,
+          "y": 164
+        },
+        {
+          "x": 76,
+          "y": 164
+        },
+        {
+          "x": 84,
+          "y": 164
+        },
+        {
+          "x": 92,
+          "y": 164
+        },
+        {
+          "x": 100,
+          "y": 164
+        },
+        {
+          "x": 108,
+          "y": 164
+        },
+        {
+          "x": 116,
+          "y": 164
+        },
+        {
+          "x": 124,
+          "y": 164
+        },
+        {
+          "x": 132,
+          "y": 164
+        },
+        {
+          "x": 132,
+          "y": 172
+        },
+        {
+          "x": 132,
+          "y": 180
+        },
+        {
+          "x": 132,
+          "y": 188
+        },
+        {
+          "x": 140,
+          "y": 188
+        },
+        {
+          "x": 148,
+          "y": 188
+        },
+        {
+          "x": 156,
+          "y": 188
+        },
+        {
+          "x": 164,
+          "y": 188
+        },
+        {
+          "x": 172,
+          "y": 188
+        },
+        {
+          "x": 180,
+          "y": 188
+        },
+        {
+          "x": 188,
+          "y": 188
+        },
+        {
+          "x": 196,
+          "y": 188
+        },
+        {
+          "x": 204,
+          "y": 188
+        },
+        {
+          "x": 212,
+          "y": 188
+        },
+        {
+          "x": 220,
+          "y": 188
+        },
+        {
+          "x": 228,
+          "y": 188
+        },
+        {
+          "x": 236,
+          "y": 188
+        },
+        {
+          "x": 244,
+          "y": 188
+        },
+        {
+          "x": 252,
+          "y": 188
+        },
+        {
+          "x": 260,
+          "y": 188
+        },
+        {
+          "x": 260,
+          "y": 180
+        },
+        {
+          "x": 260,
+          "y": 172
+        },
+        {
+          "x": 260,
+          "y": 164
+        },
+        {
+          "x": 260,
+          "y": 156
+        },
+        {
+          "x": 260,
+          "y": 148
+        },
+        {
+          "x": 260,
+          "y": 140
+        },
+        {
+          "x": 260,
+          "y": 132
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "lengthPx": 328,
+      "minSolidDistancePx": 12,
+      "minVoidDistancePx": 60,
+      "minClearRadiusPx": 12,
+      "minContinuousClearRadiusLowerBoundPx": 8,
+      "sweptSegments": 41
+    },
+    "limitation": "Conservative two-sided witness: exact 20x20 sweeps, opposite half-planes through an actual triangle interior, forward-only axis projection, and closed-loop winding ±1. A failed witness is not a proof no alternative bypass exists; no player-preference claim."
+  }
+}

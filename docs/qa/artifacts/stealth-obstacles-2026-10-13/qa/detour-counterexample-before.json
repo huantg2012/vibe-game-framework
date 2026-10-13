@@ -1,0 +1,519 @@
+{
+  "kind": "synthetic negative control, not a production world",
+  "generatedAt": "2026-10-13T07:30:19.020Z",
+  "diagnosticSourceSha256": "ba463d2ff354fa0c6d3b9ed5a17853bec13558c3c03da930116b7585c10b3eb0",
+  "setup": "Solid rectangle x=144..176,y=0..176 touches north boundary; any 20x20 crossing must use y>=186 below it. Both waypoints lie west of wall, opposite sides of endpoint axis y=124.",
+  "observed": {
+    "reportedPassed": true,
+    "oppositeSideWaypoints": true,
+    "straightLineHitsSolid": true,
+    "sideACrossings": [
+      {
+        "x": 148,
+        "y": 188
+      },
+      {
+        "x": 156,
+        "y": 188
+      },
+      {
+        "x": 164,
+        "y": 188
+      },
+      {
+        "x": 172,
+        "y": 188
+      }
+    ],
+    "sideBCrossings": [
+      {
+        "x": 148,
+        "y": 188
+      },
+      {
+        "x": 156,
+        "y": 188
+      },
+      {
+        "x": 164,
+        "y": 188
+      },
+      {
+        "x": 172,
+        "y": 188
+      }
+    ],
+    "sideALengthPx": 408,
+    "sideBLengthPx": 328
+  },
+  "expected": "A two-sided obstacle-bypass claim must fail: north bypass is impossible. Both route requests are individually valid body paths.",
+  "detour": {
+    "id": "north-closed-wall",
+    "objectId": 1,
+    "passed": true,
+    "oppositeSideWaypoints": true,
+    "straightLineHitsSolid": true,
+    "straightProbeStepPx": 2,
+    "sideA": {
+      "id": "north-closed-wall:a",
+      "requestedPoints": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 84
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "snappedPoints": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 84
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "bodySizePx": 20,
+      "sampleStepPx": 8,
+      "passed": true,
+      "path": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 116
+        },
+        {
+          "x": 60,
+          "y": 108
+        },
+        {
+          "x": 60,
+          "y": 100
+        },
+        {
+          "x": 60,
+          "y": 92
+        },
+        {
+          "x": 60,
+          "y": 84
+        },
+        {
+          "x": 68,
+          "y": 84
+        },
+        {
+          "x": 76,
+          "y": 84
+        },
+        {
+          "x": 84,
+          "y": 84
+        },
+        {
+          "x": 92,
+          "y": 84
+        },
+        {
+          "x": 100,
+          "y": 84
+        },
+        {
+          "x": 108,
+          "y": 84
+        },
+        {
+          "x": 116,
+          "y": 84
+        },
+        {
+          "x": 124,
+          "y": 84
+        },
+        {
+          "x": 132,
+          "y": 84
+        },
+        {
+          "x": 132,
+          "y": 92
+        },
+        {
+          "x": 132,
+          "y": 100
+        },
+        {
+          "x": 132,
+          "y": 108
+        },
+        {
+          "x": 132,
+          "y": 116
+        },
+        {
+          "x": 132,
+          "y": 124
+        },
+        {
+          "x": 132,
+          "y": 132
+        },
+        {
+          "x": 132,
+          "y": 140
+        },
+        {
+          "x": 132,
+          "y": 148
+        },
+        {
+          "x": 132,
+          "y": 156
+        },
+        {
+          "x": 132,
+          "y": 164
+        },
+        {
+          "x": 132,
+          "y": 172
+        },
+        {
+          "x": 132,
+          "y": 180
+        },
+        {
+          "x": 132,
+          "y": 188
+        },
+        {
+          "x": 140,
+          "y": 188
+        },
+        {
+          "x": 148,
+          "y": 188
+        },
+        {
+          "x": 156,
+          "y": 188
+        },
+        {
+          "x": 164,
+          "y": 188
+        },
+        {
+          "x": 172,
+          "y": 188
+        },
+        {
+          "x": 180,
+          "y": 188
+        },
+        {
+          "x": 188,
+          "y": 188
+        },
+        {
+          "x": 196,
+          "y": 188
+        },
+        {
+          "x": 204,
+          "y": 188
+        },
+        {
+          "x": 212,
+          "y": 188
+        },
+        {
+          "x": 220,
+          "y": 188
+        },
+        {
+          "x": 228,
+          "y": 188
+        },
+        {
+          "x": 236,
+          "y": 188
+        },
+        {
+          "x": 244,
+          "y": 188
+        },
+        {
+          "x": 252,
+          "y": 188
+        },
+        {
+          "x": 260,
+          "y": 188
+        },
+        {
+          "x": 260,
+          "y": 180
+        },
+        {
+          "x": 260,
+          "y": 172
+        },
+        {
+          "x": 260,
+          "y": 164
+        },
+        {
+          "x": 260,
+          "y": 156
+        },
+        {
+          "x": 260,
+          "y": 148
+        },
+        {
+          "x": 260,
+          "y": 140
+        },
+        {
+          "x": 260,
+          "y": 132
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "lengthPx": 408,
+      "minSolidDistancePx": 12,
+      "minVoidDistancePx": 60,
+      "minClearRadiusPx": 12,
+      "minContinuousClearRadiusLowerBoundPx": 8,
+      "sweptSegments": 51
+    },
+    "sideB": {
+      "id": "north-closed-wall:b",
+      "requestedPoints": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 164
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "snappedPoints": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 164
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "bodySizePx": 20,
+      "sampleStepPx": 8,
+      "passed": true,
+      "path": [
+        {
+          "x": 60,
+          "y": 124
+        },
+        {
+          "x": 60,
+          "y": 132
+        },
+        {
+          "x": 60,
+          "y": 140
+        },
+        {
+          "x": 60,
+          "y": 148
+        },
+        {
+          "x": 60,
+          "y": 156
+        },
+        {
+          "x": 60,
+          "y": 164
+        },
+        {
+          "x": 68,
+          "y": 164
+        },
+        {
+          "x": 76,
+          "y": 164
+        },
+        {
+          "x": 84,
+          "y": 164
+        },
+        {
+          "x": 92,
+          "y": 164
+        },
+        {
+          "x": 100,
+          "y": 164
+        },
+        {
+          "x": 108,
+          "y": 164
+        },
+        {
+          "x": 116,
+          "y": 164
+        },
+        {
+          "x": 124,
+          "y": 164
+        },
+        {
+          "x": 132,
+          "y": 164
+        },
+        {
+          "x": 132,
+          "y": 172
+        },
+        {
+          "x": 132,
+          "y": 180
+        },
+        {
+          "x": 132,
+          "y": 188
+        },
+        {
+          "x": 140,
+          "y": 188
+        },
+        {
+          "x": 148,
+          "y": 188
+        },
+        {
+          "x": 156,
+          "y": 188
+        },
+        {
+          "x": 164,
+          "y": 188
+        },
+        {
+          "x": 172,
+          "y": 188
+        },
+        {
+          "x": 180,
+          "y": 188
+        },
+        {
+          "x": 188,
+          "y": 188
+        },
+        {
+          "x": 196,
+          "y": 188
+        },
+        {
+          "x": 204,
+          "y": 188
+        },
+        {
+          "x": 212,
+          "y": 188
+        },
+        {
+          "x": 220,
+          "y": 188
+        },
+        {
+          "x": 228,
+          "y": 188
+        },
+        {
+          "x": 236,
+          "y": 188
+        },
+        {
+          "x": 244,
+          "y": 188
+        },
+        {
+          "x": 252,
+          "y": 188
+        },
+        {
+          "x": 260,
+          "y": 188
+        },
+        {
+          "x": 260,
+          "y": 180
+        },
+        {
+          "x": 260,
+          "y": 172
+        },
+        {
+          "x": 260,
+          "y": 164
+        },
+        {
+          "x": 260,
+          "y": 156
+        },
+        {
+          "x": 260,
+          "y": 148
+        },
+        {
+          "x": 260,
+          "y": 140
+        },
+        {
+          "x": 260,
+          "y": 132
+        },
+        {
+          "x": 260,
+          "y": 124
+        }
+      ],
+      "lengthPx": 328,
+      "minSolidDistancePx": 12,
+      "minVoidDistancePx": 60,
+      "minClearRadiusPx": 12,
+      "minContinuousClearRadiusLowerBoundPx": 8,
+      "sweptSegments": 41
+    },
+    "limitation": "Proves two swept routes through specified opposite-side waypoints and a centre-line obstacle hit; not disjoint homotopy or player preference."
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "createdAt": "2026-10-13T07:46:13.038Z",
+  "scope": "Tool code only; production CSV/codegen/build and natural-world browser checks owned by root/art/QA.",
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "npx tsc --noEmit -p tools/stealth-obstacles/tsconfig.json",
+      "exitCode": 0
+    },
+    {
+      "command": "node --check on baseline.mjs, diagnose.mjs, witnesses.mjs, compare.mjs, check-diagnostics.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/stealth-obstacles/check-diagnostics.mjs",
+      "exitCode": 0,
+      "controls": 5
+    },
+    {
+      "command": "QA_REPORT=.../code/native-body-edges.json TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/spatial-rollout/check-native-body-broad-phase-edges.ts",
+      "exitCode": 0,
+      "evidence": "native-body-edges.json"
+    },
+    {
+      "command": "npm run dev -- --host 127.0.0.1 --port 5188 --strictPort",
+      "status": "ready; HTTP / and /src/main.ts 200; actual Chrome title startup passed; server stopped after smoke",
+      "evidence": "dev-smoke.json"
+    },
+    {
+      "command": "git diff --check -- tools/stealth-obstacles",
+      "exitCode": 0
+    }
+  ],
+  "absentRepositoryScripts": [
+    "lint",
+    "test"
+  ],
+  "lintCoverage": "Strict TypeScript including noUnused checks and JavaScript syntax validation; no claim that a standalone style linter exists.",
+  "tools": {
+    "baseline.mjs": "2089f070dd9193b84401a4344733b7a7bfecdb5a032518b5aa8c381e951b8dfe",
+    "diagnostics.ts": "6cca4937f1b1d68f9451ded6111c299e6e927ee60f8bc196d7b9a921a7edb430",
+    "diagnose.mjs": "22846ac51ba1eca59dbf6e33705b09b477168e5ad1465a01828f235e00b507c2",
+    "witnesses.mjs": "b447cbcae98807d5cc4eb264e5ebf4833e36a30ecb9b6d048eb1af1f5e54217a",
+    "compare.mjs": "e6aa7460c5b3d2700e679405bd0415f863f3fbb2fc68f961071111eea5efe70d",
+    "check-diagnostics.mjs": "1997b4b7c6ea371607bc1a5750fe6b7ef1391cd5f1a5ef61a7e62755dc5b4cd7",
+    "tsconfig.json": "d242d0c4b0be55d2546f568a8c710dec92b90839cd5781fc49f2c346b22dbdd5",
+    "README.md": "300e52f7fdbcf96ec64a92076d6f9c8d8dfa307b0d91c536ca7d1f907415157e"
+  }
+}

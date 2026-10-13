@@ -1,0 +1,2307 @@
+{
+  "status": "passed",
+  "createdAt": "2026-10-13T07:38:16.900Z",
+  "sourceBeforeSha256": "9181ce89702849c8847261b7d5d7df003c0bc90b88968b468aa08c87b356c280",
+  "sourceAfterSha256": "b15606fa05935e01ed6a5c77fe16f4a16c47d9df9ae0f3f12233c1355169e559",
+  "cases": [
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeedBefore": 20261012,
+      "effectiveSeedAfter": 20261012,
+      "originalMeshes": [
+        {
+          "objectId": 1,
+          "geometryHash": "79f362c66b12130f9f77fb0d8b8c7acfdd63444ba06def8d69b2c2fcb54d2422",
+          "beforeMeshSeed": 20230541,
+          "afterMeshSeed": 20230541,
+          "seedChangedOnly": false
+        },
+        {
+          "objectId": 2,
+          "geometryHash": "60ead94912cd3813143eb7d522955dedf1a2518ee9c62728b8d423b1b26db660",
+          "beforeMeshSeed": 20322982,
+          "afterMeshSeed": 20322982,
+          "seedChangedOnly": false
+        }
+      ],
+      "originalInstanceParamsPreserved": true,
+      "originalHolePolygonsPreserved": true,
+      "changedMatterCells": 0,
+      "matterCells": 30687,
+      "addedConservativeWallCells": 1187,
+      "removedWallCells": 0,
+      "addedConservativeWallFractionOfMatter": 0.03868087463746864,
+      "addedFootprints": [
+        {
+          "objectId": 3,
+          "triangleHash": "68c2ff60d22379d8ef5f728ea20176cfa9353d9cad997f312d50307555ccf048",
+          "nondegenerateXYTriangles": 1038,
+          "actualXYBounds": [
+            1237.4051513671875,
+            336.53314208984375,
+            1508.916748046875,
+            544.8109741210938
+          ],
+          "widthPx": 271.5115966796875,
+          "heightPx": 208.27783203125,
+          "occupied2PxCenterSamples": 3054,
+          "sampledProjectedAreaPx2": 12216,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 4,
+          "triangleHash": "4bc42c0eef57f15eb8c6852a4c2085e8f763059799ed614b055efe6094dba33b",
+          "nondegenerateXYTriangles": 1038,
+          "actualXYBounds": [
+            1672.8963623046875,
+            380.337158203125,
+            1872.70703125,
+            592.7135009765625
+          ],
+          "widthPx": 199.8106689453125,
+          "heightPx": 212.3763427734375,
+          "occupied2PxCenterSamples": 2164,
+          "sampledProjectedAreaPx2": 8656,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 5,
+          "triangleHash": "c08bd17b984a3a9a601ff665a614e1df4b2429cbdcad3561ecf0d0520c2f5022",
+          "nondegenerateXYTriangles": 1038,
+          "actualXYBounds": [
+            351.4898376464844,
+            1287.7552490234375,
+            615.375,
+            1474.1199951171875
+          ],
+          "widthPx": 263.8851623535156,
+          "heightPx": 186.36474609375,
+          "occupied2PxCenterSamples": 2993,
+          "sampledProjectedAreaPx2": 11972,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 6,
+          "triangleHash": "67f8ba7f2b0f91552d2b1a7a9331897a3621ce9bc2d79f911737a04c289601bb",
+          "nondegenerateXYTriangles": 1038,
+          "actualXYBounds": [
+            753.5891723632812,
+            1339.621826171875,
+            969.413818359375,
+            1534.456298828125
+          ],
+          "widthPx": 215.82464599609375,
+          "heightPx": 194.83447265625,
+          "occupied2PxCenterSamples": 2460,
+          "sampledProjectedAreaPx2": 9840,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 7,
+          "triangleHash": "e5df3092e99069c609d2bb27c9486f796d83fd4d55f09a251699a01f2a27768a",
+          "nondegenerateXYTriangles": 1038,
+          "actualXYBounds": [
+            776.0693969726562,
+            1115.4776611328125,
+            966.7048950195312,
+            1294.7781982421875
+          ],
+          "widthPx": 190.635498046875,
+          "heightPx": 179.300537109375,
+          "occupied2PxCenterSamples": 1791,
+          "sampledProjectedAreaPx2": 7164,
+          "samplingStepPx": 2
+        }
+      ],
+      "staticPlayerVoidReveal": {
+        "world": "split-rib-causeway",
+        "grade": "medium",
+        "requestedSeed": 20261012,
+        "effectiveSeed": 20261012,
+        "attempt": 0,
+        "revision": 10,
+        "spatialSourceHash": "a43956406123bd70e7d26818c010216b6c27b4fdb6ab15e964a166e15d308f66",
+        "geometryFingerprint": "7d9b935e",
+        "policy": {
+          "gridPx": 8,
+          "bodyPx": 20,
+          "minimumWitnesses": 3,
+          "witnessSeparationPx": 300,
+          "maximumTargetDistancePx": 208,
+          "minimumRevealDisplacementPx": 80,
+          "maximumRevealRoutePx": 720,
+          "observerStridePx": 24,
+          "diagnosticStridePx": 64,
+          "maximumProbesPerGroup": 72
+        },
+        "standardMaximumTargetDistancePx": 208,
+        "diagnosticMaximumTargetDistancePx": 208,
+        "referenceForwardRadiusPx": 224,
+        "searchScope": "Bounded deterministic observer/chord samples; failed means the required witnesses were not found in this search, not proof that no such viewpoints exist. Three witnesses establish mechanical examples, not adequate map-wide exploration density.",
+        "status": "passed",
+        "witnessCount": 3,
+        "witnesses": [
+          {
+            "observer": {
+              "x": 1140,
+              "y": 276
+            },
+            "target": {
+              "x": 996,
+              "y": 420
+            },
+            "reveal": {
+              "x": 1028,
+              "y": 276
+            },
+            "route": [
+              {
+                "x": 1140,
+                "y": 276
+              },
+              {
+                "x": 1028,
+                "y": 276
+              }
+            ],
+            "distance": 203.6467529817257,
+            "revealDistance": 147.51271131668622,
+            "routeLength": 112,
+            "revealDisplacement": 112,
+            "center": {
+              "x": 1068,
+              "y": 348
+            },
+            "facingRadians": {
+              "observer": 2.356194490192345,
+              "reveal": 1.7894652726688387
+            },
+            "group": {
+              "id": "interior-1",
+              "kind": "interior-void",
+              "component": 1,
+              "sourcePolygons": [
+                2
+              ],
+              "areaPx2": 29184,
+              "centroid": {
+                "x": 1099.4736842105262,
+                "y": 429.2105263157895
+              }
+            },
+            "controls": {
+              "actualBlocked": true,
+              "allVoidRemovedVisible": true,
+              "onlyThisVoidRemovedVisible": true,
+              "revealVisible": true,
+              "earliestRevealDisplacementPx": 112
+            },
+            "spawnApproach": {
+              "route": [
+                {
+                  "x": 596,
+                  "y": 1236
+                },
+                {
+                  "x": 596,
+                  "y": 996
+                },
+                {
+                  "x": 636,
+                  "y": 956
+                },
+                {
+                  "x": 636,
+                  "y": 948
+                },
+                {
+                  "x": 644,
+                  "y": 940
+                },
+                {
+                  "x": 644,
+                  "y": 932
+                },
+                {
+                  "x": 652,
+                  "y": 924
+                },
+                {
+                  "x": 652,
+                  "y": 668
+                },
+                {
+                  "x": 740,
+                  "y": 580
+                },
+                {
+                  "x": 748,
+                  "y": 580
+                },
+                {
+                  "x": 1004,
+                  "y": 324
+                },
+                {
+                  "x": 1092,
+                  "y": 324
+                },
+                {
+                  "x": 1140,
+                  "y": 276
+                }
+              ],
+              "routeLength": 1241.5676759431467,
+              "fullGridSteps": 132
+            },
+            "candidatesRejectedBefore": 5
+          },
+          {
+            "observer": {
+              "x": 612,
+              "y": 732
+            },
+            "target": {
+              "x": 460,
+              "y": 820
+            },
+            "reveal": {
+              "x": 476,
+              "y": 732
+            },
+            "route": [
+              {
+                "x": 612,
+                "y": 732
+              },
+              {
+                "x": 476,
+                "y": 732
+              }
+            ],
+            "distance": 175.6359872008012,
+            "revealDistance": 89.44271909999158,
+            "routeLength": 136,
+            "revealDisplacement": 136,
+            "center": {
+              "x": 536,
+              "y": 776
+            },
+            "facingRadians": {
+              "observer": 2.6167968819396856,
+              "reveal": 1.750649826587375
+            },
+            "group": {
+              "id": "interior-2",
+              "kind": "interior-void",
+              "component": 2,
+              "sourcePolygons": [
+                1
+              ],
+              "areaPx2": 29824,
+              "centroid": {
+                "x": 551.6566523605151,
+                "y": 860.4291845493563
+              }
+            },
+            "controls": {
+              "actualBlocked": true,
+              "allVoidRemovedVisible": true,
+              "onlyThisVoidRemovedVisible": true,
+              "revealVisible": true,
+              "earliestRevealDisplacementPx": 136
+            },
+            "spawnApproach": {
+              "route": [
+                {
+                  "x": 596,
+                  "y": 1236
+                },
+                {
+                  "x": 596,
+                  "y": 996
+                },
+                {
+                  "x": 636,
+                  "y": 956
+                },
+                {
+                  "x": 636,
+                  "y": 948
+                },
+                {
+                  "x": 644,
+                  "y": 940
+                },
+                {
+                  "x": 644,
+                  "y": 932
+                },
+                {
+                  "x": 652,
+                  "y": 924
+                },
+                {
+                  "x": 652,
+                  "y": 772
+                },
+                {
+                  "x": 612,
+                  "y": 732
+                }
+              ],
+              "routeLength": 543.7645019878171,
+              "fullGridSteps": 63
+            },
+            "candidatesRejectedBefore": 12
+          },
+          {
+            "observer": {
+              "x": 1788,
+              "y": 1092
+            },
+            "target": {
+              "x": 1932,
+              "y": 1236
+            },
+            "reveal": {
+              "x": 1876,
+              "y": 1092
+            },
+            "route": [
+              {
+                "x": 1788,
+                "y": 1092
+              },
+              {
+                "x": 1876,
+                "y": 1092
+              }
+            ],
+            "distance": 203.6467529817257,
+            "revealDistance": 154.50566332662373,
+            "routeLength": 88,
+            "revealDisplacement": 88,
+            "center": {
+              "x": 1860,
+              "y": 1164
+            },
+            "facingRadians": {
+              "observer": 0.7853981633974483,
+              "reveal": 1.1999050379822342
+            },
+            "group": {
+              "id": "interior-3",
+              "kind": "interior-void",
+              "component": 3,
+              "sourcePolygons": [
+                0
+              ],
+              "areaPx2": 35200,
+              "centroid": {
+                "x": 1799.84,
+                "y": 1224.189090909091
+              }
+            },
+            "controls": {
+              "actualBlocked": true,
+              "allVoidRemovedVisible": true,
+              "onlyThisVoidRemovedVisible": true,
+              "revealVisible": true,
+              "earliestRevealDisplacementPx": 88
+            },
+            "spawnApproach": {
+              "route": [
+                {
+                  "x": 596,
+                  "y": 1236
+                },
+                {
+                  "x": 700,
+                  "y": 1236
+                },
+                {
+                  "x": 764,
+                  "y": 1300
+                },
+                {
+                  "x": 860,
+                  "y": 1300
+                },
+                {
+                  "x": 868,
+                  "y": 1308
+                },
+                {
+                  "x": 1156,
+                  "y": 1308
+                },
+                {
+                  "x": 1172,
+                  "y": 1292
+                },
+                {
+                  "x": 1196,
+                  "y": 1292
+                },
+                {
+                  "x": 1220,
+                  "y": 1268
+                },
+                {
+                  "x": 1540,
+                  "y": 1268
+                },
+                {
+                  "x": 1684,
+                  "y": 1124
+                },
+                {
+                  "x": 1756,
+                  "y": 1124
+                },
+                {
+                  "x": 1788,
+                  "y": 1092
+                }
+              ],
+              "routeLength": 1311.2935059634513,
+              "fullGridSteps": 149
+            },
+            "candidatesRejectedBefore": 7
+          }
+        ],
+        "rejectedGroups": [],
+        "reachableSeats": 24538,
+        "supportedSeats": 24538,
+        "reachableFraction": 1,
+        "diagnostics": {
+          "scope": "Geometric, zero-chaos forward-facing LOS diagnostics; no reward placement or human exploration claim. Open-corridor samples are axis-aligned and not exhaustive.",
+          "internalVoid": {
+            "components": 4,
+            "cells": 1900,
+            "areaPx2": 121600,
+            "fractionOfCanvas": 0.02945188492063492
+          },
+          "externalVoid": {
+            "components": 1,
+            "cells": 31925,
+            "areaPx2": 2043200,
+            "fractionOfCanvas": 0.49486917162698413
+          },
+          "nearbyGroundPairs": 14634,
+          "voidBlockedPairs": 345,
+          "voidBlockedPairFraction": 0.023575235752357523,
+          "regions": [
+            {
+              "region": 0,
+              "observers": 3,
+              "groundPairs": 78,
+              "voidBlockedPairs": 4,
+              "observersWithVoidLoss": 1,
+              "blockedPairFraction": 0.05128205128205128
+            },
+            {
+              "region": 1,
+              "observers": 36,
+              "groundPairs": 1453,
+              "voidBlockedPairs": 35,
+              "observersWithVoidLoss": 9,
+              "blockedPairFraction": 0.024088093599449415
+            },
+            {
+              "region": 2,
+              "observers": 40,
+              "groundPairs": 1471,
+              "voidBlockedPairs": 31,
+              "observersWithVoidLoss": 7,
+              "blockedPairFraction": 0.02107409925220938
+            },
+            {
+              "region": 3,
+              "observers": 10,
+              "groundPairs": 197,
+              "voidBlockedPairs": 2,
+              "observersWithVoidLoss": 1,
+              "blockedPairFraction": 0.01015228426395939
+            },
+            {
+              "region": 4,
+              "observers": 30,
+              "groundPairs": 1171,
+              "voidBlockedPairs": 74,
+              "observersWithVoidLoss": 13,
+              "blockedPairFraction": 0.0631938514090521
+            },
+            {
+              "region": 5,
+              "observers": 47,
+              "groundPairs": 1838,
+              "voidBlockedPairs": 51,
+              "observersWithVoidLoss": 9,
+              "blockedPairFraction": 0.027747551686615888
+            },
+            {
+              "region": 6,
+              "observers": 48,
+              "groundPairs": 2020,
+              "voidBlockedPairs": 27,
+              "observersWithVoidLoss": 6,
+              "blockedPairFraction": 0.013366336633663366
+            },
+            {
+              "region": 7,
+              "observers": 17,
+              "groundPairs": 482,
+              "voidBlockedPairs": 27,
+              "observersWithVoidLoss": 6,
+              "blockedPairFraction": 0.056016597510373446
+            },
+            {
+              "region": 8,
+              "observers": 25,
+              "groundPairs": 888,
+              "voidBlockedPairs": 0,
+              "observersWithVoidLoss": 0,
+              "blockedPairFraction": 0
+            },
+            {
+              "region": 9,
+              "observers": 42,
+              "groundPairs": 1661,
+              "voidBlockedPairs": 8,
+              "observersWithVoidLoss": 4,
+              "blockedPairFraction": 0.00481637567730283
+            },
+            {
+              "region": 10,
+              "observers": 52,
+              "groundPairs": 2443,
+              "voidBlockedPairs": 60,
+              "observersWithVoidLoss": 14,
+              "blockedPairFraction": 0.024559967253376995
+            },
+            {
+              "region": 11,
+              "observers": 26,
+              "groundPairs": 932,
+              "voidBlockedPairs": 26,
+              "observersWithVoidLoss": 7,
+              "blockedPairFraction": 0.027896995708154508
+            }
+          ],
+          "longestPeripheralOpenCorridors": [
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 268,
+                "y": 1548
+              },
+              "to": {
+                "x": 1780,
+                "y": 1548
+              },
+              "lengthPx": 1512
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 644,
+                "y": 1580
+              },
+              "to": {
+                "x": 1780,
+                "y": 1580
+              },
+              "lengthPx": 1136
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 988,
+                "y": 1452
+              },
+              "to": {
+                "x": 2100,
+                "y": 1452
+              },
+              "lengthPx": 1112
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 708,
+                "y": 300
+              },
+              "to": {
+                "x": 1644,
+                "y": 300
+              },
+              "lengthPx": 936
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 748,
+                "y": 268
+              },
+              "to": {
+                "x": 1644,
+                "y": 268
+              },
+              "lengthPx": 896
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 916,
+                "y": 1516
+              },
+              "to": {
+                "x": 1780,
+                "y": 1516
+              },
+              "lengthPx": 864
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 788,
+                "y": 236
+              },
+              "to": {
+                "x": 1644,
+                "y": 236
+              },
+              "lengthPx": 856
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 980,
+                "y": 1484
+              },
+              "to": {
+                "x": 1812,
+                "y": 1484
+              },
+              "lengthPx": 832
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 948,
+                "y": 1612
+              },
+              "to": {
+                "x": 1772,
+                "y": 1612
+              },
+              "lengthPx": 824
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 964,
+                "y": 1644
+              },
+              "to": {
+                "x": 1756,
+                "y": 1644
+              },
+              "lengthPx": 792
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 396,
+                "y": 580
+              },
+              "to": {
+                "x": 396,
+                "y": 1340
+              },
+              "lengthPx": 760
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 428,
+                "y": 580
+              },
+              "to": {
+                "x": 428,
+                "y": 1324
+              },
+              "lengthPx": 744
+            }
+          ]
+        },
+        "measurementMs": 148.61862500000007
+      }
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeedBefore": 3991160799,
+      "effectiveSeedAfter": 1872207331,
+      "originalMeshes": [
+        {
+          "objectId": 1,
+          "geometryHash": "f411eafaeaafe6333cc387b694e2e0e490bf7611b7ee98e415cf7c173f5c3697",
+          "beforeMeshSeed": -303702330,
+          "afterMeshSeed": 1872102650,
+          "seedChangedOnly": true
+        },
+        {
+          "objectId": 2,
+          "geometryHash": "3cd1a20b9e65299e0089a9f6148b4db427c63581cb916fb04169d8ba15d8f792",
+          "beforeMeshSeed": -303598099,
+          "afterMeshSeed": 1872015313,
+          "seedChangedOnly": true
+        },
+        {
+          "objectId": 4,
+          "geometryHash": "6268418abfa061729de2d88ceaeaf3528a093f9c1fbaeb9e04f1ef1ad8894b74",
+          "beforeMeshSeed": -303946821,
+          "afterMeshSeed": 1871837575,
+          "seedChangedOnly": true
+        },
+        {
+          "objectId": 5,
+          "geometryHash": "394d9490fab14ece04df11f0ec38603b492231b5cc3b3e96f7a7961965a8d820",
+          "beforeMeshSeed": -303842654,
+          "afterMeshSeed": 1871732894,
+          "seedChangedOnly": true
+        },
+        {
+          "objectId": 3,
+          "geometryHash": "48ab5ede1aa6963658b4021f05239ff11756fe966536bac0086883811fbdbc40",
+          "beforeMeshSeed": -304051052,
+          "afterMeshSeed": 1871926952,
+          "seedChangedOnly": true
+        },
+        {
+          "objectId": 6,
+          "geometryHash": "f26e3a72849c534ee637f226c4e89ff825e54190d8789891e7b5ceda3c205382",
+          "beforeMeshSeed": -303181495,
+          "afterMeshSeed": 1872628597,
+          "seedChangedOnly": true
+        }
+      ],
+      "originalInstanceParamsPreserved": true,
+      "originalHolePolygonsPreserved": true,
+      "changedMatterCells": 0,
+      "matterCells": 25886,
+      "addedConservativeWallCells": 3164,
+      "removedWallCells": 0,
+      "addedConservativeWallFractionOfMatter": 0.12222823147647377,
+      "addedFootprints": [
+        {
+          "objectId": 7,
+          "triangleHash": "2e832297067ae18135fa31f7c320533d661882c09a1bd4644d0f380cf44d1f98",
+          "nondegenerateXYTriangles": 574,
+          "actualXYBounds": [
+            563.249267578125,
+            322.11334228515625,
+            796.9220581054688,
+            566.6663208007812
+          ],
+          "widthPx": 233.67279052734375,
+          "heightPx": 244.552978515625,
+          "occupied2PxCenterSamples": 9487,
+          "sampledProjectedAreaPx2": 37948,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 8,
+          "triangleHash": "8db4ced23b19d7a63c6d332616a272936306e11b57107ffe2cc471de19c9c093",
+          "nondegenerateXYTriangles": 574,
+          "actualXYBounds": [
+            830.500244140625,
+            576.7554931640625,
+            1044.743408203125,
+            745.9515380859375
+          ],
+          "widthPx": 214.2431640625,
+          "heightPx": 169.196044921875,
+          "occupied2PxCenterSamples": 6674,
+          "sampledProjectedAreaPx2": 26696,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 9,
+          "triangleHash": "0f4303e260c869fd991315b54189d18560a4885c63e9c40739d427e8ec9d4d56",
+          "nondegenerateXYTriangles": 574,
+          "actualXYBounds": [
+            589.3876953125,
+            1115.5064697265625,
+            843.0105590820312,
+            1306.1260986328125
+          ],
+          "widthPx": 253.62286376953125,
+          "heightPx": 190.61962890625,
+          "occupied2PxCenterSamples": 8925,
+          "sampledProjectedAreaPx2": 35700,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 10,
+          "triangleHash": "8d1e13de5dbfb6ab342d7387df9b980a618d50403f602cdd48ffc5ef9193d258",
+          "nondegenerateXYTriangles": 574,
+          "actualXYBounds": [
+            653.8444213867188,
+            1358.9359130859375,
+            845.6795654296875,
+            1546.7950439453125
+          ],
+          "widthPx": 191.83514404296875,
+          "heightPx": 187.859130859375,
+          "occupied2PxCenterSamples": 6238,
+          "sampledProjectedAreaPx2": 24952,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 11,
+          "triangleHash": "79a80f7c0f2de6c8489647a07d03b9078a70bd2613a2a17f81d79aeee8d8bf4b",
+          "nondegenerateXYTriangles": 574,
+          "actualXYBounds": [
+            1744.076416015625,
+            1063.8753662109375,
+            1979.993896484375,
+            1232.8914794921875
+          ],
+          "widthPx": 235.91748046875,
+          "heightPx": 169.01611328125,
+          "occupied2PxCenterSamples": 7389,
+          "sampledProjectedAreaPx2": 29556,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 12,
+          "triangleHash": "cade22bb91e861bd4967952ccc1c5af288f58debea03a8b5c919f3b83a279640",
+          "nondegenerateXYTriangles": 574,
+          "actualXYBounds": [
+            1472.24658203125,
+            1278.8739013671875,
+            1680.4097900390625,
+            1475.1038818359375
+          ],
+          "widthPx": 208.1632080078125,
+          "heightPx": 196.22998046875,
+          "occupied2PxCenterSamples": 6826,
+          "sampledProjectedAreaPx2": 27304,
+          "samplingStepPx": 2
+        }
+      ],
+      "staticPlayerVoidReveal": {
+        "world": "gel-rafts",
+        "grade": "medium",
+        "requestedSeed": 20261012,
+        "effectiveSeed": 1872207331,
+        "attempt": 3,
+        "revision": 10,
+        "spatialSourceHash": "a43956406123bd70e7d26818c010216b6c27b4fdb6ab15e964a166e15d308f66",
+        "geometryFingerprint": "e4de9bd8",
+        "policy": {
+          "gridPx": 8,
+          "bodyPx": 20,
+          "minimumWitnesses": 3,
+          "witnessSeparationPx": 300,
+          "maximumTargetDistancePx": 208,
+          "minimumRevealDisplacementPx": 80,
+          "maximumRevealRoutePx": 720,
+          "observerStridePx": 24,
+          "diagnosticStridePx": 64,
+          "maximumProbesPerGroup": 72
+        },
+        "standardMaximumTargetDistancePx": 208,
+        "diagnosticMaximumTargetDistancePx": 208,
+        "referenceForwardRadiusPx": 224,
+        "searchScope": "Bounded deterministic observer/chord samples; failed means the required witnesses were not found in this search, not proof that no such viewpoints exist. Three witnesses establish mechanical examples, not adequate map-wide exploration density.",
+        "status": "passed",
+        "witnessCount": 3,
+        "witnesses": [
+          {
+            "observer": {
+              "x": 1764,
+              "y": 756
+            },
+            "target": {
+              "x": 1908,
+              "y": 900
+            },
+            "reveal": {
+              "x": 1876,
+              "y": 748
+            },
+            "route": [
+              {
+                "x": 1764,
+                "y": 756
+              },
+              {
+                "x": 1868,
+                "y": 756
+              },
+              {
+                "x": 1876,
+                "y": 748
+              }
+            ],
+            "distance": 203.6467529817257,
+            "revealDistance": 155.3319027115808,
+            "routeLength": 115.31370849898477,
+            "revealDisplacement": 112.2853507809456,
+            "center": {
+              "x": 1836,
+              "y": 828
+            },
+            "facingRadians": {
+              "observer": 0.7853981633974483,
+              "reveal": 1.363300100359694
+            },
+            "group": {
+              "id": "interior-1",
+              "kind": "interior-void",
+              "component": 1,
+              "sourcePolygons": [
+                0
+              ],
+              "areaPx2": 37952,
+              "centroid": {
+                "x": 1787.0286677908937,
+                "y": 905.787521079258
+              }
+            },
+            "controls": {
+              "actualBlocked": true,
+              "allVoidRemovedVisible": true,
+              "onlyThisVoidRemovedVisible": true,
+              "revealVisible": true,
+              "earliestRevealDisplacementPx": 112.2853507809456
+            },
+            "spawnApproach": {
+              "route": [
+                {
+                  "x": 1500,
+                  "y": 1172
+                },
+                {
+                  "x": 1508,
+                  "y": 1172
+                },
+                {
+                  "x": 1508,
+                  "y": 1004
+                },
+                {
+                  "x": 1716,
+                  "y": 796
+                },
+                {
+                  "x": 1724,
+                  "y": 796
+                },
+                {
+                  "x": 1764,
+                  "y": 756
+                }
+              ],
+              "routeLength": 534.7249634685277,
+              "fullGridSteps": 54
+            },
+            "candidatesRejectedBefore": 5
+          },
+          {
+            "observer": {
+              "x": 540,
+              "y": 852
+            },
+            "target": {
+              "x": 684,
+              "y": 996
+            },
+            "reveal": {
+              "x": 652,
+              "y": 852
+            },
+            "route": [
+              {
+                "x": 540,
+                "y": 852
+              },
+              {
+                "x": 652,
+                "y": 852
+              }
+            ],
+            "distance": 203.6467529817257,
+            "revealDistance": 147.51271131668622,
+            "routeLength": 112,
+            "revealDisplacement": 112,
+            "center": {
+              "x": 612,
+              "y": 924
+            },
+            "facingRadians": {
+              "observer": 0.7853981633974483,
+              "reveal": 1.3521273809209546
+            },
+            "group": {
+              "id": "interior-2",
+              "kind": "interior-void",
+              "component": 2,
+              "sourcePolygons": [
+                1
+              ],
+              "areaPx2": 39040,
+              "centroid": {
+                "x": 560.5639344262295,
+                "y": 988.2229508196722
+              }
+            },
+            "controls": {
+              "actualBlocked": true,
+              "allVoidRemovedVisible": true,
+              "onlyThisVoidRemovedVisible": true,
+              "revealVisible": true,
+              "earliestRevealDisplacementPx": 112
+            },
+            "spawnApproach": {
+              "route": [
+                {
+                  "x": 1500,
+                  "y": 1172
+                },
+                {
+                  "x": 1500,
+                  "y": 1196
+                },
+                {
+                  "x": 1492,
+                  "y": 1196
+                },
+                {
+                  "x": 1476,
+                  "y": 1212
+                },
+                {
+                  "x": 1468,
+                  "y": 1212
+                },
+                {
+                  "x": 1460,
+                  "y": 1220
+                },
+                {
+                  "x": 972,
+                  "y": 1220
+                },
+                {
+                  "x": 684,
+                  "y": 932
+                },
+                {
+                  "x": 676,
+                  "y": 932
+                },
+                {
+                  "x": 612,
+                  "y": 868
+                },
+                {
+                  "x": 556,
+                  "y": 868
+                },
+                {
+                  "x": 540,
+                  "y": 852
+                }
+              ],
+              "routeLength": 1146.3717164502534,
+              "fullGridSteps": 123
+            },
+            "candidatesRejectedBefore": 7
+          },
+          {
+            "observer": {
+              "x": 1764,
+              "y": 1236
+            },
+            "target": {
+              "x": 1964,
+              "y": 1292
+            },
+            "reveal": {
+              "x": 1884,
+              "y": 1236
+            },
+            "route": [
+              {
+                "x": 1764,
+                "y": 1236
+              },
+              {
+                "x": 1780,
+                "y": 1236
+              },
+              {
+                "x": 1788,
+                "y": 1244
+              },
+              {
+                "x": 1820,
+                "y": 1244
+              },
+              {
+                "x": 1828,
+                "y": 1252
+              },
+              {
+                "x": 1876,
+                "y": 1252
+              },
+              {
+                "x": 1884,
+                "y": 1244
+              },
+              {
+                "x": 1884,
+                "y": 1236
+              }
+            ],
+            "distance": 207.69207977195472,
+            "revealDistance": 97.65244492586962,
+            "routeLength": 137.94112549695427,
+            "revealDisplacement": 120,
+            "center": {
+              "x": 1864,
+              "y": 1264
+            },
+            "facingRadians": {
+              "observer": 0.2730087030867106,
+              "reveal": 0.6107259643892086
+            },
+            "group": {
+              "id": "interior-3",
+              "kind": "interior-void",
+              "component": 3,
+              "sourcePolygons": [
+                2
+              ],
+              "areaPx2": 38144,
+              "centroid": {
+                "x": 1831.6644295302012,
+                "y": 1363.7181208053692
+              }
+            },
+            "controls": {
+              "actualBlocked": true,
+              "allVoidRemovedVisible": true,
+              "onlyThisVoidRemovedVisible": true,
+              "revealVisible": true,
+              "earliestRevealDisplacementPx": 120
+            },
+            "spawnApproach": {
+              "route": [
+                {
+                  "x": 1500,
+                  "y": 1172
+                },
+                {
+                  "x": 1700,
+                  "y": 1172
+                },
+                {
+                  "x": 1764,
+                  "y": 1236
+                }
+              ],
+              "routeLength": 290.5096679918781,
+              "fullGridSteps": 33
+            },
+            "candidatesRejectedBefore": 2
+          }
+        ],
+        "rejectedGroups": [],
+        "reachableSeats": 19569,
+        "supportedSeats": 19569,
+        "reachableFraction": 1,
+        "diagnostics": {
+          "scope": "Geometric, zero-chaos forward-facing LOS diagnostics; no reward placement or human exploration claim. Open-corridor samples are axis-aligned and not exhaustive.",
+          "internalVoid": {
+            "components": 4,
+            "cells": 2371,
+            "areaPx2": 151744,
+            "fractionOfCanvas": 0.03675285218253968
+          },
+          "externalVoid": {
+            "components": 1,
+            "cells": 36255,
+            "areaPx2": 2320320,
+            "fractionOfCanvas": 0.5619884672619048
+          },
+          "nearbyGroundPairs": 10840,
+          "voidBlockedPairs": 290,
+          "voidBlockedPairFraction": 0.026752767527675275,
+          "regions": [
+            {
+              "region": 0,
+              "observers": 3,
+              "groundPairs": 59,
+              "voidBlockedPairs": 7,
+              "observersWithVoidLoss": 3,
+              "blockedPairFraction": 0.11864406779661017
+            },
+            {
+              "region": 1,
+              "observers": 34,
+              "groundPairs": 1076,
+              "voidBlockedPairs": 6,
+              "observersWithVoidLoss": 4,
+              "blockedPairFraction": 0.0055762081784386614
+            },
+            {
+              "region": 2,
+              "observers": 0,
+              "groundPairs": 0,
+              "voidBlockedPairs": 0,
+              "observersWithVoidLoss": 0,
+              "blockedPairFraction": null
+            },
+            {
+              "region": 3,
+              "observers": 0,
+              "groundPairs": 0,
+              "voidBlockedPairs": 0,
+              "observersWithVoidLoss": 0,
+              "blockedPairFraction": null
+            },
+            {
+              "region": 4,
+              "observers": 25,
+              "groundPairs": 850,
+              "voidBlockedPairs": 40,
+              "observersWithVoidLoss": 12,
+              "blockedPairFraction": 0.047058823529411764
+            },
+            {
+              "region": 5,
+              "observers": 54,
+              "groundPairs": 2479,
+              "voidBlockedPairs": 46,
+              "observersWithVoidLoss": 11,
+              "blockedPairFraction": 0.01855586930213796
+            },
+            {
+              "region": 6,
+              "observers": 70,
+              "groundPairs": 3164,
+              "voidBlockedPairs": 33,
+              "observersWithVoidLoss": 8,
+              "blockedPairFraction": 0.010429835651074588
+            },
+            {
+              "region": 7,
+              "observers": 35,
+              "groundPairs": 1012,
+              "voidBlockedPairs": 51,
+              "observersWithVoidLoss": 14,
+              "blockedPairFraction": 0.05039525691699605
+            },
+            {
+              "region": 8,
+              "observers": 24,
+              "groundPairs": 742,
+              "voidBlockedPairs": 38,
+              "observersWithVoidLoss": 8,
+              "blockedPairFraction": 0.05121293800539083
+            },
+            {
+              "region": 9,
+              "observers": 22,
+              "groundPairs": 544,
+              "voidBlockedPairs": 41,
+              "observersWithVoidLoss": 9,
+              "blockedPairFraction": 0.07536764705882353
+            },
+            {
+              "region": 10,
+              "observers": 15,
+              "groundPairs": 398,
+              "voidBlockedPairs": 5,
+              "observersWithVoidLoss": 2,
+              "blockedPairFraction": 0.01256281407035176
+            },
+            {
+              "region": 11,
+              "observers": 20,
+              "groundPairs": 516,
+              "voidBlockedPairs": 23,
+              "observersWithVoidLoss": 6,
+              "blockedPairFraction": 0.044573643410852716
+            }
+          ],
+          "longestPeripheralOpenCorridors": [
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 1996,
+                "y": 652
+              },
+              "to": {
+                "x": 1996,
+                "y": 1508
+              },
+              "lengthPx": 856
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 332,
+                "y": 836
+              },
+              "to": {
+                "x": 332,
+                "y": 1588
+              },
+              "lengthPx": 752
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 300,
+                "y": 876
+              },
+              "to": {
+                "x": 300,
+                "y": 1588
+              },
+              "lengthPx": 712
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 2028,
+                "y": 860
+              },
+              "to": {
+                "x": 2028,
+                "y": 1508
+              },
+              "lengthPx": 648
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 508,
+                "y": 300
+              },
+              "to": {
+                "x": 1084,
+                "y": 300
+              },
+              "lengthPx": 576
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 548,
+                "y": 268
+              },
+              "to": {
+                "x": 1084,
+                "y": 268
+              },
+              "lengthPx": 536
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 172,
+                "y": 1548
+              },
+              "to": {
+                "x": 708,
+                "y": 1548
+              },
+              "lengthPx": 536
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 364,
+                "y": 788
+              },
+              "to": {
+                "x": 364,
+                "y": 1324
+              },
+              "lengthPx": 536
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 268,
+                "y": 1076
+              },
+              "to": {
+                "x": 268,
+                "y": 1588
+              },
+              "lengthPx": 512
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 588,
+                "y": 236
+              },
+              "to": {
+                "x": 1084,
+                "y": 236
+              },
+              "lengthPx": 496
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 396,
+                "y": 788
+              },
+              "to": {
+                "x": 396,
+                "y": 1284
+              },
+              "lengthPx": 496
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 428,
+                "y": 788
+              },
+              "to": {
+                "x": 428,
+                "y": 1284
+              },
+              "lengthPx": 496
+            }
+          ]
+        },
+        "measurementMs": 111.7879170000001
+      }
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeedBefore": 20261012,
+      "effectiveSeedAfter": 20261012,
+      "originalMeshes": [
+        {
+          "objectId": 1,
+          "geometryHash": "4018426b5917c8e1aab2e24e7c3edd6e407f506bbe02e2aa9ff5286cafd7c554",
+          "beforeMeshSeed": 20230541,
+          "afterMeshSeed": 20230541,
+          "seedChangedOnly": false
+        },
+        {
+          "objectId": 2,
+          "geometryHash": "d7dc4fbd5416e06ba14556734b2f4484edfabea24cef59a7957611af937067a4",
+          "beforeMeshSeed": 20322982,
+          "afterMeshSeed": 20322982,
+          "seedChangedOnly": false
+        },
+        {
+          "objectId": 3,
+          "geometryHash": "e040f1dcda2e0368d41c3f05d8735be7af56beb7d2bdcbb25a4b756bcf68ce0c",
+          "beforeMeshSeed": 20046815,
+          "afterMeshSeed": 20046815,
+          "seedChangedOnly": false
+        }
+      ],
+      "originalInstanceParamsPreserved": true,
+      "originalHolePolygonsPreserved": true,
+      "changedMatterCells": 0,
+      "matterCells": 25896,
+      "addedConservativeWallCells": 2180,
+      "removedWallCells": 0,
+      "addedConservativeWallFractionOfMatter": 0.08418288538770466,
+      "addedFootprints": [
+        {
+          "objectId": 4,
+          "triangleHash": "ba0cb1876627e6bba99a8cb34fd07fdba82180d899be598bc455939ab78cbf81",
+          "nondegenerateXYTriangles": 247,
+          "actualXYBounds": [
+            774.78759765625,
+            729.1359252929688,
+            982.0894165039062,
+            917.5150146484375
+          ],
+          "widthPx": 207.30181884765625,
+          "heightPx": 188.37908935546875,
+          "occupied2PxCenterSamples": 5705,
+          "sampledProjectedAreaPx2": 22820,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 5,
+          "triangleHash": "6ad830a34cf19570078fe223fe5e4a0fbaaa9b1bde32618b2d5b9a779b515143",
+          "nondegenerateXYTriangles": 245,
+          "actualXYBounds": [
+            541.3894653320312,
+            954.3671875,
+            742.0374755859375,
+            1062.8330078125
+          ],
+          "widthPx": 200.64801025390625,
+          "heightPx": 108.4658203125,
+          "occupied2PxCenterSamples": 3207,
+          "sampledProjectedAreaPx2": 12828,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 6,
+          "triangleHash": "e590dee4cbd13611f0b3c78091dfc38d96e7198319f38359cb8efe0aac34e874",
+          "nondegenerateXYTriangles": 247,
+          "actualXYBounds": [
+            1639.028076171875,
+            808.2221069335938,
+            1890.2982177734375,
+            966.967529296875
+          ],
+          "widthPx": 251.2701416015625,
+          "heightPx": 158.74542236328125,
+          "occupied2PxCenterSamples": 6202,
+          "sampledProjectedAreaPx2": 24808,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 7,
+          "triangleHash": "83d2a09e2031774e161fc7fdfec0d03306d0a4c2e737a8bd3079de35b379ab65",
+          "nondegenerateXYTriangles": 247,
+          "actualXYBounds": [
+            1916.5460205078125,
+            948.3507080078125,
+            2075.758056640625,
+            1143.3753662109375
+          ],
+          "widthPx": 159.2120361328125,
+          "heightPx": 195.024658203125,
+          "occupied2PxCenterSamples": 4632,
+          "sampledProjectedAreaPx2": 18528,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 8,
+          "triangleHash": "373de6c22c68710bbdc1002a1d4428b130829ffbc5c6dced16b88b9d23705aab",
+          "nondegenerateXYTriangles": 247,
+          "actualXYBounds": [
+            1226.2164306640625,
+            1556.247314453125,
+            1460.8350830078125,
+            1716.307861328125
+          ],
+          "widthPx": 234.61865234375,
+          "heightPx": 160.060546875,
+          "occupied2PxCenterSamples": 5825,
+          "sampledProjectedAreaPx2": 23300,
+          "samplingStepPx": 2
+        },
+        {
+          "objectId": 9,
+          "triangleHash": "7ef9253c43f25a73867064820fe5564f2310b3d1f7b06447ae7e31266b6a115c",
+          "nondegenerateXYTriangles": 247,
+          "actualXYBounds": [
+            1572.250244140625,
+            1402.434326171875,
+            1744.23291015625,
+            1572.118896484375
+          ],
+          "widthPx": 171.982666015625,
+          "heightPx": 169.6845703125,
+          "occupied2PxCenterSamples": 4233,
+          "sampledProjectedAreaPx2": 16932,
+          "samplingStepPx": 2
+        }
+      ],
+      "staticPlayerVoidReveal": {
+        "world": "sloughed-court",
+        "grade": "medium",
+        "requestedSeed": 20261012,
+        "effectiveSeed": 20261012,
+        "attempt": 0,
+        "revision": 10,
+        "spatialSourceHash": "a43956406123bd70e7d26818c010216b6c27b4fdb6ab15e964a166e15d308f66",
+        "geometryFingerprint": "0e87a030",
+        "policy": {
+          "gridPx": 8,
+          "bodyPx": 20,
+          "minimumWitnesses": 3,
+          "witnessSeparationPx": 300,
+          "maximumTargetDistancePx": 208,
+          "minimumRevealDisplacementPx": 80,
+          "maximumRevealRoutePx": 720,
+          "observerStridePx": 24,
+          "diagnosticStridePx": 64,
+          "maximumProbesPerGroup": 72
+        },
+        "standardMaximumTargetDistancePx": 208,
+        "diagnosticMaximumTargetDistancePx": 208,
+        "referenceForwardRadiusPx": 224,
+        "searchScope": "Bounded deterministic observer/chord samples; failed means the required witnesses were not found in this search, not proof that no such viewpoints exist. Three witnesses establish mechanical examples, not adequate map-wide exploration density.",
+        "status": "passed",
+        "witnessCount": 3,
+        "witnesses": [
+          {
+            "observer": {
+              "x": 1860,
+              "y": 468
+            },
+            "target": {
+              "x": 2004,
+              "y": 612
+            },
+            "reveal": {
+              "x": 1956,
+              "y": 468
+            },
+            "route": [
+              {
+                "x": 1860,
+                "y": 468
+              },
+              {
+                "x": 1956,
+                "y": 468
+              }
+            ],
+            "distance": 203.6467529817257,
+            "revealDistance": 151.7893276880822,
+            "routeLength": 96,
+            "revealDisplacement": 96,
+            "center": {
+              "x": 1932,
+              "y": 540
+            },
+            "facingRadians": {
+              "observer": 0.7853981633974483,
+              "reveal": 1.2490457723982544
+            },
+            "group": {
+              "id": "interior-1",
+              "kind": "interior-void",
+              "component": 1,
+              "sourcePolygons": [
+                0
+              ],
+              "areaPx2": 36096,
+              "centroid": {
+                "x": 1892.5390070921985,
+                "y": 631.4893617021277
+              }
+            },
+            "controls": {
+              "actualBlocked": true,
+              "allVoidRemovedVisible": true,
+              "onlyThisVoidRemovedVisible": true,
+              "revealVisible": true,
+              "earliestRevealDisplacementPx": 96
+            },
+            "spawnApproach": {
+              "route": [
+                {
+                  "x": 940,
+                  "y": 676
+                },
+                {
+                  "x": 948,
+                  "y": 676
+                },
+                {
+                  "x": 996,
+                  "y": 724
+                },
+                {
+                  "x": 996,
+                  "y": 732
+                },
+                {
+                  "x": 1092,
+                  "y": 828
+                },
+                {
+                  "x": 1100,
+                  "y": 828
+                },
+                {
+                  "x": 1108,
+                  "y": 836
+                },
+                {
+                  "x": 1116,
+                  "y": 836
+                },
+                {
+                  "x": 1124,
+                  "y": 844
+                },
+                {
+                  "x": 1132,
+                  "y": 844
+                },
+                {
+                  "x": 1164,
+                  "y": 876
+                },
+                {
+                  "x": 1172,
+                  "y": 876
+                },
+                {
+                  "x": 1204,
+                  "y": 908
+                },
+                {
+                  "x": 1212,
+                  "y": 908
+                },
+                {
+                  "x": 1244,
+                  "y": 940
+                },
+                {
+                  "x": 1564,
+                  "y": 940
+                },
+                {
+                  "x": 1572,
+                  "y": 932
+                },
+                {
+                  "x": 1572,
+                  "y": 924
+                },
+                {
+                  "x": 1580,
+                  "y": 916
+                },
+                {
+                  "x": 1580,
+                  "y": 724
+                },
+                {
+                  "x": 1780,
+                  "y": 524
+                },
+                {
+                  "x": 1804,
+                  "y": 524
+                },
+                {
+                  "x": 1860,
+                  "y": 468
+                }
+              ],
+              "routeLength": 1346.704760932994,
+              "fullGridSteps": 141
+            },
+            "candidatesRejectedBefore": 3
+          },
+          {
+            "observer": {
+              "x": 588,
+              "y": 708
+            },
+            "target": {
+              "x": 732,
+              "y": 852
+            },
+            "reveal": {
+              "x": 692,
+              "y": 700
+            },
+            "route": [
+              {
+                "x": 588,
+                "y": 708
+              },
+              {
+                "x": 684,
+                "y": 708
+              },
+              {
+                "x": 692,
+                "y": 700
+              }
+            ],
+            "distance": 203.6467529817257,
+            "revealDistance": 157.175061635108,
+            "routeLength": 107.31370849898477,
+            "revealDisplacement": 104.30723848324239,
+            "center": {
+              "x": 660,
+              "y": 780
+            },
+            "facingRadians": {
+              "observer": 0.7853981633974483,
+              "reveal": 1.313472611823808
+            },
+            "group": {
+              "id": "interior-2",
+              "kind": "interior-void",
+              "component": 2,
+              "sourcePolygons": [
+                1
+              ],
+              "areaPx2": 23360,
+              "centroid": {
+                "x": 630.0383561643836,
+                "y": 848.427397260274
+              }
+            },
+            "controls": {
+              "actualBlocked": true,
+              "allVoidRemovedVisible": true,
+              "onlyThisVoidRemovedVisible": true,
+              "revealVisible": true,
+              "earliestRevealDisplacementPx": 104.30723848324239
+            },
+            "spawnApproach": {
+              "route": [
+                {
+                  "x": 940,
+                  "y": 676
+                },
+                {
+                  "x": 620,
+                  "y": 676
+                },
+                {
+                  "x": 588,
+                  "y": 708
+                }
+              ],
+              "routeLength": 365.25483399593907,
+              "fullGridSteps": 44
+            },
+            "candidatesRejectedBefore": 6
+          },
+          {
+            "observer": {
+              "x": 1332,
+              "y": 948
+            },
+            "target": {
+              "x": 1388,
+              "y": 1148
+            },
+            "reveal": {
+              "x": 1228,
+              "y": 1060
+            },
+            "route": [
+              {
+                "x": 1332,
+                "y": 948
+              },
+              {
+                "x": 1332,
+                "y": 956
+              },
+              {
+                "x": 1228,
+                "y": 1060
+              }
+            ],
+            "distance": 207.69207977195472,
+            "revealDistance": 182.60339536821323,
+            "routeLength": 155.0782104868019,
+            "revealDisplacement": 152.8397853963424,
+            "center": {
+              "x": 1360,
+              "y": 1048
+            },
+            "facingRadians": {
+              "observer": 1.297787623708186,
+              "reveal": 0.5028432109278609
+            },
+            "group": {
+              "id": "interior-3",
+              "kind": "interior-void",
+              "component": 3,
+              "sourcePolygons": [
+                2
+              ],
+              "areaPx2": 18816,
+              "centroid": {
+                "x": 1428.8707482993198,
+                "y": 1064.544217687075
+              }
+            },
+            "controls": {
+              "actualBlocked": true,
+              "allVoidRemovedVisible": true,
+              "onlyThisVoidRemovedVisible": true,
+              "revealVisible": true,
+              "earliestRevealDisplacementPx": 152.8397853963424
+            },
+            "spawnApproach": {
+              "route": [
+                {
+                  "x": 940,
+                  "y": 676
+                },
+                {
+                  "x": 948,
+                  "y": 676
+                },
+                {
+                  "x": 996,
+                  "y": 724
+                },
+                {
+                  "x": 996,
+                  "y": 732
+                },
+                {
+                  "x": 1092,
+                  "y": 828
+                },
+                {
+                  "x": 1100,
+                  "y": 828
+                },
+                {
+                  "x": 1108,
+                  "y": 836
+                },
+                {
+                  "x": 1116,
+                  "y": 836
+                },
+                {
+                  "x": 1124,
+                  "y": 844
+                },
+                {
+                  "x": 1132,
+                  "y": 844
+                },
+                {
+                  "x": 1164,
+                  "y": 876
+                },
+                {
+                  "x": 1172,
+                  "y": 876
+                },
+                {
+                  "x": 1204,
+                  "y": 908
+                },
+                {
+                  "x": 1212,
+                  "y": 908
+                },
+                {
+                  "x": 1244,
+                  "y": 940
+                },
+                {
+                  "x": 1324,
+                  "y": 940
+                },
+                {
+                  "x": 1332,
+                  "y": 948
+                }
+              ],
+              "routeLength": 509.35238046649715,
+              "fullGridSteps": 50
+            },
+            "candidatesRejectedBefore": 1
+          }
+        ],
+        "rejectedGroups": [],
+        "reachableSeats": 21084,
+        "supportedSeats": 21084,
+        "reachableFraction": 1,
+        "diagnostics": {
+          "scope": "Geometric, zero-chaos forward-facing LOS diagnostics; no reward placement or human exploration claim. Open-corridor samples are axis-aligned and not exhaustive.",
+          "internalVoid": {
+            "components": 4,
+            "cells": 1391,
+            "areaPx2": 89024,
+            "fractionOfCanvas": 0.02156187996031746
+          },
+          "externalVoid": {
+            "components": 1,
+            "cells": 37225,
+            "areaPx2": 2382400,
+            "fractionOfCanvas": 0.5770244295634921
+          },
+          "nearbyGroundPairs": 13119,
+          "voidBlockedPairs": 384,
+          "voidBlockedPairFraction": 0.029270523667962497,
+          "regions": [
+            {
+              "region": 0,
+              "observers": 0,
+              "groundPairs": 0,
+              "voidBlockedPairs": 0,
+              "observersWithVoidLoss": 0,
+              "blockedPairFraction": null
+            },
+            {
+              "region": 1,
+              "observers": 5,
+              "groundPairs": 107,
+              "voidBlockedPairs": 8,
+              "observersWithVoidLoss": 4,
+              "blockedPairFraction": 0.07476635514018691
+            },
+            {
+              "region": 2,
+              "observers": 9,
+              "groundPairs": 282,
+              "voidBlockedPairs": 2,
+              "observersWithVoidLoss": 1,
+              "blockedPairFraction": 0.0070921985815602835
+            },
+            {
+              "region": 3,
+              "observers": 31,
+              "groundPairs": 1055,
+              "voidBlockedPairs": 35,
+              "observersWithVoidLoss": 7,
+              "blockedPairFraction": 0.03317535545023697
+            },
+            {
+              "region": 4,
+              "observers": 24,
+              "groundPairs": 642,
+              "voidBlockedPairs": 32,
+              "observersWithVoidLoss": 10,
+              "blockedPairFraction": 0.04984423676012461
+            },
+            {
+              "region": 5,
+              "observers": 51,
+              "groundPairs": 2122,
+              "voidBlockedPairs": 20,
+              "observersWithVoidLoss": 8,
+              "blockedPairFraction": 0.00942507068803016
+            },
+            {
+              "region": 6,
+              "observers": 39,
+              "groundPairs": 1708,
+              "voidBlockedPairs": 93,
+              "observersWithVoidLoss": 16,
+              "blockedPairFraction": 0.05444964871194379
+            },
+            {
+              "region": 7,
+              "observers": 43,
+              "groundPairs": 1519,
+              "voidBlockedPairs": 26,
+              "observersWithVoidLoss": 8,
+              "blockedPairFraction": 0.017116524028966424
+            },
+            {
+              "region": 8,
+              "observers": 0,
+              "groundPairs": 0,
+              "voidBlockedPairs": 0,
+              "observersWithVoidLoss": 0,
+              "blockedPairFraction": null
+            },
+            {
+              "region": 9,
+              "observers": 44,
+              "groundPairs": 1728,
+              "voidBlockedPairs": 3,
+              "observersWithVoidLoss": 1,
+              "blockedPairFraction": 0.001736111111111111
+            },
+            {
+              "region": 10,
+              "observers": 68,
+              "groundPairs": 3153,
+              "voidBlockedPairs": 11,
+              "observersWithVoidLoss": 6,
+              "blockedPairFraction": 0.0034887408816999684
+            },
+            {
+              "region": 11,
+              "observers": 28,
+              "groundPairs": 803,
+              "voidBlockedPairs": 154,
+              "observersWithVoidLoss": 23,
+              "blockedPairFraction": 0.1917808219178082
+            }
+          ],
+          "longestPeripheralOpenCorridors": [
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 772,
+                "y": 1740
+              },
+              "to": {
+                "x": 1988,
+                "y": 1740
+              },
+              "lengthPx": 1216
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 740,
+                "y": 1356
+              },
+              "to": {
+                "x": 1828,
+                "y": 1356
+              },
+              "lengthPx": 1088
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 2092,
+                "y": 332
+              },
+              "to": {
+                "x": 2092,
+                "y": 1228
+              },
+              "lengthPx": 896
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 2124,
+                "y": 332
+              },
+              "to": {
+                "x": 2124,
+                "y": 1228
+              },
+              "lengthPx": 896
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 1028,
+                "y": 1388
+              },
+              "to": {
+                "x": 1828,
+                "y": 1388
+              },
+              "lengthPx": 800
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 1388,
+                "y": 1708
+              },
+              "to": {
+                "x": 2044,
+                "y": 1708
+              },
+              "lengthPx": 656
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 2060,
+                "y": 332
+              },
+              "to": {
+                "x": 2060,
+                "y": 988
+              },
+              "lengthPx": 656
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 1804,
+                "y": 956
+              },
+              "to": {
+                "x": 1804,
+                "y": 1604
+              },
+              "lengthPx": 648
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 1772,
+                "y": 980
+              },
+              "to": {
+                "x": 1772,
+                "y": 1604
+              },
+              "lengthPx": 624
+            },
+            {
+              "axis": "vertical",
+              "from": {
+                "x": 2028,
+                "y": 332
+              },
+              "to": {
+                "x": 2028,
+                "y": 948
+              },
+              "lengthPx": 616
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 1580,
+                "y": 396
+              },
+              "to": {
+                "x": 2140,
+                "y": 396
+              },
+              "lengthPx": 560
+            },
+            {
+              "axis": "horizontal",
+              "from": {
+                "x": 1580,
+                "y": 428
+              },
+              "to": {
+                "x": 2140,
+                "y": 428
+              },
+              "lengthPx": 560
+            }
+          ]
+        },
+        "measurementMs": 119.0092080000004
+      }
+    }
+  ],
+  "failures": [],
+  "limits": [
+    "3 medium maps at requested seed 20261012, complete generation supplied by code receipts; not other grades or seeds.",
+    "Projected footprints are exact original triangles with 2px centre-sampled area, not nominal length*width and not continuous union area.",
+    "VOID reveal witnesses are static player-facing DDA and body-swept paths. No actual enemy, hearing, patrol phase, detection state, approach or retreat gameplay was executed."
+  ]
+}
