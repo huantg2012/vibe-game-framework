@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 1,
+  "recordedOn": "2026-10-13",
+  "status": "extracted-from-existing-evidence",
+  "scope": "五张既有r11中污染最终地图的只读尺度统计；未运行新地图生成、未重编译基底、未试玩。",
+  "receipt": {
+    "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/final-v4-medium.json",
+    "sha256": "fc7a2abdb665b2c1880fe7e8075c065d459f125bdac5a0fd62499edc5a4701b7",
+    "status": "passed"
+  },
+  "reproduction": {
+    "command": "node docs/reviews/artifacts/native-generation-2026-10-13/baseline-counts.mjs --check",
+    "dependencies": [
+      "Node.js",
+      "repository node_modules/sharp",
+      "temporary cached maps and recipes at each evidence.cachedMapPath/cachedRecipePath"
+    ],
+    "missingCacheBehavior": "Fail without regenerating maps. These temporary caches are not committed; the JSON and PNG witnesses remain available."
+  },
+  "definitions": {
+    "baselineGroundAreaPx2": "增补前已提交before.png的FLOOR+WALL纯色色块计数；每8px支撑格绘成4×4图像像素，因此每图像像素为4世界px²。包含实体下土地，排除外部VOID和内孔。",
+    "finalGroundAreaPx2": "已有最终缓存8px tileMap中非VOID格数×64，包含实体占地。",
+    "finalReachableSeatAreaPx2": "已有metadata.reachableBodySeats×64；20px身体中心的可达采样域面积，不是精确连续可走多边形面积。",
+    "baselineReachableSeatAreaPx2": "未知：原通过报告未直接记录，且本次禁止重编译基底。",
+    "finalInternalVoidContourCount": "已有最终definition.erosion.length；独立封闭内孔轮廓数，不含通外界岸湾。",
+    "finalInternalVoidGridComponentCount": "已有最终8px VOID格四连通域，排除接画布边缘的外部VOID；本五图与轮廓数一致。",
+    "finalSolidInstanceCount": "最终definition.instances中role=solid的对象数；相接实例可能成为同一物理团。",
+    "finalSolid4ConnectedComponentCount": "最终8px WALL碰撞格的四连通团数，无尺寸或感知筛选，不是语义障碍团数。"
+  },
+  "limitations": [
+    "不是全108世界或全部种子统计，不能代表最佳数量、密度或潜行体验。",
+    "原面积依赖已提交无抗锯齿、无标记的before.png与render-batch.mjs的固定配色/4倍最近邻输出契约；脚本核对尺寸、纯色与16像素整倍数，不声称PNG等于独立几何重测。",
+    "内孔数不包含外岸开口/岸湾；任意void矩形数不等于独立内孔数。",
+    "四连通碰撞团未按人可识别尺寸、局部观察顺序或玩法作用过滤，不能直接当作2:1玩家遭遇比。",
+    "缓存mapHash与原通过报告完全核对；没有重跑当前生成器，原报告验证范围不提升。"
+  ],
+  "cases": [
+    {
+      "worldId": "split-rib-causeway",
+      "label": "双脊渡口",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "evidence": {
+        "receiptPath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/final-v4-medium.json",
+        "cachedMapPath": "/tmp/coh-spatial-augmentation-maps-v4-final/split-rib-causeway-medium-20261012.map.v8.gz",
+        "cachedRecipePath": "/tmp/coh-spatial-augmentation-maps-v4-final/split-rib-causeway-medium-20261012.recipe.json",
+        "beforeImagePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/split-rib-causeway-before.png",
+        "expectedMapHash": "40fc768708e0c509e7ee05d98ede415b8e56a38defcc60fdc8098e26fecb7960",
+        "observedMapHash": "40fc768708e0c509e7ee05d98ede415b8e56a38defcc60fdc8098e26fecb7960",
+        "mapHashMatched": true,
+        "cachedMapSha256": "a287a853f3d8605f48821bb437c2c7ebc27ec919c5168c856c9c08ded7ef9ca6",
+        "cachedRecipeSha256": "5645f41c64380387938bf3358fdf2ebc32f1e34ee61fcfc2d1ae29695d2fe69a",
+        "beforeImageSha256": "d33f88384d86647b3ddde319df517f3be5914d9a83df28688d06111adc184c13"
+      },
+      "worldDimensionsPx": [
+        2304,
+        1792
+      ],
+      "supportCellPx": 8,
+      "baselineGroundAreaPx2": 1963968,
+      "finalGroundAreaPx2": 1963968,
+      "finalReachableBodySeatCount": 24619,
+      "finalReachableSeatAreaPx2": 1575616,
+      "baselineReachableSeatAreaPx2": null,
+      "baselineInternalVoidContourCount": 4,
+      "finalInternalVoidContourCount": 4,
+      "finalInternalVoidGridComponentCount": 4,
+      "finalInternalVoidComponentAreasPx2": [
+        35200,
+        29824,
+        29184,
+        27392
+      ],
+      "finalSolidInstanceCount": 7,
+      "finalSolid4ConnectedComponentCount": 6,
+      "finalSolidComponentAreasPx2": [
+        133824,
+        16512,
+        16064,
+        13888,
+        13568,
+        11840
+      ],
+      "finalReliefInstanceCount": 0,
+      "baselineRectangleCounts": {
+        "land": 5,
+        "void": 7
+      },
+      "finalRectangleCounts": {
+        "land": 5,
+        "void": 7
+      },
+      "finalHoleVertexCount": 42,
+      "finalLargestHoleVertexCount": 13,
+      "finalOuterVertexCount": 65,
+      "countWarning": "内孔轮廓、solid实例、8px碰撞格四连通团是三种不同计数；均不直接等同玩家遇到或记忆的空间单元。"
+    },
+    {
+      "worldId": "gel-rafts",
+      "label": "断脂浅片",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 3991160799,
+      "attempt": 1,
+      "evidence": {
+        "receiptPath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/final-v4-medium.json",
+        "cachedMapPath": "/tmp/coh-spatial-augmentation-maps-v4-final/gel-rafts-medium-20261012.map.v8.gz",
+        "cachedRecipePath": "/tmp/coh-spatial-augmentation-maps-v4-final/gel-rafts-medium-20261012.recipe.json",
+        "beforeImagePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/gel-rafts-before.png",
+        "expectedMapHash": "ee0c85e51b8c9910e24517701e541966295f8da9140eb584987ce275fa3893b6",
+        "observedMapHash": "ee0c85e51b8c9910e24517701e541966295f8da9140eb584987ce275fa3893b6",
+        "mapHashMatched": true,
+        "cachedMapSha256": "54db64751e2d4f6c3ea90f5e782f7c7183e1b651f293ca729cfba531eea95737",
+        "cachedRecipeSha256": "a8e5d08a123cd15dc3309761a1c162ad091b984450dd8bb7d2d77c6db3bf1c98",
+        "beforeImageSha256": "3db024f5fed9248e445ade00b90ba55a52ee7c6dd9ebdf6bd887826b926b3923"
+      },
+      "worldDimensionsPx": [
+        2304,
+        1792
+      ],
+      "supportCellPx": 8,
+      "baselineGroundAreaPx2": 1656704,
+      "finalGroundAreaPx2": 1656704,
+      "finalReachableBodySeatCount": 19392,
+      "finalReachableSeatAreaPx2": 1241088,
+      "baselineReachableSeatAreaPx2": null,
+      "baselineInternalVoidContourCount": 4,
+      "finalInternalVoidContourCount": 4,
+      "finalInternalVoidGridComponentCount": 4,
+      "finalInternalVoidComponentAreasPx2": [
+        39040,
+        38144,
+        37952,
+        36608
+      ],
+      "finalSolidInstanceCount": 9,
+      "finalSolid4ConnectedComponentCount": 9,
+      "finalSolidComponentAreasPx2": [
+        41664,
+        36544,
+        31936,
+        31744,
+        30720,
+        29504,
+        27264,
+        25856,
+        12864
+      ],
+      "finalReliefInstanceCount": 4,
+      "baselineRectangleCounts": {
+        "land": 4,
+        "void": 7
+      },
+      "finalRectangleCounts": {
+        "land": 4,
+        "void": 7
+      },
+      "finalHoleVertexCount": 37,
+      "finalLargestHoleVertexCount": 11,
+      "finalOuterVertexCount": 62,
+      "countWarning": "内孔轮廓、solid实例、8px碰撞格四连通团是三种不同计数；均不直接等同玩家遇到或记忆的空间单元。"
+    },
+    {
+      "worldId": "sloughed-court",
+      "label": "剥皮露庭",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "evidence": {
+        "receiptPath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/final-v4-medium.json",
+        "cachedMapPath": "/tmp/coh-spatial-augmentation-maps-v4-final/sloughed-court-medium-20261012.map.v8.gz",
+        "cachedRecipePath": "/tmp/coh-spatial-augmentation-maps-v4-final/sloughed-court-medium-20261012.recipe.json",
+        "beforeImagePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/sloughed-court-before.png",
+        "expectedMapHash": "fec336c43a627c024b5ac00793cbec1506557d9f963913ac727442150bd2b7b5",
+        "observedMapHash": "fec336c43a627c024b5ac00793cbec1506557d9f963913ac727442150bd2b7b5",
+        "mapHashMatched": true,
+        "cachedMapSha256": "a67630699ece98999d27b8803ab9b4aea314803b65e138fe541e7b157db6c48f",
+        "cachedRecipeSha256": "aa275b6d9f64399bb58c03cfc874e669e88c6399df9300f96e693ac92f5dd0af",
+        "beforeImageSha256": "94b9ea06788d145e87925dfeff5fdc482270121b464adec03addbf8e20ca03ad"
+      },
+      "worldDimensionsPx": [
+        2304,
+        1792
+      ],
+      "supportCellPx": 8,
+      "baselineGroundAreaPx2": 1657344,
+      "finalGroundAreaPx2": 1624448,
+      "finalReachableBodySeatCount": 20469,
+      "finalReachableSeatAreaPx2": 1310016,
+      "baselineReachableSeatAreaPx2": null,
+      "baselineInternalVoidContourCount": 4,
+      "finalInternalVoidContourCount": 5,
+      "finalInternalVoidGridComponentCount": 5,
+      "finalInternalVoidComponentAreasPx2": [
+        35904,
+        23168,
+        19328,
+        18176,
+        10112
+      ],
+      "finalSolidInstanceCount": 7,
+      "finalSolid4ConnectedComponentCount": 7,
+      "finalSolidComponentAreasPx2": [
+        35264,
+        26880,
+        26560,
+        25152,
+        21568,
+        20992,
+        18816
+      ],
+      "finalReliefInstanceCount": 2,
+      "baselineRectangleCounts": {
+        "land": 4,
+        "void": 8
+      },
+      "finalRectangleCounts": {
+        "land": 4,
+        "void": 9
+      },
+      "finalHoleVertexCount": 44,
+      "finalLargestHoleVertexCount": 12,
+      "finalOuterVertexCount": 70,
+      "countWarning": "内孔轮廓、solid实例、8px碰撞格四连通团是三种不同计数；均不直接等同玩家遇到或记忆的空间单元。"
+    },
+    {
+      "worldId": "ash-strata",
+      "label": "逆折·穿层",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "evidence": {
+        "receiptPath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/final-v4-medium.json",
+        "cachedMapPath": "/tmp/coh-spatial-augmentation-maps-v4-final/ash-strata-medium-20261012.map.v8.gz",
+        "cachedRecipePath": "/tmp/coh-spatial-augmentation-maps-v4-final/ash-strata-medium-20261012.recipe.json",
+        "beforeImagePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/ash-strata-before.png",
+        "expectedMapHash": "b6237dc2c69b9cf6b798a6173227874ee8fc61a973d10218f9da2a0c92b36245",
+        "observedMapHash": "b6237dc2c69b9cf6b798a6173227874ee8fc61a973d10218f9da2a0c92b36245",
+        "mapHashMatched": true,
+        "cachedMapSha256": "112abf4857dc50a8163818288d56ea6c53ca62ba10e03f0f9242de3239fa7842",
+        "cachedRecipeSha256": "936ac63f15b1c7a394cef45cfad8e2b784dc353f589648c5fa809d4a7e2ee98e",
+        "beforeImageSha256": "5dc33f6722dec1715c57e11b84d6fd6a17348a8fb442d54f3d415558680de7af"
+      },
+      "worldDimensionsPx": [
+        2304,
+        1792
+      ],
+      "supportCellPx": 8,
+      "baselineGroundAreaPx2": 1932096,
+      "finalGroundAreaPx2": 1932096,
+      "finalReachableBodySeatCount": 20703,
+      "finalReachableSeatAreaPx2": 1324992,
+      "baselineReachableSeatAreaPx2": null,
+      "baselineInternalVoidContourCount": 8,
+      "finalInternalVoidContourCount": 8,
+      "finalInternalVoidGridComponentCount": 8,
+      "finalInternalVoidComponentAreasPx2": [
+        46208,
+        43072,
+        34112,
+        32960,
+        25408,
+        22080,
+        13120,
+        12224
+      ],
+      "finalSolidInstanceCount": 18,
+      "finalSolid4ConnectedComponentCount": 14,
+      "finalSolidComponentAreasPx2": [
+        68992,
+        53696,
+        46976,
+        28480,
+        27968,
+        27904,
+        27200,
+        17984,
+        17536,
+        16000,
+        12864,
+        11648,
+        11584,
+        6976
+      ],
+      "finalReliefInstanceCount": 3,
+      "baselineRectangleCounts": {
+        "land": 9,
+        "void": 13
+      },
+      "finalRectangleCounts": {
+        "land": 9,
+        "void": 13
+      },
+      "finalHoleVertexCount": 132,
+      "finalLargestHoleVertexCount": 26,
+      "finalOuterVertexCount": 101,
+      "countWarning": "内孔轮廓、solid实例、8px碰撞格四连通团是三种不同计数；均不直接等同玩家遇到或记忆的空间单元。"
+    },
+    {
+      "worldId": "black-lacuna",
+      "label": "暗脂缺湾",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "evidence": {
+        "receiptPath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/final-v4-medium.json",
+        "cachedMapPath": "/tmp/coh-spatial-augmentation-maps-v4-final/black-lacuna-medium-20261012.map.v8.gz",
+        "cachedRecipePath": "/tmp/coh-spatial-augmentation-maps-v4-final/black-lacuna-medium-20261012.recipe.json",
+        "beforeImagePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/black-lacuna-before.png",
+        "expectedMapHash": "7596ca40c32108f74190e78996a501d23883dd4c4a9a24a34b4156e1995e401a",
+        "observedMapHash": "7596ca40c32108f74190e78996a501d23883dd4c4a9a24a34b4156e1995e401a",
+        "mapHashMatched": true,
+        "cachedMapSha256": "eda8d57858a225d969572340c49ef99438a89feb6ab2160531b9473342483ece",
+        "cachedRecipeSha256": "7ba576ed439ff3affa439953032d46dfe25aaff0ad6405982c39562e2eea17c1",
+        "beforeImageSha256": "7e4a14aeeec0b90e174fc2c63d99b5d8c0edd6e1bbc5422fe1463419e516377f"
+      },
+      "worldDimensionsPx": [
+        2304,
+        1792
+      ],
+      "supportCellPx": 8,
+      "baselineGroundAreaPx2": 1817920,
+      "finalGroundAreaPx2": 1817920,
+      "finalReachableBodySeatCount": 25482,
+      "finalReachableSeatAreaPx2": 1630848,
+      "baselineReachableSeatAreaPx2": null,
+      "baselineInternalVoidContourCount": 4,
+      "finalInternalVoidContourCount": 4,
+      "finalInternalVoidGridComponentCount": 4,
+      "finalInternalVoidComponentAreasPx2": [
+        43904,
+        43648,
+        36736,
+        30528
+      ],
+      "finalSolidInstanceCount": 2,
+      "finalSolid4ConnectedComponentCount": 2,
+      "finalSolidComponentAreasPx2": [
+        65408,
+        13120
+      ],
+      "finalReliefInstanceCount": 3,
+      "baselineRectangleCounts": {
+        "land": 4,
+        "void": 7
+      },
+      "finalRectangleCounts": {
+        "land": 4,
+        "void": 7
+      },
+      "finalHoleVertexCount": 41,
+      "finalLargestHoleVertexCount": 15,
+      "finalOuterVertexCount": 77,
+      "countWarning": "内孔轮廓、solid实例、8px碰撞格四连通团是三种不同计数；均不直接等同玩家遇到或记忆的空间单元。"
+    }
+  ]
+}

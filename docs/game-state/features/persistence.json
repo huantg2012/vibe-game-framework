@@ -3,7 +3,7 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "新出发冻结r11 policy、同族profiles、fragment与来源hash，恢复不读取今日CSV。旧r10从99998703封存完整执行器；12份公开路由map恢复（6份另核两态四RGBA）及20份r11保存配方精确重放通过。跨引擎、全部历史身份与自然冷续仍不作保证。",
+    "summary": "新出发冻结r11 policy、同族profiles、fragment与来源hash，恢复不读取今日CSV。旧r10从99998703封存完整执行器；12份公开路由map恢复（6份另核两态四RGBA）及20份r11保存配方精确重放通过。跨引擎、全部历史身份与自然冷续仍不作保证。 DEC-208已要求原生联合生成；本轮设计与现状核对未改变运行实现，新准入/2:1分布尚待实施。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -610,6 +610,22 @@
       {
         "path": "tools/recovery/check-native-r100-revision11-orchestration.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/design-notes/world-fragment-native-generation-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-10-13-native-generation-design.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/artifacts/native-generation-2026-10-13/baseline-counts.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/artifacts/native-generation-2026-10-13/baseline-counts.mjs",
+        "role": "doc"
       }
     ],
     "dependsOn": [],
@@ -650,7 +666,8 @@
       "COH-E237",
       "COH-E238",
       "COH-E239",
-      "COH-E240"
+      "COH-E240",
+      "COH-E241"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。",
@@ -663,7 +680,8 @@
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E236为本轮有限程序和正常镜头验证：六图中档safe节点、四组留出seed关系/近远、三例远距FOV与一例正式低档冷续。非全seed、全部节点可读性、长期自然探索或用户审美；容量不足实景仅有事务证据。其余102推广仍暂停。",
       "E237记录108世界两项优化的正式接入及有限内部验证：324档位为固定请求seed，代表实机用知情导航；不外推全seed、全部节点自然发现、连续视觉听感、长期收益或用户审美。用户最新授权已解除102图推广暂停；I14/P49仍开放。",
       "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
-      "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。"
+      "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。",
+      "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。"
     ]
   },
   {
