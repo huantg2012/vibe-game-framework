@@ -1,0 +1,636 @@
+{
+  "status": "passed",
+  "createdAt": "2026-10-13T11:10:43.291Z",
+  "reports": [
+    "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/final-v4-medium.json",
+    "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/final-v4-low-severe.json",
+    "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/final-v4-seed0-medium.json"
+  ],
+  "scope": {
+    "worlds": [
+      "split-rib-causeway",
+      "gel-rafts",
+      "sloughed-court",
+      "ash-strata",
+      "black-lacuna"
+    ],
+    "identities": 20
+  },
+  "recipeValidation": {
+    "count": 324,
+    "largestBytes": 20506,
+    "corruptions": [
+      "missing-policy",
+      "unknown-algorithm",
+      "unknown-version",
+      "parameter-change",
+      "bad-budget",
+      "extra-field",
+      "source-drift",
+      "profile-change",
+      "unknown-revision"
+    ],
+    "templateUnchanged": true
+  },
+  "totals": {
+    "solid": 8,
+    "void": 4,
+    "noop": 9,
+    "secondCandidate": 1,
+    "constructionErrors": 0,
+    "minGenerationMs": 1278.3687920000084,
+    "maxGenerationMs": 13546.450208
+  },
+  "cases": [
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 0,
+      "noop": true,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.012706775488479625,
+        "occlusion": 0.9255677316746022
+      },
+      "remainingDeficits": {
+        "physical": 0.012706775488479625,
+        "occlusion": 0.9255677316746022
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 3145.7108749999998,
+      "replayMs": 2564.4685420000005,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/split-rib-causeway-medium-20261012",
+      "mapHash": "40fc768708e0c509e7ee05d98ede415b8e56a38defcc60fdc8098e26fecb7960"
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 3991160799,
+      "attempt": 1,
+      "selectedSolidCount": 1,
+      "selectedVoidCount": 0,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.01605480783923731,
+        "occlusion": 0.893799500883521
+      },
+      "remainingDeficits": {
+        "physical": 0.010088278569928336,
+        "occlusion": 0.893799500883521
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 8861.201541999999,
+      "replayMs": 9166.025375000001,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/gel-rafts-medium-20261012",
+      "mapHash": "ee0c85e51b8c9910e24517701e541966295f8da9140eb584987ce275fa3893b6"
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 1,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.04038701932141468,
+        "occlusion": 0.888096915199719
+      },
+      "remainingDeficits": {
+        "physical": 0.027099533790178706,
+        "occlusion": 0.8701100215118907
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 5146.333416999998,
+      "replayMs": 4772.922749999998,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/sloughed-court-medium-20261012",
+      "mapHash": "fec336c43a627c024b5ac00793cbec1506557d9f963913ac727442150bd2b7b5"
+    },
+    {
+      "worldId": "ash-strata",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 0,
+      "noop": true,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.000506319761124628,
+        "occlusion": 0.6778272709675154
+      },
+      "remainingDeficits": {
+        "physical": 0.000506319761124628,
+        "occlusion": 0.6778272709675154
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 1543.1156249999985,
+      "replayMs": 1256.1266669999968,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/ash-strata-medium-20261012",
+      "mapHash": "b6237dc2c69b9cf6b798a6173227874ee8fc61a973d10218f9da2a0c92b36245"
+    },
+    {
+      "worldId": "black-lacuna",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 1,
+      "selectedVoidCount": 0,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.08007394527604661,
+        "occlusion": 0.9279745351038727
+      },
+      "remainingDeficits": {
+        "physical": 0.055752612877210714,
+        "occlusion": 0.9279745351038727
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 4379.561292000006,
+      "replayMs": 4399.161584000001,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/black-lacuna-medium-20261012",
+      "mapHash": "7596ca40c32108f74190e78996a501d23883dd4c4a9a24a34b4156e1995e401a"
+    },
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "low",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 0,
+      "noop": true,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.012676817853313616,
+        "occlusion": 0.9255139178362533
+      },
+      "remainingDeficits": {
+        "physical": 0.012676817853313616,
+        "occlusion": 0.9255139178362533
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 3075.8919170000004,
+      "replayMs": 2587.238125,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/split-rib-causeway-low-20261012",
+      "mapHash": "a353dd4ae706a8b663252b278d4bfed5dcc4289b9e1b9c82e4ae6fba8f451082"
+    },
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "severe",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 0,
+      "noop": true,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.012681461010454306,
+        "occlusion": 0.9256253940063468
+      },
+      "remainingDeficits": {
+        "physical": 0.012681461010454306,
+        "occlusion": 0.9256253940063468
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 2709.3392919999987,
+      "replayMs": 2657.9734169999992,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/split-rib-causeway-severe-20261012",
+      "mapHash": "bb247c73dc3e7111209b7d3f18ab80e2e8617ec3fa72623179ae49a64146f670"
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "low",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 1872207331,
+      "attempt": 3,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 0,
+      "noop": true,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.01605480786267949,
+        "occlusion": 0.893799500883521
+      },
+      "remainingDeficits": {
+        "physical": 0.01605480786267949,
+        "occlusion": 0.893799500883521
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 13546.450208,
+      "replayMs": 13381.812125,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/gel-rafts-low-20261012",
+      "mapHash": "5c60a453cfabcb7b884f60436ccf14a3f80dc812c24458ef93d7985ba54677d1"
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "severe",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 3991160799,
+      "attempt": 1,
+      "selectedSolidCount": 1,
+      "selectedVoidCount": 0,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.016054807600608283,
+        "occlusion": 0.893799500883521
+      },
+      "remainingDeficits": {
+        "physical": 0.010088278331299301,
+        "occlusion": 0.893799500883521
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 8743.888208999997,
+      "replayMs": 8941.127,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/gel-rafts-severe-20261012",
+      "mapHash": "4e79f1bb77e04270f3fce97fcf89cb6f87078aeed0c8c2dbc9e62441a8add064"
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "low",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 1,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.04038701932141468,
+        "occlusion": 0.888096915199719
+      },
+      "remainingDeficits": {
+        "physical": 0.027099533790178706,
+        "occlusion": 0.8701100215118907
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 4884.265874999997,
+      "replayMs": 4810.912583000005,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/sloughed-court-low-20261012",
+      "mapHash": "58ecb8a54134c95198f815ce81880d8b15258211771d8ddcd91d8816aa19d6f4"
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "severe",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 1,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.04038701932141468,
+        "occlusion": 0.888096915199719
+      },
+      "remainingDeficits": {
+        "physical": 0.027099533790178706,
+        "occlusion": 0.8701100215118907
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 4863.0821670000005,
+      "replayMs": 4998.557207999998,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/sloughed-court-severe-20261012",
+      "mapHash": "b042f070bdcefc1d88222ed276c8f384ae6531ac5cbfd775e4a87607ea898594"
+    },
+    {
+      "worldId": "ash-strata",
+      "grade": "low",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 0,
+      "noop": true,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.0005054694360566201,
+        "occlusion": 0.6776240189349951
+      },
+      "remainingDeficits": {
+        "physical": 0.0005054694360566201,
+        "occlusion": 0.6776240189349951
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 1278.3687920000084,
+      "replayMs": 1230.7753329999978,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/ash-strata-low-20261012",
+      "mapHash": "5ebc08b3e1a0091dc7b68092d2b720be0cb613089b2e13444a2e47c6b7818617"
+    },
+    {
+      "worldId": "ash-strata",
+      "grade": "severe",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 0,
+      "noop": true,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.000508238022803259,
+        "occlusion": 0.6779288969837756
+      },
+      "remainingDeficits": {
+        "physical": 0.000508238022803259,
+        "occlusion": 0.6779288969837756
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 1508.8177089999954,
+      "replayMs": 1356.720417000004,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/ash-strata-severe-20261012",
+      "mapHash": "744fb5eb9cf0e6c06f239dbc65dbe675363afd345bcd7a7876a547060d7ce0c3"
+    },
+    {
+      "worldId": "black-lacuna",
+      "grade": "low",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 1,
+      "selectedVoidCount": 0,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.08007394532308902,
+        "occlusion": 0.9279745351038727
+      },
+      "remainingDeficits": {
+        "physical": 0.055752612924253125,
+        "occlusion": 0.9279745351038727
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 4491.212874999997,
+      "replayMs": 3873.076667000001,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/black-lacuna-low-20261012",
+      "mapHash": "7db6aa84b56d8f065be3da5387442d86b09bf60a2bba2084f70b9f4689ec393b"
+    },
+    {
+      "worldId": "black-lacuna",
+      "grade": "severe",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "selectedSolidCount": 1,
+      "selectedVoidCount": 0,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.08007394545102822,
+        "occlusion": 0.9279745351038727
+      },
+      "remainingDeficits": {
+        "physical": 0.05575261305219231,
+        "occlusion": 0.9279745351038727
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 4004.967333000008,
+      "replayMs": 3933.5000419999997,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/black-lacuna-severe-20261012",
+      "mapHash": "a9ee91112c17b3e429c951658ac93d5ac982f7a329cc927c2d3727765cb3e12c"
+    },
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "medium",
+      "requestedSeed": 0,
+      "effectiveSeed": 0,
+      "attempt": 0,
+      "selectedSolidCount": 1,
+      "selectedVoidCount": 0,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.013369150957659602,
+        "occlusion": 0.9211025218673402
+      },
+      "remainingDeficits": {
+        "physical": 0.010176799820339848,
+        "occlusion": 0.9211025218673402
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 4937.112083,
+      "replayMs": 4298.1865,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/split-rib-causeway-medium-0",
+      "mapHash": "15ab82c90ba331f1875d96ba1a27d2191c63914fdb83ba8b1d8edf3badccd85b"
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "medium",
+      "requestedSeed": 0,
+      "effectiveSeed": 0,
+      "attempt": 0,
+      "selectedSolidCount": 1,
+      "selectedVoidCount": 0,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.01442587240955353,
+        "occlusion": 0.9098552330997851
+      },
+      "remainingDeficits": {
+        "physical": 0.010498336838093177,
+        "occlusion": 0.9098552330997851
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 3987.8864170000015,
+      "replayMs": 3915.65725,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/gel-rafts-medium-0",
+      "mapHash": "b0cb2eea73db2825f8ec11da88888ec7c7a846c27d4696c0258aa9c65a172066"
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "medium",
+      "requestedSeed": 0,
+      "effectiveSeed": 0,
+      "attempt": 0,
+      "selectedSolidCount": 1,
+      "selectedVoidCount": 1,
+      "noop": false,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.038474610872677346,
+        "occlusion": 0.8984382951596063
+      },
+      "remainingDeficits": {
+        "physical": 0.023577763202933595,
+        "occlusion": 0.8761145957867266
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 6823.584208,
+      "replayMs": 1082372.7445,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/sloughed-court-medium-0",
+      "mapHash": "53f87229f08d32b9f8fe02028e6bb40d6befe1fb0f4ad7c62259b094b5899ca2"
+    },
+    {
+      "worldId": "ash-strata",
+      "grade": "medium",
+      "requestedSeed": 0,
+      "effectiveSeed": 586283262,
+      "attempt": 4,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 0,
+      "noop": true,
+      "stopReason": "no-feasible-improvement",
+      "fallback": false,
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "baselineDeficits": {
+        "physical": 0.00036617724500156117,
+        "occlusion": 0.6831681804200898
+      },
+      "remainingDeficits": {
+        "physical": 0.00036617724500156117,
+        "occlusion": 0.6831681804200898
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 6698.8293340001255,
+      "replayMs": 6351.75229199999,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/ash-strata-medium-0",
+      "mapHash": "f85a26892b7ea93a991f8d5158468787007c055e5429a5683cdbccb900393e86"
+    },
+    {
+      "worldId": "black-lacuna",
+      "grade": "medium",
+      "requestedSeed": 0,
+      "effectiveSeed": 0,
+      "attempt": 0,
+      "selectedSolidCount": 0,
+      "selectedVoidCount": 0,
+      "noop": true,
+      "stopReason": "no-feasible-improvement",
+      "fallback": true,
+      "deployment": {
+        "selectedCandidate": 1,
+        "rejectedCandidates": [
+          {
+            "candidate": 0,
+            "reason": "Cannot admit kindling/deep/1 with a full native route"
+          }
+        ]
+      },
+      "baselineDeficits": {
+        "physical": 0.08038659495158651,
+        "occlusion": 0.9211072690160136
+      },
+      "remainingDeficits": {
+        "physical": 0.08038659495158651,
+        "occlusion": 0.9211072690160136
+      },
+      "candidateConstructionErrors": [],
+      "generationMs": 5493.224291999824,
+      "replayMs": 5905.918874999974,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-v4-final/black-lacuna-medium-0",
+      "mapHash": "f922b3f270e647b7af753c5e591527691930b063ac966606e3433510b207ec43"
+    }
+  ],
+  "limits": [
+    "Only five worlds at three grades/one seed plus five medium cases at a second seed; not full-library runtime qualification.",
+    "All cases finish with remaining deficits, not a declaration that stealth-space coverage meets targets.",
+    "Offline generation timings are not browser loading or frame-rate measurements."
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "scope": "Independent small geometry contracts; not full generation, old r10, real enemy perception or UI play",
+  "seed": 20261013,
+  "policySourceHash": "c885a86dfe8978b28730375e261157e4bc6aa5dcaae52db32d411abd35b721f5",
+  "sources": {
+    "src/generation/world-study/spatial-augmentation-types.ts": "74749683bd391ffc70e71f205b7e0e502cabfa458dce13d77574dac758e9e3a7",
+    "src/generation/world-study/spatial-augmentation-measure.ts": "ef161d4f6029636c9e79821bdba97dd533d1a0a2898437e4e5ade4ba790b240a",
+    "src/generation/world-study/spatial-augmentation-candidates.ts": "d55f2a8d3cf810caaaddaa5af0b92b293d95236e332a94d6d3c728dc60b95707",
+    "src/generation/world-study/spatial-augmentation-selection.ts": "9a3aa3098456ea246b693c9ea968b7630e0345a0449b5ff9e05ab641d79be294",
+    "src/generation/world-study/native-terrain.ts": "59de172e9a84328fba15cc903c15780feb2e7fc9825ec7407aa48deb7fb20aea"
+  },
+  "passed": 10,
+  "failed": 1,
+  "results": [
+    {
+      "id": "J01-solid-blocks-body-does-not-improve-occlusion",
+      "passed": true,
+      "elapsedMs": 51,
+      "baseline": {
+        "physical": 0.2376847290640397,
+        "occlusion": 1
+      },
+      "candidate": {
+        "deficits": {
+          "physical": 0.09761702032477022,
+          "occlusion": 1
+        },
+        "removedBaseRatio": 0,
+        "addedSolidRatio": 0.015151515151515152,
+        "bodyCenterLossRatio": 0.020595191170674026,
+        "wideCoreRetainedRatio": 0.9298245614035088,
+        "largestOpenCoreRetainedRatio": 0.7217391304347827,
+        "anchorsConnected": false,
+        "bodyReachableRatio": 1,
+        "survivingProbes": 595
+      },
+      "witness": {
+        "point": {
+          "x": 516.0417277018229,
+          "y": 347.99684651692706
+        },
+        "a": {
+          "x": 416.0417277018229,
+          "y": 347.99684651692706
+        },
+        "b": {
+          "x": 616.0417277018229,
+          "y": 347.99684651692706
+        }
+      }
+    },
+    {
+      "id": "J01-relief-does-not-claim-solid-gain",
+      "passed": true,
+      "elapsedMs": 19,
+      "candidate": {
+        "deficits": {
+          "physical": 0.2376847290640397,
+          "occlusion": 1
+        },
+        "removedBaseRatio": 0,
+        "addedSolidRatio": 0,
+        "bodyCenterLossRatio": 0,
+        "wideCoreRetainedRatio": 1,
+        "largestOpenCoreRetainedRatio": 1,
+        "anchorsConnected": true,
+        "bodyReachableRatio": 1,
+        "survivingProbes": 609
+      }
+    },
+    {
+      "id": "J02-missing-fixed-probes-and-endpoints-preserve-cost",
+      "passed": true,
+      "elapsedMs": 6,
+      "removedPoint": {
+        "x": 260,
+        "y": 260
+      },
+      "removedEndpointCount": 16,
+      "baseline": {
+        "physical": 0.2376847290640397,
+        "occlusion": 1
+      },
+      "candidate": {
+        "deficits": {
+          "physical": 0.2376847290640397,
+          "occlusion": 1
+        },
+        "removedBaseRatio": 0,
+        "addedSolidRatio": 0,
+        "bodyCenterLossRatio": 0.0016752069373275522,
+        "wideCoreRetainedRatio": 0.9980506822612085,
+        "largestOpenCoreRetainedRatio": 0.9971014492753624,
+        "anchorsConnected": true,
+        "bodyReachableRatio": 1,
+        "survivingProbes": 608
+      },
+      "note": "Only reachability is removed in this adversarial fixture. Matter/triangles/rays remain unchanged, isolating denominator handling."
+    },
+    {
+      "id": "J02-real-void-deletion-retains-each-lost-probe-cost",
+      "passed": true,
+      "elapsedMs": 20,
+      "lostProbeCount": 42,
+      "fixedProbeCount": 609,
+      "candidate": {
+        "deficits": {
+          "physical": 0.10775184527413142,
+          "occlusion": 0.9667635046945392
+        },
+        "removedBaseRatio": 0.045454545454545456,
+        "addedSolidRatio": 0,
+        "bodyCenterLossRatio": 0.0563657863618447,
+        "wideCoreRetainedRatio": 0.8615984405458089,
+        "largestOpenCoreRetainedRatio": 0.5768115942028985,
+        "anchorsConnected": false,
+        "bodyReachableRatio": 1,
+        "survivingProbes": 567
+      }
+    },
+    {
+      "id": "J03-body-connected-narrow-bridge-loses-wide-core",
+      "passed": true,
+      "elapsedMs": 30,
+      "candidate": {
+        "deficits": {
+          "physical": 0.11336166475672953,
+          "occlusion": 0.8422719043408698
+        },
+        "removedBaseRatio": 0.06363636363636363,
+        "addedSolidRatio": 0,
+        "bodyCenterLossRatio": 0.08277493102089081,
+        "wideCoreRetainedRatio": 0.8148148148148148,
+        "largestOpenCoreRetainedRatio": 0.30434782608695654,
+        "anchorsConnected": false,
+        "bodyReachableRatio": 1,
+        "survivingProbes": 546
+      },
+      "reasons": [
+        "largest-open-core-loss",
+        "fixed-anchor-lost"
+      ],
+      "baselineWideGroups": 1,
+      "baselineAnchors": 12
+    },
+    {
+      "id": "J03-no-core-is-not-applicable",
+      "passed": true,
+      "elapsedMs": 2,
+      "candidate": {
+        "deficits": {
+          "physical": 0,
+          "occlusion": 1
+        },
+        "removedBaseRatio": 0,
+        "addedSolidRatio": 0,
+        "bodyCenterLossRatio": 0,
+        "wideCoreRetainedRatio": null,
+        "largestOpenCoreRetainedRatio": null,
+        "anchorsConnected": true,
+        "bodyReachableRatio": 1,
+        "survivingProbes": 29
+      },
+      "probeCount": 29
+    },
+    {
+      "id": "J04-source-instance-mutation-rejected-without-input-mutation",
+      "passed": true,
+      "elapsedMs": 57,
+      "reasons": [
+        "source-instance-mutated"
+      ],
+      "inputHash": "3d0a69a3fe1b05a45b601be438b9678203faa1f584eef3826d2be947b42c6116"
+    },
+    {
+      "id": "J04-existing-relief-ground-cut-is-rejected",
+      "passed": true,
+      "elapsedMs": 43,
+      "reasons": [
+        "fixed-anchor-lost",
+        "ground-cut-under-existing-solid-or-relief"
+      ],
+      "protectedReason": "ground-cut-under-existing-solid-or-relief"
+    },
+    {
+      "id": "J06-reject-then-valid-measurement-is-pure",
+      "passed": true,
+      "elapsedMs": 62,
+      "receipt": {
+        "id": "qa-candidate",
+        "kind": "solid",
+        "axis": "physical",
+        "hotspot": {
+          "x": 516,
+          "y": 388
+        },
+        "accepted": false,
+        "reasons": [
+          "fixed-anchor-lost"
+        ],
+        "deficits": {
+          "physical": 0.09761702032477022,
+          "occlusion": 1
+        },
+        "targetImprovement": 0.7520026686427614,
+        "removedBaseRatio": 0,
+        "addedSolidRatio": 0.015151515151515152,
+        "bodyCenterLossRatio": 0.020595191170674026,
+        "wideCoreRetainedRatio": 0.9298245614035088,
+        "largestOpenCoreRetainedRatio": 0.7217391304347827
+      },
+      "inputHash": "677d37dd0248b1486f337a39ea29fa42a0220301babb9842e850bfec29d09192",
+      "geometryHash": "ff7aaa108f73e2106d1680980fc8cebf858d79e42c2e35cc1d80944d6f6275ee",
+      "note": "Candidate geometry rollback/purity only. Final content-deployment fallback belongs to integration gate."
+    },
+    {
+      "id": "J07-policy-schema-rejects-invalid-budgets",
+      "passed": true,
+      "elapsedMs": 1,
+      "rejectedCases": [
+        "maxRounds=0",
+        "maxRounds=-1",
+        "maxRounds=1.5",
+        "maxRounds=NaN",
+        "maxCandidatesPerRound=Infinity",
+        "maxAddedVoids=5"
+      ]
+    },
+    {
+      "id": "J07-no-budget-is-not-targets-met-and-is-deterministic",
+      "passed": false,
+      "elapsedMs": 0,
+      "error": "v1 requires a layout object with worldScale: 2; coordinates must be authoring units, not world pixels",
+      "details": null
+    }
+  ]
+}

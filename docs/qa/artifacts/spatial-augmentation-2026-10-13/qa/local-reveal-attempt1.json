@@ -1,0 +1,238 @@
+{
+  "scope": "Only local reveal regression; prior 25 contracts remain separately frozen, no production batches or r10 replay rerun",
+  "seed": 20261013,
+  "sources": {
+    "src/generation/world-study/spatial-augmentation-selection.ts": "f93f075d5ee768d225e59d9676201fba80fe601b45b07a36b7cb767b531e05ff",
+    "src/generation/world-study/spatial-augmentation-candidates.ts": "540c410a93da337951e8ea8c1d1d757d3f6605edff7e981ed7a1462203580dd8",
+    "src/generation/world-study/spatial-augmentation-measure.ts": "932f5cea78f7239726fee25e73341c27c81a7997ba4a9b1daf6434348cef8a27",
+    "src/generated/r100-spatial-augmentation.ts": "ae1e3429e3f4c855099a2bc1d1b21f6d5ae72accc7f14dfc314a407617f0794e"
+  },
+  "passed": 6,
+  "failed": 0,
+  "results": [
+    {
+      "id": "L01-real-remote-witness-exists-but-local-focus-rejects-it",
+      "passed": true,
+      "remoteObserver": {
+        "x": 324,
+        "y": 164
+      },
+      "observerHotspotDistance": 1110.819517293426,
+      "hotspot": {
+        "x": 1156,
+        "y": 900
+      },
+      "radius": 224
+    },
+    {
+      "id": "L02-evaluate-cannot-borrow-remote-ring-change-for-local-solid",
+      "passed": true,
+      "receipt": {
+        "id": "qa-local-solid-remote-void",
+        "kind": "combined",
+        "axis": "physical",
+        "hotspot": {
+          "x": 1156,
+          "y": 900
+        },
+        "accepted": false,
+        "reasons": [
+          "no-void-reveal-witness"
+        ],
+        "deficits": {
+          "physical": 0.4974069117726171,
+          "occlusion": 0.9927138420077519
+        },
+        "targetImprovement": 0.7536302769220707,
+        "removedBaseRatio": 0.003936376752222004,
+        "addedSolidRatio": 0.0037226368380742034,
+        "bodyCenterLossRatio": 0.010203896692342547,
+        "wideCoreRetainedRatio": 0.9740998104864181,
+        "largestOpenCoreRetainedRatio": 0.9254658385093167
+      },
+      "note": "The candidate passes other geometry/score checks and improves local physical cost, but its optical witness is remote."
+    },
+    {
+      "id": "L03-local-focus-keeps-208-224-and-full-body-path-positive-control",
+      "passed": true,
+      "witness": {
+        "observer": {
+          "x": 324,
+          "y": 164
+        },
+        "hidden": {
+          "x": 324,
+          "y": 372
+        },
+        "revealed": {
+          "x": 244,
+          "y": 372
+        },
+        "route": [
+          {
+            "x": 324,
+            "y": 372
+          },
+          {
+            "x": 316,
+            "y": 372
+          },
+          {
+            "x": 308,
+            "y": 372
+          },
+          {
+            "x": 300,
+            "y": 372
+          },
+          {
+            "x": 292,
+            "y": 372
+          },
+          {
+            "x": 284,
+            "y": 372
+          },
+          {
+            "x": 276,
+            "y": 372
+          },
+          {
+            "x": 268,
+            "y": 372
+          },
+          {
+            "x": 260,
+            "y": 372
+          },
+          {
+            "x": 252,
+            "y": 372
+          },
+          {
+            "x": 244,
+            "y": 372
+          }
+        ],
+        "routeLengthPx": 80
+      },
+      "measurements": {
+        "observerFocusDistance": 0,
+        "hiddenDistance": 208,
+        "revealedDistance": 222.8542124349459,
+        "routeLength": 80
+      }
+    },
+    {
+      "id": "L04-evaluate-supplies-local-focus-for-real-local-combination",
+      "passed": true,
+      "receipt": {
+        "id": "r0-h1-combined-0",
+        "kind": "combined",
+        "axis": "physical",
+        "hotspot": {
+          "x": 1380,
+          "y": 900
+        },
+        "accepted": false,
+        "reasons": [],
+        "deficits": {
+          "physical": 0.4908905293506971,
+          "occlusion": 0.9919829361576934
+        },
+        "targetImprovement": 0.7032804811529901,
+        "removedBaseRatio": 0.0064121974244340345,
+        "addedSolidRatio": 0.003508896923926402,
+        "bodyCenterLossRatio": 0.013013140009062075,
+        "wideCoreRetainedRatio": 0.9696778269109286,
+        "largestOpenCoreRetainedRatio": 0.927658019729631,
+        "reveal": {
+          "observer": {
+            "x": 1380,
+            "y": 676
+          },
+          "hidden": {
+            "x": 1527.078210486802,
+            "y": 823.0782104868019
+          },
+          "revealed": {
+            "x": 1572,
+            "y": 788
+          },
+          "route": [
+            {
+              "x": 1527.078210486802,
+              "y": 823.0782104868019
+            },
+            {
+              "x": 1524,
+              "y": 820
+            },
+            {
+              "x": 1532,
+              "y": 820
+            },
+            {
+              "x": 1540,
+              "y": 820
+            },
+            {
+              "x": 1548,
+              "y": 820
+            },
+            {
+              "x": 1556,
+              "y": 820
+            },
+            {
+              "x": 1564,
+              "y": 820
+            },
+            {
+              "x": 1572,
+              "y": 820
+            },
+            {
+              "x": 1572,
+              "y": 812
+            },
+            {
+              "x": 1572,
+              "y": 804
+            },
+            {
+              "x": 1572,
+              "y": 796
+            },
+            {
+              "x": 1572,
+              "y": 788
+            }
+          ],
+          "routeLengthPx": 84.35324701827439
+        }
+      },
+      "measurements": {
+        "observerFocusDistance": 224,
+        "hiddenDistance": 208.00000000000009,
+        "revealedDistance": 222.2791038311969,
+        "routeLength": 84.35324701827439
+      }
+    },
+    {
+      "id": "L05-old-hole-still-cannot-earn-new-credit-under-focus",
+      "passed": true,
+      "passedWithoutPreviousHoleCredit": true
+    },
+    {
+      "id": "source-stability",
+      "passed": true,
+      "sources": {
+        "src/generation/world-study/spatial-augmentation-selection.ts": "f93f075d5ee768d225e59d9676201fba80fe601b45b07a36b7cb767b531e05ff",
+        "src/generation/world-study/spatial-augmentation-candidates.ts": "540c410a93da337951e8ea8c1d1d757d3f6605edff7e981ed7a1462203580dd8",
+        "src/generation/world-study/spatial-augmentation-measure.ts": "932f5cea78f7239726fee25e73341c27c81a7997ba4a9b1daf6434348cef8a27",
+        "src/generated/r100-spatial-augmentation.ts": "ae1e3429e3f4c855099a2bc1d1b21f6d5ae72accc7f14dfc314a407617f0794e"
+      }
+    }
+  ]
+}

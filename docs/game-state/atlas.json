@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "矩形开放世界碎片与环境翻找残骸已推广至108世界的新局r10；324份三档有限证据及代表生成、旧恢复与实景验证分别登记。d8cd69b7独立复评发现图册接受未完成批次的P2（真实324未受影响）；壳类翻后状态保留P3润色。自然探索与全库审美未终验，I14仍13/14、P49开放。"
+    "summary": "108世界新局统一接r11联合空间增补：分别衡量身体结构与VOID遮视缺口，同预算比较实体/空洞/组合并保护通路、宽地及原主体。五世界20例正式生成/精确重放，11例增补、9例未增补，残余均保留；旧r10闭包隔离。全库品质与敌人潜行未终验，I14仍13/14、P49开放。"
   },
   "domains": [
     {
@@ -22,7 +22,7 @@
       "id": "world",
       "title": "地图、地表与探索",
       "coverage": "mapped",
-      "note": "矩形开放世界碎片与环境翻找残骸已推广至全部108世界的新局，逐批独立作者并登记三档有限验证。用户已授权推广，未代签108世界审美、自然搜索与长程经营；I14仍13/14、P49开放。"
+      "note": "108世界新局统一接r11联合空间增补：分别衡量身体结构与VOID遮视缺口，同预算比较实体/空洞/组合并保护通路、宽地及原主体。五世界20例正式生成/精确重放，11例增补、9例未增补，残余均保留；旧r10闭包隔离。全库品质与敌人潜行未终验，I14仍13/14、P49开放。"
     },
     {
       "id": "encounters",
@@ -64,7 +64,7 @@
       "id": "persistence",
       "title": "存档、失败与恢复",
       "coverage": "mapped",
-      "note": "108世界新出发冻结修订10完整地形/部署/翻找来源身份，冷续不重抽。旧修订1–9闭包隔离；r9从固定17476a4e封存生成、验证、hydrate、表面及残骸两态。六r9加两r8完整地图与四RGBA精确回放；代表正式新局冷续保持收入及翻后状态。"
+      "note": "新出发冻结r11 policy、同族profiles、fragment与来源hash，恢复不读取今日CSV。旧r10从99998703封存完整执行器；12份公开路由map恢复（6份另核两态四RGBA）及20份r11保存配方精确重放通过。跨引擎、全部历史身份与自然冷续仍不作保证。"
     },
     {
       "id": "accessibility",
@@ -445,6 +445,22 @@
         "COH-F014",
         "COH-F052"
       ]
+    },
+    {
+      "id": "COH-C-JOINT-SPATIAL-AUGMENTATION",
+      "statement": "DEC-207：先建立共享空间衡量标准，再让行进障碍、真实VOID与组合参与算法增补；禁止仅改一类或逐图手放冒充共享策略。保持矩形拼合/自由断缘及开放碎片；solid与VOID语义不混。通路、宽地、内容准入和真实剩余缺口分别记录，机器停止不代表体验结案。",
+      "status": "active",
+      "source": {
+        "path": "docs/progress/decisions-log.md",
+        "note": "DEC-207，2026-10-13用户明确联合策略要求。"
+      },
+      "featureIds": [
+        "COH-F011",
+        "COH-F013",
+        "COH-F007",
+        "COH-F052",
+        "COH-F044"
+      ]
     }
   ],
   "inventory": [
@@ -766,6 +782,21 @@
         "tools/recovery/diagnose-revision9-site.mjs",
         "data/world-upgrades-authoring-plan.csv",
         "tools/qa/diagnose-r100-gym-texture-lifecycle.mjs"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "r100-spatial-augmentation-r11",
+      "title": "联合空间衡量增补与r10隔离恢复",
+      "include": [
+        "data/rift-spatial-augmentation-*.csv",
+        "src/generated/r100-spatial-augmentation.ts",
+        "src/generation/world-study/spatial-augmentation-*.ts",
+        "src/generation/world-study/native-terrain.ts",
+        "src/generation/legacy-r100-v10/*",
+        "tools/spatial-augmentation/*",
+        "tools/recovery/*native-r100-revision10*.mjs",
+        "tools/recovery/*native-r100-revision11*.mjs"
       ],
       "exclude": []
     }

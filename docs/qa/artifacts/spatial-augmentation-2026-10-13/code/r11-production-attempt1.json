@@ -1,0 +1,1816 @@
+{
+  "status": "cancelled-for-joint-axis-fix",
+  "startedAt": "2026-10-13T09:28:31.965Z",
+  "node": "v22.14.0",
+  "sourceHashes": {
+    "data/rift-spatial-augmentation-policy.csv": "7e29b1a517f2838ffedef26b9c6ed9cd85e25c9c0442ab27f4dca31742ca7fb2",
+    "data/rift-spatial-augmentation-profiles.csv": "0ca932e32a150a8d9f286f6854c4aca91bbe1ba612f309647c330b2ee7eb8f46",
+    "src/generation/world-study/native-terrain.ts": "59de172e9a84328fba15cc903c15780feb2e7fc9825ec7407aa48deb7fb20aea",
+    "src/generation/world-study/r100-master-world.ts": "f2a22f7ae489a467761fa60332145f55f0ba8a0bf3e61898ef2c89a3ca38e1c9",
+    "src/generation/world-study/r100-native-data.ts": "13b24ab37bd8585786274461172c5dc9f36e64ec9e962ee8d89cc98306e28a3b",
+    "src/generation/world-study/search-site-placement.ts": "4c90ca7b7a995270fd553774ea5ec032bd351a3afdbae9216cdebca9fd6a4ba1",
+    "src/generation/world-study/r100-package.ts": "bcb5defa9f58a9c443bc60fa6889c00c7850eb7c8e71a43e741dd9a37457acb7",
+    "src/generation/world-study/r100-production-map.ts": "fd092e639be181a229436d96c181288f0ba33d27465959aadc89c853c07ae1ba",
+    "src/generation/world-study/r100-spatial-world.ts": "550839ce9da8342675434a80ef741975f826d3a590194609a9bc13423bd5b829",
+    "src/generated/r100-spatial-augmentation.ts": "ae1e3429e3f4c855099a2bc1d1b21f6d5ae72accc7f14dfc314a407617f0794e",
+    "src/generation/world-study/spatial-augmentation-candidates.ts": "d55f2a8d3cf810caaaddaa5af0b92b293d95236e332a94d6d3c728dc60b95707",
+    "src/generation/world-study/spatial-augmentation-measure.ts": "ef161d4f6029636c9e79821bdba97dd533d1a0a2898437e4e5ade4ba790b240a",
+    "src/generation/world-study/spatial-augmentation-selection.ts": "9a3aa3098456ea246b693c9ea968b7630e0345a0449b5ff9e05ab641d79be294",
+    "src/generation/world-study/spatial-augmentation-types.ts": "74749683bd391ffc70e71f205b7e0e502cabfa458dce13d77574dac758e9e3a7"
+  },
+  "recipeValidation": {
+    "count": 324,
+    "largestBytes": 20512,
+    "corruptions": [
+      "missing-policy",
+      "unknown-algorithm",
+      "unknown-version",
+      "parameter-change",
+      "bad-budget",
+      "extra-field",
+      "source-drift",
+      "profile-change",
+      "unknown-revision"
+    ],
+    "templateUnchanged": true
+  },
+  "cases": [
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "rejected": [],
+      "mapHash": "a5a339e62348913f4744ee00ca794124afaae275729453dd680ca7b4da22da54",
+      "generationMs": 3194.3277500000004,
+      "replayMs": 2665.0984580000004,
+      "voidCells": 33825,
+      "transparentSolidCells": 3214,
+      "searchSites": 8,
+      "augmentation": {
+        "algorithm": "spatial-completion-v1",
+        "status": "no-feasible-improvement",
+        "rounds": 1,
+        "evaluatedCandidates": 18,
+        "baselineDeficits": {
+          "physical": 0.012706775488479625,
+          "occlusion": 0.9255677316746022
+        },
+        "remainingDeficits": {
+          "physical": 0.012706775488479625,
+          "occlusion": 0.9255677316746022
+        },
+        "acceptedCandidateIds": [],
+        "addedSolidIds": [],
+        "addedVoidCount": 0,
+        "candidates": [
+          {
+            "id": "r0-h0-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1604,
+              "y": 1476
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.00993686160236923,
+              "occlusion": 0.9255677316746022
+            },
+            "targetImprovement": 0.6375859857853611,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.004985824616287027,
+            "bodyCenterLossRatio": 0.007847847847847847,
+            "wideCoreRetainedRatio": 0.9663573085846868,
+            "largestOpenCoreRetainedRatio": 0.45263157894736844
+          },
+          {
+            "id": "r0-h0-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1604,
+              "y": 1476
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.009414132517179388,
+              "occlusion": 0.9255677316746022
+            },
+            "targetImprovement": 0.7043805561911041,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.00710398540098413,
+            "bodyCenterLossRatio": 0.010810810810810811,
+            "wideCoreRetainedRatio": 0.9582366589327146,
+            "largestOpenCoreRetainedRatio": 0.45263157894736844
+          },
+          {
+            "id": "r0-h0-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1604,
+              "y": 1476
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h0-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1604,
+              "y": 1476
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h0-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1604,
+              "y": 1476
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h0-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1604,
+              "y": 1476
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h1-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1508,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.01043127850611227,
+              "occlusion": 0.9255677316746022
+            },
+            "targetImprovement": 0.7677812309572586,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.006354482354091309,
+            "bodyCenterLossRatio": 0.00944944944944945,
+            "wideCoreRetainedRatio": 0.9617169373549884,
+            "largestOpenCoreRetainedRatio": 0.6210526315789474
+          },
+          {
+            "id": "r0-h1-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1508,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost",
+              "solid-void-body-gap"
+            ],
+            "deficits": {
+              "physical": 0.011312965987588337,
+              "occlusion": 0.9255677316746022
+            },
+            "targetImprovement": 0.5278274342510869,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.005670153485189168,
+            "bodyCenterLossRatio": 0.00980980980980981,
+            "wideCoreRetainedRatio": 0.962877030162413,
+            "largestOpenCoreRetainedRatio": 0.7052631578947368
+          },
+          {
+            "id": "r0-h1-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1508,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h1-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1508,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h1-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1508,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h1-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1508,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h2-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1508
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.012576291876450067,
+              "occlusion": 0.9255677316746022
+            },
+            "targetImprovement": 0.12427819720212033,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.008244533515821032,
+            "bodyCenterLossRatio": 0.012012012012012012,
+            "wideCoreRetainedRatio": 0.9547563805104409,
+            "largestOpenCoreRetainedRatio": 0.8
+          },
+          {
+            "id": "r0-h2-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1508
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost",
+              "solid-void-body-gap"
+            ],
+            "deficits": {
+              "physical": 0.01240439766302904,
+              "occlusion": 0.9255677316746022
+            },
+            "targetImprovement": 0.597576775378011,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.005865676019161208,
+            "bodyCenterLossRatio": 0.009329329329329328,
+            "wideCoreRetainedRatio": 0.9663573085846868,
+            "largestOpenCoreRetainedRatio": 0.8526315789473684
+          },
+          {
+            "id": "r0-h2-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1508
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation",
+              "void-cuts-or-crowds-existing-solid"
+            ]
+          },
+          {
+            "id": "r0-h2-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1508
+            },
+            "accepted": false,
+            "reasons": [
+              "new-void-not-an-internal-hole"
+            ]
+          },
+          {
+            "id": "r0-h2-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1508
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation",
+              "void-cuts-or-crowds-existing-solid"
+            ]
+          },
+          {
+            "id": "r0-h2-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1508
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          }
+        ],
+        "fallback": false,
+        "limitations": [
+          "Physical clearance uses projected solid triangles and authoritative 8px VOID edges; ordinary solids do not block LOS.",
+          "Solid area is a conservative union of 8px cells intersecting actual triangles, not a bounding-box area.",
+          "Fixed probes and wide-core anchors are finite witnesses, not whole-world stealth or play-quality certification.",
+          "A v1 fragment recompile can change earlier shore details; relative base-ground and body/core guards remain mandatory.",
+          "Original solid and non-ground-owner relief footprints retain supporting ground; the ground-edge owner substrate uses ground-loss/core/connectivity guards."
+        ]
+      },
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "geometryFingerprint": "29c9a168",
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps/split-rib-causeway-medium-20261012"
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 3991160799,
+      "attempt": 1,
+      "rejected": [
+        {
+          "seed": 20261012,
+          "reason": "geometry candidate 0: Cannot admit contaminant/safe/0 with a full native route"
+        }
+      ],
+      "mapHash": "3277af78db687a4d2ad8830f6d95647f2b1a29732885d2da05bb2a7fb4cf6eb2",
+      "generationMs": 5544.07775,
+      "replayMs": 5443.824958000001,
+      "voidCells": 38626,
+      "transparentSolidCells": 3988,
+      "searchSites": 8,
+      "augmentation": {
+        "algorithm": "spatial-completion-v1",
+        "status": "no-feasible-improvement",
+        "rounds": 1,
+        "evaluatedCandidates": 18,
+        "baselineDeficits": {
+          "physical": 0.01605480783923731,
+          "occlusion": 0.893799500883521
+        },
+        "remainingDeficits": {
+          "physical": 0.01605480783923731,
+          "occlusion": 0.893799500883521
+        },
+        "acceptedCandidateIds": [],
+        "addedSolidIds": [],
+        "addedVoidCount": 0,
+        "candidates": [
+          {
+            "id": "r0-h0-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1476,
+              "y": 868
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.010788991360915282,
+              "occlusion": 0.893799500883521
+            },
+            "targetImprovement": 0.6363246053938733,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.006953565633933401,
+            "bodyCenterLossRatio": 0.01170089891025963,
+            "wideCoreRetainedRatio": 0.9553571428571429,
+            "largestOpenCoreRetainedRatio": 1
+          },
+          {
+            "id": "r0-h0-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1476,
+              "y": 868
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.010731704528023335,
+              "occlusion": 0.893799500883521
+            },
+            "targetImprovement": 0.6432471826398334,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.009387313605810091,
+            "bodyCenterLossRatio": 0.01501531662732888,
+            "wideCoreRetainedRatio": 0.9419642857142857,
+            "largestOpenCoreRetainedRatio": 1
+          },
+          {
+            "id": "r0-h0-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1476,
+              "y": 868
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost",
+              "ground-cut-under-existing-solid-or-relief"
+            ],
+            "deficits": {
+              "physical": 0.011957413006117442,
+              "occlusion": 0.8795874178905478
+            },
+            "targetImprovement": 0.37432623126315223,
+            "removedBaseRatio": 0.022483195549717994,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.03354592477276151,
+            "wideCoreRetainedRatio": 0.8973214285714286,
+            "largestOpenCoreRetainedRatio": 0.7763157894736842
+          },
+          {
+            "id": "r0-h0-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1476,
+              "y": 868
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost",
+              "ground-cut-under-existing-solid-or-relief"
+            ],
+            "deficits": {
+              "physical": 0.009047413120375483,
+              "occlusion": 0.87765009107678
+            },
+            "targetImprovement": 0.7375922368692771,
+            "removedBaseRatio": 0.01711349764351387,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.025460754281122884,
+            "wideCoreRetainedRatio": 0.9285714285714286,
+            "largestOpenCoreRetainedRatio": 0.7763157894736842
+          },
+          {
+            "id": "r0-h0-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1476,
+              "y": 868
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h0-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1476,
+              "y": 868
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h1-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1124,
+              "y": 1092
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-separation"
+            ]
+          },
+          {
+            "id": "r0-h1-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1124,
+              "y": 1092
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-separation"
+            ]
+          },
+          {
+            "id": "r0-h1-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1124,
+              "y": 1092
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost",
+              "ground-cut-under-existing-solid-or-relief"
+            ],
+            "deficits": {
+              "physical": 0.013095205643611187,
+              "occlusion": 0.8711972175728351
+            },
+            "targetImprovement": 0.4742641114462945,
+            "removedBaseRatio": 0.01780885420690721,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.026665997087329887,
+            "wideCoreRetainedRatio": 0.9226190476190477,
+            "largestOpenCoreRetainedRatio": 0.8421052631578947
+          },
+          {
+            "id": "r0-h1-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1124,
+              "y": 1092
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h1-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1124,
+              "y": 1092
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-separation"
+            ]
+          },
+          {
+            "id": "r0-h1-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1124,
+              "y": 1092
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h2-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 836,
+              "y": 964
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h2-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 836,
+              "y": 964
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.014582691841388502,
+              "occlusion": 0.893799500883521
+            },
+            "targetImprovement": 0.42624065173997194,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.010082670169203431,
+            "bodyCenterLossRatio": 0.016069904082760007,
+            "wideCoreRetainedRatio": 0.9404761904761905,
+            "largestOpenCoreRetainedRatio": 0.8157894736842105
+          },
+          {
+            "id": "r0-h2-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 836,
+              "y": 964
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h2-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 836,
+              "y": 964
+            },
+            "accepted": false,
+            "reasons": [
+              "void-cuts-or-crowds-existing-solid"
+            ]
+          },
+          {
+            "id": "r0-h2-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 836,
+              "y": 964
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h2-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 836,
+              "y": 964
+            },
+            "accepted": false,
+            "reasons": [
+              "void-cuts-or-crowds-existing-solid"
+            ]
+          }
+        ],
+        "fallback": false,
+        "limitations": [
+          "Physical clearance uses projected solid triangles and authoritative 8px VOID edges; ordinary solids do not block LOS.",
+          "Solid area is a conservative union of 8px cells intersecting actual triangles, not a bounding-box area.",
+          "Fixed probes and wide-core anchors are finite witnesses, not whole-world stealth or play-quality certification.",
+          "A v1 fragment recompile can change earlier shore details; relative base-ground and body/core guards remain mandatory.",
+          "Original solid and non-ground-owner relief footprints retain supporting ground; the ground-edge owner substrate uses ground-loss/core/connectivity guards."
+        ]
+      },
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "geometryFingerprint": "bbf77f0c",
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps/gel-rafts-medium-20261012"
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "rejected": [],
+      "mapHash": "0426930433ee24dbbc9c46c6c937846d2e0e5f1a1051e256e568c972a07d34c0",
+      "generationMs": 2823.3276670000014,
+      "replayMs": 2705.554333,
+      "voidCells": 38616,
+      "transparentSolidCells": 2738,
+      "searchSites": 8,
+      "augmentation": {
+        "algorithm": "spatial-completion-v1",
+        "status": "no-feasible-improvement",
+        "rounds": 1,
+        "evaluatedCandidates": 18,
+        "baselineDeficits": {
+          "physical": 0.04038701932141468,
+          "occlusion": 0.888096915199719
+        },
+        "remainingDeficits": {
+          "physical": 0.04038701932141468,
+          "occlusion": 0.888096915199719
+        },
+        "acceptedCandidateIds": [],
+        "addedSolidIds": [],
+        "addedVoidCount": 0,
+        "candidates": [
+          {
+            "id": "r0-h0-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1124
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.023316925949959127,
+              "occlusion": 0.888096915199719
+            },
+            "targetImprovement": 0.6806252913676584,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.005522088353413655,
+            "bodyCenterLossRatio": 0.00902340445530595,
+            "wideCoreRetainedRatio": 0.9553805774278216,
+            "largestOpenCoreRetainedRatio": 0.5258620689655172
+          },
+          {
+            "id": "r0-h0-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1124
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.02492606089123823,
+              "occlusion": 0.888096915199719
+            },
+            "targetImprovement": 0.6507968766233632,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.007723200494284831,
+            "bodyCenterLossRatio": 0.012313187329636243,
+            "wideCoreRetainedRatio": 0.952755905511811,
+            "largestOpenCoreRetainedRatio": 0.7198275862068966
+          },
+          {
+            "id": "r0-h0-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1124
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.025396122207510776,
+              "occlusion": 0.869719511191474
+            },
+            "targetImprovement": 0.6364439771871447,
+            "removedBaseRatio": 0.024559777571825765,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.033743772910987874,
+            "wideCoreRetainedRatio": 0.9094488188976378,
+            "largestOpenCoreRetainedRatio": 0.6206896551724138
+          },
+          {
+            "id": "r0-h0-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1124
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.022262888662193763,
+              "occlusion": 0.8710170194983279
+            },
+            "targetImprovement": 0.6961839834442464,
+            "removedBaseRatio": 0.028035217794253938,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.03853745652786916,
+            "wideCoreRetainedRatio": 0.8910761154855643,
+            "largestOpenCoreRetainedRatio": 0.5258620689655172
+          },
+          {
+            "id": "r0-h0-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1124
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h0-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1060,
+              "y": 1124
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h1-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1284,
+              "y": 1348
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.030603610306348818,
+              "occlusion": 0.888096915199719
+            },
+            "targetImprovement": 0.5606164429554382,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.0068736484399135,
+            "bodyCenterLossRatio": 0.010903280383494689,
+            "wideCoreRetainedRatio": 0.952755905511811,
+            "largestOpenCoreRetainedRatio": 0.5043103448275862
+          },
+          {
+            "id": "r0-h1-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1284,
+              "y": 1348
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h1-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1284,
+              "y": 1348
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.022643279813826314,
+              "occlusion": 0.8731828961969149
+            },
+            "targetImprovement": 0.6544699177914184,
+            "removedBaseRatio": 0.023246833487797342,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.03205188457561801,
+            "wideCoreRetainedRatio": 0.910761154855643,
+            "largestOpenCoreRetainedRatio": 0.34913793103448276
+          },
+          {
+            "id": "r0-h1-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1284,
+              "y": 1348
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.0263499259306005,
+              "occlusion": 0.8690807461835502
+            },
+            "targetImprovement": 0.6379348952850231,
+            "removedBaseRatio": 0.02571825764596849,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.03571764263558605,
+            "wideCoreRetainedRatio": 0.9028871391076115,
+            "largestOpenCoreRetainedRatio": 0.4224137931034483
+          },
+          {
+            "id": "r0-h1-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1284,
+              "y": 1348
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h1-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1284,
+              "y": 1348
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost",
+              "solid-void-body-gap"
+            ],
+            "deficits": {
+              "physical": 0.02331233940735633,
+              "occlusion": 0.8701631010042227
+            },
+            "targetImprovement": 0.672830660407587,
+            "removedBaseRatio": 0.023632993512511583,
+            "addedSolidRatio": 0.0078004324992276795,
+            "bodyCenterLossRatio": 0.04455305949807313,
+            "wideCoreRetainedRatio": 0.8818897637795275,
+            "largestOpenCoreRetainedRatio": 0.3793103448275862
+          },
+          {
+            "id": "r0-h2-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1668,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost",
+              "solid-void-body-gap"
+            ],
+            "deficits": {
+              "physical": 0.03774591548905843,
+              "occlusion": 0.888096915199719
+            },
+            "targetImprovement": 0.5586085888318435,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.008958912573370404,
+            "bodyCenterLossRatio": 0.013770091173982518,
+            "wideCoreRetainedRatio": 0.952755905511811,
+            "largestOpenCoreRetainedRatio": 0.8318965517241379
+          },
+          {
+            "id": "r0-h2-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1668,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h2-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1668,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h2-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1668,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "void-cuts-or-crowds-existing-solid"
+            ]
+          },
+          {
+            "id": "r0-h2-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1668,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h2-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1668,
+              "y": 1188
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          }
+        ],
+        "fallback": false,
+        "limitations": [
+          "Physical clearance uses projected solid triangles and authoritative 8px VOID edges; ordinary solids do not block LOS.",
+          "Solid area is a conservative union of 8px cells intersecting actual triangles, not a bounding-box area.",
+          "Fixed probes and wide-core anchors are finite witnesses, not whole-world stealth or play-quality certification.",
+          "A v1 fragment recompile can change earlier shore details; relative base-ground and body/core guards remain mandatory.",
+          "Original solid and non-ground-owner relief footprints retain supporting ground; the ground-edge owner substrate uses ground-loss/core/connectivity guards."
+        ]
+      },
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "geometryFingerprint": "2d2bbc32",
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps/sloughed-court-medium-20261012"
+    },
+    {
+      "worldId": "ash-strata",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "rejected": [],
+      "mapHash": "eef0e8b0867dc07baab77708ab68f1419f34fc4e348ccd20b586b62ed70470eb",
+      "generationMs": 839.7415409999994,
+      "replayMs": 914.0654579999973,
+      "voidCells": 34323,
+      "transparentSolidCells": 5872,
+      "searchSites": 8,
+      "augmentation": {
+        "algorithm": "spatial-completion-v1",
+        "status": "no-feasible-improvement",
+        "rounds": 1,
+        "evaluatedCandidates": 0,
+        "baselineDeficits": {
+          "physical": 0.000506319761124628,
+          "occlusion": 0.6778272709675154
+        },
+        "remainingDeficits": {
+          "physical": 0.000506319761124628,
+          "occlusion": 0.6778272709675154
+        },
+        "acceptedCandidateIds": [],
+        "addedSolidIds": [],
+        "addedVoidCount": 0,
+        "candidates": [],
+        "fallback": false,
+        "limitations": [
+          "Physical clearance uses projected solid triangles and authoritative 8px VOID edges; ordinary solids do not block LOS.",
+          "Solid area is a conservative union of 8px cells intersecting actual triangles, not a bounding-box area.",
+          "Fixed probes and wide-core anchors are finite witnesses, not whole-world stealth or play-quality certification.",
+          "A v1 fragment recompile can change earlier shore details; relative base-ground and body/core guards remain mandatory.",
+          "Original solid and non-ground-owner relief footprints retain supporting ground; the ground-edge owner substrate uses ground-loss/core/connectivity guards."
+        ]
+      },
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "geometryFingerprint": "dd450508",
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps/ash-strata-medium-20261012"
+    },
+    {
+      "worldId": "black-lacuna",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "attempt": 0,
+      "rejected": [],
+      "mapHash": "881b6e68c06003a53cd054f30207d9ee0210c5c5f348beaa245ee348f333b996",
+      "generationMs": 2349.2082499999997,
+      "replayMs": 2518.1917079999985,
+      "voidCells": 36107,
+      "transparentSolidCells": 1240,
+      "searchSites": 8,
+      "augmentation": {
+        "algorithm": "spatial-completion-v1",
+        "status": "no-feasible-improvement",
+        "rounds": 2,
+        "evaluatedCandidates": 36,
+        "baselineDeficits": {
+          "physical": 0.08007394527604661,
+          "occlusion": 0.9279745351038727
+        },
+        "remainingDeficits": {
+          "physical": 0.06997944963849463,
+          "occlusion": 0.9279745351038727
+        },
+        "acceptedCandidateIds": [
+          "r0-h2-solid-1"
+        ],
+        "addedSolidIds": [
+          5
+        ],
+        "addedVoidCount": 0,
+        "candidates": [
+          {
+            "id": "r0-h0-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1348,
+              "y": 1284
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h0-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1348,
+              "y": 1284
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h0-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1348,
+              "y": 1284
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost",
+              "ground-cut-under-existing-solid-or-relief"
+            ],
+            "deficits": {
+              "physical": 0.05303836717918945,
+              "occlusion": 0.9017256735553268
+            },
+            "targetImprovement": 0.642250661089826,
+            "removedBaseRatio": 0.032811124801971486,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.03930384898639482,
+            "wideCoreRetainedRatio": 0.9275741710296684,
+            "largestOpenCoreRetainedRatio": 0.4122137404580153
+          },
+          {
+            "id": "r0-h0-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1348,
+              "y": 1284
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost",
+              "ground-cut-under-existing-solid-or-relief"
+            ],
+            "deficits": {
+              "physical": 0.054005792130173716,
+              "occlusion": 0.9023357469729713
+            },
+            "targetImprovement": 0.6975090511479682,
+            "removedBaseRatio": 0.035733145572962505,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.042986162254350944,
+            "wideCoreRetainedRatio": 0.9171029668411868,
+            "largestOpenCoreRetainedRatio": 0.4122137404580153
+          },
+          {
+            "id": "r0-h0-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1348,
+              "y": 1284
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost",
+              "ground-cut-under-existing-solid-or-relief",
+              "solid-void-body-gap"
+            ],
+            "deficits": {
+              "physical": 0.05357993111268714,
+              "occlusion": 0.9088951076963695
+            },
+            "targetImprovement": 0.5477679738040969,
+            "removedBaseRatio": 0.03883119169160359,
+            "addedSolidRatio": 0.0075338848794226365,
+            "bodyCenterLossRatio": 0.05620372882669871,
+            "wideCoreRetainedRatio": 0.8900523560209425,
+            "largestOpenCoreRetainedRatio": 0.4122137404580153
+          },
+          {
+            "id": "r0-h0-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 1348,
+              "y": 1284
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost",
+              "ground-cut-under-existing-solid-or-relief",
+              "solid-void-body-gap"
+            ],
+            "deficits": {
+              "physical": 0.05342180595375404,
+              "occlusion": 0.9058901210951685
+            },
+            "targetImprovement": 0.7062072469571669,
+            "removedBaseRatio": 0.030698820630170744,
+            "addedSolidRatio": 0.007252244323182539,
+            "bodyCenterLossRatio": 0.04620334121477577,
+            "wideCoreRetainedRatio": 0.9109947643979057,
+            "largestOpenCoreRetainedRatio": 0.4122137404580153
+          },
+          {
+            "id": "r0-h1-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 516,
+              "y": 452
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h1-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 516,
+              "y": 452
+            },
+            "accepted": false,
+            "reasons": [
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.06832523243218888,
+              "occlusion": 0.9279745351038727
+            },
+            "targetImprovement": 0.720171547776851,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.007780320366132723,
+            "bodyCenterLossRatio": 0.010698089073219893,
+            "wideCoreRetainedRatio": 0.9694589877835951,
+            "largestOpenCoreRetainedRatio": 1
+          },
+          {
+            "id": "r0-h1-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 516,
+              "y": 452
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.07166602491814224,
+              "occlusion": 0.8998643697697325
+            },
+            "targetImprovement": 0.6066386015951637,
+            "removedBaseRatio": 0.029325822918500263,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.035466490949261596,
+            "wideCoreRetainedRatio": 0.9275741710296684,
+            "largestOpenCoreRetainedRatio": 0.5826972010178118
+          },
+          {
+            "id": "r0-h1-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 516,
+              "y": 452
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h1-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 516,
+              "y": 452
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost",
+              "solid-void-body-gap"
+            ],
+            "deficits": {
+              "physical": 0.07061531362386016,
+              "occlusion": 0.9030967910463177
+            },
+            "targetImprovement": 0.5051905538131252,
+            "removedBaseRatio": 0.02925541277944024,
+            "addedSolidRatio": 0.009258933286393241,
+            "bodyCenterLossRatio": 0.047017326252955544,
+            "wideCoreRetainedRatio": 0.9022687609075044,
+            "largestOpenCoreRetainedRatio": 0.5826972010178118
+          },
+          {
+            "id": "r0-h1-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 516,
+              "y": 452
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h2-solid-0",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 740,
+              "y": 420
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h2-solid-1",
+            "kind": "solid",
+            "axis": "physical",
+            "hotspot": {
+              "x": 740,
+              "y": 420
+            },
+            "accepted": true,
+            "reasons": [],
+            "deficits": {
+              "physical": 0.06997944963849463,
+              "occlusion": 0.9279745351038727
+            },
+            "targetImprovement": 0.7097446828154839,
+            "removedBaseRatio": 0,
+            "addedSolidRatio": 0.007674705157542686,
+            "bodyCenterLossRatio": 0.010504283111748518,
+            "wideCoreRetainedRatio": 0.9668411867364747,
+            "largestOpenCoreRetainedRatio": 1
+          },
+          {
+            "id": "r0-h2-void-0",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 740,
+              "y": 420
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost"
+            ],
+            "deficits": {
+              "physical": 0.0675103000869841,
+              "occlusion": 0.9032169898100496
+            },
+            "targetImprovement": 0.7131615554243474,
+            "removedBaseRatio": 0.03168456257701109,
+            "addedSolidRatio": 0,
+            "bodyCenterLossRatio": 0.03759835652544672,
+            "wideCoreRetainedRatio": 0.9319371727748691,
+            "largestOpenCoreRetainedRatio": 0.5826972010178118
+          },
+          {
+            "id": "r0-h2-void-1",
+            "kind": "void",
+            "axis": "physical",
+            "hotspot": {
+              "x": 740,
+              "y": 420
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r0-h2-combined-0",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 740,
+              "y": 420
+            },
+            "accepted": false,
+            "reasons": [
+              "Authored erosion requires construction 4"
+            ]
+          },
+          {
+            "id": "r0-h2-combined-1",
+            "kind": "combined",
+            "axis": "physical",
+            "hotspot": {
+              "x": 740,
+              "y": 420
+            },
+            "accepted": false,
+            "reasons": [
+              "largest-open-core-loss",
+              "fixed-anchor-lost",
+              "solid-void-body-gap"
+            ],
+            "deficits": {
+              "physical": 0.07130510323878028,
+              "occlusion": 0.9051640017886073
+            },
+            "targetImprovement": 0.6342462832614495,
+            "removedBaseRatio": 0.031438127090301006,
+            "addedSolidRatio": 0.007146629114592501,
+            "bodyCenterLossRatio": 0.047017326252955544,
+            "wideCoreRetainedRatio": 0.912739965095986,
+            "largestOpenCoreRetainedRatio": 0.5826972010178118
+          },
+          {
+            "id": "r1-h0-solid-0",
+            "kind": "solid",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 356,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-outside-ground"
+            ]
+          },
+          {
+            "id": "r1-h0-solid-1",
+            "kind": "solid",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 356,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "repeated-normalized-geometry"
+            ]
+          },
+          {
+            "id": "r1-h0-void-0",
+            "kind": "void",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 356,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "new-void-not-an-internal-hole"
+            ]
+          },
+          {
+            "id": "r1-h0-void-1",
+            "kind": "void",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 356,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r1-h0-combined-0",
+            "kind": "combined",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 356,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "new-void-not-an-internal-hole"
+            ]
+          },
+          {
+            "id": "r1-h0-combined-1",
+            "kind": "combined",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 356,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-outside-ground",
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r1-h1-solid-0",
+            "kind": "solid",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 580,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-separation",
+              "solid-outside-ground"
+            ]
+          },
+          {
+            "id": "r1-h1-solid-1",
+            "kind": "solid",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 580,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-outside-ground"
+            ]
+          },
+          {
+            "id": "r1-h1-void-0",
+            "kind": "void",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 580,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "new-void-not-an-internal-hole"
+            ]
+          },
+          {
+            "id": "r1-h1-void-1",
+            "kind": "void",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 580,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r1-h1-combined-0",
+            "kind": "combined",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 580,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "new-void-not-an-internal-hole"
+            ]
+          },
+          {
+            "id": "r1-h1-combined-1",
+            "kind": "combined",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 580,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-outside-ground",
+              "void-separation"
+            ]
+          },
+          {
+            "id": "r1-h2-solid-0",
+            "kind": "solid",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 804,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-outside-ground"
+            ]
+          },
+          {
+            "id": "r1-h2-solid-1",
+            "kind": "solid",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 804,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-separation",
+              "solid-outside-ground"
+            ]
+          },
+          {
+            "id": "r1-h2-void-0",
+            "kind": "void",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 804,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "new-void-not-an-internal-hole"
+            ]
+          },
+          {
+            "id": "r1-h2-void-1",
+            "kind": "void",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 804,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "void-separation",
+              "void-cuts-or-crowds-existing-solid"
+            ]
+          },
+          {
+            "id": "r1-h2-combined-0",
+            "kind": "combined",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 804,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "new-void-not-an-internal-hole"
+            ]
+          },
+          {
+            "id": "r1-h2-combined-1",
+            "kind": "combined",
+            "axis": "occlusion",
+            "hotspot": {
+              "x": 804,
+              "y": 228
+            },
+            "accepted": false,
+            "reasons": [
+              "solid-separation",
+              "solid-outside-ground",
+              "void-separation",
+              "void-cuts-or-crowds-existing-solid"
+            ]
+          }
+        ],
+        "fallback": false,
+        "limitations": [
+          "Physical clearance uses projected solid triangles and authoritative 8px VOID edges; ordinary solids do not block LOS.",
+          "Solid area is a conservative union of 8px cells intersecting actual triangles, not a bounding-box area.",
+          "Fixed probes and wide-core anchors are finite witnesses, not whole-world stealth or play-quality certification.",
+          "A v1 fragment recompile can change earlier shore details; relative base-ground and body/core guards remain mandatory.",
+          "Original solid and non-ground-owner relief footprints retain supporting ground; the ground-edge owner substrate uses ground-loss/core/connectivity guards."
+        ]
+      },
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "geometryFingerprint": "ef4432dc",
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps/black-lacuna-medium-20261012"
+    }
+  ],
+  "failures": [
+    {
+      "phase": "source-stability",
+      "error": "Sources changed during r11 execution\n+ actual - expected\n... Skipped lines\n\n  {\n    'data/rift-spatial-augmentation-policy.csv': '7e29b1a517f2838ffedef26b9c6ed9cd85e25c9c0442ab27f4dca31742ca7fb2',\n    'data/rift-spatial-augmentation-profiles.csv': '0ca932e32a150a8d9f286f6854c4aca91bbe1ba612f309647c330b2ee7eb8f46',\n    'src/generated/r100-spatial-augmentation.ts': 'ae1e3429e3f4c855099a2bc1d1b21f6d5ae72accc7f14dfc314a407617f0794e',\n    'src/generation/world-study/native-terrain.ts': '59de172e9a84328fba15cc903c15780feb2e7fc9825ec7407aa48deb7fb20aea',\n...\n    'src/generation/world-study/spatial-augmentation-measure.ts': 'ef161d4f6029636c9e79821bdba97dd533d1a0a2898437e4e5ade4ba790b240a',\n+   'src/generation/world-study/spatial-augmentation-selection.ts': '209587846bb05f3068259f685bbdc8720c27147b624db7f31d5409853f6ac40a',\n-   'src/generation/world-study/spatial-augmentation-selection.ts': '9a3aa3098456ea246b693c9ea968b7630e0345a0449b5ff9e05ab641d79be294',\n    'src/generation/world-study/spatial-augmentation-types.ts': '74749683bd391ffc70e71f205b7e0e502cabfa458dce13d77574dac758e9e3a7'\n  }\n"
+    }
+  ],
+  "limits": [
+    "Only the five named medium worlds at requested seed 20261012; complete deployed map replay is exact.",
+    "All 324 recipes are structurally checked only; not all worlds are fully generated.",
+    "Offline generation timings are not browser FPS or end-to-end loading measurements."
+  ],
+  "completedAt": "2026-10-13T09:29:04.319Z",
+  "interruption": "Director cancelled acceptance of the biased-axis batch. The process had already exited before SIGTERM was issued; all five completed observations are retained, without acceptance."
+}

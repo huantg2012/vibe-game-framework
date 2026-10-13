@@ -1,0 +1,58 @@
+{
+  "scope": "Current lightweight baseline terrain against pre-existing r10 maps, not another complete r10 replay or material bake",
+  "sources": {
+    "src/generation/world-study/r100-spatial-world.ts": "550839ce9da8342675434a80ef741975f826d3a590194609a9bc13423bd5b829",
+    "src/generation/world-study/native-terrain.ts": "59de172e9a84328fba15cc903c15780feb2e7fc9825ec7407aa48deb7fb20aea",
+    "src/generation/world-study/native-body-collision.ts": "1ed10631c73ed5f4acfcb0204aa232a37e18e94fcf706c7db50b172c258d5228"
+  },
+  "sourceStable": true,
+  "passed": 3,
+  "failed": 0,
+  "results": [
+    {
+      "worldId": "split-rib-causeway",
+      "seed": 20261012,
+      "comparedCells": 64512,
+      "tileDifferences": 0,
+      "matterDifferences": 0,
+      "bodyDifferences": 0,
+      "meshDifferences": 0,
+      "compressedOldMapHash": "71e8b6188cc18c992693a79956af5d8507ab185ce1f3bf87429b827cf3a18926",
+      "recipeHash": "618ecffab0fb906ae02385cfae18447a1294f7dfa3b01fdfa5191eacc2878eed",
+      "mapPath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/after-final/split-rib-causeway-medium-20261012/map.v8.gz",
+      "recipePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/qa/r10-current/split-rib-causeway-medium-20261012.recipe.json",
+      "passed": true,
+      "elapsedMs": 169
+    },
+    {
+      "worldId": "gel-rafts",
+      "seed": 3991160799,
+      "comparedCells": 64512,
+      "tileDifferences": 0,
+      "matterDifferences": 0,
+      "bodyDifferences": 0,
+      "meshDifferences": 0,
+      "compressedOldMapHash": "3447df4b0311cbc322ad07426892cda725ad6155742904f2309c07fb8f5dfd4d",
+      "recipeHash": "8c2f9807ef52880b79275e1d0309e2b885b8ab9da69eda3101badee716e7cd51",
+      "mapPath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/after-final/gel-rafts-medium-20261012/map.v8.gz",
+      "recipePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/qa/r10-current/gel-rafts-medium-20261012.recipe.json",
+      "passed": true,
+      "elapsedMs": 184
+    },
+    {
+      "worldId": "sloughed-court",
+      "seed": 20261012,
+      "comparedCells": 64512,
+      "tileDifferences": 0,
+      "matterDifferences": 0,
+      "bodyDifferences": 0,
+      "meshDifferences": 0,
+      "compressedOldMapHash": "af069a8d2445fb07b80169a2cd5636b31f7c965e0da4171f9d3d91c840dd2555",
+      "recipeHash": "a09f479f6bb1b62a7b435f9d8b7f078ecb6ecdda0d9cc595b150f8bfcf652736",
+      "mapPath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/after-final/sloughed-court-medium-20261012/map.v8.gz",
+      "recipePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/qa/r10-current/sloughed-court-medium-20261012.recipe.json",
+      "passed": true,
+      "elapsedMs": 248
+    }
+  ]
+}

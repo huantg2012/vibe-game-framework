@@ -5,7 +5,6 @@ import { R100_SPATIAL_CONFIG as CONFIG, R100_SPATIAL_PLACEMENTS, R100_SPATIAL_ER
   R100_SPATIAL_ANCHORS, R100_SPATIAL_WORLDS, R100_SPATIAL_MATERIALS, R100_SPATIAL_SOURCE_HASH, R100_SPATIAL_ORGANIZATIONS, R100_SPATIAL_AUTHORED_GROUPS, R100_SPATIAL_SECTORS } from '@/generated/r100-spatial-data';
 import { mix32 } from '@/generation/seed-fork';
 import { bodyHasSupport } from '@/systems/ai/physical-grid';
-import { TileGrid } from '@/systems/tile-grid';
 import { TileType, type Vector2 } from '@/types/game-types';
 import { createMasterWorld, type MasterDefinition, type MasterWorld } from './r100-master-world';
 import { validateNativeErosion, validateNativeTerrainOutline, FRAGMENT_TERRAIN_BUDGET } from './native-volume-erosion';
@@ -16,6 +15,10 @@ import type { WorldProfile } from './types';
 import { buildSpatialExtractionField, selectSpatialExtraction } from './spatial-extraction-selection';
 import { getR100SpatialDeploymentPolicy, validateR100SpatialDeploymentPolicy } from './r100-spatial-deployment';
 import type { R100SpatialPolicy } from './r100-spatial-types';
+import { compileNativeTerrain } from './native-terrain';
+import { augmentSpatialTerrain } from './spatial-augmentation-selection';
+import { deriveSpatialAugmentationSeed } from './spatial-augmentation-candidates';
+import type { SpatialAugmentationPolicy } from './spatial-augmentation-types';
 export type { R100SpatialPolicy } from './r100-spatial-types';
 
 export function createR100SpatialPolicy(worldId: string, requestedSeed: number): R100SpatialPolicy {
@@ -192,10 +195,10 @@ export function createR100SpatialDefinition(native: MasterDefinition, policy: R1
 /** Keep the temporary multi-megapixel raster out of the final-build scope.
  * Only small placement/metric data survives this phase. */
 function inspectSpatialTerrain(definition: MasterDefinition, policy: R100SpatialPolicy, seed: number,
-  options: Parameters<typeof createMasterWorld>[2]) {
-  const terrain = createMasterWorld(definition, seed, options);
-  const grid = new TileGrid(terrain.layout.tileMap);
-  const extractionField = buildSpatialExtractionField(grid, terrain.layout.spawnPoint, policy.extraction);
+  _options: Parameters<typeof createMasterWorld>[2]) {
+  const terrain = compileNativeTerrain(definition, seed, false);
+  const grid = terrain.grid;
+  const extractionField = buildSpatialExtractionField(grid, terrain.spawnPoint, policy.extraction);
   const extraction = selectSpatialExtraction(extractionField, seed);
   let matter = 0, solid = 0, supported = 0;
   const half = GAME_CONSTANTS.PLAYER.BODY_SIZE / 2;
@@ -205,7 +208,7 @@ function inspectSpatialTerrain(definition: MasterDefinition, policy: R100Spatial
     if (tile === TileType.WALL) solid++;
     if (bodyHasSupport(grid, { x: (x + .5) * grid.tileSize, y: (y + .5) * grid.tileSize }, half, half)) supported++;
   }
-  const reachable = terrain.diagnostics.reachableBodySeats as number;
+  const reachable = terrain.reachableBodySeats;
   if (reachable / supported < .97) throw new Error(`Spatial terrain leaves ${supported - reachable}/${supported} full-body seats disconnected`);
   return { extraction, extractionCandidateField: extractionField.summary, reachable, supported,
     terrainFillRatio: matter / (grid.cols * grid.rows), solidTerrainRatio: solid / matter };
@@ -231,4 +234,36 @@ export function createR100SpatialWorld(native: MasterDefinition, policy: R100Spa
       solidObjectCount: world.definition.instances.filter(row => row.role === 'solid').length,
     },
   } };
+}
+
+/** The actual production base, before augmentation, for bounded diagnostics. */
+export function createR100SpatialBaselineTerrain(native:MasterDefinition,policy:R100SpatialPolicy,seed:number) {
+  if(!validR100SpatialPolicy(policy,policy.worldId)||!policy.fragmentShape)throw new Error('Spatial augmentation requires a valid frozen fragment policy');
+  return {...createR100SpatialDefinition(native,policy,seed),fragmentShape:policy.fragmentShape};
+}
+/** Current production, lazily rasterized: at most best geometry + preceding
+ * legal geometry. The complete content deployment remains the caller's gate. */
+export function* createR100SpatialWorldCandidates(native:MasterDefinition,policy:R100SpatialPolicy,seed:number,
+  frozen:{readonly grade:PollutionGradeDefinition;readonly profile:WorldProfile;readonly augmentationPolicy:SpatialAugmentationPolicy;readonly requestedSeed:number}):Generator<MasterWorld> {
+  const {definition,spawnIndex,fragmentShape}=createR100SpatialBaselineTerrain(native,policy,seed);
+  const candidateSeed=deriveSpatialAugmentationSeed(frozen.requestedSeed,policy.worldId,frozen.augmentationPolicy,seed);
+  const plans=augmentSpatialTerrain({definition,fragmentShape,policy:frozen.augmentationPolicy,seed,candidateSeed});
+  const options={grade:frozen.grade,profile:frozen.profile,spatialDeployment:policy.deployment};
+  const preparationRejected:string[]=[];let yielded=0;
+  for(const plan of plans) {
+    try {
+    const {extraction,extractionCandidateField,reachable,supported,terrainFillRatio,solidTerrainRatio}=inspectSpatialTerrain(plan.definition,policy,seed,options);
+    const world=createMasterWorld({...plan.definition,exit_x:extraction.point.x,exit_y:extraction.point.y},seed,options);
+    if(world.layout.extractionPoint.position.x!==extraction.point.x||world.layout.extractionPoint.position.y!==extraction.point.y)
+      throw new Error('Spatial extraction moved during final physical deployment');
+    yielded++;yield {...world,algorithmRevision:11,diagnostics:{...world.diagnostics,
+      spatialAugmentationPreparationRejected:[...preparationRejected],
+      spatialAugmentation:plan.trace,spatialAugmentationFragmentShape:plan.fragmentShape,
+      spatial:{version:policy.version,worldId:policy.worldId,sourceHash:policy.sourceHash,organization:policy.organization,
+        width:policy.cols*32,height:policy.rows*32,terrainFillRatio,solidTerrainRatio,bodyReachableRatio:reachable/supported,
+        unreachableBodySeats:supported-reachable,spawnIndex,spawnRelocationPx:Math.hypot(world.layout.spawnPoint.x-definition.spawn_x,world.layout.spawnPoint.y-definition.spawn_y),
+        extraction,extractionCandidateField,solidObjectCount:world.definition.instances.filter(row=>row.role==='solid').length}}};
+    } catch(error) {preparationRejected.push(error instanceof Error?error.message:String(error));}
+  }
+  if(!yielded)throw new Error(`All spatial geometry finalists failed preparation: ${preparationRejected.join(' | ')}`);
 }

@@ -1,3 +1,4 @@
+import { validateSearchSites as validateRevision10SearchSites } from '../legacy-r100-v10/executor-recovery.js';
 import { validateSearchSites as validateRevision9SearchSites } from '../legacy-r100-v9/executor-recovery.js';
 /** Environmental context is ranked only after the expedition's physical/risk admission. */
 import {mix32} from '@/generation/seed-fork';
@@ -96,7 +97,8 @@ export class SearchSitePlanner {
 /** Small receiving-thread validation: no generation, material baking or reward reads. */
 export function validateSearchSites(world: MasterWorld): void {
   if(world.algorithmRevision===9){validateRevision9SearchSites(world);return;}
-  if(world.algorithmRevision!==10){if(world.searchSites!==undefined)throw new Error('Historical world cannot acquire grounded search sites');return;}
+  if(world.algorithmRevision===10){validateRevision10SearchSites(world);return;}
+  if(world.algorithmRevision!==11){if(world.searchSites!==undefined)throw new Error('Historical world cannot acquire grounded search sites');return;}
   const nodes=[...world.layout.kindlingNodes,...world.layout.contaminantNodes],sites=world.searchSites;
   if(!sites||sites.length!==nodes.length)throw new Error('Grounded search sites must cover every admitted node');
   const ids=new Set<string>(),instances=new Map(world.meshes.map(mesh=>[mesh.spec.id,mesh]));

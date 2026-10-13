@@ -21,7 +21,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-native-worlds.csv",
-      "sha256": "54178c4e6932219e1149bb7fe89d38b777860e9d333cb51c3c743f65570f383a"
+      "sha256": "4a9fec97d8e615747134af260a246381b0042e59baa1a1be928042308726de55"
     },
     {
       "path": "data/rift-pollution-grades.csv",
@@ -36,12 +36,20 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "5b3859c55310182b43322574bced45fdf23557858b36802f218a70a645d7741a"
     },
     {
+      "path": "data/rift-spatial-augmentation-policy.csv",
+      "sha256": "7e29b1a517f2838ffedef26b9c6ed9cd85e25c9c0442ab27f4dca31742ca7fb2"
+    },
+    {
+      "path": "data/rift-spatial-augmentation-profiles.csv",
+      "sha256": "f4a72524ee0cadf0620eb4297a6c106fa4b229f16186b061205b639c4c951697"
+    },
+    {
       "path": "data/rift-spatial-authored-erosion.csv",
       "sha256": "0204471d847a5e7bac9e28a1c6e155fe79f0a00f6259324d16b22c127dc2e756"
     },
     {
       "path": "data/rift-spatial-authored-groups.csv",
-      "sha256": "7b3f87e5892d31c0fecc80cfd67053b9dfcffebe52628ebc716ea2f470522f17"
+      "sha256": "c089a3d2d96aeae157d59645605b79902396abceaecca9aa9b344c304504ca36"
     },
     {
       "path": "data/rift-spatial-deployment.csv",
@@ -77,7 +85,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-spatial-sector-anchors.csv",
-      "sha256": "3f7493b0de73ef2becae0ff421244ef4e076b714483db4276bfadda5bfa221ee"
+      "sha256": "5240bcac89384480800b4de05e2b9f8d0e5e399693add89dd545bdf69e75b24e"
     },
     {
       "path": "data/rift-spatial-sector-cuts.csv",
@@ -85,15 +93,15 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-spatial-sector-layouts.csv",
-      "sha256": "af1600c219bf9011f39f94411deb522fbb3ad8f5d5f785069f1fdd59b6e26895"
+      "sha256": "2c6ce2edcabca9bfec19c30000960cfe97929b011c54eb9539d60f3d8fe106a3"
     },
     {
       "path": "data/rift-spatial-sectors.csv",
-      "sha256": "e936851d090f2469e139b9ac04a277526672ef4b649312cf67e3838acb94a43d"
+      "sha256": "f9332d856cb0e7afa19b0a39d5f756f40deaddbc75655778fa79e62f53787d37"
     },
     {
       "path": "data/rift-spatial-worlds.csv",
-      "sha256": "15cde729e97a3c6892c5606f10a0c7f8b2ae3bf65b7933e170e8018127c95734"
+      "sha256": "604aaedf85f130f150ba6d4fa200e6f52fb83820d55690dcd071736482a4bbe4"
     },
     {
       "path": "data/rift-world-appearance.csv",
@@ -176,8 +184,12 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
     },
     {
+      "path": "src/generated/r100-spatial-augmentation.ts",
+      "sha256": "2366ef433c99c0f26648e67c7f109f4110cf704b4c4df1e9a653e5436e333cad"
+    },
+    {
       "path": "src/generated/r100-spatial-data.ts",
-      "sha256": "1c095869076a2d71788a79e8dcf17d48509da84621e6116a4464da95b41f476e"
+      "sha256": "529200b932ea0efb2ebd3043f90deca076f5f42b3ae16564cf8279de853eed49"
     },
     {
       "path": "src/generated/rift-spatial-deployment-data.ts",
@@ -188,12 +200,16 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
     },
     {
+      "path": "src/generation/world-study/native-terrain.ts",
+      "sha256": "59de172e9a84328fba15cc903c15780feb2e7fc9825ec7407aa48deb7fb20aea"
+    },
+    {
       "path": "src/generation/world-study/native-volume-cellular.ts",
       "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
     },
     {
       "path": "src/generation/world-study/native-volume-erosion.ts",
-      "sha256": "4ea1a9208f2f24a2b50f458035b9f46f66cb9081f0d24b8833fb0823a35dcd79"
+      "sha256": "32fb50764a8f9479bbd725a53b90a58a5bbd220199d5ad4da524a893fb9eaeec"
     },
     {
       "path": "src/generation/world-study/native-volume-expansion.ts",
@@ -237,7 +253,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/production-recipe.ts",
-      "sha256": "7e2c53d491d92816cc3e78dca2393f3163f3da5571c02d5b9f683f62a887e793"
+      "sha256": "6f4c1b7a2971cd2b3ad0a2719cf4dfad2ddc21dc1ea97a359a471895b3107341"
     },
     {
       "path": "src/generation/world-study/r100-expedition-v1.ts",
@@ -245,15 +261,15 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-expedition.ts",
-      "sha256": "f55c7bc0e9f50878785f9a691b53cfb6bb5f7ea882265e3aebe0dd32d1d6b620"
+      "sha256": "3c3a548c30bb7a380493c73301da0b870b6946d7782e499d2ddb8c34251ce95e"
     },
     {
       "path": "src/generation/world-study/r100-master-world.ts",
-      "sha256": "99e393d591ab528be60abe543d8da5ff0689f475b9889d8c05b096d2680d809d"
+      "sha256": "f2a22f7ae489a467761fa60332145f55f0ba8a0bf3e61898ef2c89a3ca38e1c9"
     },
     {
       "path": "src/generation/world-study/r100-package.ts",
-      "sha256": "0be1ac77e1c3b26fdf71cedbe5af315c0bbae0c6381b301c1df35f0552b442d6"
+      "sha256": "bcb5defa9f58a9c443bc60fa6889c00c7850eb7c8e71a43e741dd9a37457acb7"
     },
     {
       "path": "src/generation/world-study/r100-patrol-windows.ts",
@@ -265,7 +281,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-production-map.ts",
-      "sha256": "ea8a7e0c5502559232615179c03270d5211ea175cb35b4674495619c6eff287c"
+      "sha256": "93a6a73780b37032c49b113a0d64bbb0122a5091f424733bc10c2aa072ad5a78"
     },
     {
       "path": "src/generation/world-study/r100-spatial-deployment.ts",
@@ -273,15 +289,31 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-spatial-types.ts",
-      "sha256": "0a59746adb68eb838954b954cab75703143edf85f2cb3e92f40cb0f81c71e835"
+      "sha256": "3cc1a6aa422e82ed327980e72edeef4278571ed698c231558b4b82b97fb7b7c0"
     },
     {
       "path": "src/generation/world-study/r100-spatial-world.ts",
-      "sha256": "b0fce58edb15f8e79be0eea846628c755db43cab038221fab8b2858e1d2ff693"
+      "sha256": "d9def498adddb0ef6008c8850ef742922a6909039a5347d592a3e34efba58bc9"
     },
     {
       "path": "src/generation/world-study/r100-world-appearance.ts",
       "sha256": "71441ad19d1ef8702e737f46898abf05a7b0262de4916aede9bfddbe6fe04b59"
+    },
+    {
+      "path": "src/generation/world-study/spatial-augmentation-candidates.ts",
+      "sha256": "540c410a93da337951e8ea8c1d1d757d3f6605edff7e981ed7a1462203580dd8"
+    },
+    {
+      "path": "src/generation/world-study/spatial-augmentation-measure.ts",
+      "sha256": "932f5cea78f7239726fee25e73341c27c81a7997ba4a9b1daf6434348cef8a27"
+    },
+    {
+      "path": "src/generation/world-study/spatial-augmentation-selection.ts",
+      "sha256": "f93f075d5ee768d225e59d9676201fba80fe601b45b07a36b7cb767b531e05ff"
+    },
+    {
+      "path": "src/generation/world-study/spatial-augmentation-types.ts",
+      "sha256": "356cba6d1a60a9c1389cca79b0117ba41dbb9f779eaa944c73b97525438ad598"
     },
     {
       "path": "src/generation/world-study/spatial-extraction-selection.ts",
@@ -305,7 +337,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/systems/r100-world/surface-bake.ts",
-      "sha256": "ee15a75d5365978502da3e3e81d9e1c4128f04410825b64df8c58e704762c626"
+      "sha256": "d534603ef7ad06a6cb4d8e7f7ea2224996d6af2ddeac660fdd237dc2e0ce026b"
     },
     {
       "path": "src/systems/r100-world/surface-fields.ts",
@@ -324,19 +356,23 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
     },
     {
+      "path": "tools/spatial-augmentation/codegen.mjs",
+      "sha256": "f723dd1f81c84639be0f78d38ba7b67744e8b6f23f98165c00086f76192e9a13"
+    },
+    {
       "path": "tools/world-study/build-r100-authored-shores.py",
       "sha256": "658f578a1b705c93b3fede6a8ab1aedba55b773839333f3fb0355106927c1ab4"
     },
     {
       "path": "tools/world-study/codegen-r100-spatial.mjs",
-      "sha256": "2fb06516d10ef62ddf4b54d6fffd2894b29737e0daee5d4b9670d56eb56dc7df"
+      "sha256": "46354b7c35d2450209011d05de7fd793e0fa6716480e4b5cf45b7b89181725f4"
     },
     {
       "path": "tools/world-study/generate-spatial-deployment.mjs",
       "sha256": "2a666f37f57aa8d74904f488cec644f7ced77187a5ee03c804258b529cadb862"
     }
   ],
-  "hash": "7e28f9cc50ea3c8e3cbf572a5bc9b9e85fa8fdf80525291167078827590a5818"
+  "hash": "7492eb6870ce48c1add8fe65971099eeb9a75655b4ba3f96aee255d20976e3fd"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {

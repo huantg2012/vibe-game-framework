@@ -1,0 +1,208 @@
+{
+  "status": "passed",
+  "sourceHash": "919e54f2515206f85ce867c481a8f84c92800f03568a349ca9dd68322da7e35d",
+  "profiles": 12,
+  "endpointCases": [
+    {
+      "profile": "slab-curled-ledge",
+      "family": "folded-slab",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 574,
+      "status": "passed"
+    },
+    {
+      "profile": "slab-curled-ledge",
+      "family": "folded-slab",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 574,
+      "status": "passed"
+    },
+    {
+      "profile": "slab-broken-shoulder",
+      "family": "folded-slab",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 73,
+      "status": "passed"
+    },
+    {
+      "profile": "slab-broken-shoulder",
+      "family": "folded-slab",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 73,
+      "status": "passed"
+    },
+    {
+      "profile": "fibre-fallen-end",
+      "family": "fibre-knot",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 132,
+      "status": "passed"
+    },
+    {
+      "profile": "fibre-fallen-end",
+      "family": "fibre-knot",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 132,
+      "status": "passed"
+    },
+    {
+      "profile": "fibre-pressed-knot",
+      "family": "fibre-knot",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 330,
+      "status": "passed"
+    },
+    {
+      "profile": "fibre-pressed-knot",
+      "family": "fibre-knot",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 330,
+      "status": "passed"
+    },
+    {
+      "profile": "shell-broken-bank",
+      "family": "broken-shell",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 574,
+      "status": "passed"
+    },
+    {
+      "profile": "shell-broken-bank",
+      "family": "broken-shell",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 574,
+      "status": "passed"
+    },
+    {
+      "profile": "shell-pitted-end",
+      "family": "broken-shell",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 398,
+      "status": "passed"
+    },
+    {
+      "profile": "shell-pitted-end",
+      "family": "broken-shell",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 398,
+      "status": "passed"
+    },
+    {
+      "profile": "grain-pressed-ridge",
+      "family": "granular-ridge",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 330,
+      "status": "passed"
+    },
+    {
+      "profile": "grain-pressed-ridge",
+      "family": "granular-ridge",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 330,
+      "status": "passed"
+    },
+    {
+      "profile": "grain-fractured-bed",
+      "family": "granular-ridge",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 73,
+      "status": "passed"
+    },
+    {
+      "profile": "grain-fractured-bed",
+      "family": "granular-ridge",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 73,
+      "status": "passed"
+    },
+    {
+      "profile": "membrane-rolled-end",
+      "family": "membrane-rim",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 239,
+      "status": "passed"
+    },
+    {
+      "profile": "membrane-rolled-end",
+      "family": "membrane-rim",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 245,
+      "status": "passed"
+    },
+    {
+      "profile": "membrane-curled-remnant",
+      "family": "membrane-rim",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 574,
+      "status": "passed"
+    },
+    {
+      "profile": "membrane-curled-remnant",
+      "family": "membrane-rim",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 574,
+      "status": "passed"
+    },
+    {
+      "profile": "gel-peeled-front",
+      "family": "gel-flow",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 239,
+      "status": "passed"
+    },
+    {
+      "profile": "gel-peeled-front",
+      "family": "gel-flow",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 247,
+      "status": "passed"
+    },
+    {
+      "profile": "gel-curled-bank",
+      "family": "gel-flow",
+      "endpoint": "minimum",
+      "constructionVersion": 4,
+      "triangles": 574,
+      "status": "passed"
+    },
+    {
+      "profile": "gel-curled-bank",
+      "family": "gel-flow",
+      "endpoint": "maximum",
+      "constructionVersion": 4,
+      "triangles": 574,
+      "status": "passed"
+    }
+  ],
+  "negativeControl": {
+    "standaloneV3MeshValid": true,
+    "authoredTerrainRejects": true,
+    "augmentationPolicyRejects": true
+  },
+  "limits": [
+    "Capability/spec endpoint checks only; does not claim every proposal passes spatial or deployment guards.",
+    "No full world or image generation in this fixture."
+  ]
+}

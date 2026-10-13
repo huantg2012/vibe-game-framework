@@ -1,0 +1,956 @@
+{
+  "status": "passed",
+  "reports": [
+    "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/r11-production-attempt2.json",
+    "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/r11-low-severe.json",
+    "docs/qa/artifacts/spatial-augmentation-2026-10-13/code/r11-seed0-medium.json"
+  ],
+  "sourceHashes": {
+    "src/generation/world-study/spatial-augmentation-selection.ts": "f93f075d5ee768d225e59d9676201fba80fe601b45b07a36b7cb767b531e05ff",
+    "src/generation/world-study/spatial-augmentation-candidates.ts": "540c410a93da337951e8ea8c1d1d757d3f6605edff7e981ed7a1462203580dd8",
+    "src/generation/world-study/spatial-augmentation-measure.ts": "932f5cea78f7239726fee25e73341c27c81a7997ba4a9b1daf6434348cef8a27",
+    "src/generation/world-study/r100-spatial-world.ts": "d9def498adddb0ef6008c8850ef742922a6909039a5347d592a3e34efba58bc9",
+    "data/rift-spatial-augmentation-policy.csv": "7e29b1a517f2838ffedef26b9c6ed9cd85e25c9c0442ab27f4dca31742ca7fb2",
+    "data/rift-spatial-augmentation-profiles.csv": "0ca932e32a150a8d9f286f6854c4aca91bbe1ba612f309647c330b2ee7eb8f46"
+  },
+  "cases": [
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/split-rib-causeway-medium-20261012",
+      "mapHash": "09e8ad24d7330badf6ad8bb2aede650a67bf5f1380f68d1ed841218a09d60e88",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 5099.877208,
+      "before": {
+        "geometryHash": "2909afc4f72e0e02d0e1fa87502a9b64583c135a09596df51efe52b40d076503",
+        "layoutHash": "1871496f1d827fe30714a3e87f3ccdd8bcaa9507ad2f6fd4c2da1eb5195a080c",
+        "presentationInputsHash": "4bbe0a9b17aceff5891ebf25094084ae290b2db20f68ce5ba6127dd293ac48b0",
+        "traceHash": "7c9da313ae3c115555e53a7bd605f848d15a7ec0e9ccae9797b3cc841e4b73bc",
+        "fullMapHash": "09e8ad24d7330badf6ad8bb2aede650a67bf5f1380f68d1ed841218a09d60e88"
+      },
+      "after": {
+        "geometryHash": "2909afc4f72e0e02d0e1fa87502a9b64583c135a09596df51efe52b40d076503",
+        "layoutHash": "1871496f1d827fe30714a3e87f3ccdd8bcaa9507ad2f6fd4c2da1eb5195a080c",
+        "presentationInputsHash": "4bbe0a9b17aceff5891ebf25094084ae290b2db20f68ce5ba6127dd293ac48b0",
+        "traceHash": "7c9da313ae3c115555e53a7bd605f848d15a7ec0e9ccae9797b3cc841e4b73bc",
+        "fullMapHash": "09e8ad24d7330badf6ad8bb2aede650a67bf5f1380f68d1ed841218a09d60e88"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [
+        "r0-h0-solid-1"
+      ],
+      "selected": [
+        "r0-h0-solid-1"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.00984064269566279,
+        "occlusion": 0.9255677316746022
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 3991160799,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/gel-rafts-medium-20261012",
+      "mapHash": "f181d69b5fd9a523eafdb835d54dea47be87d301ff4c850e850be3d97e6bfeb3",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 5419.468125,
+      "before": {
+        "geometryHash": "0e5695eb97e9ad033ca1767f007019ee1d8148b03a34afc480f0c8f8e47c3617",
+        "layoutHash": "139fc52c455d959e9a2d744629070e73f671e0dc7e640b90ffb441122023336d",
+        "presentationInputsHash": "9e887f2349f74ca13f4fa20fb65d13b44f56afac5d1996dcc3c9e0c611490498",
+        "traceHash": "96dce6ad9b8ee8c7474cd7f779508168b896bd600818f640a608a239838a4611",
+        "fullMapHash": "f181d69b5fd9a523eafdb835d54dea47be87d301ff4c850e850be3d97e6bfeb3"
+      },
+      "after": {
+        "geometryHash": "0e5695eb97e9ad033ca1767f007019ee1d8148b03a34afc480f0c8f8e47c3617",
+        "layoutHash": "139fc52c455d959e9a2d744629070e73f671e0dc7e640b90ffb441122023336d",
+        "presentationInputsHash": "9e887f2349f74ca13f4fa20fb65d13b44f56afac5d1996dcc3c9e0c611490498",
+        "traceHash": "96dce6ad9b8ee8c7474cd7f779508168b896bd600818f640a608a239838a4611",
+        "fullMapHash": "f181d69b5fd9a523eafdb835d54dea47be87d301ff4c850e850be3d97e6bfeb3"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [],
+      "selected": [],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.01605480783923731,
+        "occlusion": 0.893799500883521
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/sloughed-court-medium-20261012",
+      "mapHash": "6cd7d85dd294da7a1db16b7bacc1d830a9feb1b249efc8b9799074036617c57d",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 4142.899458,
+      "before": {
+        "geometryHash": "789112bc2152930e9cc4530c783235c0ba45a1b718fa86a15669c18fb3aecddb",
+        "layoutHash": "cd5ee51baeb2147aad2d9ab849175559ea504648be9f653e8b07823fe7cffe23",
+        "presentationInputsHash": "e91c4bea6be2bceceb0f0895e3a5d674b992b1e89e5d4d1caad662eff3cb44e3",
+        "traceHash": "ee6ac3637cbfee344cbfdac7fbb1747852b8a5144bea7e2dd7e8cf3e2582d230",
+        "fullMapHash": "d4e4933ba4baf80bdee8ff4bab836c4abcdd5b410897f2dfa78cc72b6c9b584e"
+      },
+      "after": {
+        "geometryHash": "789112bc2152930e9cc4530c783235c0ba45a1b718fa86a15669c18fb3aecddb",
+        "layoutHash": "cd5ee51baeb2147aad2d9ab849175559ea504648be9f653e8b07823fe7cffe23",
+        "presentationInputsHash": "e91c4bea6be2bceceb0f0895e3a5d674b992b1e89e5d4d1caad662eff3cb44e3",
+        "traceHash": "7b99a164f4b183feac48103fb10d5bb17848a18139909693f51331f670470e8e",
+        "fullMapHash": "6cd7d85dd294da7a1db16b7bacc1d830a9feb1b249efc8b9799074036617c57d"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": true,
+        "fullMapHash": true
+      },
+      "priorSelected": [
+        "r0-h0-void-1"
+      ],
+      "selected": [
+        "r0-h0-void-1"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.026811672845426876,
+        "occlusion": 0.872312055372803
+      },
+      "revealReceipts": [
+        {
+          "id": "r0-h0-void-1",
+          "accepted": true,
+          "observerDistanceFromHotspot": 202.3857702507763
+        },
+        {
+          "id": "r0-h2-void-1",
+          "accepted": false,
+          "observerDistanceFromHotspot": 214.66252583997982
+        }
+      ]
+    },
+    {
+      "worldId": "ash-strata",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/ash-strata-medium-20261012",
+      "mapHash": "bd527bd8cfc62d51b8c67651b179f78f8cce2434a6a010503f62a801bbc3e0b7",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 967.0013340000005,
+      "before": {
+        "geometryHash": "f6fa30c701be791b5df2fca9fa74714806e30221c21b15dbb43510fc21d07fd5",
+        "layoutHash": "ddb52a03462316cb4e2d21a8b4bea383b75f104ba25c12fbe3ff8ad301a2eeb4",
+        "presentationInputsHash": "203aea820d9ae869a439312530444f5cfb249accefa0feb8fcec4e2f150defdc",
+        "traceHash": "97bcc8d9642ae7e65e2902cfa14223896fd0352d1fb148fd72f3811b416c4e0e",
+        "fullMapHash": "bd527bd8cfc62d51b8c67651b179f78f8cce2434a6a010503f62a801bbc3e0b7"
+      },
+      "after": {
+        "geometryHash": "f6fa30c701be791b5df2fca9fa74714806e30221c21b15dbb43510fc21d07fd5",
+        "layoutHash": "ddb52a03462316cb4e2d21a8b4bea383b75f104ba25c12fbe3ff8ad301a2eeb4",
+        "presentationInputsHash": "203aea820d9ae869a439312530444f5cfb249accefa0feb8fcec4e2f150defdc",
+        "traceHash": "97bcc8d9642ae7e65e2902cfa14223896fd0352d1fb148fd72f3811b416c4e0e",
+        "fullMapHash": "bd527bd8cfc62d51b8c67651b179f78f8cce2434a6a010503f62a801bbc3e0b7"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [],
+      "selected": [],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.000506319761124628,
+        "occlusion": 0.6778272709675154
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "black-lacuna",
+      "grade": "medium",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/black-lacuna-medium-20261012",
+      "mapHash": "0898c4119ec5e75c39c11490ef7fe902e64f82165f47dea4df502223701e6e96",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 2717.4702080000025,
+      "before": {
+        "geometryHash": "a4c4a2d1e1e1ddbf493db367547fed7662cadcf8bc688e020fa000ded4fa6dd7",
+        "layoutHash": "f618d3c87d34aee1f7a5fc20298676079b4324f951cd934f652cac6b480fc010",
+        "presentationInputsHash": "8058d1806ecc3047601dfa1ef92257686d40ebb07e8790017466d6cb20df9b6c",
+        "traceHash": "3c820f3ee68a4524cb6054886eee2c16e03bb41b2022b5fe07f22c9ba2b0b145",
+        "fullMapHash": "0898c4119ec5e75c39c11490ef7fe902e64f82165f47dea4df502223701e6e96"
+      },
+      "after": {
+        "geometryHash": "a4c4a2d1e1e1ddbf493db367547fed7662cadcf8bc688e020fa000ded4fa6dd7",
+        "layoutHash": "f618d3c87d34aee1f7a5fc20298676079b4324f951cd934f652cac6b480fc010",
+        "presentationInputsHash": "8058d1806ecc3047601dfa1ef92257686d40ebb07e8790017466d6cb20df9b6c",
+        "traceHash": "3c820f3ee68a4524cb6054886eee2c16e03bb41b2022b5fe07f22c9ba2b0b145",
+        "fullMapHash": "0898c4119ec5e75c39c11490ef7fe902e64f82165f47dea4df502223701e6e96"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [
+        "r0-h0-solid-0"
+      ],
+      "selected": [
+        "r0-h0-solid-0"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.056115116394512145,
+        "occlusion": 0.9279745351038727
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "low",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/split-rib-causeway-low-20261012",
+      "mapHash": "121f13abceccbc6f7bbe63ba12cb7c25219700ad77c2f3cbcc05fdd871e8cdf7",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 4710.770166999999,
+      "before": {
+        "geometryHash": "03a5536bc62331c0072184b1eaa8605ad63910c99425d06bf5e5bff5b1085780",
+        "layoutHash": "662760fe9910e7d6a0e56b1bdf272854ee0c436d82dedd49f085263752fce3db",
+        "presentationInputsHash": "33f3cbc47d3db5947a88ae77f80dd8856f036681a2cbcbdb06b19a8d3c2121ff",
+        "traceHash": "91143ccf770329c6d07015d0c0f850516ab9604e6d42bc1c6855523d7ddbd020",
+        "fullMapHash": "121f13abceccbc6f7bbe63ba12cb7c25219700ad77c2f3cbcc05fdd871e8cdf7"
+      },
+      "after": {
+        "geometryHash": "03a5536bc62331c0072184b1eaa8605ad63910c99425d06bf5e5bff5b1085780",
+        "layoutHash": "662760fe9910e7d6a0e56b1bdf272854ee0c436d82dedd49f085263752fce3db",
+        "presentationInputsHash": "33f3cbc47d3db5947a88ae77f80dd8856f036681a2cbcbdb06b19a8d3c2121ff",
+        "traceHash": "91143ccf770329c6d07015d0c0f850516ab9604e6d42bc1c6855523d7ddbd020",
+        "fullMapHash": "121f13abceccbc6f7bbe63ba12cb7c25219700ad77c2f3cbcc05fdd871e8cdf7"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [
+        "r0-h0-solid-1"
+      ],
+      "selected": [
+        "r0-h0-solid-1"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.009817899995154597,
+        "occlusion": 0.9255139178362533
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "severe",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/split-rib-causeway-severe-20261012",
+      "mapHash": "afc27ec2a0f5942974c786406081dadfefdee4424835dcbf3a5b1143fd6f28be",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 4699.162166999999,
+      "before": {
+        "geometryHash": "cce65bfe5fe12b7c7dbf560793baecee024f99c6c2122cc75b3cfd59059fc17c",
+        "layoutHash": "bb6864bb082c9eb8e770e45fa7555594020f3061b92b95cd153d58aada560ebb",
+        "presentationInputsHash": "0b36eb1a25ad6075ed33c240502fddba3fdabd78758bf1d4f3a18e99e7b1ae1f",
+        "traceHash": "fbe07b481dd6731652f1bcf6fa065fe0a603fb671343590e142620171851b7c9",
+        "fullMapHash": "afc27ec2a0f5942974c786406081dadfefdee4424835dcbf3a5b1143fd6f28be"
+      },
+      "after": {
+        "geometryHash": "cce65bfe5fe12b7c7dbf560793baecee024f99c6c2122cc75b3cfd59059fc17c",
+        "layoutHash": "bb6864bb082c9eb8e770e45fa7555594020f3061b92b95cd153d58aada560ebb",
+        "presentationInputsHash": "0b36eb1a25ad6075ed33c240502fddba3fdabd78758bf1d4f3a18e99e7b1ae1f",
+        "traceHash": "fbe07b481dd6731652f1bcf6fa065fe0a603fb671343590e142620171851b7c9",
+        "fullMapHash": "afc27ec2a0f5942974c786406081dadfefdee4424835dcbf3a5b1143fd6f28be"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [
+        "r0-h0-solid-1"
+      ],
+      "selected": [
+        "r0-h0-solid-1"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.009820742826188132,
+        "occlusion": 0.9256253940063468
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "low",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 1872207331,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/gel-rafts-low-20261012",
+      "mapHash": "034bf3b1c8e1fa68a0fd253c451ae407b4bba8a17fff404796883f5afa15c093",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 8324.523041,
+      "before": {
+        "geometryHash": "2570c41fb45b8809569f3a82687d78ed8e890b858bdf3e0fb78973f17f211c76",
+        "layoutHash": "25b30861f94ddc6d7c0fa5e46b8a556e2b7a6d75d943f786f4971a7b053a4806",
+        "presentationInputsHash": "fa6783612682322e0a71153ef67fe66c70d9cf71c037330e9b047112ebfc49f7",
+        "traceHash": "2084bcd7ad410d847fc258af070abaad3f7fb5687b228ccad9569247192bc452",
+        "fullMapHash": "034bf3b1c8e1fa68a0fd253c451ae407b4bba8a17fff404796883f5afa15c093"
+      },
+      "after": {
+        "geometryHash": "2570c41fb45b8809569f3a82687d78ed8e890b858bdf3e0fb78973f17f211c76",
+        "layoutHash": "25b30861f94ddc6d7c0fa5e46b8a556e2b7a6d75d943f786f4971a7b053a4806",
+        "presentationInputsHash": "fa6783612682322e0a71153ef67fe66c70d9cf71c037330e9b047112ebfc49f7",
+        "traceHash": "2084bcd7ad410d847fc258af070abaad3f7fb5687b228ccad9569247192bc452",
+        "fullMapHash": "034bf3b1c8e1fa68a0fd253c451ae407b4bba8a17fff404796883f5afa15c093"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [],
+      "selected": [],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.01605480786267949,
+        "occlusion": 0.893799500883521
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "severe",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 3991160799,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/gel-rafts-severe-20261012",
+      "mapHash": "34ecc3c47cd361f82aa573eb1b6b125da5bbb60a91751e20a5fd97b5c9e0fd89",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 5332.6266659999965,
+      "before": {
+        "geometryHash": "e1ef952d5fea2224b5c1a1f00b93743bf9545a8a87f60f6f9abe77440b7281c9",
+        "layoutHash": "7657fa4c8a6c8cb2d7dc11d04dd7f4f0a8ec20e14b1ba8bb68fac78b3bb2702c",
+        "presentationInputsHash": "4f45e22091b2251d4769bebb65b964128e1b799a8e4ddb03e373848552136a8c",
+        "traceHash": "c48ced2eaa4a4670b9aac63f161c042ce3db0eade2ab50fc08648ed83464c458",
+        "fullMapHash": "34ecc3c47cd361f82aa573eb1b6b125da5bbb60a91751e20a5fd97b5c9e0fd89"
+      },
+      "after": {
+        "geometryHash": "e1ef952d5fea2224b5c1a1f00b93743bf9545a8a87f60f6f9abe77440b7281c9",
+        "layoutHash": "7657fa4c8a6c8cb2d7dc11d04dd7f4f0a8ec20e14b1ba8bb68fac78b3bb2702c",
+        "presentationInputsHash": "4f45e22091b2251d4769bebb65b964128e1b799a8e4ddb03e373848552136a8c",
+        "traceHash": "c48ced2eaa4a4670b9aac63f161c042ce3db0eade2ab50fc08648ed83464c458",
+        "fullMapHash": "34ecc3c47cd361f82aa573eb1b6b125da5bbb60a91751e20a5fd97b5c9e0fd89"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [],
+      "selected": [],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.016054807600608283,
+        "occlusion": 0.893799500883521
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "low",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/sloughed-court-low-20261012",
+      "mapHash": "7125bda7c16351020278dded7cbe8accb09859f16351d1bd17647452631dde92",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 4225.575959000002,
+      "before": {
+        "geometryHash": "1d78a48e3f17f0931b7ce5443b3619fa6ad1357970696dfc9b648ec112304b9c",
+        "layoutHash": "828e0ad6f60569a5ea01b12d2d154ffb9692185ea9e52496564a6254cb715aae",
+        "presentationInputsHash": "29dfa18c713912cd2645eb619bc2c13bfbc20205d9e92b5057208fde23e97072",
+        "traceHash": "ee6ac3637cbfee344cbfdac7fbb1747852b8a5144bea7e2dd7e8cf3e2582d230",
+        "fullMapHash": "d35b474273c053b1dd0ed16dee283feafb5ae6275221c2ed52bdf1ee593bddf6"
+      },
+      "after": {
+        "geometryHash": "1d78a48e3f17f0931b7ce5443b3619fa6ad1357970696dfc9b648ec112304b9c",
+        "layoutHash": "828e0ad6f60569a5ea01b12d2d154ffb9692185ea9e52496564a6254cb715aae",
+        "presentationInputsHash": "29dfa18c713912cd2645eb619bc2c13bfbc20205d9e92b5057208fde23e97072",
+        "traceHash": "7b99a164f4b183feac48103fb10d5bb17848a18139909693f51331f670470e8e",
+        "fullMapHash": "7125bda7c16351020278dded7cbe8accb09859f16351d1bd17647452631dde92"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": true,
+        "fullMapHash": true
+      },
+      "priorSelected": [
+        "r0-h0-void-1"
+      ],
+      "selected": [
+        "r0-h0-void-1"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.026811672845426876,
+        "occlusion": 0.872312055372803
+      },
+      "revealReceipts": [
+        {
+          "id": "r0-h0-void-1",
+          "accepted": true,
+          "observerDistanceFromHotspot": 202.3857702507763
+        },
+        {
+          "id": "r0-h2-void-1",
+          "accepted": false,
+          "observerDistanceFromHotspot": 214.66252583997982
+        }
+      ]
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "severe",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/sloughed-court-severe-20261012",
+      "mapHash": "6396e09d01964fd7bc517102e94a5c6121b762d3b6ecb1dd4b7ddc662f9f82b4",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 4140.751916000001,
+      "before": {
+        "geometryHash": "343304a559c2c9446de7490984a9bd229cb9ba7cb613b145e90999342f0f5bd5",
+        "layoutHash": "45cbc915f1c6b4ed3870452c63073bd28466245cb28ab9e90a0f419de6614184",
+        "presentationInputsHash": "10cde7ca33ce7b71c5efd64301a3fc19501f2ae1dc24c4d763b2a618a0bf909e",
+        "traceHash": "ee6ac3637cbfee344cbfdac7fbb1747852b8a5144bea7e2dd7e8cf3e2582d230",
+        "fullMapHash": "5eb8dd7418ad82ddd19be9a23b061cbbefe7c20940120d1c37f2b45151f61eb7"
+      },
+      "after": {
+        "geometryHash": "343304a559c2c9446de7490984a9bd229cb9ba7cb613b145e90999342f0f5bd5",
+        "layoutHash": "45cbc915f1c6b4ed3870452c63073bd28466245cb28ab9e90a0f419de6614184",
+        "presentationInputsHash": "10cde7ca33ce7b71c5efd64301a3fc19501f2ae1dc24c4d763b2a618a0bf909e",
+        "traceHash": "7b99a164f4b183feac48103fb10d5bb17848a18139909693f51331f670470e8e",
+        "fullMapHash": "6396e09d01964fd7bc517102e94a5c6121b762d3b6ecb1dd4b7ddc662f9f82b4"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": true,
+        "fullMapHash": true
+      },
+      "priorSelected": [
+        "r0-h0-void-1"
+      ],
+      "selected": [
+        "r0-h0-void-1"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.026811672845426876,
+        "occlusion": 0.872312055372803
+      },
+      "revealReceipts": [
+        {
+          "id": "r0-h0-void-1",
+          "accepted": true,
+          "observerDistanceFromHotspot": 202.3857702507763
+        },
+        {
+          "id": "r0-h2-void-1",
+          "accepted": false,
+          "observerDistanceFromHotspot": 214.66252583997982
+        }
+      ]
+    },
+    {
+      "worldId": "ash-strata",
+      "grade": "low",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/ash-strata-low-20261012",
+      "mapHash": "89c4d87ff954e05ee67bb9249f79a74d09f4592e2e76b844d7e2a0c50a0c1e55",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 907.5200839999961,
+      "before": {
+        "geometryHash": "54f12cfaa5b86f185df0d0b1baf597eb76118cca8cfe6c9dd79a7fc6ea51987a",
+        "layoutHash": "bd5949fba9b83ec6f96dae9b8c050174d983b8763380d95cf430cef18135006c",
+        "presentationInputsHash": "03da3d43ff57c517dd4908f266ecc6033946ed245fd5a5335231238ee34d0471",
+        "traceHash": "0c12c6522db1c511d82b0cb772dfaa2d29f5c0f38b6d6d5c6cda7cacff327560",
+        "fullMapHash": "89c4d87ff954e05ee67bb9249f79a74d09f4592e2e76b844d7e2a0c50a0c1e55"
+      },
+      "after": {
+        "geometryHash": "54f12cfaa5b86f185df0d0b1baf597eb76118cca8cfe6c9dd79a7fc6ea51987a",
+        "layoutHash": "bd5949fba9b83ec6f96dae9b8c050174d983b8763380d95cf430cef18135006c",
+        "presentationInputsHash": "03da3d43ff57c517dd4908f266ecc6033946ed245fd5a5335231238ee34d0471",
+        "traceHash": "0c12c6522db1c511d82b0cb772dfaa2d29f5c0f38b6d6d5c6cda7cacff327560",
+        "fullMapHash": "89c4d87ff954e05ee67bb9249f79a74d09f4592e2e76b844d7e2a0c50a0c1e55"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [],
+      "selected": [],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.0005054694360566201,
+        "occlusion": 0.6776240189349951
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "ash-strata",
+      "grade": "severe",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/ash-strata-severe-20261012",
+      "mapHash": "84dae9aa88efe8ea95aa621bd088dccd9aec5e785cb898ede2f91fdb9565a3db",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 941.4681250000067,
+      "before": {
+        "geometryHash": "6b2413cd0e4fdc5cc831f6f8e3abe1fe44f02cb6e8df83f5c788256f340bc264",
+        "layoutHash": "a5f90f84730df630bd2556c599b70119095af51e32b5ca904b3bfba96a6d9a10",
+        "presentationInputsHash": "e9e3e2b0f04fdca2a414eeca738b8423e4e08ef462d28041f1bd5182b8bd73c8",
+        "traceHash": "81d6f73540b93c2591511bb3ba24e1d1a4d140be8b5d13323d35b2cffb93c1ff",
+        "fullMapHash": "84dae9aa88efe8ea95aa621bd088dccd9aec5e785cb898ede2f91fdb9565a3db"
+      },
+      "after": {
+        "geometryHash": "6b2413cd0e4fdc5cc831f6f8e3abe1fe44f02cb6e8df83f5c788256f340bc264",
+        "layoutHash": "a5f90f84730df630bd2556c599b70119095af51e32b5ca904b3bfba96a6d9a10",
+        "presentationInputsHash": "e9e3e2b0f04fdca2a414eeca738b8423e4e08ef462d28041f1bd5182b8bd73c8",
+        "traceHash": "81d6f73540b93c2591511bb3ba24e1d1a4d140be8b5d13323d35b2cffb93c1ff",
+        "fullMapHash": "84dae9aa88efe8ea95aa621bd088dccd9aec5e785cb898ede2f91fdb9565a3db"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [],
+      "selected": [],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.000508238022803259,
+        "occlusion": 0.6779288969837756
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "black-lacuna",
+      "grade": "low",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/black-lacuna-low-20261012",
+      "mapHash": "dfe4505f6b44a518d0e26593cadd7defba5f8e456ad80d89ef08383fcf4ad978",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 2794.728167000001,
+      "before": {
+        "geometryHash": "0fac7886a6d315893de6b78d209b80f60485a004cf41a1af91c03919cf521cd2",
+        "layoutHash": "f8c6090fcca0dc95506a661bfe6df64289f328f9eaf07db9487d3347c136f989",
+        "presentationInputsHash": "bded8c7dd2deea7c040d6fc8f0c9ec8aac7ff153c2622a96b1bbe18e645cb895",
+        "traceHash": "c288043ba63df4b53d06e598dded17de5e54038425b76162e6187bd8e26b26a1",
+        "fullMapHash": "dfe4505f6b44a518d0e26593cadd7defba5f8e456ad80d89ef08383fcf4ad978"
+      },
+      "after": {
+        "geometryHash": "0fac7886a6d315893de6b78d209b80f60485a004cf41a1af91c03919cf521cd2",
+        "layoutHash": "f8c6090fcca0dc95506a661bfe6df64289f328f9eaf07db9487d3347c136f989",
+        "presentationInputsHash": "bded8c7dd2deea7c040d6fc8f0c9ec8aac7ff153c2622a96b1bbe18e645cb895",
+        "traceHash": "c288043ba63df4b53d06e598dded17de5e54038425b76162e6187bd8e26b26a1",
+        "fullMapHash": "dfe4505f6b44a518d0e26593cadd7defba5f8e456ad80d89ef08383fcf4ad978"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [
+        "r0-h0-solid-0"
+      ],
+      "selected": [
+        "r0-h0-solid-0"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.056115116441554556,
+        "occlusion": 0.9279745351038727
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "black-lacuna",
+      "grade": "severe",
+      "requestedSeed": 20261012,
+      "effectiveSeed": 20261012,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/black-lacuna-severe-20261012",
+      "mapHash": "d6756ede3ec3e13d898a78c26090df5fcf61e30544b4f971a1a63e95d6df7f56",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 2730.744000000006,
+      "before": {
+        "geometryHash": "1c57fffb0cffe1e4ab40350acf1d3312846151b5deea97f2066ce579d87ce5f3",
+        "layoutHash": "898350022dd0e689982a839f37487fac31a8fbd6bd99e94445b13e584c6a4f63",
+        "presentationInputsHash": "a8ee7d395e362805745953afeba22f81f5ecabfc8626bc90994e7ecd252c1b55",
+        "traceHash": "deabe09567b9149a25a49ee052ea9c3ecb72676fdc0684419116133b8bff1c1f",
+        "fullMapHash": "d6756ede3ec3e13d898a78c26090df5fcf61e30544b4f971a1a63e95d6df7f56"
+      },
+      "after": {
+        "geometryHash": "1c57fffb0cffe1e4ab40350acf1d3312846151b5deea97f2066ce579d87ce5f3",
+        "layoutHash": "898350022dd0e689982a839f37487fac31a8fbd6bd99e94445b13e584c6a4f63",
+        "presentationInputsHash": "a8ee7d395e362805745953afeba22f81f5ecabfc8626bc90994e7ecd252c1b55",
+        "traceHash": "deabe09567b9149a25a49ee052ea9c3ecb72676fdc0684419116133b8bff1c1f",
+        "fullMapHash": "d6756ede3ec3e13d898a78c26090df5fcf61e30544b4f971a1a63e95d6df7f56"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [
+        "r0-h0-solid-0"
+      ],
+      "selected": [
+        "r0-h0-solid-0"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.056115116569493764,
+        "occlusion": 0.9279745351038727
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "split-rib-causeway",
+      "grade": "medium",
+      "requestedSeed": 0,
+      "effectiveSeed": 0,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/split-rib-causeway-medium-0",
+      "mapHash": "20e18c35b9f60ca5517a7cd4b4389d6ebc3d77fb9d400f602581f2e1cde94398",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 4730.443749999991,
+      "before": {
+        "geometryHash": "5cbb2e473e85d64e0872f67a5e13a23045b14ea0832c17bc918fe0c09a571f8f",
+        "layoutHash": "517a43c1027ff96d1927fcf17ca8e6c9a91071604bd358d3027accc12e551b77",
+        "presentationInputsHash": "599bf4dcc62502629b032baef4f94cd1f6f1f109222bbbecbf5553fd1de3de94",
+        "traceHash": "33bbcd597043fd2c2cacdb516e3f9b3e34162cdfbdc2ae3520a3fac070f53f32",
+        "fullMapHash": "20e18c35b9f60ca5517a7cd4b4389d6ebc3d77fb9d400f602581f2e1cde94398"
+      },
+      "after": {
+        "geometryHash": "5cbb2e473e85d64e0872f67a5e13a23045b14ea0832c17bc918fe0c09a571f8f",
+        "layoutHash": "517a43c1027ff96d1927fcf17ca8e6c9a91071604bd358d3027accc12e551b77",
+        "presentationInputsHash": "599bf4dcc62502629b032baef4f94cd1f6f1f109222bbbecbf5553fd1de3de94",
+        "traceHash": "33bbcd597043fd2c2cacdb516e3f9b3e34162cdfbdc2ae3520a3fac070f53f32",
+        "fullMapHash": "20e18c35b9f60ca5517a7cd4b4389d6ebc3d77fb9d400f602581f2e1cde94398"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [
+        "r0-h0-solid-1"
+      ],
+      "selected": [
+        "r0-h0-solid-1"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.010169071120655598,
+        "occlusion": 0.9211025218673402
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "medium",
+      "requestedSeed": 0,
+      "effectiveSeed": 0,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/gel-rafts-medium-0",
+      "mapHash": "adebab600d7cb7310be727188d6c9c54ddb08b968e04340685c152ca87888936",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 3689.0288750000036,
+      "before": {
+        "geometryHash": "fa3dd8da20492f09c8218c642d24ba974613c8e93c8fa36adc11c3be9ea249bb",
+        "layoutHash": "601fe4040fc5bc93e5aef9106bc0fa9fab2fef9266bd11e12de9a9b34ec8d294",
+        "presentationInputsHash": "f649f12dd559c1d3392512acf1669fbe0484cd9afee4f600c8fc05fdde93ab98",
+        "traceHash": "2de742f05fabe0f4c2206fe0cfa346fe76f018f280acc25f0fb18ebf7502e8d2",
+        "fullMapHash": "adebab600d7cb7310be727188d6c9c54ddb08b968e04340685c152ca87888936"
+      },
+      "after": {
+        "geometryHash": "fa3dd8da20492f09c8218c642d24ba974613c8e93c8fa36adc11c3be9ea249bb",
+        "layoutHash": "601fe4040fc5bc93e5aef9106bc0fa9fab2fef9266bd11e12de9a9b34ec8d294",
+        "presentationInputsHash": "f649f12dd559c1d3392512acf1669fbe0484cd9afee4f600c8fc05fdde93ab98",
+        "traceHash": "2de742f05fabe0f4c2206fe0cfa346fe76f018f280acc25f0fb18ebf7502e8d2",
+        "fullMapHash": "adebab600d7cb7310be727188d6c9c54ddb08b968e04340685c152ca87888936"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [
+        "r0-h0-solid-0"
+      ],
+      "selected": [
+        "r0-h0-solid-0"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.008098355836909191,
+        "occlusion": 0.9098552330997851
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "medium",
+      "requestedSeed": 0,
+      "effectiveSeed": 0,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/sloughed-court-medium-0",
+      "mapHash": "297686e52aed645f98ae0af597f2abd3e1e362cdcb068432c418ba87c10e766b",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 2535.8128750000033,
+      "before": {
+        "geometryHash": "3266645dce4fe4a386d4dbc8fef5163f53ab6a4f16be9cbe02a0eaef9e4061b1",
+        "layoutHash": "b35446af3919079507c8b20e93be26d1b25eb5d076d94013b33826cf267c724b",
+        "presentationInputsHash": "9c8ad3fc8fca57e7b5bb50f8d48df96278b355e4de45016f9e32f739740a9663",
+        "traceHash": "f26905e86d5d1ab9d6497778d9dfefb2dcc3c217fb586fd0a062c14ec66e6fb2",
+        "fullMapHash": "297686e52aed645f98ae0af597f2abd3e1e362cdcb068432c418ba87c10e766b"
+      },
+      "after": {
+        "geometryHash": "3266645dce4fe4a386d4dbc8fef5163f53ab6a4f16be9cbe02a0eaef9e4061b1",
+        "layoutHash": "b35446af3919079507c8b20e93be26d1b25eb5d076d94013b33826cf267c724b",
+        "presentationInputsHash": "9c8ad3fc8fca57e7b5bb50f8d48df96278b355e4de45016f9e32f739740a9663",
+        "traceHash": "f26905e86d5d1ab9d6497778d9dfefb2dcc3c217fb586fd0a062c14ec66e6fb2",
+        "fullMapHash": "297686e52aed645f98ae0af597f2abd3e1e362cdcb068432c418ba87c10e766b"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [],
+      "selected": [],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.038474610872677346,
+        "occlusion": 0.8984382951596063
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "ash-strata",
+      "grade": "medium",
+      "requestedSeed": 0,
+      "effectiveSeed": 586283262,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/ash-strata-medium-0",
+      "mapHash": "2d0ac57d2d07ca3095df71112562a05e56e360adf3cad7fb8a00f27856b8a742",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 6907.509999999995,
+      "before": {
+        "geometryHash": "4dd6cbd5c704d633b9f08e40ca8a7fdd2eeb9f377c476fb21450b78dec93746d",
+        "layoutHash": "fbdf4e9dc5b59fa9b1ac882b3cb42aefcb74e0264cfb43b0eda39c3417b79619",
+        "presentationInputsHash": "8c33179cd5aa61bdca02cefd6e0eaf42e315b46d960c23aaf34514a7d623abe8",
+        "traceHash": "3e87eee3b3bfb9092152ca7790a7e02e3755ee2f10fa1dc70af5da8119857212",
+        "fullMapHash": "2d0ac57d2d07ca3095df71112562a05e56e360adf3cad7fb8a00f27856b8a742"
+      },
+      "after": {
+        "geometryHash": "4dd6cbd5c704d633b9f08e40ca8a7fdd2eeb9f377c476fb21450b78dec93746d",
+        "layoutHash": "fbdf4e9dc5b59fa9b1ac882b3cb42aefcb74e0264cfb43b0eda39c3417b79619",
+        "presentationInputsHash": "8c33179cd5aa61bdca02cefd6e0eaf42e315b46d960c23aaf34514a7d623abe8",
+        "traceHash": "3e87eee3b3bfb9092152ca7790a7e02e3755ee2f10fa1dc70af5da8119857212",
+        "fullMapHash": "2d0ac57d2d07ca3095df71112562a05e56e360adf3cad7fb8a00f27856b8a742"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [],
+      "selected": [],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.00036617724500156117,
+        "occlusion": 0.6831681804200898
+      },
+      "revealReceipts": []
+    },
+    {
+      "worldId": "black-lacuna",
+      "grade": "medium",
+      "requestedSeed": 0,
+      "effectiveSeed": 0,
+      "cacheBase": "/tmp/coh-spatial-augmentation-maps-focus-final/black-lacuna-medium-0",
+      "mapHash": "34245c075571ae0380274172b45778767d5add2cb52909f3df18995e03a4ddd1",
+      "deployment": {
+        "selectedCandidate": 0,
+        "rejectedCandidates": []
+      },
+      "elapsedMs": 4763.737582999995,
+      "before": {
+        "geometryHash": "de61bbdedb38b67b720c2a57580ef840efd6ad410bd3efb4041ee90a07c72012",
+        "layoutHash": "cb4429a9afb9f3873635fa7fd039f489a5a1ae418b7b8272ba31e1e17d2c9565",
+        "presentationInputsHash": "06e8402f3e9eefa7ba9e4a1a4f0f948e7a6a3217a2b386d96c30893c07333d54",
+        "traceHash": "d857e44810064b7ac410f0d70ef33feddff484abc3fd714f97194155f4bcdb91",
+        "fullMapHash": "34245c075571ae0380274172b45778767d5add2cb52909f3df18995e03a4ddd1"
+      },
+      "after": {
+        "geometryHash": "de61bbdedb38b67b720c2a57580ef840efd6ad410bd3efb4041ee90a07c72012",
+        "layoutHash": "cb4429a9afb9f3873635fa7fd039f489a5a1ae418b7b8272ba31e1e17d2c9565",
+        "presentationInputsHash": "06e8402f3e9eefa7ba9e4a1a4f0f948e7a6a3217a2b386d96c30893c07333d54",
+        "traceHash": "d857e44810064b7ac410f0d70ef33feddff484abc3fd714f97194155f4bcdb91",
+        "fullMapHash": "34245c075571ae0380274172b45778767d5add2cb52909f3df18995e03a4ddd1"
+      },
+      "changed": {
+        "geometryHash": false,
+        "layoutHash": false,
+        "presentationInputsHash": false,
+        "traceHash": false,
+        "fullMapHash": false
+      },
+      "priorSelected": [
+        "r0-h1-solid-0"
+      ],
+      "selected": [
+        "r0-h1-solid-0"
+      ],
+      "status": "no-feasible-improvement",
+      "remainingDeficits": {
+        "physical": 0.06894558816734979,
+        "occlusion": 0.9211072690160136
+      },
+      "revealReceipts": []
+    }
+  ],
+  "failures": [],
+  "limits": [
+    "Existing frozen recipes only, no fresh policy or authoring substitution.",
+    "A changed trace changes the full map hash; geometry/content/presentation hashes are reported separately.",
+    "Identical presentation inputs reuse previous material evidence; this run does not rebake surfaces."
+  ],
+  "summary": {
+    "cases": 20,
+    "failures": 0,
+    "changed": {
+      "geometryHash": 0,
+      "layoutHash": 0,
+      "presentationInputsHash": 0,
+      "traceHash": 3,
+      "fullMapHash": 3
+    }
+  }
+}

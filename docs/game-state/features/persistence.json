@@ -3,7 +3,7 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "108世界新出发冻结修订10完整地形/部署/翻找来源身份，冷续不重抽。旧修订1–9闭包隔离；r9从固定17476a4e封存生成、验证、hydrate、表面及残骸两态。六r9加两r8完整地图与四RGBA精确回放；代表正式新局冷续保持收入及翻后状态。",
+    "summary": "新出发冻结r11 policy、同族profiles、fragment与来源hash，恢复不读取今日CSV。旧r10从99998703封存完整执行器；12份公开路由map恢复（6份另核两态四RGBA）及20份r11保存配方精确重放通过。跨引擎、全部历史身份与自然冷续仍不作保证。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -546,6 +546,70 @@
         "path": "docs/qa/stealth-obstacles-2026-10-13.md",
         "role": "doc",
         "note": "三代表17件实体局部接入及有限验证；全库与潜行未结案。"
+      },
+      {
+        "path": "docs/qa/spatial-augmentation-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/design-notes/stealth-obstacle-distribution-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/spatial-augmentation-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/index.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/executor-revision10.d.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/executor-revision10.js",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/executor-recovery.d.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/executor-recovery.js",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/manifest-recovery.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/manifest-revision10.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/recovery/project-native-r100-revision10.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/derive-native-r100-revision10.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision10-freezing.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision11.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision11-orchestration.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -585,7 +649,8 @@
       "COH-E236",
       "COH-E237",
       "COH-E238",
-      "COH-E239"
+      "COH-E239",
+      "COH-E240"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。",
@@ -597,7 +662,8 @@
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：DEC-206 B01已扩至六个独立注册构型；其余102世界、全seed/全孔、自然未知搜索与深区取舍、正式用户审美及I14/P49仍开放。三张初稿图审退回及输入harness失败均保留，限定技术/AI图审不转成人审；B02临时草案未接生产。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E236为本轮有限程序和正常镜头验证：六图中档safe节点、四组留出seed关系/近远、三例远距FOV与一例正式低档冷续。非全seed、全部节点可读性、长期自然探索或用户审美；容量不足实景仅有事务证据。其余102推广仍暂停。",
       "E237记录108世界两项优化的正式接入及有限内部验证：324档位为固定请求seed，代表实机用知情导航；不外推全seed、全部节点自然发现、连续视觉听感、长期收益或用户审美。用户最新授权已解除102图推广暂停；I14/P49仍开放。",
-      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。"
+      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
+      "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。"
     ]
   },
   {

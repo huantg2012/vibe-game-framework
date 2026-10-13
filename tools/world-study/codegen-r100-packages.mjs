@@ -3,7 +3,11 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { writeR100QualificationManifests } from './r100-qualification-manifests.mjs';
 const hash = value => createHash('sha256').update(value).digest('hex');
-const paths = ['data/rift-spatial-policy.csv', 'data/rift-spatial-deployment.csv',
+const paths = ['data/rift-spatial-augmentation-policy.csv', 'data/rift-spatial-augmentation-profiles.csv',
+  'tools/spatial-augmentation/codegen.mjs', 'src/generated/r100-spatial-augmentation.ts',
+  'src/generation/world-study/native-terrain.ts', 'src/generation/world-study/spatial-augmentation-types.ts',
+  'src/generation/world-study/spatial-augmentation-measure.ts', 'src/generation/world-study/spatial-augmentation-candidates.ts',
+  'src/generation/world-study/spatial-augmentation-selection.ts', 'data/rift-spatial-policy.csv', 'data/rift-spatial-deployment.csv',
   'src/generated/rift-spatial-deployment-data.ts', 'src/generation/world-study/r100-spatial-deployment.ts', 'data/rift-spatial-layouts.csv', 'data/rift-spatial-erosion.csv',
   'data/rift-spatial-anchors.csv', 'data/rift-spatial-worlds.csv', 'data/rift-spatial-materials.csv',
   'data/rift-spatial-organizations.csv', 'data/rift-spatial-authored-groups.csv', 'data/rift-spatial-authored-erosion.csv',

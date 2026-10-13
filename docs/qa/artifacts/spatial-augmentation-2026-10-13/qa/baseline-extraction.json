@@ -1,0 +1,31 @@
+{
+  "scope": "Current lightweight baseline terrain against pre-existing r10 maps, not another complete r10 replay or material bake",
+  "sources": {
+    "src/generation/world-study/r100-spatial-world.ts": "550839ce9da8342675434a80ef741975f826d3a590194609a9bc13423bd5b829",
+    "src/generation/world-study/native-terrain.ts": "59de172e9a84328fba15cc903c15780feb2e7fc9825ec7407aa48deb7fb20aea",
+    "src/generation/world-study/native-body-collision.ts": "1ed10631c73ed5f4acfcb0204aa232a37e18e94fcf706c7db50b172c258d5228"
+  },
+  "sourceStable": true,
+  "passed": 0,
+  "failed": 3,
+  "results": [
+    {
+      "worldId": "split-rib-causeway",
+      "passed": false,
+      "error": "Cannot read properties of undefined (reading '0')",
+      "elapsedMs": 127
+    },
+    {
+      "worldId": "gel-rafts",
+      "passed": false,
+      "error": "Cannot read properties of undefined (reading '0')",
+      "elapsedMs": 172
+    },
+    {
+      "worldId": "sloughed-court",
+      "passed": false,
+      "error": "Cannot read properties of undefined (reading '0')",
+      "elapsedMs": 239
+    }
+  ]
+}

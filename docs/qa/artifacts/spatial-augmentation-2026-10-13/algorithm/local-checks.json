@@ -1,0 +1,72 @@
+{
+  "status": "v4-profile-capability-and-fresh-production-passed",
+  "typecheck": {
+    "command": "npx tsc --noEmit",
+    "status": "passed",
+    "initialFailure": "Extracted terrain left two old tiles.flat() references; corrected to tileMap.tiles; subsequent checks passed."
+  },
+  "sourceWhitespace": {
+    "command": "git diff --check",
+    "status": "passed"
+  },
+  "lint": {
+    "status": "unavailable",
+    "reason": "Repository has no lint script/config; typecheck and diff whitespace performed, not presented as ESLint."
+  },
+  "existingGeometryTests": {
+    "command": "node --import tsx tools/world-study/check-native-volumes.ts",
+    "status": "passed",
+    "checks": 117
+  },
+  "devSmoke": {
+    "command": "npm run dev -- --host 127.0.0.1 --port 5191",
+    "status": "passed",
+    "startupMs": 118,
+    "httpRoot": 200,
+    "scope": "Vite starts and serves root; no new player experience claim."
+  },
+  "independentQA": {
+    "path": "../qa/independent-final.json",
+    "status": "passed",
+    "checks": 25,
+    "sourceHashesStable": true
+  },
+  "productionQualification": {
+    "status": "passed",
+    "report": "../code/final-v4-summary.json",
+    "cases": 20,
+    "limits": "Five worlds only; all retain no-feasible-improvement and unresolved deficits."
+  },
+  "focusCorrection": {
+    "typecheck": "passed",
+    "independentLocality": "../qa/local-reveal-attempt1.json",
+    "independentChecks": 6,
+    "replay": "reveal-focus-replay.json",
+    "cases": 20,
+    "geometryChanges": 0,
+    "contentChanges": 0,
+    "presentationInputChanges": 0,
+    "traceOnlyChanges": 3,
+    "devSmoke": {
+      "startupMs": 99,
+      "httpRoot": 200
+    }
+  },
+  "authoredProfileCapability": {
+    "policySourceHash": "919e54f2515206f85ce867c481a8f84c92800f03568a349ca9dd68322da7e35d",
+    "endpointCheck": "profile-capability-v4.json",
+    "profiles": 12,
+    "endpoints": 24,
+    "standaloneValidV3RejectedByAuthoredTerrainAndAugmentationPolicy": true,
+    "independentFixtures": "independent-v4.json",
+    "independentPassed": 25,
+    "localRevealFixtures": "local-reveal-v4.json",
+    "localRevealPassed": 6,
+    "typecheck": "passed",
+    "devSmoke": {
+      "startupMs": 118,
+      "httpRoot": 200
+    },
+    "productionQualification": "Fresh 20 recipes owned by revision Code; previous policy captures are retained as intermediate evidence, not final policy qualification."
+  }
+}

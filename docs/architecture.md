@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-10-12
+last-modified: 2026-10-13
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -1559,3 +1559,23 @@ DEC-199当前只改余烬脊的作者数据；其余107世界保持基线。`che
 
 
 **跨材料验证工具（DEC-206续行）**：`tools/fragment-shape/check-r8.mjs` 按world/seed/grade参数检查完整地图与材质同源；`check-r8-snapshots.mjs` 按当前绑定集合验证保存不受作者表变化影响。`check-r8-previous.mjs` 从固定Git入口、同提交tsconfig及Phaser stub捕获旧配方/完整结果/四层RGBA，当前代码只重放旧配方并精确比较；大二进制结果可由固定源再生，公开hash/recipe保留。`check-spatial-registration.mjs` 在临时CSV沙盒测试非法绑定、重复/孤立矩形及未注册世界的旧约束，不修改生产表。新增作者不变更r8执行器语义；实际验证与失败范围见[跨材料QA](qa/rift-fragment-expansion-2026-10-12.md)。
+
+<a id="spatial-augmentation-production"></a>
+
+### 共享空间补全与修订11（DEC-207，F011/F012/F019/F044）
+
+`data/rift-spatial-augmentation-policy.csv` 与 `data/rift-spatial-augmentation-profiles.csv` 经 `tools/spatial-augmentation/codegen.mjs` 生成 `generated/r100-spatial-augmentation.ts`。策略冻结算法 `spatial-completion-v1`、完整参数与材料族从属形体目录；没有 worldId 分支。正式 authored fragment 要求所有补全模板为 construction 4，codegen逐行与冻结policy校验共同拒绝v3；单体mesh合法不等于与作者侵蚀地形兼容。12模板的尺寸两端另经真实mesh构造和地形ownership能力闸，构造不兼容不得记成空间无解。`production-recipe.ts` 的 r11 `augmentationPolicy` 整体参与依赖身份。recipe 保留增补前的作者实例和 fragment 输入；恢复用冻结算法与参数重新执行，不读今日 CSV。候选随机支流由 requestedSeed、worldId、冻结策略 algorithm/version/sourceHash 与当前几何 attempt seed 固定派生；真实 mesh 构造/评价保持同一几何 seed。一个 attempt 的两个 finalist 不重抽增补，进入原有下一个几何 attempt 则重新测量，不承诺不同 attempt 的形体相同。增加独立实例 ID，不复用 sourceIndex、不复制缩小某张地图的独特主景。
+
+`native-terrain.ts` 从既有 `createMasterWorld` 提取网格、几何、完整身体支持和连通阶段，不创建材质栅格或 Host。`spatial-augmentation-measure.ts` 分别测实际 solid 三角足迹净距与权威 8px VOID 边，忽略 groundEdge；固定基底样本上评估物理负担和共享 VOID-only LOS 的独立光学负担。移除原站位、端点或断开支持不能删除原成本。新增 solid 面积护栏使用真实三角与 8px cells 相交后的 union 保守上界，不使用 bbox 作为占地。宽核锚点按原宽核分量分组，候选必须保留净空且同组仍连接；不存在的基底核心比率为 null，不写通过比例1。普通 solid 仍不阻挡玩家/敌人视线。
+
+`spatial-augmentation-candidates.ts` 在三个热点槽内对 solid、VOID、组合各枚举两个变体；双轴未达时优先轴至多占两个槽，另一轴保留至少一个，整轮上限18。相同光学负担按真实净空稳定排序。实体提案偏移按原生 mesh 投影与原宽核半径推导；孔用矩形投影范围推导。完整真实几何仍须通过后续门，提案计算不代替可行性证明。新增关系群接受归一尺寸/朝向去重、近共线等距三组检查；材料参数来自 Art CSV，不通过世界特例补救。
+
+`spatial-augmentation-selection.ts` 最多四轮，按轴目标优先级和各轴自身改善选择，另一轴不得退化，不使用可以互相抵扣的权重总分。原地面损失、身体站位损失、可达比例、宽核与最大开放核保留、原主体支撑、几何净距、对象容量都是硬门。原 solid 和非地皮 relief 的真实 XY 足迹保留支撑；承担全图地皮的 groundEdge owner 允许按原地面损失/宽核/连通门开孔。光学改善需有本次新增实际 VOID 遮断共享 LOS，以及沿20×20身体可走短路换位80–720px后在224px参照视距内再见的见证；其初始观察点必须处于当前候选热点影响半径内，不能借完整轮廓重编后远处的新断缘证明局部候选。该见证及有限采样不等于整图潜行体验通过。
+
+VOID 候选追加原冻结 layout 的 `voidRects`，仍调用未修改的 `rectilinear-fragment-v1` 完整编译。返回的实际 `fragmentShape`、`terrainOutline`、`erosion` 同时驱动支持、碰撞、LOS、材质裁切和岸壁。完整重编可能改变旧断缘细节，因此 r11 不承诺旧环逐点不变；相对基底宏形与损失门限制变化。`diagnostics.spatialAugmentationFragmentShape` 留存实际最终 snapshot；recipe 不把它回写成基底再重复增补。
+
+`r100-spatial-world.ts:createR100SpatialWorldCandidates` 位于作者/材料实例展开之后、撤离选择及完整内容部署之前，保留最多两个小几何方案，逐次 yield 才创建全图栅格。优选准备失败记录 `spatialAugmentationPreparationRejected` 后继续前一合法方案；每个方案仍受原撤离与完整部署门。`r100-production-map.ts` 每个 seed attempt 最多消费两个 finalist，首个成功即关闭 generator；沿用最多8个外层 attempts，即完整内容部署最坏16次。60秒 Worker 总截止不延长，不减配额，不根据运行时计时选择不同地图。
+
+小型确定性 trace 位于 `native.diagnostics.spatialAugmentation`：分别保存基底/剩余两轴缺口、有限候选拒绝原因、实际选择、视线换位见证及 fallback。`disabled`、`no-feasible-improvement`、`budget-exhausted` 不代表完成；`policy-targets-met` 只表示冻结策略有限目标达到，基底双轴为零另标 `no-deficit`。部署层另记录 `spatialAugmentationDeployment` 的选择和拒绝。trace 与所选几何身份参与 checkpointChecksum，不保存全部候选地图或非确定性耗时。
+
+r10 的完整执行/恢复/材质/翻找闭包从固定 `99998703` 冻结：`legacy-r100-v10` 的88个依赖先产生 r10-only oracle（约2.925MB），再作仅ID成员用途投影得到 recovery（约871KB），零可变外部 import、无旧版嵌套。`r100-package`、`r100-production-map`、native hydrate、search placement、surface/search bake、公开 validate 对 r10 均路由该归档。r11 新世界沿共享管线；r10 及更早的冻结 recipe 不读取新策略。兼容性以旧12个身份完整 map 与代表两态四层 RGBA 实际回放为证，见本轮 QA；注册108个入口只说明共同算法可达，实际启用、批次范围与品质状态由专项证据记录，不能据此称全库体验通过。

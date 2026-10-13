@@ -1,3 +1,4 @@
+import { createR100ProductionMap as createRevision10Map } from '../legacy-r100-v10/executor-recovery.js';
 import { createR100ProductionMap as createRevision9Map } from '../legacy-r100-v9/executor-recovery.js';
 import { createR100ProductionMap as createRevision6Map } from '../legacy-r100-v6/executor-recovery.js';
 import { createR100ProductionMap as createRevision7Map } from '../legacy-r100-v7/executor-recovery.js';
@@ -8,7 +9,7 @@ import { createR100ProductionMap as createRevision3Map } from '../legacy-r100-v3
 import { mix32 } from '@/generation/seed-fork';
 /** V3 generation. A failed seed fails that exact frozen trip; it never changes grade. */
 import { checkpointChecksum } from '@/types/rift-checkpoint';
-import { createR100SpatialWorld } from './r100-spatial-world';
+import { createR100SpatialWorldCandidates } from './r100-spatial-world';
 import { deployR100Expedition } from './r100-expedition';
 import { createR100ProductionMap as createFrozenR100ProductionMap } from '../legacy-r100-v2/executor.js';
 import { serializeR100MasterWorld } from './r100-native-data';
@@ -25,23 +26,51 @@ export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldP
   if (recipe.package?.algorithmRevision === 7) return createRevision7Map(recipe);
   if (recipe.package?.algorithmRevision === 8) return createRevision8Map(recipe);
   if (recipe.package?.algorithmRevision === 9) return createRevision9Map(recipe);
+  if (recipe.package?.algorithmRevision === 10) return createRevision10Map(recipe);
   if (!validR100ProductionRecipe(recipe)) throw new Error('Invalid or unavailable native world package');
   const rejected: { seed: number; reason: string }[] = [];
   for (let attempt = 0; attempt < 8; attempt++) {
-  const seed = attempt === 0 ? recipe.requestedSeed : mix32(recipe.requestedSeed, `r100-native-v3-attempt-${attempt}`);
-  try {
-  const master = createR100SpatialWorld(recipe.nativeDefinition, recipe.spatialPolicy!, seed,
-    { grade: recipe.gradeDefinition, profile: recipe.profile });
-  const deployed = deployR100Expedition(master, recipe.contentDefinition, recipe.searchSitePolicy), layout = deployed.layout;
-  const native = serializeR100MasterWorld({ ...master, algorithmRevision: 10, searchSites: deployed.searchSites, appearance: recipe.appearance, layout, diagnostics: { ...master.diagnostics,
-    qualification: 'v3-production-candidate', expedition: deployed.diagnostics } }, recipe.gradeDefinition, recipe.package.dependencyHash);
-  return { sample: master.sample, layout, hostTileMap: master.hostTileMap, native,
-    metadata: { world: recipe.package.id, space: recipe.nativeDefinition.id, contentFragmentTypeId: recipe.contentFragmentTypeId,
-      requestedSeed: recipe.requestedSeed, effectiveSeed: layout.seed, attempt, rejected,
-      signature: checkpointChecksum({ recipe, geometry: master.diagnostics.geometryFingerprint, content: deployed.diagnostics }),
-      bodySize: 20, supportTileSize: 8, hostTileSize: 32,
-      reachableBodySeats: Number(deployed.diagnostics.reachableBodySeats), extractionRoutePx: Number(deployed.diagnostics.extractionRoutePx) } };
-  } catch (error) { rejected.push({ seed, reason: error instanceof Error ? error.message : String(error) }); }
+    const seed = attempt === 0 ? recipe.requestedSeed : mix32(recipe.requestedSeed, `r100-native-v3-attempt-${attempt}`);
+    let candidateIndex = 0;
+    const candidateRejections: { candidate: number; reason: string }[] = [];
+    try {
+      const candidates = createR100SpatialWorldCandidates(recipe.nativeDefinition, recipe.spatialPolicy!, seed,
+        { grade: recipe.gradeDefinition, profile: recipe.profile, augmentationPolicy: recipe.augmentationPolicy!, requestedSeed: recipe.requestedSeed });
+      try {
+        for (let candidate = 0; candidate < 2; candidate++) {
+          const next = candidates.next();
+          if (next.done) break;
+          const master = next.value;
+          candidateIndex++;
+          try {
+            const deployed = deployR100Expedition(master, recipe.contentDefinition, recipe.searchSitePolicy), layout = deployed.layout;
+            const native = serializeR100MasterWorld({ ...master, algorithmRevision: 11, searchSites: deployed.searchSites,
+              appearance: recipe.appearance, layout, diagnostics: { ...master.diagnostics,
+                spatialAugmentationDeployment: { selectedCandidate: candidate, rejectedCandidates: candidateRejections },
+                qualification: 'v3-production-candidate', expedition: deployed.diagnostics } },
+              recipe.gradeDefinition, recipe.package.dependencyHash);
+            return { sample: master.sample, layout, hostTileMap: master.hostTileMap, native,
+              metadata: { world: recipe.package.id, space: recipe.nativeDefinition.id, contentFragmentTypeId: recipe.contentFragmentTypeId,
+                requestedSeed: recipe.requestedSeed, effectiveSeed: layout.seed, attempt, rejected,
+                signature: checkpointChecksum({ recipe, geometry: master.diagnostics.geometryFingerprint, content: deployed.diagnostics,
+                  spatialAugmentation: master.diagnostics.spatialAugmentation, selectedGeometryCandidate: candidate }),
+                bodySize: 20, supportTileSize: 8, hostTileSize: 32,
+                reachableBodySeats: Number(deployed.diagnostics.reachableBodySeats),
+                extractionRoutePx: Number(deployed.diagnostics.extractionRoutePx) } };
+          } catch (error) {
+            const reason = error instanceof Error ? error.message : String(error);
+            candidateRejections.push({ candidate, reason });
+            rejected.push({ seed, reason: `geometry candidate ${candidate}: ${reason}` });
+          }
+        }
+      } finally {
+        // Close after success or the second candidate; never construct a third full world.
+        candidates.return(undefined);
+      }
+      if (candidateIndex === 0) rejected.push({ seed, reason: 'Spatial augmentation produced no legal geometry candidate' });
+    } catch (error) {
+      rejected.push({ seed, reason: error instanceof Error ? error.message : String(error) });
+    }
   }
   throw new Error(`Native v3 world could not admit its complete ${recipe.nativeDefinition.grade} contents after 8 attempts: ${rejected.map(item => item.reason).join('; ')}`);
 }

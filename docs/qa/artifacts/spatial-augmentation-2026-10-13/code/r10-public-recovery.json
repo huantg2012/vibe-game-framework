@@ -1,0 +1,195 @@
+{
+  "status": "passed",
+  "startedAt": "2026-10-13T09:24:03.210Z",
+  "mode": "public-routing",
+  "sourceCommit": "99998703743895da7486fdee552f7bed019e64b8",
+  "baselineHashes": {
+    "docs/qa/artifacts/spatial-augmentation-2026-10-13/qa/r10-current/baseline.json": "6d86b4144c5319115fa4f22cd539fbdd51b2b12d194418b7d6075ff70e969033",
+    "docs/qa/artifacts/spatial-augmentation-2026-10-13/qa/earlier-r10-references.json": "72c388915e5ff5c5cb1684d73bd5be97e0ccdad76426ed31059882401cd907b8"
+  },
+  "node": "v22.14.0",
+  "cases": [
+    {
+      "id": "split-rib-causeway-medium-20261012",
+      "recipePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/qa/r10-current/split-rib-causeway-medium-20261012.recipe.json",
+      "mapHash": "e973b3d5083dec28e6e0f6babc139a867ce722b28c6cfa760ab0a3f70d028004",
+      "material": {
+        "patchHash": "e73c91c1cbdc2bbbf2cedff343a182f81219aa3cf2152449a0ad80c819cefefc",
+        "states": {
+          "intact": {
+            "albedo": "52169aeda833393b65cf2d5327f0d3e5d53f8ab24b44f88450e07eb6aa9f294a",
+            "normal": "37c3bbdca03e3a66dc5e247ae21d13c0b869cdb95a58058a00149705b89b2cc8",
+            "response": "b5f15257e395bfa5b5b3bc75397088787b00d4af8954c9501a95a0f9036a2153",
+            "emission": "59deae3cf32e4ad9d4238281786d118037fc1f744711f7c1c8220ff1d6236e0b"
+          },
+          "searched": {
+            "albedo": "e1a2737ad347864efc071d05799a6fd59d2b72724bbefc6df7f7cbeed68a84f8",
+            "normal": "5ab0b3f14d857c2a9193cbacb8a005436f4dc667c52879287c74f80e8451575d",
+            "response": "ac49706077f260c00a36ffb338b76b4d282f6ef817a9a4650d16db8f78908524",
+            "emission": "c00094d93fd2f8c1caf111b6342c3c106bc777e15bd390c4642ce8ab99c38d0b"
+          }
+        }
+      }
+    },
+    {
+      "id": "gel-rafts-medium-20261012",
+      "recipePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/qa/r10-current/gel-rafts-medium-20261012.recipe.json",
+      "mapHash": "40272479a9b557eb3b50dfc5fcc36bbe9b5255e250c44bbf00efbc46f4c68274",
+      "material": {
+        "patchHash": "104521332c6a539c3103d0fe6e3088e255e2d0e691dc9e9ac70a18161982be1b",
+        "states": {
+          "intact": {
+            "albedo": "cb9288e57ce57351085ceb5946724802aeaaadde97dffce0d8fe4211c06ae362",
+            "normal": "b45a37dd65b9b45c8424cdfee59075d135cb6979a2f18e0d15935fdc6828de7f",
+            "response": "c167aee9299e50ffc51224be8f7e45c1e56f3a9b5459043142082945711d4783",
+            "emission": "38191f06731789481bedbb15f34e78cfe1db60e02dd677d5702a8e402459b8a0"
+          },
+          "searched": {
+            "albedo": "639497b2d56b60e221c11f481fe796701fd5dc917004a8aceca0a917b5a4ae11",
+            "normal": "dd8a8432f909061d6f4268250753994e3716a376a4c590e99c39404681ab7fac",
+            "response": "56435a965f29c936bafcba5993adf4622065dc1b84389e7c900d5ee5c5aec587",
+            "emission": "72400009a96510fc4c64c31c69b0ea6d725170d508e516e1409d24e53c1b400f"
+          }
+        }
+      }
+    },
+    {
+      "id": "sloughed-court-medium-20261012",
+      "recipePath": "docs/qa/artifacts/spatial-augmentation-2026-10-13/qa/r10-current/sloughed-court-medium-20261012.recipe.json",
+      "mapHash": "8b950e6d223ed44aa325f13db7f63e29d3b34b72f0b15293ceec86222815de68",
+      "material": {
+        "patchHash": "89afdd994ffb761e76b959f4a321044b35442d3cd94c85025e007b52e1e43c78",
+        "states": {
+          "intact": {
+            "albedo": "f8d60e594a345df02d774325acf10384f33190eeb1ca2126dcc101a8ffe281f2",
+            "normal": "5f65c3edca79200e7fdd24ec61aa183346c9c033d71f5457258a1e2337f5a86f",
+            "response": "51cfccded4ebe724c9d88afd1b045675ffba606a128355b4b293bc85d73d54e9",
+            "emission": "f003c0762b54521e572cd9a05800cfb97a661ac814c914c07a737b31a363864f"
+          },
+          "searched": {
+            "albedo": "891c8621c701f78a13ad30c62aaf471e7fd693c8f21b1c36a9af7e03ee09b297",
+            "normal": "5a9688c06d38be1f8c296d60db3728758076c99a3e0c2b64048e36bb979d0b9c",
+            "response": "ac85b73a889409be9467153b3101e03a543bc8422b022f55a9dbb1ead1b7872d",
+            "emission": "bdc6e2633b1432c055831d8ffcb0e62932a7a08f3beab59a2b6ef6e7f30f1c5c"
+          }
+        }
+      }
+    },
+    {
+      "id": "split-rib-causeway-low-20261012",
+      "recipePath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before/split-rib-causeway-low-20261012.recipe.json",
+      "mapHash": "da52a0aeff9c43c0e05079a298cf2d288b6bb4efcf17a17b12cb7f1421684957",
+      "material": null
+    },
+    {
+      "id": "split-rib-causeway-medium-20261012",
+      "recipePath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before/split-rib-causeway-medium-20261012.recipe.json",
+      "mapHash": "6238b94a9e263555d4611a56473f7c3a95a2643524bc51eff601448e4f0368cf",
+      "material": {
+        "patchHash": "f87e78a38439be4f65b21493153a4d328463ea668afb36333707f96345b6b14b",
+        "states": {
+          "intact": {
+            "albedo": "c927baac4dfd0cbd5acd936561cdcc8fd5c2b8eb205f8aed13a3d4d0a7c27770",
+            "normal": "2ae39f42a84f956689403fca83b47d61c5a79e126417814d1a3d779d72acf09e",
+            "response": "602756e082dd1a7b50f7934e1d0ef8719f34a3cb8a4bb14cbe3cff7cc87e73db",
+            "emission": "57a4353a7b1cf2b2d6273e023a77cbb085537cb00d722d694ece04306bcb062a"
+          },
+          "searched": {
+            "albedo": "9f4ea0d9276fe5b17c61a17e8125d1d1e5c73b5e1944dbc6df128aa1b0466a4a",
+            "normal": "af7ad7cd7f736124b81ab8d11ecda4ec3adb16cb12d4c83b53988c03c7b29f93",
+            "response": "c00679046583c9d8ea3fdd6ed1ac75390b28a168744ce226824e51bcc41769c9",
+            "emission": "1a08aed8d7d63a3941c63d1f0226ab2010bb5999774730225e153511cecdb55d"
+          }
+        }
+      }
+    },
+    {
+      "id": "split-rib-causeway-severe-20261012",
+      "recipePath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before/split-rib-causeway-severe-20261012.recipe.json",
+      "mapHash": "5afa06c5ccc23d15b74c7b7473506b2aca23d1c65722fbbfb290c487b50fd987",
+      "material": null
+    },
+    {
+      "id": "gel-rafts-low-20261012",
+      "recipePath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before/gel-rafts-low-20261012.recipe.json",
+      "mapHash": "abfff3aaed7699d2888211e516fa3977f3b8045c2d3a1c8376f5c38f5836a91b",
+      "material": null
+    },
+    {
+      "id": "gel-rafts-medium-20261012",
+      "recipePath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before/gel-rafts-medium-20261012.recipe.json",
+      "mapHash": "671096ba0929b1c8e79e329418d5544f3a8d013a6fe9ae10d4e943af890d6951",
+      "material": {
+        "patchHash": "cc99e14c9bcadff3f446b52ba2013834cd8bce55ae579f7c0f54d57da3c70f87",
+        "states": {
+          "intact": {
+            "albedo": "167fd032b6d41b8024ed2238713e2e20e4664b58d6b4d0cd180e8dff8128abfb",
+            "normal": "fdb6972634eec2e111af081f33227bdcaa9f8f2fc76e6c59465fa7654bf0502a",
+            "response": "854dfa0eb595f9896ab7f7c4b9949147fae86d7b48e447b2c0dce284c105aab9",
+            "emission": "5a09e87fdc02181fa10d30303a80246d2438211f1f67efe88d4a63ca4a18fe25"
+          },
+          "searched": {
+            "albedo": "17a5270be15c3dd7de6d41439225383b74794d98469d2ac2c81f6542a0f0cbe2",
+            "normal": "b176a91ddd5e2f7f13def6faa48c68df64ad438f65c85c57c85d79949a4df99e",
+            "response": "b3738d4cf01c10ea4938de5ddd6c76a17bcdfc55069820b3152b1d548f909c4a",
+            "emission": "f410238ecb6b102e27e3366da2d8150b1c67c63190f19283a64e74a4c8ebfe0c"
+          }
+        }
+      }
+    },
+    {
+      "id": "gel-rafts-severe-20261012",
+      "recipePath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before/gel-rafts-severe-20261012.recipe.json",
+      "mapHash": "21e9b09d97986c2b04b081fec4672fa6c5a8ec6b16919bd57921fdbfb62d07e5",
+      "material": null
+    },
+    {
+      "id": "sloughed-court-low-20261012",
+      "recipePath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before/sloughed-court-low-20261012.recipe.json",
+      "mapHash": "0db6bbe5c72e9782af08518a58fb61013e3e30db2a92bb9e3e3caaaa2cb81a02",
+      "material": null
+    },
+    {
+      "id": "sloughed-court-medium-20261012",
+      "recipePath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before/sloughed-court-medium-20261012.recipe.json",
+      "mapHash": "008834ed7457f0f99f63d96fe2506f7721f99015153551efeb0993a704b1fcc6",
+      "material": {
+        "patchHash": "82e8db8cf263a2308e66ce96cc6cef489168fe1977a86da9a8624140b9103a4a",
+        "states": {
+          "intact": {
+            "albedo": "73e33463b951e4748a58f9d295d8745c4f5cc9ad704bb51b255958f4336f8a81",
+            "normal": "4add19223b2e64408d9c0fb22ba7e44d15ec8b9c64a09dd532f4516d6ca5ff94",
+            "response": "e4f18c5751d1b6b4a268cf34202a92521cd290dc4055ec901a351c09c0161164",
+            "emission": "94a970163083893c94da21c2b79f56f948a497939f1949f30ba0ad3abb56e9d3"
+          },
+          "searched": {
+            "albedo": "877a63e5b4d80b66a56fc021a90cb25e3d2f56f3bf5bc98155bbf280264547f0",
+            "normal": "870134f1a0ac2a617e098a86f2cb22cecbef82daee43401d8fde94348e7bb0ca",
+            "response": "860a63ccd0f6f5ce760a35e03805536b4941cd431de52b45ffba08f9cff8e936",
+            "emission": "895e356ea16d860e332b2a2265133005ee5d8a148e81b29d25b11513c676819f"
+          }
+        }
+      }
+    },
+    {
+      "id": "sloughed-court-severe-20261012",
+      "recipePath": "docs/qa/artifacts/stealth-obstacles-2026-10-13/code/before/sloughed-court-severe-20261012.recipe.json",
+      "mapHash": "6ffeb286b55f9c41cbb01dd98a7cca37e6f34f304e5493e57415ab99d64fe272",
+      "material": null
+    }
+  ],
+  "failures": [],
+  "materialHashes": {
+    "public/assets/r100-materials/crystal-fibre-source.png": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+    "public/assets/r100-materials/fibre-solid-source.png": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089",
+    "public/assets/r100-materials/gel-flow-source.png": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+    "public/assets/r100-materials/gel-flow-solid-source.png": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612",
+    "public/assets/r100-materials/membrane-rim-source.png": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+    "public/assets/r100-materials/membrane-rim-solid-source.png": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+  },
+  "limits": [
+    "12 frozen r10 identities; six medium-grade identities include four RGBA channels and full intact/searched patch bytes.",
+    "Hash-only evidence; no image data copied. Not a visual or runtime performance verdict."
+  ],
+  "completedAt": "2026-10-13T09:24:29.206Z"
+}

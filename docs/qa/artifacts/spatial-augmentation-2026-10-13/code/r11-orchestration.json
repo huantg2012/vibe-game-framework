@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "createdAt": "2026-10-13T09:33:15.562Z",
+  "cases": [
+    {
+      "name": "first-fails",
+      "generated": 2,
+      "closed": 1,
+      "selected": 1,
+      "rejections": [
+        {
+          "seed": 100,
+          "reason": "geometry candidate 0: forced complete Host quota rejection"
+        }
+      ]
+    },
+    {
+      "name": "both-fail-on-first-seed",
+      "generated": 3,
+      "closed": 2,
+      "selected": 0,
+      "seeds": [
+        100,
+        101
+      ],
+      "rejections": [
+        {
+          "seed": 100,
+          "reason": "geometry candidate 0: forced complete Host quota rejection"
+        },
+        {
+          "seed": 100,
+          "reason": "geometry candidate 1: forced complete Host quota rejection"
+        }
+      ]
+    },
+    {
+      "name": "all-fail",
+      "generated": 16,
+      "deployed": 16,
+      "closed": 8,
+      "seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "thirdCandidateNeverConstructed": true
+    }
+  ],
+  "limits": [
+    "The real r11 controller runs with stubbed geometry/content dependencies to force failures. This is not a substitute for actual content-admission and saved-map replay tests.",
+    "Test seed function preserves attempt labels but is a controlled stub; production mix32 implementation is unchanged."
+  ]
+}

@@ -3,11 +3,11 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "正式108世界新局均为修订10：逐项独立矩形拼合与自由断缘布局，环境翻找来源同场落地。三档共324份限定种子生产/恢复与最终来源核对；旧1–9按封存执行器恢复，不将旧局升级。 2026-10-13三代表再追加17件同材实体，其余105仍待按空地反馈整改；本轮不改真实遮视。",
+    "summary": "108世界新局统一接r11联合空间增补：分别衡量身体结构与VOID遮视缺口，同预算比较实体/空洞/组合并保护通路、宽地及原主体。五世界20例正式生成/精确重放，11例增补、9例未增补，残余均保留；旧r10闭包隔离。全库品质与敌人潜行未终验，I14仍13/14、P49开放。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 裂隙备行 → 选择污染等级 → 等级内随机revision10大图世界",
+      "净化点 → 裂隙备行 → 选择污染等级 → 等级内随机revision11世界及联合空间增补",
       "标题继续 → 原存档的v1/v2/v3执行器和冻结数据",
       "DEV rift-spatial-prototype.html → 余烬脊去雾地形、路线地点与实体占地",
       "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
@@ -747,6 +747,146 @@
         "path": "docs/qa/stealth-obstacles-2026-10-13.md",
         "role": "doc",
         "note": "三代表17件实体局部接入及有限验证；全库与潜行未结案。"
+      },
+      {
+        "path": "docs/qa/spatial-augmentation-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/design-notes/stealth-obstacle-distribution-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/spatial-augmentation-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/index.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/executor-revision10.d.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/executor-revision10.js",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/executor-recovery.d.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/executor-recovery.js",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/manifest-recovery.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-r100-v10/manifest-revision10.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/spatial-augmentation/check-independent-contracts.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-augmentation/codegen.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-augmentation/check-independent-baseline-extraction.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-augmentation/verify-profile-capability.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-augmentation/replay-focus.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-augmentation/render-batch.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/spatial-augmentation/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/spatial-augmentation/check-independent-local-reveal.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/generated/r100-spatial-augmentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-spatial-augmentation-policy.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-spatial-augmentation-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/native-terrain.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/spatial-augmentation-measure.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/spatial-augmentation-selection.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/spatial-augmentation-candidates.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/spatial-augmentation-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision10.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/project-native-r100-revision10.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/derive-native-r100-revision10.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision10-freezing.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision11.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision11-orchestration.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/art-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/browser/README.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -818,7 +958,8 @@
       "COH-E236",
       "COH-E237",
       "COH-E238",
-      "COH-E239"
+      "COH-E239",
+      "COH-E240"
     ],
     "unknowns": [
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
@@ -831,7 +972,8 @@
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E235为六图中档七个独立节点及两次换站位的知情静帧观察，含源码/48点布局诊断；不覆盖全seed、全档、容量不足留地物或动态/声音。调查之后的整改与验证见E236；其余102世界按用户要求暂停，不能自动恢复。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E236为本轮有限程序和正常镜头验证：六图中档safe节点、四组留出seed关系/近远、三例远距FOV与一例正式低档冷续。非全seed、全部节点可读性、长期自然探索或用户审美；容量不足实景仅有事务证据。其余102推广仍暂停。",
       "E237记录108世界两项优化的正式接入及有限内部验证：324档位为固定请求seed，代表实机用知情导航；不外推全seed、全部节点自然发现、连续视觉听感、长期收益或用户审美。用户最新授权已解除102图推广暂停；I14/P49仍开放。",
-      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。"
+      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
+      "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。"
     ]
   },
   {
@@ -1444,7 +1586,7 @@
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "108世界保持原配额/风险层/巡逻窗口及48px完整身体翻找站位，再以有限环境评分关联真实断落、表层剥离或开放积留。修订10拒绝把附加岸沿错误当成原生母体；未知唯一撤离继续从合法候选分层抽取，不固定两端。",
+    "summary": "r11在联合增补后的最终地形上重新部署未知出撤、完整敌人/资源/Host及翻找站位；保留原配额、风险层和巡逻窗口。每既有seed attempt最多两完整候选，部署失败整候选回滚；20例含1例真实同seed后备成功，非全库全seed准入保证。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1842,6 +1984,26 @@
         "path": "docs/qa/stealth-obstacles-2026-10-13.md",
         "role": "doc",
         "note": "三代表17件实体局部接入及有限验证；全库与潜行未结案。"
+      },
+      {
+        "path": "docs/qa/spatial-augmentation-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/design-notes/stealth-obstacle-distribution-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/spatial-augmentation-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/index.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/manifest.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -1898,7 +2060,8 @@
       "COH-E236",
       "COH-E237",
       "COH-E238",
-      "COH-E239"
+      "COH-E239",
+      "COH-E240"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
@@ -1914,7 +2077,8 @@
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E235为六图中档七个独立节点及两次换站位的知情静帧观察，含源码/48点布局诊断；不覆盖全seed、全档、容量不足留地物或动态/声音。调查之后的整改与验证见E236；其余102世界按用户要求暂停，不能自动恢复。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E236为本轮有限程序和正常镜头验证：六图中档safe节点、四组留出seed关系/近远、三例远距FOV与一例正式低档冷续。非全seed、全部节点可读性、长期自然探索或用户审美；容量不足实景仅有事务证据。其余102推广仍暂停。",
       "E237记录108世界两项优化的正式接入及有限内部验证：324档位为固定请求seed，代表实机用知情导航；不外推全seed、全部节点自然发现、连续视觉听感、长期收益或用户审美。用户最新授权已解除102图推广暂停；I14/P49仍开放。",
-      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。"
+      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
+      "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。"
     ]
   },
   {
@@ -2149,18 +2313,18 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "矩形开放世界碎片与环境翻找残骸已推广至全部108世界的新局，逐批独立作者并登记三档有限验证。用户已授权推广，未代签108世界审美、自然搜索与长程经营；I14仍13/14、P49开放。",
+    "summary": "108世界新局统一接r11联合空间增补：分别衡量身体结构与VOID遮视缺口，同预算比较实体/空洞/组合并保护通路、宽地及原主体。五世界20例正式生成/精确重放，11例增补、9例未增补，残余均保留；旧r10闭包隔离。全库品质与敌人潜行未终验，I14仍13/14、P49开放。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 裂隙备行 → 选级出发；当前108世界三档revision7已接入，本轮扩大空间资格另验",
+      "净化点 → 裂隙备行 → 选级出发；当前108世界新出发revision11已接入，空间品质另验",
       "r100-gym.html：正常实景、三档、隔离游玩；可见不等于已过审",
       "docs/reading/rift-r100.html：唯一迭代/资格台账；原I01/I02及修订4用户认可保留",
       "docs/qa/interactive/r100-i07-i09-worlds.html：新增32世界、三档实图和近邻对照；完整限定验证见E161",
       "docs/qa/interactive/r100-i10-i12-worlds.html：108世界原帧/近邻与来源离线索引，54历史缺直接帧档位明确标出",
       "docs/qa/artifacts/r100-i14/review-handoff-device-waived.md：较弱设备补测已豁免，保留当前RC试玩、视听素材及两项人审",
       "docs/art/previews/world-fragment-open-field/index.html：矩形骨架/三份边角打磨对照，仅设计样例，非游戏入口",
-      "src/generation/world-study/fragment-shape/index.ts：已实现纯作者库，尚未接入正式生成/恢复"
+      "src/generation/world-study/fragment-shape/index.ts：已接入正式生成与冻结配方恢复；v1机制保持"
     ],
     "sources": [
       {
@@ -3812,6 +3976,26 @@
         "path": "docs/qa/stealth-obstacles-2026-10-13.md",
         "role": "doc",
         "note": "三代表17件实体局部接入及有限验证；全库与潜行未结案。"
+      },
+      {
+        "path": "docs/qa/spatial-augmentation-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/design-notes/stealth-obstacle-distribution-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/spatial-augmentation-2026-10-13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/index.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/spatial-augmentation-2026-10-13/gallery/manifest.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -3927,7 +4111,8 @@
       "COH-E236",
       "COH-E237",
       "COH-E238",
-      "COH-E239"
+      "COH-E239",
+      "COH-E240"
     ],
     "unknowns": [
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
@@ -3948,7 +4133,8 @@
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E235为六图中档七个独立节点及两次换站位的知情静帧观察，含源码/48点布局诊断；不覆盖全seed、全档、容量不足留地物或动态/声音。调查之后的整改与验证见E236；其余102世界按用户要求暂停，不能自动恢复。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E236为本轮有限程序和正常镜头验证：六图中档safe节点、四组留出seed关系/近远、三例远距FOV与一例正式低档冷续。非全seed、全部节点可读性、长期自然探索或用户审美；容量不足实景仅有事务证据。其余102推广仍暂停。",
       "E237记录108世界两项优化的正式接入及有限内部验证：324档位为固定请求seed，代表实机用知情导航；不外推全seed、全部节点自然发现、连续视觉听感、长期收益或用户审美。用户最新授权已解除102图推广暂停；I14/P49仍开放。",
-      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。"
+      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
+      "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。"
     ]
   }
 ]
