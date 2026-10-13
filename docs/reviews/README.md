@@ -6,6 +6,8 @@
 
 ## 从哪里读
 
+- [全库地图与翻找残骸推广：独立复评](2026-10-13-world-upgrades-rollout.md) · [全库图册](../qa/artifacts/world-upgrades-rollout-2026-10-12/index.html) · 1项P2验证工具待修，既有壳类P3润色；游戏新增回归未复现
+
 - [六图翻找物：环境合理性考察](2026-10-12-pickup-grounding.md) · [实景证据](artifacts/pickup-grounding-2026-10-12/index.html) · 来源落点/同场受光/翻后痕迹；仅分析，扩库暂停
 
 - [世界碎片地图构型推演](2026-10-11-world-fragment-conception.md) · 原世界秩序、开放行动面与信息分隔；三路知情审查，新方向未实施

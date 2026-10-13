@@ -1,0 +1,24 @@
+{
+  "type": "synthetic interrupted check-batch receipt, not actual production result",
+  "reproductionDirectory": "/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-review-unfinished-5h0xd2",
+  "mutation": "status running after three successful per-case rows, before final cross-grade check; medium shapeHash changed",
+  "status": "running",
+  "shapeHashes": [
+    {
+      "grade": "low",
+      "shapeHash": "976354855059b041467b735f22a3ca2b9b1d16e40bfcf1e2b0bc2b5b2c3b2e7b"
+    },
+    {
+      "grade": "medium",
+      "shapeHash": "deliberately-different-cross-grade-shape"
+    },
+    {
+      "grade": "severe",
+      "shapeHash": "976354855059b041467b735f22a3ca2b9b1d16e40bfcf1e2b0bc2b5b2c3b2e7b"
+    }
+  ],
+  "verifiedGradeCells": 3,
+  "complete": true,
+  "issues": [],
+  "failures": []
+}

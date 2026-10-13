@@ -1,0 +1,27 @@
+{
+  "before": {
+    "errors": 0,
+    "warnings": [
+      "warnings: 领域尚未核对: 语言、设置与可达性",
+      "warnings: 历史证据适用性：65 条关联实现已变化，172 条无法按版本比较；基线不改变此判断。"
+    ],
+    "stale": 982,
+    "unowned": 0
+  },
+  "after": {
+    "errors": 0,
+    "warnings": [
+      "warnings: 领域尚未核对: 语言、设置与可达性",
+      "warnings: 历史证据适用性：66 条关联实现已变化，172 条无法按版本比较；基线不改变此判断。"
+    ],
+    "stale": 998,
+    "unowned": 0
+  },
+  "scope": "Read-only before check, then updated review evidence/summary and regenerated INDEX only. Historical snapshot fingerprints were not mass-refreshed; stale sources and unrelated CLAUDE.md change remain explicit. No game-state verification status promoted.",
+  "reportArchive": {
+    "command": "node tools/report-viewer/check-archive.mjs",
+    "exitCode": 0,
+    "formalReports": 29,
+    "localLinksChecked": 507
+  }
+}

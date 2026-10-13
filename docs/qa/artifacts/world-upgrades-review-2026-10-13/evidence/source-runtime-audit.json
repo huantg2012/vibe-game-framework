@@ -1,0 +1,206 @@
+{
+  "legacy-r9/replay-after-shell.json": {
+    "fileCount": 806,
+    "changed": []
+  },
+  "runtime/budget-final/source-snapshot.json": {
+    "fileCount": 802,
+    "changed": []
+  },
+  "runtime/lifecycle-final/source-snapshot.json": {
+    "fileCount": 802,
+    "changed": [
+      "src/generated/r100-spatial-data.ts",
+      "data/rift-spatial-sector-layouts.csv"
+    ]
+  },
+  "lifecycle": {
+    "phaserKeysEqual": false,
+    "temporaryBefore": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "temporaryAfter": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "lostTextureRows": [
+      {
+        "id": 3,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLRenderer2.createTemporaryTextures (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:100472:44)\n    at WebGLRenderer2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:100308:26)\n    at new WebGLRenderer2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:100227:26)\n    at CreateRenderer (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:8386:39)\n    at Game2.boot (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:8550:21)\n    at DOMContentLoaded (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:16257:21)\n    at new Game2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:8529:21)"
+      },
+      {
+        "id": 892,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at new MasterSurfaceRenderer (http://127.0.0.1:3027/src/systems/r100-world/surface-renderer.ts?t=1791801254158:142:28)\n    at prepareR100Presentation (http://127.0.0.1:3027/src/systems/r100-world-presentation.ts?t=1791806034507:85:16)\n    at async build (http://127.0.0.1:3027/src/dev/r100-gym.ts:128:7)"
+      },
+      {
+        "id": 893,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at new MasterSurfaceRenderer (http://127.0.0.1:3027/src/systems/r100-world/surface-renderer.ts?t=1791801254158:142:28)\n    at prepareR100Presentation (http://127.0.0.1:3027/src/systems/r100-world-presentation.ts?t=1791806034507:85:16)\n    at async build (http://127.0.0.1:3027/src/dev/r100-gym.ts:128:7)"
+      },
+      {
+        "id": 894,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at new MasterSurfaceRenderer (http://127.0.0.1:3027/src/systems/r100-world/surface-renderer.ts?t=1791801254158:142:28)\n    at prepareR100Presentation (http://127.0.0.1:3027/src/systems/r100-world-presentation.ts?t=1791806034507:85:16)\n    at async build (http://127.0.0.1:3027/src/dev/r100-gym.ts:128:7)"
+      },
+      {
+        "id": 895,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at new MasterSurfaceRenderer (http://127.0.0.1:3027/src/systems/r100-world/surface-renderer.ts?t=1791801254158:142:28)\n    at prepareR100Presentation (http://127.0.0.1:3027/src/systems/r100-world-presentation.ts?t=1791806034507:85:16)\n    at async build (http://127.0.0.1:3027/src/dev/r100-gym.ts:128:7)"
+      },
+      {
+        "id": 897,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.createTextureFromSource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101332:38)\n    at RenderTarget2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:97891:45)\n    at new RenderTarget2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:97871:26)\n    at new DynamicTexture2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:119788:53)"
+      },
+      {
+        "id": 900,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 901,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 902,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 903,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 904,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 905,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 906,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 907,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 908,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 909,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 910,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 911,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 912,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 913,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 914,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 915,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 916,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 917,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 918,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 919,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 920,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 921,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 922,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 923,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 924,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 925,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      },
+      {
+        "id": 926,
+        "stack": "Error\n    at track (<anonymous>:4:144)\n    at <anonymous>:9:28\n    at proto.<computed> [as createTexture] (<anonymous>:5:117)\n    at WebGLTextureWrapper2.createResource (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108669:38)\n    at new WebGLTextureWrapper2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:108649:26)\n    at WebGLRenderer2.createTexture2D (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:101366:35)\n    at WebGLRenderer2.canvasToTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102040:35)\n    at WebGLRenderer2.createCanvasTexture (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:102065:33)\n    at TextureSource2.init (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123118:53)\n    at new TextureSource2 (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:123097:26)"
+      }
+    ],
+    "missingPhaserKeys": [
+      "combat-flash-84",
+      "combat-flash-85",
+      "combat-flash-86",
+      "combat-flash-87",
+      "combat-flash-88",
+      "combat-flash-89",
+      "combat-flash-90",
+      "combat-flash-91",
+      "combat-flash-92",
+      "combat-flash-93",
+      "combat-flash-94",
+      "combat-flash-95",
+      "r100-native-folded-slab-severe-20261012-8",
+      "r100-return-wound-8",
+      "rift-remnant18-28",
+      "rift-remnant18-29",
+      "rift-remnant18-30",
+      "rift-remnant18-31"
+    ],
+    "heapGrowth": 1458040
+  }
+}

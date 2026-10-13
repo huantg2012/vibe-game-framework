@@ -1,0 +1,151 @@
+{
+  "reviewedCommit": "d8cd69b7",
+  "parentCommit": "17476a4e",
+  "mode": "independent-read-only-code-review",
+  "features": [
+    "COH-F011",
+    "COH-F012",
+    "COH-F019",
+    "COH-F044"
+  ],
+  "findings": [],
+  "scope": [
+    "revision 10 recipe identity, validation, generation, native transfer hydration",
+    "revision 9 frozen generation/surface/search-site recovery closure derivation and projection",
+    "SearchSitePlanner original formation versus appended groundEdge ownership",
+    "surface bake and intact/searched patch dispatch",
+    "generated authoring schema and CSV consistency"
+  ],
+  "staticChecks": [
+    {
+      "command": "node tools/recovery/derive-native-r100-revision9.mjs",
+      "exitCode": 0,
+      "result": "Exact frozen Git derivation equality, 88 dependencies, zero external imports"
+    },
+    {
+      "command": "node tools/recovery/project-native-r100-revision9.mjs",
+      "exitCode": 0,
+      "result": "Exact recovery projection equality; 108 immutable IDs, sole catalog consumer preserved"
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/recovery/check-native-r100-revision10.mjs",
+      "exitCode": 0,
+      "result": "Shore ownership rejected; real relief peel preserved; fictitious parent rejection"
+    },
+    {
+      "command": "node tools/world-study/codegen-r100-spatial.mjs --check",
+      "exitCode": 0
+    },
+    {
+      "command": "node --import tsx tools/world-study/codegen-r100-fragments.mjs --check",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/pickup-grounding/codegen.mjs --check",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    }
+  ],
+  "currentGeneration": {
+    "sourceReport": "/tmp/coh-d8cd69b7-code-review-r10/report.json",
+    "status": "passed",
+    "command": "QA_WORLDS=porcelain-maw,pleated-hide QA_GRADES=severe QA_SEEDS=0 QA_OUTPUT_DIR=/tmp/coh-d8cd69b7-code-review-r10 TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --expose-gc --import tsx tools/world-upgrades-rollout/check-batch.mjs",
+    "cases": [
+      {
+        "worldId": "porcelain-maw",
+        "grade": "severe",
+        "seed": 0,
+        "attempt": 0,
+        "geometryFingerprint": "e38a8ba0",
+        "rgbaHashes": {
+          "albedo": "94532e58d07b4fcab5e7d49e612b8e92a711ee20dd84300a93e7f7b27d57b307",
+          "normal": "b63adb87ba9ed3b145de0edcb33f91636d9378aa59ffd57c522b21264b20d072",
+          "response": "4f72d56cad496f92ee5a3f9521b07a1522659fa1d035f8d0d9d20dadfc5f6380",
+          "emission": "beb453273df62baca03e3d8651759ff121e7963cd82ccf178fcd1a37ffd781e5"
+        }
+      },
+      {
+        "worldId": "pleated-hide",
+        "grade": "severe",
+        "seed": 0,
+        "attempt": 0,
+        "geometryFingerprint": "91c312dd",
+        "rgbaHashes": {
+          "albedo": "2d278340c58a600f3a2932a67f917ca7639664db03465da5b3486264e4a5d8ea",
+          "normal": "89db73559f67ca9a8a30593b9330ef2af2924a1d3e2f06ac71c704e063609cbb",
+          "response": "bb33617322413082ad2df12a7ba432274c515dd35ba144c10e343712e5ed3acc",
+          "emission": "b29e10fe49ab42de98261da033302368c50f8e9fd8c1de1663317c8978a0a71c"
+        }
+      }
+    ],
+    "failures": []
+  },
+  "legacyReplay": {
+    "sourceReport": "/tmp/coh-d8cd69b7-code-review-old/replay.json",
+    "status": "passed",
+    "basis": "Subset of fixed-17476a4e original implementation oracle: pale-sail r9 and woven-quarters r8. Compared complete map, intact/searched patch bytes and both fully-composed four-channel surfaces. Baseline full asset-set hash loop omitted for the subset; expected final surface/patch hashes still enforced.",
+    "cases": [
+      {
+        "patchesHash": "b948b5bc9e9a5758057cd42d9a5c73e9b77d3dfaa51299045c237344443c9367",
+        "searchedHashes": {
+          "albedo": "a7ec3b0a9f1325827a6bf93cc134663d6c188cc2eed7a68b00429e6cc92e0c85",
+          "normal": "f2199a95efabd7cfd133f544baa70e850dd2afe9674c8dd28257fa27cf330df2",
+          "response": "9f8ecb73214e2ce1466ba4842928a9bfdf62d1cb9f1bb41a9d496b7d498e5d87",
+          "emission": "ad669b854b3876fd200a62ed818697c6d4bbe23ffe6d1822db1671ec763e6627"
+        },
+        "algorithmRevision": 9,
+        "worldId": "pale-sail",
+        "grade": "medium",
+        "seed": 20261012,
+        "recipePath": "pale-sail-medium-20261012.recipe.json",
+        "mapPath": "pale-sail-medium-20261012.map.v8.gz",
+        "storedMapChecked": true,
+        "recipeHash": "5f09394f3d11a86619ca8e46f61bef9182fa41806dfd54222314a6c5c2034b43",
+        "mapHash": "3838dbdb0179d9104b4f4976775de110192c3c5b9c693ac9546a151a0e29366b",
+        "rgbaHashes": {
+          "albedo": "6f5191ccffb43ecb607817a5bd10886a8656af61bbd093f43cd1c6ee3842f899",
+          "normal": "91b8d7e0d8609c005af3d453e62d7cacf51f9c6ab0e9e964c4b31aee7a8a5659",
+          "response": "de8a3a443bb25291848a45eaea6cb7307d3bb31510fb70502fa8ebf55ae39e49",
+          "emission": "ad669b854b3876fd200a62ed818697c6d4bbe23ffe6d1822db1671ec763e6627"
+        },
+        "attempt": 0,
+        "fragment": true
+      },
+      {
+        "patchesHash": "8fccc33005e2f4ae3327562ae96e21f201fd202d2900f7e914a9cb0d29a58016",
+        "searchedHashes": {
+          "albedo": "1ed1e90ccf69d0993de568a49f8ec9fd597a8fce234eb31fd6f36785c383c1ee",
+          "normal": "7da9f8b21c2d6f5f6f975723c72730ac80eaaeb05649d4664a5aa970515fd6cd",
+          "response": "28a4c8585e47a0454718f1e3a0bd030d0ad8b7c623808e0c3333aec7fe8617e1",
+          "emission": "31f57298f0bb45202e90c9803fca19c06cc2e674d61ca3a89c1f758ba03002c0"
+        },
+        "algorithmRevision": 8,
+        "worldId": "woven-quarters",
+        "grade": "medium",
+        "seed": 20261012,
+        "recipePath": "woven-quarters-medium-20261012.recipe.json",
+        "mapPath": "woven-quarters-medium-20261012.map.v8.gz",
+        "storedMapChecked": true,
+        "recipeHash": "3c2147fc0b0d2153d52351ddb811715f8df2584e487af189c09493bc06d36f97",
+        "mapHash": "fd56b5e5e651f1bc9a27dae6edde09059089a05381ac52c77136139dca7ad5c6",
+        "rgbaHashes": {
+          "albedo": "1ed1e90ccf69d0993de568a49f8ec9fd597a8fce234eb31fd6f36785c383c1ee",
+          "normal": "7da9f8b21c2d6f5f6f975723c72730ac80eaaeb05649d4664a5aa970515fd6cd",
+          "response": "28a4c8585e47a0454718f1e3a0bd030d0ad8b7c623808e0c3333aec7fe8617e1",
+          "emission": "31f57298f0bb45202e90c9803fca19c06cc2e674d61ca3a89c1f758ba03002c0"
+        },
+        "attempt": 0,
+        "fragment": false
+      }
+    ]
+  },
+  "limitations": [
+    "Exactly four distinct worlds rerun; finite seed/grade coverage only.",
+    "No browser UI, normal-input cold continuation, FPS or aesthetic assessment in this subreview.",
+    "No production files or game-state documents modified. Existing CLAUDE.md working-tree modification left untouched.",
+    "No separate npm lint/test scripts exist in package.json; targeted machine checks above used. Review does not imply full suite or human approval."
+  ]
+}
