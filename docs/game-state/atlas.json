@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "DEC-208要求改为原生联合生成：有效独立内部空洞约为实体两倍，禁止巨大空白；已完成实际机制与五图现状核对，生成合同/校准初值待实现。当前108世界仍运行r11增补，20例历史限定证据保持，不能作为新算法通过。全库空间品质及I14/P49开放。"
+    "summary": "DEC-209/210原生联合生成实施中。工作树五世界接入r12，其余103沿r11；凝胶群岛单seed中档完整生成/重放通过，五代表首批1/5。共同初始化试验回退已否决。保留整体孔约两倍、无巨大空白、真实遮视与完整内容硬门；局部路线均匀度仅诊断。全库品质及I14/P49仍开放。"
   },
   "domains": [
     {
@@ -22,7 +22,7 @@
       "id": "world",
       "title": "地图、地表与探索",
       "coverage": "mapped",
-      "note": "DEC-208要求改为原生联合生成：有效独立内部空洞约为实体两倍，禁止巨大空白；已完成实际机制与五图现状核对，生成合同/校准初值待实现。当前108世界仍运行r11增补，20例历史限定证据保持，不能作为新算法通过。全库空间品质及I14/P49开放。"
+      "note": "DEC-209批准原生联合生成并开始r12实现：五世界冻结意图、有效组/G1–G4及生产主链接线正在验证；新地图尚未准入通过，其余103世界显式沿r11。r11已隔离封存并通过三例公开恢复对照。全库空间品质及I14/P49开放。"
     },
     {
       "id": "encounters",
@@ -64,7 +64,7 @@
       "id": "persistence",
       "title": "存档、失败与恢复",
       "coverage": "mapped",
-      "note": "新出发冻结r11 policy、同族profiles、fragment与来源hash，恢复不读取今日CSV。旧r10从99998703封存完整执行器；12份公开路由map恢复（6份另核两态四RGBA）及20份r11保存配方精确重放通过。跨引擎、全部历史身份与自然冷续仍不作保证。"
+      "note": "r12冻结原生空间意图；r11从ef50f137封存独立闭包，三例完整地图/公开恢复/翻找两态四通道等价。r12新图与冷续仍在验证，历史通过不继承为新算法通过。"
     },
     {
       "id": "accessibility",
@@ -465,7 +465,7 @@
     },
     {
       "id": "COH-C-NATIVE-SPATIAL-GENERATION",
-      "statement": "DEC-208：在基础布局阶段共同生成地面、真实内孔与实体，不在完成地图上追加。有效独立内部空洞约为可辨实体两倍，任何巨大空白均为候选拒绝条件；数量和面积分账，实体不能抵扣遮视缺口。保留矩形拼合/自由断缘、开放漂泊碎片、材料身份、未知撤离及旧局版本隔离；本轮数值是待校准提案，当前仍运行r11。",
+      "statement": "DEC-208：在基础布局阶段共同生成地面、真实内孔与实体，不在完成地图上追加。有效独立内部空洞约为可辨实体两倍，任何巨大空白均为候选拒绝条件；数量和面积分账，实体不能抵扣遮视缺口。保留矩形拼合/自由断缘、开放漂泊碎片、材料身份、未知撤离及旧局版本隔离；数值初值需实测校准；DEC-209已批准实施，代表准入与全库推广分别验收。",
       "status": "active",
       "source": {
         "path": "docs/progress/decisions-log.md",
@@ -814,6 +814,18 @@
         "tools/spatial-augmentation/*",
         "tools/recovery/*native-r100-revision10*.mjs",
         "tools/recovery/*native-r100-revision11*.mjs"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "r100-native-spatial-r12",
+      "title": "原生空间联合生成与r11隔离恢复",
+      "include": [
+        "data/rift-native-spatial-*.csv",
+        "src/generated/r100-native-spatial.ts",
+        "src/generation/world-study/native-spatial-*.ts",
+        "src/generation/legacy-r100-v11/*",
+        "tools/native-spatial/*"
       ],
       "exclude": []
     }

@@ -118,6 +118,8 @@
     "check:preparation": "node tools/preparation-copy/generate.mjs --check && node --import tsx tools/qa/check-preparation-narration.ts && tsx --tsconfig tools/contam-preview/tsconfig.json tools/qa/check-preparation-growth-purchase.ts",
     "check:fragment-shape": "node --import tsx tools/fragment-shape/check.mjs",
     "generate:fragment-authoring": "node --import tsx tools/world-study/codegen-r100-fragments.mjs",
+    "generate:native-spatial": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/native-spatial/codegen.mjs",
+    "check:native-spatial-data": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/native-spatial/codegen.mjs --check",
     "check:fragment-authoring": "node --import tsx tools/world-study/codegen-r100-fragments.mjs --check",
     "check:fragment-r8": "node --expose-gc --import tsx tools/fragment-shape/check-r8.mjs",
     "check:fragment-r8-snapshots": "node --expose-gc --import tsx tools/fragment-shape/check-r8-snapshots.mjs",

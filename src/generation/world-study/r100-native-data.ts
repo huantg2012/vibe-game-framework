@@ -1,3 +1,4 @@
+import { hydrateR100MasterWorld as hydrateRevision11World } from '../legacy-r100-v11/executor-recovery.js';
 import { hydrateR100MasterWorld as hydrateRevision10World } from '../legacy-r100-v10/executor-recovery.js';
 import { hydrateR100MasterWorld as hydrateRevision9World } from '../legacy-r100-v9/executor-recovery.js';
 /** Pure transferable native world payload; methods are rebuilt on the receiving thread. */
@@ -19,6 +20,7 @@ export function serializeR100MasterWorld(world: MasterWorld, gradeDefinition: Po
 export function hydrateR100MasterWorld(native: R100NativeWorldData, layout: GeneratedRiftLayout): MasterWorld {
   if (native.algorithmRevision === 9) return hydrateRevision9World(native, layout);
   if (native.algorithmRevision === 10) return hydrateRevision10World(native, layout);
+  if (native.algorithmRevision === 11) return hydrateRevision11World(native, layout);
   const map = layout.tileMap, width = map.cols * map.tileSize, height = map.rows * map.tileSize;
   if (map.tileSize !== 8 || native.hostTileMap.tileSize !== 32 || native.raster.width !== width
     || native.raster.height !== height || native.raster.objectId.length !== width * height)

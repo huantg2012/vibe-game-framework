@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "id": "single-hole-attribution-full-q-set-and-actual-body-route",
+      "status": "passed",
+      "qCount": 60,
+      "maxCoveragePx": 256.908,
+      "ms": 48.02366700000002
+    },
+    {
+      "id": "visible-open-ground-cannot-substitute-for-hole-cover",
+      "status": "passed"
+    },
+    {
+      "id": "removing-an-unrelated-void-does-not-attribute-witness",
+      "status": "passed"
+    },
+    {
+      "id": "112px-wide-520px-long-corridor-fails-despite-48px-core",
+      "status": "passed",
+      "ratio": 1,
+      "maxRunPx": 520
+    },
+    {
+      "id": "wide-space-edge-hugging-not-misclassified-and-all-legal-search-seats",
+      "status": "passed",
+      "interactionSeats": 74,
+      "fullRoutes": 14
+    },
+    {
+      "id": "six-hole-route-rejects-100-percent-share-and-duplicate-public-trunks-do-not-revote",
+      "status": "passed",
+      "encounters": 6,
+      "duplicateSearchNodes": 2
+    }
+  ],
+  "scope": "Synthetic physical counterexamples; not production admission or aesthetic acceptance."
+}

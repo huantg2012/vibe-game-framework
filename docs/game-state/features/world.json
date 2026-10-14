@@ -3,11 +3,11 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "DEC-208要求改为原生联合生成：有效独立内部空洞约为实体两倍，禁止巨大空白；已完成实际机制与五图现状核对，生成合同/校准初值待实现。当前108世界仍运行r11增补，20例历史限定证据保持，不能作为新算法通过。全库空间品质及I14/P49开放。",
+    "summary": "DEC-209/210原生联合生成实施中：五世界接入r12，凝胶群岛20261012中档首次完整生成及冻结重放通过；其余四代表仍失败，其余103沿r11。取消逐路线均匀度硬门和probe，保留整体比例/空白/真实遮视/通路/完整内容。全库空间品质及I14/P49开放。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 裂隙备行 → 选择污染等级 → 等级内随机revision11世界及联合空间增补",
+      "净化点 → 裂隙备行 → 等级内随机世界；r12五个意图世界实施验证中，其余103世界显式r11",
       "标题继续 → 原存档的v1/v2/v3执行器和冻结数据",
       "DEV rift-spatial-prototype.html → 余烬脊去雾地形、路线地点与实体占地",
       "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
@@ -903,6 +903,610 @@
       {
         "path": "docs/reviews/artifacts/native-generation-2026-10-13/baseline-counts.mjs",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-native-spatial-hole-profiles.csv",
+        "role": "data",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "data/rift-native-spatial-assemblies.csv",
+        "role": "data",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "data/rift-native-spatial-worlds.csv",
+        "role": "data",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "data/rift-native-spatial-policy.csv",
+        "role": "data",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "data/rift-native-spatial-subordinate-profiles.csv",
+        "role": "data",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generated/r100-native-spatial.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-geometry.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-extraction.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-visibility.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-structures.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-recipe.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-routes.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-validation.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-generation.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-measure.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-layout.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-types.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/legacy-r100-v11/manifest-revision11.json",
+        "role": "doc",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/legacy-r100-v11/manifest-recovery.json",
+        "role": "doc",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/legacy-r100-v11/executor-recovery.js",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/legacy-r100-v11/executor-recovery.d.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/legacy-r100-v11/executor-revision11.js",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/legacy-r100-v11/executor-revision11.d.ts",
+        "role": "code",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/native-spatial/check-contracts.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/native-spatial/capture-geometry.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/native-spatial/render-receipt.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/native-spatial/capture-production.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/native-spatial/check-qa-recipes.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/native-spatial/capture-layout-relaxation.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/native-spatial/check-visibility-routes.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/native-spatial/art-profile-inspect.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/native-spatial/codegen.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/native-spatial/check-qa-measure.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/recovery/project-native-r100-revision11.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/recovery/derive-native-r100-revision11.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision11-freezing.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "docs/qa/native-spatial-2026-10-14.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/native-spatial/check-distance-equivalence.mjs",
+        "role": "test",
+        "note": "原生空间求解、实际度量及独立反例"
+      },
+      {
+        "path": "tools/native-spatial/check-geometry-archive.mjs",
+        "role": "test",
+        "note": "原生空间求解、实际度量及独立反例"
+      },
+      {
+        "path": "tools/native-spatial/check-live-ai.mjs",
+        "role": "test",
+        "note": "原生空间求解、实际度量及独立反例"
+      },
+      {
+        "path": "tools/native-spatial/check-wide-centers.mjs",
+        "role": "test",
+        "note": "原生空间求解、实际度量及独立反例"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-planning-distance.mjs",
+        "role": "test",
+        "note": "原生空间求解、实际度量及独立反例"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-probe-phase.mjs",
+        "role": "test",
+        "note": "原生空间求解、实际度量及独立反例"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-relief-coverage.mjs",
+        "role": "test",
+        "note": "原生空间求解、实际度量及独立反例"
+      },
+      {
+        "path": "tools/native-spatial/live-ai-runtime.mjs",
+        "role": "test",
+        "note": "原生空间求解、实际度量及独立反例"
+      },
+      {
+        "path": "tools/native-spatial/profile-layout.mjs",
+        "role": "test",
+        "note": "原生空间求解、实际度量及独立反例"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-land.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/capture-land-tree-contracts.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-hole-profiles.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/describe-land-proposals.mjs",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-native-spatial-bay-profiles.csv",
+        "role": "data",
+        "note": "原生联合生成实施/限定诊断；存在不代表地图通过"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-bay-layout.ts",
+        "role": "code",
+        "note": "原生联合生成实施/限定诊断；存在不代表地图通过"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-bay-measure.ts",
+        "role": "code",
+        "note": "原生联合生成实施/限定诊断；存在不代表地图通过"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-final-support.ts",
+        "role": "code",
+        "note": "原生联合生成实施/限定诊断；存在不代表地图通过"
+      },
+      {
+        "path": "tools/native-spatial/capture-bay-comparison.mjs",
+        "role": "code",
+        "note": "原生联合生成实施/限定诊断；存在不代表地图通过"
+      },
+      {
+        "path": "tools/native-spatial/check-bay-plan.mjs",
+        "role": "code",
+        "note": "原生联合生成实施/限定诊断；存在不代表地图通过"
+      },
+      {
+        "path": "tools/native-spatial/check-bays.mjs",
+        "role": "code",
+        "note": "原生联合生成实施/限定诊断；存在不代表地图通过"
+      },
+      {
+        "path": "tools/native-spatial/check-deep-span-proxy.mjs",
+        "role": "code",
+        "note": "原生联合生成实施/限定诊断；存在不代表地图通过"
+      },
+      {
+        "path": "tools/native-spatial/check-final-support.mjs",
+        "role": "code",
+        "note": "原生联合生成实施/限定诊断；存在不代表地图通过"
+      },
+      {
+        "path": "tools/native-spatial/check-geometry-fingerprint.mjs",
+        "role": "code",
+        "note": "原生联合生成实施/限定诊断；存在不代表地图通过"
+      },
+      {
+        "path": "tools/native-spatial/check-bay-freezing.mjs",
+        "role": "test",
+        "note": "r12原生联合生成限定诊断/反例；不代表完整地图或全库通过。"
+      },
+      {
+        "path": "tools/native-spatial/check-bay-side-clearance.mjs",
+        "role": "test",
+        "note": "r12原生联合生成限定诊断/反例；不代表完整地图或全库通过。"
+      },
+      {
+        "path": "tools/native-spatial/check-exhausted-front.mjs",
+        "role": "test",
+        "note": "r12原生联合生成限定诊断/反例；不代表完整地图或全库通过。"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-final-wide-cache.mjs",
+        "role": "test",
+        "note": "r12原生联合生成限定诊断/反例；不代表完整地图或全库通过。"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-site-pruning.mjs",
+        "role": "test",
+        "note": "r12原生联合生成限定诊断/反例；不代表完整地图或全库通过。"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-wide-bridge.mjs",
+        "role": "test",
+        "note": "r12原生联合生成限定诊断/反例；不代表完整地图或全库通过。"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-wide-feedback.mjs",
+        "role": "test",
+        "note": "r12原生联合生成限定诊断/反例；不代表完整地图或全库通过。"
+      },
+      {
+        "path": "tools/native-spatial/postcheck-saved-bays.mjs",
+        "role": "test",
+        "note": "r12原生联合生成限定诊断/反例；不代表完整地图或全库通过。"
+      },
+      {
+        "path": "tools/native-spatial/replay-wide-estimate.mjs",
+        "role": "test",
+        "note": "r12原生联合生成限定诊断/反例；不代表完整地图或全库通过。"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-wide-domain.ts",
+        "role": "code",
+        "note": "r12实际VOID运行期反馈与有限反例；最终准入独立重测。"
+      },
+      {
+        "path": "tools/native-spatial/check-actual-void-wiring.mjs",
+        "role": "test",
+        "note": "r12实际VOID运行期反馈与有限反例；最终准入独立重测。"
+      },
+      {
+        "path": "tools/native-spatial/check-actual-void-feedback.mjs",
+        "role": "test",
+        "note": "r12实际VOID运行期反馈与有限反例；最终准入独立重测。"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-joint-refinement.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-joint-c39.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-joint-move-independent.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-joint-slot-selection.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/classify-joint-c39.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/classify-joint-pair-sources.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-hotspot-c39.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-hotspot-minimum-step.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/replay-hotspot-receipt.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-initial-c3-field-fallback.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-initial-c3.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-hole-qualification.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-void-identity.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-geometry-work-budget.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-initial-c3-qualified.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-initial-hole-qualification.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-joint-responsibility.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-c3-shore-identity.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-historical-c27-g2.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-initial-placement.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/capture-spacing-calibration.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-global-initial-c3.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-initial-placement.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-wide-area-c27.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-wide-area-score.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/render-saved-proposal.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-runtime-diagnostics.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-g1-field.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-g1-field-c27.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-g1-field.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-complete-candidate-saved.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-g1-actual-footprints.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-g1-incumbent-c27.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-g1-actual-c27.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-g1-incumbent-pruning.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-initial-default-restoration.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-complete-candidate-logic.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-complete-candidate-replay-trace.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/replay-incumbent-c25.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-incumbent-c25-sites.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/audit-saved-g4-and-archive.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/capture-initial-order-ab.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/capture-rejected-complete-candidate.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-g1-open-planning.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-initial-order.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-open-radius-calibration.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-open-radius-production.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-route-feedback-logic.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-route-layout.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-route-share-calibration.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-route-share-production.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/diagnose-c25-hole1-legality.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/render-c27-snapshot-art.mjs",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-route-feedback.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-route-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/capture-safe-node-c17.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-refinement-admission.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-refinement-hole-qualification.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-route-feedback-controller.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-extra-travel-c17.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-route-domain-c17.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-route-first-c17.mjs",
+        "role": "test",
+        "note": "DEC-209原生联合生成实施与版本隔离"
       }
     ],
     "dependsOn": [
@@ -976,7 +1580,9 @@
       "COH-E238",
       "COH-E239",
       "COH-E240",
-      "COH-E241"
+      "COH-E241",
+      "COH-E242",
+      "COH-E243"
     ],
     "unknowns": [
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
@@ -991,7 +1597,8 @@
       "E237记录108世界两项优化的正式接入及有限内部验证：324档位为固定请求seed，代表实机用知情导航；不外推全seed、全部节点自然发现、连续视觉听感、长期收益或用户审美。用户最新授权已解除102图推广暂停；I14/P49仍开放。",
       "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
       "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。",
-      "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。"
+      "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。",
+      "r12限定五代表首批1/5：凝胶群岛20261012中档正常生成33.389秒、精确重放29.809秒；其他四图均几何阶段超时。后续共同初始化试验0/5且回退原成功，予以撤回。单图技术通过不代表动态潜行、正常镜头、全seed、其他污染档或全库完成。"
     ]
   },
   {
@@ -1604,7 +2211,7 @@
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "r11在联合增补后的最终地形上重新部署未知出撤、完整敌人/资源/Host及翻找站位；保留原配额、风险层和巡逻窗口。每既有seed attempt最多两完整候选，部署失败整候选回滚；20例含1例真实同seed后备成功，非全库全seed准入保证。 DEC-208已要求原生联合生成；本轮设计与现状核对未改变运行实现，新准入/2:1分布尚待实施。",
+    "summary": "r11在联合增补后的最终地形上重新部署未知出撤、完整敌人/资源/Host及翻找站位；保留原配额、风险层和巡逻窗口。每既有seed attempt最多两完整候选，部署失败整候选回滚；20例含1例真实同seed后备成功，非全库全seed准入保证。 DEC-209批准r12实施；已有原生候选与准入实现，当前仍有空白失败，新全图/潜行尚未通过，历史证据不外推。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -2096,7 +2703,8 @@
       "COH-E238",
       "COH-E239",
       "COH-E240",
-      "COH-E241"
+      "COH-E241",
+      "COH-E242"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
@@ -2114,7 +2722,8 @@
       "E237记录108世界两项优化的正式接入及有限内部验证：324档位为固定请求seed，代表实机用知情导航；不外推全seed、全部节点自然发现、连续视觉听感、长期收益或用户审美。用户最新授权已解除102图推广暂停；I14/P49仍开放。",
       "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
       "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。",
-      "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。"
+      "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。",
+      "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。"
     ]
   },
   {
@@ -2349,7 +2958,7 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "108世界新局统一接r11联合空间增补：分别衡量身体结构与VOID遮视缺口，同预算比较实体/空洞/组合并保护通路、宽地及原主体。五世界20例正式生成/精确重放，11例增补、9例未增补，残余均保留；旧r10闭包隔离。全库品质与敌人潜行未终验，I14仍13/14、P49开放。 DEC-208已要求原生联合生成；本轮设计与现状核对未改变运行实现，新准入/2:1分布尚待实施。",
+    "summary": "108世界新局统一接r11联合空间增补：分别衡量身体结构与VOID遮视缺口，同预算比较实体/空洞/组合并保护通路、宽地及原主体。五世界20例正式生成/精确重放，11例增补、9例未增补，残余均保留；旧r10闭包隔离。全库品质与敌人潜行未终验，I14仍13/14、P49开放。 DEC-209批准r12实施；已有原生候选与准入实现，当前仍有空白失败，新全图/潜行尚未通过，历史证据不外推。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -4165,7 +4774,8 @@
       "COH-E238",
       "COH-E239",
       "COH-E240",
-      "COH-E241"
+      "COH-E241",
+      "COH-E242"
     ],
     "unknowns": [
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
@@ -4188,7 +4798,8 @@
       "E237记录108世界两项优化的正式接入及有限内部验证：324档位为固定请求seed，代表实机用知情导航；不外推全seed、全部节点自然发现、连续视觉听感、长期收益或用户审美。用户最新授权已解除102图推广暂停；I14/P49仍开放。",
       "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
       "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。",
-      "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。"
+      "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。",
+      "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。"
     ]
   }
 ]

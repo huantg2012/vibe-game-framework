@@ -1,0 +1,32 @@
+/** Whole proposals including failures; never a production-admission or aesthetic pass. */
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import sharp from 'sharp';import {createHash} from 'node:crypto';
+import {createR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import * as data from '../../src/generated/r100-native-spatial.ts';
+import {createNativeSpatialLayout} from '../../src/generation/world-study/native-spatial-layout.ts';
+import {buildNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-geometry.ts';
+import {identifyNativeSpatialStructures,evaluateNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-measure.ts';
+import {evaluateNativeSpatialVisibility} from '../../src/generation/world-study/native-spatial-visibility.ts';
+import {TileType} from '../../src/types/game-types.ts';
+const out=process.argv[2];assert(out&&!fs.existsSync(out),'A fresh output directory is required');fs.mkdirSync(out,{recursive:true});
+const worlds=(process.env.QA_WORLDS??'split-rib-causeway,gel-rafts,sloughed-court,ash-strata,black-lacuna').split(',');assert(worlds.length<=5);
+const seeds=(process.env.QA_SEEDS??'20261012').split(',').map(Number),grade=process.env.QA_GRADE??'medium',count=Number(process.env.QA_CANDIDATES??12),spacing=Number(process.env.QA_SPACING??data.NATIVE_SPATIAL_POLICY.spacingPx);
+const paths=['src/generation/world-study/native-spatial-layout.ts','src/generation/world-study/native-spatial-measure.ts','src/generation/world-study/native-spatial-geometry.ts','src/generation/world-study/native-spatial-visibility.ts','src/generated/r100-native-spatial.ts'];
+const hashes=()=>Object.fromEntries(paths.map(p=>[p,createHash('sha256').update(fs.readFileSync(p)).digest('hex')]));
+const report={status:'running',scope:'Geometry proposals, no spawn/extraction selection, full deployment, G4 or dynamic experience acceptance.',spacing,seeds,grade,worlds,sourceHashes:hashes(),cases:[]};const save=()=>fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2)+'\n');save();
+for(const worldId of worlds)for(const seed of seeds){
+ const native=createR100ProductionRecipe(worldId,seed,grade).nativeDefinition,input={policy:{...data.NATIVE_SPATIAL_POLICY,spacingPx:spacing},world:data.NATIVE_SPATIAL_WORLDS.find(w=>w.worldId===worldId),holeProfiles:data.NATIVE_SPATIAL_HOLE_PROFILES,assemblies:data.NATIVE_SPATIAL_ASSEMBLIES.filter(a=>a.worldId===worldId&&(a.grade==='all'||a.grade===grade)),subordinateProfiles:data.NATIVE_SPATIAL_SUBORDINATE_PROFILES.filter(p=>p.family===native.family)};
+ for(let candidate=0;candidate<count;candidate++){
+  const start=performance.now(),id=`${worldId}-${seed}-${candidate}`;let row={worldId,seed,candidate};
+  try{
+   const proposal=createNativeSpatialLayout(native,input,seed,seed,candidate),layoutMs=performance.now()-start,t=performance.now(),geometry=buildNativeSpatialGeometry(proposal.definition,seed),groups=identifyNativeSpatialStructures(geometry,proposal.assemblies,input.policy),gate=evaluateNativeSpatialGeometry(geometry,groups,input.policy,input.world),measureMs=performance.now()-t;
+   row={...row,layoutMs,measureMs,requestedCounts:proposal.requestedCounts,gate};
+   if(gate.accepted&&process.env.QA_VISIBILITY==='1'){const v=performance.now();row.visibility=evaluateNativeSpatialVisibility(geometry,groups.structures,input.policy);row.visibilityMs=performance.now()-v;}
+   fs.writeFileSync(path.join(out,`${id}.json`),JSON.stringify({input,proposal,gate,visibility:row.visibility},null,2)+'\n');
+   const tile=geometry.terrain.tileMap,rgba=Buffer.alloc(tile.cols*tile.rows*4);for(let y=0;y<tile.rows;y++)for(let x=0;x<tile.cols;x++){const c=tile.tiles[y][x]===TileType.VOID?[4,7,8]:tile.tiles[y][x]===TileType.WALL?[192,145,89]:[133,152,149],at=(y*tile.cols+x)*4;for(let j=0;j<3;j++)rgba[at+j]=c[j];rgba[at+3]=255;}
+   await sharp(rgba,{raw:{width:tile.cols,height:tile.rows,channels:4}}).resize(tile.cols*4,tile.rows*4,{kernel:'nearest'}).png().toFile(path.join(out,`${id}.png`));row.image=`${id}.png`;row.proposal=`${id}.json`;
+   console.log(`${gate.accepted?'GEOMETRY':'REJECT'} ${id}: ${(performance.now()-start).toFixed(0)}ms ${gate.reasons.join(',')}`);
+  }catch(e){row.error=String(e.stack??e);console.log(`FAIL ${id}: ${e.message}`);}
+  row.totalMs=performance.now()-start;report.cases.push(row);save();global.gc?.();
+ }
+}
+report.status='completed-proposal-diagnostics';report.sourceHashesAfter=hashes();report.sourcesStable=JSON.stringify(report.sourceHashes)===JSON.stringify(report.sourceHashesAfter);save();

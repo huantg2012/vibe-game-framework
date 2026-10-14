@@ -38,6 +38,12 @@ const HALF = GAME_CONSTANTS.PLAYER.BODY_SIZE / 2;
 const TIERS = ['safe', 'contested', 'deep'] as const;
 interface RouteField { readonly distance: Float64Array; readonly parent: Int32Array; readonly seats: Uint8Array }
 interface Seat { readonly cell: number; readonly position: Vector2; readonly distance: number; readonly approachDistance: number; readonly interactionSeats: number; readonly pollutionDistance: number }
+/** A trip via an interaction seat cannot be shorter than the direct shortest
+ * return. Clamp floating-point cancellation at zero; unreachable stays absent. */
+export function r100ExtraTravelPx(outbound:number,homebound:number,directReturn:number):number {
+  return Number.isFinite(outbound)&&Number.isFinite(homebound)&&Number.isFinite(directReturn)
+    ?Math.max(0,outbound+homebound-directReturn):Infinity;
+}
 function center(grid: TileGrid, cell: number): Vector2 {
   return { x: (cell % grid.cols + .5) * grid.tileSize, y: (Math.floor(cell / grid.cols) + .5) * grid.tileSize };
 }
@@ -132,7 +138,7 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
       if (!Number.isFinite(field.distance[seat]) || !Number.isFinite(toExit.distance[seat])
         || !hasLineOfSight(world.sight, seatPoint, position, radius + .001)) continue;
       interactionSeats++;
-      interactionDistance = Math.min(interactionDistance, field.distance[seat]! + toExit.distance[seat]! - directReturn);
+      interactionDistance = Math.min(interactionDistance, r100ExtraTravelPx(field.distance[seat]!,toExit.distance[seat]!,directReturn));
       approachDistance = Math.min(approachDistance, field.distance[seat]!);
     }
     candidates.push({ cell, position, distance: interactionDistance, approachDistance, interactionSeats, pollutionDistance: pollutionDistance(position) });
@@ -140,6 +146,7 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
   const maxDistance = Math.max(...candidates.map(seat => seat.distance));
   const spatial = world.spatialDeployment;
   const chosen: { seat: Seat; tier: KindlingTier; kind: 'kindling' | 'contaminant' }[] = [];
+  const nodeDecisions: {kind:'kindling'|'contaminant';tier:KindlingTier;slot:number;rankedCells:readonly number[];selectedCell:number}[]=[];
   const kindlingNodes: KindlingNodeDef[] = [], contaminantNodes: ContaminantNodeDef[] = [];
   for (const tier of TIERS) for (const kind of ['kindling', 'contaminant'] as const) {
     const count = definition[`${kind}_${tier}_count`];
@@ -148,12 +155,15 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
       const maxDepth = tier === 'safe' ? .4 : tier === 'contested' ? .8 : 1;
       const minimum = spatial ? tier === 'safe' ? 0 : spatial[`${tier}_min_extra_travel_px`] : maxDistance * minDepth;
       const maximum = spatial ? spatial[`${tier}_max_extra_travel_px`] : maxDistance * maxDepth;
-      const allowed = candidates.filter(seat => seat.distance >= minimum && seat.distance <= maximum
-        && (!spatial || seat.approachDistance <= (tier === 'safe' ? spatial.safe_max_approach_px : spatial.max_search_approach_px))
-        && seat.pollutionDistance >= (tier === 'safe' ? 34 : 16)
-        && (tier !== 'safe' || safePoints.some(point => Math.hypot(point.x - seat.position.x, point.y - seat.position.y) < 30))
-        && (!spatial || tier !== 'deep' || seat.pollutionDistance <= 100)
-        && chosen.every(other => Math.hypot(other.seat.position.x - seat.position.x, other.seat.position.y - seat.position.y) >= (spatial?.node_spacing_px ?? 52)));
+      const filters:readonly [string,(seat:Seat)=>boolean][]=[
+        ['extra-travel',seat=>seat.distance>=minimum&&seat.distance<=maximum],
+        ['approach',seat=>!spatial||seat.approachDistance<=(tier==='safe'?spatial.safe_max_approach_px:spatial.max_search_approach_px)],
+        ['pollution-clearance',seat=>seat.pollutionDistance>=(tier==='safe'?34:16)],
+        ['safe-route',seat=>tier!=='safe'||safePoints.some(point=>Math.hypot(point.x-seat.position.x,point.y-seat.position.y)<30)],
+        ['deep-threat',seat=>!spatial||tier!=='deep'||seat.pollutionDistance<=100],
+        ['node-spacing',seat=>chosen.every(other=>Math.hypot(other.seat.position.x-seat.position.x,other.seat.position.y-seat.position.y)>=(spatial?.node_spacing_px??52))],
+      ];
+      const allowed = candidates.filter(seat=>filters.every(([,accept])=>accept(seat)));
       const goal = spatial ? (minimum + maximum) / 2 : maxDistance * (tier === 'safe' ? .2 : tier === 'contested' ? .57 : .85);
       const score = (seat: Seat): number => -Math.abs(seat.distance - goal)
         + (tier === 'safe' ? Math.min(100, seat.pollutionDistance) * .5 : -Math.min(180, seat.pollutionDistance) * .45)
@@ -163,7 +173,17 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
         + mix32(base.seed, `r100-content-${kind}-${tier}-${slot}-${seat.cell}`) / 0x100000000 * 64;
       allowed.sort((a, b) => score(b) - score(a) || a.cell - b.cell);
       const seat = allowed[0];
-      if (!seat) throw new Error(`Cannot admit ${kind}/${tier}/${slot} with a full native route`);
+      if (!seat) {
+        let remaining=candidates;
+        const funnel=filters.map(([name,accept])=>{const before=remaining.length;remaining=remaining.filter(accept);return{name,before,after:remaining.length};});
+        throw Object.assign(new Error(`Cannot admit ${kind}/${tier}/${slot} with a full native route`),{diagnostics:{nodePlacement:{
+          kind,tier,slot,minimumExtraTravelPx:minimum,maximumExtraTravelPx:maximum,nodeSpacingPx:spatial?.node_spacing_px??52,
+          safePoints,spatialDeployment:spatial,candidateCount:candidates.length,funnel,decisions:nodeDecisions,
+          selected:chosen.map(item=>({kind:item.kind,tier:item.tier,...item.seat})),
+          candidates:candidates.map(item=>({...item,failedFilters:filters.filter(([,accept])=>!accept(item)).map(([name])=>name),score:score(item)})),
+        }}});
+      }
+      nodeDecisions.push({kind,tier,slot,rankedCells:allowed.map(item=>item.cell),selectedCell:seat.cell});
       chosen.push({ seat, tier, kind });
       const id = `r100-${kind}-${tier}-${slot + 1}`;
       if (kind === 'kindling') kindlingNodes.push({ id, tier, position: seat.position, value: definition[`kindling_${tier}_value`] });

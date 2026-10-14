@@ -1,0 +1,58 @@
+/** Actual failed receipts plus a genuine two-gate tradeoff; no new map search. */
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {NativeSpatialGeometryArchive} from '../../src/generation/world-study/native-spatial-generation.ts';
+
+const output=process.argv[2];assert(output,'Usage: check-geometry-archive.mjs NEW_REPORT.json');assert(!fs.existsSync(output),'Preserve earlier evidence');
+const read=n=>JSON.parse(fs.readFileSync(`docs/qa/artifacts/native-spatial-2026-10-14/geometry-cover-corrected-round2/gel-rafts-20261012-${n}.json`,'utf8'));
+const a=read(12),b=read(15),archive=new NativeSpatialGeometryArchive(a.input.policy),cases=[];
+// Synthetic tradeoff fixtures denote distinct geometries; production computes actual fingerprints.
+const identity=layout=>({hash:`fixture-${layout.candidate}`,canonical:`distinct-fixture-geometry-${layout.candidate}`});
+const offer=(layout,gate)=>archive.offer(layout,gate,identity(layout));
+offer(a.proposal,a.gate);const selected=offer(b.proposal,b.gate);
+assert.equal(selected.layout.candidate,12,'The measured worse candidate 15 must not replace candidate 12');
+assert.deepEqual(archive.candidateIds,[12]);cases.push({id:'real-dominated-latest-does-not-replace-incumbent',passed:true,candidates:archive.candidateIds});
+const tradeoff={...a.gate,metrics:{...a.gate.metrics,maxEmptyUpperPx:160,wideRatio:.525}};
+offer({...a.proposal,candidate:13},tradeoff);
+assert.deepEqual([...archive.candidateIds].sort((x,y)=>x-y),[12,13],'G1 improvement/G3 decline must remain a genuine alternative');
+cases.push({id:'real-gate-tradeoff-remains-available',passed:true,candidates:archive.candidateIds});
+archive.clear();assert.equal(archive.candidateIds.length,0);cases.push({id:'stage-or-attempt-reset-removes-old-feedback',passed:true});
+offer(a.proposal,a.gate);
+const laterPlan={...a.proposal,candidate:41},laterGate={...a.gate,metrics:{...a.gate.metrics,maxEmptyUpperPx:160,wideRatio:.54,worstEmptyPoint:{x:28,y:44}}};
+offer(laterPlan,laterGate);
+assert.strictEqual(archive.best.layout,laterPlan,'A later complete plan can become the incumbent across old eight-slot boundaries');
+assert.strictEqual(archive.best.gate,laterGate,'A plan retains its own measured hotspot receipt; feedback cannot borrow geometry from another plan');
+offer({...b.proposal,candidate:42},b.gate);
+assert.strictEqual(archive.best.layout,laterPlan,'Later worse proposals do not erase the cross-plan incumbent');
+cases.push({id:'cross-plan-incumbent-preserves-matching-ground-receipt',passed:true,candidates:archive.candidateIds});
+archive.clear();
+const samples=Array.from({length:7},(_,i)=>({candidate:i,maxEmptyUpperPx:175-i*2.4,wideRatio:.548-i*.006}));
+let result;
+for(const item of samples){result=offer({...a.proposal,candidate:item.candidate},{...a.gate,metrics:{...a.gate.metrics,...item}});assert(archive.candidateIds.length<=4);}
+const objective=item=>[Math.max(Math.max(0,item.maxEmptyUpperPx/160-1),Math.max(0,(.55-item.wideRatio)/.55)),Math.max(0,item.maxEmptyUpperPx/160-1)+Math.max(0,(.55-item.wideRatio)/.55),item.candidate];
+const best=[...samples].sort((x,y)=>{const a=objective(x),b=objective(y);return a[0]-b[0]||a[1]-b[1]||a[2]-b[2];})[0];
+assert.equal(result.layout.candidate,best.candidate,'Archive truncation must preserve the actual best normalized incumbent');
+assert(archive.candidateIds.includes(0)&&archive.candidateIds.includes(6),'Distinct widest/least-empty extremes are retained within four slots');
+cases.push({id:'bounded-front-retains-incumbent-and-distinct-gate-extremes',passed:true,candidates:archive.candidateIds,selected:result.layout.candidate});
+archive.clear();
+offer(a.proposal,a.gate);offer({...a.proposal,candidate:13},tradeoff);
+const first=archive.nextBase;assert.equal(first.layout.candidate,12);
+for(let i=0;i<4;i++)archive.recordRefinement(first);
+assert.equal(archive.best.layout.candidate,12,'Exhaustion must not erase global measured best');
+const second=archive.nextBase;assert.equal(second.layout.candidate,13,'A stalled best must yield to the next nondominated unexhausted base');
+for(let i=0;i<4;i++)archive.recordRefinement(second);
+assert.equal(archive.nextBase,undefined,'All exhausted bases force a fresh whole-plan probe');
+const duplicate={...a.proposal,candidate:50};archive.offer(duplicate,a.gate,first.fingerprint);
+assert.deepEqual(archive.candidateIds,[]);assert.equal(archive.best.layout.candidate,12);assert.equal(archive.nextBase,undefined,'Fresh duplicate cannot revive an exhausted plan under a new ID');
+assert.equal(archive.firstCandidate(first.fingerprint),12);
+cases.push({id:'persistent-geometry-stagnation-selects-other-base-then-fresh',passed:true,history:archive.baseHistory});
+const fresh={...a.proposal,candidate:51};offer(fresh,a.gate);
+assert.equal(archive.nextBase.layout.candidate,51,'A genuinely different geometry with equal metrics can be explored without reviving old best');
+cases.push({id:'equal-gate-values-are-not-geometry-identity',passed:true,candidates:archive.candidateIds});
+archive.clear();
+archive.offer(a.proposal,a.gate,{hash:'same-diagnostic-hash',canonical:'physical-geometry-one'});
+archive.offer({...a.proposal,candidate:13},tradeoff,{hash:'same-diagnostic-hash',canonical:'physical-geometry-two'});
+assert.equal(archive.candidateIds.length,2,'Exact canonical equality prevents a diagnostic hash collision from dropping a valid alternative');
+cases.push({id:'hash-collision-cannot-alias-distinct-canonical-geometry',passed:true});
+const report={status:'passed',createdAt:new Date().toISOString(),cases,scope:'Search-state preservation only; thresholds, candidate evaluations and actual admission gates are unchanged.'};fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

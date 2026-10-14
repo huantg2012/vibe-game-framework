@@ -1,0 +1,20 @@
+/** Finite G1 counterexamples over saved primitives. No map compilation. */
+import assert from 'node:assert/strict';import fs from 'node:fs';import {createHash} from 'node:crypto';
+import {NativeSpatialG1Field} from '../../src/generation/world-study/native-spatial-g1-field.ts';
+import {nativeSpatialPlanningCoverage} from '../../src/generation/world-study/native-spatial-layout.ts';
+import {nativePrimitiveTree,nativePrimitiveDistance} from '../../src/generation/world-study/native-spatial-geometry.ts';
+import {mix32} from '../../src/generation/seed-fork.ts';
+const output=process.argv[2];assert(output&&!fs.existsSync(output));
+const source='docs/qa/artifacts/native-spatial-2026-10-14/wide-area-c27-round1/proposal.json';
+const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(dir+'/'+e.name):[dir+'/'+e.name]);
+const snapshot=()=>Object.fromEntries([...walk('src').filter(p=>/\.(ts|tsx|js|json)$/.test(p)),source,'tools/native-spatial/check-g1-field.mjs'].sort().map(p=>[p,createHash('sha256').update(fs.readFileSync(p)).digest('hex')]));
+const sourceHashes=snapshot(),saved=JSON.parse(fs.readFileSync(source)),structures=nativeSpatialPlanningCoverage(saved.proposal,20261012),trees=structures.map(s=>({...s,tree:nativePrimitiveTree(s.boundary)})),all=nativePrimitiveTree(structures.flatMap(s=>s.boundary)),point={x:948,y:524},dist=p=>nativePrimitiveDistance(all,p.x,p.y),cases=[];
+function check(id,fn){fn();cases.push({id,passed:true});}
+const distances=trees.map(s=>({id:s.id,kind:s.kind,distance:nativePrimitiveDistance(s.tree,point.x,point.y)})).sort((a,b)=>a.distance-b.distance);
+check('saved-worst-exceeds-limit-over-all-raw-H-and-S',()=>{assert.equal(distances[0].id,'hole-0');assert.equal(distances[0].distance,155.46382215808282);assert.equal(distances.find(s=>s.kind==='solid').id,'gel-rafts-upper-clamp');assert(dist(point)>152);});
+const phase=mix32(20261012,'gel-rafts:native-plan:944:512'),oldPoint={x:948,y:512+4+8*((phase>>>1)&1)},margin=p=>p.x>=944&&p.x<960&&p.y>=512&&p.y<528?20:-1;
+const fine=new NativeSpatialG1Field(960,528,margin,[]);
+check('8px-field-detects-sparse-false-zero-without-changing-margin',()=>{assert.deepEqual(oldPoint,{x:948,y:516});assert(!fine.points.some(p=>p.x%8!==4||p.y%8!==4));assert(fine.points.some(p=>p.x===point.x&&p.y===point.y));assert.equal(Math.max(0,dist(oldPoint)/152-1),0);assert(Math.max(0,fine.maximum(dist)/152-1)>0);assert.equal(fine.points.length,4);});
+check('actual-witness-survives-raw-coast-filter-and-is-deduplicated',()=>{const field=new NativeSpatialG1Field(16,16,p=>p.x===4?20:-1,[{x:12,y:12},{x:12,y:12},{x:4,y:4}]);assert.equal(field.points.length,3);assert.deepEqual(field.trace(),{gridPointCount:2,assessmentPointsAdded:1,assessmentPointsOutsideRawSupport:1,maximumEvaluations:0,maximumDistanceQueries:0,cachedDistanceQueries:0,lastEvaluatedMaximumPx:null});});
+check('bounded-checkpoints-stop-construction-cache-and-maximum',()=>{const expired=new Error('deadline fixture');assert.throws(()=>new NativeSpatialG1Field(16,16,()=>20,[],()=>{throw expired;}),e=>e===expired);let stop=false;const field=new NativeSpatialG1Field(16,16,()=>20,[],()=>{if(stop)throw expired;});stop=true;assert.throws(()=>field.distances(()=>0),e=>e===expired);assert.throws(()=>field.maximum(()=>0),e=>e===expired);assert.equal(field.trace().maximumDistanceQueries,0);assert.equal(field.trace().cachedDistanceQueries,0);});
+const sourceHashesAfter=snapshot(),report={scope:'Pure fixed saved H/S model projections, four fine-field points, and finite support/deadline fixtures; no map compiler or sampler.',sourceHashes,sourceHashesAfter,sourcesStable:JSON.stringify(sourceHashes)===JSON.stringify(sourceHashesAfter),cases,witness:{point,oldPoint,oldRawDistance:dist(oldPoint),rawDistances:distances,fineMaximum:fine.trace().lastEvaluatedMaximumPx},field:fine.trace()};assert(report.sourcesStable);fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({sourcesStable:report.sourcesStable,cases,witness:report.witness,field:report.field},null,2));

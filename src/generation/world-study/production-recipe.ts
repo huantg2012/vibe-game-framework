@@ -35,6 +35,8 @@ export interface WorldProductionRecipeV3 extends Omit<WorldProductionRecipeV1, '
   readonly searchSitePolicy?: import('./search-site-types').R100SearchSitePolicy;
   /** Revision 11 freezes joint solid/VOID completion rules and template parameters. */
   readonly augmentationPolicy?: import('./spatial-augmentation-types').SpatialAugmentationPolicy;
+  /** Revision 12 generates whole layouts from explicitly reviewed world intent. */
+  readonly nativeSpatial?: import('./native-spatial-types').NativeSpatialRuntimeInput;
   readonly nativeDefinition: import('./r100-master-world').MasterDefinition;
   readonly gradeDefinition: import('./pollution-grade').PollutionGradeDefinition;
   readonly contentDefinition: import('./r100-expedition').R100ExpeditionDefinition;

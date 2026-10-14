@@ -1,0 +1,21 @@
+/** Geometry identity tests, compiling fixed existing receipts; no layout search. */
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {buildNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-geometry.ts';
+import {nativeSpatialGeometryFingerprint} from '../../src/generation/world-study/native-spatial-generation.ts';
+const output=process.argv[2];assert(output,'Usage: check-geometry-fingerprint.mjs NEW_REPORT.json');assert(!fs.existsSync(output),'Preserve earlier evidence');
+const saved=JSON.parse(fs.readFileSync('docs/qa/artifacts/native-spatial-2026-10-14/geometry-cover-corrected-round2/gel-rafts-20261012-12.json','utf8'));
+const geometry=buildNativeSpatialGeometry(saved.proposal.definition,20261012),start=performance.now(),identity=nativeSpatialGeometryFingerprint(geometry,saved.proposal),elapsedMs=performance.now()-start,cases=[];
+const renamed=nativeSpatialGeometryFingerprint(geometry,{...saved.proposal,candidate:900,layoutSeed:999});
+assert.equal(renamed.hash,identity.hash);assert.equal(renamed.canonical,identity.canonical);cases.push({id:'candidate-and-proposal-seed-do-not-change-real-geometry-identity',passed:true});
+const moved=structuredClone(saved.proposal.definition);moved.instances.find(instance=>instance.role==='solid').x+=8;
+const movedIdentity=nativeSpatialGeometryFingerprint(buildNativeSpatialGeometry(moved,20261012),{...saved.proposal,definition:moved});
+assert.notEqual(movedIdentity.canonical,identity.canonical);assert.notEqual(movedIdentity.hash,identity.hash);cases.push({id:'actual-solid-geometry-change-has-distinct-identity',passed:true});
+const chipped=structuredClone(saved.proposal.definition);chipped.erosion[0][0].x+=.25;
+const chippedIdentity=nativeSpatialGeometryFingerprint(buildNativeSpatialGeometry(chipped,20261012),{...saved.proposal,definition:chipped});
+assert.notEqual(chippedIdentity.canonical,identity.canonical);cases.push({id:'continuous-final-contour-enters-geometry-identity',passed:true});
+const reseeded=nativeSpatialGeometryFingerprint(buildNativeSpatialGeometry(saved.proposal.definition,20261013),saved.proposal);
+assert.notEqual(reseeded.canonical,identity.canonical);cases.push({id:'actual-mesh-shape-seed-enters-geometry-identity',passed:true});
+const source='src/generation/world-study/native-spatial-generation.ts',report={status:'passed',createdAt:new Date().toISOString(),sourceHash:createHash('sha256').update(fs.readFileSync(source)).digest('hex'),cases,hash:identity.hash,canonicalBytes:Buffer.byteLength(identity.canonical),singleIdentityNodeMs:elapsedMs,scope:'Fixed receipt identity only; no map admission or browser FPS claim.'};fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

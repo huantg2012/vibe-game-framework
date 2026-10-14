@@ -1,3 +1,4 @@
+import { bakeSearchSitePatches as bakeRevision11SearchSites } from '@/generation/legacy-r100-v11/executor-recovery.js';
 import { bakeSearchSitePatches as bakeRevision10SearchSites } from '@/generation/legacy-r100-v10/executor-recovery.js';
 import { bakeSearchSitePatches as bakeRevision9SearchSites } from '@/generation/legacy-r100-v9/executor-recovery.js';
 /** Preparation-worker material patches. A node replaces only its disjoint native
@@ -147,9 +148,10 @@ export function bakeSearchSitePatches(world: MasterWorld, baseSurface: MasterSur
   painting?: PaintedMaterial): SearchSiteMaterialPatch[] {
   if (world.algorithmRevision === 9) return bakeRevision9SearchSites(world, baseSurface, painting);
   if (world.algorithmRevision === 10) return bakeRevision10SearchSites(world, baseSurface, painting);
-  if (world.algorithmRevision !== 11) return [];
+  if (world.algorithmRevision === 11) return bakeRevision11SearchSites(world, baseSurface, painting);
+  if (world.algorithmRevision !== 12) return [];
   const sites = world.searchSites;
-  if (!sites) throw new Error('Revision 11 native world has no frozen search sites');
+  if (!sites) throw new Error('Revision 12 native world has no frozen search sites');
   if (baseSurface.width !== world.raster.width || baseSurface.height !== world.raster.height) throw new Error('Search-site receiver dimensions differ from native world');
   if (new Set(sites.map(site => site.nodeId)).size !== sites.length) throw new Error('Duplicate grounded search-site node');
   const boxes = siteBounds(sites, baseSurface.width, baseSurface.height), ranges = new Map<PaintedSurface, PaintedToneRange>();

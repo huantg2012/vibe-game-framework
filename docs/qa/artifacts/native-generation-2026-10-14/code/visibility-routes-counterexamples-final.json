@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "sourceHashes": {
+    "src/generation/world-study/native-spatial-visibility.ts": "d68a426afa9d1d1fc595c180d96fde3176f55189c864886784dca49632cee187",
+    "src/generation/world-study/native-spatial-routes.ts": "66c13613fee0f15ddf612fc52865840dd3474bbd140cc6d710ca61c87886c903",
+    "src/generation/world-study/native-spatial-geometry.ts": "6889c5d4afb09c6ae08fee9474b2a8943cedadb5e737bfadb0d929562d750c6d",
+    "src/generation/world-study/native-spatial-measure.ts": "7f9fda1b05cfaa8ce7b3061d8899c47884e79769d5bba13e975cb23a1fc2066a",
+    "tools/native-spatial/check-visibility-routes.mjs": "15c4da76a8d19d6cdb540cf1fad17265a48e272e5ef1952e7eac3a566dc5fa16"
+  },
+  "cases": [
+    {
+      "id": "single-hole-attribution-full-q-set-and-actual-body-route",
+      "status": "passed",
+      "qCount": 60,
+      "maxCoveragePx": 256.908,
+      "ms": 49.1485
+    },
+    {
+      "id": "visible-open-ground-cannot-substitute-for-hole-cover",
+      "status": "passed"
+    },
+    {
+      "id": "removing-an-unrelated-void-does-not-attribute-witness",
+      "status": "passed"
+    },
+    {
+      "id": "112px-wide-520px-long-corridor-fails-despite-48px-core",
+      "status": "passed",
+      "ratio": 1,
+      "maxRunPx": 520
+    },
+    {
+      "id": "wide-space-edge-hugging-not-misclassified-and-all-legal-search-seats",
+      "status": "passed",
+      "interactionSeats": 74,
+      "fullRoutes": 14
+    },
+    {
+      "id": "six-hole-route-rejects-100-percent-share-and-duplicate-public-trunks-do-not-revote",
+      "status": "passed",
+      "encounters": 6,
+      "duplicateSearchNodes": 2
+    }
+  ],
+  "scope": "Synthetic physical counterexamples; not production admission or aesthetic acceptance."
+}

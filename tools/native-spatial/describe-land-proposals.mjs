@@ -1,0 +1,5 @@
+import fs from 'node:fs';import path from 'node:path';import {createHash} from 'node:crypto';
+import {describeNativeSpatialLand} from '../../src/generation/world-study/native-spatial-land.ts';
+const [directory,out]=process.argv.slice(2);if(!out||fs.existsSync(out))throw Error('proposal directory new-output required');
+const report=JSON.parse(fs.readFileSync(path.join(directory,'report.json'))),rows=report.cases.filter(c=>c.proposal).map(c=>{const r=JSON.parse(fs.readFileSync(path.join(directory,c.proposal)));return{worldId:c.worldId,seed:c.seed,candidate:c.candidate,...describeNativeSpatialLand(r.proposal.plan.land)};});
+const result={scope:'Raw positive land union diagnosis, not an art acceptance gate.',sourceReport:directory,analysedSourceHash:createHash('sha256').update(fs.readFileSync('src/generation/world-study/native-spatial-land.ts')).digest('hex'),rows};fs.writeFileSync(out,JSON.stringify(result,null,2)+'\n');console.log(rows.map(r=>({candidate:r.candidate,area:r.areaPx2,fill:r.boundingBoxFill,plates:r.plates.length,perimeter:r.perimeterPx})));

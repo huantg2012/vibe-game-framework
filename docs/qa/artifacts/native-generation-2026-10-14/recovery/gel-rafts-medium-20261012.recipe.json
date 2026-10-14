@@ -1,0 +1,1471 @@
+{
+  "version": 3,
+  "requestedSeed": 20261012,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "gel-rafts",
+    "label": "断脂浅片",
+    "description": "断脂浅片的原生材料与完整搜撤地段",
+    "material": "gel",
+    "surface": {
+      "substrate": "gel",
+      "coating": "gel",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 2437959,
+      "floor": 6321807,
+      "floorLight": 10465989,
+      "materialDark": 5456203,
+      "materialMid": 11242652,
+      "materialLight": 14205899,
+      "faceLight": 11372199,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 6321807,
+      "groundLight": 10465989,
+      "groundDark": 2437959,
+      "wall": 11242652,
+      "wallLight": 14205899,
+      "wallDark": 5456203
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "gel-rafts",
+    "ground": {
+      "dark": 2437959,
+      "mid": 6321807,
+      "light": 10465989
+    },
+    "solid": {
+      "dark": 5456203,
+      "mid": 11242652,
+      "light": 14205899
+    },
+    "cleaved": {
+      "dark": 3350584,
+      "mid": 7358578,
+      "light": 11372199
+    },
+    "secondary": {
+      "dark": 4209478,
+      "mid": 9339534,
+      "light": 12628413
+    },
+    "groundPattern": "flow",
+    "patternScale": 256,
+    "patternStrength": 0.3,
+    "secondaryCoverage": 0.1,
+    "textureContrast": 1.12,
+    "quietCoverage": 0.65
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "gel-rafts-medium",
+    "family": "gel-flow",
+    "grade": "medium",
+    "label": "断脂浅片",
+    "profile": "gel-rafts",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 136,
+    "emission": 0.55,
+    "motion_period": 18,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 350,
+        "y": 400,
+        "rotation": -0.45,
+        "length": 230,
+        "width": 170,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.45,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-clamp"
+      },
+      {
+        "id": 2,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 352,
+        "y": 525,
+        "rotation": 0.2,
+        "length": 190,
+        "width": 140,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.58,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-clamp"
+      },
+      {
+        "id": 3,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 439,
+        "y": 314,
+        "rotation": -0.65,
+        "length": 160,
+        "width": 130,
+        "height": 35,
+        "thickness": 10,
+        "fold": 0.64,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 4,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 700,
+        "y": 365,
+        "rotation": 0.5,
+        "length": 260,
+        "width": 155,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.43,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-clamp"
+      },
+      {
+        "id": 5,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 786,
+        "y": 510,
+        "rotation": -0.5,
+        "length": 200,
+        "width": 120,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.32,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-clamp"
+      },
+      {
+        "id": 6,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 709,
+        "y": 565,
+        "rotation": 0.3,
+        "length": 155,
+        "width": 115,
+        "height": 45,
+        "thickness": 12,
+        "fold": 0.67,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 7,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 345,
+        "y": 220,
+        "rotation": -0.9,
+        "length": 255,
+        "width": 170,
+        "height": 44,
+        "thickness": 16,
+        "fold": 0.76,
+        "branches": 3,
+        "opening": 0.52,
+        "distortion": 0.3,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 8,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 470,
+        "y": 332.5,
+        "rotation": 0.3,
+        "length": 260,
+        "width": 100,
+        "height": 25,
+        "thickness": 11,
+        "fold": 0.36,
+        "branches": 3,
+        "opening": 0.85,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 9,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 360,
+        "y": 597.5,
+        "rotation": -0.15,
+        "length": 300,
+        "width": 125,
+        "height": 26,
+        "thickness": 12,
+        "fold": 0.72,
+        "branches": 3,
+        "opening": 0.57,
+        "distortion": 0.28,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 10,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 377.5,
+        "y": 730,
+        "rotation": 0.68,
+        "length": 170,
+        "width": 190,
+        "height": 42,
+        "thickness": 16,
+        "fold": 0.4,
+        "branches": 3,
+        "opening": 0.82,
+        "distortion": 0.2,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 11,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 932.5,
+        "y": 567.5,
+        "rotation": -0.12,
+        "length": 270,
+        "width": 110,
+        "height": 27,
+        "thickness": 12,
+        "fold": 0.74,
+        "branches": 3,
+        "opening": 0.48,
+        "distortion": 0.32,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 12,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 790,
+        "y": 692.5,
+        "rotation": 0.65,
+        "length": 185,
+        "width": 170,
+        "height": 42,
+        "thickness": 15,
+        "fold": 0.42,
+        "branches": 3,
+        "opening": 0.87,
+        "distortion": 0.24,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "medium",
+    "version": 1,
+    "label": "中污染",
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
+  },
+  "contentDefinition": {
+    "grade_id": "medium",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "中污染",
+    "public_risk": "侵蚀更广，久留代价更高",
+    "public_preparation": "按行装选择绕行或穿越",
+    "public_reward": "更多收获在较深处",
+    "enemy_count": 3,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 1
+  },
+  "spatialPolicy": {
+    "version": 2,
+    "worldId": "gel-rafts",
+    "sourceHash": "329706f695777bde04876687a4ca435809bd0637ea53c72253232fc4e489c965",
+    "organization": "authored-sectors",
+    "organizationRules": {
+      "sourceMode": "source-once",
+      "materialScaling": false,
+      "solidCount": 8,
+      "reliefCount": 4
+    },
+    "groupTransform": null,
+    "cols": 72,
+    "rows": 56,
+    "mirrorX": false,
+    "mirrorY": false,
+    "placementJitterPx": 0,
+    "placements": [
+      {
+        "id": 1,
+        "role": "relief",
+        "sourceIndex": 0,
+        "x": 947.5,
+        "y": 920.625,
+        "rotation": -0.45,
+        "length": 287.5,
+        "width": 212.5
+      },
+      {
+        "id": 2,
+        "role": "relief",
+        "sourceIndex": 1,
+        "x": 950,
+        "y": 1076.875,
+        "rotation": 0.2,
+        "length": 237.5,
+        "width": 175
+      },
+      {
+        "id": 3,
+        "role": "solid",
+        "sourceIndex": 0,
+        "x": 1058.75,
+        "y": 813.125,
+        "rotation": -0.65,
+        "length": 200,
+        "width": 162.5
+      },
+      {
+        "id": 4,
+        "role": "relief",
+        "sourceIndex": 2,
+        "x": 1385,
+        "y": 876.875,
+        "rotation": 0.5,
+        "length": 325,
+        "width": 193.75
+      },
+      {
+        "id": 5,
+        "role": "relief",
+        "sourceIndex": 3,
+        "x": 1492.5,
+        "y": 1058.125,
+        "rotation": -0.5,
+        "length": 250,
+        "width": 150
+      },
+      {
+        "id": 6,
+        "role": "solid",
+        "sourceIndex": 1,
+        "x": 1396.25,
+        "y": 1126.875,
+        "rotation": 0.3,
+        "length": 193.75,
+        "width": 143.75
+      },
+      {
+        "id": 7,
+        "role": "solid",
+        "sourceIndex": 2,
+        "x": 690,
+        "y": 440,
+        "rotation": -0.9,
+        "length": 255,
+        "width": 170
+      },
+      {
+        "id": 8,
+        "role": "solid",
+        "sourceIndex": 3,
+        "x": 940,
+        "y": 665,
+        "rotation": 0.3,
+        "length": 260,
+        "width": 100
+      },
+      {
+        "id": 9,
+        "role": "solid",
+        "sourceIndex": 4,
+        "x": 720,
+        "y": 1195,
+        "rotation": -0.15,
+        "length": 300,
+        "width": 125
+      },
+      {
+        "id": 10,
+        "role": "solid",
+        "sourceIndex": 5,
+        "x": 755,
+        "y": 1460,
+        "rotation": 0.68,
+        "length": 170,
+        "width": 190
+      },
+      {
+        "id": 11,
+        "role": "solid",
+        "sourceIndex": 6,
+        "x": 1865,
+        "y": 1135,
+        "rotation": -0.12,
+        "length": 270,
+        "width": 110
+      },
+      {
+        "id": 12,
+        "role": "solid",
+        "sourceIndex": 7,
+        "x": 1580,
+        "y": 1385,
+        "rotation": 0.65,
+        "length": 185,
+        "width": 170
+      }
+    ],
+    "materials": [
+      {
+        "key": "folded-slab",
+        "lengthScale": 1.08,
+        "widthScale": 1.03
+      },
+      {
+        "key": "fibre-knot",
+        "lengthScale": 1.04,
+        "widthScale": 1.5
+      },
+      {
+        "key": "broken-shell",
+        "lengthScale": 0.8,
+        "widthScale": 1.2
+      },
+      {
+        "key": "granular-ridge",
+        "lengthScale": 1,
+        "widthScale": 1
+      },
+      {
+        "key": "membrane-rim",
+        "lengthScale": 1,
+        "widthScale": 0.9
+      },
+      {
+        "key": "gel-flow",
+        "lengthScale": 0.86,
+        "widthScale": 0.78
+      },
+      {
+        "key": "rib-vault",
+        "lengthScale": 1.1,
+        "widthScale": 1.5
+      },
+      {
+        "key": "pleated-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      },
+      {
+        "key": "cellular-shell",
+        "lengthScale": 1.08,
+        "widthScale": 2.65
+      },
+      {
+        "key": "lobed-cushion",
+        "lengthScale": 1,
+        "widthScale": 1.7
+      },
+      {
+        "key": "monolith-buttress",
+        "lengthScale": 0.85,
+        "widthScale": 1.5
+      },
+      {
+        "key": "terrace-shelf",
+        "lengthScale": 1.05,
+        "widthScale": 1.05
+      },
+      {
+        "key": "fracture-fan",
+        "lengthScale": 0.97,
+        "widthScale": 1.2
+      },
+      {
+        "key": "fallen-bundle",
+        "lengthScale": 0.8,
+        "widthScale": 1.37
+      },
+      {
+        "key": "clamp-bank",
+        "lengthScale": 0.93,
+        "widthScale": 0.9
+      },
+      {
+        "key": "torn-sheet",
+        "lengthScale": 1.1,
+        "widthScale": 1.15
+      },
+      {
+        "key": "compressed-wedge",
+        "lengthScale": 0.9,
+        "widthScale": 0.98
+      },
+      {
+        "key": "porous-break",
+        "lengthScale": 0.82,
+        "widthScale": 1.18
+      },
+      {
+        "key": "pleated-tear",
+        "lengthScale": 1.1,
+        "widthScale": 1.1
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 1731.54,
+          "y": 810
+        },
+        {
+          "x": 1717.06,
+          "y": 828.56
+        },
+        {
+          "x": 1685.1,
+          "y": 866.38
+        },
+        {
+          "x": 1670,
+          "y": 878
+        },
+        {
+          "x": 1670,
+          "y": 947.2
+        },
+        {
+          "x": 1743.1,
+          "y": 1010
+        },
+        {
+          "x": 1844.28,
+          "y": 1010
+        },
+        {
+          "x": 1890,
+          "y": 956.78
+        },
+        {
+          "x": 1890,
+          "y": 810
+        }
+      ],
+      [
+        {
+          "x": 494.72,
+          "y": 880
+        },
+        {
+          "x": 485.3,
+          "y": 896
+        },
+        {
+          "x": 467.78,
+          "y": 918.82
+        },
+        {
+          "x": 460,
+          "y": 931.02
+        },
+        {
+          "x": 460,
+          "y": 1080
+        },
+        {
+          "x": 670,
+          "y": 1080
+        },
+        {
+          "x": 670,
+          "y": 948
+        },
+        {
+          "x": 647.94,
+          "y": 931.66
+        },
+        {
+          "x": 609.34,
+          "y": 902.26
+        },
+        {
+          "x": 598.6,
+          "y": 880
+        }
+      ],
+      [
+        {
+          "x": 1730,
+          "y": 1270
+        },
+        {
+          "x": 1730,
+          "y": 1460
+        },
+        {
+          "x": 1918.88,
+          "y": 1460
+        },
+        {
+          "x": 1923.08,
+          "y": 1454.44
+        },
+        {
+          "x": 1932.86,
+          "y": 1440.76
+        },
+        {
+          "x": 1940,
+          "y": 1435.42
+        },
+        {
+          "x": 1940,
+          "y": 1270
+        }
+      ],
+      [
+        {
+          "x": 402.62,
+          "y": 1300
+        },
+        {
+          "x": 386.94,
+          "y": 1320.76
+        },
+        {
+          "x": 365.58,
+          "y": 1345.36
+        },
+        {
+          "x": 350,
+          "y": 1361.2
+        },
+        {
+          "x": 350,
+          "y": 1480
+        },
+        {
+          "x": 570,
+          "y": 1480
+        },
+        {
+          "x": 570,
+          "y": 1361.2
+        },
+        {
+          "x": 564.02,
+          "y": 1341.16
+        },
+        {
+          "x": 545.36,
+          "y": 1336.8
+        },
+        {
+          "x": 536.98,
+          "y": 1315.82
+        },
+        {
+          "x": 518.14,
+          "y": 1300
+        }
+      ]
+    ],
+    "terrainOutline": [
+      {
+        "x": 500,
+        "y": 276.14
+      },
+      {
+        "x": 535.68,
+        "y": 260.9
+      },
+      {
+        "x": 588.42,
+        "y": 216.72
+      },
+      {
+        "x": 611.88,
+        "y": 200
+      },
+      {
+        "x": 1100,
+        "y": 200
+      },
+      {
+        "x": 1100,
+        "y": 640
+      },
+      {
+        "x": 2040,
+        "y": 640
+      },
+      {
+        "x": 2040,
+        "y": 756.9
+      },
+      {
+        "x": 2020.56,
+        "y": 786.54
+      },
+      {
+        "x": 2013,
+        "y": 826.4
+      },
+      {
+        "x": 2040,
+        "y": 849.58
+      },
+      {
+        "x": 2040,
+        "y": 1000
+      },
+      {
+        "x": 2122.62,
+        "y": 1000
+      },
+      {
+        "x": 2160,
+        "y": 1094.26
+      },
+      {
+        "x": 2160,
+        "y": 1459.52
+      },
+      {
+        "x": 2147.54,
+        "y": 1474.34
+      },
+      {
+        "x": 2130.42,
+        "y": 1488.2
+      },
+      {
+        "x": 2114.16,
+        "y": 1513.12
+      },
+      {
+        "x": 2089.6,
+        "y": 1520
+      },
+      {
+        "x": 1561.4,
+        "y": 1520
+      },
+      {
+        "x": 1528.84,
+        "y": 1514.42
+      },
+      {
+        "x": 1506.58,
+        "y": 1488.42
+      },
+      {
+        "x": 1458.16,
+        "y": 1487.4
+      },
+      {
+        "x": 1440,
+        "y": 1462.46
+      },
+      {
+        "x": 1440,
+        "y": 1359.8
+      },
+      {
+        "x": 1436.56,
+        "y": 1331.9
+      },
+      {
+        "x": 1420.02,
+        "y": 1321.58
+      },
+      {
+        "x": 1417.22,
+        "y": 1298.36
+      },
+      {
+        "x": 1402.18,
+        "y": 1280
+      },
+      {
+        "x": 920,
+        "y": 1280
+      },
+      {
+        "x": 920,
+        "y": 1491.2
+      },
+      {
+        "x": 909.38,
+        "y": 1517.02
+      },
+      {
+        "x": 875.88,
+        "y": 1536.22
+      },
+      {
+        "x": 867.34,
+        "y": 1586.72
+      },
+      {
+        "x": 833.82,
+        "y": 1600
+      },
+      {
+        "x": 594.22,
+        "y": 1600
+      },
+      {
+        "x": 566.9,
+        "y": 1584.44
+      },
+      {
+        "x": 530.18,
+        "y": 1578.4
+      },
+      {
+        "x": 508.82,
+        "y": 1600
+      },
+      {
+        "x": 258.8,
+        "y": 1600
+      },
+      {
+        "x": 234.14,
+        "y": 1594.06
+      },
+      {
+        "x": 218.88,
+        "y": 1576.92
+      },
+      {
+        "x": 182.98,
+        "y": 1570.7
+      },
+      {
+        "x": 160,
+        "y": 1553.18
+      },
+      {
+        "x": 160,
+        "y": 1127.32
+      },
+      {
+        "x": 200.16,
+        "y": 1100
+      },
+      {
+        "x": 239.2,
+        "y": 1100
+      },
+      {
+        "x": 251.22,
+        "y": 1085.18
+      },
+      {
+        "x": 267.88,
+        "y": 1050.76
+      },
+      {
+        "x": 280,
+        "y": 1038.08
+      },
+      {
+        "x": 280,
+        "y": 873.24
+      },
+      {
+        "x": 301.9,
+        "y": 854.98
+      },
+      {
+        "x": 336.02,
+        "y": 809.86
+      },
+      {
+        "x": 354.8,
+        "y": 780
+      },
+      {
+        "x": 465.74,
+        "y": 780
+      },
+      {
+        "x": 476.1,
+        "y": 764.94
+      },
+      {
+        "x": 491.66,
+        "y": 739.98
+      },
+      {
+        "x": 500,
+        "y": 729.64
+      },
+      {
+        "x": 500,
+        "y": 481.12
+      },
+      {
+        "x": 521.94,
+        "y": 450.4
+      },
+      {
+        "x": 530.48,
+        "y": 409.12
+      },
+      {
+        "x": 500,
+        "y": 385.12
+      }
+    ],
+    "fragmentShape": {
+      "algorithmVersion": "rectilinear-fragment-v1",
+      "layoutId": "rafts-northern-break-v1",
+      "sourceHash": "48770a699cc4db5b60787f9905349222628b39b5610ecae6fda7c3b517e6d368",
+      "seedMode": "run-seed",
+      "seedSalt": 0,
+      "edgeSeed": 20261012,
+      "layout": {
+        "authoringFrame": [
+          1152,
+          896
+        ],
+        "worldScale": 2,
+        "landRects": [
+          [
+            140,
+            320,
+            880,
+            360
+          ],
+          [
+            80,
+            550,
+            530,
+            250
+          ],
+          [
+            720,
+            500,
+            360,
+            260
+          ],
+          [
+            250,
+            100,
+            300,
+            330
+          ]
+        ],
+        "voidRects": [
+          [
+            550,
+            0,
+            602,
+            320
+          ],
+          [
+            0,
+            0,
+            250,
+            390
+          ],
+          [
+            460,
+            640,
+            260,
+            256
+          ],
+          [
+            230,
+            440,
+            105,
+            100
+          ],
+          [
+            835,
+            405,
+            110,
+            100
+          ],
+          [
+            865,
+            635,
+            105,
+            95
+          ],
+          [
+            175,
+            650,
+            110,
+            90
+          ]
+        ]
+      }
+    },
+    "spawnCandidates": [
+      {
+        "x": 660,
+        "y": 400
+      },
+      {
+        "x": 1090,
+        "y": 820
+      },
+      {
+        "x": 1910,
+        "y": 710
+      },
+      {
+        "x": 1960,
+        "y": 1100
+      },
+      {
+        "x": 1490,
+        "y": 1170
+      },
+      {
+        "x": 720,
+        "y": 1200
+      },
+      {
+        "x": 630,
+        "y": 1520
+      },
+      {
+        "x": 300,
+        "y": 1020
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "gel-rafts",
+    "sourceHash": "1de67a612d41433c1942fc190a81ed5ddb4c87c4461e7b72afb017dd42ff11ce",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.48,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "augmentationPolicy": {
+    "algorithm": "spatial-completion-v1",
+    "version": 1,
+    "enabled": true,
+    "sourceHash": "919e54f2515206f85ce867c481a8f84c92800f03568a349ca9dd68322da7e35d",
+    "parameters": {
+      "referenceSightPx": 224,
+      "physicalRadiusPx": 112,
+      "occlusionRadiusPx": 208,
+      "probeStepPx": 32,
+      "hotspotRadiusPx": 224,
+      "maxRounds": 4,
+      "maxCandidatesPerRound": 18,
+      "maxAddedSolids": 8,
+      "maxAddedVoids": 4,
+      "maxRemovedBaseRatio": 0.08,
+      "maxSolidAddedRatio": 0.08,
+      "maxBodyCenterLossRatio": 0.15,
+      "minReachableRatio": 0.97,
+      "wideCoreRadiusPx": 48,
+      "minWideCoreRetainedRatio": 0.8,
+      "minLargestOpenCoreRetainedRatio": 0.65,
+      "minVoidSeparationPx": 96,
+      "minSolidSeparationPx": 32,
+      "minimumImprovement": 0.1,
+      "targetPhysicalReduction": 0.25,
+      "targetOcclusionReduction": 0.25,
+      "targetBlockedPairRatio": 0.25,
+      "minValidOcclusionPairs": 4,
+      "physicalComponentMinSpanPx": 448,
+      "physicalComponentMinAreaPx2": 50176,
+      "revealRouteMinPx": 80,
+      "revealRouteMaxPx": 720,
+      "voidLengthMinPx": 112,
+      "voidLengthMaxPx": 224,
+      "voidWidthMinPx": 64,
+      "voidWidthMaxPx": 128,
+      "comboOffsetPx": 160,
+      "repeatSpacingToleranceRatio": 0.15,
+      "repeatAngleToleranceDeg": 15
+    },
+    "profiles": [
+      {
+        "id": "slab-curled-ledge",
+        "family": "folded-slab",
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank",
+        "minLengthPx": 112,
+        "maxLengthPx": 184,
+        "minWidthPx": 64,
+        "maxWidthPx": 104,
+        "minHeightPx": 26,
+        "maxHeightPx": 40,
+        "thicknessPx": 8,
+        "fold": 0.36,
+        "branches": 2,
+        "opening": 0.82,
+        "distortion": 0.46,
+        "rotationOffsetRad": -0.18
+      },
+      {
+        "id": "slab-broken-shoulder",
+        "family": "folded-slab",
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan",
+        "minLengthPx": 144,
+        "maxLengthPx": 216,
+        "minWidthPx": 72,
+        "maxWidthPx": 120,
+        "minHeightPx": 20,
+        "maxHeightPx": 32,
+        "thicknessPx": 7,
+        "fold": 0.28,
+        "branches": 2,
+        "opening": 0.72,
+        "distortion": 0.54,
+        "rotationOffsetRad": 0.24
+      },
+      {
+        "id": "fibre-fallen-end",
+        "family": "fibre-knot",
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle",
+        "minLengthPx": 136,
+        "maxLengthPx": 208,
+        "minWidthPx": 52,
+        "maxWidthPx": 84,
+        "minHeightPx": 22,
+        "maxHeightPx": 36,
+        "thicknessPx": 7,
+        "fold": 0.42,
+        "branches": 3,
+        "opening": 0.74,
+        "distortion": 0.62,
+        "rotationOffsetRad": 0.14
+      },
+      {
+        "id": "fibre-pressed-knot",
+        "family": "fibre-knot",
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge",
+        "minLengthPx": 104,
+        "maxLengthPx": 160,
+        "minWidthPx": 72,
+        "maxWidthPx": 108,
+        "minHeightPx": 28,
+        "maxHeightPx": 44,
+        "thicknessPx": 9,
+        "fold": 0.58,
+        "branches": 2,
+        "opening": 0.62,
+        "distortion": 0.52,
+        "rotationOffsetRad": -0.32
+      },
+      {
+        "id": "shell-broken-bank",
+        "family": "broken-shell",
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank",
+        "minLengthPx": 136,
+        "maxLengthPx": 208,
+        "minWidthPx": 72,
+        "maxWidthPx": 112,
+        "minHeightPx": 28,
+        "maxHeightPx": 44,
+        "thicknessPx": 9,
+        "fold": 0.46,
+        "branches": 2,
+        "opening": 0.68,
+        "distortion": 0.58,
+        "rotationOffsetRad": 0.2
+      },
+      {
+        "id": "shell-pitted-end",
+        "family": "broken-shell",
+        "constructionVersion": 4,
+        "shapeProfile": "porous-break",
+        "minLengthPx": 104,
+        "maxLengthPx": 160,
+        "minWidthPx": 72,
+        "maxWidthPx": 112,
+        "minHeightPx": 24,
+        "maxHeightPx": 40,
+        "thicknessPx": 8,
+        "fold": 0.32,
+        "branches": 3,
+        "opening": 0.74,
+        "distortion": 0.56,
+        "rotationOffsetRad": -0.28
+      },
+      {
+        "id": "grain-pressed-ridge",
+        "family": "granular-ridge",
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge",
+        "minLengthPx": 144,
+        "maxLengthPx": 220,
+        "minWidthPx": 56,
+        "maxWidthPx": 88,
+        "minHeightPx": 28,
+        "maxHeightPx": 42,
+        "thicknessPx": 9,
+        "fold": 0.4,
+        "branches": 2,
+        "opening": 0.68,
+        "distortion": 0.64,
+        "rotationOffsetRad": -0.16
+      },
+      {
+        "id": "grain-fractured-bed",
+        "family": "granular-ridge",
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan",
+        "minLengthPx": 104,
+        "maxLengthPx": 160,
+        "minWidthPx": 80,
+        "maxWidthPx": 120,
+        "minHeightPx": 20,
+        "maxHeightPx": 34,
+        "thicknessPx": 8,
+        "fold": 0.24,
+        "branches": 3,
+        "opening": 0.76,
+        "distortion": 0.68,
+        "rotationOffsetRad": 0.3
+      },
+      {
+        "id": "membrane-rolled-end",
+        "family": "membrane-rim",
+        "constructionVersion": 4,
+        "shapeProfile": "torn-sheet",
+        "minLengthPx": 120,
+        "maxLengthPx": 192,
+        "minWidthPx": 80,
+        "maxWidthPx": 120,
+        "minHeightPx": 28,
+        "maxHeightPx": 44,
+        "thicknessPx": 5,
+        "fold": 0.48,
+        "branches": 2,
+        "opening": 0.78,
+        "distortion": 0.62,
+        "rotationOffsetRad": -0.22
+      },
+      {
+        "id": "membrane-curled-remnant",
+        "family": "membrane-rim",
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank",
+        "minLengthPx": 160,
+        "maxLengthPx": 220,
+        "minWidthPx": 56,
+        "maxWidthPx": 88,
+        "minHeightPx": 24,
+        "maxHeightPx": 38,
+        "thicknessPx": 5,
+        "fold": 0.52,
+        "branches": 2,
+        "opening": 0.76,
+        "distortion": 0.58,
+        "rotationOffsetRad": 0.18
+      },
+      {
+        "id": "gel-peeled-front",
+        "family": "gel-flow",
+        "constructionVersion": 4,
+        "shapeProfile": "torn-sheet",
+        "minLengthPx": 144,
+        "maxLengthPx": 216,
+        "minWidthPx": 96,
+        "maxWidthPx": 128,
+        "minHeightPx": 28,
+        "maxHeightPx": 42,
+        "thicknessPx": 7,
+        "fold": 0.62,
+        "branches": 3,
+        "opening": 0.82,
+        "distortion": 0.66,
+        "rotationOffsetRad": 0.12
+      },
+      {
+        "id": "gel-curled-bank",
+        "family": "gel-flow",
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank",
+        "minLengthPx": 104,
+        "maxLengthPx": 168,
+        "minWidthPx": 72,
+        "maxWidthPx": 112,
+        "minHeightPx": 22,
+        "maxHeightPx": 36,
+        "thicknessPx": 7,
+        "fold": 0.38,
+        "branches": 2,
+        "opening": 0.78,
+        "distortion": 0.54,
+        "rotationOffsetRad": -0.3
+      }
+    ]
+  },
+  "package": {
+    "id": "r100-gel-rafts",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 11,
+    "materials": {
+      "gel-flow": {
+        "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+        "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+        "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+      }
+    },
+    "dependencyHash": "62d8e490",
+    "grade": "medium"
+  }
+}
