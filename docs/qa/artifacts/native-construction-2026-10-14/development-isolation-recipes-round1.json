@@ -1,0 +1,2121 @@
+{
+  "status": "passed",
+  "createdAt": "2026-10-14T10:57:54.064Z",
+  "sourceHashes": {
+    "tools/native-spatial/check-qa-recipes.mjs": "b4a20f0f44516d9c24c2cd8a6a5027084f7501b7618c7da4960dc28c1528c79b",
+    "src/generation/world-study/r100-package.ts": "e750042834c0b6e5ddfb6a92e07862d0f4d1a073e99b3b8993f4c1a4d34aa09d",
+    "src/dev/r100-gym.ts": "ac356f0ef8edfc0ec0d68e8f4f13855850a4cd3778f60f08c015ba453db7e433",
+    "src/generation/world-study/production-recipe.ts": "a77896bfdc23ae7b688860083df2a82a9fe0391bd5917e860d4aeca665c5fcd8",
+    "src/generation/world-study/native-spatial-recipe.ts": "71711a974ce8d39d7f354a9f9687633b7032a37ccc5cdadf09e9727c85ab0745",
+    "src/generation/world-study/native-spatial-validation.ts": "6b86f91d3953b1f9e27a142f5a8b4608db4bae190d508a5cca5d6d245574bd7d",
+    "src/generation/world-study/r100-production-map.ts": "018596af1fee71e93e0b1b38fcdcb388829cbb4c1a0cb5952b2a3325b129bfee",
+    "src/generation/rift-generation-execute.ts": "73b0882b47c2b040c11f1f021125c7ce44d1f5d0be5c9785c69adbcad1c36cfc",
+    "src/generated/r100-native-spatial.ts": "ce09d205b4ab0fdac892503aeabf2d3b12366152858ca69cd62c9a05b7d7b208",
+    "src/generation/legacy-r100-v11/executor-revision11.js": "84babeb4c7d46f45c7be80db7601c5e63a2c61296e68aa9133b4c408677b5673",
+    "docs/qa/artifacts/native-spatial-2026-10-14/safe-node-c17-capture-round1/recipe.json": "9f6fa9f036a999efb17640f20e41ecabfa7a1c8705e48a5f314aa15f3c6bc29b",
+    "data/rift-native-spatial-policy.csv": "16e51eaecbb7df817699264e3f50565e35699bb048e212ea1b6cedb5601f29b2",
+    "data/rift-native-spatial-worlds.csv": "3a39b72402231f7cf1bea7d858fa278b52ea2f36ff1c7a1c3c1a4a6099f501d9",
+    "data/rift-native-spatial-hole-profiles.csv": "d7e6e3c32a318ff5b2f757151d7051c55607d52072ca41d64ef96c0751a0060a",
+    "data/rift-native-spatial-bay-profiles.csv": "9776e8ec4649c2bbe62ed040e880d435780a76cb488b68f33d24cf3e97d90f7b",
+    "data/rift-native-spatial-assemblies.csv": "8fd8d7a67fceaa1ffaf19e070f8dda88cb7862dc3da49f8c0e2bcd42e3ddd98e",
+    "data/rift-native-spatial-subordinate-profiles.csv": "0743bb21e761a9e1721bda871e26a49670c39515496cf213ddd6c69ad5d69adc"
+  },
+  "sourceHashesAfter": {
+    "tools/native-spatial/check-qa-recipes.mjs": "b4a20f0f44516d9c24c2cd8a6a5027084f7501b7618c7da4960dc28c1528c79b",
+    "src/generation/world-study/r100-package.ts": "e750042834c0b6e5ddfb6a92e07862d0f4d1a073e99b3b8993f4c1a4d34aa09d",
+    "src/dev/r100-gym.ts": "ac356f0ef8edfc0ec0d68e8f4f13855850a4cd3778f60f08c015ba453db7e433",
+    "src/generation/world-study/production-recipe.ts": "a77896bfdc23ae7b688860083df2a82a9fe0391bd5917e860d4aeca665c5fcd8",
+    "src/generation/world-study/native-spatial-recipe.ts": "71711a974ce8d39d7f354a9f9687633b7032a37ccc5cdadf09e9727c85ab0745",
+    "src/generation/world-study/native-spatial-validation.ts": "6b86f91d3953b1f9e27a142f5a8b4608db4bae190d508a5cca5d6d245574bd7d",
+    "src/generation/world-study/r100-production-map.ts": "018596af1fee71e93e0b1b38fcdcb388829cbb4c1a0cb5952b2a3325b129bfee",
+    "src/generation/rift-generation-execute.ts": "73b0882b47c2b040c11f1f021125c7ce44d1f5d0be5c9785c69adbcad1c36cfc",
+    "src/generated/r100-native-spatial.ts": "ce09d205b4ab0fdac892503aeabf2d3b12366152858ca69cd62c9a05b7d7b208",
+    "src/generation/legacy-r100-v11/executor-revision11.js": "84babeb4c7d46f45c7be80db7601c5e63a2c61296e68aa9133b4c408677b5673",
+    "docs/qa/artifacts/native-spatial-2026-10-14/safe-node-c17-capture-round1/recipe.json": "9f6fa9f036a999efb17640f20e41ecabfa7a1c8705e48a5f314aa15f3c6bc29b",
+    "data/rift-native-spatial-policy.csv": "16e51eaecbb7df817699264e3f50565e35699bb048e212ea1b6cedb5601f29b2",
+    "data/rift-native-spatial-worlds.csv": "3a39b72402231f7cf1bea7d858fa278b52ea2f36ff1c7a1c3c1a4a6099f501d9",
+    "data/rift-native-spatial-hole-profiles.csv": "d7e6e3c32a318ff5b2f757151d7051c55607d52072ca41d64ef96c0751a0060a",
+    "data/rift-native-spatial-bay-profiles.csv": "9776e8ec4649c2bbe62ed040e880d435780a76cb488b68f33d24cf3e97d90f7b",
+    "data/rift-native-spatial-assemblies.csv": "8fd8d7a67fceaa1ffaf19e070f8dda88cb7862dc3da49f8c0e2bcd42e3ddd98e",
+    "data/rift-native-spatial-subordinate-profiles.csv": "0743bb21e761a9e1721bda871e26a49670c39515496cf213ddd6c69ad5d69adc"
+  },
+  "sourcesStable": true,
+  "cases": [
+    {
+      "id": "policy-v2-freezes-all-six-csv-sources",
+      "passed": true,
+      "policyVersion": 2,
+      "sourceHash": "eb9bb3c189409643d6f1056ab4cc14935717e31c4117b26cf8cdf7fc6ea9285b",
+      "sourceFiles": [
+        "data/rift-native-spatial-policy.csv",
+        "data/rift-native-spatial-worlds.csv",
+        "data/rift-native-spatial-hole-profiles.csv",
+        "data/rift-native-spatial-bay-profiles.csv",
+        "data/rift-native-spatial-assemblies.csv",
+        "data/rift-native-spatial-subordinate-profiles.csv"
+      ],
+      "elapsedMs": 0.30783300000001645
+    },
+    {
+      "id": "normal-factories-r11-only-and-explicit-development-r12",
+      "passed": true,
+      "count": 324,
+      "normalRevision12": 0,
+      "normalRevision11": 324,
+      "developmentRevision12": 15,
+      "selectionCases": 18,
+      "unavailableDevelopmentFails": true,
+      "results": [
+        {
+          "world": "ash-strata",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 18966
+        },
+        {
+          "world": "ash-strata",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 19276
+        },
+        {
+          "world": "ash-strata",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 19457
+        },
+        {
+          "world": "crystal-fibre",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16190
+        },
+        {
+          "world": "crystal-fibre",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16499
+        },
+        {
+          "world": "crystal-fibre",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16683
+        },
+        {
+          "world": "ivory-basin",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16276
+        },
+        {
+          "world": "ivory-basin",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16581
+        },
+        {
+          "world": "ivory-basin",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16765
+        },
+        {
+          "world": "cinder-ridge",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 20183
+        },
+        {
+          "world": "cinder-ridge",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 20305
+        },
+        {
+          "world": "cinder-ridge",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 20506
+        },
+        {
+          "world": "pallid-membrane",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15453
+        },
+        {
+          "world": "pallid-membrane",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15559
+        },
+        {
+          "world": "pallid-membrane",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15787
+        },
+        {
+          "world": "silt-gel",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15517
+        },
+        {
+          "world": "silt-gel",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15612
+        },
+        {
+          "world": "silt-gel",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15839
+        },
+        {
+          "world": "schist-shear",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16077
+        },
+        {
+          "world": "schist-shear",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16196
+        },
+        {
+          "world": "schist-shear",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16437
+        },
+        {
+          "world": "splayed-fibres",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 18711
+        },
+        {
+          "world": "splayed-fibres",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 18830
+        },
+        {
+          "world": "splayed-fibres",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 19069
+        },
+        {
+          "world": "shell-chain",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 18566
+        },
+        {
+          "world": "shell-chain",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 18652
+        },
+        {
+          "world": "shell-chain",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 18937
+        },
+        {
+          "world": "grain-laminate",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15791
+        },
+        {
+          "world": "grain-laminate",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15893
+        },
+        {
+          "world": "grain-laminate",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16149
+        },
+        {
+          "world": "tension-membrane",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16466
+        },
+        {
+          "world": "tension-membrane",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16569
+        },
+        {
+          "world": "tension-membrane",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16796
+        },
+        {
+          "world": "shell-gel-delta",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15634
+        },
+        {
+          "world": "shell-gel-delta",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15751
+        },
+        {
+          "world": "shell-gel-delta",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15993
+        },
+        {
+          "world": "pressed-dunes",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15477
+        },
+        {
+          "world": "pressed-dunes",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15580
+        },
+        {
+          "world": "pressed-dunes",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15836
+        },
+        {
+          "world": "ruptured-film",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14684
+        },
+        {
+          "world": "ruptured-film",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14806
+        },
+        {
+          "world": "ruptured-film",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15045
+        },
+        {
+          "world": "reversed-flow",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15173
+        },
+        {
+          "world": "reversed-flow",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15305
+        },
+        {
+          "world": "reversed-flow",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15504
+        },
+        {
+          "world": "laminate-shell",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16866
+        },
+        {
+          "world": "laminate-shell",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16993
+        },
+        {
+          "world": "laminate-shell",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 17249
+        },
+        {
+          "world": "fibre-silt",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15652
+        },
+        {
+          "world": "fibre-silt",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15726
+        },
+        {
+          "world": "fibre-silt",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15967
+        },
+        {
+          "world": "film-laminate",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16034
+        },
+        {
+          "world": "film-laminate",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16126
+        },
+        {
+          "world": "film-laminate",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16369
+        },
+        {
+          "world": "gel-fibre",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16971
+        },
+        {
+          "world": "gel-fibre",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 17049
+        },
+        {
+          "world": "gel-fibre",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 17278
+        },
+        {
+          "world": "shell-grit",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16310
+        },
+        {
+          "world": "shell-grit",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16421
+        },
+        {
+          "world": "shell-grit",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16666
+        },
+        {
+          "world": "rib-vault",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15183
+        },
+        {
+          "world": "rib-vault",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15302
+        },
+        {
+          "world": "rib-vault",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15530
+        },
+        {
+          "world": "pleated-hide",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14779
+        },
+        {
+          "world": "pleated-hide",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14911
+        },
+        {
+          "world": "pleated-hide",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15137
+        },
+        {
+          "world": "blister-field",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14552
+        },
+        {
+          "world": "blister-field",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14687
+        },
+        {
+          "world": "blister-field",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14898
+        },
+        {
+          "world": "wax-tongues",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14417
+        },
+        {
+          "world": "wax-tongues",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14524
+        },
+        {
+          "world": "wax-tongues",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14764
+        },
+        {
+          "world": "monolith-sill",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15361
+        },
+        {
+          "world": "monolith-sill",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15475
+        },
+        {
+          "world": "monolith-sill",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15684
+        },
+        {
+          "world": "bleached-court",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14661
+        },
+        {
+          "world": "bleached-court",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14783
+        },
+        {
+          "world": "bleached-court",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14995
+        },
+        {
+          "world": "split-rib-causeway",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16089
+        },
+        {
+          "world": "split-rib-causeway",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16168
+        },
+        {
+          "world": "split-rib-causeway",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16429
+        },
+        {
+          "world": "satin-fan",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14782
+        },
+        {
+          "world": "satin-fan",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14901
+        },
+        {
+          "world": "satin-fan",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15087
+        },
+        {
+          "world": "chalk-steps",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14693
+        },
+        {
+          "world": "chalk-steps",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14816
+        },
+        {
+          "world": "chalk-steps",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15027
+        },
+        {
+          "world": "porcelain-maw",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14565
+        },
+        {
+          "world": "porcelain-maw",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14688
+        },
+        {
+          "world": "porcelain-maw",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14899
+        },
+        {
+          "world": "amber-ribs",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14601
+        },
+        {
+          "world": "amber-ribs",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14736
+        },
+        {
+          "world": "amber-ribs",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14947
+        },
+        {
+          "world": "pale-sail",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15543
+        },
+        {
+          "world": "pale-sail",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15666
+        },
+        {
+          "world": "pale-sail",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15864
+        },
+        {
+          "world": "root-cistern",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14262
+        },
+        {
+          "world": "root-cistern",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14397
+        },
+        {
+          "world": "root-cistern",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14608
+        },
+        {
+          "world": "scab-islands",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14694
+        },
+        {
+          "world": "scab-islands",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14800
+        },
+        {
+          "world": "scab-islands",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15028
+        },
+        {
+          "world": "foam-trenches",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14501
+        },
+        {
+          "world": "foam-trenches",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14624
+        },
+        {
+          "world": "foam-trenches",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14848
+        },
+        {
+          "world": "resin-fall",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15411
+        },
+        {
+          "world": "resin-fall",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15529
+        },
+        {
+          "world": "resin-fall",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15757
+        },
+        {
+          "world": "tendon-shelves",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14892
+        },
+        {
+          "world": "tendon-shelves",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15027
+        },
+        {
+          "world": "tendon-shelves",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15238
+        },
+        {
+          "world": "felt-basin",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14853
+        },
+        {
+          "world": "felt-basin",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14959
+        },
+        {
+          "world": "felt-basin",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15173
+        },
+        {
+          "world": "cork-shelves",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14713
+        },
+        {
+          "world": "cork-shelves",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14836
+        },
+        {
+          "world": "cork-shelves",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15047
+        },
+        {
+          "world": "lacquer-court",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14253
+        },
+        {
+          "world": "lacquer-court",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14388
+        },
+        {
+          "world": "lacquer-court",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14613
+        },
+        {
+          "world": "ribbed-delta",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15035
+        },
+        {
+          "world": "ribbed-delta",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15153
+        },
+        {
+          "world": "ribbed-delta",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15380
+        },
+        {
+          "world": "bladder-weave",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16103
+        },
+        {
+          "world": "bladder-weave",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16217
+        },
+        {
+          "world": "bladder-weave",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16471
+        },
+        {
+          "world": "flake-thicket",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15099
+        },
+        {
+          "world": "flake-thicket",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15218
+        },
+        {
+          "world": "flake-thicket",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15431
+        },
+        {
+          "world": "resin-hollows",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14805
+        },
+        {
+          "world": "resin-hollows",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14924
+        },
+        {
+          "world": "resin-hollows",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15138
+        },
+        {
+          "world": "sentinel-mass",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15350
+        },
+        {
+          "world": "sentinel-mass",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15485
+        },
+        {
+          "world": "sentinel-mass",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15722
+        },
+        {
+          "world": "stepped-bowl",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14561
+        },
+        {
+          "world": "stepped-bowl",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14696
+        },
+        {
+          "world": "stepped-bowl",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14907
+        },
+        {
+          "world": "draped-bay",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15197
+        },
+        {
+          "world": "draped-bay",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15320
+        },
+        {
+          "world": "draped-bay",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15531
+        },
+        {
+          "world": "ember-cushions",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14961
+        },
+        {
+          "world": "ember-cushions",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15063
+        },
+        {
+          "world": "ember-cushions",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15306
+        },
+        {
+          "world": "splinter-rotunda",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15305
+        },
+        {
+          "world": "splinter-rotunda",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15424
+        },
+        {
+          "world": "splinter-rotunda",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15650
+        },
+        {
+          "world": "quilted-scars",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16137
+        },
+        {
+          "world": "quilted-scars",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16229
+        },
+        {
+          "world": "quilted-scars",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16532
+        },
+        {
+          "world": "silt-colonnade",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15565
+        },
+        {
+          "world": "silt-colonnade",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15683
+        },
+        {
+          "world": "silt-colonnade",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15922
+        },
+        {
+          "world": "shell-causeway",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15111
+        },
+        {
+          "world": "shell-causeway",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15242
+        },
+        {
+          "world": "shell-causeway",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15482
+        },
+        {
+          "world": "cleft-tableland",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16250
+        },
+        {
+          "world": "cleft-tableland",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16225
+        },
+        {
+          "world": "cleft-tableland",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16278
+        },
+        {
+          "world": "fallen-spines",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15796
+        },
+        {
+          "world": "fallen-spines",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15795
+        },
+        {
+          "world": "fallen-spines",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15849
+        },
+        {
+          "world": "clamped-shore",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15924
+        },
+        {
+          "world": "clamped-shore",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15899
+        },
+        {
+          "world": "clamped-shore",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15981
+        },
+        {
+          "world": "torn-reservoir",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14283
+        },
+        {
+          "world": "torn-reservoir",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14218
+        },
+        {
+          "world": "torn-reservoir",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14342
+        },
+        {
+          "world": "braided-seam",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15679
+        },
+        {
+          "world": "braided-seam",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15676
+        },
+        {
+          "world": "braided-seam",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15730
+        },
+        {
+          "world": "scalloped-reach",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15753
+        },
+        {
+          "world": "scalloped-reach",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15749
+        },
+        {
+          "world": "scalloped-reach",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15814
+        },
+        {
+          "world": "offset-pan",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15640
+        },
+        {
+          "world": "offset-pan",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15646
+        },
+        {
+          "world": "offset-pan",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15675
+        },
+        {
+          "world": "thin-delta",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16315
+        },
+        {
+          "world": "thin-delta",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16324
+        },
+        {
+          "world": "thin-delta",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16351
+        },
+        {
+          "world": "shard-switchback",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15500
+        },
+        {
+          "world": "shard-switchback",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15478
+        },
+        {
+          "world": "shard-switchback",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15562
+        },
+        {
+          "world": "hollow-wreckage",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15276
+        },
+        {
+          "world": "hollow-wreckage",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15258
+        },
+        {
+          "world": "hollow-wreckage",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15297
+        },
+        {
+          "world": "knotted-run",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 17042
+        },
+        {
+          "world": "knotted-run",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 17002
+        },
+        {
+          "world": "knotted-run",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 17104
+        },
+        {
+          "world": "rolled-fragments",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15304
+        },
+        {
+          "world": "rolled-fragments",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15258
+        },
+        {
+          "world": "rolled-fragments",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15325
+        },
+        {
+          "world": "fibre-choke",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15253
+        },
+        {
+          "world": "fibre-choke",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15258
+        },
+        {
+          "world": "fibre-choke",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15337
+        },
+        {
+          "world": "buried-lamellae",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15143
+        },
+        {
+          "world": "buried-lamellae",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15138
+        },
+        {
+          "world": "buried-lamellae",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15177
+        },
+        {
+          "world": "pressed-rim",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15526
+        },
+        {
+          "world": "pressed-rim",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15520
+        },
+        {
+          "world": "pressed-rim",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15571
+        },
+        {
+          "world": "wedged-hide",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15532
+        },
+        {
+          "world": "wedged-hide",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15499
+        },
+        {
+          "world": "wedged-hide",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15553
+        },
+        {
+          "world": "quiet-spur",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16244
+        },
+        {
+          "world": "quiet-spur",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16207
+        },
+        {
+          "world": "quiet-spur",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16292
+        },
+        {
+          "world": "split-fall",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15690
+        },
+        {
+          "world": "split-fall",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15667
+        },
+        {
+          "world": "split-fall",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15722
+        },
+        {
+          "world": "three-shelves",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15078
+        },
+        {
+          "world": "three-shelves",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15087
+        },
+        {
+          "world": "three-shelves",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15123
+        },
+        {
+          "world": "frayed-outwash",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16158
+        },
+        {
+          "world": "frayed-outwash",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16134
+        },
+        {
+          "world": "frayed-outwash",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16207
+        },
+        {
+          "world": "short-fibre-mat",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14708
+        },
+        {
+          "world": "short-fibre-mat",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14704
+        },
+        {
+          "world": "short-fibre-mat",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14753
+        },
+        {
+          "world": "marrow-break",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15102
+        },
+        {
+          "world": "marrow-break",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15113
+        },
+        {
+          "world": "marrow-break",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15147
+        },
+        {
+          "world": "felt-wedges",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14699
+        },
+        {
+          "world": "felt-wedges",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14695
+        },
+        {
+          "world": "felt-wedges",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14731
+        },
+        {
+          "world": "pore-bank",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15262
+        },
+        {
+          "world": "pore-bank",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15259
+        },
+        {
+          "world": "pore-bank",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15309
+        },
+        {
+          "world": "staggered-cups",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14318
+        },
+        {
+          "world": "staggered-cups",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14427
+        },
+        {
+          "world": "staggered-cups",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14666
+        },
+        {
+          "world": "split-tows",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15765
+        },
+        {
+          "world": "split-tows",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15771
+        },
+        {
+          "world": "split-tows",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15825
+        },
+        {
+          "world": "curled-flats",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15370
+        },
+        {
+          "world": "curled-flats",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15351
+        },
+        {
+          "world": "curled-flats",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15418
+        },
+        {
+          "world": "pitch-forks",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14704
+        },
+        {
+          "world": "pitch-forks",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14699
+        },
+        {
+          "world": "pitch-forks",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14737
+        },
+        {
+          "world": "grain-weld",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15724
+        },
+        {
+          "world": "grain-weld",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15702
+        },
+        {
+          "world": "grain-weld",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15773
+        },
+        {
+          "world": "silk-catch",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15732
+        },
+        {
+          "world": "silk-catch",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15739
+        },
+        {
+          "world": "silk-catch",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15805
+        },
+        {
+          "world": "resin-sleeve",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15316
+        },
+        {
+          "world": "resin-sleeve",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15308
+        },
+        {
+          "world": "resin-sleeve",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15348
+        },
+        {
+          "world": "shell-threads",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14924
+        },
+        {
+          "world": "shell-threads",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14918
+        },
+        {
+          "world": "shell-threads",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14982
+        },
+        {
+          "world": "chalk-divide",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14921
+        },
+        {
+          "world": "chalk-divide",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14914
+        },
+        {
+          "world": "chalk-divide",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14967
+        },
+        {
+          "world": "red-vault-fragments",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15840
+        },
+        {
+          "world": "red-vault-fragments",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15832
+        },
+        {
+          "world": "red-vault-fragments",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15899
+        },
+        {
+          "world": "blue-fault",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14934
+        },
+        {
+          "world": "blue-fault",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14915
+        },
+        {
+          "world": "blue-fault",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14981
+        },
+        {
+          "world": "pale-pressure",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15505
+        },
+        {
+          "world": "pale-pressure",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15482
+        },
+        {
+          "world": "pale-pressure",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15551
+        },
+        {
+          "world": "notched-backwater",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16374
+        },
+        {
+          "world": "notched-backwater",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16349
+        },
+        {
+          "world": "notched-backwater",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16447
+        },
+        {
+          "world": "crossed-casings",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15586
+        },
+        {
+          "world": "crossed-casings",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15579
+        },
+        {
+          "world": "crossed-casings",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15633
+        },
+        {
+          "world": "fibre-stumpfield",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16396
+        },
+        {
+          "world": "fibre-stumpfield",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16395
+        },
+        {
+          "world": "fibre-stumpfield",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16495
+        },
+        {
+          "world": "sloughed-court",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16543
+        },
+        {
+          "world": "sloughed-court",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16477
+        },
+        {
+          "world": "sloughed-court",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16632
+        },
+        {
+          "world": "crushed-seam",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15611
+        },
+        {
+          "world": "crushed-seam",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15603
+        },
+        {
+          "world": "crushed-seam",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15659
+        },
+        {
+          "world": "husk-reef",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14988
+        },
+        {
+          "world": "husk-reef",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14981
+        },
+        {
+          "world": "husk-reef",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15021
+        },
+        {
+          "world": "fibre-scree",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16550
+        },
+        {
+          "world": "fibre-scree",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16498
+        },
+        {
+          "world": "fibre-scree",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16598
+        },
+        {
+          "world": "gel-rafts",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 17583
+        },
+        {
+          "world": "gel-rafts",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 17485
+        },
+        {
+          "world": "gel-rafts",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 17692
+        },
+        {
+          "world": "double-return",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15202
+        },
+        {
+          "world": "double-return",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15183
+        },
+        {
+          "world": "double-return",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15248
+        },
+        {
+          "world": "offset-basins",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 13795
+        },
+        {
+          "world": "offset-basins",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 13806
+        },
+        {
+          "world": "offset-basins",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 13840
+        },
+        {
+          "world": "pinched-fan",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 16453
+        },
+        {
+          "world": "pinched-fan",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 16430
+        },
+        {
+          "world": "pinched-fan",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 16501
+        },
+        {
+          "world": "spliced-reaches",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15355
+        },
+        {
+          "world": "spliced-reaches",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15347
+        },
+        {
+          "world": "spliced-reaches",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15413
+        },
+        {
+          "world": "white-scarfield",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15163
+        },
+        {
+          "world": "white-scarfield",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15169
+        },
+        {
+          "world": "white-scarfield",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15196
+        },
+        {
+          "world": "black-lacuna",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15339
+        },
+        {
+          "world": "black-lacuna",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15346
+        },
+        {
+          "world": "black-lacuna",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15398
+        },
+        {
+          "world": "ochre-folds",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14614
+        },
+        {
+          "world": "ochre-folds",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14726
+        },
+        {
+          "world": "ochre-folds",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14952
+        },
+        {
+          "world": "violet-marrows",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 14575
+        },
+        {
+          "world": "violet-marrows",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 14586
+        },
+        {
+          "world": "violet-marrows",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 14609
+        },
+        {
+          "world": "fractured-estuary",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15426
+        },
+        {
+          "world": "fractured-estuary",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15419
+        },
+        {
+          "world": "fractured-estuary",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15459
+        },
+        {
+          "world": "woven-quarters",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 18130
+        },
+        {
+          "world": "woven-quarters",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 18120
+        },
+        {
+          "world": "woven-quarters",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 18190
+        },
+        {
+          "world": "shell-patchwork",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15441
+        },
+        {
+          "world": "shell-patchwork",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15418
+        },
+        {
+          "world": "shell-patchwork",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15488
+        },
+        {
+          "world": "last-shelf",
+          "grade": "low",
+          "revision": 11,
+          "bytes": 15079
+        },
+        {
+          "world": "last-shelf",
+          "grade": "medium",
+          "revision": 11,
+          "bytes": 15088
+        },
+        {
+          "world": "last-shelf",
+          "grade": "severe",
+          "revision": 11,
+          "bytes": 15125
+        }
+      ],
+      "elapsedMs": 1639.295125
+    },
+    {
+      "id": "existing-r12-snapshot-still-valid-and-integrity-checked",
+      "passed": true,
+      "source": "docs/qa/artifacts/native-spatial-2026-10-14/safe-node-c17-capture-round1/recipe.json",
+      "dependencyHash": "73ccbc27",
+      "oldSnapshotUnchanged": true,
+      "valid": true,
+      "editedChecksumRejected": true,
+      "replayExecutionUnchangedNotRun": true,
+      "elapsedMs": 1.8744160000001102
+    },
+    {
+      "id": "r12-integrity-and-unknown-revision-fail-before-map-or-worker-generation",
+      "passed": true,
+      "rejected": [
+        "missing-native-input",
+        "legacy-spatial-field",
+        "legacy-augmentation-field",
+        "world-mismatch",
+        "deleted-policy",
+        "edited-hole-size",
+        "edited-target-area",
+        "edited-assembly",
+        "duplicate-assembly",
+        "extra-policy-key",
+        "nan-policy",
+        "infinite-extraction",
+        "missing-deployment",
+        "relabel-to-r11",
+        "unknown-revision--1",
+        "unknown-revision-0",
+        "unknown-revision-13",
+        "unknown-revision-NaN"
+      ],
+      "elapsedMs": 5.23070800000005
+    },
+    {
+      "id": "bay-and-core-shoulder-schema-fail-closed-without-live-defaults",
+      "passed": true,
+      "rejected": [
+        "missing-bayGrammar",
+        "missing-bayProfileIds",
+        "missing-bayCountOptions",
+        "missing-landCoreMinCount",
+        "missing-landCoreMaxCount",
+        "missing-landShoulderMinCount",
+        "missing-landShoulderMaxCount",
+        "missing-landShoulderMinSpanPx",
+        "missing-landShoulderMaxSpanPx",
+        "missing-landShoulderMinThicknessPx",
+        "missing-landShoulderMaxThicknessPx",
+        "missing-landShoulderMinExtensionPx",
+        "missing-landShoulderMaxExtensionPx",
+        "missing-landShoulderAttachment",
+        "missing-bayProfiles",
+        "policy-v1-with-v2-data",
+        "unknown-bay-profile-reference",
+        "duplicate-bay-profile",
+        "bay-count-outside-frozen-domain",
+        "bay-depth-inverted",
+        "bay-throat-nonfinite",
+        "shoulder-role-count-exceeds-total",
+        "shoulder-too-thin-for-320px-join",
+        "shoulder-extension-cannot-fit-author-span",
+        "unknown-shoulder-attachment"
+      ],
+      "elapsedMs": 3.1557500000001255
+    },
+    {
+      "id": "valid-range-bay-and-shoulder-edits-break-frozen-integrity",
+      "passed": true,
+      "rejected": [
+        "bay-depth",
+        "bay-count-options",
+        "core-count",
+        "shoulder-extension"
+      ],
+      "reason": "Values remain in allowed schema ranges but differ from the frozen dependency receipt.",
+      "elapsedMs": 5.389167000000043
+    },
+    {
+      "id": "frozen-recipe-does-not-share-author-data-or-revalidate-against-todays-policy",
+      "passed": true,
+      "oldSnapshotUnchanged": true,
+      "oldSnapshotRemainsValid": true,
+      "malformedReviewedAuthorDataThrowsInsteadOfR11": true,
+      "authorDataRestoredInProcess": true,
+      "elapsedMs": 4.264292000000069
+    },
+    {
+      "id": "saved-bay-and-core-shoulder-ignore-todays-author-values",
+      "passed": true,
+      "oldSnapshotUnchanged": true,
+      "newDepartureConsumesNewValues": true,
+      "newDepartureIntegrityChanges": true,
+      "malformedNewBayDomainRejected": true,
+      "authorDataRestoredInProcess": true,
+      "elapsedMs": 0.8881669999998394
+    }
+  ],
+  "limitations": [
+    "Factory validation and malformed-input rejection only; no successful r12 map, rendering, recovery, Worker message transfer, timing, AI or gameplay acceptance.",
+    "In-memory author mutation is confined to this process and restored in finally; no CSV or generated file is changed.",
+    "Checksum is an integrity receipt, not an anti-cheat signature; no deliberate re-signing attack is claimed."
+  ]
+}

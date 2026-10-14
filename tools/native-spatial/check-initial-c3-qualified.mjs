@@ -1,11 +1,11 @@
 /** One fixed c3 after shared final-VOID qualification, with real work accounting. */
 import fs from 'node:fs';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';
-import {createR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100NativeSpatialDevelopmentRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {createNativeSpatialLayout} from '../../src/generation/world-study/native-spatial-layout.ts';
 import {buildNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-geometry.ts';
 import {identifyNativeSpatialStructures,evaluateNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-measure.ts';
 import {nativeSpatialGeometryFingerprint,createNativeSpatialGeometryWorkBudget} from '../../src/generation/world-study/native-spatial-generation.ts';
-const out=process.argv[2];assert(out&&!fs.existsSync(out));fs.mkdirSync(out,{recursive:true});const old=JSON.parse(fs.readFileSync('docs/qa/artifacts/native-spatial-2026-10-14/initial-c3-diagnosis/report.json')),input=old.input,seed=20261012,native=createR100ProductionRecipe('gel-rafts',seed,'medium').nativeDefinition;
+const out=process.argv[2];assert(out&&!fs.existsSync(out));fs.mkdirSync(out,{recursive:true});const old=JSON.parse(fs.readFileSync('docs/qa/artifacts/native-spatial-2026-10-14/initial-c3-diagnosis/report.json')),input=old.input,seed=20261012,native=createR100NativeSpatialDevelopmentRecipe('gel-rafts',seed,'medium').nativeDefinition;
 const paths=['native-spatial-layout.ts','native-spatial-land.ts','native-spatial-bay-layout.ts','native-spatial-geometry.ts','native-spatial-measure.ts','native-spatial-void-identity.ts','native-spatial-hole-qualification.ts','native-spatial-generation.ts','native-spatial-types.ts','r100-fragment-shape.ts','fragment-shape/rectilinear-fragment.ts'],hashes=()=>Object.fromEntries(paths.map(p=>[p,createHash('sha256').update(fs.readFileSync('src/generation/world-study/'+p)).digest('hex')]));
 const attempt={geometrySeed:seed,proposalBudget:72,layoutProposals:1,geometryEvaluations:0,fullCandidates:0,feedbackBases:[],candidates:[],deploymentRejections:[],stopReason:'searching'};
 const result={scope:'One exact c3 with the existing 12 tuple sites; first final-VOID-qualified site. No fresh controller or new seed.',sourceHashes:hashes()},start=performance.now();let proposal,gate;

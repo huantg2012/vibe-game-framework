@@ -1,0 +1,607 @@
+{
+  "version": 3,
+  "requestedSeed": 20261012,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "split-rib-causeway",
+    "label": "双脊渡口",
+    "description": "双脊渡口的原生材料与完整搜撤地段",
+    "material": "crystal",
+    "surface": {
+      "substrate": "crystal",
+      "coating": "crystal",
+      "organization": "clusters",
+      "coverage": 0.66,
+      "wear": 0.43,
+      "deposits": 0.42,
+      "scale": 0.95,
+      "relief": 0.58,
+      "contrast": 0.85,
+      "regionScale": 1.1,
+      "quietness": 0.5,
+      "formScale": 1.5,
+      "fragmentation": 0.32,
+      "accentCoverage": 0.18
+    },
+    "palette": {
+      "void": 856090,
+      "shadow": 1449000,
+      "floorDeep": 2372427,
+      "floor": 5008523,
+      "floorLight": 9414587,
+      "materialDark": 5056831,
+      "materialMid": 9656687,
+      "materialLight": 13077400,
+      "faceLight": 14535638,
+      "accentDim": 5326174,
+      "accent": 7956100,
+      "accentLight": 11444401,
+      "peak": 14476773,
+      "actorDark": 2433318,
+      "actorMid": 11702376,
+      "actorLight": 15584925,
+      "ground": 5008523,
+      "groundLight": 9414587,
+      "groundDark": 2372427,
+      "wall": 9656687,
+      "wallLight": 13077400,
+      "wallDark": 5056831
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "split-rib-causeway",
+    "ground": {
+      "dark": 2372427,
+      "mid": 5008523,
+      "light": 9414587
+    },
+    "solid": {
+      "dark": 5056831,
+      "mid": 9656687,
+      "light": 13077400
+    },
+    "cleaved": {
+      "dark": 5852003,
+      "mid": 11771052,
+      "light": 14535638
+    },
+    "secondary": {
+      "dark": 4474702,
+      "mid": 9014161,
+      "light": 12501439
+    },
+    "groundPattern": "veins",
+    "patternScale": 144,
+    "patternStrength": 0.7,
+    "secondaryCoverage": 0.18,
+    "textureContrast": 1.12,
+    "quietCoverage": 0.43
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "split-rib-causeway-medium",
+    "family": "fibre-knot",
+    "grade": "medium",
+    "label": "双脊渡口",
+    "profile": "split-rib-causeway",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.42,
+    "light_radius": 136,
+    "emission": 0.55,
+    "motion_period": 18,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 410,
+        "y": 325,
+        "rotation": -1.5,
+        "length": 430,
+        "width": 350,
+        "height": 70,
+        "thickness": 14,
+        "fold": 0.48,
+        "branches": 3,
+        "opening": 0.88,
+        "distortion": 0.68,
+        "constructionVersion": 3,
+        "shapeProfile": "rib-vault"
+      },
+      {
+        "id": 2,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 650,
+        "y": 460,
+        "rotation": 1.65,
+        "length": 380,
+        "width": 350,
+        "height": 60,
+        "thickness": 12,
+        "fold": 0.6,
+        "branches": 3,
+        "opening": 0.84,
+        "distortion": 0.62,
+        "constructionVersion": 3,
+        "shapeProfile": "rib-vault"
+      },
+      {
+        "id": 3,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 700,
+        "y": 232.5,
+        "rotation": -0.48,
+        "length": 320,
+        "width": 135,
+        "height": 32,
+        "thickness": 11,
+        "fold": 0.78,
+        "branches": 2,
+        "opening": 0.63,
+        "distortion": 0.45,
+        "constructionVersion": 3,
+        "shapeProfile": "rib-vault"
+      },
+      {
+        "id": 4,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 875,
+        "y": 255,
+        "rotation": 0.82,
+        "length": 150,
+        "width": 245,
+        "height": 42,
+        "thickness": 13,
+        "fold": 0.34,
+        "branches": 2,
+        "opening": 0.81,
+        "distortion": 0.57,
+        "constructionVersion": 3,
+        "shapeProfile": "rib-vault"
+      },
+      {
+        "id": 5,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 255,
+        "y": 705,
+        "rotation": -0.42,
+        "length": 310,
+        "width": 145,
+        "height": 28,
+        "thickness": 11,
+        "fold": 0.82,
+        "branches": 2,
+        "opening": 0.76,
+        "distortion": 0.52,
+        "constructionVersion": 3,
+        "shapeProfile": "rib-vault"
+      },
+      {
+        "id": 6,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 417.5,
+        "y": 730,
+        "rotation": 0.5,
+        "length": 150,
+        "width": 240,
+        "height": 42,
+        "thickness": 13,
+        "fold": 0.42,
+        "branches": 2,
+        "opening": 0.59,
+        "distortion": 0.41,
+        "constructionVersion": 3,
+        "shapeProfile": "rib-vault"
+      },
+      {
+        "id": 7,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 442.5,
+        "y": 615,
+        "rotation": -0.95,
+        "length": 190,
+        "width": 160,
+        "height": 30,
+        "thickness": 9,
+        "fold": 0.62,
+        "branches": 2,
+        "opening": 0.85,
+        "distortion": 0.6,
+        "constructionVersion": 3,
+        "shapeProfile": "rib-vault"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 632,
+          "y": 424
+        },
+        {
+          "x": 696,
+          "y": 400
+        },
+        {
+          "x": 776,
+          "y": 424
+        },
+        {
+          "x": 804,
+          "y": 464
+        },
+        {
+          "x": 764,
+          "y": 488
+        },
+        {
+          "x": 700,
+          "y": 460
+        },
+        {
+          "x": 656,
+          "y": 464
+        }
+      ],
+      [
+        {
+          "x": 216,
+          "y": 200
+        },
+        {
+          "x": 288,
+          "y": 176
+        },
+        {
+          "x": 332,
+          "y": 200
+        },
+        {
+          "x": 316,
+          "y": 232
+        },
+        {
+          "x": 248,
+          "y": 240
+        }
+      ]
+    ]
+  },
+  "gradeDefinition": {
+    "id": "medium",
+    "version": 1,
+    "label": "中污染",
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
+  },
+  "contentDefinition": {
+    "grade_id": "medium",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "中污染",
+    "public_risk": "侵蚀更广，久留代价更高",
+    "public_preparation": "按行装选择绕行或穿越",
+    "public_reward": "更多收获在较深处",
+    "enemy_count": 3,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 1
+  },
+  "nativeSpatial": {
+    "policy": {
+      "algorithm": "native-joint-layout-v1",
+      "version": 2,
+      "enabled": true,
+      "planningCellFactor": 0.866,
+      "holeToSolidRatio": 2,
+      "holeCountAbsTolerance": 1,
+      "holeCountRelTolerance": 0.2,
+      "minSolidCount": 1,
+      "requireMoreHoles": true,
+      "regionHoleShareMin": 0.64,
+      "regionHoleShareMax": 0.7,
+      "comparisonSpacingsPx": [
+        288,
+        352
+      ],
+      "spacingPx": 320,
+      "countToleranceRatio": 0.2,
+      "areaToleranceRatio": 0.1,
+      "maxEmptyRadiusPx": 160,
+      "deepEmptyThresholdPx": 112,
+      "maxDeepEmptySpanPx": 448,
+      "minHoleCoreRadiusPx": 32,
+      "minSolidAreaPx2": 1600,
+      "minSolidSpanPx": 80,
+      "probeStepPx": 32,
+      "referenceSightPx": 224,
+      "revealRouteMinPx": 80,
+      "revealRouteMaxPx": 240,
+      "maxCoverRoutePx": 320,
+      "wideRadiusPx": 48,
+      "minWideRatio": 0.55,
+      "minLargestWideRatio": 0.8,
+      "narrowWidthPx": 160,
+      "maxNarrowRatio": 0.2,
+      "maxNarrowRunPx": 224,
+      "encounterRadiusPx": 112,
+      "minRouteLengthPx": 224,
+      "minRouteEncounters": 6,
+      "minRouteHoleShare": 0.6,
+      "maxRouteHoleShare": 0.75,
+      "windowSize": 6,
+      "minWindowHoles": 3,
+      "maxGeometryEvaluations": 72,
+      "maxFullCandidates": 2,
+      "sourceHash": "eb9bb3c189409643d6f1056ab4cc14935717e31c4117b26cf8cdf7fc6ea9285b"
+    },
+    "world": {
+      "worldId": "split-rib-causeway",
+      "enabled": true,
+      "annotationStatus": "reviewed",
+      "targetWalkAreaPx2": 1575616,
+      "frameWidthPx": 2304,
+      "frameHeightPx": 1792,
+      "materialAxisRad": 0.42,
+      "landGrammar": "offset-overlap-v1",
+      "landRectMinCount": 4,
+      "landRectMaxCount": 7,
+      "landRectMinSpanPx": 800,
+      "landRectMaxSpanPx": 1440,
+      "landRectMinThicknessPx": 544,
+      "landRectMaxThicknessPx": 960,
+      "landRectMinOverlapPx": 320,
+      "bayGrammar": "shore-rect-cut-v1",
+      "bayProfileIds": [
+        "shore-bay-default"
+      ],
+      "bayCountOptions": [
+        0,
+        1,
+        2
+      ],
+      "landCoreMinCount": 3,
+      "landCoreMaxCount": 5,
+      "landShoulderMinCount": 1,
+      "landShoulderMaxCount": 2,
+      "landShoulderMinSpanPx": 576,
+      "landShoulderMaxSpanPx": 768,
+      "landShoulderMinThicknessPx": 384,
+      "landShoulderMaxThicknessPx": 448,
+      "landShoulderMinExtensionPx": 192,
+      "landShoulderMaxExtensionPx": 320,
+      "landShoulderAttachment": "core-outward-normal-v1"
+    },
+    "holeProfiles": [
+      {
+        "id": "offset-cut-small",
+        "sizeClass": "small",
+        "weight": 35,
+        "minSpanPx": 112,
+        "maxSpanPx": 144,
+        "minThicknessPx": 80,
+        "maxThicknessPx": 104,
+        "minRectCount": 2,
+        "maxRectCount": 3,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 14000
+      },
+      {
+        "id": "offset-cut-medium",
+        "sizeClass": "medium",
+        "weight": 50,
+        "minSpanPx": 152,
+        "maxSpanPx": 192,
+        "minThicknessPx": 88,
+        "maxThicknessPx": 120,
+        "minRectCount": 2,
+        "maxRectCount": 3,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 22000
+      },
+      {
+        "id": "offset-cut-large",
+        "sizeClass": "large",
+        "weight": 15,
+        "minSpanPx": 200,
+        "maxSpanPx": 240,
+        "minThicknessPx": 96,
+        "maxThicknessPx": 136,
+        "minRectCount": 3,
+        "maxRectCount": 4,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 30000
+      }
+    ],
+    "bayProfiles": [
+      {
+        "id": "shore-bay-default",
+        "minRectCount": 1,
+        "maxRectCount": 3,
+        "minDepthPx": 128,
+        "maxDepthPx": 480,
+        "minMouthPx": 96,
+        "maxMouthPx": 192,
+        "minOffsetRatio": 0.15,
+        "maxOffsetRatio": 0.45,
+        "minOverlapRatio": 0.35,
+        "maxOverlapRatio": 0.8,
+        "maxUnionSpanPx": 576,
+        "minRemovedLandAreaPx2": 8192,
+        "maxRemovedLandAreaPx2": 61440,
+        "minFinalThroatPx": 64,
+        "minBacklandPx": 320
+      }
+    ],
+    "assemblies": [
+      {
+        "worldId": "split-rib-causeway",
+        "grade": "all",
+        "id": "split-rib-paired-vault",
+        "sourceInstanceIds": [
+          1,
+          2
+        ],
+        "attachedReliefIds": [],
+        "sourceScale": 1.16,
+        "minScale": 0.95,
+        "maxScale": 1.05,
+        "rotationOffsetsRad": [
+          -0.18,
+          0,
+          0.18,
+          3.14159265359
+        ],
+        "maxSpanPx": 1120,
+        "mode": "unique-once"
+      }
+    ],
+    "subordinateProfiles": [
+      {
+        "id": "native-fibre-fallen-end",
+        "family": "fibre-knot",
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle",
+        "minLengthPx": 136,
+        "maxLengthPx": 208,
+        "minWidthPx": 52,
+        "maxWidthPx": 84,
+        "minHeightPx": 22,
+        "maxHeightPx": 36,
+        "thicknessPx": 7,
+        "fold": 0.42,
+        "branches": 3,
+        "opening": 0.74,
+        "distortion": 0.62,
+        "rotationOffsetRad": 0.14
+      },
+      {
+        "id": "native-fibre-pressed-knot",
+        "family": "fibre-knot",
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge",
+        "minLengthPx": 104,
+        "maxLengthPx": 160,
+        "minWidthPx": 72,
+        "maxWidthPx": 108,
+        "minHeightPx": 28,
+        "maxHeightPx": 44,
+        "thicknessPx": 9,
+        "fold": 0.58,
+        "branches": 2,
+        "opening": 0.62,
+        "distortion": 0.52,
+        "rotationOffsetRad": -0.32
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "split-rib-causeway",
+    "sourceHash": "03e0dab270b07d8cfb54e384cdc5f6e6d4630501d776c4cfb817ab2d775be09d",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.45,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "package": {
+    "id": "r100-split-rib-causeway",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 12,
+    "materials": {
+      "fibre-knot": {
+        "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+        "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+        "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+      }
+    },
+    "dependencyHash": "b8360d08",
+    "grade": "medium"
+  }
+}

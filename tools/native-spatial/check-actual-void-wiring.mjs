@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';import fs from 'node:fs';import path fro
 import {buildNativeSpatialGeometry,createNativeSpatialActualVoidFeedback} from '../../src/generation/world-study/native-spatial-geometry.ts';
 import {identifyNativeSpatialStructures,evaluateNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-measure.ts';
 import {NativeSpatialGeometryArchive,nativeSpatialGeometryFingerprint} from '../../src/generation/world-study/native-spatial-generation.ts';
-import {createR100ProductionRecipe,validR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100NativeSpatialDevelopmentRecipe,validR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
 const output=process.argv[2];assert(output&&!fs.existsSync(output),'Supply a NEW report path');
 const dir='docs/qa/artifacts/native-spatial-2026-10-14/site-pruning-c16/',fixed=JSON.parse(fs.readFileSync(dir+'current.json','utf8')),input=JSON.parse(fs.readFileSync(dir+'candidate-16.json','utf8')).input,proposal=fixed.proposal,seed=20261012,cases=[];
-const recipe=createR100ProductionRecipe('gel-rafts',seed,'medium'),recipeBefore=JSON.stringify(recipe),layoutBefore=JSON.stringify(proposal),g=buildNativeSpatialGeometry(proposal.definition,seed),groups=identifyNativeSpatialStructures(g,proposal.assemblies,input.policy),result=createNativeSpatialActualVoidFeedback(g,groups,proposal.holes);
+const recipe=createR100NativeSpatialDevelopmentRecipe('gel-rafts',seed,'medium'),recipeBefore=JSON.stringify(recipe),layoutBefore=JSON.stringify(proposal),g=buildNativeSpatialGeometry(proposal.definition,seed),groups=identifyNativeSpatialStructures(g,proposal.assemblies,input.policy),result=createNativeSpatialActualVoidFeedback(g,groups,proposal.holes);
 assert(result.feedback,result.reason);const cache=result.feedback,reconstructed=new Uint8Array(cache.exteriorMask);let holeCells=0;
 for(const hole of cache.holes){for(const cell of hole.cells){assert.equal(reconstructed[cell],0,'Runtime H/exterior partition must be disjoint');reconstructed[cell]=1;holeCells++;}}
 let mismatches=0;for(let cell=0;cell<reconstructed.length;cell++)mismatches+=Number(reconstructed[cell]!==Number(!g.terrain.matter[cell]));assert.equal(mismatches,0);assert.equal(cache.holes.length,proposal.holes.length);cases.push({id:'saved-c19-runtime-VOID-partition-equals-every-actual-cell',passed:true,cells:reconstructed.length,holes:cache.holes.length,holeCells,mismatches,maskBytes:cache.exteriorMask.byteLength});

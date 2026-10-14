@@ -3,14 +3,15 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "DEC-209/210原生联合生成实施中：五世界接入r12，凝胶群岛20261012中档首次完整生成及冻结重放通过；其余四代表仍失败，其余103沿r11。取消逐路线均匀度硬门和probe，保留整体比例/空白/真实遮视/通路/完整内容。全库空间品质及I14/P49开放。",
+    "summary": "DEC-211已将全部108世界普通出发隔离回r11，仅显式DEV创建r12，旧配方按原修订恢复；324份普通配方/15份DEV身份及单图完整2.434秒通过。DEV完整CSV直接构造与参差岸线已实现，最终12H/6S、全可达、G2及最长直边272≤384通过；G1/G3仍失败，full0。随机化、完整地图与全库品质未完成，I14/P49开放。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 裂隙备行 → 等级内随机世界；r12五个意图世界实施验证中，其余103世界显式r11",
+      "净化点 → 裂隙备行 → 等级内随机世界；普通create/select的全部108世界均r11",
       "标题继续 → 原存档的v1/v2/v3执行器和冻结数据",
       "DEV rift-spatial-prototype.html → 余烬脊去雾地形、路线地点与实体占地",
-      "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
+      "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。",
+      "DEV r100-gym.html?world=gel-rafts&grade=medium&seed=20261012&nativeSpatial=1 → 显式r12旧求解器；固定CSV直接构造仅由独立检查工具调用，尚无普通玩家入口"
     ],
     "sources": [
       {
@@ -1507,6 +1508,30 @@
         "path": "tools/native-spatial/check-route-first-c17.mjs",
         "role": "test",
         "note": "DEC-209原生联合生成实施与版本隔离"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-construction-reference.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-construction-shore.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-native-construction-reference.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-native-construction-shore.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-reference.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/native-construction-2026-10-14.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -1582,7 +1607,8 @@
       "COH-E240",
       "COH-E241",
       "COH-E242",
-      "COH-E243"
+      "COH-E243",
+      "COH-E244"
     ],
     "unknowns": [
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
@@ -1598,7 +1624,8 @@
       "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
       "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。",
       "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。",
-      "r12限定五代表首批1/5：凝胶群岛20261012中档正常生成33.389秒、精确重放29.809秒；其他四图均几何阶段超时。后续共同初始化试验0/5且回退原成功，予以撤回。单图技术通过不代表动态潜行、正常镜头、全seed、其他污染档或全库完成。"
+      "r12限定五代表首批1/5：凝胶群岛20261012中档正常生成33.389秒、精确重放29.809秒；其他四图均几何阶段超时。后续共同初始化试验0/5且回退原成功，予以撤回。单图技术通过不代表动态潜行、正常镜头、全seed、其他污染档或全库完成。",
+      "E244仅证明正常/DEV入口隔离、单份r11完整基线及DEV构造范围；21轮参考与最终复核均未完整准入，不能以1.731秒几何检查声称完整生成提速。固定参考CSV身份不同于普通r12配方，随机构造、确定性恢复、留出样本和全108推广未完成。"
     ]
   },
   {
@@ -2211,7 +2238,7 @@
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "r11在联合增补后的最终地形上重新部署未知出撤、完整敌人/资源/Host及翻找站位；保留原配额、风险层和巡逻窗口。每既有seed attempt最多两完整候选，部署失败整候选回滚；20例含1例真实同seed后备成功，非全库全seed准入保证。 DEC-209批准r12实施；已有原生候选与准入实现，当前仍有空白失败，新全图/潜行尚未通过，历史证据不外推。",
+    "summary": "普通出发全108世界使用r11，保留未知出撤、完整资源/敌人/Host、风险层与巡逻窗口；双脊渡口单中档完整生成2.434秒取得限定证据。DEV参考的最终12H/6S、全身体可达及G2通过仍被G1/G3拒绝，Master/full均0，尚无本参考完整内容或G4证据；历史完整图结果不外推。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -2645,6 +2672,34 @@
       {
         "path": "docs/reviews/artifacts/native-generation-2026-10-13/baseline-counts.mjs",
         "role": "doc"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-construction-reference.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-construction-shore.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-native-construction-reference.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-native-construction-shore.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-reference.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/native-construction-2026-10-14.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -2704,7 +2759,8 @@
       "COH-E239",
       "COH-E240",
       "COH-E241",
-      "COH-E242"
+      "COH-E242",
+      "COH-E244"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
@@ -2723,7 +2779,8 @@
       "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
       "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。",
       "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。",
-      "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。"
+      "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。",
+      "E244最终参考在内容部署前即因G1/G3拒绝，出口、全部资源/Host/敌人巡逻和G4均未执行，身体全可达不等于完整地图准入。普通r11单图基线也不代表全库重新生成或动态搜撤通过。"
     ]
   },
   {

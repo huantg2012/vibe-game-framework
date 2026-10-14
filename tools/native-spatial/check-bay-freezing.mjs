@@ -1,15 +1,15 @@
 /** Authoring freeze/schema checks, without searching or deploying maps. */
 import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';
-import {createR100ProductionRecipe,validR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100NativeSpatialDevelopmentRecipe,validR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {validNativeSpatialRuntimeInput} from '../../src/generation/world-study/native-spatial-recipe.ts';
 import {NATIVE_SPATIAL_WORLDS as worlds,NATIVE_SPATIAL_BAY_PROFILES as profiles} from '../../src/generated/r100-native-spatial.ts';
 const output=process.argv[2];assert(output&&!fs.existsSync(output),'Supply a NEW report path');
-const cases=[],recipes=worlds.flatMap(w=>['low','medium','severe'].map(grade=>createR100ProductionRecipe(w.worldId,20261012,grade)));
+const cases=[],recipes=worlds.flatMap(w=>['low','medium','severe'].map(grade=>createR100NativeSpatialDevelopmentRecipe(w.worldId,20261012,grade)));
 for(const recipe of recipes){assert(validR100ProductionRecipe(recipe));assert.equal(recipe.nativeSpatial.policy.version,2);assert(recipe.nativeSpatial.world.landShoulderAttachment);assert(recipe.nativeSpatial.bayProfiles.length);assert(Buffer.byteLength(JSON.stringify(recipe))<=60*1024);}
 cases.push({id:'fifteen-reviewed-recipes-freeze-B-and-core-shoulder-under-byte-cap',passed:true,count:recipes.length,maxBytes:Math.max(...recipes.map(r=>Buffer.byteLength(JSON.stringify(r))))});
 const base=recipes.find(r=>r.nativeSpatial.world.worldId==='gel-rafts'),mutations=[['missing-bay-profile',v=>delete v.bayProfiles],['missing-B-world-field',v=>delete v.world.bayGrammar],['missing-shoulder-field',v=>delete v.world.landShoulderMinExtensionPx],['unversioned-attachment',v=>v.world.landShoulderAttachment='other'],['too-thin-shoulder-for-wide-join',v=>v.world.landShoulderMinThicknessPx=64],['impossible-role-count-sum',v=>v.world.landCoreMaxCount=16],['duplicate-B-count-domain',v=>v.world.bayCountOptions=[0,1,1]],['unrecognized-field',v=>v.world.shoulderOther=1]];
 for(const [id,mutate]of mutations){const copy=structuredClone(base);mutate(copy.nativeSpatial);assert(!validNativeSpatialRuntimeInput(copy.nativeSpatial,copy.nativeDefinition,copy.nativeSpatial.world.worldId),id);assert(!validR100ProductionRecipe(copy),id);cases.push({id,passed:true});}
 const original=JSON.stringify(base),world=worlds.find(w=>w.worldId==='gel-rafts'),oldWidth=world.landShoulderMinThicknessPx,oldMouth=profiles[0].minMouthPx;
-try{world.landShoulderMinThicknessPx=8;profiles[0].minMouthPx=4096;assert.equal(JSON.stringify(base),original);assert(validR100ProductionRecipe(base));assert.throws(()=>createR100ProductionRecipe('gel-rafts',20261012,'medium'),/Invalid reviewed native spatial intent/);}finally{world.landShoulderMinThicknessPx=oldWidth;profiles[0].minMouthPx=oldMouth;}
+try{world.landShoulderMinThicknessPx=8;profiles[0].minMouthPx=4096;assert.equal(JSON.stringify(base),original);assert(validR100ProductionRecipe(base));assert.throws(()=>createR100NativeSpatialDevelopmentRecipe('gel-rafts',20261012,'medium'),/Invalid reviewed native spatial intent/);}finally{world.landShoulderMinThicknessPx=oldWidth;profiles[0].minMouthPx=oldMouth;}
 cases.push({id:'saved-B-and-shoulder-input-does-not-read-mutated-current-author-table',passed:true});
 const report={status:'passed',createdAt:new Date().toISOString(),cases,scope:'Schema and frozen factory receipts only; no successful r12 generation or recovery replay claimed. In-memory author mutations restored; no file changed.'};fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

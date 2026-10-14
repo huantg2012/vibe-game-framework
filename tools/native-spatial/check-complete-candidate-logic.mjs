@@ -4,13 +4,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import ts from 'typescript';
-import {createR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100NativeSpatialDevelopmentRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {completeNativeSpatialCandidate} from '../../src/generation/world-study/r100-production-map.ts';
 
 const output=process.argv[2];assert(output&&!fs.existsSync(output),'Supply a NEW receipt path');
 const files=['src/generation/world-study/r100-production-map.ts','tools/native-spatial/check-complete-candidate-logic.mjs'];
 const snapshot=()=>Object.fromEntries(files.map(file=>[file,createHash('sha256').update(fs.readFileSync(file)).digest('hex')]));
-const before=snapshot(),cases=[],recipe=createR100ProductionRecipe('gel-rafts',20261012,'medium');
+const before=snapshot(),cases=[],recipe=createR100NativeSpatialDevelopmentRecipe('gel-rafts',20261012,'medium');
 assert.equal(recipe.package.algorithmRevision,12);
 const frozenRecipe=JSON.stringify(recipe);
 function fixture(){

@@ -1,7 +1,8 @@
 /** Catalog inspection uses the formal v3 worker and RiftScene in memory storage. */
 import { R100_NATIVE_WORLDS } from '@/generated/r100-native-worlds';
 import { BUILD_LAB_LOADOUTS } from '@/generated/build-lab-data';
-import { createR100ProductionRecipe } from '@/generation/world-study/r100-package';
+import { createR100ProductionRecipe, createR100NativeSpatialDevelopmentRecipe } from '@/generation/world-study/r100-package';
+import { NATIVE_SPATIAL_WORLDS } from '@/generated/r100-native-spatial';
 import { isPollutionGrade, POLLUTION_GRADES } from '@/generation/world-study/pollution-grade';
 import { RiftGenerationClient } from '@/generation/rift-generation-client';
 import { hydrateRiftGeneration } from '@/generation/rift-generation-protocol';
@@ -17,25 +18,28 @@ else initialize();
 function initialize(): void {
   const el = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
   const params = new URLSearchParams(location.search);
+  const nativeDevelopment = params.get('nativeSpatial') === '1';
+  const createRecipe = nativeDevelopment ? createR100NativeSpatialDevelopmentRecipe : createR100ProductionRecipe;
+  const worlds = nativeDevelopment ? R100_NATIVE_WORLDS.filter(world => NATIVE_SPATIAL_WORLDS.some(intent => intent.worldId === world.id && intent.enabled && intent.annotationStatus === 'reviewed')) : R100_NATIVE_WORLDS;
   const world = el<HTMLSelectElement>('world'), grade = el<HTMLSelectElement>('grade');
   const seed = el<HTMLInputElement>('seed'), loadout = el<HTMLSelectElement>('loadout');
   const client = new RiftGenerationClient();
   let map: WorldProductionMap | null = null, recipe: WorldProductionRecipeV3 | null = null;
   let request: AbortController | null = null, revision = 0, scan = false, overview = false;
   let generatedMs = 0, ready = false;
-  for (const entry of R100_NATIVE_WORLDS) world.add(new Option(`${entry.label}${entry.enabled ? '' : ' · 待审'}`, entry.id));
+  for (const entry of worlds) world.add(new Option(`${entry.label}${entry.enabled ? '' : ' · 待审'}`, entry.id));
   for (const entry of BUILD_LAB_LOADOUTS) loadout.add(new Option(entry.name, entry.id));
-  if (R100_NATIVE_WORLDS.some(entry => entry.id === params.get('world'))) world.value = params.get('world')!;
+  if (worlds.some(entry => entry.id === params.get('world'))) world.value = params.get('world')!;
   if (isPollutionGrade(params.get('grade'))) grade.value = params.get('grade')!;
   if (/^\d+$/.test(params.get('seed') ?? '')) seed.value = params.get('seed')!;
   if (BUILD_LAB_LOADOUTS.some(entry => entry.id === params.get('loadout'))) loadout.value = params.get('loadout')!;
   const catalog = el('catalog');
-  const catalogButtons = R100_NATIVE_WORLDS.map((entry, index) => {
+  const catalogButtons = worlds.map((entry, index) => {
     const button = document.createElement('button'); button.textContent = `${String(index + 1).padStart(2, '0')}　${entry.label}`;
     button.dataset.world = entry.id; button.onclick = () => { world.value = entry.id; void build(); };
     catalog.append(button); return button;
   });
-  el('catalog-count').textContent = `${R100_NATIVE_WORLDS.length} 世界 / ${R100_NATIVE_WORLDS.length * 3} 档`;
+  el('catalog-count').textContent = `${nativeDevelopment ? 'DEV r12 · ' : ''}${worlds.length} 世界 / ${worlds.length * 3} 档`;
   function error(reason: unknown): void { el('error').hidden = false; el('error').textContent = String(reason); el('waiting').hidden = true; }
   function publish(state: RiftGymRuntimeState): void {
     el<HTMLButtonElement>('pause').disabled = !state.running;
@@ -43,10 +47,10 @@ function initialize(): void {
     el('diagnostics').textContent = JSON.stringify({ recipe, metadata: map?.metadata, runtime: state }, null, 2);
   }
   const runtime = createRiftGymRuntime({ onReady: () => { ready = true; void build(); }, onState: publish, onReturn: () => { overview = true; syncView(); }, onError: error });
-  function query(): string { return new URLSearchParams({ world: world.value, grade: grade.value, seed: seed.value, loadout: loadout.value }).toString(); }
+  function query(): string { return new URLSearchParams({ world: world.value, grade: grade.value, seed: seed.value, loadout: loadout.value, ...(nativeDevelopment ? { nativeSpatial: '1' } : {}) }).toString(); }
   function readRecipe(): WorldProductionRecipeV3 {
     if (!/^\d+$/.test(seed.value) || Number(seed.value) > 0xffffffff || !isPollutionGrade(grade.value)) throw new Error('种子或污染等级不合法。');
-    return createR100ProductionRecipe(world.value, Number(seed.value), grade.value);
+    return createRecipe(world.value, Number(seed.value), grade.value);
   }
   function stopScan(): void { scan = false; el('scan').textContent = '巡检全部世界 × 三级'; }
   function syncView(): void {
@@ -98,7 +102,7 @@ function initialize(): void {
       map = result.world; recipe = frozen; generatedMs = performance.now() - start;
       const entry = R100_NATIVE_WORLDS.find(row => row.id === world.value)!;
       el('map-title').textContent = `${entry.label} · ${frozen.gradeDefinition.label}`;
-      el('qualification').textContent = entry.enabled ? '正式随机池' : '候选 · 尚未进入随机池';
+      el('qualification').textContent = nativeDevelopment ? 'DEV r12 · 未准入正常游戏' : entry.enabled ? '正式随机池' : '候选 · 尚未进入随机池';
       for (const button of catalogButtons) button.setAttribute('aria-current', String(button.dataset.world === world.value));
       el('metrics').textContent = `请求 ${frozen.requestedSeed} → 实际 ${map.layout.seed} · ${map.layout.kindlingNodes.length} 薪柴 / ${map.layout.contaminantNodes.length} 污染物 / ${map.layout.enemySpawns.length} 敌人 · ${(generatedMs / 1000).toFixed(2)} 秒`;
       runtime.start(map, loadout.value, { productionRecipe: frozen, pollutionGrade: frozen.nativeDefinition.grade });
@@ -106,8 +110,8 @@ function initialize(): void {
     } catch (reason) { if (!signal.aborted && current === revision) error(reason); }
   }
   function adjacent(delta: number): void {
-    const index = R100_NATIVE_WORLDS.findIndex(row => row.id === world.value);
-    world.value = R100_NATIVE_WORLDS[(index + delta + R100_NATIVE_WORLDS.length) % R100_NATIVE_WORLDS.length]!.id; void build();
+    const index = worlds.findIndex(row => row.id === world.value);
+    world.value = worlds[(index + delta + worlds.length) % worlds.length]!.id; void build();
   }
   for (const control of [world, grade, loadout]) control.onchange = () => { void build(); };
   el('generate').onclick = () => { void build(); };
@@ -128,11 +132,11 @@ function initialize(): void {
     el('scan').textContent = '停止巡检'; let checked = 0, failed = 0;
     try {
       const inputSeed = readRecipe().requestedSeed;
-      for (const entry of R100_NATIVE_WORLDS) for (const level of POLLUTION_GRADES) {
+      for (const entry of worlds) for (const level of POLLUTION_GRADES) {
         if (!scan || signal.aborted) return;
-        try { await client.generate({ kind: 'departure', generation: createR100ProductionRecipe(entry.id, inputSeed, level) }, signal); }
+        try { await client.generate({ kind: 'departure', generation: createRecipe(entry.id, inputSeed, level) }, signal); }
         catch (reason) { if (signal.aborted) return; failed++; error(`${entry.label} / ${level}: ${String(reason)}`); }
-        el('scan-status').textContent = `${++checked} / ${R100_NATIVE_WORLDS.length * 3} 已生成 · ${failed} 拒绝。仅证明当前种子准入。`;
+        el('scan-status').textContent = `${++checked} / ${worlds.length * 3} 已生成 · ${failed} 拒绝。仅证明当前种子准入。`;
       }
     } catch (reason) { error(reason); }
     finally { stopScan(); }

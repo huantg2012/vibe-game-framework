@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "createdAt": "2026-10-14T11:04:17.283Z",
+  "worldId": "split-rib-causeway",
+  "requestedSeed": 20261012,
+  "grade": "medium",
+  "scope": "One complete ordinary r11 factory + map generation, no bake, replay or additional map. 60s hard subprocess cap includes startup and hashing; totalGenerationMs measures factory through complete map return, excluding module startup and hashing.",
+  "node": "v22.14.0",
+  "deadlineMs": 60000,
+  "sourceHashes": {
+    "src/generation/world-study/r100-package.ts": "e750042834c0b6e5ddfb6a92e07862d0f4d1a073e99b3b8993f4c1a4d34aa09d",
+    "src/generation/world-study/r100-production-map.ts": "018596af1fee71e93e0b1b38fcdcb388829cbb4c1a0cb5952b2a3325b129bfee",
+    "src/generation/legacy-r100-v11/executor-recovery.js": "12641ac9720eb6eb46d5cf3dc9238e9845d7dd368c30021f495fed636e26ceca",
+    "src/generation/legacy-r100-v11/manifest-recovery.json": "b95cd3c7eb71b564ac8f5379dc812ea9816d46d7c1d7af1f4b4c1aa785ff3de6"
+  },
+  "runnerSha256": "5e48e322a9304c98a8fe8e71d50b8272cfb09b6443167ebbe7d3cb0ea348e6c1",
+  "recipeRevision": 11,
+  "mapRevision": 11,
+  "recipeDependencyHash": "f1d65368",
+  "mapHash": "40fc768708e0c509e7ee05d98ede415b8e56a38defcc60fdc8098e26fecb7960",
+  "hashAlgorithm": "sha256 exactHash from tools/stealth-obstacles/baseline.mjs",
+  "recipeMs": 19.145250000000033,
+  "totalGenerationMs": 2434.158792,
+  "mapGenerationMs": 2415.013542,
+  "hashAndAssertionsMs": 85.4261660000002,
+  "effectiveSeed": 20261012,
+  "attempt": 0,
+  "content": {
+    "kindling": 5,
+    "contaminants": 3,
+    "enemies": 3
+  },
+  "processElapsedMs": 2903.880959,
+  "sourceHashesAfter": {
+    "src/generation/world-study/r100-package.ts": "e750042834c0b6e5ddfb6a92e07862d0f4d1a073e99b3b8993f4c1a4d34aa09d",
+    "src/generation/world-study/r100-production-map.ts": "018596af1fee71e93e0b1b38fcdcb388829cbb4c1a0cb5952b2a3325b129bfee",
+    "src/generation/legacy-r100-v11/executor-recovery.js": "12641ac9720eb6eb46d5cf3dc9238e9845d7dd368c30021f495fed636e26ceca",
+    "src/generation/legacy-r100-v11/manifest-recovery.json": "b95cd3c7eb71b564ac8f5379dc812ea9816d46d7c1d7af1f4b4c1aa785ff3de6"
+  },
+  "sourcesStable": true
+}

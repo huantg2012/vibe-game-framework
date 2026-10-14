@@ -66,9 +66,17 @@ function dependencyHash(recipe: Omit<WorldProductionRecipeV3, 'package'>, materi
     ...(revision === 11 ? { searchSitePolicy: recipe.searchSitePolicy, augmentationPolicy: recipe.augmentationPolicy } : {}),
     ...(revision === 12 ? { searchSitePolicy: recipe.searchSitePolicy, nativeSpatial: recipe.nativeSpatial } : {}) });
 }
-/** Explicit package selection is shared with qualification/gym; normal play only
- * calls selectR100ProductionRecipe and therefore respects the enabled pool. */
+/** Normal departures use the validated production revision, including worlds
+ * that also have an experimental native-spatial authoring definition. */
 export function createR100ProductionRecipe(worldId: string, seed: number, grade: PollutionGrade): WorldProductionRecipeV3 {
+  return createR100Recipe(worldId, seed, grade, false);
+}
+/** Explicit DEV opt-in. Unavailable native intent rejects instead of silently
+ * substituting a production recipe. Frozen r12 validation/replay is unchanged. */
+export function createR100NativeSpatialDevelopmentRecipe(worldId: string, seed: number, grade: PollutionGrade): WorldProductionRecipeV3 {
+  return createR100Recipe(worldId, seed, grade, true);
+}
+function createR100Recipe(worldId: string, seed: number, grade: PollutionGrade, nativeDevelopment: boolean): WorldProductionRecipeV3 {
   if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff || !isPollutionGrade(grade)) throw new Error('Invalid native departure seed/grade');
   const world = R100_NATIVE_WORLDS.find(row => row.id === worldId);
   if (!world) throw new Error(`Unknown native world ${worldId}`);
@@ -77,7 +85,8 @@ export function createR100ProductionRecipe(worldId: string, seed: number, grade:
   const nativeDefinition = world.definitions.find(definition => definition.grade === grade)!;
   const gradeDefinition = POLLUTION_GRADE_DEFINITIONS.find(row => row.id === grade)!;
   const contentDefinition = R100_EXPEDITION_GRADES.find(row => row.grade_id === grade)!;
-  const nativeSpatial = createNativeSpatialRuntimeInput(worldId, nativeDefinition);
+  const nativeSpatial = nativeDevelopment ? createNativeSpatialRuntimeInput(worldId, nativeDefinition) : undefined;
+  if (nativeDevelopment && !nativeSpatial) throw new Error(`Native spatial development is unavailable for ${worldId}`);
   const spatialPolicy = nativeSpatial ? undefined : createR100SpatialPolicy(worldId, seed);
   const searchSitePolicy = R100_SEARCH_SITE_POLICIES.find(row => row.worldId === worldId);
   if (nativeSpatial && !searchSitePolicy) throw new Error(`Native spatial world has no complete search-site policy: ${worldId}`);

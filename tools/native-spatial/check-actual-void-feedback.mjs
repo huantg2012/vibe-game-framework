@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import {buildNativeSpatialGeometry,createNativeSpatialActualVoidFeedback,nativePrimitive} from '../../src/generation/world-study/native-spatial-geometry.ts';
 import {identifyNativeSpatialStructures,evaluateNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-measure.ts';
 import {compileR100FragmentShape} from '../../src/generation/world-study/r100-fragment-shape.ts';
-import {createR100ProductionRecipe,validR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100ProductionRecipe,createR100NativeSpatialDevelopmentRecipe,validR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {validNativeSpatialRuntimeInput} from '../../src/generation/world-study/native-spatial-recipe.ts';
 import {NativeSpatialWideDomain,nativeSpatialConstraintScore,compareNativeSpatialConstraintScores} from '../../src/generation/world-study/native-spatial-wide-domain.ts';
 
@@ -114,7 +114,7 @@ await check('static-fresh-unknown-and-final-admission-remain-separate',()=>{
 });
 
 await check('runtime-feedback-is-not-frozen-recipe-input',()=>{
-  const recipe=createR100ProductionRecipe('gel-rafts',20261012,'medium'),json=JSON.stringify(recipe);assert.equal(recipe.package.algorithmRevision,12);assert(validR100ProductionRecipe(recipe));assert(!json.includes('actualVoid'));assert(!json.includes('exteriorMask'));
+  const recipe=createR100NativeSpatialDevelopmentRecipe('gel-rafts',20261012,'medium'),json=JSON.stringify(recipe);assert.equal(recipe.package.algorithmRevision,12);assert(validR100ProductionRecipe(recipe));assert(!json.includes('actualVoid'));assert(!json.includes('exteriorMask'));
   const invalid=structuredClone(recipe.nativeSpatial);invalid.actualVoid={cols:1,rows:1,exteriorMask:[1],holes:[]};assert.equal(validNativeSpatialRuntimeInput(invalid,recipe.nativeDefinition,'gel-rafts'),false);
   const legacy=createR100ProductionRecipe('cinder-ridge',20261012,'medium');assert.equal(legacy.package.algorithmRevision,11);assert(validR100ProductionRecipe(legacy));assert(!JSON.stringify(legacy).includes('actualVoid'));return{r12FactoryValid:true,extraRuntimeCacheRejectedByFrozenInputSchema:true,unregisteredWorldRevision:11,legacyFactoryValid:true};
 });

@@ -1,12 +1,12 @@
 /** One bounded continuation of saved candidate 37; never a fresh request. */
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';
-import {createR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100NativeSpatialDevelopmentRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {createNativeSpatialLayout} from '../../src/generation/world-study/native-spatial-layout.ts';
 import {buildNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-geometry.ts';
 import {identifyNativeSpatialStructures,evaluateNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-measure.ts';
 import {evaluateNativeSpatialVisibility} from '../../src/generation/world-study/native-spatial-visibility.ts';
 const [source,out]=process.argv.slice(2);assert(source&&out&&!fs.existsSync(out));fs.mkdirSync(out,{recursive:true});
-const receipt=JSON.parse(fs.readFileSync(source)),input=receipt.input,seed=20261012,native=createR100ProductionRecipe('gel-rafts',seed,'medium').nativeDefinition;
+const receipt=JSON.parse(fs.readFileSync(source)),input=receipt.input,seed=20261012,native=createR100NativeSpatialDevelopmentRecipe('gel-rafts',seed,'medium').nativeDefinition;
 const files=['native-spatial-layout.ts','native-spatial-land.ts','native-spatial-bay-layout.ts','native-spatial-geometry.ts','native-spatial-measure.ts','native-spatial-bay-measure.ts'].map(name=>'src/generation/world-study/'+name);
 const hashes=()=>Object.fromEntries(files.map(p=>[p,createHash('sha256').update(fs.readFileSync(p)).digest('hex')]));
 const report={scope:'Saved candidate37 continuation only, 4 refinements, not fresh production or deployment admission',source,sourceHashes:hashes(),cases:[]};

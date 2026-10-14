@@ -1,6 +1,6 @@
 /** One frozen c3 all-object reinitialization. No fresh sampling or retries. */
 import fs from 'node:fs';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';
-import {createR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100NativeSpatialDevelopmentRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {reinitializeNativeSpatialLayout} from '../../src/generation/world-study/native-spatial-layout.ts';
 import {buildNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-geometry.ts';
 import {identifyNativeSpatialStructures,evaluateNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-measure.ts';
@@ -11,7 +11,7 @@ const source='docs/qa/artifacts/native-spatial-2026-10-14/initial-c3-qualified-r
 const saved=JSON.parse(fs.readFileSync(source,'utf8')),old=JSON.parse(fs.readFileSync(prior,'utf8')),input=saved.input,seed=20261012;
 const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(dir+'/'+e.name):[dir+'/'+e.name]);
 const snapshot=()=>Object.fromEntries([...walk('src').filter(p=>/\.(ts|tsx|js|json)$/.test(p)),...walk('data').filter(p=>p.endsWith('.csv')),source,prior,'tools/native-spatial/check-global-initial-c3.mjs'].sort().map(p=>[p,createHash('sha256').update(fs.readFileSync(p)).digest('hex')]));
-const sourceHashes=snapshot(),savedBefore=JSON.stringify(saved),native=createR100ProductionRecipe('gel-rafts',seed,'medium').nativeDefinition;
+const sourceHashes=snapshot(),savedBefore=JSON.stringify(saved),native=createR100NativeSpatialDevelopmentRecipe('gel-rafts',seed,'medium').nativeDefinition;
 const attempt={geometrySeed:seed,proposalBudget:72,layoutProposals:1,geometryEvaluations:0,fullCandidates:0,feedbackBases:[],candidates:[],deploymentRejections:[],stopReason:'searching'};
 const start=performance.now(),checkpoint=()=>{if(performance.now()-start>60000){attempt.stopReason='deadline';throw new Error('Fixed initial assignment exceeded its 60 second deadline');}},budget=createNativeSpatialGeometryWorkBudget(attempt,input.policy.maxGeometryEvaluations,checkpoint);
 const result={scope:'One frozen c3 complete L/B/15 objects/edge seed, new global initializer once; not a fresh request or production admission.',sourceHashes,before:{hash:old.geometryHash,gate:saved.gate},input,work:attempt};let proposal,gate;

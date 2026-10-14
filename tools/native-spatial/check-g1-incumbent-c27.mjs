@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {nativeSpatialG1HoleFootprints} from '../../src/generation/world-study/native-spatial-g1-field.ts';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
-import {createR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100NativeSpatialDevelopmentRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {createNativeSpatialLayout,nativeSpatialPlanningWideRatio,nativeSpatialPlanningCoverage} from '../../src/generation/world-study/native-spatial-layout.ts';
 import {buildNativeSpatialGeometry,createNativeSpatialActualVoidFeedback,nativePrimitive,nativePrimitiveTree,nativePrimitiveDistance} from '../../src/generation/world-study/native-spatial-geometry.ts';
 import {identifyNativeSpatialStructures,evaluateNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-measure.ts';
@@ -17,7 +17,7 @@ const snapshot=()=>Object.fromEntries([...walk('src').filter(p=>/\.(ts|tsx|js|js
 const sourceHashes=snapshot(),saved=JSON.parse(fs.readFileSync(source,'utf8')),input=saved.input,seed=20261012;
 const evidence={stage:'native-definition'};
 try{
-const native=createR100ProductionRecipe('gel-rafts',seed,'medium').nativeDefinition;
+const native=createR100NativeSpatialDevelopmentRecipe('gel-rafts',seed,'medium').nativeDefinition;
 function compile(proposal){
   const geometry=buildNativeSpatialGeometry(proposal.definition,seed),groups=identifyNativeSpatialStructures(geometry,proposal.assemblies,input.policy);
   const gate=evaluateNativeSpatialGeometry(geometry,groups,input.policy,input.world,{placements:proposal.holes,profiles:input.holeProfiles},{landRects:proposal.plan.land,placements:proposal.bays,landJoins:proposal.landJoins,profiles:input.bayProfiles,allowedCounts:input.world.bayCountOptions,minWideJoinPx:input.world.landRectMinOverlapPx});

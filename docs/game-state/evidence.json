@@ -9934,5 +9934,52 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E244",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-14",
+    "revision": "77907ef0 + DEC-211 scoped development construction working tree",
+    "scope": "普通入口108×3的324份配方均r11，15份显式DEV配方均r12，旧r12校验保持；正常双脊渡口20261012中档单图完整生成2.434秒。DEV完整CSV/岸线构造已实现，最终源稳定：12H/6S、26244身体点全可达、G2通过，实际外轮廓共线合并后最长直边272px≤384px；10处内缺/0外伸。最终纯岸线检查通过，限定类型/DEV冒烟取得证据。",
+    "limitations": "round1–21均未完整准入（round19输入失败、0几何），最终复核仍拒绝G1半径167.743>160、深区584>448、G3宽域.548735<.55；Master/full均0，1.731秒不是完整地图生成速度。早期932px长直边图与最终图为同世界不同参考布局，非严格A/B。未验证新参考的完整部署/G4、普通配方恢复、随机变化、全库、动态潜行或审美；I14/P49开放。历史E243保留旧求解器单图范围。",
+    "sources": [
+      {
+        "path": "docs/qa/native-construction-2026-10-14.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-construction-2026-10-14/development-isolation-recipes-round1.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-construction-2026-10-14/development-isolation-dev.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-construction-2026-10-14/normal-baseline.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-construction-2026-10-14/reference-final/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-construction-2026-10-14/reference-final/silhouette.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/native-construction-2026-10-14/shore-input-final/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-construction-2026-10-14/reference-dev-smoke.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-construction-2026-10-14/review.md",
+        "role": "doc"
+      }
+    ]
   }
 ]

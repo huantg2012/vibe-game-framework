@@ -2,14 +2,14 @@
  * production selection, then compare the previous objective at the same base. */
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';import {build} from 'esbuild';import sharp from 'sharp';
 import * as data from '../../src/generated/r100-native-spatial.ts';
-import {createR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100NativeSpatialDevelopmentRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {createNativeSpatialLayout} from '../../src/generation/world-study/native-spatial-layout.ts';
 import {buildNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-geometry.ts';
 import {nativeSpatialGeometryFingerprint} from '../../src/generation/world-study/native-spatial-generation.ts';
 import {TileType} from '../../src/types/game-types.ts';
 const [out]=process.argv.slice(2);assert(out&&!fs.existsSync(out));fs.mkdirSync(out,{recursive:true});
 const source='docs/qa/artifacts/native-spatial-2026-10-14/production-gel-feedback-round1.json',production=JSON.parse(fs.readFileSync(source)),trace=production.failures[0].diagnostics.attempts[0],seed=20261012;
-const native=createR100ProductionRecipe('gel-rafts',seed,'medium').nativeDefinition,input={policy:data.NATIVE_SPATIAL_POLICY,world:data.NATIVE_SPATIAL_WORLDS.find(w=>w.worldId==='gel-rafts'),holeProfiles:data.NATIVE_SPATIAL_HOLE_PROFILES,bayProfiles:data.NATIVE_SPATIAL_BAY_PROFILES,assemblies:data.NATIVE_SPATIAL_ASSEMBLIES.filter(a=>a.worldId==='gel-rafts'&&(a.grade==='all'||a.grade==='medium')),subordinateProfiles:data.NATIVE_SPATIAL_SUBORDINATE_PROFILES.filter(p=>p.family===native.family)};
+const native=createR100NativeSpatialDevelopmentRecipe('gel-rafts',seed,'medium').nativeDefinition,input={policy:data.NATIVE_SPATIAL_POLICY,world:data.NATIVE_SPATIAL_WORLDS.find(w=>w.worldId==='gel-rafts'),holeProfiles:data.NATIVE_SPATIAL_HOLE_PROFILES,bayProfiles:data.NATIVE_SPATIAL_BAY_PROFILES,assemblies:data.NATIVE_SPATIAL_ASSEMBLIES.filter(a=>a.worldId==='gel-rafts'&&(a.grade==='all'||a.grade==='medium')),subordinateProfiles:data.NATIVE_SPATIAL_SUBORDINATE_PROFILES.filter(p=>p.family===native.family)};
 const receipts=new Map(),replay=[];
 for(const candidate of [9,15,16]){const row=trace.candidates.find(r=>r.candidate===candidate),base=receipts.get(row.feedbackBaseCandidate),proposal=createNativeSpatialLayout(native,input,seed,seed,candidate,base?{layout:base,gate:trace.candidates.find(r=>r.candidate===row.feedbackBaseCandidate).gates.geometry}:undefined,row.countPairIndex,row.bayCountIndex),g=buildNativeSpatialGeometry(proposal.definition,seed),hash=nativeSpatialGeometryFingerprint(g,proposal).hash;assert.equal(hash,row.geometryHash);receipts.set(candidate,proposal);replay.push({candidate,hash});}
 const base=receipts.get(16),baseGate=trace.candidates.find(r=>r.candidate===16).gates.geometry;

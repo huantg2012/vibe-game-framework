@@ -1,6 +1,6 @@
 /** Whole proposals including failures; never a production-admission or aesthetic pass. */
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import sharp from 'sharp';import {createHash} from 'node:crypto';
-import {createR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100NativeSpatialDevelopmentRecipe} from '../../src/generation/world-study/r100-package.ts';
 import * as data from '../../src/generated/r100-native-spatial.ts';
 import {createNativeSpatialLayout} from '../../src/generation/world-study/native-spatial-layout.ts';
 import {buildNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-geometry.ts';
@@ -14,7 +14,7 @@ const paths=['src/generation/world-study/native-spatial-layout.ts','src/generati
 const hashes=()=>Object.fromEntries(paths.map(p=>[p,createHash('sha256').update(fs.readFileSync(p)).digest('hex')]));
 const report={status:'running',scope:'Geometry proposals, no spawn/extraction selection, full deployment, G4 or dynamic experience acceptance.',spacing,seeds,grade,worlds,sourceHashes:hashes(),cases:[]};const save=()=>fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2)+'\n');save();
 for(const worldId of worlds)for(const seed of seeds){
- const native=createR100ProductionRecipe(worldId,seed,grade).nativeDefinition,input={policy:{...data.NATIVE_SPATIAL_POLICY,spacingPx:spacing},world:data.NATIVE_SPATIAL_WORLDS.find(w=>w.worldId===worldId),holeProfiles:data.NATIVE_SPATIAL_HOLE_PROFILES,assemblies:data.NATIVE_SPATIAL_ASSEMBLIES.filter(a=>a.worldId===worldId&&(a.grade==='all'||a.grade===grade)),subordinateProfiles:data.NATIVE_SPATIAL_SUBORDINATE_PROFILES.filter(p=>p.family===native.family)};
+ const native=createR100NativeSpatialDevelopmentRecipe(worldId,seed,grade).nativeDefinition,input={policy:{...data.NATIVE_SPATIAL_POLICY,spacingPx:spacing},world:data.NATIVE_SPATIAL_WORLDS.find(w=>w.worldId===worldId),holeProfiles:data.NATIVE_SPATIAL_HOLE_PROFILES,assemblies:data.NATIVE_SPATIAL_ASSEMBLIES.filter(a=>a.worldId===worldId&&(a.grade==='all'||a.grade===grade)),subordinateProfiles:data.NATIVE_SPATIAL_SUBORDINATE_PROFILES.filter(p=>p.family===native.family)};
  let previous=process.env.QA_RESUME?(()=>{const p=JSON.parse(fs.readFileSync(process.env.QA_RESUME));return{layout:p.proposal,gate:p.gate};})():undefined;
  for(let candidate=Number(process.env.QA_START??0);candidate<Number(process.env.QA_START??0)+count;candidate++){
   const start=performance.now(),id=`${worldId}-${seed}-${candidate}`;let row={worldId,seed,candidate};

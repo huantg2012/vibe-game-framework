@@ -5,7 +5,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {serialize} from 'node:v8';
 import {gzipSync} from 'node:zlib';
-import {createR100ProductionRecipe,validR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
+import {createR100NativeSpatialDevelopmentRecipe,validR100ProductionRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {createR100ProductionMap} from '../../src/generation/world-study/r100-production-map.ts';
 import {hydrateR100MasterWorld} from '../../src/generation/world-study/r100-native-data.ts';
 import {NativeBodyCollision} from '../../src/generation/world-study/native-body-collision.ts';
@@ -32,7 +32,7 @@ const save=()=>fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');save(
 for(const worldId of worlds)for(const requestedSeed of seeds)for(const grade of grades){
   const start=performance.now();let recipe,capturedMap;
   try{
-    recipe=createR100ProductionRecipe(worldId,requestedSeed,grade);
+    recipe=createR100NativeSpatialDevelopmentRecipe(worldId,requestedSeed,grade);
     assert.equal(recipe.package.algorithmRevision,12,'This test must exercise the new revision');assert(validR100ProductionRecipe(recipe));
     const frozen=JSON.stringify(recipe),map=createR100ProductionMap(recipe),elapsedMs=performance.now()-start;
     // Preserve the exact returned map before independent assertions/replay.

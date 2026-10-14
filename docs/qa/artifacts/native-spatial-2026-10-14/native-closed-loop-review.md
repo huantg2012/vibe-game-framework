@@ -204,3 +204,15 @@ src/generation/world-study/native-spatial-generation.ts       4b4bdddaaa29c69c94
 2026-10-14，基准为 Root 本轮共同初始化增量合同。结论：未发现实现阻断。`layout:421–442` 先取得完整匹配基底，再一次全 others 扫描；185 池、每对象 12 槽含原位、共享 work 与最终 H/几何硬门保留。`initial-placement:136` 禁止生产进入局部 Lloyd。`geometry:24–42` 与 `measure:85–91` 共享 S 阻行三角面积下界，没有替换作者身份、最终有效结构归并或实际面积统计。
 
 只读 `complete-initialization-round1` 的 28 项既有纯回归，全部记录通过，四个审查来源与回执吻合；未复跑或生成地图。`layout` / `initial-placement` / `geometry` / `measure` 四文件完整路径→SHA-256 排序紧凑 JSON 聚合为 `c4b8f831e91de7c165dfaa7d2fe05d02b69fd074a4811c746cbe882344904ea7`。读取时 spec:165/169 仍为旧默认入口描述，已提醒 Root 收尾同步；不以旧文字否定本轮明确授权。五图 fresh 结论另记。
+
+## 追加窄审：正常工厂与 r12 DEV 隔离
+
+2026-10-14，依据用户批准、Root 派发的“先隔离 r12，再完整直接构造参考图验证”任务合同。**当前工厂隔离未发现静态阻断项；参考图结果不在本节结论内。**
+
+真实玩家入口 `purification-scene.ts:1016` → `rift-recovery.ts:121–127` → `r100-package.ts:102–103` 使用普通选择工厂；同步兼容入口 `rift-recovery.ts:153–158` 同样如此。`r100-package.ts:71–89` 的普通工厂固定传入 false，短路后不读取 native intent；只有显式 DEV 工厂传 true，未配置时抛错。当前 `src` 中 DEV 工厂唯一调用方为已有 DEV 闸门下的 `r100-gym.ts:22`。gym 默认全部普通世界，`?nativeSpatial=1` 才进入 reviewed native 域，单图、相邻切换、巡检共同使用该域/工厂；复制链接与 replaceState 保留该参数。
+
+旧存档不经过新工厂：`session.ts:85` → `prepareProceduralRecovery` 使用保存的 generation；`rift-generation-execute.ts:15–17` 与同步 `restoreProceduralLayout` 仍校验并分派该原配方。此次 diff 未改 `validR100ProductionRecipe`、dependencyHash 或恢复执行分派，不会因为普通默认变为 r11 就重选、改写或直接拒绝有效 r12 配方。这是本次隔离变化的控制流确认，不是一次成功 r12 地图恢复实测。
+
+已读 `development-isolation-recipes-round1.json`：8 组通过、sourcesStable=true；324 个普通配方全部 r11，15 个显式 DEV 配方 r12，18 次正常随机选择 r11，reviewed 5 世界×3 档与 immutable r11 工厂精确一致。保存 c17 的 r12 原配方仍通过校验、内容未变，checksum 篡改仍拒绝。实现方报告 `development-isolation-tsc.log` 对应 tsc exit 0（日志为空）；`development-isolation-dev.json` 记录根页、DEV gym 和两模块 HTTP 200、28 个工具语法检查通过，明确未执行浏览器 JS 或地图生成。QA 未复跑批次、build、几何或恢复。
+
+本次只读 `r100-package.ts`、`r100-gym.ts`、`rift-recovery.ts`、`rift-generation-execute.ts`、`r100-production-map.ts` 的完整路径→SHA-256 按键排序紧凑 JSON 聚合为 `b4c64b45be22c605ea68a07dbaf8e95dcd180f0cd36d82f73297ee98da0af708`；package/gym/execute/map 与该回执来源吻合。package 为 `e750042834c0b6e5ddfb6a92e07862d0f4d1a073e99b3b8993f4c1a4d34aa09d`，gym 为 `ac356f0ef8edfc0ec0d68e8f4f13855850a4cd3778f60f08c015ba453db7e433`。
