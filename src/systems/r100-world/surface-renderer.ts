@@ -2,7 +2,7 @@
  * or grades: the normal Rift fog is composited over this opaque scene texture. */
 import type { MasterGroundSurface } from '@/generation/world-study/master-ground-field';
 import type { NativeVolumeLighting, NativeVolumeLight } from '@/generation/world-study/native-volume-raster';
-import type { MasterWorld } from '@/generation/world-study/r100-master-world';
+import type { MasterSurfaceWorld } from './surface-world';
 import type { PaintedMaterial } from './painted-material';
 import { bakeMasterSurface, type MasterSurfaceBake } from './surface-bake';
 import type { SearchSiteMaterialPatch } from './search-site-bake';
@@ -96,7 +96,7 @@ export class MasterSurfaceRenderer {
  private readonly searchSites=new Map<string,{patch:SearchSiteMaterialPatch;collected:boolean}>();
  private searchUploadCount=0;
  private searchBufferBytes=0;
- constructor(world:MasterWorld,ground:MasterGroundSurface|undefined,volume:NativeVolumeLighting|undefined,painting?:PaintedMaterial,prepared?:MasterSurfaceBake,searchPatches:readonly SearchSiteMaterialPatch[]=[]){
+ constructor(world:MasterSurfaceWorld,ground:MasterGroundSurface|undefined,volume:NativeVolumeLighting|undefined,painting?:PaintedMaterial,prepared?:MasterSurfaceBake,searchPatches:readonly SearchSiteMaterialPatch[]=[]){
   const r=world.raster,w=r.width,h=r.height,size=w*h;
   this.canvas=document.createElement('canvas');this.canvas.width=w;this.canvas.height=h;
   const gl=this.canvas.getContext('webgl2',{alpha:false,antialias:false,depth:false,premultipliedAlpha:false,preserveDrawingBuffer:true});

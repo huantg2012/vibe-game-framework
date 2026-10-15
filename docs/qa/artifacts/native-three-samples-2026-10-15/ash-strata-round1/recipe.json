@@ -1,0 +1,528 @@
+{
+  "version": 3,
+  "requestedSeed": 20261012,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "ash-strata",
+    "label": "无彩层原",
+    "description": "沉积层片与失色断面",
+    "material": "strata",
+    "surface": {
+      "substrate": "strata",
+      "coating": "strata",
+      "organization": "bands",
+      "coverage": 0.46,
+      "wear": 0.52,
+      "deposits": 0.52,
+      "scale": 1.1,
+      "relief": 0.52,
+      "contrast": 0.75,
+      "regionScale": 1.15,
+      "quietness": 0.48,
+      "formScale": 1.3,
+      "fragmentation": 0.65,
+      "accentCoverage": 0.02
+    },
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 2302505,
+      "floor": 4539212,
+      "floorLight": 7762299,
+      "materialDark": 3289145,
+      "materialMid": 6709611,
+      "materialLight": 11116714,
+      "faceLight": 12762048,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 4539212,
+      "groundLight": 7762299,
+      "groundDark": 2302505,
+      "wall": 6709611,
+      "wallLight": 11116714,
+      "wallDark": 3289145
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "ash-strata",
+    "ground": {
+      "dark": 2302505,
+      "mid": 4539212,
+      "light": 7762299
+    },
+    "solid": {
+      "dark": 3289145,
+      "mid": 6709611,
+      "light": 11116714
+    },
+    "cleaved": {
+      "dark": 5327703,
+      "mid": 8946316,
+      "light": 12762048
+    },
+    "secondary": {
+      "dark": 3813433,
+      "mid": 6771804,
+      "light": 9928839
+    },
+    "groundPattern": "strata",
+    "patternScale": 192,
+    "patternStrength": 0.48,
+    "secondaryCoverage": 0.16,
+    "textureContrast": 1.08,
+    "quietCoverage": 0.46
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "folded-slab-medium",
+    "family": "folded-slab",
+    "grade": "medium",
+    "label": "逆折·穿层",
+    "profile": "ash-strata",
+    "cols": 28,
+    "rows": 20,
+    "seed": 20261002,
+    "spawn_x": 260,
+    "spawn_y": 380,
+    "exit_x": 196,
+    "exit_y": 460,
+    "search_x": 570,
+    "search_y": 440,
+    "enemy_x": 716,
+    "enemy_y": 180,
+    "axis": -0.22,
+    "light_radius": 132,
+    "emission": 0.55,
+    "motion_period": 16,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "role": "solid",
+        "x": 448,
+        "y": 276,
+        "rotation": -0.22,
+        "length": 350,
+        "width": 146,
+        "height": 126,
+        "thickness": 14,
+        "fold": 0.66,
+        "branches": 4,
+        "opening": 0.18,
+        "distortion": 0.28
+      },
+      {
+        "id": 2,
+        "role": "relief",
+        "x": 633,
+        "y": 294,
+        "rotation": 0.67,
+        "length": 238,
+        "width": 100,
+        "height": 6,
+        "thickness": 2,
+        "fold": 0.55,
+        "branches": 3,
+        "opening": 0.18,
+        "distortion": 0.22
+      },
+      {
+        "id": 3,
+        "role": "relief",
+        "x": 442,
+        "y": 156,
+        "rotation": 2.79,
+        "length": 252,
+        "width": 94,
+        "height": 6,
+        "thickness": 2,
+        "fold": 0.47,
+        "branches": 3,
+        "opening": 0.18,
+        "distortion": 0.22
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 584,
+          "y": 352
+        },
+        {
+          "x": 648,
+          "y": 328
+        },
+        {
+          "x": 728,
+          "y": 352
+        },
+        {
+          "x": 756,
+          "y": 392
+        },
+        {
+          "x": 716,
+          "y": 416
+        },
+        {
+          "x": 652,
+          "y": 388
+        },
+        {
+          "x": 608,
+          "y": 392
+        }
+      ],
+      [
+        {
+          "x": 168,
+          "y": 128
+        },
+        {
+          "x": 240,
+          "y": 104
+        },
+        {
+          "x": 284,
+          "y": 128
+        },
+        {
+          "x": 268,
+          "y": 160
+        },
+        {
+          "x": 200,
+          "y": 168
+        }
+      ]
+    ]
+  },
+  "gradeDefinition": {
+    "id": "medium",
+    "version": 1,
+    "label": "中污染",
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
+  },
+  "contentDefinition": {
+    "grade_id": "medium",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "中污染",
+    "public_risk": "侵蚀更广，久留代价更高",
+    "public_preparation": "按行装选择绕行或穿越",
+    "public_reward": "更多收获在较深处",
+    "enemy_count": 3,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 1
+  },
+  "nativeSpatial": {
+    "policy": {
+      "algorithm": "native-joint-layout-v1",
+      "version": 2,
+      "enabled": true,
+      "planningCellFactor": 0.866,
+      "holeToSolidRatio": 2,
+      "holeCountAbsTolerance": 1,
+      "holeCountRelTolerance": 0.2,
+      "minSolidCount": 1,
+      "requireMoreHoles": true,
+      "regionHoleShareMin": 0.64,
+      "regionHoleShareMax": 0.7,
+      "comparisonSpacingsPx": [
+        288,
+        352
+      ],
+      "spacingPx": 320,
+      "countToleranceRatio": 0.2,
+      "areaToleranceRatio": 0.1,
+      "maxEmptyRadiusPx": 160,
+      "deepEmptyThresholdPx": 112,
+      "maxDeepEmptySpanPx": 448,
+      "minHoleCoreRadiusPx": 32,
+      "minSolidAreaPx2": 1600,
+      "minSolidSpanPx": 80,
+      "probeStepPx": 32,
+      "referenceSightPx": 224,
+      "revealRouteMinPx": 80,
+      "revealRouteMaxPx": 240,
+      "maxCoverRoutePx": 320,
+      "wideRadiusPx": 48,
+      "minWideRatio": 0.55,
+      "minLargestWideRatio": 0.8,
+      "narrowWidthPx": 160,
+      "maxNarrowRatio": 0.2,
+      "maxNarrowRunPx": 224,
+      "encounterRadiusPx": 112,
+      "minRouteLengthPx": 224,
+      "minRouteEncounters": 6,
+      "minRouteHoleShare": 0.6,
+      "maxRouteHoleShare": 0.75,
+      "windowSize": 6,
+      "minWindowHoles": 3,
+      "maxGeometryEvaluations": 72,
+      "maxFullCandidates": 2,
+      "sourceHash": "eb9bb3c189409643d6f1056ab4cc14935717e31c4117b26cf8cdf7fc6ea9285b"
+    },
+    "world": {
+      "worldId": "ash-strata",
+      "enabled": true,
+      "annotationStatus": "reviewed",
+      "targetWalkAreaPx2": 1324992,
+      "frameWidthPx": 2304,
+      "frameHeightPx": 1792,
+      "materialAxisRad": -0.22,
+      "landGrammar": "offset-overlap-v1",
+      "landRectMinCount": 4,
+      "landRectMaxCount": 7,
+      "landRectMinSpanPx": 752,
+      "landRectMaxSpanPx": 1360,
+      "landRectMinThicknessPx": 512,
+      "landRectMaxThicknessPx": 928,
+      "landRectMinOverlapPx": 320,
+      "bayGrammar": "shore-rect-cut-v1",
+      "bayProfileIds": [
+        "shore-bay-default"
+      ],
+      "bayCountOptions": [
+        0,
+        1,
+        2
+      ],
+      "landCoreMinCount": 3,
+      "landCoreMaxCount": 5,
+      "landShoulderMinCount": 1,
+      "landShoulderMaxCount": 2,
+      "landShoulderMinSpanPx": 576,
+      "landShoulderMaxSpanPx": 768,
+      "landShoulderMinThicknessPx": 384,
+      "landShoulderMaxThicknessPx": 448,
+      "landShoulderMinExtensionPx": 192,
+      "landShoulderMaxExtensionPx": 320,
+      "landShoulderAttachment": "core-outward-normal-v1"
+    },
+    "holeProfiles": [
+      {
+        "id": "offset-cut-small",
+        "sizeClass": "small",
+        "weight": 35,
+        "minSpanPx": 112,
+        "maxSpanPx": 144,
+        "minThicknessPx": 80,
+        "maxThicknessPx": 104,
+        "minRectCount": 2,
+        "maxRectCount": 3,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 14000
+      },
+      {
+        "id": "offset-cut-medium",
+        "sizeClass": "medium",
+        "weight": 50,
+        "minSpanPx": 152,
+        "maxSpanPx": 192,
+        "minThicknessPx": 88,
+        "maxThicknessPx": 120,
+        "minRectCount": 2,
+        "maxRectCount": 3,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 22000
+      },
+      {
+        "id": "offset-cut-large",
+        "sizeClass": "large",
+        "weight": 15,
+        "minSpanPx": 200,
+        "maxSpanPx": 240,
+        "minThicknessPx": 96,
+        "maxThicknessPx": 136,
+        "minRectCount": 3,
+        "maxRectCount": 4,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 30000
+      }
+    ],
+    "bayProfiles": [
+      {
+        "id": "shore-bay-default",
+        "minRectCount": 1,
+        "maxRectCount": 3,
+        "minDepthPx": 128,
+        "maxDepthPx": 480,
+        "minMouthPx": 96,
+        "maxMouthPx": 192,
+        "minOffsetRatio": 0.15,
+        "maxOffsetRatio": 0.45,
+        "minOverlapRatio": 0.35,
+        "maxOverlapRatio": 0.8,
+        "maxUnionSpanPx": 576,
+        "minRemovedLandAreaPx2": 8192,
+        "maxRemovedLandAreaPx2": 61440,
+        "minFinalThroatPx": 64,
+        "minBacklandPx": 320
+      }
+    ],
+    "assemblies": [
+      {
+        "worldId": "ash-strata",
+        "grade": "medium",
+        "id": "ash-medium-fold",
+        "sourceInstanceIds": [
+          1
+        ],
+        "attachedReliefIds": [
+          2,
+          3
+        ],
+        "sourceScale": 1.25,
+        "minScale": 0.95,
+        "maxScale": 1.05,
+        "rotationOffsetsRad": [
+          -0.18,
+          0,
+          0.18,
+          3.14159265359
+        ],
+        "maxSpanPx": 560,
+        "mode": "unique-once"
+      }
+    ],
+    "subordinateProfiles": [
+      {
+        "id": "native-slab-curled-ledge",
+        "family": "folded-slab",
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank",
+        "minLengthPx": 112,
+        "maxLengthPx": 184,
+        "minWidthPx": 64,
+        "maxWidthPx": 104,
+        "minHeightPx": 26,
+        "maxHeightPx": 40,
+        "thicknessPx": 8,
+        "fold": 0.36,
+        "branches": 2,
+        "opening": 0.82,
+        "distortion": 0.46,
+        "rotationOffsetRad": -0.18
+      },
+      {
+        "id": "native-slab-broken-shoulder",
+        "family": "folded-slab",
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan",
+        "minLengthPx": 144,
+        "maxLengthPx": 216,
+        "minWidthPx": 72,
+        "maxWidthPx": 120,
+        "minHeightPx": 20,
+        "maxHeightPx": 32,
+        "thicknessPx": 7,
+        "fold": 0.28,
+        "branches": 2,
+        "opening": 0.72,
+        "distortion": 0.54,
+        "rotationOffsetRad": 0.24
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "ash-strata",
+    "sourceHash": "619ddb9e3955bce8cb7c7f6bd830ca56818dad6c0c831f683cd1caf27d5e1e86",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.65,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "package": {
+    "id": "r100-ash-strata",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 12,
+    "materials": {
+      "folded-slab": {
+        "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+        "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+        "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+      }
+    },
+    "dependencyHash": "9ee3ee6b",
+    "grade": "medium"
+  }
+}

@@ -5,15 +5,19 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 # 开发练习场
 
+## 三张固定空间打磨样本（2026-10-15，DEC-212）
+
+入口 `/native-construction.html`。固定双脊渡口（`split-rib-causeway`）、断脂浅片（`gel-rafts`）、无彩层原（`ash-strata`），中污染、种子20261012；地图构型与岸线策略来自独立CSV。使用正式材质烘焙与渲染，支持去雾材质全图／真实结构剪影，供同三张图持续打磨。普通玩家入口保持r11；该页只展示DEV构造与实际诊断，未通过完整准入的图没有完整内容或可用撤离点，不读写玩家存档。验证及固定产物见[本批QA](../qa/native-three-samples-2026-10-15.md)。
+
 ## 裂隙备行重构体验（2026-10-09）
 
 `/prepare-review.html?fixture=equipped`复用正式净化点、裂隙聚焦、备行组件和出发链；Boot前使用内存存储，不读取或改写玩家存档。DEV工具条可切`starter`（开局）、`equipped`（已有行装）、`long`（长库）、`expanded`（第三主动位）、`blocked`（无有效武器）。夹具物件是测试授予，不计自然经营证据。正式玩家入口仍为根游戏→净化点裂隙E。
 
 先“选择污染程度”，通过“整理行装”进入第二环节；第一环节不显示装备/装置读数，不可直接出发。第二环节单列装配，Esc回选级，再Esc离开；鼠标踏入与Shift+Enter走正式出发，普通Enter不出发。装置读数保留在净化点存续报告。开发API`__prepareReview`只提供本页状态、重置与开关，机制/UI规格归[统一库存第5节](../specs/system-field-inventory.md#5-入口备行与装备hud)，新验证归[两环节QA](../qa/preparation-flow-2026-10-09.md)。
 
-## 当前 R100 入口（2026-10-12，DEC-206首代表）
+## 当前 R100 入口（2026-10-15，DEC-211）
 
-`/r100-gym.html`读取当前修订8的108世界目录，可选低／中／重污染并用正式角色、有限视野和交互规则实走。余烬脊及无彩层原、纤维扇流、壳缘阶串、苍帆夹道、凝胶裹纤维已注册独立矩形拼合与自由断缘布局，另102世界保持原几何、待逐类整改；当前资格以推广QA为准，目录数不是新构型完成数。直接复看首代表用 `/r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011`；跨材料代表用 `world=ash-strata|splayed-fibres|shell-chain|pale-sail|gel-fibre`、`seed=20261012`（world只填其中一个ID）。Boot前的内存存储隔离保护正式存档，正式玩家仍从净化点备行随机选池。当前接入与验证范围见[推广任务](../tasks/rift-spatial-rollout.md)，I14/P49状态不自动提升。
+`/r100-gym.html`读取108世界目录，可选低／中／重污染并用正式角色、有限视野和交互规则实走。普通入口统一r11，显式`nativeSpatial=1`才选择尚在验证的r12路径；目录数不代表原生联合生成已完成。直接复看旧首代表用 `/r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011`；其他世界可改`world`及`seed`。Boot前的内存存储隔离保护正式存档，正式玩家仍从净化点备行随机选池。三张直接构造参考应使用上方独立入口，不能用普通r12配方恢复参考图。当前接入与验证范围见[推广任务](../tasks/rift-spatial-rollout.md)，I14/P49状态不自动提升。
 
 [I07–I09历史正常实景图册](../qa/interactive/r100-i07-i09-worlds.html)保留当时52世界阶段的对照；旧20世界图册继续保留。下方按日期记录的母版、v2巡览和旧修订结果均是历史阶段，不能覆盖当前入口与状态。
 

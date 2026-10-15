@@ -13,6 +13,7 @@ import type { PaintedSurface } from './painted-material';
 import type { MasterGroundSurface } from '@/generation/world-study/master-ground-field';
 import { NativeVolumeLighting, type NativeVolumeMaterialSet } from '@/generation/world-study/native-volume-raster';
 import type { MasterWorld } from '@/generation/world-study/r100-master-world';
+import type { MasterSurfaceWorld } from './surface-world';
 import type { PaintedMaterial } from './painted-material';
 import { buildMasterSurfaceFields } from './surface-fields';
 import { deriveFragmentContamRamp, type Rgb } from '@/entities/form-renderers/d/fragment-ramp';
@@ -27,7 +28,7 @@ export interface MasterSurfaceBake {
 }
 const rgb=(hex:number):Rgb=>[hex>>>16&255,hex>>>8&255,hex&255];
 const mix=(a:Rgb,b:Rgb,t:number):Rgb=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
-export function masterVolumePalette(world:MasterWorld):NativeVolumeMaterialSet {
+export function masterVolumePalette(world:MasterSurfaceWorld):NativeVolumeMaterialSet {
  const p=world.sample.profile.palette,ramp=deriveFragmentContamRamp('frag-outdoor');
  const neutral=(ramp.mid[0]+ramp.mid[1]+ramp.mid[2])/3;
  const sourceColor=mix(ramp.core,[neutral,neutral,neutral],.20);
@@ -38,7 +39,7 @@ export function masterVolumePalette(world:MasterWorld):NativeVolumeMaterialSet {
    joint:{base:rgb(p.shadow),dark:rgb(p.floorDeep),light:rgb(p.materialMid),roughness:.51,structure:.5,emission:sourceColor,emissionStrength:.72+world.definition.emission*.40},
  };
 }
-export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,volume:NativeVolumeLighting,painting?:PaintedMaterial):MasterSurfaceBake {
+export function bakeMasterSurface(world:MasterSurfaceWorld,ground:MasterGroundSurface,volume:NativeVolumeLighting,painting?:PaintedMaterial):MasterSurfaceBake {
  const r=world.raster,w=r.width,h=r.height,size=w*h;
   const fields=buildMasterSurfaceFields(world),ramp=deriveFragmentContamRamp('frag-outdoor');
   const diagnostics={structuralEmissionPixels:fields.infection.reduce((n,v)=>n+(v>.15?1:0),0),erosionEdgePixels:fields.erosion.reduce((n,v)=>n+(v>.1?1:0),0),blockingSurfaceMaterial:painting?.solid?'dedicated compact skin/fracture atlas and finish; geometric face normals':'object-local UV; no perimeter brightening',greenOwnership:'actual fractured object or authored light-eaten edge; never the whole floor'};

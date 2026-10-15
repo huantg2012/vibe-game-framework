@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>参差岸线 · 三图固定样本</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/src/dev/rift-spatial-prototype.css">
+  <style>select{font:inherit;color:inherit;background:#111519;border:1px solid #3a3d42;padding:6px 10px}nav label{margin-left:0;margin-right:auto}#identity{max-width:55%;text-align:right}#scope{padding:10px 30px;color:#e0bd80;border-bottom:1px solid #3a3429}#viewport{height:calc(100vh - 275px)}#sample-title{letter-spacing:1px}#sources a{color:#c8cdd4;margin-right:16px}#error{white-space:pre-wrap}footer{align-items:flex-start}</style>
+</head>
+<body>
+  <header><div><p class="eyebrow">参差岸线 · 三图固定样本</p><h1 id="sample-title">正在读取样本</h1></div><p id="identity">中污染 · 固定种子 20261012</p></header>
+  <p id="scope">DEV 几何诊断，未完整准入。材质与结构来自同一构型；没有部署资源、敌人或撤离点。</p>
+  <nav aria-label="固定样本浏览">
+    <label>样本 <select id="sample" aria-label="样本"></select></label>
+    <button id="material" aria-pressed="true" disabled>材质全图</button>
+    <button id="silhouette" aria-pressed="false" disabled>结构剪影</button>
+    <span class="divider"></span>
+    <button id="fit" aria-pressed="true" disabled>全图</button>
+    <button id="native" aria-pressed="false" disabled>原始像素</button>
+  </nav>
+  <main id="viewport"><div id="stage"><canvas id="map" aria-label="固定样本俯视全图"></canvas></div></main>
+  <footer><p id="summary" role="status">读取固定 CSV；不会运行布局搜索。</p><p id="legend">黑色：缺地 · 剪影赭色：真实实体 · 白圈：出生点</p></footer>
+  <p id="error" role="alert" hidden></p>
+  <details><summary>实际检查、来源与构建次数</summary><p id="sources"></p><pre id="diagnostics"></pre></details>
+  <script type="module" src="/src/dev/native-construction.ts"></script>
+</body>
+</html>

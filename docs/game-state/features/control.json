@@ -406,13 +406,14 @@
     "id": "COH-F007",
     "title": "有限视野与不可照亮的空间空洞",
     "domain": "controls",
-    "summary": "普通出发全108世界恢复r11：真实VOID阻行并遮视，ordinary solid只阻身体/近战。DEV直接构造沿用实际遮视与结构门；最终固定参考G2通过、12H/6S及全可达，但G1/G3仍拒绝。最长直边272px仅为岸线机械证据，未验证正常镜头动态潜行或全库体验；历史夹具与单图证据保留原范围。",
+    "summary": "普通出发全108世界为r11：VOID阻行并遮视，ordinary solid只阻身体/近战。DEC-212三张固定DEV参考沿用实际遮视与结构门，G2/身体全可达通过，仍有空白和宽域失败。岸线最大直边272/160/193.4px均≤384px；未验证正常视距动态潜行或全库体验，历史证据保留原范围。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "进入 Rift，移动/转向观察地形与敌人",
       "DEV：rift-r100-masters.html；原生有限视野覆盖普通地表/实体材质，作者侵蚀VOID区独立阻光/阻行。",
-      "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
+      "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。",
+      "DEC-212：DEV native-construction.html?sample=split-rib-causeway（另有gel-rafts/ash-strata），三图固定medium/20261012；真实材质与同构型剪影切换，仅几何打磨入口，无内容/撤离/存档。"
     ],
     "sources": [
       {
@@ -699,6 +700,38 @@
       {
         "path": "docs/qa/native-construction-2026-10-14.md",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-gel-rafts.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-native-construction-gel-rafts-shore.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-native-construction-ash-strata.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-native-construction-ash-strata-shore.csv",
+        "role": "data"
+      },
+      {
+        "path": "native-construction.html",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/native-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/native-three-samples-2026-10-15.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/native-spatial/capture-three-construction-samples.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -740,7 +773,8 @@
       "COH-E241",
       "COH-E242",
       "COH-E243",
-      "COH-E244"
+      "COH-E244",
+      "COH-E245"
     ],
     "unknowns": [
       "历史I28所列全世界光照、压力与动态辨识扩展验收仍沿原挂起边界；R100专项按当前任务推进，不由旧记录判通过。",
@@ -755,7 +789,8 @@
       "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。",
       "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。",
       "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。",
-      "E244的G2仅为最终固定参考的真实几何遮视检查；其G1空白和G3宽域仍失败，完整内容未部署。没有正常镜头、实际敌人时序或自然探索证据，最长直边检查不代替视觉/潜行人审。"
+      "E244的G2仅为最终固定参考的真实几何遮视检查；其G1空白和G3宽域仍失败，完整内容未部署。没有正常镜头、实际敌人时序或自然探索证据，最长直边检查不代替视觉/潜行人审。",
+      "E245仅覆盖三张固定DEV样本的构造、真实材质及浏览器切换；三图仍有G1空白/G3宽域失败，无彩层原另有面积下界缺口。完整内容、未知出口、正常视距潜行、保存恢复、随机变化和全库品质未完成，人审未签。"
     ]
   },
   {

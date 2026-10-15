@@ -1,6 +1,6 @@
 /** Fields follow the raster's real material and object ownership. They never
  * create collision, optical cover or a separate painted floor contaminant. */
-import type { MasterWorld } from '@/generation/world-study/r100-master-world';
+import type { MasterSurfaceWorld } from './surface-world';
 
 function fracturePigment(x:number,y:number,salt:number):number {
  const hash=(a:number,b:number):number=>{
@@ -22,7 +22,7 @@ export interface MasterSurfaceFields {
  readonly infectedPixels: number;
 }
 
-export function buildMasterSurfaceFields(world:MasterWorld):MasterSurfaceFields {
+export function buildMasterSurfaceFields(world:MasterSurfaceWorld):MasterSurfaceFields {
  const r=world.raster,w=r.width,h=r.height,total=w*h;
  const solid=new Uint8Array(total),edgeDistance=new Float32Array(total),fractureDistance=new Float32Array(total),infection=new Float32Array(total);
  const roles=new Map<number,string>(world.definition.instances.map(value=>[value.id,value.role]));

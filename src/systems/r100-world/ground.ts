@@ -1,7 +1,7 @@
 /** Art-lab ground: material beds and their real shallow surface response. */
 import { bakeMasterGround, type MasterGroundSurface } from '@/generation/world-study/master-ground-field';
-import type { MasterWorld } from '@/generation/world-study/r100-master-world';
-export function paintMasterGround(world:MasterWorld):MasterGroundSurface {
+import type { MasterSurfaceWorld } from './surface-world';
+export function paintMasterGround(world:MasterSurfaceWorld):MasterGroundSurface {
   const sample=world.sample,width=sample.cols*sample.tileSize,height=sample.rows*sample.tileSize;
   const support=new Uint8Array(width*height);
   for(let y=0;y<height;y++)for(let x=0;x<width;x++)support[y*width+x]=world.matterAt(x,y)?1:0;

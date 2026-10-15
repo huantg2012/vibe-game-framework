@@ -33,7 +33,10 @@ const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>
 function silhouette(geometry,groups,gate,map){
   const t=geometry.terrain;let land='';
   for(let y=0;y<t.rows;y++)for(let x=0;x<t.cols;){if(!t.matter[y*t.cols+x]){x++;continue;}const from=x;while(x<t.cols&&t.matter[y*t.cols+x])x++;land+=`M${from*8},${y*8}h${(x-from)*8}v8h-${(x-from)*8}z`;}
-  const triangles=geometry.solidPrimitives.map(p=>`M${p.points[0]},${p.points[1]}L${p.points[2]},${p.points[3]}L${p.points[4]},${p.points[5]}z`).join('');
+  const triangles=geometry.solidPrimitives.map(({points:p})=>{
+    const reverse=(p[2]-p[0])*(p[5]-p[1])-(p[3]-p[1])*(p[4]-p[0])<0;
+    return `M${p[0]},${p[1]}L${p[reverse?4:2]},${p[reverse?5:3]}L${p[reverse?2:4]},${p[reverse?3:5]}z`;
+  }).join('');
   const text=(x,y,value,color='#f2f3ed')=>`<text x="${x}" y="${y}" fill="${color}" font-family="sans-serif" font-size="20" stroke="#10161b" stroke-width="4" paint-order="stroke">${esc(value)}</text>`;
   let labels=groups.structures.map(s=>text((s.bounds.minX+s.bounds.maxX)/2,(s.bounds.minY+s.bounds.maxY)/2,s.id,s.kind==='hole'?'#69d9e7':'#f3c685')).join('');
   const marker=(p,label,color)=>`<circle cx="${p.x}" cy="${p.y}" r="10" fill="${color}" stroke="#111" stroke-width="3"/>${text(p.x+15,p.y-15,label,color)}`;
