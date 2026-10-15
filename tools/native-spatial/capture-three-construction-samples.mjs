@@ -1,4 +1,4 @@
-/** Capture the three fixed DEV samples once, using the real Chrome canvas. */
+/** Capture a registered group of fixed DEV samples once, using the real Chrome canvas. */
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -7,15 +7,19 @@ import {createHash} from 'node:crypto';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const out=path.resolve(process.env.QA_OUTPUT_DIR??'docs/qa/artifacts/native-three-samples-2026-10-15/browser');
 const origin=process.env.GAME_URL??'http://127.0.0.1:3027';
-const extensionCapture=process.env.QA_EXTENSIONS==='1';
+const diverseCapture=process.env.QA_DIVERSE==='1';
+const extensionCapture=diverseCapture||process.env.QA_EXTENSIONS==='1';
 const macroCapture=extensionCapture||process.env.QA_MACRO==='1';
-const previousOut=macroCapture?path.resolve(process.env.QA_BASELINE_DIR??(extensionCapture?'docs/qa/artifacts/native-three-macro-2026-10-15/browser':'docs/qa/artifacts/native-three-samples-2026-10-15/browser')):null;
-const galleryTitle=extensionCapture?'中尺度扩展前后':macroCapture?'大形前后':'三图';
-const samples=[{id:'split-rib-causeway',label:'双脊渡口'},{id:'gel-rafts',label:'断脂浅片'},{id:'ash-strata',label:'无彩层原'}];
+const previousOut=macroCapture&&!diverseCapture?path.resolve(process.env.QA_BASELINE_DIR??(extensionCapture?'docs/qa/artifacts/native-three-macro-2026-10-15/browser':'docs/qa/artifacts/native-three-samples-2026-10-15/browser')):null;
+const galleryTitle=diverseCapture?'四种材质 · 共享新构型':extensionCapture?'中尺度扩展前后':macroCapture?'大形前后':'三图';
+const registryFile='data/rift-native-construction-samples.csv';
+const registry=(await fs.readFile(registryFile,'utf8')).trim().split(/\r?\n/).slice(1).map(line=>{const [id,label,reference,shore,cohort,character]=line.split(',');return{id,label,reference,shore,cohort,character};});
+const samples=registry.filter(sample=>sample.cohort===(diverseCapture?'diverse':'original'));
+assert.equal(samples.length,diverseCapture?4:3);
 const seed=20261012,grade='medium';
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const esc=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-const sourcePaths=['native-construction.html','src/dev/native-construction.ts','src/generation/world-study/native-spatial-construction-reference.ts','src/generation/world-study/native-spatial-construction-shore.ts','src/systems/r100-world/surface-world.ts','src/systems/r100-world/ground.ts','src/systems/r100-world/surface-fields.ts','src/systems/r100-world/surface-bake.ts','src/systems/r100-world/surface-renderer.ts',...['reference','shore','gel-rafts','gel-rafts-shore','ash-strata','ash-strata-shore'].map(name=>`data/rift-native-construction-${name}.csv`)];
+const sourcePaths=['native-construction.html','src/dev/native-construction.ts',registryFile,'src/generation/world-study/native-spatial-construction-reference.ts','src/generation/world-study/native-spatial-construction-shore.ts','src/systems/r100-world/surface-world.ts','src/systems/r100-world/ground.ts','src/systems/r100-world/surface-fields.ts','src/systems/r100-world/surface-bake.ts','src/systems/r100-world/surface-renderer.ts','src/generated/r100-native-spatial.ts','src/generated/r100-native-worlds.ts','src/generated/r100-world-appearance.ts','data/rift-native-spatial-worlds.csv','data/rift-native-spatial-assemblies.csv','data/rift-native-spatial-subordinate-profiles.csv','data/rift-world-appearance.csv',...samples.flatMap(sample=>[sample.reference.slice(1),sample.shore.slice(1)])];
 if(macroCapture)sourcePaths.push('src/generation/world-study/native-spatial-construction-macro.ts','data/rift-native-construction-macro-policy.csv');
 if(extensionCapture)sourcePaths.push('src/generation/world-study/native-spatial-construction-extension.ts','data/rift-native-construction-extension.csv');
 if(extensionCapture)sourcePaths.push('src/generation/world-study/native-volume-raster.ts');
@@ -41,7 +45,7 @@ if(previousReport){
 }
 await fs.mkdir(out,{recursive:true});
 assert(!(await fs.readdir(out)).includes('capture.json'),'Never overwrite a capture receipt');
-const report={status:'running',startedAt:new Date().toISOString(),scope:'Three fixed DEV construction samples; actual material renderer without observation fog, plus actual geometry silhouettes. No r12 search, full content deployment, gameplay admission, or ordinary recipe recovery.',receiptFormat:'compact-v2: scalar geometry metrics and gate reasons, no repeated witness arrays or full-source snapshots',macroCapture,extensionCapture,seed,grade,sourceHashes:await sourceHashes(),browserErrors:[],samples:[],cacheRevisits:[]};
+const report={status:'running',startedAt:new Date().toISOString(),scope:`${samples.length} fixed DEV construction samples; actual material renderer without observation fog, plus actual geometry silhouettes. No r12 search, full content deployment, gameplay admission, or ordinary recipe recovery.`,receiptFormat:'compact-v2: scalar geometry metrics and gate reasons, no repeated witness arrays or full-source snapshots',macroCapture,extensionCapture,diverseCapture,seed,grade,sourceHashes:await sourceHashes(),browserErrors:[],samples:[],cacheRevisits:[]};
 if(extensionCapture){const file='data/rift-native-construction-extension.csv';report.extensionPolicy={path:file,sha256:report.sourceHashes[file],csv:await fs.readFile(file,'utf8')};}
 if(previousBytes)report.previousCapture={path:path.join(previousOut,'capture.json'),sha256:sha(previousBytes)};
 const save=()=>fs.writeFile(path.join(out,'capture.json'),JSON.stringify(report,null,2)+'\n');
@@ -102,13 +106,13 @@ try{
     assert.equal(sha(JSON.stringify(combinedSources)),initial.sources.combinedSHA256);
     const record={...sample,state:compactState(initial,true),exports:[]};report.samples.push(record);await save();
     if(extensionCapture){
-      const previous=previousReport.samples.find(item=>item.id===sample.id).state.geometryMetrics;
+      const previous=previousReport?.samples.find(item=>item.id===sample.id).state.geometryMetrics??{holes:initial.extension.baseCounts.holes,solids:initial.extension.baseCounts.solids,positiveLandAreaPx2:null};
       const extension=initial.extension,accepted=extension.additions.length;
       record.extensionCounts={accepted,expectedAddedHoles:accepted*2,actualAddedHoles:extension.holes.length,expectedAddedSolids:accepted,actualAddedSolids:extension.solids.length,
         declaredBaseCounts:extension.baseCounts,declaredFinalCounts:extension.finalCounts,
         expectedFinalHoles:previous.holes+accepted*2,actualFinalHoles:initial.geometryMetrics.holes,
         expectedFinalSolids:previous.solids+accepted,actualFinalSolids:initial.geometryMetrics.solids,
-        addedLandToPreviousPositiveLandRatio:extension.addedLandAreaPx2/previous.positiveLandAreaPx2};
+        addedLandToPreviousPositiveLandRatio:previous.positiveLandAreaPx2?extension.addedLandAreaPx2/previous.positiveLandAreaPx2:null};
     }
     for(const mode of ['material','silhouette']){
       const current=await setMode(mode,sample.id);
@@ -171,7 +175,7 @@ const cards=report.samples.map(sample=>{
   }else views=`<div class="views">${sample.exports.map(item=>imageLink(sample,item,'',item.mode==='material'?'真实材质 · 去雾':'实际剪影')).join('')}</div>`;
   const extension=sample.state.extension;
   const extensionNote=extension?`<p>扩展 ${extension.additions.length} 处 · 新增地块 ${Math.round(extension.addedLandAreaPx2).toLocaleString('en-US')} px² · 画框 ${extension.frameBefore.join(' × ')} → ${extension.frameAfter.join(' × ')} · 主体平移 ${extension.translation.x}, ${extension.translation.y} px</p>`:'';
-  return `<section id="${sample.id}"><header><h2>${esc(sample.label)}</h2><a href="${esc(origin)}/native-construction.html?sample=${sample.id}">打开 DEV</a></header><p>外岸${gateLabel(sample.state.gates?.boundary)} · 几何门${gateLabel(sample.state.gates?.geometry)} · G2${gateLabel(sample.state.gates?.visibility)}</p>${extensionNote}${views}</section>`;
+  return `<section id="${sample.id}"><header><h2>${esc(sample.label)}</h2>${diverseCapture?`<span>${esc(sample.character)}</span>`:''}<a href="${esc(origin)}/native-construction.html?sample=${sample.id}">打开 DEV</a></header><p>外岸${gateLabel(sample.state.gates?.boundary)} · 几何门${gateLabel(sample.state.gates?.geometry)} · G2${gateLabel(sample.state.gates?.visibility)}</p>${extensionNote}${views}</section>`;
 }).join('\n');
-await fs.writeFile(path.join(out,'index.html'),`<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>参差岸 · ${galleryTitle}</title><style>body{margin:0;background:#10161b;color:#e1e5e3;font:16px/1.6 system-ui,"PingFang SC",sans-serif}main{max-width:1480px;margin:auto;padding:28px}h1{font-size:26px;margin:0}p{color:#a6b4b5;margin:8px 0}nav{display:flex;gap:22px;margin:22px 0}a{color:#c9d8d7;text-decoration:none}a:hover{text-decoration:underline}section{margin:28px 0 52px;scroll-margin-top:20px}header{display:flex;align-items:baseline;gap:22px}h2{font-size:20px}.views{display:grid;grid-template-columns:1fr 1fr;gap:20px}.image{display:block;background:#0b1115;padding:12px}.image span{display:block;margin-bottom:10px;color:#b1bdbc}img{width:100%;height:auto;display:block;image-rendering:pixelated}.comparison-frame{position:relative;width:100%;background:#080d10}.comparison-frame img{position:absolute;top:0;left:0}details{margin-top:14px}summary{cursor:pointer;padding:8px 0;color:#b1bdbc}footer{color:#8d9d9e;font-size:13px}</style><main><h1>参差岸 · ${galleryTitle}</h1><p>中污染 · 固定种子 ${seed} · 点击看原尺寸</p><p>${macroCapture?'左：此前 · 右：本轮。同一像素比例、同等画框；旧主体按实际平移对齐。材质可展开。指标仅为诊断。':'DEV 固定样本。'} 未通过完整地图准入。</p><nav>${samples.map(sample=>`<a href="#${sample.id}">${esc(sample.label)}</a>`).join('')}</nav>${cards}<footer><a href="capture.json">采集回执</a>${previousPrefix?` · <a href="${previousPrefix}/index.html">此前图册</a>`:''} · 实际画布导出，无生成后修图。</footer></main></html>\n`);
+await fs.writeFile(path.join(out,'index.html'),`<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>参差岸 · ${galleryTitle}</title><style>body{margin:0;background:#10161b;color:#e1e5e3;font:16px/1.6 system-ui,"PingFang SC",sans-serif}main{max-width:1480px;margin:auto;padding:28px}h1{font-size:26px;margin:0}p{color:#a6b4b5;margin:8px 0}nav{display:flex;gap:22px;margin:22px 0}a{color:#c9d8d7;text-decoration:none}a:hover{text-decoration:underline}section{margin:28px 0 52px;scroll-margin-top:20px}header{display:flex;align-items:baseline;gap:22px}h2{font-size:20px}.views{display:grid;grid-template-columns:1fr 1fr;gap:20px}.image{display:block;background:#0b1115;padding:12px}.image span{display:block;margin-bottom:10px;color:#b1bdbc}img{width:100%;height:auto;display:block;image-rendering:pixelated}.comparison-frame{position:relative;width:100%;background:#080d10}.comparison-frame img{position:absolute;top:0;left:0}.overview img{height:280px;object-fit:contain}details{margin-top:14px}summary{cursor:pointer;padding:8px 0;color:#b1bdbc}footer{color:#8d9d9e;font-size:13px}</style><main><h1>参差岸 · ${galleryTitle}</h1>${diverseCapture?'<p>四个现有世界的原配色与实体。共同应用矩形拼合、自由断缘和偏置宽臂规则；下方可对照结构剪影。</p>':''}<p>中污染 · 固定种子 ${seed} · 点击看原尺寸</p><p>${macroCapture&&!diverseCapture?'左：此前 · 右：本轮。同一像素比例、同等画框；旧主体按实际平移对齐。材质可展开。指标仅为诊断。':'DEV 固定样本。'} 未通过完整地图准入。</p>${diverseCapture?`<div class="views overview">${report.samples.map(sample=>`<a class=image href="#${sample.id}"><strong>${esc(sample.label)}</strong><p>${esc(sample.character)}</p><img src="${sample.id}-material.png" alt="${esc(sample.label)}去雾材质全图"></a>`).join('')}</div>`:''}<nav>${samples.map(sample=>`<a href="#${sample.id}">${esc(sample.label)}</a>`).join('')}</nav>${cards}<footer><a href="capture.json">采集回执</a>${previousPrefix?` · <a href="${previousPrefix}/index.html">此前图册</a>`:''} · 实际画布导出，无生成后修图。</footer></main></html>\n`);
 console.log(JSON.stringify({status:report.status,samples:report.samples.length,errors:report.browserErrors,sourcesStable:report.sourcesStable,output:out}));

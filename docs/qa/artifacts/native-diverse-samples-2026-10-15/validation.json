@@ -1,0 +1,109 @@
+{
+  "scope": "Four diverse fixed DEV samples; source geometry and shared algorithm, no production deployment",
+  "typecheck": "passed",
+  "generatedData": "passed, 9 explicit DEV intents / 27 grade definitions",
+  "pureExtensionRegression": "passed after correcting command to use tsx; initial plain node invocation had unknown .ts extension",
+  "ordinaryRecipe": "four selected worlds remain algorithmRevision 11 (precompile probe)",
+  "checks": [
+    {
+      "world": "cinder-ridge",
+      "label": "余烬脊",
+      "extensions": 2,
+      "holes": 16,
+      "solids": 8,
+      "allBodyReachable": true,
+      "sourceSupportViolations": 0,
+      "holeIdentityViolations": 0,
+      "boundaryPass": true,
+      "geometryReasons": [
+        "walk-area-outside-intent",
+        "G1-largest-empty-radius",
+        "G1-long-deep-empty-region",
+        "G3-wide-domain-area"
+      ],
+      "visibilityReasons": [
+        "body-route-to-cover-exceeds-limit"
+      ],
+      "frame": [
+        2688,
+        1792
+      ]
+    },
+    {
+      "world": "crystal-fibre",
+      "label": "晶化林床",
+      "extensions": 2,
+      "holes": 16,
+      "solids": 8,
+      "allBodyReachable": true,
+      "sourceSupportViolations": 0,
+      "holeIdentityViolations": 0,
+      "boundaryPass": true,
+      "geometryReasons": [
+        "G1-largest-empty-radius",
+        "G1-long-deep-empty-region",
+        "G3-wide-domain-area",
+        "G3-wide-domain-connectivity"
+      ],
+      "visibilityReasons": [],
+      "frame": [
+        2976,
+        1792
+      ]
+    },
+    {
+      "world": "ruptured-film",
+      "label": "破膜盆地",
+      "extensions": 1,
+      "holes": 14,
+      "solids": 7,
+      "allBodyReachable": true,
+      "sourceSupportViolations": 0,
+      "holeIdentityViolations": 0,
+      "boundaryPass": true,
+      "geometryReasons": [
+        "walk-area-outside-intent",
+        "G1-largest-empty-radius",
+        "G1-long-deep-empty-region",
+        "G3-wide-domain-area",
+        "G3-wide-domain-connectivity"
+      ],
+      "visibilityReasons": [
+        "body-route-to-cover-exceeds-limit"
+      ],
+      "frame": [
+        2304,
+        1792
+      ]
+    },
+    {
+      "world": "ivory-basin",
+      "label": "吸光釉原",
+      "extensions": 1,
+      "holes": 12,
+      "solids": 6,
+      "allBodyReachable": true,
+      "sourceSupportViolations": 0,
+      "holeIdentityViolations": 0,
+      "boundaryPass": true,
+      "geometryReasons": [
+        "G1-largest-empty-radius",
+        "G1-long-deep-empty-region",
+        "G3-wide-domain-area"
+      ],
+      "visibilityReasons": [],
+      "frame": [
+        2304,
+        2080
+      ]
+    }
+  ],
+  "capture": "browser/capture.json",
+  "failuresRetained": [
+    "browser-attempt1/capture.json",
+    "browser-before-solid-fit/capture.json",
+    "browser-before-edge-clearance/capture.json",
+    "browser-support-diagnostic/capture.json",
+    "ruptured-film-support-probe/report.json"
+  ]
+}

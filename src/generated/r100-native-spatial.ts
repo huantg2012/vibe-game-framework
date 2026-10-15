@@ -45,7 +45,7 @@ export const NATIVE_SPATIAL_POLICY:NativeSpatialPolicy={
   "minWindowHoles": 3,
   "maxGeometryEvaluations": 72,
   "maxFullCandidates": 2,
-  "sourceHash": "eb9bb3c189409643d6f1056ab4cc14935717e31c4117b26cf8cdf7fc6ea9285b"
+  "sourceHash": "cadc8521f6b32eb8d4856b7cf7b951156de45ea3007437e964b6a3248cd75258"
 };
 export const NATIVE_SPATIAL_WORLDS:readonly NativeSpatialWorldIntent[]=[
   {
@@ -211,6 +211,154 @@ export const NATIVE_SPATIAL_WORLDS:readonly NativeSpatialWorldIntent[]=[
     "landRectMaxSpanPx": 1472,
     "landRectMinThicknessPx": 576,
     "landRectMaxThicknessPx": 992,
+    "landRectMinOverlapPx": 320,
+    "bayGrammar": "shore-rect-cut-v1",
+    "bayProfileIds": [
+      "shore-bay-default"
+    ],
+    "bayCountOptions": [
+      0,
+      1,
+      2
+    ],
+    "landCoreMinCount": 3,
+    "landCoreMaxCount": 5,
+    "landShoulderMinCount": 1,
+    "landShoulderMaxCount": 2,
+    "landShoulderMinSpanPx": 576,
+    "landShoulderMaxSpanPx": 768,
+    "landShoulderMinThicknessPx": 384,
+    "landShoulderMaxThicknessPx": 448,
+    "landShoulderMinExtensionPx": 192,
+    "landShoulderMaxExtensionPx": 320,
+    "landShoulderAttachment": "core-outward-normal-v1"
+  },
+  {
+    "worldId": "cinder-ridge",
+    "enabled": true,
+    "annotationStatus": "reviewed",
+    "targetWalkAreaPx2": 1575616,
+    "frameWidthPx": 2304,
+    "frameHeightPx": 1792,
+    "materialAxisRad": 0.1,
+    "landGrammar": "offset-overlap-v1",
+    "landRectMinCount": 4,
+    "landRectMaxCount": 7,
+    "landRectMinSpanPx": 800,
+    "landRectMaxSpanPx": 1440,
+    "landRectMinThicknessPx": 544,
+    "landRectMaxThicknessPx": 960,
+    "landRectMinOverlapPx": 320,
+    "bayGrammar": "shore-rect-cut-v1",
+    "bayProfileIds": [
+      "shore-bay-default"
+    ],
+    "bayCountOptions": [
+      0,
+      1,
+      2
+    ],
+    "landCoreMinCount": 3,
+    "landCoreMaxCount": 5,
+    "landShoulderMinCount": 1,
+    "landShoulderMaxCount": 2,
+    "landShoulderMinSpanPx": 576,
+    "landShoulderMaxSpanPx": 768,
+    "landShoulderMinThicknessPx": 384,
+    "landShoulderMaxThicknessPx": 448,
+    "landShoulderMinExtensionPx": 192,
+    "landShoulderMaxExtensionPx": 320,
+    "landShoulderAttachment": "core-outward-normal-v1"
+  },
+  {
+    "worldId": "crystal-fibre",
+    "enabled": true,
+    "annotationStatus": "reviewed",
+    "targetWalkAreaPx2": 1324992,
+    "frameWidthPx": 2304,
+    "frameHeightPx": 1792,
+    "materialAxisRad": 0.1,
+    "landGrammar": "offset-overlap-v1",
+    "landRectMinCount": 4,
+    "landRectMaxCount": 7,
+    "landRectMinSpanPx": 752,
+    "landRectMaxSpanPx": 1360,
+    "landRectMinThicknessPx": 512,
+    "landRectMaxThicknessPx": 928,
+    "landRectMinOverlapPx": 320,
+    "bayGrammar": "shore-rect-cut-v1",
+    "bayProfileIds": [
+      "shore-bay-default"
+    ],
+    "bayCountOptions": [
+      0,
+      1,
+      2
+    ],
+    "landCoreMinCount": 3,
+    "landCoreMaxCount": 5,
+    "landShoulderMinCount": 1,
+    "landShoulderMaxCount": 2,
+    "landShoulderMinSpanPx": 576,
+    "landShoulderMaxSpanPx": 768,
+    "landShoulderMinThicknessPx": 384,
+    "landShoulderMaxThicknessPx": 448,
+    "landShoulderMinExtensionPx": 192,
+    "landShoulderMaxExtensionPx": 320,
+    "landShoulderAttachment": "core-outward-normal-v1"
+  },
+  {
+    "worldId": "ruptured-film",
+    "enabled": true,
+    "annotationStatus": "reviewed",
+    "targetWalkAreaPx2": 1575616,
+    "frameWidthPx": 2304,
+    "frameHeightPx": 1792,
+    "materialAxisRad": 0.1,
+    "landGrammar": "offset-overlap-v1",
+    "landRectMinCount": 4,
+    "landRectMaxCount": 7,
+    "landRectMinSpanPx": 800,
+    "landRectMaxSpanPx": 1440,
+    "landRectMinThicknessPx": 544,
+    "landRectMaxThicknessPx": 960,
+    "landRectMinOverlapPx": 320,
+    "bayGrammar": "shore-rect-cut-v1",
+    "bayProfileIds": [
+      "shore-bay-default"
+    ],
+    "bayCountOptions": [
+      0,
+      1,
+      2
+    ],
+    "landCoreMinCount": 3,
+    "landCoreMaxCount": 5,
+    "landShoulderMinCount": 1,
+    "landShoulderMaxCount": 2,
+    "landShoulderMinSpanPx": 576,
+    "landShoulderMaxSpanPx": 768,
+    "landShoulderMinThicknessPx": 384,
+    "landShoulderMaxThicknessPx": 448,
+    "landShoulderMinExtensionPx": 192,
+    "landShoulderMaxExtensionPx": 320,
+    "landShoulderAttachment": "core-outward-normal-v1"
+  },
+  {
+    "worldId": "ivory-basin",
+    "enabled": true,
+    "annotationStatus": "reviewed",
+    "targetWalkAreaPx2": 1241088,
+    "frameWidthPx": 2304,
+    "frameHeightPx": 1792,
+    "materialAxisRad": 0.1,
+    "landGrammar": "offset-overlap-v1",
+    "landRectMinCount": 4,
+    "landRectMaxCount": 7,
+    "landRectMinSpanPx": 720,
+    "landRectMaxSpanPx": 1328,
+    "landRectMinThicknessPx": 512,
+    "landRectMaxThicknessPx": 896,
     "landRectMinOverlapPx": 320,
     "bayGrammar": "shore-rect-cut-v1",
     "bayProfileIds": [
@@ -486,6 +634,188 @@ export const NATIVE_SPATIAL_ASSEMBLIES:readonly NativeSpatialAssembly[]=[
     ],
     "maxSpanPx": 432,
     "mode": "unique-once"
+  },
+  {
+    "worldId": "cinder-ridge",
+    "grade": "all",
+    "id": "cinder-ridge-all-whole",
+    "sourceInstanceIds": [
+      2,
+      3
+    ],
+    "attachedReliefIds": [
+      1
+    ],
+    "sourceScale": 1,
+    "minScale": 0.95,
+    "maxScale": 1.05,
+    "rotationOffsetsRad": [
+      -0.18,
+      0,
+      0.18,
+      3.14159265359
+    ],
+    "maxSpanPx": 1120,
+    "mode": "unique-once"
+  },
+  {
+    "worldId": "ruptured-film",
+    "grade": "all",
+    "id": "ruptured-film-all-whole",
+    "sourceInstanceIds": [
+      2,
+      3
+    ],
+    "attachedReliefIds": [
+      1
+    ],
+    "sourceScale": 1,
+    "minScale": 0.95,
+    "maxScale": 1.05,
+    "rotationOffsetsRad": [
+      -0.18,
+      0,
+      0.18,
+      3.14159265359
+    ],
+    "maxSpanPx": 1120,
+    "mode": "unique-once"
+  },
+  {
+    "worldId": "crystal-fibre",
+    "grade": "low",
+    "id": "crystal-fibre-low-whole",
+    "sourceInstanceIds": [
+      2
+    ],
+    "attachedReliefIds": [
+      1
+    ],
+    "sourceScale": 1,
+    "minScale": 0.95,
+    "maxScale": 1.05,
+    "rotationOffsetsRad": [
+      -0.18,
+      0,
+      0.18,
+      3.14159265359
+    ],
+    "maxSpanPx": 1120,
+    "mode": "unique-once"
+  },
+  {
+    "worldId": "crystal-fibre",
+    "grade": "medium",
+    "id": "crystal-fibre-medium-whole",
+    "sourceInstanceIds": [
+      1
+    ],
+    "attachedReliefIds": [
+      2,
+      3
+    ],
+    "sourceScale": 1,
+    "minScale": 0.95,
+    "maxScale": 1.05,
+    "rotationOffsetsRad": [
+      -0.18,
+      0,
+      0.18,
+      3.14159265359
+    ],
+    "maxSpanPx": 1120,
+    "mode": "unique-once"
+  },
+  {
+    "worldId": "crystal-fibre",
+    "grade": "severe",
+    "id": "crystal-fibre-severe-whole",
+    "sourceInstanceIds": [
+      1,
+      2
+    ],
+    "attachedReliefIds": [
+      3
+    ],
+    "sourceScale": 1,
+    "minScale": 0.95,
+    "maxScale": 1.05,
+    "rotationOffsetsRad": [
+      -0.18,
+      0,
+      0.18,
+      3.14159265359
+    ],
+    "maxSpanPx": 1120,
+    "mode": "unique-once"
+  },
+  {
+    "worldId": "ivory-basin",
+    "grade": "low",
+    "id": "ivory-basin-low-whole",
+    "sourceInstanceIds": [
+      2
+    ],
+    "attachedReliefIds": [
+      1
+    ],
+    "sourceScale": 1,
+    "minScale": 0.95,
+    "maxScale": 1.05,
+    "rotationOffsetsRad": [
+      -0.18,
+      0,
+      0.18,
+      3.14159265359
+    ],
+    "maxSpanPx": 1120,
+    "mode": "unique-once"
+  },
+  {
+    "worldId": "ivory-basin",
+    "grade": "medium",
+    "id": "ivory-basin-medium-whole",
+    "sourceInstanceIds": [
+      1
+    ],
+    "attachedReliefIds": [
+      2,
+      3
+    ],
+    "sourceScale": 1,
+    "minScale": 0.95,
+    "maxScale": 1.05,
+    "rotationOffsetsRad": [
+      -0.18,
+      0,
+      0.18,
+      3.14159265359
+    ],
+    "maxSpanPx": 1120,
+    "mode": "unique-once"
+  },
+  {
+    "worldId": "ivory-basin",
+    "grade": "severe",
+    "id": "ivory-basin-severe-whole",
+    "sourceInstanceIds": [
+      1,
+      2
+    ],
+    "attachedReliefIds": [
+      3
+    ],
+    "sourceScale": 1,
+    "minScale": 0.95,
+    "maxScale": 1.05,
+    "rotationOffsetsRad": [
+      -0.18,
+      0,
+      0.18,
+      3.14159265359
+    ],
+    "maxSpanPx": 1120,
+    "mode": "unique-once"
   }
 ];
 export const NATIVE_SPATIAL_SUBORDINATE_PROFILES:readonly NativeSpatialSubordinateProfile[]=[
@@ -596,5 +926,41 @@ export const NATIVE_SPATIAL_SUBORDINATE_PROFILES:readonly NativeSpatialSubordina
     "opening": 0.82,
     "distortion": 0.66,
     "rotationOffsetRad": 0.12
+  },
+  {
+    "id": "native-grain-broken-mound",
+    "family": "granular-ridge",
+    "constructionVersion": 4,
+    "shapeProfile": "porous-break",
+    "minLengthPx": 136,
+    "maxLengthPx": 208,
+    "minWidthPx": 72,
+    "maxWidthPx": 112,
+    "minHeightPx": 24,
+    "maxHeightPx": 40,
+    "thicknessPx": 8,
+    "fold": 0.4,
+    "branches": 3,
+    "opening": 0.68,
+    "distortion": 0.64,
+    "rotationOffsetRad": 0.14
+  },
+  {
+    "id": "native-shell-broken-rim",
+    "family": "broken-shell",
+    "constructionVersion": 4,
+    "shapeProfile": "clamp-bank",
+    "minLengthPx": 144,
+    "maxLengthPx": 216,
+    "minWidthPx": 72,
+    "maxWidthPx": 112,
+    "minHeightPx": 28,
+    "maxHeightPx": 44,
+    "thicknessPx": 8,
+    "fold": 0.48,
+    "branches": 2,
+    "opening": 0.72,
+    "distortion": 0.58,
+    "rotationOffsetRad": 0.14
   }
 ];

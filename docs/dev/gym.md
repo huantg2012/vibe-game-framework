@@ -5,6 +5,10 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 # 开发练习场
 
+## 四种材质重点样本（2026-10-15，DEC-215）
+
+当前入口 `/native-construction.html?sample=cinder-ridge`，下拉可选余烬脊、晶化林床、破膜盆地、吸光釉原以及原三图回归组。中污染／20261012，保留原配色和完整主体，共享矩形拼合／断缘／宽臂算法。材质和剪影同构型；仅DEV几何，不含玩法内容或撤离。[材质总览与剪影](../qa/artifacts/native-diverse-samples-2026-10-15/browser/index.html)与[QA及残余](../qa/native-diverse-samples-2026-10-15.md)。
+
 ## 三张固定空间打磨样本（2026-10-15，DEC-212）
 
 入口 `/native-construction.html`。固定双脊渡口（`split-rib-causeway`）、断脂浅片（`gel-rafts`）、无彩层原（`ash-strata`），中污染、种子20261012；地图构型与岸线策略来自独立CSV。使用正式材质烘焙与渲染，支持去雾材质全图／真实结构剪影，供同三张图持续打磨。普通玩家入口保持r11；该页只展示DEV构造与实际诊断，未通过完整准入的图没有完整内容或可用撤离点，不读写玩家存档。DEC-213已将同三图整体骨架改为横向偏折／错位块群／偏置宽臂，增加只测真实外环的宏观诊断；旧图仍保留作对照。DEC-214已接共享次级宽地块规则，实际生成1／2／1处宽臂；地面／孔／实体共同构造，画布按需要扩大而不缩放，长岸及空间质量残余保留。当前验证与同尺度前后图册见[次级扩展QA](../qa/native-three-extensions-2026-10-15.md)，上一轮见[整体骨架QA](../qa/native-three-macro-2026-10-15.md)，旧固定产物见[前批QA](../qa/native-three-samples-2026-10-15.md)。

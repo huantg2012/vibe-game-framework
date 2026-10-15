@@ -1,4 +1,4 @@
-/** Three fixed CSV references. This diagnostic entry never searches for a
+/** Fixed CSV references. This diagnostic entry never searches for a
  * production candidate or deploys gameplay content. View changes use caches. */
 import {R100_NATIVE_WORLDS} from '@/generated/r100-native-worlds';
 import {createR100NativeSpatialDevelopmentRecipe} from '@/generation/world-study/r100-package';
@@ -6,6 +6,7 @@ import {constructNativeSpatialReference,parseNativeSpatialConstructionReference}
 import {parseNativeConstructionShore,measureNativeConstructionBoundary} from '@/generation/world-study/native-spatial-construction-shore';
 import {measureNativeConstructionMacro,parseNativeConstructionMacroPolicy,type NativeConstructionMacroMetrics,type NativeConstructionMacroPolicy} from '@/generation/world-study/native-spatial-construction-macro';
 import {parseNativeConstructionExtensionPolicy} from '@/generation/world-study/native-spatial-construction-extension';
+import sampleRegistryCSV from '../../data/rift-native-construction-samples.csv?raw';
 import extensionModuleSource from '@/generation/world-study/native-spatial-construction-extension.ts?raw';
 import {buildNativeSpatialGeometry,nativeSolidPrimitives,type NativeSpatialGeometry} from '@/generation/world-study/native-spatial-geometry';
 import {identifyNativeSpatialStructures,evaluateNativeSpatialGeometry} from '@/generation/world-study/native-spatial-measure';
@@ -19,12 +20,16 @@ import {loadPaintedMaterial,type PaintedMaterial} from '@/systems/r100-world/pai
 import type {MasterSurfaceWorld} from '@/systems/r100-world/surface-world';
 
 if(!import.meta.env.DEV)throw new Error('Native construction review is development-only');
-const samples=[
-  {id:'split-rib-causeway',reference:'/data/rift-native-construction-reference.csv',shore:'/data/rift-native-construction-shore.csv'},
-  {id:'gel-rafts',reference:'/data/rift-native-construction-gel-rafts.csv',shore:'/data/rift-native-construction-gel-rafts-shore.csv'},
-  {id:'ash-strata',reference:'/data/rift-native-construction-ash-strata.csv',shore:'/data/rift-native-construction-ash-strata-shore.csv'},
-] as const;
-type Sample=typeof samples[number];
+interface Sample {id:string;label:string;reference:string;shore:string;cohort:string;character:string}
+const registryLines=sampleRegistryCSV.trim().split(/\r?\n/);
+if(registryLines.shift()!=='id,label,reference_csv,shore_csv,cohort,character')throw new Error('Invalid sample registry header');
+const samples:Sample[]=registryLines.map(line=>{
+  const fields=line.split(',');if(fields.length!==6)throw new Error('Invalid sample registry row');
+  const [id,label,reference,shore,cohort,character]=fields as [string,string,string,string,string,string];
+  if(!R100_NATIVE_WORLDS.some(world=>world.id===id&&world.label===label)||![reference,shore].every(path=>/^\/data\/rift-native-construction-[a-z-]+\.csv$/.test(path))||!['original','diverse'].includes(cohort))throw new Error(`Invalid registered sample ${id}`);
+  return{id,label,reference,shore,cohort,character};
+});
+if(new Set(samples.map(sample=>sample.id)).size!==samples.length)throw new Error('Duplicate construction sample');
 type Mode='material'|'silhouette';
 interface Counts {constructions:number;fragmentCompiles:number;initialGeometryBuilds:number;visualTerrainCompiles:number;visualRasterBuilds:number;fullCandidates:number}
 interface SampleResult {
@@ -40,9 +45,9 @@ const element=<T extends HTMLElement>(id:string):T=>{const node=document.getElem
 const canvas=element<HTMLCanvasElement>('map'),selector=element<HTMLSelectElement>('sample'),viewport=element('viewport'),stage=element('stage');
 const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvas 2D unavailable');const context=ctx;
 const cache=new Map<string,Promise<SampleResult>>(),results=new Map<string,SampleResult>(),countsBySample:Record<string,Counts>={};
-let selected:Sample=samples.find(s=>s.id===new URLSearchParams(location.search).get('sample'))??samples[0],mode:Mode='material',nativeSize=false,ready=false,phase='idle',errors:string[]=[];
+let selected:Sample=samples.find(s=>s.id===new URLSearchParams(location.search).get('sample'))??samples[0]!,mode:Mode='material',nativeSize=false,ready=false,phase='idle',errors:string[]=[];
 const labelFor=(id:string):string=>R100_NATIVE_WORLDS.find(world=>world.id===id)?.label??id;
-for(const sample of samples){const option=document.createElement('option');option.value=sample.id;option.textContent=labelFor(sample.id);selector.append(option);}selector.value=selected.id;
+for(const sample of samples){const option=document.createElement('option');option.value=sample.id;option.textContent=`${labelFor(sample.id)} · ${sample.character}`;selector.append(option);}selector.value=selected.id;
 const yieldPaint=()=>new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));
 const textFile=async(url:string)=>{const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw new Error(`${url}: HTTP ${response.status}`);return response.text();};
 const sha=async(value:string)=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))),byte=>byte.toString(16).padStart(2,'0')).join('');
@@ -90,7 +95,7 @@ async function construct(sample:Sample):Promise<SampleResult>{
   const painting:PaintedMaterial={...textures[0]!,...(recipe.appearance?{appearance:recipe.appearance}:{}),families:Object.fromEntries(families.map((family,i)=>[family,textures[i]!]))};
   await setPhase('烘焙原生地面、实体表面与光照…');
   counts.visualRasterBuilds++;
-  const raster=compileNativeVolumeRaster(terrain.meshes,{x:0,y:0,width:terrain.width,height:terrain.height,pixelSize:1,supportCellSize:8,opticalHeight:24,maxPixels:5_242_880});
+  const raster=compileNativeVolumeRaster(terrain.meshes,{x:0,y:0,width:terrain.width,height:terrain.height,pixelSize:1,supportCellSize:8,opticalHeight:24,maxPixels:sample.cohort==='diverse'?8_388_608:5_242_880});
   const world:MasterSurfaceWorld={definition,meshes:terrain.meshes,raster,matterAt:terrain.matterAt,appearance:recipe.appearance,
     sample:{profile:{...recipe.profile,surface:{...recipe.profile.surface,quietness:definition.ground_quietness,contrast:definition.ground_contrast,coverage:definition.ground_coverage}},topologyId:'loops',seed:reference.seed,cols:definition.cols,rows:definition.rows,tileSize:32,land:terrain.land,walls:terrain.walls,spawn:terrain.spawnPoint,exit:terrain.exitPoint,formations:[],flowAngle:terrain.flowAngle,deposition:terrain.deposition}};
   const ground=paintMasterGround(world),volume=new NativeVolumeLighting(raster,masterVolumePalette(world),{seed:reference.seed,axis:definition.axis});
