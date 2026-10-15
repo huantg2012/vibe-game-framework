@@ -1,0 +1,106 @@
+{
+  "scope": "Read-only summary of the three round1 receipts; no additional geometry. Zero accepted extensions means the requested visual change is not yet delivered.",
+  "worlds": [
+    {
+      "world": "split-rib-causeway",
+      "source": "split-rib-causeway-round1/report.json",
+      "sourcesStable": true,
+      "geometryHash": "478fc58caed451ac",
+      "geometryBuilds": 1,
+      "fullCandidates": 0,
+      "acceptedExtensions": 0,
+      "candidateCount": 24,
+      "rejections": {
+        "offset-span-outside-original-shore": 22,
+        "wide-parent-overlap": 16,
+        "fills-or-crosses-another-bank": 22,
+        "negative-space-bank-gap": 21,
+        "extension-0-solid:existing-complete-sources:fixed-conflict": 1,
+        "extension-0-solid:hole-0:fixed-conflict": 1,
+        "extension-0-solid:hole-1:fixed-conflict": 1
+      },
+      "addedLandAreaPx2": 0,
+      "G2": {
+        "maxRoutePx": 563.42,
+        "worstCell": 49110,
+        "overLimit": 1131,
+        "unreachable": 0,
+        "checkedBodyCenters": 21296
+      },
+      "oldG2": {
+        "maxRoutePx": 563.42,
+        "worstCell": 49110,
+        "overLimit": 1131,
+        "unreachable": 0,
+        "checkedBodyCenters": 21296
+      }
+    },
+    {
+      "world": "gel-rafts",
+      "source": "gel-rafts-round1/report.json",
+      "sourcesStable": true,
+      "geometryHash": "dc5b050a5b1cc3d2",
+      "geometryBuilds": 1,
+      "fullCandidates": 0,
+      "acceptedExtensions": 0,
+      "candidateCount": 24,
+      "rejections": {
+        "extension-0-solid:existing-complete-sources:fixed-conflict": 1,
+        "extension-0-solid:hole-0:fixed-conflict": 1,
+        "offset-span-outside-original-shore": 20,
+        "wide-parent-overlap": 17,
+        "fills-or-crosses-another-bank": 20,
+        "negative-space-bank-gap": 13,
+        "extension-1-solid:existing-complete-sources:fixed-conflict": 1,
+        "extension-1-solid:hole-1:fixed-conflict": 1,
+        "extension-2-solid:existing-complete-sources:fixed-conflict": 1
+      },
+      "addedLandAreaPx2": 0,
+      "G2": {
+        "maxRoutePx": 311.198,
+        "worstCell": 58413,
+        "overLimit": 0,
+        "unreachable": 0,
+        "checkedBodyCenters": 20196
+      },
+      "oldG2": {
+        "maxRoutePx": 311.198,
+        "worstCell": 58413,
+        "overLimit": 0,
+        "unreachable": 0,
+        "checkedBodyCenters": 20196
+      }
+    },
+    {
+      "world": "ash-strata",
+      "source": "ash-strata-round1/report.json",
+      "sourcesStable": true,
+      "geometryHash": "df4e49327e8704f6",
+      "geometryBuilds": 1,
+      "fullCandidates": 0,
+      "acceptedExtensions": 0,
+      "candidateCount": 24,
+      "rejections": {
+        "offset-span-outside-original-shore": 24,
+        "fills-or-crosses-another-bank": 24,
+        "negative-space-bank-gap": 17,
+        "wide-parent-overlap": 17
+      },
+      "addedLandAreaPx2": 0,
+      "G2": {
+        "maxRoutePx": 288.57,
+        "worstCell": 51283,
+        "overLimit": 0,
+        "unreachable": 0,
+        "checkedBodyCenters": 18948
+      },
+      "oldG2": {
+        "maxRoutePx": 288.57,
+        "worstCell": 51283,
+        "overLimit": 0,
+        "unreachable": 0,
+        "checkedBodyCenters": 18948
+      }
+    }
+  ]
+}

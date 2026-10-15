@@ -29,6 +29,10 @@ export interface NativeConstructionShoreInput {
   readonly supportBounds:readonly (readonly [number,number,number,number])[];
   readonly coverPrimitives:readonly NativeSpatialPrimitive[];readonly maxAddedCoverDistancePx:number;
   readonly frame:readonly [number,number];readonly seed:number;
+  /** An extension must not reroll unchanged base banks when new banks alter
+   * enumeration order. Coordinates use the same translated frame as land. */
+  readonly seedLand?:readonly Rect[];
+  readonly seedTranslation?:Readonly<{x:number;y:number}>;
 }
 export function parseNativeConstructionShore(csv:string,sourceHash:string):NativeConstructionShorePolicy {
   const lines=csv.replace(/^\uFEFF/,'').trim().split(/\r?\n/);
@@ -113,22 +117,26 @@ function originalExterior(land:readonly Rect[],frame:readonly [number,number]):S
 
 export function constructNativeMacroShore(input:NativeConstructionShoreInput,policy:NativeConstructionShorePolicy):NativeConstructionShoreResult {
   const {land,frame,seed}=input,originalShore=originalExterior(land,frame),additions:Rect[]=[],cuts:Rect[]=[],trials:NativeConstructionShoreTrial[]=[];
+  const baseShore=input.seedLand?originalExterior(input.seedLand,frame):undefined;
   if(!Number.isFinite(input.maxAddedCoverDistancePx)||input.maxAddedCoverDistancePx<=0)throw new Error('Shore addition requires the frozen maximum open-distance limit');
   const coverTree=nativePrimitiveTree(input.coverPrimitives);
   const guards=[...input.protectedRects,...input.supportBounds].map(r=>[r[0]-policy.protectedGapPx,r[1]-policy.protectedGapPx,r[2]+2*policy.protectedGapPx,r[3]+2*policy.protectedGapPx] as Rect);
   const pick=(key:string,min:number,max:number)=>min+8*(mix32(seed,key)%((max-min)/8+1));
   for(const [sourceEdge,shore]of originalShore.entries()){
     const vertical=shore.direction<2,[nx,ny]=normal(shore),axis=vertical?shore.x1:shore.y1,begin=vertical?shore.y1:shore.x1,end=vertical?shore.y2:shore.x2;
-    const phase=mix32(seed,`shore-${sourceEdge}-phase`)%2;let segment=0;
+    const baseIndex=baseShore?.findIndex(bank=>bank.direction===shore.direction&&bank.x1===shore.x1&&bank.y1===shore.y1&&bank.x2===shore.x2&&bank.y2===shore.y2)??-1;
+    const shift=input.seedTranslation??{x:0,y:0};
+    const randomKey=!baseShore?`shore-${sourceEdge}`:baseIndex>=0?`shore-${baseIndex}`:`extension-shore-${shore.direction}-${shore.x1-shift.x}-${shore.y1-shift.y}-${shore.x2-shift.x}-${shore.y2-shift.y}`;
+    const phase=mix32(seed,`${randomKey}-phase`)%2;let segment=0;
     // Cover the entire source edge. An unconditional 8px end margin leaves
     // needle-like land fins where a step meets the neighbouring source edge.
     for(let start=begin;start<end;segment++){
-      const sampledLength=Math.min(pick(`shore-${sourceEdge}-${segment}-length`,policy.segmentMinPx,policy.segmentMaxPx),end-start);
+      const sampledLength=Math.min(pick(`${randomKey}-${segment}-length`,policy.segmentMinPx,policy.segmentMaxPx),end-start);
       // Fold a short tail into this step rather than leaving a thin spur at
       // the corner. The merged final step may exceed segmentMaxPx.
       const remainder=end-start-sampledLength;
       const length=remainder>0&&remainder<policy.segmentMinPx?end-start:sampledLength,mode=(['cut','add'] as const)[(phase+segment)%2]!;
-      const requestedDepth=pick(`shore-${sourceEdge}-${segment}-depth`,policy.depthMinPx,policy.depthMaxPx),base={sourceEdge,startPx:start,lengthPx:length,mode,requestedDepthPx:requestedDepth};
+      const requestedDepth=pick(`${randomKey}-${segment}-depth`,policy.depthMinPx,policy.depthMaxPx),base={sourceEdge,startPx:start,lengthPx:length,mode,requestedDepthPx:requestedDepth};
       if(length<policy.segmentMinPx){trials.push({...base,actualDepthPx:0,reason:'short-remainder'});start+=length;continue;}
       const sign=(vertical?nx:ny)*(mode==='cut'?-1:1),tangentEnd=start+length;
       const inset=mode==='add'?NATIVE_CONSTRUCTION_FRAME_INSET_PX:0;

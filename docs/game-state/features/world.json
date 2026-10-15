@@ -3,7 +3,7 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "普通出发全108世界保持r11，旧配方按原修订恢复。DEC-213在同三张中档20261012参考中改变宏观骨架：双脊横向偏折、凝胶错位块群、折板偏置宽臂；真实外环增加PCA/填充率/凹入诊断。边界/身体全可达/完整支撑通过；双脊新增G2与宽域连通失败，各图尚有G1等缺口，完整部署0。随机化、全库与I14/P49开放。",
+    "summary": "普通全108世界保持r11。DEC-214为同三图medium/20261012加入共享中尺度宽臂构造，有限24候选联合生成地面/空洞/实体；接受1/2/1块，均14H:7S，母体保留且全身体可达。前后同尺度图册已采集。凝胶/折板新增长直岸，宽域/面积等退化保留，三图未完整准入；全库、随机化和I14/P49开放。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -13,7 +13,8 @@
       "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。",
       "DEV r100-gym.html?world=gel-rafts&grade=medium&seed=20261012&nativeSpatial=1 → 显式r12旧求解器；固定CSV直接构造另有DEC-212独立DEV浏览入口，尚无普通玩家入口",
       "DEC-212：DEV native-construction.html?sample=split-rib-causeway（另有gel-rafts/ash-strata），三图固定medium/20261012；真实材质与同构型剪影切换，仅几何打磨入口，无内容/撤离/存档。",
-      "DEC-213：native-construction.html保持同3样本/medium/20261012；宏观骨架已重排，新增外环诊断，前后图册 docs/qa/artifacts/native-three-macro-2026-10-15/browser/index.html。"
+      "DEC-213：native-construction.html保持同3样本/medium/20261012；宏观骨架已重排，新增外环诊断，前后图册 docs/qa/artifacts/native-three-macro-2026-10-15/browser/index.html。",
+      "DEC-214：同一native-construction三样本入口应用共享中尺度扩展；当前前后同尺度图册 docs/qa/artifacts/native-three-extensions-2026-10-15/browser/index.html，三图未完整准入。"
     ],
     "sources": [
       {
@@ -1582,6 +1583,62 @@
       {
         "path": "docs/qa/native-three-macro-2026-10-15.md",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-extension.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-construction-extension.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-raster.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-extension.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-shore-identity.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/native-three-extensions-2026-10-15.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/validation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/round2-summary.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser-attempt1/capture.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/capture.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/comparison.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/gallery-validation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/index.html",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -1660,7 +1717,8 @@
       "COH-E243",
       "COH-E244",
       "COH-E245",
-      "COH-E246"
+      "COH-E246",
+      "COH-E247"
     ],
     "unknowns": [
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
@@ -1679,14 +1737,15 @@
       "r12限定五代表首批1/5：凝胶群岛20261012中档正常生成33.389秒、精确重放29.809秒；其他四图均几何阶段超时。后续共同初始化试验0/5且回退原成功，予以撤回。单图技术通过不代表动态潜行、正常镜头、全seed、其他污染档或全库完成。",
       "E244仅证明正常/DEV入口隔离、单份r11完整基线及DEV构造范围；21轮参考与最终复核均未完整准入，不能以1.731秒几何检查声称完整生成提速。固定参考CSV身份不同于普通r12配方，随机构造、确定性恢复、留出样本和全108推广未完成。",
       "E245仅覆盖三张固定DEV样本的构造、真实材质及浏览器切换；三图仍有G1空白/G3宽域失败，无彩层原另有面积下界缺口。完整内容、未知出口、正常视距潜行、保存恢复、随机变化和全库品质未完成，人审未签。",
-      "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。"
+      "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。",
+      "E247仅覆盖固定三图共享扩展与最终浏览器复看：新增宽臂1/2/1，孔对重复；凝胶441.58px/折板463.56px长直岸失败，凝胶新增宽域面积失败、折板新增面积失败，双脊G2仍失败。最终G2仅保留结果/原因，coverage标量未留存，不沿用round2数字。没有完整部署、自然探索、动态潜行或人审通过。"
     ]
   },
   {
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "正式残骸地表shader、真实灯场、VOID/FOV和collected翻后散迹保持。DEC-213三张DEV参考在保持纤维/凝胶/折板完整母体与材料的前提下重排宏观骨架、内孔和从属实体，源支撑零违规；旧新真实材质/剪影可对照，未部署翻找内容，不代表正常游戏美术人审。",
+    "summary": "正式同场受光/VOID/FOV及翻后散迹保持。DEC-214固定三图保留完整母体与材料，新增同源宽臂和2H/1S组合，地表与剪影同源。DEV显式提高像素预算以保持1:1原图，默认生产预算不变；端部孔对模板感和长岸待改，无正常游戏美术人审。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -2265,6 +2324,66 @@
       {
         "path": "docs/qa/native-three-macro-2026-10-15.md",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-extension.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-construction-extension.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-construction-shore.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-raster.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-extension.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-shore-identity.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/native-three-extensions-2026-10-15.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/validation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/round2-summary.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser-attempt1/capture.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/capture.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/comparison.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/gallery-validation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/index.html",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -2327,7 +2446,8 @@
       "COH-E238",
       "COH-E239",
       "COH-E245",
-      "COH-E246"
+      "COH-E246",
+      "COH-E247"
     ],
     "unknowns": [
       "旧v1/v2及v3修订1/2/3按各自封存身份恢复；历史修订4/7及当前修订8仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
@@ -2343,7 +2463,8 @@
       "E237记录108世界两项优化的正式接入及有限内部验证：324档位为固定请求seed，代表实机用知情导航；不外推全seed、全部节点自然发现、连续视觉听感、长期收益或用户审美。用户最新授权已解除102图推广暂停；I14/P49仍开放。",
       "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
       "E245仅覆盖三张固定DEV样本的构造、真实材质及浏览器切换；三图仍有G1空白/G3宽域失败，无彩层原另有面积下界缺口。完整内容、未知出口、正常视距潜行、保存恢复、随机变化和全库品质未完成，人审未签。",
-      "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。"
+      "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。",
+      "E247仅覆盖固定三图共享扩展与最终浏览器复看：新增宽臂1/2/1，孔对重复；凝胶441.58px/折板463.56px长直岸失败，凝胶新增宽域面积失败、折板新增面积失败，双脊G2仍失败。最终G2仅保留结果/原因，coverage标量未留存，不沿用round2数字。没有完整部署、自然探索、动态潜行或人审通过。"
     ]
   },
   {
@@ -3127,7 +3248,7 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "普通全108新局保持r11。DEC-213先在三张固定DEV参考改变长宽/地块错位/宽臂，面积积分外环诊断识别近方及规则条带风险；孔洞不能偷减整体填充率。形状差异已实现但双脊新增遮视/宽连通失败，其他G1等残余保留；r12随机生成、完整地图、全库准入和I14/P49未完成。",
+    "summary": "普通全108仍r11；DEC-214固定三图共同生成中尺度扩展，真实材质/剪影对照、来源稳定与缓存切换通过。身体/支撑通过，边界/空白/宽域/面积仍有失败；三图未完整准入，r12随机化、全库品质和I14/P49未完成。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -4876,6 +4997,62 @@
       {
         "path": "docs/qa/native-three-macro-2026-10-15.md",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-extension.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-construction-extension.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-construction-shore.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-extension.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-shore-identity.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/native-three-extensions-2026-10-15.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/validation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/round2-summary.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser-attempt1/capture.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/capture.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/comparison.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/gallery-validation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/index.html",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -4996,7 +5173,8 @@
       "COH-E241",
       "COH-E242",
       "COH-E245",
-      "COH-E246"
+      "COH-E246",
+      "COH-E247"
     ],
     "unknowns": [
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
@@ -5022,7 +5200,8 @@
       "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。",
       "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。",
       "E245仅覆盖三张固定DEV样本的构造、真实材质及浏览器切换；三图仍有G1空白/G3宽域失败，无彩层原另有面积下界缺口。完整内容、未知出口、正常视距潜行、保存恢复、随机变化和全库品质未完成，人审未签。",
-      "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。"
+      "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。",
+      "E247仅覆盖固定三图共享扩展与最终浏览器复看：新增宽臂1/2/1，孔对重复；凝胶441.58px/折板463.56px长直岸失败，凝胶新增宽域面积失败、折板新增面积失败，双脊G2仍失败。最终G2仅保留结果/原因，coverage标量未留存，不沿用round2数字。没有完整部署、自然探索、动态潜行或人审通过。"
     ]
   }
 ]

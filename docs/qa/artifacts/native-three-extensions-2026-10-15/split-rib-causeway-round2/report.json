@@ -1,0 +1,1325 @@
+{
+  "world": "split-rib-causeway",
+  "grade": "medium",
+  "seed": 20261012,
+  "scope": "One fixed CSV geometry check; no search, Master, deployment or full map admission.",
+  "sourceFingerprint": {
+    "scope": "all src TS/JSON and data CSV bytes; docs/tools excluded",
+    "fileCount": 833,
+    "sha256": "c49b1f4a3b49f8971c74045b0b461f8aed6713b10a4556bfa8f1e808b0f783a1"
+  },
+  "inputHashes": {
+    "data/rift-native-construction-reference.csv": "6758857e0a30723aef62133c29b535fc6403704ef051e19be4eb63c0ba3971dd",
+    "data/rift-native-construction-shore.csv": "aa7b3d90cdadefdc001368d8998a7119eb3dfc99ad56aafb219ad3f53dc036ec",
+    "data/rift-native-construction-macro-policy.csv": "2afddacfaf3b15990a9c631c167c9b06b7f48b60f20b042de9af2542d502e47b",
+    "data/rift-native-construction-extension.csv": "c216c4eca82df261e75fd374429d1731535caffa927c3a3ae975b21b026c532d",
+    "src/generation/world-study/native-spatial-construction-extension.ts": "81bfa2ac673f0af41a2bf5c1c9b3b8a7eaffa36fb92792285da927f855a24f4d"
+  },
+  "counts": {
+    "fragmentCompiles": 1,
+    "geometryBuilds": 1,
+    "G2Evaluations": 1,
+    "fullCandidates": 0
+  },
+  "stages": [
+    {
+      "stage": "construction",
+      "elapsedMs": 388.087542
+    },
+    {
+      "stage": "actual-geometry",
+      "elapsedMs": 255.12979200000007
+    },
+    {
+      "stage": "actual-structures",
+      "elapsedMs": 1238.7807079999998
+    },
+    {
+      "stage": "G1-G3",
+      "elapsedMs": 94.3983330000001
+    },
+    {
+      "stage": "G2",
+      "elapsedMs": 191.12641600000006
+    }
+  ],
+  "status": "geometry-rejected",
+  "extension": {
+    "algorithm": "coherent-extension-v1",
+    "sourceHash": "c216c4eca82df261e75fd374429d1731535caffa927c3a3ae975b21b026c532d",
+    "trials": [
+      {
+        "slot": 0,
+        "profileId": "short-shoulder",
+        "parentIndex": 0,
+        "direction": 2,
+        "rect": [
+          144,
+          304,
+          424,
+          536
+        ],
+        "spanPx": 424,
+        "outwardPx": 216,
+        "addedAreaPx2": 91584,
+        "accepted": false,
+        "reasons": [
+          "extension-0-hole-0:extension-0-solid:fixed-conflict",
+          "extension-0-hole-1:extension-0-solid:fixed-conflict",
+          "extension-0-solid:extension-0-hole-0:fixed-conflict",
+          "extension-0-solid:extension-0-hole-1:fixed-conflict"
+        ],
+        "maxAddedOpenRadiusUpperPx": 0
+      },
+      {
+        "slot": 0,
+        "profileId": "short-shoulder",
+        "parentIndex": 2,
+        "direction": 2,
+        "rect": [
+          1552,
+          8,
+          424,
+          536
+        ],
+        "spanPx": 424,
+        "outwardPx": 216,
+        "addedAreaPx2": 91584,
+        "accepted": false,
+        "reasons": [
+          "extension-0-hole-0:extension-0-solid:fixed-conflict",
+          "extension-0-hole-1:extension-0-solid:fixed-conflict",
+          "extension-0-solid:extension-0-hole-0:fixed-conflict",
+          "extension-0-solid:extension-0-hole-1:fixed-conflict"
+        ],
+        "maxAddedOpenRadiusUpperPx": 0
+      },
+      {
+        "slot": 0,
+        "profileId": "short-shoulder",
+        "parentIndex": 2,
+        "direction": 1,
+        "rect": [
+          1920,
+          304,
+          536,
+          424
+        ],
+        "spanPx": 424,
+        "outwardPx": 216,
+        "addedAreaPx2": 91584,
+        "accepted": false,
+        "reasons": [
+          "extension-0-hole-1:extension-0-solid:fixed-conflict",
+          "extension-0-solid:existing-complete-sources:fixed-conflict",
+          "extension-0-solid:extension-0-hole-1:fixed-conflict"
+        ],
+        "maxAddedOpenRadiusUpperPx": 0
+      },
+      {
+        "slot": 0,
+        "profileId": "short-shoulder",
+        "parentIndex": 1,
+        "direction": 3,
+        "rect": [
+          1296,
+          928,
+          424,
+          536
+        ],
+        "spanPx": 424,
+        "outwardPx": 216,
+        "addedAreaPx2": 91584,
+        "accepted": false,
+        "reasons": [
+          "negative-space-bank-gap"
+        ]
+      },
+      {
+        "slot": 0,
+        "profileId": "short-shoulder",
+        "parentIndex": 3,
+        "direction": 3,
+        "rect": [
+          400,
+          1056,
+          424,
+          536
+        ],
+        "spanPx": 424,
+        "outwardPx": 216,
+        "addedAreaPx2": 91584,
+        "accepted": false,
+        "reasons": [
+          "extension-0-hole-0:extension-0-solid:fixed-conflict",
+          "extension-0-hole-1:extension-0-solid:fixed-conflict",
+          "extension-0-solid:extension-0-hole-0:fixed-conflict",
+          "extension-0-solid:extension-0-hole-1:fixed-conflict"
+        ],
+        "maxAddedOpenRadiusUpperPx": 0
+      },
+      {
+        "slot": 0,
+        "profileId": "short-shoulder",
+        "parentIndex": 1,
+        "direction": 2,
+        "rect": [
+          784,
+          168,
+          424,
+          536
+        ],
+        "spanPx": 424,
+        "outwardPx": 216,
+        "addedAreaPx2": 91584,
+        "accepted": false,
+        "reasons": [
+          "extension-0-hole-0:extension-0-solid:fixed-conflict",
+          "extension-0-hole-1:extension-0-solid:fixed-conflict",
+          "extension-0-solid:extension-0-hole-0:fixed-conflict",
+          "extension-0-solid:extension-0-hole-1:fixed-conflict"
+        ],
+        "maxAddedOpenRadiusUpperPx": 0
+      },
+      {
+        "slot": 0,
+        "profileId": "short-shoulder",
+        "parentIndex": 0,
+        "direction": 0,
+        "rect": [
+          -152,
+          600,
+          536,
+          424
+        ],
+        "spanPx": 424,
+        "outwardPx": 216,
+        "addedAreaPx2": 91584,
+        "accepted": false,
+        "reasons": [
+          "extension-0-hole-0:extension-0-solid:fixed-conflict",
+          "extension-0-hole-1:extension-0-solid:fixed-conflict",
+          "extension-0-solid:extension-0-hole-0:fixed-conflict",
+          "extension-0-solid:extension-0-hole-1:fixed-conflict"
+        ],
+        "maxAddedOpenRadiusUpperPx": 0
+      },
+      {
+        "slot": 1,
+        "profileId": "offset-arm",
+        "parentIndex": 0,
+        "direction": 0,
+        "rect": [
+          -200,
+          624,
+          584,
+          496
+        ],
+        "spanPx": 496,
+        "outwardPx": 264,
+        "addedAreaPx2": 130944,
+        "accepted": false,
+        "reasons": [
+          "extension-1-hole-0:extension-1-solid:fixed-conflict",
+          "extension-1-solid:extension-1-hole-0:fixed-conflict"
+        ],
+        "maxAddedOpenRadiusUpperPx": 0
+      },
+      {
+        "slot": 1,
+        "profileId": "offset-arm",
+        "parentIndex": 1,
+        "direction": 2,
+        "rect": [
+          856,
+          120,
+          496,
+          584
+        ],
+        "spanPx": 496,
+        "outwardPx": 264,
+        "addedAreaPx2": 130944,
+        "accepted": false,
+        "reasons": [
+          "negative-space-bank-gap"
+        ]
+      },
+      {
+        "slot": 1,
+        "profileId": "offset-arm",
+        "parentIndex": 1,
+        "direction": 3,
+        "rect": [
+          1216,
+          928,
+          496,
+          584
+        ],
+        "spanPx": 496,
+        "outwardPx": 264,
+        "addedAreaPx2": 130944,
+        "accepted": false,
+        "reasons": [
+          "negative-space-bank-gap"
+        ]
+      },
+      {
+        "slot": 1,
+        "profileId": "offset-arm",
+        "parentIndex": 2,
+        "direction": 1,
+        "rect": [
+          1920,
+          440,
+          584,
+          496
+        ],
+        "spanPx": 496,
+        "outwardPx": 264,
+        "addedAreaPx2": 130944,
+        "accepted": false,
+        "reasons": [
+          "extension-1-hole-1:extension-1-solid:fixed-conflict",
+          "extension-1-solid:hole-6:fixed-conflict",
+          "extension-1-solid:extension-1-hole-1:fixed-conflict"
+        ],
+        "maxAddedOpenRadiusUpperPx": 0
+      },
+      {
+        "slot": 1,
+        "profileId": "offset-arm",
+        "parentIndex": 3,
+        "direction": 3,
+        "rect": [
+          600,
+          1056,
+          496,
+          584
+        ],
+        "spanPx": 496,
+        "outwardPx": 264,
+        "addedAreaPx2": 130944,
+        "accepted": false,
+        "reasons": [
+          "extension-1-hole-1:extension-1-solid:fixed-conflict",
+          "extension-1-solid:extension-1-hole-1:fixed-conflict"
+        ],
+        "maxAddedOpenRadiusUpperPx": 0
+      },
+      {
+        "slot": 1,
+        "profileId": "offset-arm",
+        "parentIndex": 0,
+        "direction": 2,
+        "rect": [
+          88,
+          256,
+          496,
+          584
+        ],
+        "spanPx": 496,
+        "outwardPx": 264,
+        "addedAreaPx2": 130944,
+        "accepted": false,
+        "reasons": [
+          "negative-space-bank-gap"
+        ]
+      },
+      {
+        "slot": 1,
+        "profileId": "offset-arm",
+        "parentIndex": 2,
+        "direction": 2,
+        "rect": [
+          1624,
+          -40,
+          496,
+          584
+        ],
+        "spanPx": 496,
+        "outwardPx": 264,
+        "addedAreaPx2": 130944,
+        "accepted": false,
+        "reasons": [
+          "extension-1-hole-0:extension-1-solid:fixed-conflict",
+          "extension-1-hole-1:extension-1-solid:fixed-conflict",
+          "extension-1-solid:extension-1-hole-0:fixed-conflict",
+          "extension-1-solid:extension-1-hole-1:fixed-conflict"
+        ],
+        "maxAddedOpenRadiusUpperPx": 0
+      },
+      {
+        "slot": 2,
+        "profileId": "offset-arm",
+        "parentIndex": 1,
+        "direction": 2,
+        "rect": [
+          880,
+          24,
+          448,
+          680
+        ],
+        "spanPx": 448,
+        "outwardPx": 360,
+        "addedAreaPx2": 161280,
+        "accepted": true,
+        "reasons": [],
+        "maxAddedOpenRadiusUpperPx": 113.18834367112815,
+        "newHoleIds": [
+          "extension-2-hole-0",
+          "extension-2-hole-1"
+        ],
+        "newAssemblyId": "extension-2-solid"
+      }
+    ],
+    "additions": [
+      {
+        "rect": [
+          880,
+          24,
+          448,
+          680
+        ],
+        "parentIndex": 1,
+        "profileId": "offset-arm"
+      }
+    ],
+    "holes": [
+      {
+        "holeId": "extension-2-hole-0",
+        "profileId": "offset-cut-small",
+        "rects": [
+          [
+            920,
+            56,
+            80,
+            112
+          ],
+          [
+            912,
+            120,
+            72,
+            56
+          ]
+        ]
+      },
+      {
+        "holeId": "extension-2-hole-1",
+        "profileId": "offset-cut-small",
+        "rects": [
+          [
+            1216,
+            56,
+            80,
+            112
+          ],
+          [
+            1208,
+            120,
+            72,
+            56
+          ]
+        ]
+      }
+    ],
+    "solids": [
+      {
+        "site": {
+          "x": 1104,
+          "y": 296
+        },
+        "instances": [
+          {
+            "id": 13,
+            "role": "solid",
+            "family": "fibre-knot",
+            "constructionVersion": 4,
+            "shapeProfile": "fallen-bundle",
+            "x": 0,
+            "y": 0,
+            "length": 144,
+            "width": 56,
+            "height": 32,
+            "rotation": 0.5,
+            "thickness": 7,
+            "fold": 0.42,
+            "branches": 3,
+            "opening": 0.74,
+            "distortion": 0.62
+          }
+        ],
+        "assembly": {
+          "assemblyId": "extension-2-solid",
+          "instanceIds": [
+            13
+          ],
+          "maxSpanPx": 512
+        }
+      }
+    ],
+    "addedLandAreaPx2": 161280,
+    "addedHoleAreaPx2": 19840,
+    "addedSolidAreaLowerPx2": 1684,
+    "translation": {
+      "x": 0,
+      "y": 32
+    },
+    "frameBefore": [
+      2304,
+      1792
+    ],
+    "frameAfter": [
+      2304,
+      1792
+    ],
+    "moduleSourceHash": "81bfa2ac673f0af41a2bf5c1c9b3b8a7eaffa36fb92792285da927f855a24f4d",
+    "combinedSourceHash": "006e5d504a80582cfdd0c0f5a5387455dc777e0273734e5cfae951f376f0f35c",
+    "coordinateSpace": "before-global-translation",
+    "baseCounts": {
+      "holes": 12,
+      "solids": 6
+    },
+    "finalCounts": {
+      "holes": 14,
+      "solids": 7
+    },
+    "baseTargetWalkAreaPx2": 1575616
+  },
+  "assessmentIntent": {
+    "policy": {
+      "algorithm": "native-joint-layout-v1",
+      "version": 2,
+      "enabled": true,
+      "planningCellFactor": 0.7976990327380953,
+      "holeToSolidRatio": 2,
+      "holeCountAbsTolerance": 1,
+      "holeCountRelTolerance": 0.2,
+      "minSolidCount": 1,
+      "requireMoreHoles": true,
+      "regionHoleShareMin": 0.64,
+      "regionHoleShareMax": 0.7,
+      "comparisonSpacingsPx": [
+        288,
+        352
+      ],
+      "spacingPx": 320,
+      "countToleranceRatio": 0.2,
+      "areaToleranceRatio": 0.1,
+      "maxEmptyRadiusPx": 160,
+      "deepEmptyThresholdPx": 112,
+      "maxDeepEmptySpanPx": 448,
+      "minHoleCoreRadiusPx": 32,
+      "minSolidAreaPx2": 1600,
+      "minSolidSpanPx": 80,
+      "probeStepPx": 32,
+      "referenceSightPx": 224,
+      "revealRouteMinPx": 80,
+      "revealRouteMaxPx": 240,
+      "maxCoverRoutePx": 320,
+      "wideRadiusPx": 48,
+      "minWideRatio": 0.55,
+      "minLargestWideRatio": 0.8,
+      "narrowWidthPx": 160,
+      "maxNarrowRatio": 0.2,
+      "maxNarrowRunPx": 224,
+      "encounterRadiusPx": 112,
+      "minRouteLengthPx": 224,
+      "minRouteEncounters": 6,
+      "minRouteHoleShare": 0.6,
+      "maxRouteHoleShare": 0.75,
+      "windowSize": 6,
+      "minWindowHoles": 3,
+      "maxGeometryEvaluations": 72,
+      "maxFullCandidates": 2,
+      "sourceHash": "006e5d504a80582cfdd0c0f5a5387455dc777e0273734e5cfae951f376f0f35c"
+    },
+    "world": {
+      "worldId": "split-rib-causeway",
+      "enabled": true,
+      "annotationStatus": "reviewed",
+      "targetWalkAreaPx2": 1715372,
+      "frameWidthPx": 2304,
+      "frameHeightPx": 1792,
+      "materialAxisRad": 0.42,
+      "landGrammar": "offset-overlap-v1",
+      "landRectMinCount": 4,
+      "landRectMaxCount": 7,
+      "landRectMinSpanPx": 800,
+      "landRectMaxSpanPx": 1440,
+      "landRectMinThicknessPx": 544,
+      "landRectMaxThicknessPx": 960,
+      "landRectMinOverlapPx": 320,
+      "bayGrammar": "shore-rect-cut-v1",
+      "bayProfileIds": [
+        "shore-bay-default"
+      ],
+      "bayCountOptions": [
+        0,
+        1,
+        2
+      ],
+      "landCoreMinCount": 3,
+      "landCoreMaxCount": 5,
+      "landShoulderMinCount": 1,
+      "landShoulderMaxCount": 2,
+      "landShoulderMinSpanPx": 576,
+      "landShoulderMaxSpanPx": 768,
+      "landShoulderMinThicknessPx": 384,
+      "landShoulderMaxThicknessPx": 448,
+      "landShoulderMinExtensionPx": 192,
+      "landShoulderMaxExtensionPx": 320,
+      "landShoulderAttachment": "core-outward-normal-v1"
+    }
+  },
+  "boundary": {
+    "accepted": true,
+    "limitPx": 384,
+    "maxCleanRunPx": 286.05999999999995,
+    "perimeterPx": 8445.893015437347,
+    "longRunCount": 0,
+    "longRunShare": 0
+  },
+  "macro": {
+    "scope": "filled-exterior-only",
+    "outerAreaPx2": 2019236.540200001,
+    "aabb": {
+      "minX": 32,
+      "minY": 56,
+      "width": 2240,
+      "height": 1352,
+      "fillRatio": 0.6667491745694213
+    },
+    "hull": {
+      "areaPx2": 2448865.7882000003,
+      "fillRatio": 0.824559904397296,
+      "vertexCount": 20
+    },
+    "pca": {
+      "axisRatio": 1.9572168981407077,
+      "majorSpanPx": 2010.6236406867995,
+      "minorSpanPx": 1027.2870843271517,
+      "angleRadians": -0.1836150091562287
+    },
+    "concavity": {
+      "deficitAreaPx2": 429629.2479999992,
+      "maxDepthPx": 356.3862556075375,
+      "maxDepthRatio": 0.34691982508566427,
+      "areaWeightedDepthPx": 271.0589083647979,
+      "pockets": [
+        {
+          "from": {
+            "x": 32,
+            "y": 716.86
+          },
+          "to": {
+            "x": 120,
+            "y": 559.86
+          },
+          "mouthWidthPx": 179.98055450520204,
+          "areaPx2": 4609.4,
+          "hullAreaRatio": 0.0018822591349067217,
+          "maxDepthPx": 51.87671537999478,
+          "depthRatio": 0.05049875168436755,
+          "deepestPoint": {
+            "x": 120,
+            "y": 665.96
+          }
+        },
+        {
+          "from": {
+            "x": 120,
+            "y": 559.86
+          },
+          "to": {
+            "x": 128.16,
+            "y": 552
+          },
+          "mouthWidthPx": 11.329836715504781,
+          "areaPx2": 1.5114000000002035,
+          "hullAreaRatio": 6.171836804135901e-7,
+          "maxDepthPx": 0.19753153167137322,
+          "depthRatio": 0.00019228464436574867,
+          "deepestPoint": {
+            "x": 126.14,
+            "y": 554.22
+          }
+        },
+        {
+          "from": {
+            "x": 128.16,
+            "y": 552
+          },
+          "to": {
+            "x": 895.88,
+            "y": 56
+          },
+          "mouthWidthPx": 914.0076577359732,
+          "areaPx2": 158556.05540000004,
+          "hullAreaRatio": 0.06474673139051207,
+          "maxDepthPx": 350.00844609161,
+          "depthRatio": 0.34071142471420934,
+          "deepestPoint": {
+            "x": 674.08,
+            "y": 616
+          }
+        },
+        {
+          "from": {
+            "x": 895.88,
+            "y": 56
+          },
+          "to": {
+            "x": 1360,
+            "y": 56
+          },
+          "mouthWidthPx": 464.12,
+          "areaPx2": 763.0500000000009,
+          "hullAreaRatio": 0.00031159322968077747,
+          "maxDepthPx": 14.439999999999998,
+          "depthRatio": 0.014056440716820509,
+          "deepestPoint": {
+            "x": 1100.06,
+            "y": 70.44
+          }
+        },
+        {
+          "from": {
+            "x": 1360,
+            "y": 56
+          },
+          "to": {
+            "x": 2124.92,
+            "y": 256
+          },
+          "mouthWidthPx": 790.6343063642003,
+          "areaPx2": 120353.13639999997,
+          "hullAreaRatio": 0.049146481191386,
+          "maxDepthPx": 356.3862556075375,
+          "depthRatio": 0.34691982508566427,
+          "deepestPoint": {
+            "x": 1328,
+            "y": 416
+          }
+        },
+        {
+          "from": {
+            "x": 2124.92,
+            "y": 256
+          },
+          "to": {
+            "x": 2217.12,
+            "y": 328
+          },
+          "mouthWidthPx": 116.98222087137843,
+          "areaPx2": 1922.1581999999994,
+          "hullAreaRatio": 0.0007849177399847834,
+          "maxDepthPx": 30.42923936205537,
+          "depthRatio": 0.029620969470268176,
+          "deepestPoint": {
+            "x": 2167.68,
+            "y": 328
+          }
+        },
+        {
+          "from": {
+            "x": 2240,
+            "y": 354.64
+          },
+          "to": {
+            "x": 2272,
+            "y": 543.46
+          },
+          "mouthWidthPx": 191.5123818451434,
+          "areaPx2": 2806.272,
+          "hullAreaRatio": 0.0011459476519792068,
+          "maxDepthPx": 30.30362812098863,
+          "depthRatio": 0.029498694749809668,
+          "deepestPoint": {
+            "x": 2240,
+            "y": 536
+          }
+        },
+        {
+          "from": {
+            "x": 2272,
+            "y": 688
+          },
+          "to": {
+            "x": 2240,
+            "y": 982.9
+          },
+          "mouthWidthPx": 296.63110086435637,
+          "areaPx2": 4684.808,
+          "hullAreaRatio": 0.0019130521658532757,
+          "maxDepthPx": 30.859609708241308,
+          "depthRatio": 0.0300399082000078,
+          "deepestPoint": {
+            "x": 2240,
+            "y": 696.84
+          }
+        },
+        {
+          "from": {
+            "x": 2240,
+            "y": 982.9
+          },
+          "to": {
+            "x": 2184,
+            "y": 1088
+          },
+          "mouthWidthPx": 119.08824459198314,
+          "areaPx2": 2334.409200000002,
+          "hullAreaRatio": 0.0009532613878835197,
+          "maxDepthPx": 34.90831537775372,
+          "depthRatio": 0.033981071027110045,
+          "deepestPoint": {
+            "x": 2193.7,
+            "y": 995.56
+          }
+        },
+        {
+          "from": {
+            "x": 2184,
+            "y": 1088
+          },
+          "to": {
+            "x": 1744.44,
+            "y": 1280
+          },
+          "mouthWidthPx": 479.6634169915399,
+          "areaPx2": 24559.827800000006,
+          "hullAreaRatio": 0.010029062400374466,
+          "maxDepthPx": 134.47829814617216,
+          "depthRatio": 0.13090624830959713,
+          "deepestPoint": {
+            "x": 1848.04,
+            "y": 1088
+          }
+        },
+        {
+          "from": {
+            "x": 1744.44,
+            "y": 1280
+          },
+          "to": {
+            "x": 1080.48,
+            "y": 1408
+          },
+          "mouthWidthPx": 676.1855378518534,
+          "areaPx2": 47345.59680000001,
+          "hullAreaRatio": 0.019333683792773566,
+          "maxDepthPx": 158.89887314262603,
+          "depthRatio": 0.1546781572229159,
+          "deepestPoint": {
+            "x": 1320,
+            "y": 1200
+          }
+        },
+        {
+          "from": {
+            "x": 1080.48,
+            "y": 1408
+          },
+          "to": {
+            "x": 352.64,
+            "y": 1408
+          },
+          "mouthWidthPx": 727.84,
+          "areaPx2": 22486.592599999996,
+          "hullAreaRatio": 0.00918245201854382,
+          "maxDepthPx": 96,
+          "depthRatio": 0.09345002138606434,
+          "deepestPoint": {
+            "x": 752.5,
+            "y": 1312
+          }
+        },
+        {
+          "from": {
+            "x": 352.64,
+            "y": 1408
+          },
+          "to": {
+            "x": 110.24,
+            "y": 1272
+          },
+          "mouthWidthPx": 277.9456061894125,
+          "areaPx2": 19169.519200000002,
+          "hullAreaRatio": 0.007827917435234477,
+          "maxDepthPx": 144.46797900678436,
+          "depthRatio": 0.14063058049776556,
+          "deepestPoint": {
+            "x": 305.68,
+            "y": 1216
+          }
+        },
+        {
+          "from": {
+            "x": 99.92,
+            "y": 1266.18
+          },
+          "to": {
+            "x": 70.94,
+            "y": 1246.94
+          },
+          "mouthWidthPx": 34.78531299269852,
+          "areaPx2": 133.7077999999999,
+          "hullAreaRatio": 0.00005459988891358546,
+          "maxDepthPx": 7.687600800261038,
+          "depthRatio": 0.007483400616582493,
+          "deepestPoint": {
+            "x": 92.34,
+            "y": 1251.92
+          }
+        },
+        {
+          "from": {
+            "x": 64,
+            "y": 1231.36
+          },
+          "to": {
+            "x": 32,
+            "y": 777.2
+          },
+          "mouthWidthPx": 455.28596024916015,
+          "areaPx2": 19903.2032,
+          "hullAreaRatio": 0.008127518990997678,
+          "maxDepthPx": 85.00609150965221,
+          "depthRatio": 0.08274813614086188,
+          "deepestPoint": {
+            "x": 120,
+            "y": 816.7
+          }
+        }
+      ]
+    },
+    "regression": {
+      "policyId": "diagnostic-v1",
+      "policySourceHash": "2afddacfaf3b15990a9c631c167c9b06b7f48b60f20b042de9af2542d502e47b",
+      "squareLike": false,
+      "barLike": false,
+      "macroPocketCount": 2
+    }
+  },
+  "shore": {
+    "additions": 6,
+    "cuts": 17
+  },
+  "geometryHash": "8414adf8191d2890",
+  "geometry": {
+    "accepted": false,
+    "reasons": [
+      "walk-area-outside-intent",
+      "G1-largest-empty-radius",
+      "G1-long-deep-empty-region",
+      "G3-wide-domain-area",
+      "G3-wide-domain-connectivity"
+    ],
+    "metrics": {
+      "holes": 14,
+      "solids": 7,
+      "targetCount": 21,
+      "minCount": 17,
+      "maxCount": 25,
+      "walkAreaPx2": 1485376,
+      "targetWalkAreaPx2": 1715372,
+      "maxEmptyUpperPx": 193.65685424949237,
+      "maxDeepSpanPx": 520,
+      "worstEmptyPoint": {
+        "x": 916,
+        "y": 1180
+      },
+      "internalMaxEmptyUpperPx": 331.8166742257035,
+      "internalWorstEmptyPoint": {
+        "x": 1028,
+        "y": 1396
+      },
+      "worstDeepPoint": {
+        "x": 1044,
+        "y": 1220
+      },
+      "worstDeepBounds": {
+        "minX": 784,
+        "minY": 1056,
+        "maxX": 1304,
+        "maxY": 1392
+      },
+      "wideRatio": 0.46856822784264723,
+      "largestWideRatio": 0.5615632183908046,
+      "reachableBodySeats": 23209,
+      "supportedBodySeats": 23209,
+      "rejectedObjects": [],
+      "holeProfileViolationCount": 0,
+      "orphanHoleLabels": [],
+      "orphanHoleContours": [],
+      "bayCount": 0,
+      "bayViolationCount": 0,
+      "positiveLandAreaPx2": 2109952,
+      "finalSourceSupportViolationCount": 0,
+      "unsupportedSources": [],
+      "finalSourceSupportCheckedTriangles": 3784,
+      "finalSourceSupportVoidCellTests": 0,
+      "cellSizePx": 8,
+      "distanceCellUpperErrorPx": 5.656854249492381
+    },
+    "holeFailures": []
+  },
+  "visibility": {
+    "accepted": false,
+    "reasons": [
+      "body-route-to-cover-exceeds-limit"
+    ],
+    "coverage": {
+      "maxRoutePx": 509.362,
+      "worstCell": 47092,
+      "overLimit": 974,
+      "unreachable": 0,
+      "checkedBodyCenters": 23209
+    },
+    "qProbeCount": 1440
+  },
+  "before": {
+    "source": "docs/qa/artifacts/native-three-macro-2026-10-15/split-rib-causeway-round2",
+    "geometryHash": "478fc58caed451ac",
+    "boundary": {
+      "accepted": true,
+      "limitPx": 384,
+      "maxCleanRunPx": 280.46,
+      "perimeterPx": 8037.867980161099,
+      "longRunCount": 0,
+      "longRunShare": 0
+    },
+    "metrics": {
+      "holes": 12,
+      "solids": 6,
+      "targetCount": 18,
+      "minCount": 15,
+      "maxCount": 21,
+      "walkAreaPx2": 1362944,
+      "targetWalkAreaPx2": 1575616,
+      "maxEmptyUpperPx": 183.04692386206665,
+      "maxDeepSpanPx": 568,
+      "worstEmptyPoint": {
+        "x": 924,
+        "y": 1132
+      },
+      "internalMaxEmptyUpperPx": 325.6324218095816,
+      "internalWorstEmptyPoint": {
+        "x": 1052,
+        "y": 1364
+      },
+      "worstDeepPoint": {
+        "x": 1044,
+        "y": 1188
+      },
+      "worstDeepBounds": {
+        "minX": 760,
+        "minY": 1024,
+        "maxX": 1328,
+        "maxY": 1360
+      },
+      "wideRatio": 0.4434635612321563,
+      "largestWideRatio": 0.4855993223210504,
+      "reachableBodySeats": 21296,
+      "supportedBodySeats": 21296,
+      "rejectedObjects": [],
+      "holeProfileViolationCount": 0,
+      "orphanHoleLabels": [],
+      "orphanHoleContours": [],
+      "bayCount": 0,
+      "bayViolationCount": 0,
+      "positiveLandAreaPx2": 1948672,
+      "finalSourceSupportViolationCount": 0,
+      "unsupportedSources": [],
+      "finalSourceSupportCheckedTriangles": 3676,
+      "finalSourceSupportVoidCellTests": 0,
+      "cellSizePx": 8,
+      "distanceCellUpperErrorPx": 5.656854249492381
+    },
+    "visibility": {
+      "accepted": false,
+      "reasons": [
+        "body-route-to-cover-exceeds-limit"
+      ],
+      "coverage": {
+        "maxRoutePx": 563.42,
+        "worstCell": 49110,
+        "overLimit": 1131,
+        "unreachable": 0,
+        "checkedBodyCenters": 21296
+      },
+      "qProbeCount": 1301
+    },
+    "macro": {
+      "scope": "filled-exterior-only",
+      "outerAreaPx2": 1856385.0730000003,
+      "aabb": {
+        "minX": 64,
+        "minY": 224,
+        "width": 2208,
+        "height": 1152,
+        "fillRatio": 0.7298212753025615
+      },
+      "hull": {
+        "areaPx2": 2140467.3328,
+        "fillRatio": 0.8672802637784786,
+        "vertexCount": 14
+      },
+      "pca": {
+        "axisRatio": 2.4331771816564185,
+        "majorSpanPx": 2126.5827573886163,
+        "minorSpanPx": 873.9942053627661,
+        "angleRadians": -0.1735580881525789
+      },
+      "concavity": {
+        "deficitAreaPx2": 284082.25979999965,
+        "maxDepthPx": 199.84571453864433,
+        "maxDepthRatio": 0.22865793996390968,
+        "areaWeightedDepthPx": 141.59295071046986,
+        "pockets": [
+          {
+            "from": {
+              "x": 87.54,
+              "y": 520
+            },
+            "to": {
+              "x": 704,
+              "y": 384
+            },
+            "mouthWidthPx": 631.2835587911347,
+            "areaPx2": 34130.5384,
+            "hullAreaRatio": 0.015945367573235968,
+            "maxDepthPx": 122.4096508199529,
+            "depthRatio": 0.1400577373040416,
+            "deepestPoint": {
+              "x": 655.74,
+              "y": 520
+            }
+          },
+          {
+            "from": {
+              "x": 704,
+              "y": 384
+            },
+            "to": {
+              "x": 1521.9,
+              "y": 224
+            },
+            "mouthWidthPx": 833.4029097621391,
+            "areaPx2": 76964.6654,
+            "hullAreaRatio": 0.03595694464503719,
+            "maxDepthPx": 199.84571453864433,
+            "depthRatio": 0.22865793996390968,
+            "deepestPoint": {
+              "x": 1336,
+              "y": 464
+            }
+          },
+          {
+            "from": {
+              "x": 1521.9,
+              "y": 224
+            },
+            "to": {
+              "x": 2222.18,
+              "y": 224
+            },
+            "mouthWidthPx": 700.2799999999997,
+            "areaPx2": 15667.0812,
+            "hullAreaRatio": 0.007319467557351362,
+            "maxDepthPx": 96,
+            "depthRatio": 0.10984054517861885,
+            "deepestPoint": {
+              "x": 1802.62,
+              "y": 320
+            }
+          },
+          {
+            "from": {
+              "x": 2240,
+              "y": 244.74
+            },
+            "to": {
+              "x": 2272,
+              "y": 428
+            },
+            "mouthWidthPx": 186.032866988605,
+            "areaPx2": 2554.4810000000016,
+            "hullAreaRatio": 0.0011934220909872143,
+            "maxDepthPx": 27.745634863092025,
+            "depthRatio": 0.031745788121759606,
+            "deepestPoint": {
+              "x": 2240,
+              "y": 406.04
+            }
+          },
+          {
+            "from": {
+              "x": 2272,
+              "y": 428
+            },
+            "to": {
+              "x": 2272,
+              "y": 904
+            },
+            "mouthWidthPx": 476,
+            "areaPx2": 6878.856000000002,
+            "hullAreaRatio": 0.003213716880697074,
+            "maxDepthPx": 32,
+            "depthRatio": 0.036613515059539616,
+            "deepestPoint": {
+              "x": 2240,
+              "y": 520
+            }
+          },
+          {
+            "from": {
+              "x": 2272,
+              "y": 904
+            },
+            "to": {
+              "x": 2208,
+              "y": 1056
+            },
+            "mouthWidthPx": 164.9242250247064,
+            "areaPx2": 4439.612399999996,
+            "hullAreaRatio": 0.002074132285024143,
+            "maxDepthPx": 42.081871228803934,
+            "depthRatio": 0.04814891331154437,
+            "deepestPoint": {
+              "x": 2226.34,
+              "y": 904
+            }
+          },
+          {
+            "from": {
+              "x": 2208,
+              "y": 1056
+            },
+            "to": {
+              "x": 1775.04,
+              "y": 1248
+            },
+            "mouthWidthPx": 473.6225940556468,
+            "areaPx2": 32913.551600000006,
+            "hullAreaRatio": 0.015376806314976529,
+            "maxDepthPx": 145.8984450219899,
+            "depthRatio": 0.16693296606175123,
+            "deepestPoint": {
+              "x": 1848.1,
+              "y": 1056
+            }
+          },
+          {
+            "from": {
+              "x": 1775.04,
+              "y": 1248
+            },
+            "to": {
+              "x": 1216,
+              "y": 1376
+            },
+            "mouthWidthPx": 573.5065139996232,
+            "areaPx2": 55086.75059999999,
+            "hullAreaRatio": 0.02573585205242988,
+            "maxDepthPx": 166.3869505762278,
+            "depthRatio": 0.1903753475197997,
+            "deepestPoint": {
+              "x": 1344,
+              "y": 1176
+            }
+          },
+          {
+            "from": {
+              "x": 1216,
+              "y": 1376
+            },
+            "to": {
+              "x": 392,
+              "y": 1376
+            },
+            "mouthWidthPx": 824,
+            "areaPx2": 26060.028200000008,
+            "hullAreaRatio": 0.012174924513288516,
+            "maxDepthPx": 72,
+            "depthRatio": 0.08238040888396414,
+            "deepestPoint": {
+              "x": 726.54,
+              "y": 1304
+            }
+          },
+          {
+            "from": {
+              "x": 392,
+              "y": 1376
+            },
+            "to": {
+              "x": 81.58,
+              "y": 1216.42
+            },
+            "mouthWidthPx": 349.0363201731304,
+            "areaPx2": 18374.47460000001,
+            "hullAreaRatio": 0.008584328440071958,
+            "maxDepthPx": 120.95337235694927,
+            "depthRatio": 0.13839150375916454,
+            "deepestPoint": {
+              "x": 392,
+              "y": 1240
+            }
+          },
+          {
+            "from": {
+              "x": 64,
+              "y": 1198.26
+            },
+            "to": {
+              "x": 64,
+              "y": 568.96
+            },
+            "mouthWidthPx": 629.3,
+            "areaPx2": 11012.220399999998,
+            "hullAreaRatio": 0.005144773868421823,
+            "maxDepthPx": 56,
+            "depthRatio": 0.06407365135419434,
+            "deepestPoint": {
+              "x": 120,
+              "y": 771.44
+            }
+          }
+        ]
+      },
+      "regression": {
+        "policyId": "diagnostic-v1",
+        "policySourceHash": "2afddacfaf3b15990a9c631c167c9b06b7f48b60f20b042de9af2542d502e47b",
+        "squareLike": false,
+        "barLike": false,
+        "macroPocketCount": 2
+      }
+    }
+  },
+  "taskChecks": {
+    "acceptedExtensions": 1,
+    "hasExtension": true,
+    "sourceSupported": true,
+    "holeIdentity": true,
+    "allBodyReachable": true,
+    "holeSolidRatio": 2,
+    "boundary": true,
+    "notSquare": true,
+    "notBar": true,
+    "G2MaxNonRegression": true,
+    "G2OverLimitNonRegression": true
+  },
+  "render": {
+    "worldPixelScale": 0.5,
+    "frameWidth": 2304,
+    "frameHeight": 1792
+  },
+  "elapsedMs": 2245.652541,
+  "sourceFingerprintAfter": {
+    "scope": "all src TS/JSON and data CSV bytes; docs/tools excluded",
+    "fileCount": 833,
+    "sha256": "c49b1f4a3b49f8971c74045b0b461f8aed6713b10a4556bfa8f1e808b0f783a1"
+  },
+  "sourcesStable": true
+}

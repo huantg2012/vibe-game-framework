@@ -1,0 +1,339 @@
+{
+  "scope": "One shared rule correction followed by one geometry per fixed world; no deployment/full candidates. True failures retained.",
+  "worlds": [
+    {
+      "world": "split-rib-causeway",
+      "source": "split-rib-causeway-round2/report.json",
+      "sourcesStable": true,
+      "counts": {
+        "fragmentCompiles": 1,
+        "geometryBuilds": 1,
+        "G2Evaluations": 1,
+        "fullCandidates": 0
+      },
+      "accepted": [
+        {
+          "profileId": "offset-arm",
+          "parentIndex": 1,
+          "direction": 2,
+          "rect": [
+            880,
+            24,
+            448,
+            680
+          ],
+          "spanPx": 448,
+          "outwardPx": 360,
+          "addedAreaPx2": 161280
+        }
+      ],
+      "coordinateSpace": "before-global-translation",
+      "translation": {
+        "x": 0,
+        "y": 32
+      },
+      "frameAfter": [
+        2304,
+        1792
+      ],
+      "addedLandAreaPx2": 161280,
+      "checks": {
+        "acceptedExtensions": 1,
+        "hasExtension": true,
+        "sourceSupported": true,
+        "holeIdentity": true,
+        "allBodyReachable": true,
+        "holeSolidRatio": 2,
+        "boundary": true,
+        "notSquare": true,
+        "notBar": true,
+        "G2MaxNonRegression": true,
+        "G2OverLimitNonRegression": true
+      },
+      "boundary": {
+        "accepted": true,
+        "limitPx": 384,
+        "maxCleanRunPx": 286.05999999999995,
+        "perimeterPx": 8445.893015437347,
+        "longRunCount": 0,
+        "longRunShare": 0
+      },
+      "before": {
+        "walkAreaPx2": 1362944,
+        "maxEmptyUpperPx": 183.04692386206665,
+        "maxDeepSpanPx": 568,
+        "wideRatio": 0.4434635612321563,
+        "largestWideRatio": 0.4855993223210504,
+        "holes": 12,
+        "solids": 6
+      },
+      "after": {
+        "walkAreaPx2": 1485376,
+        "maxEmptyUpperPx": 193.65685424949237,
+        "maxDeepSpanPx": 520,
+        "wideRatio": 0.46856822784264723,
+        "largestWideRatio": 0.5615632183908046,
+        "holes": 14,
+        "solids": 7
+      },
+      "G2Before": {
+        "accepted": false,
+        "reasons": [
+          "body-route-to-cover-exceeds-limit"
+        ],
+        "coverage": {
+          "maxRoutePx": 563.42,
+          "worstCell": 49110,
+          "overLimit": 1131,
+          "unreachable": 0,
+          "checkedBodyCenters": 21296
+        },
+        "qProbeCount": 1301
+      },
+      "G2After": {
+        "accepted": false,
+        "reasons": [
+          "body-route-to-cover-exceeds-limit"
+        ],
+        "coverage": {
+          "maxRoutePx": 509.362,
+          "worstCell": 47092,
+          "overLimit": 974,
+          "unreachable": 0,
+          "checkedBodyCenters": 23209
+        },
+        "qProbeCount": 1440
+      },
+      "geometryReasons": [
+        "walk-area-outside-intent",
+        "G1-largest-empty-radius",
+        "G1-long-deep-empty-region",
+        "G3-wide-domain-area",
+        "G3-wide-domain-connectivity"
+      ]
+    },
+    {
+      "world": "gel-rafts",
+      "source": "gel-rafts-round2/report.json",
+      "sourcesStable": true,
+      "counts": {
+        "fragmentCompiles": 1,
+        "geometryBuilds": 1,
+        "G2Evaluations": 1,
+        "fullCandidates": 0
+      },
+      "accepted": [
+        {
+          "profileId": "offset-arm",
+          "parentIndex": 2,
+          "direction": 3,
+          "rect": [
+            1376,
+            1312,
+            592,
+            624
+          ],
+          "spanPx": 592,
+          "outwardPx": 304,
+          "addedAreaPx2": 179968
+        },
+        {
+          "profileId": "offset-arm",
+          "parentIndex": 0,
+          "direction": 0,
+          "rect": [
+            -160,
+            264,
+            640,
+            552
+          ],
+          "spanPx": 552,
+          "outwardPx": 320,
+          "addedAreaPx2": 176640
+        }
+      ],
+      "coordinateSpace": "before-global-translation",
+      "translation": {
+        "x": 192,
+        "y": 0
+      },
+      "frameAfter": [
+        2304,
+        1984
+      ],
+      "addedLandAreaPx2": 356608,
+      "checks": {
+        "acceptedExtensions": 2,
+        "hasExtension": true,
+        "sourceSupported": true,
+        "holeIdentity": true,
+        "allBodyReachable": true,
+        "holeSolidRatio": 2,
+        "boundary": false,
+        "notSquare": true,
+        "notBar": true,
+        "G2MaxNonRegression": true,
+        "G2OverLimitNonRegression": true
+      },
+      "boundary": {
+        "accepted": false,
+        "limitPx": 384,
+        "maxCleanRunPx": 414.20000000000005,
+        "perimeterPx": 9238.362115394792,
+        "longRunCount": 1,
+        "longRunShare": 0.04483478725192833
+      },
+      "before": {
+        "walkAreaPx2": 1292544,
+        "maxEmptyUpperPx": 209.84122293135576,
+        "maxDeepSpanPx": 1512,
+        "wideRatio": 0.5502079619726679,
+        "largestWideRatio": 0.9697624190064795,
+        "holes": 10,
+        "solids": 5
+      },
+      "after": {
+        "walkAreaPx2": 1593152,
+        "maxEmptyUpperPx": 209.84122293135576,
+        "maxDeepSpanPx": 1520,
+        "wideRatio": 0.5462981561081428,
+        "largestWideRatio": 0.9977204206191632,
+        "holes": 14,
+        "solids": 7
+      },
+      "G2Before": {
+        "accepted": true,
+        "reasons": [],
+        "coverage": {
+          "maxRoutePx": 311.198,
+          "worstCell": 58413,
+          "overLimit": 0,
+          "unreachable": 0,
+          "checkedBodyCenters": 20196
+        },
+        "qProbeCount": 1244
+      },
+      "G2After": {
+        "accepted": true,
+        "reasons": [],
+        "coverage": {
+          "maxRoutePx": 241.71,
+          "worstCell": 6156,
+          "overLimit": 0,
+          "unreachable": 0,
+          "checkedBodyCenters": 24893
+        },
+        "qProbeCount": 1544
+      },
+      "geometryReasons": [
+        "G1-largest-empty-radius",
+        "G1-long-deep-empty-region",
+        "G3-wide-domain-area"
+      ]
+    },
+    {
+      "world": "ash-strata",
+      "source": "ash-strata-round2/report.json",
+      "sourcesStable": true,
+      "counts": {
+        "fragmentCompiles": 1,
+        "geometryBuilds": 1,
+        "G2Evaluations": 1,
+        "fullCandidates": 0
+      },
+      "accepted": [
+        {
+          "profileId": "offset-arm",
+          "parentIndex": 2,
+          "direction": 2,
+          "rect": [
+            1056,
+            -312,
+            488,
+            760
+          ],
+          "spanPx": 488,
+          "outwardPx": 440,
+          "addedAreaPx2": 214720
+        }
+      ],
+      "coordinateSpace": "before-global-translation",
+      "translation": {
+        "x": 0,
+        "y": 352
+      },
+      "frameAfter": [
+        2304,
+        1824
+      ],
+      "addedLandAreaPx2": 214720,
+      "checks": {
+        "acceptedExtensions": 1,
+        "hasExtension": true,
+        "sourceSupported": true,
+        "holeIdentity": true,
+        "allBodyReachable": true,
+        "holeSolidRatio": 2,
+        "boundary": true,
+        "notSquare": true,
+        "notBar": true,
+        "G2MaxNonRegression": true,
+        "G2OverLimitNonRegression": true
+      },
+      "boundary": {
+        "accepted": true,
+        "limitPx": 384,
+        "maxCleanRunPx": 281.74,
+        "perimeterPx": 8843.056591570028,
+        "longRunCount": 0,
+        "longRunShare": 0
+      },
+      "before": {
+        "walkAreaPx2": 1212672,
+        "maxEmptyUpperPx": 173.8634951396291,
+        "maxDeepSpanPx": 440,
+        "wideRatio": 0.45403208781929494,
+        "largestWideRatio": 0.9528071602929211,
+        "holes": 12,
+        "solids": 6
+      },
+      "after": {
+        "walkAreaPx2": 1355328,
+        "maxEmptyUpperPx": 173.86351803786368,
+        "maxDeepSpanPx": 440,
+        "wideRatio": 0.44600273882041835,
+        "largestWideRatio": 0.853996823716252,
+        "holes": 14,
+        "solids": 7
+      },
+      "G2Before": {
+        "accepted": true,
+        "reasons": [],
+        "coverage": {
+          "maxRoutePx": 288.57,
+          "worstCell": 51283,
+          "overLimit": 0,
+          "unreachable": 0,
+          "checkedBodyCenters": 18948
+        },
+        "qProbeCount": 1152
+      },
+      "G2After": {
+        "accepted": true,
+        "reasons": [],
+        "coverage": {
+          "maxRoutePx": 278.628,
+          "worstCell": 63958,
+          "overLimit": 0,
+          "unreachable": 0,
+          "checkedBodyCenters": 21177
+        },
+        "qProbeCount": 1289
+      },
+      "geometryReasons": [
+        "G1-largest-empty-radius",
+        "G3-wide-domain-area"
+      ]
+    }
+  ]
+}

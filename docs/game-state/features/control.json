@@ -406,7 +406,7 @@
     "id": "COH-F007",
     "title": "有限视野与不可照亮的空间空洞",
     "domain": "controls",
-    "summary": "普通r11的VOID阻行并遮视，solid只阻身体/近战。DEC-213三张DEV构型H:S保持12:6/10:5/12:6、身体全可达；凝胶/折板G2通过，双脊因下侧到遮视处路线563.42px新增回退。宏观形状改善不能抵扣遮视/宽域门，未验证动态潜行或自然探索。",
+    "summary": "普通r11的VOID阻行遮视、solid只阻身体/近战保持。DEC-214三图扩展均14H:7S且身体全可达；凝胶/折板G2通过，双脊到遮视处路线门仍失败。仅几何检查，无动态潜行或自然探索证据。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -749,6 +749,62 @@
       {
         "path": "docs/qa/native-three-macro-2026-10-15.md",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-extension.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-construction-extension.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-raster.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-extension.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-shore-identity.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/native-three-extensions-2026-10-15.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/validation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/round2-summary.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser-attempt1/capture.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/capture.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/comparison.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/gallery-validation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/native-three-extensions-2026-10-15/browser/index.html",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -792,7 +848,8 @@
       "COH-E243",
       "COH-E244",
       "COH-E245",
-      "COH-E246"
+      "COH-E246",
+      "COH-E247"
     ],
     "unknowns": [
       "历史I28所列全世界光照、压力与动态辨识扩展验收仍沿原挂起边界；R100专项按当前任务推进，不由旧记录判通过。",
@@ -809,7 +866,8 @@
       "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。",
       "E244的G2仅为最终固定参考的真实几何遮视检查；其G1空白和G3宽域仍失败，完整内容未部署。没有正常镜头、实际敌人时序或自然探索证据，最长直边检查不代替视觉/潜行人审。",
       "E245仅覆盖三张固定DEV样本的构造、真实材质及浏览器切换；三图仍有G1空白/G3宽域失败，无彩层原另有面积下界缺口。完整内容、未知出口、正常视距潜行、保存恢复、随机变化和全库品质未完成，人审未签。",
-      "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。"
+      "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。",
+      "E247仅覆盖固定三图共享扩展与最终浏览器复看：新增宽臂1/2/1，孔对重复；凝胶441.58px/折板463.56px长直岸失败，凝胶新增宽域面积失败、折板新增面积失败，双脊G2仍失败。最终G2仅保留结果/原因，coverage标量未留存，不沿用round2数字。没有完整部署、自然探索、动态潜行或人审通过。"
     ]
   },
   {

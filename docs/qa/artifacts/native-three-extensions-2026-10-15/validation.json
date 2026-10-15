@@ -1,0 +1,147 @@
+{
+  "scope": "DEV mechanism and type checks; no playable admission",
+  "sourceHashes": {
+    "data/rift-native-construction-extension.csv": "c216c4eca82df261e75fd374429d1731535caffa927c3a3ae975b21b026c532d",
+    "src/generation/world-study/native-spatial-construction-extension.ts": "81bfa2ac673f0af41a2bf5c1c9b3b8a7eaffa36fb92792285da927f855a24f4d",
+    "src/generation/world-study/native-spatial-construction-reference.ts": "cfab8b526c9ebd39650f81fdb0c119f5c22aadf102cf9e41922a2b6f3dae03b7",
+    "src/generation/world-study/native-spatial-construction-shore.ts": "73115f5f64c4a01642efe59b736618f22e0c9aee257d6f910a5f477cc95ea751",
+    "src/dev/native-construction.ts": "ec250475cee7a0946105d35db7af44972d80d098a063406cac8b2c20199dcb3a",
+    "src/generation/world-study/native-volume-raster.ts": "beb4c7d58a313e23a2c7fd035f77560d587b66f656b2c8f57c4e126b63c38274"
+  },
+  "preflight": {
+    "scope": "three frozen references stopped before fragment compiler",
+    "sampleCounts": [
+      {
+        "worldId": "split-rib-causeway",
+        "accepted": 1,
+        "frame": [
+          2304,
+          1792
+        ]
+      },
+      {
+        "worldId": "gel-rafts",
+        "accepted": 2,
+        "frame": [
+          2304,
+          1984
+        ]
+      },
+      {
+        "worldId": "ash-strata",
+        "accepted": 1,
+        "frame": [
+          2304,
+          1824
+        ]
+      }
+    ]
+  },
+  "mechanism": {
+    "passed": true,
+    "scope": "pure complete-object construction; no fragment/terrain/render",
+    "checks": [
+      "deterministic",
+      "input-immutable",
+      "2H1S-per-accepted-module",
+      "shared-budget",
+      "direction-diversity",
+      "8px-grid",
+      "whole-source-dimensions",
+      "frame-translation-no-clipping",
+      "protected-region",
+      "area-budget",
+      "strict-policy",
+      "no-extension-compatibility"
+    ],
+    "sampleCounts": [
+      {
+        "worldId": "split-rib-causeway",
+        "accepted": 1,
+        "frame": [
+          2304,
+          1792
+        ]
+      },
+      {
+        "worldId": "gel-rafts",
+        "accepted": 2,
+        "frame": [
+          2304,
+          1984
+        ]
+      },
+      {
+        "worldId": "ash-strata",
+        "accepted": 1,
+        "frame": [
+          2304,
+          1824
+        ]
+      }
+    ],
+    "accepted": 2,
+    "trials": 6,
+    "additions": [
+      {
+        "rect": [
+          208,
+          -384,
+          464,
+          736
+        ],
+        "parentIndex": 0,
+        "profileId": "offset-arm"
+      },
+      {
+        "rect": [
+          -416,
+          200,
+          768,
+          448
+        ],
+        "parentIndex": 0,
+        "profileId": "offset-arm"
+      }
+    ],
+    "translation": {
+      "x": 448,
+      "y": 416
+    },
+    "frameAfter": [
+      2432,
+      2400
+    ]
+  },
+  "shoreIdentity": {
+    "passed": true,
+    "scope": "pure shore construction; zero fragment/terrain compiles",
+    "checks": [
+      "unchanged-bank-random-identity",
+      "global-translation-keeps-bank",
+      "legacy-no-extension-determinism"
+    ]
+  },
+  "typecheck": {
+    "command": "npx tsc --noEmit",
+    "exitCode": 0,
+    "output": ""
+  },
+  "notes": [
+    "First three actual geometry samples accepted zero extensions; preserved as round1.",
+    "Legal shore interval and new-solid placement corrected; round2 preserved separately.",
+    "Final shore identity regression fixture first needed coordinate normalization for diagnostic worstPoint; implementation unchanged by fixture correction.",
+    "Final three actual geometries and renderings belong to browser capture, not offline round2.",
+    "First browser capture failed on enlarged-frame raster allocation; preserved as browser-attempt1. Final successful capture is browser."
+  ],
+  "rasterBudget": {
+    "passed": true,
+    "checks": [
+      "default 4M still rejects enlarged frame",
+      "explicit allocation enforced",
+      "absolute 8M ceiling",
+      "same-size default and explicit raster matter/occupancy identical"
+    ],
+    "devMaxPixels": 5242880
+  }
+}

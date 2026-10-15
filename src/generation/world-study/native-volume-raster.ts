@@ -5,6 +5,9 @@ export interface NativeVolumeRasterConfig {
   /** World XY origin and native-pixel extent. No camera tilt or Z projection. */
   x: number; y: number; width: number; height: number;
   pixelSize?: number; supportCellSize?: number; opticalHeight: number;
+  /** Explicit caller allocation budget. Ordinary gameplay keeps the 4M default;
+   * enlarged DEV reference frames may opt in, with an absolute 8M ceiling. */
+  maxPixels?: number;
 }
 export interface NativeVolumeRaster {
   readonly config: Readonly<NativeVolumeRasterConfig>;
@@ -73,7 +76,9 @@ export function compileNativeVolumeRaster(meshes: readonly NativeVolumeMesh[], c
     || config.width <= 0 || config.height <= 0 || pixelSize < 1 || cellSize < pixelSize
     || config.opticalHeight < 0 || !Number.isInteger(pixelSize) || !Number.isInteger(cellSize)) throw new Error('Invalid native volume raster bounds');
   const width = Math.ceil(config.width / pixelSize), height = Math.ceil(config.height / pixelSize);
-  if (width * height > 4_194_304) throw new Error('Native volume raster exceeds its bounded 4M pixel allocation');
+  const maxPixels = config.maxPixels ?? 4_194_304;
+  if (!Number.isSafeInteger(maxPixels) || maxPixels <= 0 || maxPixels > 8_388_608) throw new Error('Invalid native volume raster allocation budget');
+  if (width * height > maxPixels) throw new Error(config.maxPixels === undefined ? 'Native volume raster exceeds its bounded 4M pixel allocation' : 'Native volume raster exceeds its explicit pixel allocation');
   const size = width * height, columns = Math.ceil(config.width / cellSize), rows = Math.ceil(config.height / cellSize);
   const matter = new Uint8Array(size), objectId = new Int32Array(size), material = new Uint8Array(size), family = new Uint8Array(size), region = new Uint8Array(size);
   const heightField = new Float32Array(size), normals = new Float32Array(size * 3), uv = new Float32Array(size * 2);

@@ -1,0 +1,319 @@
+{
+  "scope": "Read existing browser receipts only; no new geometry. Baseline is the immediately preceding macro batch. Browser control success is not map admission.",
+  "captureSHA256": "3b94c0e4db054a57bf1ced79d151d3cfd939b60f1f45be29a6b13396234b92ce",
+  "previousCapture": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/native-three-macro-2026-10-15/browser/capture.json",
+    "sha256": "18db0e1823ddec22972315deeffaa5cf4f7ffde4ace688fa21a8c150eca9083e"
+  },
+  "comparisonPresentation": {
+    "commonFrame": {
+      "x": 0,
+      "y": 0,
+      "width": 2496,
+      "height": 2144
+    },
+    "previousOffsets": {
+      "split-rib-causeway": {
+        "x": 0,
+        "y": 32
+      },
+      "gel-rafts": {
+        "x": 192,
+        "y": 0
+      },
+      "ash-strata": {
+        "x": 0,
+        "y": 352
+      }
+    },
+    "rawPNGsUnmodified": true
+  },
+  "samples": [
+    {
+      "id": "split-rib-causeway",
+      "label": "双脊渡口",
+      "acceptedExtensions": 1,
+      "trials": 15,
+      "addedLandAreaPx2": 161280,
+      "addedHoleAreaPx2": 19840,
+      "addedSolidAreaLowerPx2": 1684,
+      "frameBefore": [
+        2304,
+        1792
+      ],
+      "frameAfter": [
+        2304,
+        1792
+      ],
+      "translation": {
+        "x": 0,
+        "y": 32
+      },
+      "baseCounts": {
+        "holes": 12,
+        "solids": 6
+      },
+      "finalCounts": {
+        "holes": 14,
+        "solids": 7
+      },
+      "actualCounts": {
+        "holes": 14,
+        "solids": 7
+      },
+      "outerAreaPx2": {
+        "before": 1856385.0730000003,
+        "after": 2049674.6200000013,
+        "ratio": 1.1041214723234316
+      },
+      "walkAreaPx2": {
+        "before": 1362944,
+        "after": 1513792,
+        "ratio": 1.1106780616078136
+      },
+      "axisRatio": {
+        "before": 2.4331771816564185,
+        "after": 1.964575040233766
+      },
+      "hullFill": {
+        "before": 0.8672802637784786,
+        "after": 0.8177708120668101
+      },
+      "macroPocketCount": {
+        "before": 2,
+        "after": 2
+      },
+      "supportedBodySeats": 23653,
+      "reachableBodySeats": 23653,
+      "holeProfileViolationCount": 0,
+      "finalSourceSupportViolationCount": 0,
+      "boundary": {
+        "accepted": true,
+        "limitPx": 384,
+        "maxCleanRunPx": 286.96,
+        "perimeterPx": 8707.637190336687,
+        "longRunCount": 0,
+        "longRunShare": 0
+      },
+      "geometryReasons": [
+        "walk-area-outside-intent",
+        "G1-largest-empty-radius",
+        "G1-long-deep-empty-region",
+        "G3-wide-domain-area",
+        "G3-wide-domain-connectivity"
+      ],
+      "G2": {
+        "accepted": false,
+        "reasons": [
+          "body-route-to-cover-exceeds-limit"
+        ]
+      },
+      "wideRatio": 0.45863104045998393,
+      "largestWideRatio": 0.514933628318584,
+      "targetWalkAreaPx2": 1715372,
+      "sources": {
+        "referenceCSV": "/data/rift-native-construction-reference.csv",
+        "shoreCSV": "/data/rift-native-construction-shore.csv",
+        "referenceSHA256": "6758857e0a30723aef62133c29b535fc6403704ef051e19be4eb63c0ba3971dd",
+        "shoreSHA256": "aa7b3d90cdadefdc001368d8998a7119eb3dfc99ad56aafb219ad3f53dc036ec",
+        "combinedSHA256": "006e5d504a80582cfdd0c0f5a5387455dc777e0273734e5cfae951f376f0f35c",
+        "macroPolicyCSV": "/data/rift-native-construction-macro-policy.csv",
+        "macroPolicySHA256": "2afddacfaf3b15990a9c631c167c9b06b7f48b60f20b042de9af2542d502e47b",
+        "extensionCSV": "/data/rift-native-construction-extension.csv",
+        "extensionSHA256": "c216c4eca82df261e75fd374429d1731535caffa927c3a3ae975b21b026c532d",
+        "extensionModule": "/src/generation/world-study/native-spatial-construction-extension.ts",
+        "extensionModuleSHA256": "81bfa2ac673f0af41a2bf5c1c9b3b8a7eaffa36fb92792285da927f855a24f4d"
+      }
+    },
+    {
+      "id": "gel-rafts",
+      "label": "断脂浅片",
+      "acceptedExtensions": 2,
+      "trials": 14,
+      "addedLandAreaPx2": 356608,
+      "addedHoleAreaPx2": 51072,
+      "addedSolidAreaLowerPx2": 8188,
+      "frameBefore": [
+        2304,
+        1792
+      ],
+      "frameAfter": [
+        2304,
+        1984
+      ],
+      "translation": {
+        "x": 192,
+        "y": 0
+      },
+      "baseCounts": {
+        "holes": 10,
+        "solids": 5
+      },
+      "finalCounts": {
+        "holes": 14,
+        "solids": 7
+      },
+      "actualCounts": {
+        "holes": 14,
+        "solids": 7
+      },
+      "outerAreaPx2": {
+        "before": 1646951.4069999992,
+        "after": 2048578.6195999994,
+        "ratio": 1.2438609972904928
+      },
+      "walkAreaPx2": {
+        "before": 1292544,
+        "after": 1578304,
+        "ratio": 1.2210833828480887
+      },
+      "axisRatio": {
+        "before": 2.215287999058451,
+        "after": 2.3316690046466406
+      },
+      "hullFill": {
+        "before": 0.7951381617844485,
+        "after": 0.7252090328298239
+      },
+      "macroPocketCount": {
+        "before": 3,
+        "after": 2
+      },
+      "supportedBodySeats": 24661,
+      "reachableBodySeats": 24661,
+      "holeProfileViolationCount": 0,
+      "finalSourceSupportViolationCount": 0,
+      "boundary": {
+        "accepted": false,
+        "limitPx": 384,
+        "maxCleanRunPx": 441.5799999999999,
+        "perimeterPx": 9287.35465365499,
+        "longRunCount": 1,
+        "longRunShare": 0.04754636992636202
+      },
+      "geometryReasons": [
+        "G1-largest-empty-radius",
+        "G1-long-deep-empty-region",
+        "G3-wide-domain-area"
+      ],
+      "G2": {
+        "accepted": true,
+        "reasons": []
+      },
+      "wideRatio": 0.5340821540083532,
+      "largestWideRatio": 0.989294662516134,
+      "targetWalkAreaPx2": 1538436,
+      "sources": {
+        "referenceCSV": "/data/rift-native-construction-gel-rafts.csv",
+        "shoreCSV": "/data/rift-native-construction-gel-rafts-shore.csv",
+        "referenceSHA256": "5c7104a3f604b94447d7b032fa3ca048ba61abee3ab5b1633700beea8bd0aace",
+        "shoreSHA256": "caa6bfb910adb4945d72e11492b3a8e58708806f5df0b39971f58ba425311c93",
+        "combinedSHA256": "bf092d2f8899d140f24cc4c6974aa9af6d9297fcd7a8cadbb413121c6be5dd4b",
+        "macroPolicyCSV": "/data/rift-native-construction-macro-policy.csv",
+        "macroPolicySHA256": "2afddacfaf3b15990a9c631c167c9b06b7f48b60f20b042de9af2542d502e47b",
+        "extensionCSV": "/data/rift-native-construction-extension.csv",
+        "extensionSHA256": "c216c4eca82df261e75fd374429d1731535caffa927c3a3ae975b21b026c532d",
+        "extensionModule": "/src/generation/world-study/native-spatial-construction-extension.ts",
+        "extensionModuleSHA256": "81bfa2ac673f0af41a2bf5c1c9b3b8a7eaffa36fb92792285da927f855a24f4d"
+      }
+    },
+    {
+      "id": "ash-strata",
+      "label": "无彩层原",
+      "acceptedExtensions": 1,
+      "trials": 15,
+      "addedLandAreaPx2": 214720,
+      "addedHoleAreaPx2": 31232,
+      "addedSolidAreaLowerPx2": 2876,
+      "frameBefore": [
+        2304,
+        1792
+      ],
+      "frameAfter": [
+        2304,
+        1824
+      ],
+      "translation": {
+        "x": 0,
+        "y": 352
+      },
+      "baseCounts": {
+        "holes": 12,
+        "solids": 6
+      },
+      "finalCounts": {
+        "holes": 14,
+        "solids": 7
+      },
+      "actualCounts": {
+        "holes": 14,
+        "solids": 7
+      },
+      "outerAreaPx2": {
+        "before": 1663586.6612,
+        "after": 1871081.4570000013,
+        "ratio": 1.1247273740763999
+      },
+      "walkAreaPx2": {
+        "before": 1212672,
+        "after": 1346816,
+        "ratio": 1.1106185349377242
+      },
+      "axisRatio": {
+        "before": 1.7971340648311676,
+        "after": 1.3368867572173246
+      },
+      "hullFill": {
+        "before": 0.7690980627121035,
+        "after": 0.7092568104506629
+      },
+      "macroPocketCount": {
+        "before": 2,
+        "after": 2
+      },
+      "supportedBodySeats": 21044,
+      "reachableBodySeats": 21044,
+      "holeProfileViolationCount": 0,
+      "finalSourceSupportViolationCount": 0,
+      "boundary": {
+        "accepted": false,
+        "limitPx": 384,
+        "maxCleanRunPx": 463.55999999999995,
+        "perimeterPx": 8672.425131176282,
+        "longRunCount": 2,
+        "longRunShare": 0.0991533494949143
+      },
+      "geometryReasons": [
+        "walk-area-outside-intent",
+        "G1-largest-empty-radius",
+        "G3-wide-domain-area"
+      ],
+      "G2": {
+        "accepted": true,
+        "reasons": []
+      },
+      "wideRatio": 0.456377114616993,
+      "largestWideRatio": 0.8464181591003749,
+      "targetWalkAreaPx2": 1505604,
+      "sources": {
+        "referenceCSV": "/data/rift-native-construction-ash-strata.csv",
+        "shoreCSV": "/data/rift-native-construction-ash-strata-shore.csv",
+        "referenceSHA256": "c2b7f84483d1724da3b8ee641df017e8a37622fa0d90d62179dcf854b2aa4e30",
+        "shoreSHA256": "26be5cc2e5646ff53a1fc43218c1475bec1b3154b93727c502e6b93654f77a83",
+        "combinedSHA256": "85e4d0664349b4d48ef1ccc9a2fb6ea1d5af2bcd072d3862d736a60021d87d51",
+        "macroPolicyCSV": "/data/rift-native-construction-macro-policy.csv",
+        "macroPolicySHA256": "2afddacfaf3b15990a9c631c167c9b06b7f48b60f20b042de9af2542d502e47b",
+        "extensionCSV": "/data/rift-native-construction-extension.csv",
+        "extensionSHA256": "c216c4eca82df261e75fd374429d1731535caffa927c3a3ae975b21b026c532d",
+        "extensionModule": "/src/generation/world-study/native-spatial-construction-extension.ts",
+        "extensionModuleSHA256": "81bfa2ac673f0af41a2bf5c1c9b3b8a7eaffa36fb92792285da927f855a24f4d"
+      }
+    }
+  ],
+  "galleryChecks": {
+    "imageLinks": 12,
+    "currentPNGDimensionsAndHashes": true,
+    "commonFrameAppliedToAll12Images": true,
+    "oldPNGsLinkedWithoutModification": true
+  }
+}
