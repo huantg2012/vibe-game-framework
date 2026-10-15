@@ -4,6 +4,7 @@ import {R100_NATIVE_WORLDS} from '@/generated/r100-native-worlds';
 import {createR100NativeSpatialDevelopmentRecipe} from '@/generation/world-study/r100-package';
 import {constructNativeSpatialReference,parseNativeSpatialConstructionReference} from '@/generation/world-study/native-spatial-construction-reference';
 import {parseNativeConstructionShore,measureNativeConstructionBoundary} from '@/generation/world-study/native-spatial-construction-shore';
+import {measureNativeConstructionMacro,parseNativeConstructionMacroPolicy,type NativeConstructionMacroMetrics,type NativeConstructionMacroPolicy} from '@/generation/world-study/native-spatial-construction-macro';
 import {buildNativeSpatialGeometry,nativeSolidPrimitives,type NativeSpatialGeometry} from '@/generation/world-study/native-spatial-geometry';
 import {identifyNativeSpatialStructures,evaluateNativeSpatialGeometry} from '@/generation/world-study/native-spatial-measure';
 import {evaluateNativeSpatialVisibility} from '@/generation/world-study/native-spatial-visibility';
@@ -29,6 +30,7 @@ interface SampleResult {
   readonly material:HTMLCanvasElement;readonly silhouette:HTMLCanvasElement;
   readonly gates:Readonly<Record<string,unknown>>;readonly geometryMetrics:Readonly<Record<string,unknown>>|null;
   readonly errors:readonly string[];readonly sources:Readonly<Record<string,string>>;
+  readonly macro:NativeConstructionMacroMetrics;
 }
 const element=<T extends HTMLElement>(id:string):T=>{const node=document.getElementById(id);if(!node)throw new Error(`Missing review element ${id}`);return node as T;};
 const canvas=element<HTMLCanvasElement>('map'),selector=element<HTMLSelectElement>('sample'),viewport=element('viewport'),stage=element('stage');
@@ -40,13 +42,16 @@ for(const sample of samples){const option=document.createElement('option');optio
 const yieldPaint=()=>new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));
 const textFile=async(url:string)=>{const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw new Error(`${url}: HTTP ${response.status}`);return response.text();};
 const sha=async(value:string)=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))),byte=>byte.toString(16).padStart(2,'0')).join('');
+const macroPolicyURL='/data/rift-native-construction-macro-policy.csv';
+let macroPolicyPromise:Promise<NativeConstructionMacroPolicy>|undefined;
+const loadMacroPolicy=()=>macroPolicyPromise??=(async()=>{const csv=await textFile(macroPolicyURL);return parseNativeConstructionMacroPolicy(csv,await sha(csv));})();
 const setPhase=async(value:string)=>{phase=value;element('summary').textContent=value;await yieldPaint();};
 const makeCanvas=(width:number,height:number):HTMLCanvasElement=>{const next=document.createElement('canvas');next.width=width;next.height=height;return next;};
 const drawSpawn=(target:CanvasRenderingContext2D,x:number,y:number)=>{target.strokeStyle='#f1f0e6';target.fillStyle='#080c0e';target.lineWidth=4;target.beginPath();target.arc(x,y,12,0,Math.PI*2);target.fill();target.stroke();target.fillStyle='#f1f0e6';target.fillRect(x-3,y-3,6,6);};
 
 async function construct(sample:Sample):Promise<SampleResult>{
   const counts:Counts={constructions:0,fragmentCompiles:0,initialGeometryBuilds:0,visualTerrainCompiles:0,visualRasterBuilds:0,fullCandidates:0};countsBySample[sample.id]=counts;
-  const [referenceText,shoreText]=await Promise.all([textFile(sample.reference),textFile(sample.shore)]);
+  const [referenceText,shoreText,macroPolicy]=await Promise.all([textFile(sample.reference),textFile(sample.shore),loadMacroPolicy()]);
   const [referenceHash,shoreHash]=await Promise.all([sha(referenceText),sha(shoreText)]);
   const reference=parseNativeSpatialConstructionReference(referenceText,referenceHash),shorePolicy=parseNativeConstructionShore(shoreText,shoreHash);
   if(reference.worldId!==sample.id||reference.seed!==20261012||reference.grade!=='medium'||shorePolicy.referenceId!==reference.id)throw new Error('Sample CSV must preserve its registered world, medium grade and seed 20261012');
@@ -54,6 +59,7 @@ async function construct(sample:Sample):Promise<SampleResult>{
   const combinedHash=await sha(JSON.stringify({referenceSHA256:referenceHash,shoreSHA256:shoreHash}));
   await setPhase('构造固定地形与参差岸线…');counts.constructions++;
   const layout=constructNativeSpatialReference(recipe,reference,()=>counts.fragmentCompiles++,{policy:shorePolicy,combinedSourceHash:combinedHash});
+  const macro=measureNativeConstructionMacro(layout.definition.terrainOutline!,macroPolicy);
   const gates:Record<string,unknown>={boundary:measureNativeConstructionBoundary(layout.definition.terrainOutline!,shorePolicy.maxCleanRunPx)},diagnosticErrors:string[]=[];
   let geometry:NativeSpatialGeometry|undefined,geometryMetrics:Readonly<Record<string,unknown>>|null=null;
   await setPhase('检查真实身体通路、空白与遮视…');
@@ -99,7 +105,7 @@ async function construct(sample:Sample):Promise<SampleResult>{
     silhouetteContext.lineTo(p[reverse?2:4]!,p[reverse?3:5]!);
     silhouetteContext.closePath();
   }silhouetteContext.fill();drawSpawn(silhouetteContext,terrain.spawnPoint.x,terrain.spawnPoint.y);
-  return{id:sample.id,label:recipe.profile.label,seed:reference.seed,counts,material,silhouette,gates,geometryMetrics,errors:diagnosticErrors,sources:{referenceCSV:sample.reference,shoreCSV:sample.shore,referenceSHA256:referenceHash,shoreSHA256:shoreHash,combinedSHA256:combinedHash}};
+  return{id:sample.id,label:recipe.profile.label,seed:reference.seed,counts,material,silhouette,gates,geometryMetrics,macro,errors:diagnosticErrors,sources:{referenceCSV:sample.reference,shoreCSV:sample.shore,referenceSHA256:referenceHash,shoreSHA256:shoreHash,combinedSHA256:combinedHash,macroPolicyCSV:macroPolicyURL,macroPolicySHA256:macroPolicy.sourceHash}};
 }
 
 function fit():void{
@@ -113,7 +119,7 @@ function draw():void{
   element('legend').textContent=mode==='material'?'正式材质与岸壁 · 固定照明 · 白圈：出生点':'黑色：缺地 · 赭色：真实实体 · 白圈：出生点';
 }
 function diagnostics():void{
-  const result=results.get(selected.id);element('diagnostics').textContent=JSON.stringify({scope:'DEV geometric/material diagnostic; no production admission, content or exit; no layout search',worldId:selected.id,seed:20261012,counts:countsBySample[selected.id],gates:result?.gates,errors,sources:result?.sources},null,2);
+  const result=results.get(selected.id);element('diagnostics').textContent=JSON.stringify({scope:'DEV geometric/material diagnostic; no production admission, content or exit; no layout search',worldId:selected.id,seed:20261012,counts:countsBySample[selected.id],macro:result?.macro,gates:result?.gates,errors,sources:result?.sources},null,2);
 }
 async function select(sample:Sample):Promise<void>{
   selected=sample;selector.value=sample.id;ready=false;errors=[];element('error').hidden=true;
@@ -134,5 +140,5 @@ selector.addEventListener('change',()=>{const sample=samples.find(s=>s.id===sele
 for(const id of ['material','silhouette'] as const)element(id).addEventListener('click',()=>{mode=id;draw();});
 for(const id of ['fit','native'])element(id).addEventListener('click',()=>{nativeSize=id==='native';document.body.classList.toggle('native',nativeSize);element('fit').setAttribute('aria-pressed',String(!nativeSize));element('native').setAttribute('aria-pressed',String(nativeSize));fit();});
 window.addEventListener('resize',fit);
-Object.assign(window,{__nativeConstruction:{canvas,getState:()=>{const result=results.get(selected.id);return structuredClone({worldId:selected.id,label:labelFor(selected.id),seed:20261012,grade:'medium',ready,phase,mode,cachedSampleIds:[...results.keys()],countsBySample,gates:result?.gates??null,geometryMetrics:result?.geometryMetrics??null,errors,sources:result?.sources??null,admission:'DEV-not-complete'});}}});
+Object.assign(window,{__nativeConstruction:{canvas,getState:()=>{const result=results.get(selected.id);return structuredClone({worldId:selected.id,label:labelFor(selected.id),seed:20261012,grade:'medium',ready,phase,mode,cachedSampleIds:[...results.keys()],countsBySample,gates:result?.gates??null,geometryMetrics:result?.geometryMetrics??null,macro:result?.macro??null,errors,sources:result?.sources??null,admission:'DEV-not-complete'});}}});
 void select(selected);

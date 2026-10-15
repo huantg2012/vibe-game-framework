@@ -1,0 +1,740 @@
+{
+  "world": "ash-strata",
+  "grade": "medium",
+  "seed": 20261012,
+  "scope": "One fixed CSV geometry check; no search, Master, deployment or full map admission.",
+  "sourceFingerprint": {
+    "scope": "all src TS/JSON and data CSV bytes; docs/tools excluded",
+    "fileCount": 831,
+    "sha256": "cfa5d294777c095a1aee1de41a326989f8e54a92398a04cb9bb61a1066aca1fd"
+  },
+  "inputHashes": {
+    "data/rift-native-construction-ash-strata.csv": "c2b7f84483d1724da3b8ee641df017e8a37622fa0d90d62179dcf854b2aa4e30",
+    "data/rift-native-construction-ash-strata-shore.csv": "26be5cc2e5646ff53a1fc43218c1475bec1b3154b93727c502e6b93654f77a83",
+    "data/rift-native-construction-macro-policy.csv": "2afddacfaf3b15990a9c631c167c9b06b7f48b60f20b042de9af2542d502e47b"
+  },
+  "counts": {
+    "fragmentCompiles": 1,
+    "geometryBuilds": 1,
+    "G2Evaluations": 1,
+    "fullCandidates": 0
+  },
+  "stages": [
+    {
+      "stage": "construction",
+      "elapsedMs": 46.850166
+    },
+    {
+      "stage": "actual-geometry",
+      "elapsedMs": 169.00025000000005
+    },
+    {
+      "stage": "actual-structures",
+      "elapsedMs": 185.03116599999998
+    },
+    {
+      "stage": "G1-G3",
+      "elapsedMs": 64.61387500000001
+    },
+    {
+      "stage": "G2",
+      "elapsedMs": 163.994959
+    }
+  ],
+  "status": "geometry-rejected",
+  "boundary": {
+    "accepted": true,
+    "limitPx": 384,
+    "maxCleanRunPx": 264,
+    "perimeterPx": 7769.789142272378,
+    "longRunCount": 0,
+    "longRunShare": 0
+  },
+  "macro": {
+    "scope": "filled-exterior-only",
+    "outerAreaPx2": 1663586.6612,
+    "aabb": {
+      "minX": 128,
+      "minY": 40,
+      "width": 2104,
+      "height": 1448,
+      "fillRatio": 0.5460483915141903
+    },
+    "hull": {
+      "areaPx2": 2163035.8232,
+      "fillRatio": 0.7690980627121035,
+      "vertexCount": 20
+    },
+    "pca": {
+      "axisRatio": 1.7971340648311676,
+      "majorSpanPx": 1845.917714707244,
+      "minorSpanPx": 1027.145247998323,
+      "angleRadians": -0.2864180290974048
+    },
+    "concavity": {
+      "deficitAreaPx2": 499449.162,
+      "maxDepthPx": 336.6402793810899,
+      "maxDepthRatio": 0.32774359812998866,
+      "areaWeightedDepthPx": 267.79897647754706,
+      "pockets": [
+        {
+          "from": {
+            "x": 135.72,
+            "y": 898.52
+          },
+          "to": {
+            "x": 151.4,
+            "y": 855.2
+          },
+          "mouthWidthPx": 46.0704330346481,
+          "areaPx2": 122.31799999999949,
+          "hullAreaRatio": 0.00005654922525464325,
+          "maxDepthPx": 5.310043424510815,
+          "depthRatio": 0.005169710354848943,
+          "deepestPoint": {
+            "x": 145.66,
+            "y": 886.66
+          }
+        },
+        {
+          "from": {
+            "x": 166.6,
+            "y": 840
+          },
+          "to": {
+            "x": 1088,
+            "y": 128
+          },
+          "mouthWidthPx": 1164.4406210709071,
+          "areaPx2": 219958.76399999997,
+          "hullAreaRatio": 0.10168983871686067,
+          "maxDepthPx": 336.6402793810899,
+          "depthRatio": 0.32774359812998866,
+          "deepestPoint": {
+            "x": 780,
+            "y": 791.44
+          }
+        },
+        {
+          "from": {
+            "x": 1088,
+            "y": 128
+          },
+          "to": {
+            "x": 1471.02,
+            "y": 40
+          },
+          "mouthWidthPx": 392.99913536800557,
+          "areaPx2": 21287.675799999997,
+          "hullAreaRatio": 0.00984157339035974,
+          "maxDepthPx": 98.20194633217484,
+          "depthRatio": 0.09560667931195567,
+          "deepestPoint": {
+            "x": 1248,
+            "y": 192
+          }
+        },
+        {
+          "from": {
+            "x": 1608.52,
+            "y": 43.42
+          },
+          "to": {
+            "x": 2176,
+            "y": 677.6
+          },
+          "mouthWidthPx": 851.0098840789101,
+          "areaPx2": 128283.11879999995,
+          "hullAreaRatio": 0.05930697837921964,
+          "maxDepthPx": 329.1737466753381,
+          "depthRatio": 0.32047438988480387,
+          "deepestPoint": {
+            "x": 1672,
+            "y": 608
+          }
+        },
+        {
+          "from": {
+            "x": 2176,
+            "y": 677.6
+          },
+          "to": {
+            "x": 2232,
+            "y": 1035.2
+          },
+          "mouthWidthPx": 361.9582296343047,
+          "areaPx2": 14445.867399999992,
+          "hullAreaRatio": 0.006678515096725834,
+          "maxDepthPx": 79.46198661944743,
+          "depthRatio": 0.07736197657955496,
+          "deepestPoint": {
+            "x": 2112,
+            "y": 782.52
+          }
+        },
+        {
+          "from": {
+            "x": 2232,
+            "y": 1066.34
+          },
+          "to": {
+            "x": 2176,
+            "y": 1190.86
+          },
+          "mouthWidthPx": 136.53289127532602,
+          "areaPx2": 2155.0473999999917,
+          "hullAreaRatio": 0.0009963068465559713,
+          "maxDepthPx": 28.866890338183694,
+          "depthRatio": 0.028104000280816006,
+          "deepestPoint": {
+            "x": 2176,
+            "y": 1120.48
+          }
+        },
+        {
+          "from": {
+            "x": 2139.04,
+            "y": 1216
+          },
+          "to": {
+            "x": 1248,
+            "y": 1440
+          },
+          "mouthWidthPx": 918.7645408917347,
+          "areaPx2": 69704.4072,
+          "hullAreaRatio": 0.03222526712335219,
+          "maxDepthPx": 156.19726188030023,
+          "depthRatio": 0.15206930293908663,
+          "deepestPoint": {
+            "x": 1357.72,
+            "y": 1251.36
+          }
+        },
+        {
+          "from": {
+            "x": 1248,
+            "y": 1440
+          },
+          "to": {
+            "x": 965.94,
+            "y": 1488
+          },
+          "mouthWidthPx": 286.1150880327704,
+          "areaPx2": 6042.525000000001,
+          "hullAreaRatio": 0.0027935390321278523,
+          "maxDepthPx": 44.289869811229956,
+          "depthRatio": 0.04311938345384067,
+          "deepestPoint": {
+            "x": 984,
+            "y": 1440
+          }
+        },
+        {
+          "from": {
+            "x": 840,
+            "y": 1488
+          },
+          "to": {
+            "x": 155.2,
+            "y": 1440
+          },
+          "mouthWidthPx": 686.4801817969693,
+          "areaPx2": 31892.412999999997,
+          "hullAreaRatio": 0.014744283316037868,
+          "maxDepthPx": 87.78461723724308,
+          "depthRatio": 0.08546465790336442,
+          "deepestPoint": {
+            "x": 840,
+            "y": 1400
+          }
+        },
+        {
+          "from": {
+            "x": 146.2,
+            "y": 1438.34
+          },
+          "to": {
+            "x": 133.56,
+            "y": 1430.44
+          },
+          "mouthWidthPx": 14.90569018864935,
+          "areaPx2": 24.284599999999465,
+          "hullAreaRatio": 0.000011227090989215692,
+          "maxDepthPx": 3.258433483139497,
+          "depthRatio": 0.003172320068159257,
+          "deepestPoint": {
+            "x": 143.74,
+            "y": 1432.96
+          }
+        },
+        {
+          "from": {
+            "x": 128,
+            "y": 1425.42
+          },
+          "to": {
+            "x": 128,
+            "y": 921.44
+          },
+          "mouthWidthPx": 503.98,
+          "areaPx2": 5532.7408,
+          "hullAreaRatio": 0.0025578590704128288,
+          "maxDepthPx": 40,
+          "depthRatio": 0.03894288570964144,
+          "deepestPoint": {
+            "x": 168,
+            "y": 1293.12
+          }
+        }
+      ]
+    },
+    "regression": {
+      "policyId": "diagnostic-v1",
+      "policySourceHash": "2afddacfaf3b15990a9c631c167c9b06b7f48b60f20b042de9af2542d502e47b",
+      "squareLike": false,
+      "barLike": false,
+      "macroPocketCount": 2
+    }
+  },
+  "shore": {
+    "additions": 8,
+    "cuts": 14
+  },
+  "geometryHash": "df4e49327e8704f6",
+  "geometry": {
+    "accepted": false,
+    "reasons": [
+      "G1-largest-empty-radius",
+      "G3-wide-domain-area"
+    ],
+    "metrics": {
+      "holes": 12,
+      "solids": 6,
+      "targetCount": 15,
+      "minCount": 12,
+      "maxCount": 18,
+      "walkAreaPx2": 1212672,
+      "targetWalkAreaPx2": 1324992,
+      "maxEmptyUpperPx": 173.8634951396291,
+      "maxDeepSpanPx": 440,
+      "worstEmptyPoint": {
+        "x": 1564,
+        "y": 908
+      },
+      "internalMaxEmptyUpperPx": 277.838822783907,
+      "internalWorstEmptyPoint": {
+        "x": 140,
+        "y": 1420
+      },
+      "worstDeepPoint": {
+        "x": 1636,
+        "y": 908
+      },
+      "worstDeepBounds": {
+        "minX": 1424,
+        "minY": 832,
+        "maxX": 1864,
+        "maxY": 984
+      },
+      "wideRatio": 0.45403208781929494,
+      "largestWideRatio": 0.9528071602929211,
+      "reachableBodySeats": 18948,
+      "supportedBodySeats": 18948,
+      "rejectedObjects": [],
+      "holeProfileViolationCount": 0,
+      "orphanHoleLabels": [],
+      "orphanHoleContours": [],
+      "bayCount": 0,
+      "bayViolationCount": 0,
+      "positiveLandAreaPx2": 1691648,
+      "finalSourceSupportViolationCount": 0,
+      "unsupportedSources": [],
+      "finalSourceSupportCheckedTriangles": 2540,
+      "finalSourceSupportVoidCellTests": 0,
+      "cellSizePx": 8,
+      "distanceCellUpperErrorPx": 5.656854249492381
+    },
+    "holeFailures": []
+  },
+  "visibility": {
+    "accepted": true,
+    "reasons": [],
+    "coverage": {
+      "maxRoutePx": 288.57,
+      "worstCell": 51283,
+      "overLimit": 0,
+      "unreachable": 0,
+      "checkedBodyCenters": 18948
+    },
+    "qProbeCount": 1152
+  },
+  "before": {
+    "source": "docs/qa/artifacts/native-three-samples-2026-10-15/ash-strata-round2",
+    "geometryHash": "235950dc5d277a70",
+    "boundary": {
+      "accepted": true,
+      "limitPx": 384,
+      "maxCleanRunPx": 193.39999999999986,
+      "perimeterPx": 6595.867966260821,
+      "longRunCount": 0,
+      "longRunShare": 0
+    },
+    "metrics": {
+      "holes": 12,
+      "solids": 6,
+      "targetCount": 15,
+      "minCount": 12,
+      "maxCount": 18,
+      "walkAreaPx2": 1192192,
+      "targetWalkAreaPx2": 1324992,
+      "maxEmptyUpperPx": 185.5373906880997,
+      "maxDeepSpanPx": 344,
+      "worstEmptyPoint": {
+        "x": 1500,
+        "y": 788
+      },
+      "internalMaxEmptyUpperPx": 185.5373906880997,
+      "internalWorstEmptyPoint": {
+        "x": 1500,
+        "y": 788
+      },
+      "worstDeepPoint": {
+        "x": 860,
+        "y": 660
+      },
+      "worstDeepBounds": {
+        "minX": 688,
+        "minY": 544,
+        "maxX": 1032,
+        "maxY": 776
+      },
+      "wideRatio": 0.4696156323813614,
+      "largestWideRatio": 0.9821673525377229,
+      "reachableBodySeats": 18628,
+      "supportedBodySeats": 18628,
+      "rejectedObjects": [],
+      "holeProfileViolationCount": 0,
+      "orphanHoleLabels": [],
+      "orphanHoleContours": [],
+      "bayCount": 0,
+      "bayViolationCount": 0,
+      "positiveLandAreaPx2": 1699840,
+      "finalSourceSupportViolationCount": 0,
+      "unsupportedSources": [],
+      "finalSourceSupportCheckedTriangles": 2540,
+      "finalSourceSupportVoidCellTests": 0,
+      "cellSizePx": 8,
+      "distanceCellUpperErrorPx": 5.656854249492381
+    },
+    "macro": {
+      "scope": "filled-exterior-only",
+      "outerAreaPx2": 1633421.2233999998,
+      "aabb": {
+        "minX": 256,
+        "minY": 288,
+        "width": 1720,
+        "height": 1288,
+        "fillRatio": 0.7373163835223168
+      },
+      "hull": {
+        "areaPx2": 1842529.3084000002,
+        "fillRatio": 0.8865103073005748,
+        "vertexCount": 17
+      },
+      "pca": {
+        "axisRatio": 1.339903950994655,
+        "majorSpanPx": 1470.3329898601858,
+        "minorSpanPx": 1097.3420809519287,
+        "angleRadians": 0.15369625735443826
+      },
+      "concavity": {
+        "deficitAreaPx2": 209108.08500000043,
+        "maxDepthPx": 168.33692000741854,
+        "maxDepthRatio": 0.15340423276339557,
+        "areaWeightedDepthPx": 112.04609124030164,
+        "pockets": [
+          {
+            "from": {
+              "x": 256,
+              "y": 864
+            },
+            "to": {
+              "x": 416,
+              "y": 311.48
+            },
+            "mouthWidthPx": 575.2202625081978,
+            "areaPx2": 35497.302599999995,
+            "hullAreaRatio": 0.01926552942098101,
+            "maxDepthPx": 121.23244702112032,
+            "depthRatio": 0.1104782630006797,
+            "deepestPoint": {
+              "x": 424,
+              "y": 719.7
+            }
+          },
+          {
+            "from": {
+              "x": 416,
+              "y": 311.48
+            },
+            "to": {
+              "x": 450.52,
+              "y": 288
+            },
+            "mouthWidthPx": 41.748542489528894,
+            "areaPx2": 40.71599999999965,
+            "hullAreaRatio": 0.000022097884584184045,
+            "maxDepthPx": 2.300343779045361,
+            "depthRatio": 0.002096286854368918,
+            "deepestPoint": {
+              "x": 427,
+              "y": 306.78
+            }
+          },
+          {
+            "from": {
+              "x": 450.52,
+              "y": 288
+            },
+            "to": {
+              "x": 1386.64,
+              "y": 288
+            },
+            "mouthWidthPx": 936.1200000000001,
+            "areaPx2": 18037.499199999995,
+            "hullAreaRatio": 0.009789531769056767,
+            "maxDepthPx": 56,
+            "depthRatio": 0.051032399989090725,
+            "deepestPoint": {
+              "x": 1120,
+              "y": 344
+            }
+          },
+          {
+            "from": {
+              "x": 1386.64,
+              "y": 288
+            },
+            "to": {
+              "x": 1906.52,
+              "y": 578.4
+            },
+            "mouthWidthPx": 595.4891891545974,
+            "areaPx2": 39076.59400000002,
+            "hullAreaRatio": 0.021208126145864686,
+            "maxDepthPx": 168.33692000741854,
+            "depthRatio": 0.15340423276339557,
+            "deepestPoint": {
+              "x": 1600,
+              "y": 600
+            }
+          },
+          {
+            "from": {
+              "x": 1906.52,
+              "y": 578.4
+            },
+            "to": {
+              "x": 1916.3,
+              "y": 589.02
+            },
+            "mouthWidthPx": 14.437201944975333,
+            "areaPx2": 28.787399999999977,
+            "hullAreaRatio": 0.00001562384916688144,
+            "maxDepthPx": 3.987947264257674,
+            "depthRatio": 0.0036341878558035306,
+            "deepestPoint": {
+              "x": 1909,
+              "y": 586.98
+            }
+          },
+          {
+            "from": {
+              "x": 1920,
+              "y": 597.76
+            },
+            "to": {
+              "x": 1976,
+              "y": 971.2
+            },
+            "mouthWidthPx": 377.6154573107409,
+            "areaPx2": 20414.649600000004,
+            "hullAreaRatio": 0.011079687854586967,
+            "maxDepthPx": 97.37991199269176,
+            "depthRatio": 0.08874161820916962,
+            "deepestPoint": {
+              "x": 1840,
+              "y": 720.92
+            }
+          },
+          {
+            "from": {
+              "x": 1976,
+              "y": 998.22
+            },
+            "to": {
+              "x": 1696,
+              "y": 1472
+            },
+            "mouthWidthPx": 550.3339789618665,
+            "areaPx2": 24921.683200000007,
+            "hullAreaRatio": 0.013525800152205603,
+            "maxDepthPx": 112.09338757597324,
+            "depthRatio": 0.10214990340909356,
+            "deepestPoint": {
+              "x": 1736,
+              "y": 1184
+            }
+          },
+          {
+            "from": {
+              "x": 1696,
+              "y": 1472
+            },
+            "to": {
+              "x": 1586.08,
+              "y": 1536
+            },
+            "mouthWidthPx": 127.19436465504286,
+            "areaPx2": 2760.9483999999975,
+            "hullAreaRatio": 0.0014984556215268707,
+            "maxDepthPx": 48.304026807027334,
+            "depthRatio": 0.04401911459107107,
+            "deepestPoint": {
+              "x": 1600,
+              "y": 1472
+            }
+          },
+          {
+            "from": {
+              "x": 1586.08,
+              "y": 1536
+            },
+            "to": {
+              "x": 1368,
+              "y": 1576
+            },
+            "mouthWidthPx": 221.7180335471158,
+            "areaPx2": 4233.156799999999,
+            "hullAreaRatio": 0.0022974705372127576,
+            "maxDepthPx": 34.89116278110986,
+            "depthRatio": 0.03179606741303703,
+            "deepestPoint": {
+              "x": 1392.68,
+              "y": 1536
+            }
+          },
+          {
+            "from": {
+              "x": 1267.68,
+              "y": 1576
+            },
+            "to": {
+              "x": 1019.2,
+              "y": 1536
+            },
+            "mouthWidthPx": 251.67898283329106,
+            "areaPx2": 11891.367400000001,
+            "hullAreaRatio": 0.006453828086092223,
+            "maxDepthPx": 89.02896756715646,
+            "depthRatio": 0.08113146220540918,
+            "deepestPoint": {
+              "x": 1181.8,
+              "y": 1472
+            }
+          },
+          {
+            "from": {
+              "x": 1019.2,
+              "y": 1536
+            },
+            "to": {
+              "x": 334.24,
+              "y": 1376
+            },
+            "mouthWidthPx": 703.3990344036591,
+            "areaPx2": 42421.367,
+            "hullAreaRatio": 0.023023442181680953,
+            "maxDepthPx": 115.04366091233726,
+            "depthRatio": 0.10483846642656638,
+            "deepestPoint": {
+              "x": 840,
+              "y": 1376
+            }
+          },
+          {
+            "from": {
+              "x": 334.24,
+              "y": 1376
+            },
+            "to": {
+              "x": 296,
+              "y": 1319.8
+            },
+            "mouthWidthPx": 67.97600753206977,
+            "areaPx2": 164.79899999999958,
+            "hullAreaRatio": 0.00008944172515937145,
+            "maxDepthPx": 3.908143617800181,
+            "depthRatio": 0.00356146336282841,
+            "deepestPoint": {
+              "x": 308.62,
+              "y": 1331.4
+            }
+          },
+          {
+            "from": {
+              "x": 296,
+              "y": 1319.8
+            },
+            "to": {
+              "x": 256,
+              "y": 1155.04
+            },
+            "mouthWidthPx": 169.54603386691176,
+            "areaPx2": 2833.9535999999985,
+            "hullAreaRatio": 0.0015380778949241913,
+            "maxDepthPx": 35.81328245499582,
+            "depthRatio": 0.032636388485100566,
+            "deepestPoint": {
+              "x": 296,
+              "y": 1168
+            }
+          },
+          {
+            "from": {
+              "x": 256,
+              "y": 1155.04
+            },
+            "to": {
+              "x": 256,
+              "y": 864
+            },
+            "mouthWidthPx": 291.03999999999996,
+            "areaPx2": 6785.260799999998,
+            "hullAreaRatio": 0.0036825795763824917,
+            "maxDepthPx": 64,
+            "depthRatio": 0.05832274284467512,
+            "deepestPoint": {
+              "x": 320,
+              "y": 1056
+            }
+          }
+        ]
+      },
+      "regression": {
+        "policyId": "diagnostic-v1",
+        "policySourceHash": "2afddacfaf3b15990a9c631c167c9b06b7f48b60f20b042de9af2542d502e47b",
+        "squareLike": true,
+        "barLike": false,
+        "macroPocketCount": 0
+      }
+    }
+  },
+  "elapsedMs": 675.1294169999999,
+  "sourceFingerprintAfter": {
+    "scope": "all src TS/JSON and data CSV bytes; docs/tools excluded",
+    "fileCount": 831,
+    "sha256": "cfa5d294777c095a1aee1de41a326989f8e54a92398a04cb9bb61a1066aca1fd"
+  },
+  "sourcesStable": true
+}

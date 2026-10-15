@@ -1,0 +1,51 @@
+{
+  "scope": "DEV filled-exterior diagnostics; no map generation or browser rendering",
+  "checks": [
+    {
+      "command": "node --import tsx tools/native-spatial/check-construction-macro.mjs",
+      "round": 1,
+      "exitCode": 1,
+      "failure": "Rotated sawtooth-square maxDepth 1000 vs 16: floating-point collinear convex hull turns"
+    },
+    {
+      "command": "node --import tsx tools/native-spatial/check-construction-macro.mjs",
+      "round": 2,
+      "exitCode": 0,
+      "fix": "Machine-epsilon-scaled hull turn tolerance; no art-scale simplification",
+      "fixtures": [
+        "rectangle",
+        "thin bar",
+        "L shape",
+        "sawtooth square"
+      ],
+      "invariance": [
+        "subdivision",
+        "winding",
+        "closed duplicate endpoint",
+        "translation",
+        "rotation",
+        "input immutability",
+        "internal holes excluded"
+      ]
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "stdout": ""
+    },
+    {
+      "command": "npm run dev -- --host 127.0.0.1 --port 3039 --strictPort",
+      "readyMilliseconds": 180,
+      "httpStatus": {
+        "/native-construction.html": 200,
+        "/src/dev/native-construction.ts": 200,
+        "/src/generation/world-study/native-spatial-construction-macro.ts": 200
+      },
+      "stoppedAfterChecks": true
+    }
+  ],
+  "lint": "No top-level lint command exists; none invented",
+  "mapBuilds": 0,
+  "fullRenders": 0,
+  "policySHA256": "2afddacfaf3b15990a9c631c167c9b06b7f48b60f20b042de9af2542d502e47b"
+}
