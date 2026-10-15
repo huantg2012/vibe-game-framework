@@ -2,13 +2,21 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-10-14
+last-modified: 2026-10-15
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
 ---
 
 # 技术架构
+
+## 两世界怪物材料生成试点（2026-10-15）
+
+`data/enemy-world-materials.csv` → `tools/enemy-world-pilot/codegen.mjs` → `generated/enemy-world-materials.ts` 定义两类共享材料语法，并从世界目录派生家族路由；`entities/form-renderers/d/world-adaptation.ts` 合并既有世界外观，返回冻结的可选 `EnemyWorldAdaptation`。颜色源仍为世界材料 CSV，不为每世界另造怪物色板或逐 ID 绘制。配方键包含规则与外观源摘要。
+
+`human-model.ts` 在原骨架和动作锚上生成纤维束／张膜组织；`model-raster.ts`／`body-pixel-material.ts` 提供可选材料分支，`model-visual.ts` 传播配方并将其纳入帧缓存。`paint-genome/world-material.ts` 由 `material.ts` 的显式分支调用，`attach.ts` 支持同一可选身份；原占漆拓扑与危险定义保持。无参数时生产默认绘制不变。`world-material-light.ts` 提供共享 CPU 环境光／漫反射／距离衰减／tone 采样，`paint-genome/lighting.ts` 从既有密度计算1–3px微厚度与法向；不改变alpha、形体或危险格。`shadeAt` 遮挡采样由调用方提供，缺省不能宣称真实遮挡；此试点尚不覆盖地表 shader 的 specular／emission。
+
+DEV `enemy-world-pilot.html` → `src/dev/enemy-world-pilot.ts`／`enemy-world-pilot-world.ts`，元界面样式独立在 `enemy-world-pilot.css`。两关复用当前原生地图构造和地表渲染，在完整支撑位置调用共享类人／菌毯 baker；控制动画、种子、覆盖深度及新旧对照；可选 `worldLighting` 只读同场受控固定灯样本，尚非正式 runtime 完整 LOS／动态肩灯管线。它是去雾受控视觉巡演，无 AI 战斗、正式投放或存档接入；不注册新游戏 overlay 根。自动合同入口为 `tools/enemy-world-pilot/check-human.ts` 与同目录占漆检查，人工体验未获通过。
 
 ## DEC-ARCH-021：R100 角色遮挡查询的场景内缓存（2026-10-09）
 

@@ -2,8 +2,8 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified-by: code（I18 R4-C：实体占空共享场与合法局部宿主）
-last-modified-date: 2026-10-03
+last-modified-by: code（两世界本土材料显式DEV试点）
+last-modified-date: 2026-10-15
 interface-changed: true
 interfaces-with:
   - system-enemy-ai                 # 一份五态仍由本接口的消费方拥有；句法只决定孔谱与填词，禁止第二份 FSM。出击甲 spawn 带 form
@@ -43,6 +43,12 @@ note: |
 ---
 
 # 系统设计：污染句法
+
+## 两世界材料身份试点合同（2026-10-15）
+
+仅 `enemy-world-pilot.html` 显式向共享 baker／`FormAttachContext.worldAdaptation` 传入 `EnemyWorldAdaptation`，当前试点为晶化林床与破膜盆地，各一只 `human_remnant` 与一处 `fungal_mat`。`resolveEnemyWorldAdaptation(worldId)` 消费 CSV 编译的材料家族规则和既有世界外观，返回带源版本键的确定性配方；未知／不支持的世界返回 `undefined`。世界、基体与个体种子共同决定外观，材料响应读取既有动作相，不新增行为、感知、伤害或碰撞规则。
+
+类人请求／动画缓存携带可选身份键；占漆材质绘制消费同一可选配方及有界周期。缺省分支保持旧绘制输出，原占漆拓扑／支撑／危险格不因材质扩展改变。此能力未写入生产生成配方或存档，不能据同族解析数量宣称全库接入。试点只作共享 baker 的去雾受控动态展示，可选 `worldLighting` 只消费同场受控固定灯样本，不声明正式 runtime 完整 LOS 接入；没有真实 AI、Host 攻击判定、探索或存档；正式部署、正常视野辨识和战斗体验仍待另行验证。绑定 COH-F015／F016／F017，开发入口关联 F052。
 
 ## 迭代20：环境工具目标合同
 

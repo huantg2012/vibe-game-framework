@@ -2,6 +2,7 @@
  * this module owns pigment steps and the selective one-pixel contact edge.
  * No screen-space noise, blur, normal gradient, or frame-random texture. */
 import type { PaintBuf } from './genome/buffer';
+import type { EnemyWorldAdaptation } from './world-adaptation';
 
 export type BodyInk = readonly [number, number, number];
 export const BODY_INKS = {
@@ -11,8 +12,15 @@ export const BODY_INKS = {
   foreign: [[32, 52, 47], [62, 91, 80], [107, 135, 115]],
 } as const;
 
-export function bodyInk(base: BodyInk, illumination: number, fold = 0): BodyInk {
+export function bodyInk(base: BodyInk, illumination: number, fold = 0, world?: EnemyWorldAdaptation): BodyInk {
   const brightness = (base[0] + base[1] + base[2]) / 3;
+  if (world) {
+    const step = Math.max(0, Math.min(2, (brightness < 65 ? (illumination > .58 ? 1 : 0) : illumination > .64 ? 2 : 1) + fold));
+    // The native material's secondary pigment marks surviving inner tissue;
+    // it is opaque pigment, never an emission channel or a danger indicator.
+    if (brightness > 133 && step === 2) return world.secondary;
+    return step === 0 ? world.dark : step === 1 ? world.mid : world.light;
+  }
   const material = brightness < 65 ? BODY_INKS.soot
     : base[1] > base[0] + 4 ? BODY_INKS.foreign
     : brightness > 133 ? BODY_INKS.bone : BODY_INKS.hide;
@@ -24,6 +32,12 @@ export function bodyInk(base: BodyInk, illumination: number, fold = 0): BodyInk 
 /** A broken fold with a short dry ridge, not an all-over grain. Inputs are
  * body-part coordinates, so a limb carries its marks while articulating. */
 export function bodyFold(u: number, v: number, family: string): number {
+  if (family === 'world-fibre') {
+    // One continuous load-path ridge per bundle. Do not reuse the historical
+    // cross-fold stamps: they turn a long fibre into unrelated blue flecks.
+    const axis = u + Math.max(0, v - 5) * .055;
+    return axis > -.25 && axis < .85 ? 1 : axis < -1 && axis > -1.8 ? -1 : 0;
+  }
   const positive = (n: number, span: number) => ((n % span) + span) % span;
   if (family === 'growth') {
     const grain = positive(u + Math.floor(v / 5) * .45, 4.8);
@@ -39,7 +53,10 @@ export function bodyFold(u: number, v: number, family: string): number {
 
 /** Shade inside the silhouette only: never closes inter-limb negative space
  * and never changes collision anchors or grows the body's apparent size. */
-export function finishBodyPixels(buf: PaintBuf): void {
+export function finishBodyPixels(buf: PaintBuf, world?: EnemyWorldAdaptation): void {
+  // Native materials already carry three face inks. Preserve their face-colored
+  // contour; the old contact-edge vocabulary is only for historical bodies.
+  if (world) return;
   const original = new Uint8ClampedArray(buf.data);
   const opaque = (x: number, y: number) => x >= 0 && x < buf.w && y >= 0 && y < buf.h && original[(y * buf.w + x) * 4 + 3] !== 0;
   for (let y = 0; y < buf.h; y++) for (let x = 0; x < buf.w; x++) {

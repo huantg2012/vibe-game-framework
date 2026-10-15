@@ -6,10 +6,14 @@ import type { CoverageId } from '@/generated/contamination-lexicon-data';
 import { makeBuf, type PaintBuf } from './genome/buffer';
 import type { GenomeCanvas } from './genome/types';
 import { bodyInk, bodyFold, finishBodyPixels } from './body-pixel-material';
+import type { EnemyWorldAdaptation } from './world-adaptation';
 
 export type ModelPoint = readonly [number, number, number];
 export type ModelColor = readonly [number, number, number];
 export type CreaturePhase = 'idle' | 'walk' | 'alert' | 'windup' | 'strike' | 'recover';
+/** Per-pixel local geometry, retained only by the optional native-material path.
+ * Allows a cached body pose to receive changing scene light without re-baking. */
+export interface ModelLightingSurface { readonly positions: Float32Array; readonly normals: Float32Array }
 export interface CreatureModelRequest {
   seed: number;
   coverage: CoverageId;
@@ -18,6 +22,7 @@ export interface CreatureModelRequest {
   phase01: number;
   /** 0 = active, 1 = settled. The contact plane remains at the same height. */
   restAmount?: number;
+  worldAdaptation?: EnemyWorldAdaptation;
 }
 export interface CreatureModelResult { buf: PaintBuf; canvas: GenomeCanvas }
 export const smoothModel = (p: number): number => p * p * (3 - 2 * p);
@@ -37,6 +42,8 @@ export function createModelRaster(req: CreatureModelRequest, label: string, arti
   const buf = makeBuf(64, 64);
   const canvas: GenomeCanvas = { w: 64, h: 64, originX: 32, originY: 42, offsetX: 0, offsetY: 0, collision: 20, coverage: req.coverage };
   const depth = new Float64Array(4096).fill(-Infinity);
+  const lightingSurface: ModelLightingSurface | undefined = req.worldAdaptation
+    ? { positions: new Float32Array(4096 * 3), normals: new Float32Array(4096 * 3) } : undefined;
   const rest = modelProgress(req.restAmount ?? 0);
   const settle = (v: ModelPoint): ModelPoint => rest === 0 || v[2] <= 2 ? v : [v[0], v[1], 2 + (v[2] - 2) * (1 - rest * .38)];
   const angle = { down: 0, left: Math.PI / 2, up: Math.PI, right: -Math.PI / 2 }[req.facing4];
@@ -48,6 +55,7 @@ export function createModelRaster(req: CreatureModelRequest, label: string, arti
     const sourceA = a, sourceB = b, sourceC = c;
     a = settle(articulate ? articulate(a) : a); b = settle(articulate ? articulate(b) : b); c = settle(articulate ? articulate(c) : c);
     const normal = norm(rotate(cross(sub(b, a), sub(c, a))));
+    const ra = rotate(a), rb = rotate(b), rc = rotate(c);
     const illumination = Math.max(0, normal[0] * -.43 + normal[1] * -.3 + normal[2] * .84);
 
     const pa = project(a), pb = project(b), pc = project(c);
@@ -64,8 +72,12 @@ export function createModelRaster(req: CreatureModelRequest, label: string, arti
       const z = u * pa[2] + v * pb[2] + w * pc[2], i = y * 64 + x;
       if (z < depth[i]!) continue;
       depth[i] = z;
+      if (lightingSurface) {
+        lightingSurface.normals.set(normal, i * 3);
+        for (let axis = 0; axis < 3; axis++) lightingSurface.positions[i * 3 + axis] = u * ra[axis]! + v * rb[axis]! + w * rc[axis]!;
+      }
       const mark = surface?.([u * sourceA[0] + v * sourceB[0] + w * sourceC[0], u * sourceA[1] + v * sourceB[1] + w * sourceC[1], u * sourceA[2] + v * sourceB[2] + w * sourceC[2]]) ?? 0;
-      const rgb = bodyInk(color, illumination, mark);
+      const rgb = bodyInk(color, illumination, mark, req.worldAdaptation);
       buf.data.set([rgb[0], rgb[1], rgb[2], 255], i * 4);
     }
   }
@@ -82,7 +94,7 @@ export function createModelRaster(req: CreatureModelRequest, label: string, arti
       const local = sub(point, a);
       const along = (local[0] * axis[0] + local[1] * axis[1] + local[2] * axis[2]) / (length || 1);
       const across = local[0] * u[0] + local[1] * u[1] + local[2] * u[2];
-      return Math.max(r0, r1) < 1.8 ? 0 : bodyFold(across, along * length, label);
+      return Math.max(r0, r1) < 1.8 ? 0 : bodyFold(across, along * length, req.worldAdaptation?.kind === 'fibre' ? 'world-fibre' : label);
     };
     const ring = (at: ModelPoint, radius: number): ModelPoint[] => Array.from({ length: cuts }, (_, i) => {
       const c = Math.cos(i * Math.PI * 2 / cuts) * radius, s = Math.sin(i * Math.PI * 2 / cuts) * radius;
@@ -101,7 +113,7 @@ export function createModelRaster(req: CreatureModelRequest, label: string, arti
       const along = height === 0 ? 0 : (point[2] - bottom.at[2]) / height;
       const centerX = bottom.at[0] + (top.at[0] - bottom.at[0]) * along;
       const centerY = bottom.at[1] + (top.at[1] - bottom.at[1]) * along;
-      return bodyFold(point[0] - centerX + (point[1] - centerY) * .4, along * Math.abs(height), label);
+      return bodyFold(point[0] - centerX + (point[1] - centerY) * .4, along * Math.abs(height), req.worldAdaptation?.kind === 'fibre' ? 'world-fibre' : label);
     };
     const cuts = [[-.66, -1], [.66, -1], [1, -.58], [1, .58], [.66, 1], [-.66, 1], [-1, .58], [-1, -.58]] as const;
     const rows = rings.map(r => cuts.map(([x, y]): ModelPoint => [r.at[0] + x * r.rx, r.at[1] + y * r.ry, r.at[2]]));
@@ -119,5 +131,5 @@ export function createModelRaster(req: CreatureModelRequest, label: string, arti
       { at: [at[0] - radii[0] * .08, at[1] - radii[1] * .1, at[2] + radii[2]], rx: radii[0] * .2, ry: radii[1] * .28 },
     ], color);
   }
-  return { buf, canvas, triangle, face, tube, volume, mass, finish: () => finishBodyPixels(buf) };
+  return { buf, canvas, lightingSurface, triangle, face, tube, volume, mass, finish: () => finishBodyPixels(buf, req.worldAdaptation) };
 }

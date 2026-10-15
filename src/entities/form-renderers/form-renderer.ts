@@ -2,6 +2,8 @@ import type Phaser from 'phaser';
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { FormWallAttach } from '@/generation/wall-edge-path';
+import type { EnemyWorldAdaptation } from './d/world-adaptation';
+import type { WorldMaterialLighting } from './d/world-material-light';
 
 export type { FormWallAttach, WallFace } from '@/generation/wall-edge-path';
 
@@ -80,6 +82,10 @@ export function applyFormVisibility(
 }
 
 export interface FormAttachContext {
+  /** Optional actual scene light; never a substitute for authoritative FOV. */
+  worldLighting?: WorldMaterialLighting;
+  /** Explicit material pilot. Omitted for all existing production worlds. */
+  worldAdaptation?: EnemyWorldAdaptation;
   scene: Phaser.Scene;
   form: ContaminationForm;
   seed: number;

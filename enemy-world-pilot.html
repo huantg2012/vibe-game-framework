@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>原生污染体 · 双世界试点</title><link rel="icon" href="data:,"></head>
+<body><main>
+  <header><div><p class="eyebrow">RIFT / MATERIAL INHABITANTS</p><h1>原生污染体</h1><p class="intro">同一个类人基体，同一种占漆。身体随世界形成，个体由种子生成。</p></div><span class="badge">动态视觉试点</span></header>
+  <nav aria-label="试点关卡"><button data-world="crystal-fibre" aria-pressed="true"><span>01</span> 晶化林床 <small>纤维 · 牵拉 · 分束</small></button><button data-world="ruptured-film" aria-pressed="false"><span>02</span> 破膜盆地 <small>薄膜 · 张力 · 收褶</small></button></nav>
+  <section class="viewer"><canvas id="stage" width="960" height="640" tabindex="0" aria-label="原生关卡中的类人和占漆动态样片"></canvas><div id="loading" role="status">正在准备关卡…</div><div class="view-caption"><span id="world-label">晶化林床</span><span id="action-label">自动巡演</span></div></section>
+  <div class="controls">
+    <label>观察尺度 <select id="zoom"><option value="3" selected>近观 3×</option><option value="1.5">关卡尺度 1.5×</option><option value="5">细看 5×</option></select></label>
+    <label>个体覆盖 <select id="coverage"><option value="infiltrate">低覆盖</option><option value="rewrite" selected>中覆盖</option><option value="overwrite">高覆盖</option></select></label>
+    <label>类人动作 <select id="action"><option value="auto">完整巡演</option><option value="idle">静息</option><option value="walk">行走</option><option value="alert">警觉</option><option value="windup">攻击前摇</option><option value="strike">出手</option><option value="recover">收势</option></select></label>
+    <button id="pause">暂停</button><button id="focus">回到样本</button>
+  </div>
+  <div class="controls secondary"><label>个体种子 <input id="seed" type="number" min="0" max="4294967295" value="2718"></label><button id="regenerate">按种子生成</button><button id="next-seed">换一个体</button><label class="check"><input id="adapted" type="checkbox" checked> 世界适配 <small>取消看原模型</small></label><p id="generation-status" aria-live="polite"></p></div>
+  <footer><p>1 / 2 切换关卡 · N 换个体 · 空格暂停 · 拖动画面查看关卡</p><p>原生关卡材质与共享怪物绘制函数。去雾观察，动作受控巡演；本页不结算战斗，不写入存档。</p><details><summary>生成与运行记录</summary><pre id="diagnostics"></pre></details></footer>
+  <pre id="error" hidden role="alert"></pre>
+</main><script type="module" src="/src/dev/enemy-world-pilot.ts"></script></body></html>

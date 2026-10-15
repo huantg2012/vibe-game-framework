@@ -3,11 +3,12 @@
     "id": "COH-F015",
     "title": "地面敌人感知与行为",
     "domain": "encounters",
-    "summary": "地面实体按污染句法组合感官、活动与攻击；AI 使用共同地形和控制状态，听觉与视觉存在不同应对条件。",
+    "summary": "地面实体按污染句法组合感官、活动与攻击；AI 使用共同地形和控制状态，听觉与视觉存在不同应对条件。 两世界本土材料适配仅DEV显式试点，共享baker受控巡演，原正式机制与默认画法保持。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
-      "正式生成遭遇 → 进入感知范围、发声或交战"
+      "正式生成遭遇 → 进入感知范围、发声或交战",
+      "DEV /enemy-world-pilot.html：晶化林床／破膜盆地各单类人＋单菌毯，去雾动态观察；无真实AI／Host战斗或存档。"
     ],
     "sources": [
       {
@@ -66,6 +67,96 @@
         "path": "docs/qa/stealth-obstacles-2026-10-13.md",
         "role": "doc",
         "note": "三代表17件实体局部接入及有限验证；全库与潜行未结案。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-adaptation.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/generated/enemy-world-materials.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "data/enemy-world-materials.csv",
+        "role": "data",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen.mjs",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "enemy-world-pilot.html",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/dev/enemy-world-pilot.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/dev/enemy-world-pilot-world.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/dev/enemy-world-pilot.css",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/human-model.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/model-raster.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/body-pixel-material.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/model-visual.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-human.ts",
+        "role": "test",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-material-light.ts",
+        "role": "code",
+        "note": "显式DEV受控固定灯；完整LOS/动态肩灯/AI尚未接入。"
+      },
+      {
+        "path": "docs/qa/enemy-world-pilot-2026-10-15.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-world-pilot-2026-10-15/browser-check.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-paint.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/capture.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/lighting.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -75,22 +166,25 @@
     "evidence": [
       "COH-E-SRC-threat",
       "COH-E-HIST-CYCLE",
-      "COH-E239"
+      "COH-E239",
+      "COH-E249"
     ],
     "unknowns": [
       "具有听觉诱导行为不等于所有布置下都已验证稳定的诱离后搜取收益。",
-      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。"
+      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
+      "2026-10-15材料试点只覆盖两个世界、human_remnant与fungal_mat；同族可解析不等于启用。尚未获用户审美认可，本次仅同场受控固定灯采样，真实动态肩灯/完整LOS/迷雾、AI/Host战斗、正常投放、冷续与性能均不可由受控巡演推定；I14/P49与全库推广保持开放。"
     ]
   },
   {
     "id": "COH-F016",
     "title": "占漆与占空环境危险",
     "domain": "encounters",
-    "summary": "生产启用的占漆/占空 Host 在合法宿主区域执行活动与危险阶段，部分具有可攻击核心，并可按能力资格被压制或暂缓。",
+    "summary": "生产启用的占漆/占空 Host 在合法宿主区域执行活动与危险阶段，部分具有可攻击核心，并可按能力资格被压制或暂缓。 两世界本土材料适配仅DEV显式试点，共享baker受控巡演，原正式机制与默认画法保持。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
-      "正式生成的环境 Host 区域内靠近、穿越或攻击核心"
+      "正式生成的环境 Host 区域内靠近、穿越或攻击核心",
+      "DEV /enemy-world-pilot.html：晶化林床／破膜盆地各单类人＋单菌毯，去雾动态观察；无真实AI／Host战斗或存档。"
     ],
     "sources": [
       {
@@ -124,6 +218,86 @@
       {
         "path": "docs/specs/system-contamination-lexicon.md",
         "role": "spec"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-adaptation.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/generated/enemy-world-materials.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "data/enemy-world-materials.csv",
+        "role": "data",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen.mjs",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "enemy-world-pilot.html",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/dev/enemy-world-pilot.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/dev/enemy-world-pilot-world.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/dev/enemy-world-pilot.css",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/world-material.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/material.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-material-light.ts",
+        "role": "code",
+        "note": "显式DEV受控固定灯；完整LOS/动态肩灯/AI尚未接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/lighting.ts",
+        "role": "code",
+        "note": "显式DEV受控固定灯；完整LOS/动态肩灯/AI尚未接入。"
+      },
+      {
+        "path": "docs/qa/enemy-world-pilot-2026-10-15.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-world-pilot-2026-10-15/browser-check.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-human.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-paint.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/capture.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -133,21 +307,24 @@
     "evidence": [
       "COH-E-SRC-threat",
       "COH-E-HIST-CATALOG",
-      "COH-E-HIST-PAINT"
+      "COH-E-HIST-PAINT",
+      "COH-E249"
     ],
     "unknowns": [
-      "占墙门框/墙锈、占空散光/间距等当前 substrate 表仅 gym；不能因共用 Host 代码存在就称它们在正式新地图可遇。资格与部署以实际 CSV 和生成规则为准。"
+      "占墙门框/墙锈、占空散光/间距等当前 substrate 表仅 gym；不能因共用 Host 代码存在就称它们在正式新地图可遇。资格与部署以实际 CSV 和生成规则为准。",
+      "2026-10-15材料试点只覆盖两个世界、human_remnant与fungal_mat；同族可解析不等于启用。尚未获用户审美认可，本次仅同场受控固定灯采样，真实动态肩灯/完整LOS/迷雾、AI/Host战斗、正常投放、冷续与性能均不可由受控巡演推定；I14/P49与全库推广保持开放。"
     ]
   },
   {
     "id": "COH-F017",
     "title": "漆面群落完整形体与局部受光",
     "domain": "encounters",
-    "summary": "完整形体跨格展示并按真实地面支撑投放；旧局展示与原危险格/核心分离兼容，受光外围可独立显示。",
+    "summary": "完整形体跨格展示并按真实地面支撑投放；旧局展示与原危险格/核心分离兼容，受光外围可独立显示。 两世界本土材料适配仅DEV显式试点，共享baker受控巡演，原正式机制与默认画法保持。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
-      "正式 Rift 中占漆群落；包括新出击及旧在途恢复"
+      "正式 Rift 中占漆群落；包括新出击及旧在途恢复",
+      "DEV /enemy-world-pilot.html：晶化林床／破膜盆地各单类人＋单菌毯，去雾动态观察；无真实AI／Host战斗或存档。"
     ],
     "sources": [
       {
@@ -173,6 +350,86 @@
       {
         "path": "docs/specs/system-contamination-lexicon.md",
         "role": "spec"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-adaptation.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/generated/enemy-world-materials.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "data/enemy-world-materials.csv",
+        "role": "data",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen.mjs",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "enemy-world-pilot.html",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/dev/enemy-world-pilot.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/dev/enemy-world-pilot-world.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/dev/enemy-world-pilot.css",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/world-material.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/material.ts",
+        "role": "code",
+        "note": "两世界显式DEV试点；不声明正式接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-material-light.ts",
+        "role": "code",
+        "note": "显式DEV受控固定灯；完整LOS/动态肩灯/AI尚未接入。"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/lighting.ts",
+        "role": "code",
+        "note": "显式DEV受控固定灯；完整LOS/动态肩灯/AI尚未接入。"
+      },
+      {
+        "path": "docs/qa/enemy-world-pilot-2026-10-15.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-world-pilot-2026-10-15/browser-check.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-human.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-paint.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/capture.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -182,10 +439,12 @@
     ],
     "evidence": [
       "COH-E-SRC-threat",
-      "COH-E-HIST-PAINT"
+      "COH-E-HIST-PAINT",
+      "COH-E249"
     ],
     "unknowns": [
-      "极窄旧图若在限定距离内找不到完整支撑，保留旧档与真实 VOID 遮罩并报告适配失败；没有证明任意旧图都能完整安放。"
+      "极窄旧图若在限定距离内找不到完整支撑，保留旧档与真实 VOID 遮罩并报告适配失败；没有证明任意旧图都能完整安放。",
+      "2026-10-15材料试点只覆盖两个世界、human_remnant与fungal_mat；同族可解析不等于启用。尚未获用户审美认可，本次仅同场受控固定灯采样，真实动态肩灯/完整LOS/迷雾、AI/Host战斗、正常投放、冷续与性能均不可由受控巡演推定；I14/P49与全库推广保持开放。"
     ]
   },
   {

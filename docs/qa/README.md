@@ -1,5 +1,7 @@
 # 验证与质量记录
 
+2026-10-15 两世界怪物材料试点：[专项QA](enemy-world-pilot-2026-10-15.md) · [动态样片](http://127.0.0.1:3027/enemy-world-pilot.html)。类人／占漆共享规则与同场受光，18 组浏览器生成及连续动态通过；用户审美与正式玩法接入待验。
+
 2026-10-13 中尺度障碍首批三图：[专项QA](stealth-obstacles-2026-10-13.md) · [真实前后图册](artifacts/stealth-obstacles-2026-10-13/root-owned/index.html)。追加17件，18例生产/9旧配方及原几何保持通过；局部正常镜头已复看，实体不挡视线，全库与真实敌人潜行仍开放。
 
 2026-10-12 两项地图优化全库接入：[专项QA](world-upgrades-rollout-2026-10-12.md) · [108世界三档图册](artifacts/world-upgrades-rollout-2026-10-12/index.html)。324份限定生成覆盖齐全，最终全源及实机复核分别记录；不代签用户审美或I14/P49。

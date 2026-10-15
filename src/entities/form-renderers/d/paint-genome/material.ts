@@ -2,11 +2,19 @@
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
 import type { FormVisualPose } from '@/entities/form-renderers/form-renderer';
 import { ENV_INK as C, activityOf, cluster, putPixel, stageOf, type Ink } from '../environment-pixels';
+import type { EnemyWorldAdaptation } from '../world-adaptation';
+import type { PaintGrowthGuide } from './bake';
+import { paintWorldSurfaceMaterial } from './world-material';
 
 export function paintSurfaceMaterial(
   out: Uint8ClampedArray, field: Float32Array, w: number, h: number,
   substrate: string, coverage: CoverageId, seed: number, elapsedMs=0, pose?: FormVisualPose,
+  worldAdaptation?: EnemyWorldAdaptation, growth?: PaintGrowthGuide,
 ): void {
+  if (worldAdaptation && substrate === 'fungal_mat') {
+    paintWorldSurfaceMaterial(out, field, w, h, coverage, seed, elapsedMs, pose, worldAdaptation, growth);
+    return;
+  }
   out.fill(0);
   const stage=stageOf(coverage), activity=activityOf(pose);
   const phase=elapsedMs*Math.PI*2/2400;

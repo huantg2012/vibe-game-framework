@@ -10181,5 +10181,36 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E249",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-15",
+    "revision": "6f013d4d + two-world enemy pilot working tree",
+    "scope": "两世界各类人/占漆的显式DEV材料试点。360旧帧字节兼容、2160类人适配帧、6占漆世界种子、18组浏览器种子/覆盖落点及两关连续动画通过；同场受光、alpha/危险格保持、新旧对照、手选步行连续性、typecheck和CSV一致性通过。真实地图固定seed20261012，个体种子独立。",
+    "limitations": "受控去雾视觉巡演，非AI/Host战斗、肩灯/FOV、正常投放、存档或全库接入；固定灯/结构高度遮挡不能代替真实潜行验收。内部静帧复核不代签用户审美。地图原有几何门、I14/P49保持开放；同族39世界可解析不代表验证。局部CPU计时非全游戏FPS。",
+    "sources": [
+      {
+        "path": "docs/qa/enemy-world-pilot-2026-10-15.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-world-pilot-2026-10-15/browser-check.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-human.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-paint.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/capture.mjs",
+        "role": "test"
+      }
+    ]
   }
 ]

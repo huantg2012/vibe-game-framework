@@ -1,0 +1,34 @@
+/** CSV -> supported material grammar and world-family routing. No per-world art. */
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { createHash } from 'node:crypto';
+const source = 'data/enemy-world-materials.csv';
+const text = fs.readFileSync(source, 'utf8');
+const lines = text.trim().split(/\r?\n/);
+assert.equal(lines.shift(), 'family,kind,version,fibre_count,membrane_spread,motion_lag,paint_branching');
+const families = new Set();
+const rules = lines.map(line => {
+  const cells = line.split(',');
+  assert.equal(cells.length, 7);
+  const [family, kind, version, count, spread, lag, branching] = cells;
+  assert(/^[a-z]+(?:-[a-z]+)*$/.test(family) && !families.has(family));
+  families.add(family);
+  assert(['fibre', 'membrane'].includes(kind));
+  assert.equal(version, '1');
+  for (const value of [count, spread, lag, branching]) assert(/^\d+(?:\.\d+)?$/.test(value));
+  const fibreCount = Number(count), membraneSpread = Number(spread), motionLag = Number(lag), paintBranching = Number(branching);
+  assert(Number.isInteger(fibreCount) && fibreCount >= 2 && fibreCount <= 6);
+  assert(membraneSpread >= .5 && membraneSpread <= 1.5);
+  assert(motionLag >= 0 && motionLag <= .3 && paintBranching >= 0 && paintBranching <= 1);
+  return { family, kind, version: 1, fibreCount, membraneSpread, motionLag, paintBranching };
+});
+const nativeLines = fs.readFileSync('data/rift-native-worlds.csv', 'utf8').trim().split(/\r?\n/);
+const header = nativeLines.shift().split(',');
+const familyIndex = header.indexOf('family');
+assert(familyIndex >= 0);
+const worlds = nativeLines.map(line => line.split(',')).filter(row => families.has(row[familyIndex])).map(row => ({ worldId: row[0], family: row[familyIndex] }));
+const output = `/** Generated from ${source} and data/rift-native-worlds.csv. Do not edit. */\nexport const ENEMY_WORLD_MATERIAL_SOURCE_HASH = '${createHash('sha256').update(text).update(JSON.stringify(worlds)).digest('hex')}';\nexport const ENEMY_WORLD_MATERIAL_RULES = ${JSON.stringify(rules, null, 2)} as const;\nexport const ENEMY_WORLD_MATERIAL_ROUTING = ${JSON.stringify(worlds, null, 2)} as const;\n`;
+const path = 'src/generated/enemy-world-materials.ts';
+if (process.argv.includes('--check')) assert.equal(fs.readFileSync(path, 'utf8'), output);
+else fs.writeFileSync(path, output);
+console.log(`PASS enemy world material grammar: ${rules.length} families, ${worlds.length} eligible worlds (explicit opt-in only)`);

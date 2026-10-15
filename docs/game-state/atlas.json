@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "DEC-215当前重点为余烬脊/晶化林床/破膜盆地/吸光釉原四种配色材质，保留原主体并应用共享构型；扩展2/2/1/1处，外岸/支撑/孔身份/全身体可达通过。G1/G3及两图G2仍未过，无完整内容部署。原三图保留回归，普通全108仍r11，I14/P49开放。"
+    "summary": "当前新增晶化林床／破膜盆地单类人＋单菌毯的共享材料DEV试点，仅去雾受控动态展示，未接AI战斗／生产或获人审。DEC-215当前重点为余烬脊/晶化林床/破膜盆地/吸光釉原四种配色材质，保留原主体并应用共享构型；扩展2/2/1/1处，外岸/支撑/孔身份/全身体可达通过。G1/G3及两图G2仍未过，无完整内容部署。原三图保留回归，普通全108仍r11，I14/P49开放。"
   },
   "domains": [
     {
@@ -28,7 +28,7 @@
       "id": "encounters",
       "title": "敌人、危险与识别",
       "coverage": "mapped",
-      "note": "已登记实体 AI、环境 Host、漆面及提示，并挂接生产词表；未逐一枚举每个合法随机组合。"
+      "note": "已登记实体 AI、环境 Host、漆面及提示，并挂接生产词表；未逐一枚举每个合法随机组合。 两世界世界材料适配仅显式DEV，既有生产规则不变，真实战斗与人审未验。"
     },
     {
       "id": "items",
@@ -76,7 +76,7 @@
       "id": "development",
       "title": "开发入口与退役方向",
       "coverage": "mapped",
-      "note": "native-construction由CSV登记7个固定样本：当前四材质组与原三图回归组。共享新构型、同源材质/剪影；四图通路/支撑通过但完整准入未过。无内容/出口/存档，正式r11保持。"
+      "note": "native-construction由CSV登记7个固定样本：当前四材质组与原三图回归组。共享新构型、同源材质/剪影；四图通路/支撑通过但完整准入未过。无内容/出口/存档，正式r11保持。 /enemy-world-pilot.html复用共享baker与真实地表，展示两世界各单类人/单菌毯；为去雾受控巡演，不是正常游玩。"
     }
   ],
   "featureFiles": [
@@ -478,6 +478,20 @@
         "COH-F052",
         "COH-F044"
       ]
+    },
+    {
+      "id": "COH-C-ENEMY-WORLD-PILOT",
+      "statement": "世界材料怪物生成当前仅晶化林床/破膜盆地两关显式DEV试点；只含human_remnant与fungal_mat。共享纯baker、受控去雾动态观察不等于AI/Host战斗、正常视野可读性、正式接入或用户审美通过；无参数维持旧表现，不推广全库。",
+      "status": "active",
+      "source": {
+        "path": "docs/specs/system-contamination-lexicon.md"
+      },
+      "featureIds": [
+        "COH-F015",
+        "COH-F016",
+        "COH-F017",
+        "COH-F052"
+      ]
     }
   ],
   "inventory": [
@@ -826,6 +840,22 @@
         "src/generation/world-study/native-spatial-*.ts",
         "src/generation/legacy-r100-v11/*",
         "tools/native-spatial/*"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "enemy-world-pilot",
+      "title": "两世界本土怪物材料显式DEV试点",
+      "include": [
+        "enemy-world-pilot.html",
+        "src/dev/enemy-world-pilot*",
+        "data/enemy-world-materials.csv",
+        "src/generated/enemy-world-materials.ts",
+        "src/entities/form-renderers/d/world-adaptation.ts",
+        "src/entities/form-renderers/d/paint-genome/world-material.ts",
+        "tools/enemy-world-pilot/*",
+        "src/entities/form-renderers/d/world-material-light.ts",
+        "src/entities/form-renderers/d/paint-genome/lighting.ts"
       ],
       "exclude": []
     }

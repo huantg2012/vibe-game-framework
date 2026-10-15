@@ -14,6 +14,8 @@ import {
 import { resolvePaintVeinVariant } from '@/entities/form-renderers/d/paint-genome/topology';
 import { paintGenomePreparationKey } from './prepared';
 import { paintSurfaceMaterial } from './material';
+import { applyPaintWorldLighting } from './lighting';
+import { sampleWorldMaterialLight } from '../world-material-light';
 import { PaintSurfaceVisibility } from './visibility';
 import { fitLegacyPaintPresentation, type LegacyPaintPresentationReport } from './legacy-presentation';
 import { paintPaintGenomeLive } from '@/entities/form-renderers/d/paint-genome/live';
@@ -31,7 +33,8 @@ function textureKey(ctx: FormAttachContext, vein: string, offsetX = 0, offsetY =
   const prefix = ctx.textureNamespace ? `${ctx.textureNamespace}_` : '';
   const sense = ctx.form.lexemes.sense;
   const rhythm = ctx.form.lexemes.rhythm;
-  return `${prefix}d_paint_genome_${fragment}_${ctx.form.substrate}_${ctx.form.coverage}_${ctx.form.continuity}_${sense}_${rhythm}_display2_mechanics${ctx.paintGeometryVersion ?? 2}_fit${offsetX}_${offsetY}_v${vein}_${(ctx.seed >>> 0).toString(16)}`;
+  const world = ctx.worldAdaptation ? `_world${ctx.worldAdaptation.key}` : '';
+  return `${prefix}d_paint_genome_${fragment}_${ctx.form.substrate}_${ctx.form.coverage}_${ctx.form.continuity}_${sense}_${rhythm}_display2_mechanics${ctx.paintGeometryVersion ?? 2}_fit${offsetX}_${offsetY}_v${vein}_${(ctx.seed >>> 0).toString(16)}${world}`;
 }
 
 function makeTexture(scene: Phaser.Scene, key: string, w: number, h: number): Phaser.Textures.CanvasTexture {
@@ -61,6 +64,9 @@ class BingPaintGenomeVisual implements FormVisual {
   private readonly substrate: string;
   private readonly coverage: FormAttachContext['form']['coverage'];
   private readonly seed: number;
+  private readonly worldAdaptation: FormAttachContext['worldAdaptation'];
+  private readonly worldLighting: FormAttachContext['worldLighting'];
+  private readonly floorLight: [number, number, number] = [1, 1, 1];
   private readonly subjectId?: string;
   private readonly footprint: Phaser.GameObjects.Graphics;
   private readonly dangerMask: Uint8Array;
@@ -84,6 +90,8 @@ class BingPaintGenomeVisual implements FormVisual {
     this.surfaceFloorAt=ctx.surfaceFloorAt;
     this.surfaceOrigin=ctx.pin?{x:ctx.pin.x,y:ctx.pin.y}:undefined;
     this.substrate=ctx.form.substrate; this.coverage=ctx.form.coverage; this.seed=ctx.seed; this.subjectId=ctx.subjectId;
+    this.worldAdaptation = ctx.worldAdaptation;
+    this.worldLighting = ctx.worldLighting;
     this.footprint=ctx.scene.add.graphics().setDepth(ctx.depth-.01);
     const veinVariant = resolvePaintVeinVariant(ctx.form.substrate, ctx.seed, ctx.paintVeinVariant);
     const recipe = {
@@ -149,7 +157,8 @@ class BingPaintGenomeVisual implements FormVisual {
     this.texture = makeTexture(ctx.scene, this.key, this.w, this.h);
     this.canvasCtx = this.texture.getContext();
     this.pixels = this.canvasCtx.createImageData(this.w, this.h);
-    paintSurfaceMaterial(this.pixels.data,this.rest,this.w,this.h,this.substrate,this.coverage,this.seed);
+    paintSurfaceMaterial(this.pixels.data,this.rest,this.w,this.h,this.substrate,this.coverage,this.seed,0,undefined,this.worldAdaptation,this.growth);
+    if (this.worldLighting && ctx.pin) applyPaintWorldLighting(this.pixels.data,this.rest,this.w,this.h,ctx.pin.x-this.w*.5,ctx.pin.y-this.h*.5,this.worldLighting);
     if(ctx.pin&&(this.isWalkableFloor||this.surfaceFloorAt))this.applyDangerSurface({x:ctx.pin.x,y:ctx.pin.y,facing4:'down',moving:false,visibility:1,signal:'idle',deltaMs:0},false);
     this.canvasCtx.putImageData(this.pixels, 0, 0);
     this.texture.refresh();
@@ -198,7 +207,8 @@ class BingPaintGenomeVisual implements FormVisual {
       ramp: this.ramp,
       growth: this.growth,
     });
-    paintSurfaceMaterial(this.pixels.data,this.scratch,this.w,this.h,this.substrate,this.coverage,this.seed,this.clock,pose);
+    paintSurfaceMaterial(this.pixels.data,this.scratch,this.w,this.h,this.substrate,this.coverage,this.seed,this.clock,pose,this.worldAdaptation,this.growth);
+    if (this.worldLighting) applyPaintWorldLighting(this.pixels.data,this.scratch,this.w,this.h,pose.x-this.w*.5,pose.y-this.h*.5,this.worldLighting);
     this.applyDangerSurface(pose);
     if (this.surfaceVisibility) {
       const visible = this.surfaceVisibility.clip(this.pixels.data, this.w, this.h, pose.x - this.w * .5, pose.y - this.h * .5);
@@ -244,7 +254,15 @@ class BingPaintGenomeVisual implements FormVisual {
       const hasUp=!!this.dangerMask[index-stride],hasDown=!!this.dangerMask[index+stride];
       // Connected deposits share their internal edges. Only exposed perimeter
       // frays into 2–3px clusters; no isolated rectangular tile highlight.
-      const ink=this.substrate==='oil_film'?0x293b32:this.substrate==='ash_veil'?0x4b5044:0x435548;
+      const material = this.worldAdaptation?.mid;
+      let ink=material ? (material[0]<<16)|(material[1]<<8)|material[2]
+        : this.substrate==='oil_film'?0x293b32:this.substrate==='ash_veil'?0x4b5044:0x435548;
+      if (this.worldLighting) {
+        sampleWorldMaterialLight(this.worldLighting,cell.col*tile+tile*.5,cell.row*tile+tile*.5,0,0,0,1,false,this.floorLight);
+        ink=(Math.min(255,Math.round((ink>>>16&255)*this.floorLight[0]))<<16)
+          |(Math.min(255,Math.round((ink>>>8&255)*this.floorLight[1]))<<8)
+          |Math.min(255,Math.round((ink&255)*this.floorLight[2]));
+      }
       for(let y=0;y<tile;y+=2)for(let x=0;x<tile;x+=2) {
         const edge=Math.min(hasLeft?tile:x+1,hasRight?tile:tile-x,hasUp?tile:y+1,hasDown?tile:tile-y);
         const wx=cell.col*tile+x,wy=cell.row*tile+y;
