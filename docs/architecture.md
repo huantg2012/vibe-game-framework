@@ -80,6 +80,8 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `systems/rift-entry-frame-fence.ts` 管理正式原生场景的真实帧边界：最后建场段标记 finishConstruction 后，下一实际 engine frame 绘制完整的零时长画面并提交首个完整 checkpoint，收到该帧 `POST_RENDER` 后才交还玩法。它不使用固定毫秒假装渲染完成，不修改冷续的速度、输入向量、攻击进度或物理余量。准备期间的 pagehide 保留已持久化的出发／旧 checkpoint；提前请求暂停排到首次完整存档之后。绘制失败、保存失败、隐藏、取消、shutdown 和直接 destroy 不得放行；所拥有的暂停及渲染 listener 必须成对释放。显式 DEV 入场演出沿用其原时长合同。
 
+失焦保护由 `RiftScene` 生命周期持有：blur/hidden共用系统菜单入口，自动请求绕过背包/菜单关闭防抖；原生建场与保存失败保留待处理标记，完整帧后兑现。退出成对解除监听。`main.ts` 不再暂停所有场景或创建独立失焦遮罩；净化点失焦保持现有交互，出发准备仍取消并关闭准备菜单。`pauseMenu` 统一暂停/恢复模拟及音频，并清键与消费关闭输入。
+
 `systems/native-rift-body-recovery.ts` 是原生 v3 保存的身体坐标兼容边界。manager 在完整状态与库存校验后、Scene 在真正恢复玩家前调用同一纯函数。新世界状态写 `bodyGeometryVersion=1`；缺标记时仅允许已实测的旧 active paid catalog dash 省略 6px offset，且必须满足技能插值、锁输入和实际完整身体支持。它只返回身体位置副本，不重写保存或重放技能；v1/v2 沿原恢复分支。
 
 场景创建中途失败时，`RiftScene.onShutdown` 调用表现包装器的 `disposeUnconsumed`。包装器捕获具体的准备对象，按引用释放；旧场景的延迟清理不能删除同一包／种子的下一次准备，已交给运行时的纹理也不受该清理影响。

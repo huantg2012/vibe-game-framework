@@ -1,0 +1,53 @@
+{
+  "scope": "Controlled preboot growth levels and unoffered items. Controlled scene.openDefensePanel opens production UI; mouse and keyboard use real InventoryStore/SaveManager. Not earned progression or natural loot evidence.",
+  "cases": [
+    {
+      "capacity": 1,
+      "ok": true,
+      "checks": [
+        "mouse/Enter consecutive mixed item offering reaches actual capacity",
+        "full mouse/keyboard refusal explains real full capacity and does not mutate",
+        "keyboard removal then Tab/Space refill, progress preserved",
+        "mouse removal, rejected persistence leaves bytes/items unchanged, keyboard retry succeeds",
+        "cold reload retains exact item state and assignments"
+      ],
+      "errors": []
+    },
+    {
+      "capacity": 2,
+      "ok": true,
+      "checks": [
+        "mouse/Enter consecutive mixed item offering reaches actual capacity",
+        "full mouse/keyboard refusal explains real full capacity and does not mutate",
+        "keyboard removal then Tab/Space refill, progress preserved",
+        "mouse removal, rejected persistence leaves bytes/items unchanged, keyboard retry succeeds",
+        "cold reload retains exact item state and assignments"
+      ],
+      "errors": []
+    },
+    {
+      "capacity": 3,
+      "ok": true,
+      "checks": [
+        "mouse/Enter consecutive mixed item offering reaches actual capacity",
+        "full mouse/keyboard refusal explains real full capacity and does not mutate",
+        "keyboard removal then Tab/Space refill, progress preserved",
+        "mouse removal, rejected persistence leaves bytes/items unchanged, keyboard retry succeeds",
+        "cold reload retains exact item state and assignments"
+      ],
+      "errors": []
+    },
+    {
+      "capacity": 4,
+      "ok": true,
+      "checks": [
+        "mouse/Enter consecutive mixed item offering reaches actual capacity",
+        "full mouse/keyboard refusal explains real full capacity and does not mutate",
+        "keyboard removal then Tab/Space refill, progress preserved",
+        "mouse removal, rejected persistence leaves bytes/items unchanged, keyboard retry succeeds",
+        "cold reload retains exact item state and assignments"
+      ],
+      "errors": []
+    }
+  ]
+}

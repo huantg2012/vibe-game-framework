@@ -343,8 +343,6 @@ const CSS = `
 .scene-menu-result .readout-hero { margin:10px 0; border-bottom-color:rgba(147,160,146,.12); }
 .scene-menu-result .pill { border-bottom-color:rgba(147,160,146,.12); }
 #impact-result-panel.game-panel.scene-menu-impact { left:400px; top:124px; width:496px; height:464px; }
-.focus-pause-copy { position:absolute; left:536px; top:244px; width:304px; font:16px/24px var(--ui-font); color:#b2b5a6; letter-spacing:1px; text-shadow:0 1px 4px #050907; }
-.focus-pause-copy span { display:block; margin-top:14px; font:11px/18px var(--ui-font); color:#7e8a7e; letter-spacing:0; }
 /* HUD has no solid plate. Small stable readings sit in the margins. */
 .device-plate { position:absolute; box-sizing:border-box; padding:0; border:0; background:transparent; font:11px/16px var(--ui-font); color:#8a9a88; pointer-events:none; text-shadow:0 1px 3px #000; }
 .hud-report-entry{display:flex;align-items:baseline;justify-content:flex-end;gap:7px;padding:4px;border:0;background:transparent;color:#929e91;font:11px/18px var(--ui-font);text-shadow:0 1px 3px #000;pointer-events:auto;cursor:pointer;white-space:nowrap}

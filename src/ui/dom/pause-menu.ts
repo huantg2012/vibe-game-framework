@@ -19,7 +19,12 @@ import { saveManager } from '@/managers/save-manager';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 type MenuMode = 'root' | 'confirmOverwrite' | 'confirmAbandon' | 'preparing';
-export interface PauseMenuOptions { onAbandon?: () => void; preparation?: { message: string; cancel: () => void } }
+export interface PauseMenuOptions {
+  onAbandon?: () => void;
+  /** Focus protection must work even immediately after a manual close. */
+  focusLoss?: boolean;
+  preparation?: { message: string; cancel: () => void };
+}
 let recoveryOptions: PauseMenuOptions | undefined;
 let loadAbort: AbortController | null = null;
 
@@ -45,6 +50,7 @@ function pauseHost(): void {
 
 function resumeHost(): void {
   if (!host) return;
+  host.input.keyboard?.resetKeys();
   if (host.scene.isPaused()) host.scene.resume();
   audioManager.resumeAll();
 }
@@ -240,7 +246,7 @@ function onKey(e: KeyboardEvent): void {
   }
   if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
     e.preventDefault();
-    e.stopPropagation();
+    e.stopImmediatePropagation();
     if (items.length === 0) return;
     selectedIndex = (selectedIndex - 1 + items.length) % items.length;
     audioManager.playSFX('sfx-ui-hover');
@@ -249,7 +255,7 @@ function onKey(e: KeyboardEvent): void {
   }
   if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
     e.preventDefault();
-    e.stopPropagation();
+    e.stopImmediatePropagation();
     if (items.length === 0) return;
     selectedIndex = (selectedIndex + 1) % items.length;
     audioManager.playSFX('sfx-ui-hover');
@@ -258,7 +264,7 @@ function onKey(e: KeyboardEvent): void {
   }
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
-    e.stopPropagation();
+    e.stopImmediatePropagation();
     audioManager.playSFX('sfx-ui-click');
     items[selectedIndex]?.action();
   }
@@ -271,7 +277,7 @@ export const pauseMenu = {
 
   open(scene: Phaser.Scene, options?: PauseMenuOptions): void {
     if (panel) return;
-    if (!options?.preparation && performance.now() < closedAt + 200) return;
+    if (!options?.preparation && !options?.focusLoss && performance.now() < closedAt + 200) return;
     injectPanelStyles();
     host = scene;
     recoveryOptions = options;
@@ -337,12 +343,11 @@ export const pauseMenu = {
     closedAt = performance.now();
   },
 
-  /** Preparation owns no inventory commit. Keep the normal pause menu after
-   * focus loss; do not resume a hidden scene merely because a Promise settled. */
-  finishPreparation(resume = true): void {
+  /** Preparation owns no inventory commit. Cancellation returns to Haven,
+   * whose focus loss does not require a separate resume confirmation. */
+  finishPreparation(): void {
     if (!recoveryOptions?.preparation) return;
     delete recoveryOptions.preparation;
-    if (resume) this.close();
-    else { mode = 'root'; buildRootItems(); paint(); }
+    this.close();
   },
 };

@@ -1043,7 +1043,7 @@ export class PurificationScene extends Phaser.Scene {
       }
       if (this.departureAbort === controller) {
         this.departureAbort = null;
-        if (!this.shuttingDown) pauseMenu.finishPreparation(!document.hidden && document.hasFocus());
+        if (!this.shuttingDown) pauseMenu.finishPreparation();
       }
     }
   }

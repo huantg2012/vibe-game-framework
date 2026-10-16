@@ -407,11 +407,11 @@
     "id": "COH-F037",
     "title": "暂停、记录菜单与失焦保护",
     "domain": "interface",
-    "summary": "Esc 按当前场景显示记录/继续或明确放弃本趟；失焦自动暂停并要求玩家确认恢复，同时处理音频暂停。",
+    "summary": "手动Esc按场景显示记录/继续或明确放弃本趟；净化点失焦不显式暂停，Rift失焦或隐藏统一暂停并打开系统菜单，回焦仍需明确继续。建场与保存失败保留待处理暂停。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
-      "场景 Esc；浏览器失焦后点击/按键恢复"
+      "场景 Esc；Rift 浏览器失焦/隐藏打开现有系统菜单，菜单明确继续"
     ],
     "sources": [
       {
@@ -433,6 +433,14 @@
       {
         "path": "docs/specs/system-field-inventory.md",
         "role": "spec"
+      },
+      {
+        "path": "tools/qa/check-focus-menu.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/offering-focus-fix-2026-10-16.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -443,7 +451,8 @@
     ],
     "evidence": [
       "COH-E-SRC-interface",
-      "COH-E-HIST-CYCLE"
+      "COH-E-HIST-CYCLE",
+      "COH-E258"
     ],
     "unknowns": [
       "暂停菜单不是设置页；未把“存在 Esc 菜单”解释成有音量、键位或显示设置。"

@@ -257,6 +257,7 @@ export class RiftScene extends Phaser.Scene {
   private entryOwnsPhysicsPause = false;
   private nativeEntryFence: RiftEntryFrameFence | null = null;
   private nativeEntryPauseRequested = false;
+  private focusPauseRequested = false;
   private entryFrameFrozen = false;
   private inventoryClosedAt = -1000;
   private readonly runController = new RunController();
@@ -345,6 +346,7 @@ export class RiftScene extends Phaser.Scene {
     this.stagedEntry = new RiftStagedEntry(this.createRunSteps(data), () => {
       this.nativeEntryFence?.finishConstruction();
       if (this.constructionClockPaused !== null) { this.time.paused = this.constructionClockPaused; this.constructionClockPaused = null; }
+      if (this.focusPauseRequested || document.hidden || !document.hasFocus()) this.onFocusLost();
     }, reason => this.failEntry(reason, data));
     this.stagedEntry.start();
   }
@@ -359,6 +361,9 @@ export class RiftScene extends Phaser.Scene {
     this.nativeWorldPresentation = null;
     this.nativeEntryFence?.destroy(); this.nativeEntryFence = null;
     this.nativeEntryPauseRequested = false;
+    this.focusPauseRequested = false;
+    window.addEventListener('blur', this.onFocusLost);
+    document.addEventListener('visibilitychange', this.onFocusVisibility);
     this.recovery = this.devFixture?.recovery ?? data?.recovery ?? null;
     this.devElapsedMs = 0;
     this.devPresentation = this.devFixture ? createPresentationFrame() : null;
@@ -1885,9 +1890,9 @@ export class RiftScene extends Phaser.Scene {
       released: () => {
         this.resetEntryHeldKeys();
         this.startRiftAudio(!this.recovery?.checkpoint);
-        if (this.nativeEntryPauseRequested) {
+        if (this.nativeEntryPauseRequested || this.focusPauseRequested) {
           this.nativeEntryPauseRequested = false;
-          this.openPauseMenu();
+          this.openSystemMenu(this.focusPauseRequested);
         }
       },
     });
@@ -2005,15 +2010,41 @@ export class RiftScene extends Phaser.Scene {
 
   openRecoveredPauseMenu(): void { this.openPauseMenu(); }
 
-  private openPauseMenu(): void {
-    // Preserve an early Escape/cold-load pause request until the first complete
-    // checkpoint exists; the pause menu must not abandon a half-built run.
-    if (this.nativeEntryFence?.isActive()) { this.nativeEntryPauseRequested = true; return; }
-    if (inventoryPanel.isOpen() || this.time.now - this.inventoryClosedAt < 150 || riftResultPanel.isOpen()) return;
+  private openPauseMenu(): void { this.openSystemMenu(false); }
+
+  private readonly onFocusLost = (): void => {
+    if (this.shutdownComplete || pauseMenu.isOpen()) return;
+    this.focusPauseRequested = true;
+    this.openSystemMenu(true);
+  };
+
+  private readonly onFocusVisibility = (): void => {
+    if (!document.hidden) return;
+    this.onFocusLost();
+    // A completed run keeps its result view, but still persists on hiding.
+    if (!this.stagedEntry?.isActive() && this.runController.isRunEnded()) this.flushRuntimeCheckpoint();
+  };
+
+  private openSystemMenu(focusLoss: boolean): void {
+    // The native first-frame fence must finish before we can pause or abandon.
+    if (this.stagedEntry?.isActive() || this.nativeEntryFence?.isActive()) {
+      if (focusLoss) this.focusPauseRequested = true;
+      else this.nativeEntryPauseRequested = true;
+      return;
+    }
+    if (pauseMenu.isOpen() || riftResultPanel.isOpen() || this.runController.isRunEnded()) {
+      this.focusPauseRequested = false;
+      return;
+    }
+    if (focusLoss) inventoryPanel.close();
+    else if (inventoryPanel.isOpen() || this.time.now - this.inventoryClosedAt < 150) return;
+    this.input.keyboard?.resetKeys();
+    this.combat.clearAttackBuffer();
     if (!this.flushRuntimeCheckpoint()) return;
-    if (this.recovery) pauseMenu.open(this, { onAbandon: () => this.abandonRecoveredRun() });
-    else if (this.devFixture?.onPause) this.devFixture.onPause();
-    else pauseMenu.open(this);
+    if (this.recovery) pauseMenu.open(this, { onAbandon: () => this.abandonRecoveredRun(), focusLoss });
+    else if (!focusLoss && this.devFixture?.onPause) this.devFixture.onPause();
+    else pauseMenu.open(this, { focusLoss });
+    if (pauseMenu.isOpen()) this.focusPauseRequested = false;
   }
 
   /**
@@ -2277,6 +2308,18 @@ export class RiftScene extends Phaser.Scene {
       onRetried: () => {
         document.getElementById('inventory-settlement-retry')?.remove();
         if (!this.frameCommit) return;
+        if (this.focusPauseRequested && !this.nativeEntryFence?.isActive()) {
+          // complete() clears the failed candidate after this hook. Stay paused
+          // through that boundary; resuming first would allow Arcade's UPDATE
+          // to advance a body before the scene can reopen the system menu.
+          const owner = this.frameCommit;
+          queueMicrotask(() => {
+            if (this.shutdownComplete || this.frameCommit !== owner || owner.isBlocked()) return;
+            owner.begin();
+            this.openSystemMenu(true);
+          });
+          return;
+        }
         this.input.keyboard?.resetKeys();
         if (this.scene.isPaused()) this.scene.resume();
         audioManager.resumeAll(); this.frameCommit.begin();
@@ -2284,7 +2327,6 @@ export class RiftScene extends Phaser.Scene {
     }, restored);
     this.frameCommit.begin();
     window.addEventListener('pagehide', this.onRecoveryPageHide);
-    document.addEventListener('visibilitychange', this.onRecoveryVisibility);
   }
 
   private capturePhysicsClock(): { fixedStep: true; fps: 60; timeScale: 1; elapsedMs: number } {
@@ -2359,9 +2401,6 @@ export class RiftScene extends Phaser.Scene {
     return committed;
   }
   private readonly onRecoveryPageHide = (): void => { this.flushRuntimeCheckpoint(); };
-  private readonly onRecoveryVisibility = (): void => {
-    if (document.visibilityState === 'hidden') this.flushRuntimeCheckpoint();
-  };
   /** Only the explicit, confirmed menu action calls this. Closing a page never does. */
   private abandonRecoveredRun(): void {
     if (!this.frameCommit || this.runController.isRunEnded() || this.frameCommit.isBlocked()) return;
@@ -2386,7 +2425,9 @@ export class RiftScene extends Phaser.Scene {
     this.endOwnsPhysicsPause = false;
     this.endFrozen = false;
     window.removeEventListener('pagehide', this.onRecoveryPageHide);
-    document.removeEventListener('visibilitychange', this.onRecoveryVisibility);
+    window.removeEventListener('blur', this.onFocusLost);
+    document.removeEventListener('visibilitychange', this.onFocusVisibility);
+    this.focusPauseRequested = false;
     this.frameCommit?.destroy(); this.frameCommit = null;
     this.worldSurface?.destroy();
     this.worldSurface = null;

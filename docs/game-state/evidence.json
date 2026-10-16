@@ -10597,5 +10597,63 @@
     ],
     "date": "2026-10-16",
     "revision": "56ab1ece7e4716da7fbccedd9eded31e6030fa27 + DEC-216 final r13 functional integration working tree (2026-10-16; performance and user acceptance open)"
+  },
+  {
+    "id": "COH-E257",
+    "kind": "automated",
+    "result": "pass",
+    "scope": "四档容量1/2/3/4正式供奉面板共20组检查：连续键鼠装填、满槽原因与不变性、移除重放、拒写回滚重试、冷恢复；库存9项/迁移12项及最终构建通过。",
+    "limitations": "受控成长/物件夹具及场景方法开面板，不证明自然升级、导航或长期经济。此前脚本启动/旧导航失败保留，不作为游戏通过。",
+    "sources": [
+      {
+        "path": "docs/qa/offering-focus-fix-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-offering-capacity.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/offering-capacity-2026-10-16/final-ui/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/ui/dom/defense-panel.ts",
+        "role": "code"
+      }
+    ],
+    "date": "2026-10-16",
+    "revision": "e0a74e128cc7a4e4601f1c12310316bae9cfc770 + DEC-217 offering/focus working tree (2026-10-16)"
+  },
+  {
+    "id": "COH-E258",
+    "kind": "automated",
+    "result": "pass",
+    "scope": "隔离正式新档Chrome真实blur回归11/11，无pageerror，五个生产源哈希稳定；净化点保留交互/准备取消，Rift单菜单、背包、防抖、首帧排队、显式继续不穿透、弃局确认、保存拒写重试完全冻结及返回净化点清理通过。",
+    "limitations": "只观察到可信blur，visibilitychange未触发；OS切换、其他浏览器/设备和直接DESTROY未实测。源码复核与截图art复核不代签用户终验；I14/P49保持。",
+    "sources": [
+      {
+        "path": "docs/qa/offering-focus-fix-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-focus-menu.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/focus-menu-2026-10-16/attempt-2026-10-16T13-53-06-744Z/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/focus-menu-2026-10-16/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/focus-menu-2026-10-16/build.log",
+        "role": "doc"
+      }
+    ],
+    "date": "2026-10-16",
+    "revision": "e0a74e128cc7a4e4601f1c12310316bae9cfc770 + DEC-217 offering/focus working tree (2026-10-16)"
   }
 ]

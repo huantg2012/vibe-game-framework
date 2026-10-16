@@ -1,0 +1,230 @@
+{
+  "startedAt": "2026-10-16T13:47:19.019Z",
+  "revision": "e0a74e128cc7a4e4601f1c12310316bae9cfc770",
+  "task": "COH-F037: Haven focus loss does not auto-pause; Rift focus loss opens the existing system menu",
+  "method": "Fresh isolated record; normal title/grade/loadout/departure controls. Haven offering and preparation are opened through their actual scene methods to avoid irrelevant navigation. Real headed Chrome tab switching with focus emulation disabled; no synthetic focus events, game clock/state/position or generation changes.",
+  "exclusions": [
+    "No OS application switching or other browsers",
+    "Not a performance test or final human visual acceptance",
+    "No forced persistence failure"
+  ],
+  "sourceHashes": {
+    "src/main.ts": "2cddf5cd6f7ddb72545331b5136ab274b3404c9afec1f0dbaa6dcced9ffa4851",
+    "src/ui/dom/pause-menu.ts": "5e148eaf1db6854f2232153def026b4ef829e18266505e2807808f31e273a823",
+    "src/scenes/rift-scene.ts": "01fe6d51993a0260ae19b45467b82d14bc4719f7d747cf52de479bc1266388ae",
+    "src/scenes/purification-scene.ts": "c04d9f5da50505df5ae2874904fa39e5ca6a8b06a85ad0d598675adc870c1c9a",
+    "src/ui/dom/panel-styles.ts": "0192b1210284a2b2346f83e1302f6663fb76da2d4df4ee4a5ed16b0c8d08f7eb"
+  },
+  "cases": [
+    {
+      "name": "Haven idle focus loss",
+      "status": "pass",
+      "before": {
+        "at": 8078.100000023842,
+        "hidden": false,
+        "focused": true,
+        "haven": {
+          "active": true,
+          "paused": false,
+          "preparing": false
+        },
+        "rift": {
+          "active": false,
+          "paused": false,
+          "pendingFocus": false,
+          "fence": false,
+          "staging": false,
+          "position": null,
+          "combat": false
+        },
+        "menu": false,
+        "menuCount": 0,
+        "oldOverlay": 0,
+        "inventory": false,
+        "offering": false,
+        "menuText": null,
+        "saved": {
+          "run": null
+        },
+        "trace": [
+          {
+            "type": "keydown",
+            "key": "Enter",
+            "trusted": true,
+            "at": 4056.199999988079,
+            "hidden": false,
+            "focused": true
+          }
+        ]
+      },
+      "loss": {
+        "at": 8227.600000023842,
+        "hidden": false,
+        "focused": false,
+        "haven": {
+          "active": true,
+          "paused": false,
+          "preparing": false
+        },
+        "rift": {
+          "active": false,
+          "paused": false,
+          "pendingFocus": false,
+          "fence": false,
+          "staging": false,
+          "position": null,
+          "combat": false
+        },
+        "menu": false,
+        "menuCount": 0,
+        "oldOverlay": 0,
+        "inventory": false,
+        "offering": false,
+        "menuText": null,
+        "saved": {
+          "run": null
+        },
+        "trace": [
+          {
+            "type": "keydown",
+            "key": "Enter",
+            "trusted": true,
+            "at": 4056.199999988079,
+            "hidden": false,
+            "focused": true
+          },
+          {
+            "type": "blur",
+            "trusted": true,
+            "at": 8086.400000035763,
+            "hidden": false,
+            "focused": false
+          }
+        ]
+      },
+      "trustedLossEvents": [
+        {
+          "type": "blur",
+          "trusted": true,
+          "at": 8086.400000035763,
+          "hidden": false,
+          "focused": false
+        }
+      ]
+    },
+    {
+      "name": "Haven offering stays open on focus loss",
+      "status": "running",
+      "before": {
+        "at": 8348.199999988079,
+        "hidden": false,
+        "focused": true,
+        "haven": {
+          "active": true,
+          "paused": false,
+          "preparing": false
+        },
+        "rift": {
+          "active": false,
+          "paused": false,
+          "pendingFocus": false,
+          "fence": false,
+          "staging": false,
+          "position": null,
+          "combat": false
+        },
+        "menu": false,
+        "menuCount": 0,
+        "oldOverlay": 0,
+        "inventory": false,
+        "offering": false,
+        "menuText": null,
+        "saved": {
+          "run": null
+        },
+        "trace": [
+          {
+            "type": "keydown",
+            "key": "Enter",
+            "trusted": true,
+            "at": 4056.199999988079,
+            "hidden": false,
+            "focused": true
+          },
+          {
+            "type": "blur",
+            "trusted": true,
+            "at": 8086.400000035763,
+            "hidden": false,
+            "focused": false
+          },
+          {
+            "type": "focus",
+            "trusted": true,
+            "at": 8260.800000011921,
+            "hidden": false,
+            "focused": true
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "status": "failed",
+  "browser": "155.0.8059.80",
+  "failure": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(row.before.offering)\n\n    at file:///Users/yilungao/coh/tools/qa/check-focus-menu.mjs:108:77",
+  "failureState": {
+    "at": 8481.5,
+    "hidden": false,
+    "focused": true,
+    "haven": {
+      "active": true,
+      "paused": false,
+      "preparing": false
+    },
+    "rift": {
+      "active": false,
+      "paused": false,
+      "pendingFocus": false,
+      "fence": false,
+      "staging": false,
+      "position": null,
+      "combat": false
+    },
+    "menu": false,
+    "menuCount": 0,
+    "oldOverlay": 0,
+    "inventory": false,
+    "offering": false,
+    "menuText": null,
+    "saved": {
+      "run": null
+    },
+    "trace": [
+      {
+        "type": "keydown",
+        "key": "Enter",
+        "trusted": true,
+        "at": 4056.199999988079,
+        "hidden": false,
+        "focused": true
+      },
+      {
+        "type": "blur",
+        "trusted": true,
+        "at": 8086.400000035763,
+        "hidden": false,
+        "focused": false
+      },
+      {
+        "type": "focus",
+        "trusted": true,
+        "at": 8260.800000011921,
+        "hidden": false,
+        "focused": true
+      }
+    ]
+  },
+  "finishedAt": "2026-10-16T13:47:29.751Z",
+  "sourcesUnchanged": true
+}
