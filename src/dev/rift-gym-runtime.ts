@@ -1,3 +1,4 @@
+import { inventoryStore } from '@/systems/inventory-store';
 /** DEV-only host for an admitted production map. No browser-save reads or writes. */
 import Phaser from 'phaser';
 import { RiftGymPerformance } from './rift-gym-performance';
@@ -212,6 +213,15 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
       prepareBuildLabRun(loadout.id, {
         catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2,
       });
+      if (fixtureOverrides?.playerModel === 'last-light-a') {
+        // Review fixture is genuinely unarmed: keep the weapon intact in this
+        // memory session's stash, rather than hide an equipped combat rig.
+        const inventory = inventoryStore.getState();
+        const weapon = inventory.items.find(item => item.id === inventory.equipment.weaponId);
+        if (weapon) weapon.location = { kind: 'stash' };
+        inventory.equipment.weaponId = null;
+        if (!inventoryStore.loadState(inventory)) throw new Error('Cannot prepare the unarmed Player A review fixture');
+      }
       starting = true;
       publish();
       const onCreated = (): void => {

@@ -336,6 +336,8 @@ RiftDevFixture显式注入1200ms入场、世界环境音、soil脚步、运行�
 
 `RunController`的可选`onReturn`在正式出击账本结算、保存及退出事件之后执行，未提供时沿原生产归来路径。实验返回配置页，不进入基地`ImpactSystem`或供奉结算；训练库存、单趟携回不能作为完整基地循环或四A持续供给证据。刷新实验页也不是生产出击恢复方案。
 
+2026-10-16（DEC-218）：`r100-gym.html?playerModel=a` 提供已选 A 玩家模型的限定实景试装。Gym 在内存存档中将武器退回库存，创建前准备八向 idle/walk G-buffer，再由 `LastLightPlayerPresentation` 接替可见身体；原 Player 保持 20×20 玩法身体。图集深度反投影和 Y-up→Z-up 变换使像素法线、受光位置和肩灯锚点进入同一个世界灯场。材料 PNG 的 alpha 是发光数据，使用无预乘的数据解码，避免 alpha=0 时 AO 丢失。接线不读取 review 检视光图、不改正常出击默认人物，也不作为完整武器或战斗动作适配。身体在真实实体遮罩更新后，用既有投影擦除只豁免自身 opaque 像素的地面 fog 二次遮暗；图像及 GeometryMask 一同临时转到 fog-local 并恢复，contact 不参与，FOV 查询与半径保持。
+
 `world-study.html`展示仓库中的世界意象与局部概念，读取`docs/art/iteration-21-worlds/manifest.json`；它和构筑对照入口均未加入生产打包入口或主菜单。开发合同见[build-lab](dev/build-lab.md)，几何/隔离/失败重试/真实操作证据见[迭代21 QA](qa/iteration-21.md)。尚未新增生产世界类型。
 
 ### M：三维长路线与正式物件反馈（DEC-156）

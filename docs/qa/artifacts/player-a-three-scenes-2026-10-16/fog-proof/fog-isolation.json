@@ -1,0 +1,34 @@
+{
+  "pass": true,
+  "browser": "155.0.8059.80",
+  "world": "cinder-ridge",
+  "seed": 92,
+  "changed": 409,
+  "outsideOpaque": 0,
+  "half": {
+    "pixels": 255,
+    "blockedSideLeaks": 0,
+    "restoredMaskPosition": [
+      0,
+      0
+    ]
+  },
+  "blocked": {
+    "pixels": 0,
+    "blockedSideLeaks": 0,
+    "restoredMaskPosition": [
+      0,
+      0
+    ]
+  },
+  "contactStillMasked": true,
+  "bodyDepth": 33.6,
+  "fogDepth": 50,
+  "scope": "Real GPU fog-alpha diff at one stationary cinder-ridge pose; half/full synthetic GeometryMask cases validate the projection helper. Does not certify all world occlusion or combat.",
+  "sources": {
+    "src/entities/player-last-light-presentation.ts": "435e85762208b78da7b99fdc99e6baa4acfdd77afda8a6bce5d92ca4a4139274",
+    "src/systems/visibility-system.ts": "40ab26383b231433d5cd68dffd8c665dbd16c8b8a607f0d38fb202413afed0c9",
+    "src/scenes/rift-scene.ts": "b2e5a283d5ce7176188e008b47d8618c1563f375d97e782d11d8cfed441872b8",
+    "tools/qa/check-rift-player-presentation-fog.mjs": "997cc898147d55b12d1727c60cbee834ce6c44b1d5fe128c744e4718b571d3fb"
+  }
+}

@@ -553,9 +553,19 @@ export class VisibilitySystem {
   revealProjectedTerrain(image: Phaser.GameObjects.Image, visibility: number): void {
     if (!this.mask || visibility <= 0 || !image.visible) return;
     const alpha = image.alpha;
+    // DynamicTexture moves the image into texture-local coordinates while
+    // drawing, but a GeometryMask keeps its independent world transform.
+    // Move both together for this draw, so foreground solids cannot punch
+    // transparent holes in the fog behind an occluded projected body.
+    const geometry = image.mask instanceof Phaser.Display.Masks.GeometryMask ? image.mask.geometryMask : null;
+    const maskX = geometry?.x ?? 0, maskY = geometry?.y ?? 0;
     image.setAlpha(clamp(visibility, 0, 1));
+    if (geometry) geometry.setPosition(maskX - this.maskOriginX, maskY - this.maskOriginY);
     try { this.mask.erase(image, image.x - this.maskOriginX, image.y - this.maskOriginY); }
-    finally { image.setAlpha(alpha); }
+    finally {
+      if (geometry) geometry.setPosition(maskX, maskY);
+      image.setAlpha(alpha);
+    }
   }
 
   // ------------------------------------------------------------ glow sources

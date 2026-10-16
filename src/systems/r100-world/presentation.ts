@@ -105,8 +105,9 @@ export class MasterPresentation implements RiftDevRuntime {
  update(elapsedMs:number,ended:boolean):void{const dt=Math.max(0,elapsedMs-this.lastElapsed);this.lastElapsed=elapsedMs;if(this.motion&&!ended)this.time+=dt;if(ended)this.audio.destroy();}
  prepareWorldMaterialLighting():void{
   if(this.destroyed)return;
-  const point=this.context.player.getPosition();
-  this.lamp.x=point.x;this.lamp.y=point.y;
+  const shoulder=this.context.player.getLampPosition?.();
+  const point=shoulder??this.context.player.getPosition();
+  this.lamp.x=point.x;this.lamp.y=point.y;this.lamp.z=shoulder?.z??28;
   const cycle=(this.time/1000%this.world.definition.motion_period)/this.world.definition.motion_period;
   const pressure=r100MaterialPressure(this.time,this.world.definition.motion_period);
   this.activity=.72+pressure*.40;this.phase=cycle<.56?'缓慢闪动':cycle<.76?'绿色侵蚀逐渐变亮':cycle<.83?'绿色侵蚀强烈闪动':'绿色侵蚀逐渐变暗';

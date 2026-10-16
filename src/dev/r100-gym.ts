@@ -1,3 +1,4 @@
+import { prepareLastLightPlayerAssets } from '@/entities/player-last-light-presentation';
 /** Catalog inspection uses the formal v3 worker and RiftScene in memory storage. */
 import { R100_NATIVE_WORLDS } from '@/generated/r100-native-worlds';
 import { BUILD_LAB_LOADOUTS } from '@/generated/build-lab-data';
@@ -19,6 +20,7 @@ function initialize(): void {
   const el = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
   const params = new URLSearchParams(location.search);
   const nativeDevelopment = params.get('nativeSpatial') === '1';
+  const playerModelA = params.get('playerModel') === 'a';
   const createRecipe = nativeDevelopment ? createR100NativeSpatialDevelopmentRecipe : createR100ProductionRecipe;
   const worlds = nativeDevelopment ? R100_NATIVE_WORLDS.filter(world => NATIVE_SPATIAL_WORLDS.some(intent => intent.worldId === world.id && intent.enabled && intent.annotationStatus === 'reviewed')) : R100_NATIVE_WORLDS;
   const world = el<HTMLSelectElement>('world'), grade = el<HTMLSelectElement>('grade');
@@ -47,7 +49,7 @@ function initialize(): void {
     el('diagnostics').textContent = JSON.stringify({ recipe, metadata: map?.metadata, runtime: state }, null, 2);
   }
   const runtime = createRiftGymRuntime({ onReady: () => { ready = true; void build(); }, onState: publish, onReturn: () => { overview = true; syncView(); }, onError: error });
-  function query(): string { return new URLSearchParams({ world: world.value, grade: grade.value, seed: seed.value, loadout: loadout.value, ...(nativeDevelopment ? { nativeSpatial: '1' } : {}) }).toString(); }
+  function query(): string { return new URLSearchParams({ world: world.value, grade: grade.value, seed: seed.value, loadout: loadout.value, ...(nativeDevelopment ? { nativeSpatial: '1' } : {}), ...(playerModelA ? { playerModel: 'a' } : {}) }).toString(); }
   function readRecipe(): WorldProductionRecipeV3 {
     if (!/^\d+$/.test(seed.value) || Number(seed.value) > 0xffffffff || !isPollutionGrade(grade.value)) throw new Error('种子或污染等级不合法。');
     return createRecipe(world.value, Number(seed.value), grade.value);
@@ -98,14 +100,16 @@ function initialize(): void {
       const result = hydrateRiftGeneration(wire);
       if (!result.world?.native) throw new Error('原生世界缺失；不回落其他地图。');
       await prepareR100Presentation(frozen,{signal,world:result.world});
+      const playerModelAssets = playerModelA ? await prepareLastLightPlayerAssets({ signal }) : undefined;
       if(current!==revision||signal.aborted)return;
       map = result.world; recipe = frozen; generatedMs = performance.now() - start;
       const entry = R100_NATIVE_WORLDS.find(row => row.id === world.value)!;
       el('map-title').textContent = `${entry.label} · ${frozen.gradeDefinition.label}`;
-      el('qualification').textContent = nativeDevelopment ? 'DEV r12 · 未准入正常游戏' : entry.enabled ? '正式随机池' : '候选 · 尚未进入随机池';
+      el('qualification').textContent = playerModelA ? 'DEV · A 角色空手模型审阅 · 独立内存存档' : nativeDevelopment ? 'DEV r12 · 未准入正常游戏' : entry.enabled ? '正式随机池' : '候选 · 尚未进入随机池';
       for (const button of catalogButtons) button.setAttribute('aria-current', String(button.dataset.world === world.value));
       el('metrics').textContent = `请求 ${frozen.requestedSeed} → 实际 ${map.layout.seed} · ${map.layout.kindlingNodes.length} 薪柴 / ${map.layout.contaminantNodes.length} 污染物 / ${map.layout.enemySpawns.length} 敌人 · ${(generatedMs / 1000).toFixed(2)} 秒`;
-      runtime.start(map, loadout.value, { productionRecipe: frozen, pollutionGrade: frozen.nativeDefinition.grade });
+      runtime.start(map, loadout.value, { productionRecipe: frozen, pollutionGrade: frozen.nativeDefinition.grade,
+        ...(playerModelAssets ? { playerModel: 'last-light-a', playerModelAssets } : {}) });
       el('waiting').hidden = true; el<HTMLButtonElement>('export').disabled = false; syncView();
     } catch (reason) { if (!signal.aborted && current === revision) error(reason); }
   }

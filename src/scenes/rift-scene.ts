@@ -1,3 +1,4 @@
+import { LastLightPlayerPresentation, type LastLightPlayerAssets } from '@/entities/player-last-light-presentation';
 import { nativeRiftPlayerForRestore, NATIVE_BODY_GEOMETRY_VERSION } from '@/systems/native-rift-body-recovery';
 import { nativeBodyCollision, type NativeBodyCollision, type NativeBodyMotion } from '@/generation/world-study/native-body-collision';
 import { createR100WorldPresentation, getPreparedR100Presentation } from '@/systems/r100-world-presentation';
@@ -64,6 +65,9 @@ import type { WorldProductionRecipeV3 } from '@/generation/world-study/productio
 
 /** Development encounters still use the complete production scene lifecycle. */
 export interface RiftDevFixture {
+  /** Explicit isolated model review; normal entry never loads candidate assets. */
+  playerModel?: 'last-light-a';
+  playerModelAssets?: LastLightPlayerAssets;
   recovery?: { identity: RiftCheckpoint['identity']; externalTargetIds: readonly string[]; checkpoint?: RiftCheckpoint<RiftRecoveryState> };
   createLayout(): GeneratedRiftLayout;
   /** DEV-only QA intent, fed through the original Player motion path. */
@@ -115,6 +119,7 @@ export interface RiftDevActorVisuals {
   readonly objects: readonly Phaser.GameObjects.GameObject[];
   readonly getPosition: () => Readonly<{ x: number; y: number }>;
   readonly getGroundY: () => number;
+  readonly getLampPosition?: () => Readonly<{ x: number; y: number; z: number }>;
 }
 export interface RiftDevRuntimeContext {
   readonly scene: RiftScene;
@@ -227,6 +232,7 @@ export class RiftScene extends Phaser.Scene {
   private recoveryConditions: RiftRecoveryConditions = { modifiers: { chaosRateModifier: 1, kindlingValueModifier: 1, startingChaos: 0 }, cycle: 0 };
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
+  private lastLightPlayerPresentation: LastLightPlayerPresentation | null = null;
   private readonly visibility = new VisibilitySystem();
   private readonly trail = new TrailSystem();
   private readonly ai = new AISystem();
@@ -488,7 +494,17 @@ export class RiftScene extends Phaser.Scene {
     camera.setBackgroundColor(suppressVoidNoise ? 0x000000 : GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
 
     const beforePlayer = createRuntime ? new Set(this.children.list) : null;
-    this.player.create(this, { spawn: layout.spawnPoint, depth: DEPTH.player, facing: 'right', readMovementInput: this.devFixture?.readMovementInput });
+    const playerAssets = this.devFixture?.playerModel === 'last-light-a' ? this.devFixture.playerModelAssets : undefined;
+    if (this.devFixture?.playerModel === 'last-light-a' && !playerAssets) throw new Error('Player A assets must be prepared before entry');
+    this.player.create(this, { spawn: layout.spawnPoint, depth: DEPTH.player, facing: 'right', readMovementInput: this.devFixture?.readMovementInput, externalPresentation: !!playerAssets });
+    if (playerAssets) {
+      const scene = this, emptyLights: WorldMaterialLighting['lights'] = [];
+      const lighting: WorldMaterialLighting = {
+        get lights() { return scene.devRuntime?.worldMaterialLighting?.lights ?? emptyLights; },
+        shadeAt(x, y, z, light) { return scene.devRuntime?.worldMaterialLighting?.shadeAt?.(x, y, z, light) ?? 1; },
+      };
+      this.lastLightPlayerPresentation = new LastLightPlayerPresentation(this, this.player, playerAssets, lighting);
+    }
     const playerVisuals = beforePlayer ? this.children.list.filter(child => !beforePlayer.has(child)) : [];
     if (this.nativeBody) {
       if (!this.nativeBody.supports(layout.spawnPoint, GAME_CONSTANTS.PLAYER.BODY_SIZE / 2, GAME_CONSTANTS.PLAYER.BODY_SIZE / 2))
@@ -761,7 +777,8 @@ export class RiftScene extends Phaser.Scene {
     this.syncDevPresentation();
     try {
       this.devRuntime = createRuntime?.({ scene: this, layout,
-        player: { id: 'player', objects: playerVisuals, getPosition: () => this.player.getPosition(), getGroundY: () => this.player.getGroundY() },
+        player: { id: 'player', objects: playerVisuals, getPosition: () => this.player.getPosition(), getGroundY: () => this.player.getGroundY(),
+          ...(this.lastLightPlayerPresentation ? { getLampPosition: this.lastLightPlayerPresentation.getLampPosition } : {}) },
         enemies: this.devEnemyVisuals,
         applyHazardHit: (source, damage) => !this.entryView.active && !this.nativeEntryFence?.isActive() && this.combat.applyHazardHit(source, damage),
         isRunEnded: () => this.runController.isRunEnded(),
@@ -1023,6 +1040,7 @@ export class RiftScene extends Phaser.Scene {
       this.syncDetectionPulse(0);
       this.syncDevPresentation();
       this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.lastLightPlayerPresentation?.revealBody(this.visibility);
       this.worldSurface?.afterUpdate(this.devElapsedMs);
       if (!this.commitRuntimeFrame(true)) return;
       this.cameras.main.setVisible(true);
@@ -1034,15 +1052,20 @@ export class RiftScene extends Phaser.Scene {
       this.syncDevPresentation();
       if (!this.commitRuntimeFrame()) return;
       this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.lastLightPlayerPresentation?.revealBody(this.visibility);
       this.worldSurface?.afterUpdate(this.devElapsedMs);
       this.frameCommit?.begin();
       return;
     }
     if (this.entryView.active || this.entryFrameFrozen) {
+      this.lastLightPlayerPresentation?.syncPose();
+      if (this.lastLightPlayerPresentation) this.devRuntime?.prepareWorldMaterialLighting?.();
+      this.lastLightPlayerPresentation?.render();
       this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
       this.syncDevPresentation();
       if (!this.commitRuntimeFrame()) return;
       this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.lastLightPlayerPresentation?.revealBody(this.visibility);
       this.worldSurface?.afterUpdate(this.devElapsedMs);
       this.frameCommit?.begin();
       return;
@@ -1066,6 +1089,7 @@ export class RiftScene extends Phaser.Scene {
     if (!this.commitRuntimeFrame()) return;
     this.updateNarration(delta);
     this.devRuntime?.afterUpdate(this.devElapsedMs);
+    this.lastLightPlayerPresentation?.revealBody(this.visibility);
     this.worldSurface?.afterUpdate(this.devElapsedMs);
     this.frameCommit?.begin();
     if (this.debugPanel) this.updateDebugOverlay(delta);
@@ -2119,7 +2143,7 @@ export class RiftScene extends Phaser.Scene {
 
   private rebuildGroundDepth(): void {
     const targets: GroundDepthTarget[] = [{ id: 'player', groundY: () => this.player.getGroundY(),
-      applyDepth: depth => this.player.setGroundDepth(depth, GROUND_LIGHT_DEPTH) }];
+      applyDepth: depth => { this.player.setGroundDepth(depth, GROUND_LIGHT_DEPTH); this.lastLightPlayerPresentation?.setGroundDepth(depth, GROUND_LIGHT_DEPTH); } }];
     for (const view of this.ai.getEnemies()) {
       const visual = this.formVisuals.get(view.getId());
       if (!(view instanceof Enemy) || !visual?.setGroundDepth) continue;
@@ -2132,8 +2156,10 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private syncSchemeDPoses(deltaMs: number): void {
+    this.lastLightPlayerPresentation?.syncPose();
+    if (this.hasWorldMaterialActors || this.lastLightPlayerPresentation) this.devRuntime?.prepareWorldMaterialLighting?.();
+    this.lastLightPlayerPresentation?.render();
     if (this.formVisuals.size === 0) return;
-    if (this.hasWorldMaterialActors) this.devRuntime?.prepareWorldMaterialLighting?.();
     for (const [id, visual] of this.formVisuals) {
       const view = this.ai.getEnemyById(id);
       if (view) {
@@ -2296,6 +2322,7 @@ export class RiftScene extends Phaser.Scene {
       this.runController.finishRuntimeRestore();
       if (!this.nativeEntryFence?.isActive()) {
         this.devRuntime?.afterUpdate(this.devElapsedMs);
+        this.lastLightPlayerPresentation?.revealBody(this.visibility);
         this.worldSurface?.afterUpdate(this.devElapsedMs);
       }
     }
@@ -2432,6 +2459,7 @@ export class RiftScene extends Phaser.Scene {
     this.worldSurface?.destroy();
     this.worldSurface = null;
     this.devRuntime?.destroy(); this.devRuntime = null; this.devEnemyVisuals.length = 0;
+    this.lastLightPlayerPresentation?.destroy(); this.lastLightPlayerPresentation = null;
     this.nativeWorldPresentation?.disposeUnconsumed();
     for (const unregister of this.devTargetDisposers) unregister();
     this.endEntryGate();

@@ -10682,5 +10682,32 @@
     ],
     "date": "2026-10-16",
     "revision": "bf608ca2 + F039 model candidates working tree"
+  },
+  {
+    "id": "COH-E260",
+    "kind": "runtime",
+    "result": "pass",
+    "scope": "DEC-218已选A的三场r13真实Rift空手静态试装，六帧实际正/侧朝向、原像素、20×20身体/支撑/脚灯/遮罩与存档零读写通过。修复地面fog二次压暗；同帧GPU身体外变化0、半遮挡泄漏0、全遮挡变化0。类型/数据检查与生产构建通过。",
+    "limitations": "仅显式DEV参数；正式默认人物、完整武器战斗和长期性能未推广。截图为合法支撑位置受控摆拍，不等于自然搜撤或用户审美验收。",
+    "sources": [
+      {
+        "path": "docs/qa/player-a-three-scenes-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/player-a-three-scenes-2026-10-16/capture.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/player-a-three-scenes-2026-10-16/index.html",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/player-a-three-scenes-2026-10-16/fog-proof/fog-isolation.json",
+        "role": "test"
+      }
+    ],
+    "date": "2026-10-16",
+    "revision": "45f6cbee + DEC-218 A three-scene fitting working tree"
   }
 ]
