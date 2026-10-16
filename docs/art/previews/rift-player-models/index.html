@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rift 玩家模型 · 三版实物对比</title>
+  <link rel="stylesheet" href="./review.css">
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">RIFT / CHARACTER STUDY · 2026.10.16</p>
+      <h1>同一个人，三种轮廓</h1>
+      <p class="intro">净化点人物的同源模型。正面、灯侧、背面均由实际游戏相机烘焙；统一体格、比例与照明。</p>
+      <div class="controls" aria-label="模型展示设置">
+        <label>观察 <select id="channel"><option value="review">统一检视照明</option><option value="rgba">仅肩灯对照</option><option value="silhouette">轮廓</option><option value="albedo">底色</option><option value="normal">法线</option></select></label>
+        <label>背景 <select id="backdrop"><option value="dark">深灰</option><option value="light">浅灰</option><option value="check">透明棋盘</option></select></label>
+        <span class="note">主图 4× 整数放大 · 原像素不插值</span>
+      </div>
+    </header>
+
+    <section id="candidates" class="cards" aria-label="三版模型三视图"></section>
+
+    <section class="motion">
+      <div class="section-heading">
+        <div><p class="eyebrow">IN MOTION</p><h2>同一步态，观察轮廓</h2></div>
+        <div class="controls">
+          <button id="play" type="button" aria-pressed="true">暂停行走</button>
+          <label>朝向 <select id="direction"><option value="0">正面</option><option value="1">斜向 1</option><option value="2">无灯侧</option><option value="3">斜向 3</option><option value="4">背面</option><option value="5">斜向 5</option><option value="6">灯侧</option><option value="7">斜向 7</option></select></label>
+          <label>地表 <select id="ground"><option value="plain">中性底</option><option value="ivory">吸光釉原</option><option value="crystal">晶化林床</option></select></label>
+        </div>
+      </div>
+      <div id="motion-cards" class="cards"></div>
+      <p class="note">12 帧真实关节步态，原地展示。地表选项使用现有地图材质样片，只检查轮廓与明暗关系；角色保持统一照明，未模拟正式 Rift 动态受光。</p>
+    </section>
+
+    <section class="reference">
+      <div><p class="eyebrow">IDENTITY / SCALE</p><h2>身份与原尺寸</h2><p>头盔、单条黑面罩、右肩暖灯与靴型来自净化点。<br>下方均为 1× 实际像素，脚底对齐。</p></div>
+      <div id="native-strip" aria-label="原尺寸基准"></div>
+    </section>
+
+    <footer>
+      <p>每帧 64 × 80 · 脚底锚 [32, 66] · 模型高 1.665 m · 相机与净化点一致</p>
+      <p>检视照明来自同一渲染器中的统一环境光，便于看清体积；“仅肩灯对照”保留原始低照度效果。参数随模型清单保存。</p>
+      <p>这些是透明模型贴图及材质图集，尚未替换正式游戏角色。选定后接入武器、受击、遮挡与场景受光。</p>
+      <nav><a href="../../rift-player-three-models.md">设计合同</a><a href="./assets/manifest.json">模型与图集清单</a></nav>
+      <p id="load-status" role="status">正在加载模型…</p>
+    </footer>
+  </main>
+  <script type="module" src="./review.js"></script>
+</body>
+</html>

@@ -192,6 +192,8 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 ## 迭代30 R11：Last Light 正式场景
 
+2026-10-16 Rift 玩家模型三版 DEV 比较：`tools/rift-player-models/model.ts` 复用下述人物几何/步态，在作者阶段派生短摆、长襟、覆肩组合；`export.mjs` 通过同一相机及材质渲染器输出 64×80 透明帧、八朝向的静态/12 帧行走及 G-buffer，独立落在 `docs/art/previews/rift-player-models/assets/`。比较页同时显示原始仅肩灯与公开参数的统一检视照明，不把检视光当正式世界光源。正式 Player、武器 rig、碰撞和两场景渲染接线保持现状；用户选型前不翻生产默认。合同见 `docs/art/rift-player-three-models.md`。
+
 正式 `PurificationScene` 使用 `LastLightVisual`、`LastLightLocomotion`。作者几何仍在Last Light目录与已选`purification-forecourt-options/option-a.ts`；构建期`tools/last-light/export.mjs`导出`public/assets/last-light/`，运行时不导入作者模型或执行离线光线烘焙。逻辑画布960×640、默认镜头1倍。`BootScene`预载，场景preload补齐缓存；现有菜单/出击/归返事务归原场景。
 
 资源包含：无参考人物/肩灯的建筑与外景、固定光源贡献、真实法线/材质/相机深度、核心体积八帧、完整三层外景及四板独立深度、按真实相机/地面投影校准的站立/行走/坐姿图集。人物主层/上层和西坡的屏幕八向合并为14朝向，另保留精确坐姿朝向，共15列；8静息＋12行走＋48收步＋1坐姿组成69行、1035帧，atlas为960×5520。本轮仅重导人物，原静态场景与外景资源保持；三类资源分别记录来源与校验值，不将新人物来源记成整景重烘焙。透明RGB保留加性空气与能量晕光，PNG解码不预乘；不能用Canvas普通alpha覆盖丢掉这部分颜色。外景与haven存在交叉遮挡，不能固定haven最后覆盖，必须按各像素深度排序。

@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director
 created-when: 2026-08-20
-last-modified: 2026-08-28
+last-modified: 2026-10-16
 purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §5.2；改写体格点合同在 rewriter-sprite.md。裂隙甲出击指针在 contamination-forms.md 方案 D（I5-J 生产路径为基因谱模块；画布含 48×64，碰撞仍 20）。
 ---
 
@@ -18,7 +18,9 @@ purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §
 
 ## 接线状态（先看这一段）
 
-**玩家已接出击（DEC-068）。** 裂隙 / 净化点的 `Player` 与练习场玩家课同一套：加厚工业像素 + 灯尘上飘。旧方块人 `player-sprite.ts` 只剩 boot 别名，不要再接到 `Player`。
+**玩家当前分两条呈现路径。** Rift 与练习场玩家课仍用 DEC-068 的 `player-sprite-dense.ts`（32×32）和灯尘；正式净化点已经使用 Last Light 同源立体人物烘焙（64×80、15 朝向、1035 帧），详见 `art-direction.md` 当前 Last Light 节与 `architecture.md`。下文旧密像素配方仅描述 Rift/默认练习场，不能反向覆盖净化点母型。旧方块人 `player-sprite.ts` 只剩 boot 别名，不要再接到 `Player`。
+
+**Rift 重构候选（2026-10-16，COH-F039）**：三套同源模型及三视图在 [独立比较页](previews/rift-player-models/index.html)，形体/材质/脚点合同在 [三版设计](rift-player-three-models.md)。这是可重烘的候选模型、透明贴图与材质图集，正式 Rift 尚未切换；完整武器动作、受击和场景受光在选定后接入。
 
 **裂隙甲生产路径是方案 D 基因谱**（DEC-084 / I3-C / I5-J）。配方在 `docs/art/contamination-forms.md`「方案 D · 甲」与基因谱 HOW：程序像素词法（Canvas 烘焙、四向、不转 `GameObject`），覆盖深度改骨架违规预算，不换孔谱通道。代码：`src/entities/form-renderers/d/genome/`（`attachJiaGenomeD`）。旧 `d/jia-*` 只留给 A/B/C 冻结对照。乙 / 丙 / 丁不走本文。
 

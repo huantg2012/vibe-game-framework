@@ -3,12 +3,13 @@
     "id": "COH-F039",
     "title": "玩家身份、净化点人物与裂隙像素呈现",
     "domain": "presentation",
-    "summary": "当前净化点角色为15朝向1035帧：1.25m距离步态、12行走/48收步/8静息/1坐姿，全身承重、早收膝、髋胸反向及分部动作同源。角色专项已有限验证左右/斜向/归位与根页A短移；94faa33边界修复保持角色资产，仅纠正位移预算与步频。Rift保留原角色，局部改善认可不等于整体自然度验收。 R100-I02 DEV保留原生Rift人物、武器与移动，仅由presentation按实体的solid物理标记设置前景遮罩；relief地表不裁掉演员，GPU材质层仍在原生fog下。 DEC-197大图增加逐行块高度索引，仅加速角色遮挡查询，逐像素和绘制条带保持原结果；生命周期与旧缓存行为已专项核对。",
+    "summary": "当前净化点角色为15朝向1035帧：1.25m距离步态、12行走/48收步/8静息/1坐姿，全身承重、早收膝、髋胸反向及分部动作同源。角色专项已有限验证左右/斜向/归位与根页A短移；94faa33边界修复保持角色资产，仅纠正位移预算与步频。Rift保留原角色，局部改善认可不等于整体自然度验收。 R100-I02 DEV保留原生Rift人物、武器与移动，仅由presentation按实体的solid物理标记设置前景遮罩；relief地表不裁掉演员，GPU材质层仍在原生fog下。 DEC-197大图增加逐行块高度索引，仅加速角色遮挡查询，逐像素和绘制条带保持原结果；生命周期与旧缓存行为已专项核对。 2026-10-16新增独立Rift玩家三版候选：同源净化点模型的短摆/长襟/覆肩构型、九视图与八向行走；含母型416帧和限定浏览器检查通过。仅DEV供选，正式Rift未切换。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "正式净化点：新人物随实际行走与坐下状态呈现；进入 Rift 后沿用原低精度玩家、持具与灯晕。",
-      "DEV：rift-r100-masters.html 使用原生Rift演员同场检查实体遮挡；不替换正式Rift角色资源。"
+      "DEV：rift-r100-masters.html 使用原生Rift演员同场检查实体遮挡；不替换正式Rift角色资源。",
+      "DEV：docs/art/previews/rift-player-models/index.html；三套实际模型的三视、原尺寸、行走和材质背景对照。"
     ],
     "sources": [
       {
@@ -280,12 +281,61 @@
       {
         "path": "tools/spatial-rollout/check-actor-mask-worlds.ts",
         "role": "test"
+      },
+      {
+        "path": "docs/art/rift-player-three-models.md",
+        "role": "art"
+      },
+      {
+        "path": "tools/rift-player-models/model.ts",
+        "role": "art"
+      },
+      {
+        "path": "tools/rift-player-models/export.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/rift-player-models/check.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/previews/rift-player-models/index.html",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/previews/rift-player-models/review.js",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/previews/rift-player-models/review.css",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/previews/rift-player-models/assets/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/previews/rift-player-models/assets/mechanical-check.json",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-rift-player-model-review.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-player-models-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/rift-player-models-2026-10-16/browser-check.json",
+        "role": "test"
       }
     ],
     "dependsOn": [
       "COH-F006",
       "COH-F009",
-      "COH-F022"
+      "COH-F022",
+      "COH-F012"
     ],
     "evidence": [
       "COH-E-SRC-audiovisual",
@@ -304,12 +354,14 @@
       "COH-E127",
       "COH-E188",
       "COH-E190",
-      "COH-E212"
+      "COH-E212",
+      "COH-E259"
     ],
     "unknowns": [
       "本轮全身动作已有新图集、全身/接地/模型同源及实景连续片段证据；正式根页仅新开继续、A短键真实移动与松手站稳；D短按无位移不计验证，完整左右周期只归正式Renderer复现页。不能以数学通过代签自然度，3cd4372好多了的改善评价不升级成整体验收；六站/坐下UI/重入/Rift全链未扩验。",
       "人物阴影由每姿态11个胶囊近似，不等于完整人体三角网格光追；无WebGL2 fallback、Rift全量动作和长期体验仍未覆盖。",
-      "R100-I02演员遮罩仅经限定接入/生命周期代码复核；未据此签九格遮挡、动作辨识或视觉通过，旧净化点人物证据不覆盖该DEV场景。"
+      "R100-I02演员遮罩仅经限定接入/生命周期代码复核；未据此签九格遮挡、动作辨识或视觉通过，旧净化点人物证据不覆盖该DEV场景。",
+      "2026-10-16三版只是可重烘候选模型和有限动画资产，用户未选型；完整武器/战斗/收步、正式Rift同场光照、遮挡与自然游玩未接入。检视光与地表截块不代表正式运行效果。"
     ]
   },
   {

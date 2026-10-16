@@ -1,0 +1,101 @@
+{
+  "status": "mechanical-checks",
+  "validatorHash": "4e487a0290ead5072b5c1207c6e5ec714e2d4c481a0e77eeb74c1d22eedaa379",
+  "scope": "candidate-assets",
+  "frames": 416,
+  "sourceHashes": {
+    "tools/rift-player-models/model.ts": "06db23e2b7aafab494deb69fce83e2a9483d3e7299e6b59daf5201b9848a035c",
+    "tools/rift-player-models/export.mjs": "dbfa8a16bccc6d72519d34a8e528e6f95dc5a3c5eb8501f823fc63ac5056bf5c",
+    "docs/art/demos/purification-last-light/actor.ts": "c8d895f0772a48b9bc751d93813bb8da5450bf127912b46668eb769bb3440842",
+    "docs/art/demos/purification-last-light/model.ts": "edabcec3345472bba38f37cfce3cde2510668496ffc0ee4aecf20ddf0106381a",
+    "docs/art/demos/purification-last-light/render.ts": "f24698f6c46521af58a198075a9aad38c5804cd01e918572fc4b4cd2395df48d",
+    "docs/art/demos/purification-last-light/energy.ts": "34e1a53759dc1e30a816fe4e65337885dde705dcb64b273f9fc670f067d08cf9",
+    "src/art/last-light-gait.ts": "feaa5dce24f0610950f9bd8e9910b6918e04c0af1bd097ddd8c1301485e32509"
+  },
+  "variants": [
+    {
+      "id": "a",
+      "frameCount": 104,
+      "pixelRange": [
+        448,
+        558
+      ],
+      "height": 1.665,
+      "headAndBoots": "identical-to-haven",
+      "lamp": "identical-to-haven"
+    },
+    {
+      "id": "b",
+      "frameCount": 104,
+      "pixelRange": [
+        434,
+        584
+      ],
+      "height": 1.665,
+      "headAndBoots": "identical-to-haven",
+      "lamp": "identical-to-haven"
+    },
+    {
+      "id": "c",
+      "frameCount": 104,
+      "pixelRange": [
+        457,
+        573
+      ],
+      "height": 1.665,
+      "headAndBoots": "identical-to-haven",
+      "lamp": "identical-to-haven"
+    },
+    {
+      "id": "haven",
+      "frameCount": 104,
+      "pixelRange": [
+        448,
+        558
+      ],
+      "height": 1.665,
+      "headAndBoots": "identical-to-haven",
+      "lamp": "identical-to-haven"
+    }
+  ],
+  "silhouettes": [
+    {
+      "pair": [
+        "a",
+        "b"
+      ],
+      "difference": {
+        "front": 0.08103448275862069,
+        "lamp-side": 0.10191082802547771,
+        "back": 0.06486486486486487
+      }
+    },
+    {
+      "pair": [
+        "a",
+        "c"
+      ],
+      "difference": {
+        "front": 0.018214936247723135,
+        "lamp-side": 0.10612244897959183,
+        "back": 0.0659536541889483
+      }
+    },
+    {
+      "pair": [
+        "b",
+        "c"
+      ],
+      "difference": {
+        "front": 0.07465277777777778,
+        "lamp-side": 0.16161616161616163,
+        "back": 0.06118881118881119
+      }
+    }
+  ],
+  "limitations": [
+    "Human selection pending.",
+    "This does not validate battle animation, production weapon rig or gameplay reachability.",
+    "Scene-background contrast is measured by the comparison viewer QA, not this isolated asset check."
+  ]
+}
