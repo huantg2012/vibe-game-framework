@@ -196,7 +196,7 @@ export function bakeMasterSurface(world:MasterSurfaceWorld,ground:MasterGroundSu
 }
 export function bakeMasterWorldSurface(world:MasterWorld,painting?:PaintedMaterial):MasterSurfaceBake {
  const revision=world.algorithmRevision;
- if(revision!==undefined&&revision!==5&&revision!==6&&revision!==7&&revision!==8&&revision!==9&&revision!==10&&revision!==11&&revision!==12)throw new Error('Unknown native surface algorithm revision');
+ if(revision!==undefined&&revision!==5&&revision!==6&&revision!==7&&revision!==8&&revision!==9&&revision!==10&&revision!==11&&revision!==12&&revision!==13)throw new Error('Unknown native surface algorithm revision');
  if(revision!==undefined&&!world.appearance)throw new Error('Explicit native surface revision requires frozen appearance');
  if(!world.appearance)return bakeRevision3Surface(world,painting);
  if(world.algorithmRevision===undefined)return bakeRevision4Surface(world,painting);

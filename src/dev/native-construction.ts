@@ -1,7 +1,9 @@
 /** Fixed CSV references. This diagnostic entry never searches for a
  * production candidate or deploys gameplay content. View changes use caches. */
 import {R100_NATIVE_WORLDS} from '@/generated/r100-native-worlds';
-import {createR100NativeSpatialDevelopmentRecipe} from '@/generation/world-study/r100-package';
+import {NATIVE_CONSTRUCTION_REGISTRATIONS} from '@/generated/r100-native-construction';
+import {constructNativeProductionLayout} from '@/generation/world-study/native-construction-recipe';
+import {createR100NativeSpatialDevelopmentRecipe,createR100DirectConstructionRecipe} from '@/generation/world-study/r100-package';
 import {constructNativeSpatialReference,parseNativeSpatialConstructionReference} from '@/generation/world-study/native-spatial-construction-reference';
 import {parseNativeConstructionShore,measureNativeConstructionBoundary} from '@/generation/world-study/native-spatial-construction-shore';
 import {measureNativeConstructionMacro,parseNativeConstructionMacroPolicy,type NativeConstructionMacroMetrics,type NativeConstructionMacroPolicy} from '@/generation/world-study/native-spatial-construction-macro';
@@ -68,11 +70,15 @@ async function construct(sample:Sample):Promise<SampleResult>{
   const [referenceHash,shoreHash]=await Promise.all([sha(referenceText),sha(shoreText)]);
   const reference=parseNativeSpatialConstructionReference(referenceText,referenceHash),shorePolicy=parseNativeConstructionShore(shoreText,shoreHash);
   if(reference.worldId!==sample.id||reference.seed!==20261012||reference.grade!=='medium'||shorePolicy.referenceId!==reference.id)throw new Error('Sample CSV must preserve its registered world, medium grade and seed 20261012');
-  const recipe=createR100NativeSpatialDevelopmentRecipe(reference.worldId,reference.seed,'medium'),input=recipe.nativeSpatial;if(!input)throw new Error('Missing frozen native intent');
+  const direct=NATIVE_CONSTRUCTION_REGISTRATIONS.some(row=>row.worldId===sample.id);
+  const recipe=direct?createR100DirectConstructionRecipe(reference.worldId,reference.seed,'medium'):createR100NativeSpatialDevelopmentRecipe(reference.worldId,reference.seed,'medium');
+  const input=recipe.nativeSpatial;if(!input)throw new Error('Missing frozen native intent');
+  if(direct&&(recipe.nativeConstruction!.reference.sourceHash!==referenceHash||recipe.nativeConstruction!.shore.sourceHash!==shoreHash))throw new Error('Construction sources changed; run codegen-construction before previewing.');
   const baseCombinedHash=await sha(JSON.stringify({referenceSHA256:referenceHash,shoreSHA256:shoreHash}));
-  const combinedHash=await sha(JSON.stringify({referenceSHA256:referenceHash,shoreSHA256:shoreHash,extensionSHA256:extensionPolicy.policy.sourceHash,extensionModuleSHA256:extensionPolicy.moduleSourceHash}));
+  const combinedHash=direct?recipe.nativeConstruction!.sourceHash:await sha(JSON.stringify({referenceSHA256:referenceHash,shoreSHA256:shoreHash,extensionSHA256:extensionPolicy.policy.sourceHash,extensionModuleSHA256:extensionPolicy.moduleSourceHash}));
   await setPhase('共同构造宽地块、孔洞、实体与参差岸线…');counts.constructions++;
-  const layout=constructNativeSpatialReference(recipe,reference,()=>counts.fragmentCompiles++,{policy:shorePolicy,combinedSourceHash:baseCombinedHash},{...extensionPolicy,combinedSourceHash:combinedHash});
+  const layout=direct?constructNativeProductionLayout(recipe):constructNativeSpatialReference(recipe,reference,()=>counts.fragmentCompiles++,{policy:shorePolicy,combinedSourceHash:baseCombinedHash},{...extensionPolicy,combinedSourceHash:combinedHash});
+  if(direct)counts.fragmentCompiles++;
   const assessment=layout.assessmentInput??{policy:input.policy,world:input.world};
   const assessmentIntent={targetWalkAreaPx2:assessment.world.targetWalkAreaPx2,planningCellFactor:assessment.policy.planningCellFactor,frameWidthPx:assessment.world.frameWidthPx,frameHeightPx:assessment.world.frameHeightPx,requestedCounts:layout.requestedCounts};
   const macro=measureNativeConstructionMacro(layout.definition.terrainOutline!,macroPolicy);
@@ -121,7 +127,7 @@ async function construct(sample:Sample):Promise<SampleResult>{
     silhouetteContext.lineTo(p[reverse?2:4]!,p[reverse?3:5]!);
     silhouetteContext.closePath();
   }silhouetteContext.fill();drawSpawn(silhouetteContext,terrain.spawnPoint.x,terrain.spawnPoint.y);
-  return{id:sample.id,label:recipe.profile.label,seed:reference.seed,counts,material,silhouette,gates,geometryMetrics,macro,extension:layout.constructionExtension,assessmentIntent,errors:diagnosticErrors,sources:{referenceCSV:sample.reference,shoreCSV:sample.shore,referenceSHA256:referenceHash,shoreSHA256:shoreHash,combinedSHA256:combinedHash,macroPolicyCSV:macroPolicyURL,macroPolicySHA256:macroPolicy.sourceHash,extensionCSV:extensionPolicyURL,extensionSHA256:extensionPolicy.policy.sourceHash,extensionModule:extensionModuleURL,extensionModuleSHA256:extensionPolicy.moduleSourceHash}};
+  return{id:sample.id,label:recipe.profile.label,seed:reference.seed,counts,material,silhouette,gates,geometryMetrics,macro,extension:layout.constructionExtension,assessmentIntent,errors:diagnosticErrors,sources:{referenceCSV:sample.reference,shoreCSV:sample.shore,referenceSHA256:referenceHash,shoreSHA256:shoreHash,combinedSHA256:combinedHash,macroPolicyCSV:macroPolicyURL,macroPolicySHA256:macroPolicy.sourceHash,...(direct?{constructionMode:'complete-production-csv'}:{extensionCSV:extensionPolicyURL,extensionSHA256:extensionPolicy.policy.sourceHash,extensionModule:extensionModuleURL,extensionModuleSHA256:extensionPolicy.moduleSourceHash})}};
 }
 
 function fit():void{
@@ -146,7 +152,7 @@ async function select(sample:Sample):Promise<void>{
     const result=await pending;results.set(sample.id,result);errors=[...result.errors];ready=true;phase='ready';
     element('identity').textContent=`${sample.id} · 中污染 · 种子 ${result.seed} · ${result.material.width} × ${result.material.height}`;
     const geometry=result.gates.geometry as {accepted:boolean;reasons:readonly string[]}|undefined,visibility=result.gates.visibility as {accepted:boolean;reasons:readonly string[]}|undefined;
-    element('summary').textContent=`次级地块：${result.extension?.additions.length??0} 处；G1/G3：${geometry?(geometry.accepted?'通过':geometry.reasons.join(' / ')):'未完成'}；G2：${visibility?(visibility.accepted?'通过':visibility.reasons.join(' / ')):'未完成'}。完整内容未运行。`;
+    element('summary').textContent=`${result.sources.constructionMode==='complete-production-csv'?'完整初始构型':`次级地块：${result.extension?.additions.length??0} 处`}；G1/G3：${geometry?(geometry.accepted?'通过':geometry.reasons.join(' / ')):'未完成'}；G2：${visibility?(visibility.accepted?'通过':visibility.reasons.join(' / ')):'未完成'}。完整内容未运行。`;
     const sources=element('sources');sources.replaceChildren();for(const [name,url]of [['参考 CSV',sample.reference],['岸线 CSV',sample.shore],['共享扩展 CSV',extensionPolicyURL]]){const link=document.createElement('a');link.textContent=name!;link.href=url!;link.target='_blank';link.rel='noopener';sources.append(link);}
     const url=new URL(location.href);url.searchParams.set('sample',sample.id);history.replaceState(null,'',url);draw();
   }catch(error){phase='failed';errors.push(error instanceof Error?error.message:String(error));element('summary').textContent='此样本未显示；错误已保留，不自动重试或替换地图。';}

@@ -3,7 +3,7 @@ status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
 last-modified-by: code（两世界本土材料显式DEV试点）
-last-modified-date: 2026-10-15
+last-modified-date: 2026-10-16
 interface-changed: true
 interfaces-with:
   - system-enemy-ai                 # 一份五态仍由本接口的消费方拥有；句法只决定孔谱与填词，禁止第二份 FSM。出击甲 spawn 带 form
@@ -44,11 +44,17 @@ note: |
 
 # 系统设计：污染句法
 
-## 两世界材料身份试点合同（2026-10-15）
+## 两世界材料与实际投放合同（2026-10-16）
 
-仅 `enemy-world-pilot.html` 显式向共享 baker／`FormAttachContext.worldAdaptation` 传入 `EnemyWorldAdaptation`，当前试点为晶化林床与破膜盆地，各一只 `human_remnant` 与一处 `fungal_mat`。`resolveEnemyWorldAdaptation(worldId)` 消费 CSV 编译的材料家族规则和既有世界外观，返回带源版本键的确定性配方；未知／不支持的世界返回 `undefined`。世界、基体与个体种子共同决定外观，材料响应读取既有动作相，不新增行为、感知、伤害或碰撞规则。
+用户认可晶化林床与破膜盆地的类人／占漆试点，授权接入正式游戏。适配范围仅 `human_remnant` 与 `fungal_mat`；世界材料由 CSV 家族语法及世界原色构成，与个体种子、已有动作共同决定组织和动态。其余世界保持原投放和表现。
 
-类人请求／动画缓存携带可选身份键；占漆材质绘制消费同一可选配方及有界周期。缺省分支保持旧绘制输出，原占漆拓扑／支撑／危险格不因材质扩展改变。此能力未写入生产生成配方或存档，不能据同族解析数量宣称全库接入。试点只作共享 baker 的去雾受控动态展示，可选 `worldLighting` 只消费同场受控固定灯样本，不声明正式 runtime 完整 LOS 接入；没有真实 AI、Host 攻击判定、探索或存档；正式部署、正常视野辨识和战斗体验仍待另行验证。绑定 COH-F015／F016／F017，开发入口关联 F052。
+两世界三档的实际投放来自 `data/rift-native-enemy-deployment.csv`：占地的 infiltrator／rewriter 职责保留，真实基体改为 `human_remnant`；占漆改为 `fungal_mat` 的合法 colony／cluster 形式。各档实体与 Host 数量不变。使用这两类已有的身体、攻击、感官和活动参数：类人的速度／攻击时序与原有机残影不同，菌毯有群落活动和可攻击核，不能声称原有机残影／油膜的全部行为数值未改。没有新增一套独立行为参数覆盖系统。
+
+新局冻结完整 `enemyDeployment`、`EnemyWorldAdaptation` 与 `enemyMaterialVersion=1`。真实类型在部署前确定：占地按对应身体计算巡逻路径；占漆先按真实形体烘焙，再测量完整支撑、危险格和核额度，禁止先投油膜再仅换显示模型。恢复直接消费保存值，不重新读取当前投放表、色板或材料表。无新字段的旧局继续使用原冻结生成及原绘制。
+
+渲染接线读取该关活动肩灯、材料发光与 Host 局部光，保留地表相同的高度受光遮挡及 VOID 光路规则。受光不赋予可见性：真实 FOV 决定 alpha，部分可见占漆按可见像素裁切。渲染不改部署所得的权威危险格、支撑与活动／压制相位；缓存含冻结配方键，动态光不累积修改原始材质。
+
+DEV 两关巡演是共享 baker 的视觉回归，不等同正式 AI、Host 战斗或自然搜撤。生产准入由 r13 注册控制；材料家族能解析更多世界也不代表已经推广。绑定 COH-F015／F016／F017，开发入口关联 F052。
 
 ## 迭代20：环境工具目标合同
 

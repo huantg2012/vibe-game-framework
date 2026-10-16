@@ -10212,5 +10212,390 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E250",
+    "kind": "source",
+    "result": "pass",
+    "date": "2026-10-16",
+    "revision": "56ab1ece7e4716da7fbccedd9eded31e6030fa27 + DEC-216 r13 integration working tree (2026-10-16; final browser closure pending)",
+    "scope": "静态源核对：四认可图注册均enabled=true，r13完整作者/岸线/意图、medium物理源、认证内容seed和两world真实enemyDeployment/材料均进入正式recipe、生成身份与恢复校验。其他104图及r12无新增投放覆盖。",
+    "limitations": "本轮四认可图已接线启用，不代表108图推广。最终browser需覆盖认证bank与真实enemyDeployment落地后的源；先前余烬/晶纤入场冷续不能证明当时未投放的human/fungal生效。自然未知搜撤、长期经营、任意seed/设备性能和用户终验仍未据此通过。",
+    "sources": [
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      },
+      {
+        "path": "data/rift-native-construction-production.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-native-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-runtime.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-adaptation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/model-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/form-renderer.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/material-lighting.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-native-enemy-deployment.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-expedition.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-native-construction-content-seeds.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/native-spatial/certify-construction-content.mjs",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E251",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-16",
+    "revision": "56ab1ece7e4716da7fbccedd9eded31e6030fa27 + DEC-216 integration working tree (2026-10-16; final sources still changing)",
+    "scope": "余烬脊medium一例正式浏览器：预选请求seed92仍经普通选池，实际两阶段备行出发与重载控件，6.877秒入场；Rift当前身份及冷续相等，pageerror为空。原两次browser尝试失败保留，成功范围为rerun02。",
+    "limitations": "备行由场景方法打开、seed为预选覆盖，不是自然入口步行/自然未知搜撤或经营样本；不覆盖其他三图、两世界材料战斗、全档全seed、性能预算或新物理冻结合同的后续变动。",
+    "sources": [
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/cinder-browser-rerun02/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/cinder-browser/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/cinder-browser-rerun01/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-r100-production-browser.mjs",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E252",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-10-16",
+    "revision": "56ab1ece7e4716da7fbccedd9eded31e6030fa27 + DEC-216 integration working tree (2026-10-16; final sources still changing)",
+    "scope": "旧r11公开恢复3/3：独立历史Git oracle对完整地图、全部支撑格/边界、地表四通道、翻找前后与完整patch逐项比对，保留gel-rafts原重试seed和attempt。",
+    "limitations": "只覆盖报告中三份历史r11身份，不代表全部历史版本、跨引擎、当前四图r13、正式浏览器或自然搜撤通过。",
+    "sources": [
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/recovery/r11-public.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision11-freezing.mjs",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E253",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-16",
+    "revision": "56ab1ece7e4716da7fbccedd9eded31e6030fa27 + DEC-216 integration working tree (2026-10-16; final sources still changing)",
+    "scope": "真实scheme-D受控挂载2类人、4占漆（geometry v1/v2）；冻结材料、活动受光、部分FOV、危险接触格、inactive Host、纹理释放和旧默认分支有断言。局部光穿VOID修为同地表8px光路及斜角阻断，肩灯slot0例外，相关方向/动态灯位/缓存反例通过。",
+    "limitations": "这是受控挂载和光路专项，尚不代替两目标世界的正式AI/Host战斗、正常动态肩灯完整旅程、冷续、性能或用户最终体验验收。",
+    "sources": [
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-runtime.ts",
+        "role": "test"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-runtime.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/material-lighting.ts",
+        "role": "code"
+      }
+    ]
+  },
+  {
+    "id": "COH-E254",
+    "kind": "automated",
+    "result": "pass",
+    "scope": "四图三档完整生成与JSON冷恢复12/12通过；24条完整内容/G4认证覆盖四图三档，每档2个不同seed和不同撤离位置。破膜medium请求seed82、釉原low请求seed42最终完整生成/冷恢复复验通过；312份其余104世界三档配方与独立封存r11身份一致。认证身份变更拒绝、清空当前construction/spatial/enemy目录后的12份保存合同验证通过。最终持久回执已归档；浏览器结果单列E255。 最终构建及材料/真实投放/构型CSV生成一致性检查通过。",
+    "limitations": "范围为四张认可medium物理几何、有限内容种子和归档环境；不代表任意seed、任意设备性能或自然未知探索。前7内容尝试与第8认证槽仍共用60秒硬截止。认证工具的中间产物不是可恢复正式配方，完整生成/冷恢复由最终回执另验；较早production/summary.json不替代最终bank/敌人合同证据。 Vite大chunk警告保留，项目无lint脚本；构建成功不代表帧性能通过。",
+    "sources": [
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/certified-content-bank.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/certified-bank-review.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/enemy-deployment-six-cases.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/rupture-seed82-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/ivory-seed42-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/cinder-ridge-low-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/cinder-ridge-medium-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/cinder-ridge-severe-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/ivory-basin-low-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/ivory-basin-medium-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/ivory-basin-severe-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-content-seeds.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/native-spatial/certify-construction-content.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-direct-construction.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/final-checks.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/build.log",
+        "role": "doc"
+      }
+    ],
+    "date": "2026-10-16",
+    "revision": "56ab1ece7e4716da7fbccedd9eded31e6030fa27 + DEC-216 final r13 functional integration working tree (2026-10-16; performance and user acceptance open)"
+  },
+  {
+    "id": "COH-E255",
+    "kind": "runtime",
+    "result": "pass",
+    "scope": "最终源四图中污染正式新出发与冷续功能4/4通过：晶纤请求156、破膜82（认证末槽有效2957726398）、釉原274、余烬92。真实按键移动、保存身份、玩家全身位置及世界历史精确恢复；两试点各真实投放3类人/4菌毯，观察到可见形体、共享活动灯桥、跟随肩灯、FOV/VOID裁切，冷续保留ID/个体seed/冻结profile。428个共同served URL哈希一致，四例无HMR、page error或console warning/error。此pass仅指功能接入。",
+    "limitations": "仅4个中档受控入口用例，三档机器生成另见E254/E256；游玩前预选seed，备行通过场景方法打开，其后使用真实控件/输入，无位置、形体、灯、FOV、生命或时钟注入。不是自然净化点实走或整趟未知搜撤。破膜类人仅FOV边缘alpha0.2、菌毯约205像素可见，不称强主灯正面近景。入场分别13.727/21.126/7.636/9.115秒；入场/续玩长任务50–404ms，50ms预算未通过。旧失败与旧通过回执保留，不提升性能、战斗平衡、I14/P49或用户体验终验。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/final-browser-summary/summary.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/final-browser-summary/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/final-browser-crystal/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/final-browser-rupture-82/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/final-browser-ivory/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/final-browser-cinder/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-r100-production-browser.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/cinder-browser-final-contract/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/crystal-browser/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/rupture-browser/report.json",
+        "role": "doc"
+      }
+    ],
+    "date": "2026-10-16",
+    "revision": "56ab1ece7e4716da7fbccedd9eded31e6030fa27 + DEC-216 final r13 functional integration working tree (2026-10-16; performance and user acceptance open)"
+  },
+  {
+    "id": "COH-E256",
+    "kind": "automated",
+    "result": "pass",
+    "scope": "真实两world×三档投放与完整冷恢复6/6通过且执行前后源稳定：human AI为2/3/4、fungal Host为2/4/6，实际20px支撑巡路、真实bake支撑/危险格并集与无交叠、每Host2核，以及清空当前enemy目录后的完整地图JSON重放均有断言。旧占漆回归90例/324帧、48帧局部FOV和7个v1旧Host表现通过，原危险格与legacy字节保持。最终持久回执已归档；正式浏览器覆盖单列E255。 受控2类人/4占漆实际渲染挂载、活动灯/VOID/FOV与有界纹理生命周期检查通过。",
+    "limitations": "首轮仅checker把零位移误当可移动段而失败，修正checker后的原成功回执已归档，未据此修改游戏规则。机器证据不替代动态AI/Host战斗、自然未知探索及用户终验；人形/菌毯采用既有类型参数，存在已明确的速度/攻击/cluster/colony差异，不能称所有战斗数值未改。",
+    "sources": [
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/paint-regression.log",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/enemy-deployment-six-cases.json",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-native-enemy-deployment.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-expedition.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/production/material-receivers.json",
+        "role": "doc"
+      }
+    ],
+    "date": "2026-10-16",
+    "revision": "56ab1ece7e4716da7fbccedd9eded31e6030fa27 + DEC-216 final r13 functional integration working tree (2026-10-16; performance and user acceptance open)"
   }
 ]

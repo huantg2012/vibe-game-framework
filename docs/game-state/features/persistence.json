@@ -3,7 +3,7 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "新出发冻结r11 policy、同族profiles、fragment与来源hash，恢复不读取今日CSV。旧r10从99998703封存完整执行器；12份公开路由map恢复（6份另核两态四RGBA）及20份r11保存配方精确重放通过。跨引擎、全部历史身份与自然冷续仍不作保证。 DEC-209批准r12实施；已有原生候选与准入实现，当前仍有空白失败，新全图/潜行尚未通过，历史证据不外推。",
+    "summary": "r13冻结完整作者CSV、岸线、意图、认可medium母体、认证内容bank及两world真实敌人forms/材料；恢复消费保存合同。旧r11公开恢复3/3通过，新四图三档完整冷重放与两world六档投放冷恢复通过；四图中档正式冷续保持身份、全身位置和世界历史。50ms性能预算未过。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -626,6 +626,86 @@
       {
         "path": "docs/reviews/artifacts/native-generation-2026-10-13/baseline-counts.mjs",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-production.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-native-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-validation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/recovery/r11-public.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-runtime-integration-2026-10-16/cinder-browser-rerun02/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision11-freezing.mjs",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-native-construction-content-seeds.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/native-spatial/certify-construction-content.mjs",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-native-enemy-deployment.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-expedition.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-deployment.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -668,7 +748,13 @@
       "COH-E239",
       "COH-E240",
       "COH-E241",
-      "COH-E242"
+      "COH-E242",
+      "COH-E250",
+      "COH-E251",
+      "COH-E252",
+      "COH-E254",
+      "COH-E256",
+      "COH-E255"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。",
@@ -683,7 +769,8 @@
       "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
       "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。",
       "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。",
-      "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。"
+      "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。",
+      "E252仍只覆盖三份历史r11身份；本轮新敌人/认证bank冷恢复机器结果不能替代最终正式浏览器、全历史版本或任意seed体验。"
     ]
   },
   {

@@ -222,7 +222,7 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
       type: hearing ? 'rewriter' : 'infiltrator', spawn: { col: seat.cell % grid.cols, row: Math.floor(seat.cell / grid.cols) },
       facing: Math.round(Math.atan2(target.position.y - seat.position.y, target.position.x - seat.position.x) * 180 / Math.PI * 1e6) / 1e6,
       patrol: { mode: waypoints.length > 1 ? 'pingpong' : 'static', waypoints },
-      form: hearing ? REWRITER_FORM : INFILTRATOR_FORM });
+      form: hearing ? world.enemyDeployment?.rewriter ?? REWRITER_FORM : world.enemyDeployment?.infiltrator ?? INFILTRATOR_FORM });
   }
   // A deep label must correspond to real distance AND existing hostile coverage.
   for (const item of chosen.filter(item => item.tier === 'deep')) {

@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "date": "2026-10-16",
+  "scope": "final production sources; browser tests recorded separately",
+  "checks": [
+    {
+      "command": "npm run build",
+      "result": "passed; Vite large chunk warning retained"
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/enemy-world-pilot/check-runtime.ts",
+      "result": "passed; 2 human / 4 paint variants, live light / VOID / FOV / lifecycle"
+    },
+    {
+      "command": "node tools/enemy-world-pilot/codegen.mjs --check",
+      "result": "passed"
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/enemy-world-pilot/codegen-deployment.mjs --check",
+      "result": "passed; 6 contracts / 18 forms"
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/native-spatial/codegen-construction.mjs --check",
+      "result": "passed; four registered worlds"
+    }
+  ],
+  "limitations": [
+    "No lint script in package.json.",
+    "Build success does not certify steady-frame performance or player aesthetic acceptance."
+  ]
+}

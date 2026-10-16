@@ -1,0 +1,305 @@
+{
+  "date": "2026-10-16",
+  "status": "functional-pass-performance-budget-not-passed",
+  "method": "Four serial, isolated Chrome contexts. Actual new-game menu, two preparation steps, departure, real arrow keys, stationary checkpoint, browser reload and Continue. A single predeparture seed selects an enabled world through the ordinary formal pool. No form injection, teleport, FOV, health, map, loot or clock setters. Preparation opens through its ordinary scene method; this is integration coverage, not haven navigation or a complete expedition playtest.",
+  "sourceStable": {
+    "allSharedServedHashesMatch": true,
+    "sharedAcrossAllCases": 428,
+    "totalUniqueServedUrls": 436,
+    "changed": [],
+    "hmrEvents": 0
+  },
+  "harnessSha256": "4c035e3440423a5b54f2efb30398c31f72b2d895669a5bc801ecf4bcd9699558",
+  "cases": [
+    {
+      "world": "crystal-fibre",
+      "grade": "medium",
+      "status": "passed",
+      "requestedSeed": 156,
+      "effectiveSeed": 156,
+      "entryMs": 13727,
+      "coldIdentityPreserved": true,
+      "coldPlayerBodyPositionPreserved": true,
+      "worldHistoryPreserved": true,
+      "sourceGrade": "medium",
+      "materialPresent": true,
+      "deploymentPresent": true,
+      "realMovement": {
+        "before": {
+          "x": 1132,
+          "y": 1324
+        },
+        "inputs": [
+          {
+            "key": "ArrowRight",
+            "heldMs": 180,
+            "point": {
+              "x": 1150.0880999999993,
+              "y": 1324
+            }
+          }
+        ],
+        "method": "Real arrow keys only; no position, clock or lamp setter"
+      },
+      "materialCoverage": {
+        "worldId": "crystal-fibre",
+        "completedDepartures": 1,
+        "substrates": [
+          {
+            "substrate": "human_remnant",
+            "generated": 3,
+            "visibleSamples": 5,
+            "status": "attached-and-visible"
+          },
+          {
+            "substrate": "fungal_mat",
+            "generated": 4,
+            "visibleSamples": 5,
+            "status": "attached-and-visible"
+          }
+        ]
+      },
+      "approach": [
+        {
+          "substrate": "human_remnant",
+          "status": "visible",
+          "realKeyPresses": 19
+        },
+        {
+          "substrate": "fungal_mat",
+          "status": "visible",
+          "realKeyPresses": 0
+        }
+      ],
+      "consoleWarningsOrErrors": [],
+      "pageErrors": [],
+      "hmr": [],
+      "entryLongTasksMs": [
+        163,
+        84
+      ],
+      "coldLongTasksMs": [
+        123,
+        97,
+        55
+      ],
+      "longTaskRangeMs": [
+        55,
+        163
+      ],
+      "performanceBudget50msPassed": false,
+      "report": "../final-browser-crystal/report.json"
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "medium",
+      "status": "passed",
+      "requestedSeed": 82,
+      "effectiveSeed": 2957726398,
+      "entryMs": 21126,
+      "coldIdentityPreserved": true,
+      "coldPlayerBodyPositionPreserved": true,
+      "worldHistoryPreserved": true,
+      "sourceGrade": "medium",
+      "materialPresent": true,
+      "deploymentPresent": true,
+      "realMovement": {
+        "before": {
+          "x": 292,
+          "y": 1028
+        },
+        "inputs": [
+          {
+            "key": "ArrowRight",
+            "heldMs": 180,
+            "point": {
+              "x": 298.9095550557998,
+              "y": 1032.2060080515905
+            }
+          }
+        ],
+        "method": "Real arrow keys only; no position, clock or lamp setter"
+      },
+      "materialCoverage": {
+        "worldId": "ruptured-film",
+        "completedDepartures": 1,
+        "substrates": [
+          {
+            "substrate": "human_remnant",
+            "generated": 3,
+            "visibleSamples": 3,
+            "status": "attached-and-visible"
+          },
+          {
+            "substrate": "fungal_mat",
+            "generated": 4,
+            "visibleSamples": 3,
+            "status": "attached-and-visible"
+          }
+        ]
+      },
+      "approach": [
+        {
+          "substrate": "human_remnant",
+          "status": "visible",
+          "realKeyPresses": 79
+        },
+        {
+          "substrate": "fungal_mat",
+          "status": "visible",
+          "realKeyPresses": 61
+        }
+      ],
+      "consoleWarningsOrErrors": [],
+      "pageErrors": [],
+      "hmr": [],
+      "entryLongTasksMs": [
+        128,
+        69
+      ],
+      "coldLongTasksMs": [
+        85
+      ],
+      "longTaskRangeMs": [
+        69,
+        128
+      ],
+      "performanceBudget50msPassed": false,
+      "report": "../final-browser-rupture-82/report.json"
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "medium",
+      "status": "passed",
+      "requestedSeed": 274,
+      "effectiveSeed": 274,
+      "entryMs": 7636,
+      "coldIdentityPreserved": true,
+      "coldPlayerBodyPositionPreserved": true,
+      "worldHistoryPreserved": true,
+      "sourceGrade": "medium",
+      "materialPresent": false,
+      "deploymentPresent": false,
+      "realMovement": {
+        "before": {
+          "x": 932,
+          "y": 492
+        },
+        "inputs": [
+          {
+            "key": "ArrowRight",
+            "heldMs": 180,
+            "point": {
+              "x": 947.4436000000002,
+              "y": 492
+            }
+          }
+        ],
+        "method": "Real arrow keys only; no position, clock or lamp setter"
+      },
+      "materialCoverage": null,
+      "approach": null,
+      "consoleWarningsOrErrors": [],
+      "pageErrors": [],
+      "hmr": [],
+      "entryLongTasksMs": [
+        67
+      ],
+      "coldLongTasksMs": [
+        73
+      ],
+      "longTaskRangeMs": [
+        67,
+        73
+      ],
+      "performanceBudget50msPassed": false,
+      "report": "../final-browser-ivory/report.json"
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "status": "passed",
+      "requestedSeed": 92,
+      "effectiveSeed": 2546585388,
+      "entryMs": 9115,
+      "coldIdentityPreserved": true,
+      "coldPlayerBodyPositionPreserved": true,
+      "worldHistoryPreserved": true,
+      "sourceGrade": "medium",
+      "materialPresent": false,
+      "deploymentPresent": false,
+      "realMovement": {
+        "before": {
+          "x": 300,
+          "y": 988
+        },
+        "inputs": [
+          {
+            "key": "ArrowRight",
+            "heldMs": 180,
+            "point": {
+              "x": 315.4456333333332,
+              "y": 988
+            }
+          }
+        ],
+        "method": "Real arrow keys only; no position, clock or lamp setter"
+      },
+      "materialCoverage": null,
+      "approach": null,
+      "consoleWarningsOrErrors": [],
+      "pageErrors": [],
+      "hmr": [],
+      "entryLongTasksMs": [
+        70,
+        53
+      ],
+      "coldLongTasksMs": [
+        81,
+        53,
+        78,
+        53,
+        94,
+        404,
+        97,
+        91,
+        111,
+        398,
+        109,
+        61,
+        88,
+        50
+      ],
+      "longTaskRangeMs": [
+        50,
+        404
+      ],
+      "performanceBudget50msPassed": false,
+      "report": "../final-browser-cinder/report.json"
+    }
+  ],
+  "limitations": [
+    "Only medium is browser-tested here; all-grade generation/replay evidence is separate.",
+    "Crystal has clear visible human/fungal frames. Rupture human observation is peripheral official FOV alpha 0.2, with approximately 205 fungal pixels; do not claim a close frontal shoulder-light visual review.",
+    "Performance is not accepted: observed entry/cold long tasks span 50–404ms. No performance thresholds were relaxed.",
+    "This source was frozen by the coordinating agents for all four runs; matching served hashes corroborate stability."
+  ],
+  "screenshots": [
+    "../final-browser-crystal/crystal-fibre-medium-entry.png",
+    "../final-browser-crystal/crystal-fibre-medium-fungal_mat-visible.png",
+    "../final-browser-crystal/crystal-fibre-medium-human_remnant-visible.png",
+    "../final-browser-crystal/crystal-fibre-medium-prepare.png",
+    "../final-browser-crystal/crystal-fibre-medium-restored.png",
+    "../final-browser-rupture-82/ruptured-film-medium-entry.png",
+    "../final-browser-rupture-82/ruptured-film-medium-fungal_mat-visible.png",
+    "../final-browser-rupture-82/ruptured-film-medium-human_remnant-visible.png",
+    "../final-browser-rupture-82/ruptured-film-medium-prepare.png",
+    "../final-browser-rupture-82/ruptured-film-medium-restored.png",
+    "../final-browser-ivory/ivory-basin-medium-entry.png",
+    "../final-browser-ivory/ivory-basin-medium-prepare.png",
+    "../final-browser-ivory/ivory-basin-medium-restored.png",
+    "../final-browser-cinder/cinder-ridge-medium-entry.png",
+    "../final-browser-cinder/cinder-ridge-medium-prepare.png",
+    "../final-browser-cinder/cinder-ridge-medium-restored.png"
+  ]
+}

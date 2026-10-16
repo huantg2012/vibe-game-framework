@@ -3,11 +3,11 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "DEC-215当前重点为余烬脊/晶化林床/破膜盆地/吸光釉原四种配色材质，保留原主体并应用共享构型；扩展2/2/1/1处，外岸/支撑/孔身份/全身体可达通过。G1/G3及两图G2仍未过，无完整内容部署。原三图保留回归，普通全108仍r11，I14/P49开放。",
+    "summary": "DEC-216仅接余烬脊、晶化林床、破膜盆地、吸光釉原四张已认可样本，四图现均启用r13。认可medium完整物理母体和20261012几何跨三污染级冻结，内容/污染/氛围按实际grade。前7次内容尝试保留请求seed及派生seed，第8槽使用同档已认证内容seed；24条认证记录随配方冻结。四图三档完整生成/冷回放12/12、24条内容认证与四图中档正式入场/冷续功能4/4通过，持久回执已归档；50ms性能预算未通过。其余104图保留r11，I14/P49及用户最终体验不提升。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 裂隙备行 → 等级内随机世界；普通create/select的全部108世界均r11",
+      "净化点 → 两阶段裂隙备行 → 普通随机池；四张认可图已启用r13，其余104图保留r11",
       "标题继续 → 原存档的v1/v2/v3执行器和冻结数据",
       "DEV rift-spatial-prototype.html → 余烬脊去雾地形、路线地点与实体占地",
       "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。",
@@ -15,7 +15,8 @@
       "DEC-212：DEV native-construction.html?sample=split-rib-causeway（另有gel-rafts/ash-strata），三图固定medium/20261012；真实材质与同构型剪影切换，仅几何打磨入口，无内容/撤离/存档。",
       "DEC-213：native-construction.html保持同3样本/medium/20261012；宏观骨架已重排，新增外环诊断，前后图册 docs/qa/artifacts/native-three-macro-2026-10-15/browser/index.html。",
       "DEC-214：同一native-construction三样本入口应用共享中尺度扩展；当前前后同尺度图册 docs/qa/artifacts/native-three-extensions-2026-10-15/browser/index.html，三图未完整准入。",
-      "DEC-215：native-construction.html?sample=cinder-ridge进入当前四材质打磨组；另有crystal-fibre/ruptured-film/ivory-basin。图册 docs/qa/artifacts/native-diverse-samples-2026-10-15/browser/index.html。"
+      "DEC-215：native-construction.html?sample=cinder-ridge进入当前四材质打磨组；另有crystal-fibre/ruptured-film/ivory-basin。图册 docs/qa/artifacts/native-diverse-samples-2026-10-15/browser/index.html。",
+      "DEC-216：data/rift-native-construction-production.csv显式登记四图r13资格；完整作者CSV/岸线/意图冻结进新出发recipe，正常Rift与恢复共用直接构造链。"
     ],
     "sources": [
       {
@@ -1692,6 +1693,54 @@
       {
         "path": "data/rift-native-construction-ivory-basin-shore.csv",
         "role": "data"
+      },
+      {
+        "path": "data/rift-native-construction-production.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-native-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-content-seeds.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/native-spatial/certify-construction-content.mjs",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-native-enemy-deployment.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-deployment.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -1772,7 +1821,11 @@
       "COH-E245",
       "COH-E246",
       "COH-E247",
-      "COH-E248"
+      "COH-E248",
+      "COH-E250",
+      "COH-E251",
+      "COH-E254",
+      "COH-E255"
     ],
     "unknowns": [
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
@@ -1793,14 +1846,15 @@
       "E245仅覆盖三张固定DEV样本的构造、真实材质及浏览器切换；三图仍有G1空白/G3宽域失败，无彩层原另有面积下界缺口。完整内容、未知出口、正常视距潜行、保存恢复、随机变化和全库品质未完成，人审未签。",
       "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。",
       "E247仅覆盖固定三图共享扩展与最终浏览器复看：新增宽臂1/2/1，孔对重复；凝胶441.58px/折板463.56px长直岸失败，凝胶新增宽域面积失败、折板新增面积失败，双脊G2仍失败。最终G2仅保留结果/原因，coverage标量未留存，不沿用round2数字。没有完整部署、自然探索、动态潜行或人审通过。",
-      "E248只验证新四张固定medium/20261012 DEV样本及图册。四材质视觉差异已实际复看，机器检查不代签审美；各图G1/G3及余烬/破膜G2仍拒绝，未证明自然探索、动态潜行、随机种子或全库准入。18次浏览器样本构造包含失败/修正轮次，不以最终每图1次当作总数。"
+      "E248只验证新四张固定medium/20261012 DEV样本及图册。四材质视觉差异已实际复看，机器检查不代签审美；各图G1/G3及余烬/破膜G2仍拒绝，未证明自然探索、动态潜行、随机种子或全库准入。18次浏览器样本构造包含失败/修正轮次，不以最终每图1次当作总数。",
+      "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。"
     ]
   },
   {
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "DEC-215重点四世界保留原锈红颗粒/钴蓝金脉/酒红膜/灰紫暖白壳与完整主体，真实材质和新构型同源，新增几何不靠后期换色。四图支撑通过，画册可复看；正常运行美术和潜行仍未验。正式同场受光/VOID/FOV及翻后散迹保持。",
+    "summary": "四认可构型保留完整medium母体及原世界材料，三污染档保持各自气氛；r13地表与冻结几何同源。两world真实human/fungal与材料桥已接线，VOID受光修复和受控挂载有证据；最终正式动态场景仍待收口。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -2507,6 +2561,114 @@
       {
         "path": "src/generated/r100-native-spatial.ts",
         "role": "code"
+      },
+      {
+        "path": "data/rift-native-construction-production.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-native-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-validation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-runtime.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-adaptation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/model-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/form-renderer.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/material-lighting.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/enemy-world-materials.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/enemy-world-materials.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-runtime.ts",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-native-enemy-deployment.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-expedition.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-deployment.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -2571,7 +2733,10 @@
       "COH-E245",
       "COH-E246",
       "COH-E247",
-      "COH-E248"
+      "COH-E248",
+      "COH-E250",
+      "COH-E251",
+      "COH-E255"
     ],
     "unknowns": [
       "旧v1/v2及v3修订1/2/3按各自封存身份恢复；历史修订4/7及当前修订8仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
@@ -2589,14 +2754,15 @@
       "E245仅覆盖三张固定DEV样本的构造、真实材质及浏览器切换；三图仍有G1空白/G3宽域失败，无彩层原另有面积下界缺口。完整内容、未知出口、正常视距潜行、保存恢复、随机变化和全库品质未完成，人审未签。",
       "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。",
       "E247仅覆盖固定三图共享扩展与最终浏览器复看：新增宽臂1/2/1，孔对重复；凝胶441.58px/折板463.56px长直岸失败，凝胶新增宽域面积失败、折板新增面积失败，双脊G2仍失败。最终G2仅保留结果/原因，coverage标量未留存，不沿用round2数字。没有完整部署、自然探索、动态潜行或人审通过。",
-      "E248只验证新四张固定medium/20261012 DEV样本及图册。四材质视觉差异已实际复看，机器检查不代签审美；各图G1/G3及余烬/破膜G2仍拒绝，未证明自然探索、动态潜行、随机种子或全库准入。18次浏览器样本构造包含失败/修正轮次，不以最终每图1次当作总数。"
+      "E248只验证新四张固定medium/20261012 DEV样本及图册。四材质视觉差异已实际复看，机器检查不代签审美；各图G1/G3及余烬/破膜G2仍拒绝，未证明自然探索、动态潜行、随机种子或全库准入。18次浏览器样本构造包含失败/修正轮次，不以最终每图1次当作总数。",
+      "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。"
     ]
   },
   {
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "普通出发全108世界使用r11，保留未知出撤、完整资源/敌人/Host、风险层与巡逻窗口；双脊渡口单中档完整生成2.434秒取得限定证据。DEV参考的最终12H/6S、全身体可达及G2通过仍被G1/G3拒绝，Master/full均0，尚无本参考完整内容或G4证据；历史完整图结果不外推。",
+    "summary": "四图r13通过真实几何门后部署完整出撤、资源、AI和Host；前7内容尝试保持请求seed分支，第8槽由冻结认证bank选择。两world真实human/fungal在部署前生效，数量/支撑/核与完整路线照常准入；机器生成/冷回放和四图中档正式入场/冷续功能均已有最终回执；50ms性能预算未过。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -3058,6 +3224,78 @@
       {
         "path": "docs/qa/native-construction-2026-10-14.md",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-production.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-native-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-validation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-native-enemy-deployment.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-native-construction-content-seeds.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/native-spatial/certify-construction-content.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -3118,7 +3356,12 @@
       "COH-E240",
       "COH-E241",
       "COH-E242",
-      "COH-E244"
+      "COH-E244",
+      "COH-E250",
+      "COH-E251",
+      "COH-E254",
+      "COH-E256",
+      "COH-E255"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
@@ -3138,14 +3381,15 @@
       "E240为r11共享策略有限验证：20例中9例未增补，全部仍有残余并以no-feasible-improvement停止；不代表108世界空旷或潜行已整改完成。新增细颈数量/窄区行程/共同存活子集统计尚缺，实际敌人接近等待撤回、自然搜撤、全seed与FPS未验。",
       "E241为知情设计审查及既有五图只读统计；无新生成或潜行试玩。2:1有效空间组、绝对空白/遮视/宽地门、目标面积和有限共同求解仍为待实现/校准合同；五图原始计数不等于玩家认知组。先封存r11再开新版本，不能用历史通过宣称新算法完成。",
       "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。",
-      "E244最终参考在内容部署前即因G1/G3拒绝，出口、全部资源/Host/敌人巡逻和G4均未执行，身体全可达不等于完整地图准入。普通r11单图基线也不代表全库重新生成或动态搜撤通过。"
+      "E244最终参考在内容部署前即因G1/G3拒绝，出口、全部资源/Host/敌人巡逻和G4均未执行，身体全可达不等于完整地图准入。普通r11单图基线也不代表全库重新生成或动态搜撤通过。",
+      "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。"
     ]
   },
   {
     "id": "COH-F014",
     "title": "探索记忆、小地图与已知退路",
     "domain": "world",
-    "summary": "108世界仍仅记录真实观察，未知撤离不预先显示；新构型完整生成校验出撤候选与视线，代表正常输入和正式冷续证据独立记录。知情导航不代表玩家盲搜能力。",
+    "summary": "探索仍只记录实际观察，未知撤离不预先显示；r13固定认可物理构型，内容先按请求seed尝试，末槽从冻结认证内容候选选择。有限browser证据不等于四图自然未知搜撤或动态潜行通过。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -3329,6 +3573,50 @@
         "path": "docs/qa/stealth-obstacles-2026-10-13.md",
         "role": "doc",
         "note": "三代表17件实体局部接入及有限验证；全库与潜行未结案。"
+      },
+      {
+        "path": "data/rift-native-construction-production.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-native-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-validation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-content-seeds.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/native-spatial/certify-construction-content.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -3359,21 +3647,25 @@
       "COH-E234",
       "COH-E237",
       "COH-E238",
-      "COH-E239"
+      "COH-E239",
+      "COH-E250",
+      "COH-E251",
+      "COH-E255"
     ],
     "unknowns": [
       "全图只读导航的测试不代表普通玩家可凭局部记忆顺利找到出口。",
       "三档正式进入/冷续验证未发现出口不泄漏；三代表普通输入旅程验证实际走近后发现并撤离。测试预读完整地图，不代表玩家仅凭局部记忆能顺利找到出口；发现后的跨刷新记忆未在这组三档入口冷续中独立覆盖。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：DEC-206 B01已扩至六个独立注册构型；其余102世界、全seed/全孔、自然未知搜索与深区取舍、正式用户审美及I14/P49仍开放。三张初稿图审退回及输入harness失败均保留，限定技术/AI图审不转成人审；B02临时草案未接生产。",
       "E237记录108世界两项优化的正式接入及有限内部验证：324档位为固定请求seed，代表实机用知情导航；不外推全seed、全部节点自然发现、连续视觉听感、长期收益或用户审美。用户最新授权已解除102图推广暂停；I14/P49仍开放。",
-      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。"
+      "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
+      "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。"
     ]
   },
   {
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "DEC-215当前重点为余烬脊/晶化林床/破膜盆地/吸光釉原四种配色材质，保留原主体并应用共享构型；扩展2/2/1/1处，外岸/支撑/孔身份/全身体可达通过。G1/G3及两图G2仍未过，无完整内容部署。原三图保留回归，普通全108仍r11，I14/P49开放。",
+    "summary": "DEC-216仅接余烬脊、晶化林床、破膜盆地、吸光釉原四张已认可样本，四图现均启用r13。认可medium完整物理母体和20261012几何跨三污染级冻结，内容/污染/氛围按实际grade。前7次内容尝试保留请求seed及派生seed，第8槽使用同档已认证内容seed；24条认证记录随配方冻结。四图三档完整生成/冷回放12/12、24条内容认证与四图中档正式入场/冷续功能4/4通过，持久回执已归档；50ms性能预算未通过。其余104图保留r11，I14/P49及用户最终体验不提升。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -3387,7 +3679,8 @@
       "src/generation/world-study/fragment-shape/index.ts：已接入正式生成与冻结配方恢复；v1机制保持",
       "DEC-212：DEV native-construction.html?sample=split-rib-causeway（另有gel-rafts/ash-strata），三图固定medium/20261012；真实材质与同构型剪影切换，仅几何打磨入口，无内容/撤离/存档。",
       "DEC-213：native-construction.html保持同3样本/medium/20261012；宏观骨架已重排，新增外环诊断，前后图册 docs/qa/artifacts/native-three-macro-2026-10-15/browser/index.html。",
-      "DEV /enemy-world-pilot.html：两世界各类人/占漆，共享baker、真实原生材质、受控动态，无AI战斗或存档。"
+      "DEV /enemy-world-pilot.html：两世界各类人/占漆，共享baker、真实原生材质、受控动态，无AI战斗或存档。",
+      "DEC-216：data/rift-native-construction-production.csv显式登记四图r13资格；完整作者CSV/岸线/意图冻结进新出发recipe，正常Rift与恢复共用直接构造链。"
     ],
     "sources": [
       {
@@ -5255,6 +5548,114 @@
       {
         "path": "docs/qa/enemy-world-pilot-2026-10-15.md",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-production.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-native-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-validation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/native-spatial/codegen-construction.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-direct-construction.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-reviewed-grades.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-reviewed-land-expansion.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/inspect-reviewed-layout.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-integration-geometry.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/refine-approved-layout.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-reference.mjs",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-native-construction-content-seeds.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/native-spatial/certify-construction-content.mjs",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-native-enemy-deployment.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-expedition.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-deployment.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -5378,7 +5779,11 @@
       "COH-E246",
       "COH-E247",
       "COH-E248",
-      "COH-E249"
+      "COH-E249",
+      "COH-E250",
+      "COH-E251",
+      "COH-E254",
+      "COH-E255"
     ],
     "unknowns": [
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
@@ -5406,7 +5811,8 @@
       "E245仅覆盖三张固定DEV样本的构造、真实材质及浏览器切换；三图仍有G1空白/G3宽域失败，无彩层原另有面积下界缺口。完整内容、未知出口、正常视距潜行、保存恢复、随机变化和全库品质未完成，人审未签。",
       "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。",
       "E247仅覆盖固定三图共享扩展与最终浏览器复看：新增宽臂1/2/1，孔对重复；凝胶441.58px/折板463.56px长直岸失败，凝胶新增宽域面积失败、折板新增面积失败，双脊G2仍失败。最终G2仅保留结果/原因，coverage标量未留存，不沿用round2数字。没有完整部署、自然探索、动态潜行或人审通过。",
-      "E248只验证新四张固定medium/20261012 DEV样本及图册。四材质视觉差异已实际复看，机器检查不代签审美；各图G1/G3及余烬/破膜G2仍拒绝，未证明自然探索、动态潜行、随机种子或全库准入。18次浏览器样本构造包含失败/修正轮次，不以最终每图1次当作总数。"
+      "E248只验证新四张固定medium/20261012 DEV样本及图册。四材质视觉差异已实际复看，机器检查不代签审美；各图G1/G3及余烬/破膜G2仍拒绝，未证明自然探索、动态潜行、随机种子或全库准入。18次浏览器样本构造包含失败/修正轮次，不以最终每图1次当作总数。",
+      "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。"
     ]
   }
 ]

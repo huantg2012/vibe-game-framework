@@ -57,7 +57,7 @@
     "id": "COH-F049",
     "title": "世界方向查看与隔离搜撤体验",
     "domain": "development",
-    "summary": "r100-gym遍历当前108世界×三档并在Boot前隔离内存存储；原生正常帧/近邻/返修记录和108世界离线图册v4浏览复验完成。I10–I12已按授权抽查内部结案；图册54历史档位缺活跃直接帧仍明确留空，Gym可见不等同用户认可。",
+    "summary": "七固定DEV样本与受控材料巡演保留诊断用途。四认可图r13直接构造、认证内容bank、真实敌人投放及正式browser分开登记；有界优化/准入拒绝保留，完整生成与冷恢复机器通过不代签动态体验。",
     "delivery": "dev",
     "work": "active",
     "entryPoints": [
@@ -70,7 +70,8 @@
       "r100-gym.html（当前108世界×三级，正式生成器与原生RiftScene，内存存储）",
       "docs/qa/interactive/r100-world-identity.html（修订3/4正常实帧对照及验证范围）",
       "docs/qa/interactive/r100-i10-i12-worlds.html（全108原帧与证据，54历史缺直接帧档位明确留空）",
-      "DEC-206 /r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011：r8矩形开放碎片首代表，正常RiftScene与隔离内存保存"
+      "DEC-206 /r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011：r8矩形开放碎片首代表，正常RiftScene与隔离内存保存",
+      "DEC-216：check-direct-construction核r13完整生成/冷回放；check-reviewed-grades核显式作者候选；refine-approved-layout保留有界优化与拒绝证据，不能当生产重试器。"
     ],
     "sources": [
       {
@@ -720,6 +721,134 @@
       {
         "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/README.md",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-native-construction-production.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-native-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-construction-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-spatial-validation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/world-runtime-integration-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/native-spatial/codegen-construction.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-direct-construction.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-reviewed-grades.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-reviewed-land-expansion.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/inspect-reviewed-layout.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-integration-geometry.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/refine-approved-layout.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-construction-reference.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-r100-production-browser.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-r100-revision11-freezing.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/dev/native-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/enemy-world-pilot-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-native-enemy-deployment.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-enemy-deployment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-expedition.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/codegen-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-deployment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "data/rift-native-construction-content-seeds.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/native-spatial/certify-construction-content.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -754,7 +883,13 @@
       "COH-E179",
       "COH-E180",
       "COH-E192",
-      "COH-E232"
+      "COH-E232",
+      "COH-E250",
+      "COH-E251",
+      "COH-E253",
+      "COH-E254",
+      "COH-E256",
+      "COH-E255"
     ],
     "unknowns": [
       "v2的30组合、当前修订4的20世界×三级及固定种子巡检均非穷举uint32种子或连续条件；正常短走和定点补图只覆盖实际取景，不能当作完整自然旅程。",
@@ -764,7 +899,8 @@
       "e8888655后用户确认折板南侧低斜面在normal中仍像地面。已局部重做阻挡物厚断面及材质坐标，外足占地不变；本轮取得44/48独立方向、50次受控键盘接近和600支撑采样；四方向未覆盖、四次战斗干扰和三次沿边滑动见E133，不算完整自然绕行。此前54帧不证明全部阻挡边缘可读，“这次好多了”当时仅为局部肯定；其后2026-10-04明确整体验收单列E138，未覆盖的运行范围仍不补判。",
       "E134来源外观的14图与三组行为采集是不同批次；额外材料依赖的事后指纹未冒充起点基线，不覆盖之后并行地形材料变更。",
       "E137为三中档母版/五正式来源同点近照及三中档实际运行；关键帧和状态序列不等于连续动画审美通过。受控归位、旧局隔离、完整自然搜撤和全等级未测范围按本批QA保持。",
-      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10/弱设备/用户终验仍待。"
+      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10/弱设备/用户终验仍待。",
+      "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。"
     ]
   },
   {

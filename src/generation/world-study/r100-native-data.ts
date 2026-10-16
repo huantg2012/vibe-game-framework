@@ -22,6 +22,8 @@ export function hydrateR100MasterWorld(native: R100NativeWorldData, layout: Gene
   if (native.algorithmRevision === 10) return hydrateRevision10World(native, layout);
   if (native.algorithmRevision === 11) return hydrateRevision11World(native, layout);
   const map = layout.tileMap, width = map.cols * map.tileSize, height = map.rows * map.tileSize;
+  if (native.algorithmRevision === 13 && (native.surfacePixelBudget !== 8388608 || width * height > native.surfacePixelBudget))
+    throw new Error('Directly constructed native world exceeds its frozen surface budget');
   if (map.tileSize !== 8 || native.hostTileMap.tileSize !== 32 || native.raster.width !== width
     || native.raster.height !== height || native.raster.objectId.length !== width * height)
     throw new Error('Native world transfer dimensions do not match its physical layout');

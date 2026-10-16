@@ -45,7 +45,7 @@ export const NATIVE_SPATIAL_POLICY:NativeSpatialPolicy={
   "minWindowHoles": 3,
   "maxGeometryEvaluations": 72,
   "maxFullCandidates": 2,
-  "sourceHash": "cadc8521f6b32eb8d4856b7cf7b951156de45ea3007437e964b6a3248cd75258"
+  "sourceHash": "0ad4c7149ef3a9befb047e5b78733bef94b766b23a88e9a7e6824c7b6124876a"
 };
 export const NATIVE_SPATIAL_WORLDS:readonly NativeSpatialWorldIntent[]=[
   {
@@ -670,7 +670,7 @@ export const NATIVE_SPATIAL_ASSEMBLIES:readonly NativeSpatialAssembly[]=[
       1
     ],
     "sourceScale": 1,
-    "minScale": 0.95,
+    "minScale": 0.8,
     "maxScale": 1.05,
     "rotationOffsetsRad": [
       -0.18,

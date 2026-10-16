@@ -37,6 +37,13 @@ export interface WorldProductionRecipeV3 extends Omit<WorldProductionRecipeV1, '
   readonly augmentationPolicy?: import('./spatial-augmentation-types').SpatialAugmentationPolicy;
   /** Revision 12 generates whole layouts from explicitly reviewed world intent. */
   readonly nativeSpatial?: import('./native-spatial-types').NativeSpatialRuntimeInput;
+  /** Revision 13 freezes the reviewed direct L/H/S authoring and seed rules. */
+  readonly nativeConstruction?: import('./native-construction-recipe').NativeConstructionRuntimeInput;
+  readonly surfacePixelBudget?: 8388608;
+  readonly enemyMaterialVersion?: 1;
+  readonly enemyMaterial?: import('@/entities/form-renderers/d/world-adaptation').EnemyWorldAdaptation;
+  /** Revision 13 freezes actual AI/Host forms before placement and admission. */
+  readonly enemyDeployment?: import('./native-enemy-deployment').NativeEnemyDeployment;
   readonly nativeDefinition: import('./r100-master-world').MasterDefinition;
   readonly gradeDefinition: import('./pollution-grade').PollutionGradeDefinition;
   readonly contentDefinition: import('./r100-expedition').R100ExpeditionDefinition;

@@ -19,13 +19,13 @@ export function validNativeSpatialPolicy(v:unknown):v is NativeSpatialPolicy {
     ||!integer(p.windowSize,1,32)||!integer(p.minWindowHoles,0,p.windowSize)||!integer(p.minRouteEncounters,1,64))return false;
   return ['countToleranceRatio','areaToleranceRatio','holeCountRelTolerance','minWideRatio','minLargestWideRatio','maxNarrowRatio','minRouteHoleShare','maxRouteHoleShare','regionHoleShareMin','regionHoleShareMax'].every(key=>finite(v[key],0,1));
 }
-export function validNativeSpatialFrozenInput(value:unknown,native:MasterDefinition):value is NativeSpatialFrozenInput {
+export function validNativeSpatialFrozenInput(value:unknown,native:MasterDefinition,surfacePixelBudget:4194304|8388608=4194304):value is NativeSpatialFrozenInput {
   try {
     if(!object(value)||!keys(value,['policy','world','holeProfiles','bayProfiles','assemblies','subordinateProfiles'])||!validNativeSpatialPolicy(value.policy)||!object(value.world))return false;
     const w=value.world;
     if(!keys(w,['worldId','enabled','annotationStatus','targetWalkAreaPx2','frameWidthPx','frameHeightPx','materialAxisRad','landGrammar','landRectMinCount','landRectMaxCount','landRectMinSpanPx','landRectMaxSpanPx','landRectMinThicknessPx','landRectMaxThicknessPx','landRectMinOverlapPx','bayGrammar','bayProfileIds','bayCountOptions','landCoreMinCount','landCoreMaxCount','landShoulderMinCount','landShoulderMaxCount','landShoulderMinSpanPx','landShoulderMaxSpanPx','landShoulderMinThicknessPx','landShoulderMaxThicknessPx','landShoulderMinExtensionPx','landShoulderMaxExtensionPx','landShoulderAttachment'])
       ||!name(w.worldId)||typeof w.enabled!=='boolean'||w.annotationStatus!=='reviewed'||w.landGrammar!=='offset-overlap-v1'
-      ||!integer(w.frameWidthPx,1024,3072)||!integer(w.frameHeightPx,1024,2304)||w.frameWidthPx%32||w.frameHeightPx%32||w.frameWidthPx*w.frameHeightPx>4194304
+      ||!integer(w.frameWidthPx,1024,3072)||!integer(w.frameHeightPx,1024,2304)||w.frameWidthPx%32||w.frameHeightPx%32||w.frameWidthPx*w.frameHeightPx>surfacePixelBudget
       ||!finite(w.targetWalkAreaPx2,100000,w.frameWidthPx*w.frameHeightPx)||!finite(w.materialAxisRad,-Math.PI*2,Math.PI*2)
       ||!integer(w.landRectMinCount,2,16)||!integer(w.landRectMaxCount,w.landRectMinCount,16))return false;
     for(const stem of ['Span','Thickness'])if(!finite(w[`landRectMin${stem}Px`],64,3072)||!finite(w[`landRectMax${stem}Px`],w[`landRectMin${stem}Px`] as number,3072))return false;

@@ -7,6 +7,7 @@ import {serialize} from 'node:v8';
 import {gzipSync} from 'node:zlib';
 import sharp from 'sharp';
 import {parseNativeSpatialConstructionReference,constructNativeSpatialReference} from '../../src/generation/world-study/native-spatial-construction-reference.ts';
+import {parseNativeConstructionExtensionPolicy} from '../../src/generation/world-study/native-spatial-construction-extension.ts';
 import {parseNativeConstructionShore,constructNativeMacroShore,nativeConstructionAddedCoverage,measureNativeConstructionBoundary} from '../../src/generation/world-study/native-spatial-construction-shore.ts';
 import {createR100NativeSpatialDevelopmentRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {buildNativeSpatialGeometry,nativePrimitive,nativePrimitiveTree} from '../../src/generation/world-study/native-spatial-geometry.ts';
@@ -16,8 +17,8 @@ import {nativeSpatialGeometryFingerprint} from '../../src/generation/world-study
 import {completeNativeSpatialCandidate} from '../../src/generation/world-study/r100-production-map.ts';
 
 const csvPath=process.argv[2],output=process.argv[3];
-const options=process.argv.slice(4);let shorePath;
-for(let i=0;i<options.length;i++){if(options[i]==='--shore'){assert(options[i+1]&&!options[i+1].startsWith('--')&&!shorePath,'--shore requires one CSV');shorePath=options[++i];}else assert.equal(options[i],'--check-only','Unknown reference option');}
+const options=process.argv.slice(4);let shorePath,extensionPath;
+for(let i=0;i<options.length;i++){if(options[i]==='--shore'||options[i]==='--extension'){const key=options[i];assert(options[i+1]&&!options[i+1].startsWith('--'),`${key} requires one CSV`);if(key==='--shore'){assert(!shorePath);shorePath=options[++i];}else{assert(!extensionPath);extensionPath=options[++i];}}else assert.equal(options[i],'--check-only','Unknown reference option');}
 assert(csvPath&&output,'Usage: check-construction-reference.mjs CSV NEW_OUTPUT_DIRECTORY [--shore SHORE_CSV] [--check-only]');
 assert(!fs.existsSync(output),'Never overwrite a reference result');fs.mkdirSync(output,{recursive:true});
 const sha=value=>createHash('sha256').update(value).digest('hex');
@@ -51,6 +52,8 @@ try{
   let shore;
   if(shorePath){const text=fs.readFileSync(shorePath,'utf8'),policy=parseNativeConstructionShore(text,report.shoreCSVSHA256);assert.equal(policy.referenceId,reference.id);report.combinedSourceSHA256=sha(JSON.stringify({referenceSHA256:report.csvSHA256,shoreSHA256:report.shoreCSVSHA256}));shore={policy,combinedSourceHash:report.combinedSourceSHA256};fs.writeFileSync(path.join(output,'shore.csv'),text);report.shorePolicy=policy;}
   else report.combinedSourceSHA256=report.csvSHA256;
+  let extension;
+  if(extensionPath){const csv=fs.readFileSync(extensionPath,'utf8'),policy=parseNativeConstructionExtensionPolicy(csv,sha(csv)),moduleSourceHash=sha(fs.readFileSync('src/generation/world-study/native-spatial-construction-extension.ts'));const combinedSourceHash=sha(JSON.stringify({referenceSHA256:report.csvSHA256,shoreSHA256:report.shoreCSVSHA256,extensionSHA256:policy.sourceHash,extensionModuleSHA256:moduleSourceHash}));extension={policy,moduleSourceHash,combinedSourceHash};report.extensionPolicy=policy;report.combinedSourceSHA256=combinedSourceHash;fs.writeFileSync(path.join(output,'extension.csv'),csv);}
   if(process.argv.includes('--check-only')){
     assert.throws(()=>parseNativeSpatialConstructionReference(csv.replace('reference_id','wrong_header'),report.csvSHA256),/header/);
     assert.throws(()=>parseNativeSpatialConstructionReference(csv,'bad'),/SHA256/);
@@ -92,22 +95,23 @@ try{
     const recipe=createR100NativeSpatialDevelopmentRecipe(reference.worldId,reference.seed,reference.grade),input=recipe.nativeSpatial;assert(input);
     fs.writeFileSync(path.join(output,'recipe.json'),JSON.stringify(recipe,null,2)+'\n');
     const frozenRecipe=JSON.stringify(recipe);report.counts.references++;
-    const layout=run('construct-and-break-edges',()=>constructNativeSpatialReference(recipe,reference,()=>{report.counts.fragmentCompiles++;},shore));
+    const layout=run('construct-and-break-edges',()=>constructNativeSpatialReference(recipe,reference,()=>{report.counts.fragmentCompiles++;},shore,extension));
+    const assessment=layout.assessmentInput??input;
     if(layout.constructionShore)report.shore=layout.constructionShore;
     if(shore)report.boundary=measureNativeConstructionBoundary(layout.definition.terrainOutline,shore.policy.maxCleanRunPx);
     fs.writeFileSync(path.join(output,'layout.json'),JSON.stringify(layout,null,2)+'\n');
     const geometry=run('initial-geometry',()=>{report.counts.initialGeometryBuilds++;return buildNativeSpatialGeometry(layout.definition,reference.seed);});
     // Persist actual failed terrain too. Runtime callbacks are intentionally not serialized.
     const t=geometry.terrain;store('geometry.v8.gz',{layout,terrain:{cols:t.cols,rows:t.rows,width:t.width,height:t.height,matter:t.matter,definition:t.definition,spawnPoint:t.spawnPoint},supported:geometry.supported,reachable:geometry.reachable,links8:geometry.links8,solidPrimitives:geometry.solidPrimitives});
-    const groups=run('structure-identities',()=>identifyNativeSpatialStructures(geometry,layout.assemblies,input.policy));
-    const ground=run('G1-G3',()=>evaluateNativeSpatialGeometry(geometry,groups,input.policy,input.world,{placements:layout.holes,profiles:input.holeProfiles},
-      {landRects:layout.plan.land,placements:layout.bays,landJoins:layout.landJoins,profiles:input.bayProfiles,allowedCounts:input.world.bayCountOptions,minWideJoinPx:input.world.landRectMinOverlapPx}));
+    const groups=run('structure-identities',()=>identifyNativeSpatialStructures(geometry,layout.assemblies,assessment.policy));
+    const ground=run('G1-G3',()=>evaluateNativeSpatialGeometry(geometry,groups,assessment.policy,assessment.world,{placements:layout.holes,profiles:input.holeProfiles},
+      {landRects:layout.plan.land,placements:layout.bays,landJoins:layout.landJoins,profiles:input.bayProfiles,allowedCounts:input.world.bayCountOptions,minWideJoinPx:input.world.landRectMinOverlapPx},diagnostic=>store('geometry-diagnostic.v8.gz',diagnostic)));
     report.geometryHash=nativeSpatialGeometryFingerprint(geometry,layout).hash;report.gates={geometry:ground};
     const beforeFullSvg=silhouette(geometry,groups,ground);
     fs.writeFileSync(path.join(output,'silhouette.svg'),beforeFullSvg);await sharp(Buffer.from(beforeFullSvg)).resize({width:1152}).png().toFile(path.join(output,'silhouette.png'));save();
     // One official visibility measurement, also on failed G1/G3 references for
     // diagnosis. It cannot override geometry rejection or authorize deployment.
-    const visibility=run('G2',()=>{report.counts.visibilityEvaluations++;return evaluateNativeSpatialVisibility(geometry,groups.structures,input.policy);});report.gates.visibility=visibility;
+    const visibility=run('G2',()=>{report.counts.visibilityEvaluations++;return evaluateNativeSpatialVisibility(geometry,groups.structures,assessment.policy);});report.gates.visibility=visibility;
     const reasons=[...ground.reasons,...visibility.reasons,...(report.boundary?.accepted===false?['shore-long-clean-run']:[])],trace={candidate:0,geometrySeed:reference.seed,layoutSeed:layout.layoutSeed,geometryHash:report.geometryHash,requestedCounts:layout.requestedCounts,accepted:reasons.length===0,reasons,gates:report.gates};report.candidate=trace;
     if(trace.accepted){
       attempt={geometrySeed:reference.seed,proposalBudget:1,layoutProposals:1,geometryEvaluations:1,finalGeometryEvaluations:1,fullCandidates:0,feedbackBases:[],candidates:[trace],deploymentRejections:[],stopReason:'searching'};

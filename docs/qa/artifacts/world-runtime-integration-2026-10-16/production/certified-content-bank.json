@@ -1,0 +1,1003 @@
+{
+  "status": "passed",
+  "scope": "Actual geometry and complete content/G4 certification. Intermediate maps are not recoverable production recipes until the bank is compiled and final recipe/cold checks pass.",
+  "sourcesBefore": {
+    "src/generation/world-study/r100-package.ts": "346e555b6c58499c330c0a7a469a752f2c0c3acfb5f75cf29588eb1876092d88",
+    "src/generation/world-study/r100-production-map.ts": "0eb006453c8cdd1d8b5d57b3c1a4c11091fbe41de39a8d6b24dbe01ca253aec1",
+    "src/generation/world-study/r100-master-world.ts": "a6056aa98325dcfa5b463914303d310f73cec069f94f3c28568bde4efd4f02a7",
+    "src/generation/world-study/r100-expedition.ts": "590017f3d57acd8af445f31a2a80d7da583c40161c50c40a2be55de8f8f1a613",
+    "src/generation/world-study/r100-pollution.ts": "57562cdcbba7d92f3b16d927fd569f6182b73c835041e9d40c236d45753345f2",
+    "src/generation/world-study/native-construction-recipe.ts": "407280b9891b4109816f98d43da130fda80ba38193947109a9b921f6b7c5c644",
+    "src/generated/r100-native-construction.ts": "2831212e6d84ca9bf649e5a3ae3a0d216832d6d2afe76e3a4d6cc77d3dfebdb3",
+    "src/generated/r100-enemy-deployment.ts": "28d619736a8cb7f435142c6efec6c344cd5a0f27d42b5969bbc0c1d04e895634"
+  },
+  "sourcesAfter": {
+    "src/generation/world-study/r100-package.ts": "346e555b6c58499c330c0a7a469a752f2c0c3acfb5f75cf29588eb1876092d88",
+    "src/generation/world-study/r100-production-map.ts": "0eb006453c8cdd1d8b5d57b3c1a4c11091fbe41de39a8d6b24dbe01ca253aec1",
+    "src/generation/world-study/r100-master-world.ts": "a6056aa98325dcfa5b463914303d310f73cec069f94f3c28568bde4efd4f02a7",
+    "src/generation/world-study/r100-expedition.ts": "590017f3d57acd8af445f31a2a80d7da583c40161c50c40a2be55de8f8f1a613",
+    "src/generation/world-study/r100-pollution.ts": "57562cdcbba7d92f3b16d927fd569f6182b73c835041e9d40c236d45753345f2",
+    "src/generation/world-study/native-construction-recipe.ts": "407280b9891b4109816f98d43da130fda80ba38193947109a9b921f6b7c5c644",
+    "src/generated/r100-native-construction.ts": "2831212e6d84ca9bf649e5a3ae3a0d216832d6d2afe76e3a4d6cc77d3dfebdb3",
+    "src/generated/r100-enemy-deployment.ts": "28d619736a8cb7f435142c6efec6c344cd5a0f27d42b5969bbc0c1d04e895634"
+  },
+  "resumedFrom": "/tmp/coh-r13-certified-content-bank-20261016",
+  "cases": [
+    {
+      "worldId": "cinder-ridge",
+      "grade": "low",
+      "identity": "0107ac06",
+      "elapsedMs": 10897.759917,
+      "accepted": [
+        {
+          "worldId": "cinder-ridge",
+          "grade": "low",
+          "seed": 2530803610,
+          "x": 1268,
+          "y": 1300,
+          "identity": "0107ac06"
+        },
+        {
+          "worldId": "cinder-ridge",
+          "grade": "low",
+          "seed": 2936677010,
+          "x": 1300,
+          "y": 1228,
+          "identity": "0107ac06"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 20261012,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 42,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 3908480648,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 3908480648,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1729759881,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1729759881,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 2761755553,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2761755553,
+              "reason": "candidate 0: node:r100-kindling-contested-2:max-narrow-run"
+            }
+          ]
+        },
+        {
+          "seed": 2530803610,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 1887262519,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1887262519,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2887463522,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2887463522,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 2437493859,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2437493859,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 2936677010,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "cinder-ridge",
+      "grade": "medium",
+      "identity": "26f4e3c6",
+      "elapsedMs": 5747.375375000001,
+      "accepted": [
+        {
+          "worldId": "cinder-ridge",
+          "grade": "medium",
+          "seed": 42,
+          "x": 1700,
+          "y": 1244,
+          "identity": "26f4e3c6"
+        },
+        {
+          "worldId": "cinder-ridge",
+          "grade": "medium",
+          "seed": 3908480648,
+          "x": 1564,
+          "y": 540,
+          "identity": "26f4e3c6"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 20261012,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 3908480648,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "cinder-ridge",
+      "grade": "severe",
+      "identity": "6622ddc7",
+      "elapsedMs": 6411.574790999999,
+      "accepted": [
+        {
+          "worldId": "cinder-ridge",
+          "grade": "severe",
+          "seed": 42,
+          "x": 1700,
+          "y": 1244,
+          "identity": "6622ddc7"
+        },
+        {
+          "worldId": "cinder-ridge",
+          "grade": "severe",
+          "seed": 1729759881,
+          "x": 1396,
+          "y": 508,
+          "identity": "6622ddc7"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 20261012,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 3908480648,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 3908480648,
+              "reason": "candidate 0: node:r100-kindling-deep-1:max-narrow-run"
+            }
+          ]
+        },
+        {
+          "seed": 1729759881,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "crystal-fibre",
+      "grade": "low",
+      "identity": "fdd515c9",
+      "elapsedMs": 5834.878250000002,
+      "accepted": [
+        {
+          "worldId": "crystal-fibre",
+          "grade": "low",
+          "seed": 42,
+          "x": 2420,
+          "y": 1212,
+          "identity": "fdd515c9"
+        },
+        {
+          "worldId": "crystal-fibre",
+          "grade": "low",
+          "seed": 1729759881,
+          "x": 1964,
+          "y": 668,
+          "identity": "fdd515c9"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 20261012,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 3908480648,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 3908480648,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1729759881,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "crystal-fibre",
+      "grade": "medium",
+      "identity": "85162594",
+      "elapsedMs": 5442.1576669999995,
+      "accepted": [
+        {
+          "worldId": "crystal-fibre",
+          "grade": "medium",
+          "seed": 42,
+          "x": 2420,
+          "y": 1212,
+          "identity": "85162594"
+        },
+        {
+          "worldId": "crystal-fibre",
+          "grade": "medium",
+          "seed": 1729759881,
+          "x": 1964,
+          "y": 668,
+          "identity": "85162594"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 20261012,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 3908480648,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 3908480648,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1729759881,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "crystal-fibre",
+      "grade": "severe",
+      "identity": "98286e4e",
+      "elapsedMs": 11216.777749999994,
+      "accepted": [
+        {
+          "worldId": "crystal-fibre",
+          "grade": "severe",
+          "seed": 42,
+          "x": 2420,
+          "y": 1212,
+          "identity": "98286e4e"
+        },
+        {
+          "worldId": "crystal-fibre",
+          "grade": "severe",
+          "seed": 2437493859,
+          "x": 2796,
+          "y": 1204,
+          "identity": "98286e4e"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 20261012,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 3908480648,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 3908480648,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1729759881,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1729759881,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2761755553,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2761755553,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2530803610,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2530803610,
+              "reason": "candidate 0: node:r100-kindling-contested-1:max-narrow-run; explore:4:max-narrow-run"
+            }
+          ]
+        },
+        {
+          "seed": 1887262519,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1887262519,
+              "reason": "candidate 0: node:r100-kindling-contested-2:max-narrow-run; overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2887463522,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2887463522,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2437493859,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "ruptured-film",
+      "grade": "low",
+      "identity": "c676fa18",
+      "elapsedMs": 12951.527833,
+      "accepted": [
+        {
+          "worldId": "ruptured-film",
+          "grade": "low",
+          "seed": 2761755553,
+          "x": 1852,
+          "y": 1140,
+          "identity": "c676fa18"
+        },
+        {
+          "worldId": "ruptured-film",
+          "grade": "low",
+          "seed": 2936677010,
+          "x": 1508,
+          "y": 1252,
+          "identity": "c676fa18"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 20261012,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 42,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 3908480648,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 3908480648,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1729759881,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1729759881,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2761755553,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 2530803610,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2530803610,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1887262519,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1887262519,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2887463522,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2887463522,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 2437493859,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2437493859,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 2936677010,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "ruptured-film",
+      "grade": "medium",
+      "identity": "4931950b",
+      "elapsedMs": 20447.331125000004,
+      "accepted": [
+        {
+          "worldId": "ruptured-film",
+          "grade": "medium",
+          "seed": 2761755553,
+          "x": 1852,
+          "y": 1140,
+          "identity": "4931950b"
+        },
+        {
+          "worldId": "ruptured-film",
+          "grade": "medium",
+          "seed": 2957726398,
+          "x": 1564,
+          "y": 1284,
+          "identity": "4931950b"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 20261012,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 42,
+              "reason": "candidate 0: node:r100-contaminant-contested-1:max-narrow-run"
+            }
+          ]
+        },
+        {
+          "seed": 3908480648,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 3908480648,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1729759881,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1729759881,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2761755553,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 2530803610,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2530803610,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1887262519,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1887262519,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2887463522,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2887463522,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2437493859,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2437493859,
+              "reason": "candidate 0: Cannot admit kindling/deep/1 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 2936677010,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2936677010,
+              "reason": "candidate 0: node:r100-kindling-deep-1:max-narrow-run"
+            }
+          ]
+        },
+        {
+          "seed": 35529204,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 35529204,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1526386737,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1526386737,
+              "reason": "candidate 0: Cannot admit kindling/deep/1 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 3296170299,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 3296170299,
+              "reason": "candidate 0: node:r100-kindling-contested-1:max-narrow-run; explore:6:max-narrow-run; overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2957726398,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "ruptured-film",
+      "grade": "severe",
+      "identity": "a7e4a511",
+      "elapsedMs": 17900.773083000007,
+      "accepted": [
+        {
+          "worldId": "ruptured-film",
+          "grade": "severe",
+          "seed": 2761755553,
+          "x": 1852,
+          "y": 1140,
+          "identity": "a7e4a511"
+        },
+        {
+          "worldId": "ruptured-film",
+          "grade": "severe",
+          "seed": 35529204,
+          "x": 2092,
+          "y": 1052,
+          "identity": "a7e4a511"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 20261012,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 42,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 3908480648,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 3908480648,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1729759881,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1729759881,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2761755553,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 2530803610,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2530803610,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 1887262519,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 1887262519,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2887463522,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2887463522,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2437493859,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2437493859,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 2936677010,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 2936677010,
+              "reason": "candidate 0: overall-route-hole-share"
+            }
+          ]
+        },
+        {
+          "seed": 35529204,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "ivory-basin",
+      "grade": "low",
+      "identity": "748193d6",
+      "elapsedMs": 3823.068333,
+      "accepted": [
+        {
+          "worldId": "ivory-basin",
+          "grade": "low",
+          "seed": 20261012,
+          "x": 1940,
+          "y": 1948,
+          "identity": "748193d6"
+        },
+        {
+          "worldId": "ivory-basin",
+          "grade": "low",
+          "seed": 3908480648,
+          "x": 1756,
+          "y": 980,
+          "identity": "748193d6"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 42,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 42,
+              "reason": "candidate 0: Certification deadline ivory-basin/low"
+            }
+          ]
+        },
+        {
+          "seed": 3908480648,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "ivory-basin",
+      "grade": "medium",
+      "identity": "6830e467",
+      "elapsedMs": 6931.702208,
+      "accepted": [
+        {
+          "worldId": "ivory-basin",
+          "grade": "medium",
+          "seed": 42,
+          "x": 1500,
+          "y": 1660,
+          "identity": "6830e467"
+        },
+        {
+          "worldId": "ivory-basin",
+          "grade": "medium",
+          "seed": 3908480648,
+          "x": 1756,
+          "y": 980,
+          "identity": "6830e467"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 20261012,
+              "reason": "candidate 0: Cannot admit kindling/deep/0 with a full native route"
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 3908480648,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "worldId": "ivory-basin",
+      "grade": "severe",
+      "identity": "5cd81af6",
+      "elapsedMs": 7003.740250000001,
+      "accepted": [
+        {
+          "worldId": "ivory-basin",
+          "grade": "severe",
+          "seed": 20261012,
+          "x": 1940,
+          "y": 1948,
+          "identity": "5cd81af6"
+        },
+        {
+          "worldId": "ivory-basin",
+          "grade": "severe",
+          "seed": 3908480648,
+          "x": 1756,
+          "y": 980,
+          "identity": "5cd81af6"
+        }
+      ],
+      "attempts": [
+        {
+          "seed": 20261012,
+          "accepted": true,
+          "rejected": []
+        },
+        {
+          "seed": 42,
+          "accepted": false,
+          "rejected": [
+            {
+              "seed": 42,
+              "reason": "candidate 0: node:r100-kindling-deep-2:max-narrow-run"
+            }
+          ]
+        },
+        {
+          "seed": 3908480648,
+          "accepted": true,
+          "rejected": []
+        }
+      ]
+    }
+  ],
+  "fullReceipt": "/tmp/coh-r13-certified-content-bank-resume-20261016/report.json",
+  "fullReceiptSha256": "e2184cdc88ac67f2407e0fe8b784659ec1796836a7ed983fd4f855ec6f3f0720",
+  "contentCSV": "data/rift-native-construction-content-seeds.csv",
+  "contentCSVSha256": "ac198b5a367b2f8a59af23ff0cbbc85f295c510766d8dea90ddcf0572336f526"
+}

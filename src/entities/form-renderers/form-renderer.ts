@@ -84,7 +84,8 @@ export function applyFormVisibility(
 export interface FormAttachContext {
   /** Optional actual scene light; never a substitute for authoritative FOV. */
   worldLighting?: WorldMaterialLighting;
-  /** Explicit material pilot. Omitted for all existing production worlds. */
+  /** Recipe-controlled world material identity. Omitted for legacy runs and
+   * unsupported substrates; explicit DEV previews may also supply a profile. */
   worldAdaptation?: EnemyWorldAdaptation;
   scene: Phaser.Scene;
   form: ContaminationForm;

@@ -2,6 +2,10 @@ import { validR100ProductionRecipe as validRevision11Recipe } from '../legacy-r1
 import { validR100ProductionRecipe as validRevision10Recipe } from '../legacy-r100-v10/executor-recovery.js';
 import { SPATIAL_AUGMENTATION_POLICY } from '@/generated/r100-spatial-augmentation';
 import { createNativeSpatialRuntimeInput, validNativeSpatialRuntimeInput } from './native-spatial-recipe';
+import {applyNativeConstructionIntent,createNativeConstructionRuntimeInput,validNativeConstructionRuntimeInput,validNativeConstructionContentBank} from './native-construction-recipe';
+import {resolveEnemyWorldAdaptation,type EnemyWorldAdaptation} from '@/entities/form-renderers/d/world-adaptation';
+import {NATIVE_ENEMY_DEPLOYMENTS} from '@/generated/r100-enemy-deployment';
+import {validNativeEnemyDeployment} from './native-enemy-deployment';
 import { validR100ProductionRecipe as validRevision9Recipe } from '../legacy-r100-v9/executor-recovery.js';
 /** A departure freezes the exact native geometry/rules. Adding catalog rows does
  * not invalidate previously frozen v3 departures. Existing asset paths are immutable. */
@@ -35,7 +39,7 @@ export interface R100PackageIdentity {
   readonly algorithm: 'r100-native';
   readonly version: 3;
   /** Increment/freeze the executor before changing existing algorithm semantics. */
-  readonly algorithmRevision: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+  readonly algorithmRevision: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
   readonly dependencyHash: string;
   readonly materials: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>>;
   readonly grade: PollutionGrade;
@@ -59,12 +63,13 @@ function materialDependencies(definition: MasterDefinition, appearance: R100Worl
     return [name, dependency];
   }));
 }
-function dependencyHash(recipe: Omit<WorldProductionRecipeV3, 'package'>, materials: R100PackageIdentity['materials'], revision: 8 | 11 | 12): string {
+function dependencyHash(recipe: Omit<WorldProductionRecipeV3, 'package'>, materials: R100PackageIdentity['materials'], revision: 8 | 11 | 12 | 13): string {
   // Public copy is frozen for display, but does not redefine the map/loot algorithm.
   return fingerprint({ algorithm: `r100-native@3.${revision}`, native: recipe.nativeDefinition, profile: recipe.profile, space: recipe.space,
     contentFragmentTypeId: recipe.contentFragmentTypeId, grade: recipe.gradeDefinition, contents: recipe.contentDefinition, spatialPolicy: recipe.spatialPolicy, appearance: recipe.appearance, materials,
     ...(revision === 11 ? { searchSitePolicy: recipe.searchSitePolicy, augmentationPolicy: recipe.augmentationPolicy } : {}),
-    ...(revision === 12 ? { searchSitePolicy: recipe.searchSitePolicy, nativeSpatial: recipe.nativeSpatial } : {}) });
+    ...(revision >= 12 ? { searchSitePolicy: recipe.searchSitePolicy, nativeSpatial: recipe.nativeSpatial } : {}),
+    ...(revision === 13 ? {nativeConstruction:recipe.nativeConstruction,surfacePixelBudget:recipe.surfacePixelBudget,enemyMaterialVersion:recipe.enemyMaterialVersion,enemyMaterial:recipe.enemyMaterial,enemyDeployment:recipe.enemyDeployment} : {}) });
 }
 /** Normal departures use the validated production revision, including worlds
  * that also have an experimental native-spatial authoring definition. */
@@ -76,24 +81,40 @@ export function createR100ProductionRecipe(worldId: string, seed: number, grade:
 export function createR100NativeSpatialDevelopmentRecipe(worldId: string, seed: number, grade: PollutionGrade): WorldProductionRecipeV3 {
   return createR100Recipe(worldId, seed, grade, true);
 }
-function createR100Recipe(worldId: string, seed: number, grade: PollutionGrade, nativeDevelopment: boolean): WorldProductionRecipeV3 {
+/** Explicit diagnostic access until each registered source is admitted. */
+export function createR100DirectConstructionRecipe(worldId:string,seed:number,grade:PollutionGrade):WorldProductionRecipeV3 {
+  return createR100Recipe(worldId,seed,grade,false,true);
+}
+function createR100Recipe(worldId: string, seed: number, grade: PollutionGrade, nativeDevelopment: boolean,directDevelopment=false): WorldProductionRecipeV3 {
   if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff || !isPollutionGrade(grade)) throw new Error('Invalid native departure seed/grade');
   const world = R100_NATIVE_WORLDS.find(row => row.id === worldId);
   if (!world) throw new Error(`Unknown native world ${worldId}`);
   const appearance = R100_WORLD_APPEARANCES.find(row => row.worldId === worldId);
   if (!appearance) throw new Error(`Missing native world appearance ${worldId}`);
-  const nativeDefinition = world.definitions.find(definition => definition.grade === grade)!;
+  const gradeNativeDefinition = world.definitions.find(definition => definition.grade === grade)!;
   const gradeDefinition = POLLUTION_GRADE_DEFINITIONS.find(row => row.id === grade)!;
   const contentDefinition = R100_EXPEDITION_GRADES.find(row => row.grade_id === grade)!;
-  const nativeSpatial = nativeDevelopment ? createNativeSpatialRuntimeInput(worldId, nativeDefinition) : undefined;
-  if (nativeDevelopment && !nativeSpatial) throw new Error(`Native spatial development is unavailable for ${worldId}`);
+  const nativeConstruction=nativeDevelopment?undefined:createNativeConstructionRuntimeInput(worldId,directDevelopment);
+  if(directDevelopment&&!nativeConstruction)throw new Error(`Direct construction is unavailable for ${worldId}`);
+  // Revision 13 admits the reviewed physical mother once. Freeze all its source
+  // instances; retain the requested grade's atmosphere and gameplay parameters.
+  const geometrySource=nativeConstruction?world.definitions.find(definition=>definition.grade===nativeConstruction.sourceGrade)!:gradeNativeDefinition;
+  const nativeDefinition=nativeConstruction?{...gradeNativeDefinition,instances:geometrySource.instances}:gradeNativeDefinition;
+  let nativeSpatial = nativeDevelopment||nativeConstruction ? createNativeSpatialRuntimeInput(worldId, geometrySource) : undefined;
+  if ((nativeDevelopment||nativeConstruction) && !nativeSpatial) throw new Error(`Native spatial development is unavailable for ${worldId}`);
+  if(nativeConstruction&&nativeSpatial)nativeSpatial=applyNativeConstructionIntent({...nativeSpatial,assemblies:nativeSpatial.assemblies.map(assembly=>({...assembly,grade:'all' as const}))},nativeConstruction);
   const spatialPolicy = nativeSpatial ? undefined : createR100SpatialPolicy(worldId, seed);
   const searchSitePolicy = R100_SEARCH_SITE_POLICIES.find(row => row.worldId === worldId);
   if (nativeSpatial && !searchSitePolicy) throw new Error(`Native spatial world has no complete search-site policy: ${worldId}`);
-  const algorithmRevision = nativeSpatial ? 12 : searchSitePolicy ? 11 : 8;
+  const algorithmRevision = nativeConstruction ? 13 : nativeSpatial ? 12 : searchSitePolicy ? 11 : 8;
+  const enemyMaterial=nativeConstruction&&['crystal-fibre','ruptured-film'].includes(worldId)?resolveEnemyWorldAdaptation(worldId):undefined;
+  if(nativeConstruction&&['crystal-fibre','ruptured-film'].includes(worldId)&&!enemyMaterial)throw new Error(`Missing admitted enemy material for ${worldId}`);
+  const enemyDeployment=enemyMaterial?NATIVE_ENEMY_DEPLOYMENTS.find(row=>row.worldId===worldId&&row.grade===grade):undefined;
+  if(enemyMaterial&&!validNativeEnemyDeployment(enemyDeployment,worldId,grade,gradeDefinition.paintCoverage))throw new Error(`Missing admitted enemy deployment for ${worldId}/${grade}`);
   const frozen = { version: 3 as const, requestedSeed: seed, paintGeometryVersion: 2 as const,
     profile: profileWithWorldAppearance(world.profile, appearance), appearance, space: SPACE_PROFILES[0]!, contentFragmentTypeId: 'frag-outdoor', nativeDefinition, gradeDefinition, contentDefinition,
-    ...(nativeSpatial ? { nativeSpatial, searchSitePolicy } : { spatialPolicy, ...(searchSitePolicy ? { searchSitePolicy, augmentationPolicy: SPATIAL_AUGMENTATION_POLICY } : {}) }) };
+    ...(nativeSpatial ? { nativeSpatial, searchSitePolicy } : { spatialPolicy, ...(searchSitePolicy ? { searchSitePolicy, augmentationPolicy: SPATIAL_AUGMENTATION_POLICY } : {}) }),
+    ...(nativeConstruction?{nativeConstruction,surfacePixelBudget:8388608 as const,...(enemyMaterial?{enemyMaterialVersion:1 as const,enemyMaterial,enemyDeployment}:{})}:{}) };
   if (contentDefinition.version !== 2) throw new Error('Revision 8 requires expedition definition version 2');
   const materials = materialDependencies(nativeDefinition, appearance);
   return structuredClone({ ...frozen, package: { id: `r100-${worldId}`, algorithm: 'r100-native', version: 3, algorithmRevision,
@@ -122,7 +143,7 @@ export function validR100ProductionRecipe(value: unknown): value is WorldProduct
     if (recipe.version !== 3 || recipe.paintGeometryVersion !== 2 || !Number.isSafeInteger(recipe.requestedSeed)
       || recipe.requestedSeed < 0 || recipe.requestedSeed > 0xffffffff || !native || !isPollutionGrade(native.grade)
       || recipe.contentFragmentTypeId !== 'frag-outdoor' || !pack || pack.algorithm !== 'r100-native' || pack.version !== 3
-      || pack.algorithmRevision !== 12 || pack.grade !== native.grade || !/^r100-[a-z][a-z0-9-]+$/.test(pack.id)
+      || (pack.algorithmRevision !== 12&&pack.algorithmRevision !== 13) || pack.grade !== native.grade || !/^r100-[a-z][a-z0-9-]+$/.test(pack.id)
       || !R100_NATIVE_WORLDS.some(world => `r100-${world.id}` === pack.id)
       || !Array.isArray(native.instances) || native.instances.length < 1 || native.instances.length > 32
       // The source-sized mother form cannot own a second world-sized outline.
@@ -131,10 +152,19 @@ export function validR100ProductionRecipe(value: unknown): value is WorldProduct
       || !isPollutionGradeDefinition(recipe.gradeDefinition) || recipe.gradeDefinition.id !== native.grade
       || recipe.contentDefinition?.grade_id !== native.grade || recipe.contentDefinition.version !== 2
       || !validR100WorldAppearance(recipe.appearance) || `r100-${recipe.appearance.worldId}` !== pack.id
-      || !validNativeSpatialRuntimeInput(recipe.nativeSpatial, native, recipe.appearance.worldId)
+      || !validNativeSpatialRuntimeInput(recipe.nativeSpatial, native, recipe.appearance.worldId,pack.algorithmRevision===13?8388608:4194304)
       || Object.prototype.hasOwnProperty.call(recipe, 'spatialPolicy') || Object.prototype.hasOwnProperty.call(recipe, 'augmentationPolicy')
       || !validSearchSitePolicy(recipe.searchSitePolicy, recipe.appearance.worldId)
-      || recipe.profile?.id !== native.profile || JSON.stringify(recipe).length > 60000) return false;
+      || recipe.profile?.id !== native.profile || JSON.stringify(recipe).length > (pack.algorithmRevision===13?100000:60000)) return false;
+    if(pack.algorithmRevision===13){
+      if(recipe.surfacePixelBudget!==8388608||!validNativeConstructionRuntimeInput(recipe.nativeConstruction,recipe.appearance.worldId))return false;
+      if(recipe.nativeSpatial!.assemblies.some(assembly=>assembly.grade!=='all'))return false;
+      if(!equal(recipe.nativeSpatial,applyNativeConstructionIntent(recipe.nativeSpatial!,recipe.nativeConstruction!)))return false;
+      const hasMaterial=['crystal-fibre','ruptured-film'].includes(recipe.appearance.worldId);
+      if(hasMaterial?recipe.enemyMaterialVersion!==1||!validFrozenEnemyMaterial(recipe.enemyMaterial,recipe.appearance.worldId):recipe.enemyMaterial!==undefined||recipe.enemyMaterialVersion!==undefined)return false;
+      if(hasMaterial?!validNativeEnemyDeployment(recipe.enemyDeployment,recipe.appearance.worldId,native.grade,recipe.gradeDefinition.paintCoverage):Object.prototype.hasOwnProperty.call(recipe,'enemyDeployment'))return false;
+      if(!validNativeConstructionContentBank(recipe))return false;
+    }else if(['nativeConstruction','surfacePixelBudget','enemyMaterial','enemyMaterialVersion','enemyDeployment'].some(key=>Object.prototype.hasOwnProperty.call(recipe,key)))return false;
     validateNativeErosion(native.erosion, native.cols * 32, native.rows * 32);
     const ids = new Set<number>();
     for (const instance of native.instances) {
@@ -148,4 +178,17 @@ export function validR100ProductionRecipe(value: unknown): value is WorldProduct
     const materials = materialDependencies(native, recipe.appearance), { package: _package, ...frozen } = recipe;
     return equal(pack.materials, materials) && pack.dependencyHash === dependencyHash(frozen, materials, pack.algorithmRevision);
   } catch { return false; }
+}
+
+/** Saved colours and shape grammar are self-contained, never compared with
+ * today's material CSV. The complete object participates in the receipt. */
+function validFrozenEnemyMaterial(value:unknown,worldId:string):value is EnemyWorldAdaptation {
+  if(!value||typeof value!=='object'||Array.isArray(value))return false;
+  const material=value as EnemyWorldAdaptation,keys=['key','worldId','kind','dark','mid','light','secondary','fibreCount','membraneSpread','motionLag','paintBranching'];
+  if(Object.keys(material).length!==keys.length||!keys.every(key=>Object.prototype.hasOwnProperty.call(material,key))
+    ||material.worldId!==worldId||material.kind!==(worldId==='crystal-fibre'?'fibre':'membrane')
+    ||typeof material.key!=='string'||material.key.length>240||!material.key.startsWith(`world-body-v1:${worldId}:`))return false;
+  if(![material.dark,material.mid,material.light,material.secondary].every(color=>Array.isArray(color)&&color.length===3&&color.every(n=>Number.isInteger(n)&&n>=0&&n<=255)))return false;
+  return Number.isInteger(material.fibreCount)&&material.fibreCount>=1&&material.fibreCount<=64
+    &&[material.membraneSpread,material.motionLag,material.paintBranching].every(n=>Number.isFinite(n)&&n>=0&&n<=8);
 }

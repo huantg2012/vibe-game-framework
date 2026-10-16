@@ -1,6 +1,7 @@
 /** Capture an unmodified fixed-Git r11 oracle; replay frozen/public boundaries.
  * node --expose-gc --import tsx tools/recovery/check-native-r100-revision11-freezing.mjs --capture|--frozen|--public
  * TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json is needed only for --public.
+ * QA_REPORT may select a new recovery report path; oracle inputs remain fixed.
  * The temporary oracle includes original historical routing; it is NOT shipped.
  * The retained recovery closure must contain neither imports nor prior closures. */
 import assert from 'node:assert/strict';
@@ -17,9 +18,9 @@ const directory='docs/qa/artifacts/native-generation-2026-10-14/recovery';
 const baselinePath=`${directory}/r11-original-oracle.json`;
 const capture=process.argv.includes('--capture'),publicMode=process.argv.includes('--public');
 assert.equal(Number(capture)+Number(publicMode)+Number(process.argv.includes('--frozen')),1,'Select exactly one mode');
-const reportPath=capture?baselinePath:`${directory}/r11-${publicMode?'public':'closure'}-recovery.json`;
+const reportPath=capture?baselinePath:process.env.QA_REPORT??`${directory}/r11-${publicMode?'public':'closure'}-recovery.json`;
 assert(!fs.existsSync(reportPath),'Never overwrite prior evidence');
-fs.mkdirSync(directory,{recursive:true});
+fs.mkdirSync(path.dirname(reportPath),{recursive:true});
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 function exactHash(value){const digest=createHash('sha256');function visit(item){
   if(ArrayBuffer.isView(item)){digest.update(`typed:${item.constructor.name}:${item.byteLength}:`).update(new Uint8Array(item.buffer,item.byteOffset,item.byteLength));return;}

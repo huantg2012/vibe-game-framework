@@ -22,11 +22,11 @@ export function createNativeSpatialRuntimeInput(worldId:string,native:MasterDefi
   return structuredClone(input);
 }
 
-export function validNativeSpatialRuntimeInput(value:unknown,native:MasterDefinition,worldId:string):value is NativeSpatialRuntimeInput {
+export function validNativeSpatialRuntimeInput(value:unknown,native:MasterDefinition,worldId:string,surfacePixelBudget:4194304|8388608=4194304):value is NativeSpatialRuntimeInput {
   try {
     if(!value||typeof value!=='object'||Array.isArray(value))return false;
     const {extraction,deployment,...intent}=value as NativeSpatialRuntimeInput;
-    if(!validNativeSpatialFrozenInput(intent,native)||intent.world.worldId!==worldId||!intent.world.enabled||!intent.policy.enabled)return false;
+    if(!validNativeSpatialFrozenInput(intent,native,surfacePixelBudget)||intent.world.worldId!==worldId||!intent.world.enabled||!intent.policy.enabled)return false;
     if(!extraction||typeof extraction!=='object'||Array.isArray(extraction))return false;
     const e=extraction,keys=['minPathDistancePx','minEuclideanDistancePx','minPathFraction','maxPathFraction','clearanceHalfSize','regionCols','regionRows','distanceBands'];
     if(Object.keys(e).length!==keys.length||!keys.every(key=>Object.prototype.hasOwnProperty.call(e,key)))return false;

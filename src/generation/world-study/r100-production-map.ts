@@ -22,6 +22,7 @@ import { serializeR100MasterWorld } from './r100-native-data';
 import { validR100ProductionRecipe } from './r100-package';
 import type { WorldProductionRecipeV3 } from './production-recipe';
 import type { WorldProductionMap } from './production-map';
+import {createNativeConstructionCandidate} from './native-construction-generation';
 
 export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldProductionMap {
   if (recipe.package?.algorithmRevision === 1 || recipe.package?.algorithmRevision === 2) return createFrozenR100ProductionMap(recipe);
@@ -35,6 +36,7 @@ export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldP
   if (recipe.package?.algorithmRevision === 10) return createRevision10Map(recipe);
   if (recipe.package?.algorithmRevision === 11) return createRevision11Map(recipe);
   if (!validR100ProductionRecipe(recipe)) throw new Error('Invalid or unavailable native world package');
+  if(recipe.package.algorithmRevision===13)return createDirectConstructionMap(recipe);
   const input=recipe.nativeSpatial!,rejected:{seed:number;reason:string}[]=[],attempts:NativeSpatialAttemptTrace[]=[];
   // Deadline only terminates a request. It never ranks/selects a different layout.
   const started=performance.now();
@@ -61,6 +63,37 @@ export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldP
   throw failure(`Native v3 world could not admit its complete ${recipe.nativeDefinition.grade} contents after 8 deterministic attempts`);
 }
 
+function createDirectConstructionMap(recipe:WorldProductionRecipeV3):WorldProductionMap {
+  const started=performance.now(),seed=recipe.nativeConstruction!.geometrySeed;
+  const trace:NativeSpatialAttemptTrace={geometrySeed:seed,proposalBudget:1,layoutProposals:0,geometryEvaluations:0,fullCandidates:0,feedbackBases:[],candidates:[],deploymentRejections:[],stopReason:'searching'};
+  const attempts=[trace],rejected:{seed:number;reason:string}[]=[];
+  const failure=(message:string)=>Object.assign(new Error(message),{diagnostics:{algorithm:'native-direct-construction-v1',attempts,rejected}});
+  const checkpoint=()=>{if(performance.now()-started>=60000){trace.stopReason='deadline';throw failure('Direct construction exceeded its 60 second deadline');}};
+  let candidate:NativeSpatialGeometryCandidate;
+  try{candidate=createNativeConstructionCandidate(recipe,trace,checkpoint);}
+  catch(error){
+    if(trace.stopReason==='deadline')throw error;
+    const reason=error instanceof Error?error.message:String(error);rejected.push({seed,reason});
+    throw failure(`Direct construction failed before admission: ${reason}`);
+  }
+  if(!candidate.trace.accepted){trace.stopReason='geometry-work-budget';throw failure(`Direct construction rejected: ${candidate.trace.reasons.join('; ')}`);}
+  // Only content changes between these fixed attempts. The physical meshes,
+  // body graph and measured G1/G2/G3 candidate are reused without modification.
+  const certified=recipe.nativeConstruction!.contentSeeds[recipe.nativeDefinition.grade];
+  const certifiedSeed=certified[mix32(recipe.requestedSeed,`r100-certified-content-v1:${recipe.package.id}:${recipe.nativeDefinition.grade}`)%certified.length]!;
+  for(let attempt=0;attempt<8;attempt++){
+    const current=attempt===0?trace:{...trace,layoutProposals:0,geometryEvaluations:0,finalGeometryEvaluations:0,
+      fullCandidates:0,feedbackBases:[],candidates:[candidate.trace],deploymentRejections:[],stopReason:'searching' as const};
+    if(attempt>0)attempts.push(current);
+    const attemptCheckpoint=()=>{if(performance.now()-started>=60000){current.stopReason='deadline';throw failure('Direct construction exceeded its 60 second deadline');}};
+    const result=completeNativeSpatialCandidate(recipe,candidate,{attempt,trace:current,attempts,rejected,checkpoint:attemptCheckpoint,
+      ...(attempt===7?{contentSeed:certifiedSeed,contentSeedSource:'certified' as const}:{})});
+    if(result.accepted)return result.map;
+    current.stopReason='full-candidate-budget';
+  }
+  throw failure(`Direct construction rejected complete ${recipe.nativeDefinition.grade} deployment after 8 deterministic content attempts`);
+}
+
 
 /** Internal execution context shared by normal search and fixed-layout diagnostics.
  * The caller owns the original request deadline and the same attempt ledger. */
@@ -70,6 +103,9 @@ export interface NativeSpatialCompleteCandidateContext {
   readonly attempts:NativeSpatialAttemptTrace[];
   readonly rejected:{seed:number;reason:string}[];
   readonly checkpoint:()=>void;
+  /** Explicit content seed is revision-13 only; geometry remains unchanged. */
+  readonly contentSeed?:number;
+  readonly contentSeedSource?:'certified'|'certification';
 }
 export type NativeSpatialCompleteCandidateResult =
   | Readonly<{accepted:true;map:WorldProductionMap}>
@@ -104,11 +140,14 @@ export function nativeSpatialReplayAttempts(attempts:readonly NativeSpatialAttem
 export function completeNativeSpatialCandidate(recipe:WorldProductionRecipeV3,candidate:NativeSpatialGeometryCandidate,
   context:NativeSpatialCompleteCandidateContext):NativeSpatialCompleteCandidateResult {
   const input=recipe.nativeSpatial,{attempt,trace,attempts,rejected,checkpoint}=context;
-  if(recipe.package.algorithmRevision!==12||!input)throw new Error('Complete native candidate requires a revision-12 recipe');
+  if((recipe.package.algorithmRevision!==12&&recipe.package.algorithmRevision!==13)||!input)throw new Error('Complete native candidate requires a revision-12 or revision-13 recipe');
   if(!candidate.trace.accepted||!candidate.trace.gates.geometry?.accepted||!candidate.trace.gates.visibility?.accepted)
     throw new Error('Complete native candidate requires measured G1/G2/G3 admission');
-  const seed=trace.geometrySeed,selected=candidate.layout.candidate;
-  if(candidate.trace.geometrySeed!==seed||candidate.trace.candidate!==selected||attempts[attempt]!==trace)
+  if(context.contentSeed!==undefined&&(recipe.package.algorithmRevision!==13||!Number.isSafeInteger(context.contentSeed)||context.contentSeed<0||context.contentSeed>0xffffffff))throw new Error('Invalid explicit construction content seed');
+  const geometrySeed=trace.geometrySeed,seed=recipe.package.algorithmRevision===13
+    ?context.contentSeed??(attempt===0?recipe.requestedSeed:mix32(recipe.requestedSeed,`r100-direct-content-v1-${attempt}`))
+    :geometrySeed,selected=candidate.layout.candidate;
+  if(candidate.trace.geometrySeed!==geometrySeed||candidate.trace.candidate!==selected||attempts[attempt]!==trace)
     throw new Error('Complete native candidate does not belong to the request attempt');
   if(trace.fullCandidates>=input.policy.maxFullCandidates){trace.stopReason='full-candidate-budget';throw new Error('Native full candidate budget exhausted before extraction');}
   trace.fullCandidates++;
@@ -120,7 +159,9 @@ export function completeNativeSpatialCandidate(recipe:WorldProductionRecipeV3,ca
     stageDiagnostics.extraction={extraction,summary};stage='master';
     const point=candidate.geometry.terrain.spawnPoint;
     const definition={...candidate.layout.definition,spawn_x:point.x,spawn_y:point.y,exit_x:extraction.point.x,exit_y:extraction.point.y};
-    const master=createMasterWorld(definition,seed,{grade:recipe.gradeDefinition,profile:recipe.profile,spatialDeployment:input.deployment});
+    const master=createMasterWorld(definition,seed,{grade:recipe.gradeDefinition,profile:recipe.profile,spatialDeployment:input.deployment,
+      ...(recipe.package.algorithmRevision===13?{surfacePixelBudget:recipe.surfacePixelBudget!,geometrySeed}:{}),
+      ...(recipe.enemyDeployment?{enemyDeployment:recipe.enemyDeployment}:{})});
     if(master.layout.spawnPoint.x!==point.x||master.layout.spawnPoint.y!==point.y||master.layout.extractionPoint.position.x!==extraction.point.x||master.layout.extractionPoint.position.y!==extraction.point.y)
       throw new Error('Native final deployment moved a measured spawn/extraction endpoint');
     // Ground-edge presentation cannot replace the support measured by G1–G4.
@@ -141,8 +182,9 @@ export function completeNativeSpatialCandidate(recipe:WorldProductionRecipeV3,ca
     checkpoint();trace.stopReason='selected';
     const diagnostics={...master.diagnostics,qualification:'v3-production-candidate',expedition:deployed.diagnostics,
       nativeSpatial:{algorithm:input.policy.algorithm,version:input.policy.version,sourceHash:input.policy.sourceHash,selectedCandidate:selected,
+        ...(recipe.nativeConstruction?{construction:{algorithm:recipe.nativeConstruction.algorithm,version:recipe.nativeConstruction.version,sourceHash:recipe.nativeConstruction.sourceHash,geometrySeed,seedMode:recipe.nativeConstruction.seedMode,contentAttempt:attempt,contentSeed:seed,contentSeedSource:context.contentSeedSource??'requested'}}:{}),
         attempts:nativeSpatialReplayAttempts(attempts),fragmentShape:candidate.layout.fragmentShape,assemblies:candidate.layout.assemblies,holes:candidate.layout.holes,bays:candidate.layout.bays,positiveLandRects:candidate.layout.plan.land,landJoins:candidate.layout.landJoins,gates:{...candidate.trace.gates,routes},extraction,extractionCandidateField:summary}};
-    const native=serializeR100MasterWorld({...master,algorithmRevision:12,searchSites:deployed.searchSites,appearance:recipe.appearance,layout,diagnostics},recipe.gradeDefinition,recipe.package.dependencyHash);
+    const native=serializeR100MasterWorld({...master,algorithmRevision:recipe.package.algorithmRevision,searchSites:deployed.searchSites,appearance:recipe.appearance,layout,diagnostics},recipe.gradeDefinition,recipe.package.dependencyHash);
     return{accepted:true,map:{sample:master.sample,layout,hostTileMap:master.hostTileMap,native,
       metadata:{world:recipe.package.id,space:recipe.nativeDefinition.id,contentFragmentTypeId:recipe.contentFragmentTypeId,
         requestedSeed:recipe.requestedSeed,effectiveSeed:layout.seed,attempt,rejected,

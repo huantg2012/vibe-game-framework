@@ -14,6 +14,8 @@ import { r100MaterialPressure, r100PresentationIdentity, validR100PresentationSt
 import { ActorOcclusionField } from './actor-occlusion-field';
 import { bakeSearchSitePatches } from './search-site-bake';
 import { applySearchSitePatch, validateSearchSitePatches } from './search-site-patches';
+import { createNativeMaterialLighting } from './material-lighting';
+import type { WorldMaterialLighting } from '@/entities/form-renderers/d/world-material-light';
 export type MasterViewMode='normal'|'albedo'|'light'|'geometry';
 const mix=(a:Rgb,b:Rgb,t:number):Rgb=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
 let presentationSequence=0;
@@ -34,6 +36,7 @@ export class MasterPresentation implements RiftDevRuntime {
  private readonly pollutionColor:Rgb;
  private readonly lamp:NativeVolumeLight={x:0,y:0,z:28,radius:264,intensity:3.1,color:[1,.94,.86],castsShadow:false};
  private readonly lights:NativeVolumeLight[];
+ readonly worldMaterialLighting:WorldMaterialLighting;
  private readonly actorMasks:Array<{actor:RiftDevActorVisuals;graphics:Phaser.GameObjects.Graphics;mask:Phaser.Display.Masks.GeometryMask;objects:Phaser.GameObjects.Components.Mask[];key:string;retired:boolean}>=[];
  private readonly actorOcclusionField:ActorOcclusionField;
  private mode:MasterViewMode='normal';private motion=true;private destroyed=false;
@@ -88,6 +91,7 @@ export class MasterPresentation implements RiftDevRuntime {
    if(found)this.erosionSources.push({...found,z:12,radius:64,intensity:.55,color:[sourceColor[0]/Math.max(...sourceColor),sourceColor[1]/Math.max(...sourceColor),sourceColor[2]/Math.max(...sourceColor)],castsShadow:false});
   }
   this.lights=[this.lamp];
+  this.worldMaterialLighting=createNativeMaterialLighting(r,this.lights,(x,y)=>world.matterAt(x,y));
   for(const actor of [context.player,...context.enemies]){
    const graphics=scene.add.graphics().setVisible(false);rollback.push(()=>graphics.destroy());
    const mask=graphics.createGeometryMask(),objects:Phaser.GameObjects.Components.Mask[]=[];rollback.push(()=>mask.destroy());
@@ -99,16 +103,15 @@ export class MasterPresentation implements RiftDevRuntime {
  setMode(mode:MasterViewMode):void{this.mode=mode;}
  setMotion(enabled:boolean):void{this.motion=enabled;this.audio.setPaused(!enabled);}
  update(elapsedMs:number,ended:boolean):void{const dt=Math.max(0,elapsedMs-this.lastElapsed);this.lastElapsed=elapsedMs;if(this.motion&&!ended)this.time+=dt;if(ended)this.audio.destroy();}
- afterUpdate():void{
-  if(this.destroyed)return;const began=performance.now(),frame=this.context.readPresentationFrame();
-  if(this.world.searchSites)for(const node of frame.piles)this.renderer.setSearchSiteCollected(node.id,node.collected);
-  this.lamp.x=frame.player.position.x;this.lamp.y=frame.player.position.y;
+ prepareWorldMaterialLighting():void{
+  if(this.destroyed)return;
+  const point=this.context.player.getPosition();
+  this.lamp.x=point.x;this.lamp.y=point.y;
   const cycle=(this.time/1000%this.world.definition.motion_period)/this.world.definition.motion_period;
   const pressure=r100MaterialPressure(this.time,this.world.definition.motion_period);
   this.activity=.72+pressure*.40;this.phase=cycle<.56?'缓慢闪动':cycle<.76?'绿色侵蚀逐渐变亮':cycle<.83?'绿色侵蚀强烈闪动':'绿色侵蚀逐渐变暗';
   for(let i=0;i<this.phaseSources.length;i++)this.phaseSources[i]!.intensity=this.world.definition.emission*1.8*(.65+Math.max(0,pressure-i*.09)*.55);
   for(const light of this.erosionSources)light.intensity=.48+pressure*.36;
-  this.audio.update(this.time,pressure,frame.player.position,this.phaseSources,this.motion);
   const liveHosts=this.context.readPollutionSources?.()??[],seen=new Set<string>();
   for(const source of liveHosts){
    seen.add(source.id);let light=this.hostSources.get(source.id);
@@ -123,6 +126,13 @@ export class MasterPresentation implements RiftDevRuntime {
   const score=(light:NativeVolumeLight):number=>light.intensity*Math.max(0,1-Math.hypot(light.x-this.lamp.x,light.y-this.lamp.y)/(light.radius+160));
   candidates.sort((a,b)=>score(b)-score(a));
   this.lights.length=1;this.lights.push(...candidates.filter(light=>light.intensity>0).slice(0,7));
+ }
+ afterUpdate():void{
+  if(this.destroyed)return;const began=performance.now(),frame=this.context.readPresentationFrame();
+  if(this.world.searchSites)for(const node of frame.piles)this.renderer.setSearchSiteCollected(node.id,node.collected);
+  this.prepareWorldMaterialLighting();
+  const cycle=(this.time/1000%this.world.definition.motion_period)/this.world.definition.motion_period;
+  this.audio.update(this.time,r100MaterialPressure(this.time,this.world.definition.motion_period),frame.player.position,this.phaseSources,this.motion);
   this.renderer.draw(this.lights,this.activity,this.time/1000,['normal','albedo','light','geometry'].indexOf(this.mode));
   this.texture.source[0]!.update();this.drawStress(cycle);this.maskActor();this.renderMs=performance.now()-began;
  }

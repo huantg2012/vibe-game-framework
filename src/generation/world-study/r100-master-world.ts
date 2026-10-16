@@ -17,6 +17,7 @@ import type { WorldSample } from '@/generation/world-study/types';
 import { TileType, type Vector2 } from '@/types/game-types';
 import type { TileMapData, OccluderGrid } from '@/types/map-types';
 import { MASTER_SCENES_SOURCE_HASH } from './r100-generated-scenes';
+import type {NativeEnemyDeployment} from './native-enemy-deployment';
 
 export type MasterFamily = NativeVolumeFamily;
 export type MasterGrade = 'low' | 'medium' | 'severe';
@@ -39,7 +40,12 @@ export interface MasterDefinition {
 }
 export interface MasterWorld {
   /** New packages opt into current presentation; absence preserves frozen r4. */
-  readonly algorithmRevision?: 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+  readonly algorithmRevision?: 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
+  /** Explicit budget frozen with the larger directly constructed r13 worlds. */
+  readonly surfacePixelBudget?: 8388608;
+  readonly geometrySeed?: number;
+  /** Actual forms, already frozen and validated by the r13 recipe. */
+  readonly enemyDeployment?: NativeEnemyDeployment;
   /** Present from revision 9 grounded-search packages; no reward identity. */
   readonly searchSites?: readonly import('./search-site-types').R100SearchSitePlacement[];
   readonly spatialDeployment?: R100SpatialDeploymentPolicy;
@@ -64,12 +70,12 @@ export interface MasterWorld {
 }
 const TILE = 32, SUPPORT = 8, HALF_BODY = GAME_CONSTANTS.PLAYER.BODY_SIZE / 2;
 
-export function createMasterWorld(definition: MasterDefinition, seed: number, frozen?: { readonly grade: PollutionGradeDefinition; readonly profile: WorldProfile; readonly spatialDeployment?: R100SpatialDeploymentPolicy }): MasterWorld {
+export function createMasterWorld(definition: MasterDefinition, seed: number, frozen?: { readonly grade: PollutionGradeDefinition; readonly profile: WorldProfile; readonly spatialDeployment?: R100SpatialDeploymentPolicy; readonly surfacePixelBudget?: 8388608; readonly geometrySeed?: number; readonly enemyDeployment?: NativeEnemyDeployment }): MasterWorld {
   if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('种子必须是 0–4294967295 的整数');
   if (frozen?.spatialDeployment) validateR100SpatialDeploymentPolicy(frozen.spatialDeployment);
   const { width, height, cols, rows, land, walls, flowAngle, deposition, matter, erosion, roles, meshes,
-    tileMap, grid, reachable, start, reachableBodySeats, spawnPoint, exitPoint, searchPoint, enemyPoint, matterAt } = compileNativeTerrain(definition, seed);
-  const raster = compileNativeVolumeRaster(meshes, { x:0, y:0, width, height, pixelSize:1, supportCellSize:SUPPORT, opticalHeight:24 });
+    tileMap, grid, reachable, start, reachableBodySeats, spawnPoint, exitPoint, searchPoint, enemyPoint, matterAt } = compileNativeTerrain(definition, frozen?.geometrySeed ?? seed);
+  const raster = compileNativeVolumeRaster(meshes, { x:0, y:0, width, height, pixelSize:1, supportCellSize:SUPPORT, opticalHeight:24, ...(frozen?.surfacePixelBudget ? {maxPixels:frozen.surfacePixelBudget} : {}) });
   const roleAt = (x:number,y:number): MasterPhysicalRole | null => {
     if (!matterAt(x,y)) return null;
     return roles.get(raster.objectId[Math.floor(y) * raster.width + Math.floor(x)]!) ?? null;
@@ -79,7 +85,7 @@ export function createMasterWorld(definition: MasterDefinition, seed: number, fr
   const physicalLand=Uint8Array.from(tileMap.tiles.flat(),v=>v===TileType.VOID?0:1), physicalWalls=Uint8Array.from(tileMap.tiles.flat(),v=>v===TileType.WALL?1:0);
   const fragmentTypeId='frag-outdoor';
   const grade = frozen?.grade ?? POLLUTION_GRADE_DEFINITIONS.find(item => item.id === definition.grade)!;
-  const pollution = createMasterPollution(grade, seed, grid, reachable, start, [exitPoint, searchPoint], frozen?.spatialDeployment);
+  const pollution = createMasterPollution(grade, seed, grid, reachable, start, [exitPoint, searchPoint], frozen?.spatialDeployment, frozen?.enemyDeployment?.paint);
   const outline={seed,attempt:0,cols,rows,tileSize:SUPPORT,land:physicalLand,tileMap,metrics:measureOutline(physicalLand,cols,rows)};
   const enemyCell={col:Math.floor(enemyPoint.x/SUPPORT),row:Math.floor(enemyPoint.y/SUPPORT)};
   const layout:GeneratedRiftLayout={seed,paintGeometryVersion:2,fragmentTypeId,recipeId:`r100-art-lab:${definition.id}`,contaminationAge:'new',ruinSeverity:'broken',tileMap,
@@ -92,7 +98,7 @@ export function createMasterWorld(definition: MasterDefinition, seed: number, fr
   const sample:WorldSample={profile:{...baseProfile,surface:{...baseProfile.surface,quietness:definition.ground_quietness,contrast:definition.ground_contrast,coverage:definition.ground_coverage}},topologyId:'loops',seed,cols:definition.cols,rows:definition.rows,tileSize:TILE,land,walls,spawn:spawnPoint,exit:exitPoint,formations:[],flowAngle,deposition};
   const sight:OccluderGrid={cols,rows,tileSize:SUPPORT,version:0,isOpaque:(col,row)=>col<0||row<0||col>=cols||row>=rows||!matter[row*cols+col]};
   let hash=2166136261;for(const mesh of meshes)for(const v of mesh.positions){hash=Math.imul(hash^Math.round(v*100),16777619);}for(const v of physicalWalls)hash=Math.imul(hash^v,16777619);for(const v of matter)hash=Math.imul(hash^v,16777619);
-  return{...(frozen?.spatialDeployment ? { spatialDeployment: frozen.spatialDeployment } : {}),definition,meshes,raster,sample,layout,hostTileMap:pollution.hostTileMap,pollution,sight,combat:grid,matterAt,roleAt,diagnostics:{identity:definition.id,family:definition.family,grade:definition.grade,seed,
+  return{...(frozen?.enemyDeployment?{enemyDeployment:frozen.enemyDeployment}:{}),...(frozen?.geometrySeed !== undefined ? {geometrySeed:frozen.geometrySeed} : {}),...(frozen?.surfacePixelBudget ? {surfacePixelBudget:frozen.surfacePixelBudget} : {}),...(frozen?.spatialDeployment ? { spatialDeployment: frozen.spatialDeployment } : {}),definition,meshes,raster,sample,layout,hostTileMap:pollution.hostTileMap,pollution,sight,combat:grid,matterAt,roleAt,diagnostics:{identity:definition.id,family:definition.family,grade:definition.grade,seed,
     sourceHash:MASTER_SCENES_SOURCE_HASH,geometryFingerprint:(hash>>>0).toString(16).padStart(8,'0'),qualification:'author-local-art-lab; not a production-world admission',projection:'native XY topdown; height projection 0',
     nativeCanvas:[960,640],cameraZoom:1.5,actorBody:HALF_BODY*2,movementPxPerSecond:80,supportCell:SUPPORT,
     triangles:meshes.reduce((n,m)=>n+m.triangleCount,0),reachableBodySeats,spawnPoint,exitPoint,searchPoint,enemyPoint,

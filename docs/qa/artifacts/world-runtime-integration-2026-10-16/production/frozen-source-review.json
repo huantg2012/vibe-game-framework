@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "scope": "read-only in-memory adversarial review",
+  "cases": [
+    {
+      "world": "cinder-ridge",
+      "grade": "low",
+      "status": "passed"
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "status": "passed"
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "severe",
+      "status": "passed"
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "low",
+      "status": "passed"
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "medium",
+      "status": "passed"
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "severe",
+      "status": "passed"
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "low",
+      "status": "passed"
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "medium",
+      "status": "passed"
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "severe",
+      "status": "passed"
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "low",
+      "status": "passed"
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "medium",
+      "status": "passed"
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "severe",
+      "status": "passed"
+    }
+  ],
+  "checks": [
+    "12 recipes preserve requested content/grade",
+    "four physical authored geometries equal across all grades",
+    "12 explicit r12 recipes remain valid with no r13 construction",
+    "12 saved r13 validate and reconstruct after current construction/spatial catalogs and native definitions cleared in this isolated process"
+  ],
+  "limitations": [
+    "No permanent source mutation",
+    "No new complete content or browser runs; production/QA own those",
+    "Registered world ids and immutable material dependency manifest intentionally preserved, as existing validation requires them"
+  ]
+}

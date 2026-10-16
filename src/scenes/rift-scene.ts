@@ -1,6 +1,8 @@
 import { nativeRiftPlayerForRestore, NATIVE_BODY_GEOMETRY_VERSION } from '@/systems/native-rift-body-recovery';
 import { nativeBodyCollision, type NativeBodyCollision, type NativeBodyMotion } from '@/generation/world-study/native-body-collision';
 import { createR100WorldPresentation, getPreparedR100Presentation } from '@/systems/r100-world-presentation';
+import { resolveRuntimeEnemyWorldAppearance } from '@/entities/form-renderers/d/world-runtime';
+import type { WorldMaterialLighting } from '@/entities/form-renderers/d/world-material-light';
 import { createWorldPlaySurface, type WorldPlaySurface } from '@/systems/world-space-surface';
 import { createGroundedWorldSearchVisual, createWorldSearchVisual } from '@/systems/world-search-presentation';
 import { createR100ExtractionVisual } from '@/systems/r100-extraction-presentation';
@@ -144,6 +146,9 @@ export interface RiftDevRuntimeContext {
   readonly setWorldProjector: (projector: RiftWorldProjector | null) => void;
 }
 export interface RiftDevRuntime {
+  /** Current native lamps; does not replace visibility or Host danger geometry. */
+  readonly worldMaterialLighting?: WorldMaterialLighting;
+  prepareWorldMaterialLighting?(): void;
   beforeCombat?(elapsedMs: number, ended: boolean): void;
   update(elapsedMs: number, ended: boolean): void;
   afterUpdate(elapsedMs: number): void;
@@ -236,6 +241,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly fieldInventory = new FieldLootInventory();
   private devFixture: RiftDevFixture | null = null;
   private devRuntime: RiftDevRuntime | null = null;
+  private hasWorldMaterialActors = false;
   /** Production rendering owns only its surfaces; native Hosts remain scene-owned. */
   private nativeWorldPresentation: ReturnType<typeof createR100WorldPresentation> | null = null;
   private worldSurface: WorldPlaySurface | null = null;
@@ -2023,6 +2029,16 @@ export class RiftScene extends Phaser.Scene {
     this.hosts.setSkipPaint(true);
     const fragmentTypeId = this.layoutDebug.fragmentTypeId;
     const seedRoot = this.layoutDebug.seed;
+    const recipe = this.recovery?.identity.generation ?? this.devFixture?.productionRecipe;
+    const material = recipe?.version === 3 ? recipe.enemyMaterial : undefined;
+    this.hasWorldMaterialActors = !!material;
+    // Actors attach before the native runtime. Keep one lazy bridge rather than
+    // capturing a missing renderer or a stale copy of the moving shoulder lamp.
+    const scene = this, emptyLights: WorldMaterialLighting['lights'] = [];
+    const worldLighting: WorldMaterialLighting | undefined = material ? {
+      get lights() { return scene.devRuntime?.worldMaterialLighting?.lights ?? emptyLights; },
+      shadeAt(x, y, z, light) { return scene.devRuntime?.worldMaterialLighting?.shadeAt?.(x, y, z, light) ?? 1; },
+    } : undefined;
     for (const view of this.ai.getEnemies()) {
       if (!(view instanceof Enemy)) continue;
       view.setVisualSuppressed(true);
@@ -2036,6 +2052,7 @@ export class RiftScene extends Phaser.Scene {
         seed: mix32(seedRoot, view.getId()),
         depth: DEPTH.enemy,
         fragmentTypeId,
+        ...resolveRuntimeEnemyWorldAppearance(material, view.getForm().substrate, worldLighting),
       });
       this.formVisuals.set(view.getId(), visual);
       if (beforeVisual) this.devEnemyVisuals.push({ id: view.getId(),
@@ -2061,6 +2078,7 @@ export class RiftScene extends Phaser.Scene {
         depth: this.depthForHostPin(pin?.kind),
         fragmentTypeId,
         pin,
+        ...resolveRuntimeEnemyWorldAppearance(material, subject.form.substrate, worldLighting),
       });
       this.formVisuals.set(subject.id, visual);
       this.hosts.setStepFloors(subject.id, visual.stepFloors ?? []);
@@ -2084,6 +2102,7 @@ export class RiftScene extends Phaser.Scene {
 
   private syncSchemeDPoses(deltaMs: number): void {
     if (this.formVisuals.size === 0) return;
+    if (this.hasWorldMaterialActors) this.devRuntime?.prepareWorldMaterialLighting?.();
     for (const [id, visual] of this.formVisuals) {
       const view = this.ai.getEnemyById(id);
       if (view) {

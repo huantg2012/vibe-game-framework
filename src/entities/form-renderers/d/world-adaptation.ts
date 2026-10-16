@@ -1,5 +1,6 @@
 /** Shared optional material grammar. World identity is data, never a world-ID
- * drawing branch. A caller must opt in: production attachment stays unchanged. */
+ * drawing branch. A caller must opt in through the admitted runtime recipe or
+ * an explicit preview; resolving a supported family never enables it alone. */
 import { ENEMY_WORLD_MATERIAL_ROUTING, ENEMY_WORLD_MATERIAL_RULES, ENEMY_WORLD_MATERIAL_SOURCE_HASH } from '@/generated/enemy-world-materials';
 import { R100_WORLD_APPEARANCES, R100_APPEARANCE_SOURCE_HASH } from '@/generated/r100-world-appearance';
 

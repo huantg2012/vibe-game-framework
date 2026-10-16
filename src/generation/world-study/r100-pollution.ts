@@ -9,6 +9,7 @@ import type { PollutionGradeDefinition } from '@/generation/world-study/pollutio
 import type { TileGrid } from '@/systems/tile-grid';
 import { bodyDisplacementFraction } from '@/systems/ai/physical-grid';
 import { GAME_CONSTANTS } from '@/config/constants';
+import {colonyNucleusSeatsInFloors,resolveStopLoss} from '@/systems/contamination-host-live';
 import type { R100SpatialDeploymentPolicy } from './r100-spatial-deployment';
 import type { TileMapData } from '@/types/map-types';
 import { TileType, type Vector2 } from '@/types/game-types';
@@ -25,7 +26,7 @@ export interface MasterPollution {
 }
 const TILE = 32;
 export function createMasterPollution(grade: PollutionGradeDefinition, seed: number, grid: TileGrid,
-  reachable: Uint8Array, start: number, targets: readonly Readonly<Vector2>[], spatial?: R100SpatialDeploymentPolicy): MasterPollution {
+  reachable: Uint8Array, start: number, targets: readonly Readonly<Vector2>[], spatial?: R100SpatialDeploymentPolicy, frozenPaintForm?: ContaminationForm): MasterPollution {
   const cols = grid.cols * grid.tileSize / TILE, rows = grid.rows * grid.tileSize / TILE;
   const scale = TILE / grid.tileSize;
   const tiles = Array.from({ length: rows }, (_, row) => Array.from({ length: cols }, (_, col) => {
@@ -95,7 +96,7 @@ export function createMasterPollution(grade: PollutionGradeDefinition, seed: num
   type Seat = { col: number; row: number; danger: readonly number[] };
   const paintRequests: { form: ContaminationForm; seats: Seat[] }[] = [];
   for (let slot = 0; slot < grade.paintCount; slot++) {
-    const form: ContaminationForm = { substrate: grade.paintSubstrate, coverage: grade.paintCoverage,
+    const form: ContaminationForm = frozenPaintForm ?? { substrate: grade.paintSubstrate, coverage: grade.paintCoverage,
       continuity: grade.paintContinuity, occupancy: 'paint', portfolio: 'bing',
       lexemes: { motion: 'motion_anchor', sense: 'sense_domain', rhythm: 'rhythm_open', contact: 'contact_step_chaos' } };
     const hostSeed = mix32(seed, `ENM_BING_${String(slot + 1).padStart(2, '0')}`);
@@ -103,6 +104,13 @@ export function createMasterPollution(grade: PollutionGradeDefinition, seed: num
       fragmentTypeId: 'frag-outdoor', veinVariant: resolvePaintVeinVariant(form.substrate, hostSeed), geometryVersion: 2 });
     const cells = (field: Float32Array) => collectPaintGenomeFloorTiles(field, baked.canvasW, baked.canvasH, TILE / 2, TILE / 2, TILE);
     const support = cells(baked.terrainFootprintField), danger = cells(baked.field);
+    if(frozenPaintForm){
+      const stop=resolveStopLoss(form),config=GAME_CONSTANTS.CONTAMINATION;
+      if(stop==='illegal'||!danger.length)throw new Error(`${grade.id}: frozen paint form has no legal Host surface`);
+      if(stop.family==='scatter_rejoin'&&colonyNucleusSeatsInFloors(danger,config.COLONY_NUCLEUS_COUNT_MIN,
+        config.COLONY_NUCLEUS_COUNT_MAX,config.COLONY_NUCLEUS_MIN_TILE_GAP,2).length<config.COLONY_NUCLEUS_COUNT_MIN)
+        throw new Error(`${grade.id}: frozen paint form cannot preserve its colony nucleus quota`);
+    }
     const seats = candidates.filter(seat => support.every(offset => isFloor(seat.col + offset.col, seat.row + offset.row))
       && danger.every(offset => !blocked(seat.col + offset.col, seat.row + offset.row)))
       .map(seat => ({ ...seat, danger: danger.map(offset => (seat.row + offset.row) * cols + seat.col + offset.col) }));

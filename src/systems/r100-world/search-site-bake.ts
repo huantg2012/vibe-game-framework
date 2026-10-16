@@ -149,7 +149,7 @@ export function bakeSearchSitePatches(world: MasterWorld, baseSurface: MasterSur
   if (world.algorithmRevision === 9) return bakeRevision9SearchSites(world, baseSurface, painting);
   if (world.algorithmRevision === 10) return bakeRevision10SearchSites(world, baseSurface, painting);
   if (world.algorithmRevision === 11) return bakeRevision11SearchSites(world, baseSurface, painting);
-  if (world.algorithmRevision !== 12) return [];
+  if (world.algorithmRevision !== 12 && world.algorithmRevision !== 13) return [];
   const sites = world.searchSites;
   if (!sites) throw new Error('Revision 12 native world has no frozen search sites');
   if (baseSurface.width !== world.raster.width || baseSurface.height !== world.raster.height) throw new Error('Search-site receiver dimensions differ from native world');
