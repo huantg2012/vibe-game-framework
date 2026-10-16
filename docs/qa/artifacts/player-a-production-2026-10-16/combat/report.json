@@ -1,0 +1,66 @@
+{
+  "method": "Actual RiftScene, ordinary equipped gym loadout, isolated storage. Explicit public applyHazardHit calls exercise hurt/death presentation; not a natural fight.",
+  "checks": [
+    "Actual A body and glove flash, contact does not; original mask survives",
+    "Scene pause clears body flash",
+    "Lethal hazard cancels swing and clears flash on the same update",
+    "Scene shutdown releases all owned body/contact/glove canvas textures"
+  ],
+  "errors": [],
+  "hurt": {
+    "health": 99,
+    "before": 100,
+    "allBodyFlashes": true,
+    "contactTint": false,
+    "sameMask": true,
+    "oldBodyVisible": false
+  },
+  "death": {
+    "accepted": true,
+    "dead": true,
+    "phase": "idle",
+    "probe": {
+      "ready": true,
+      "model": "a",
+      "frame": "2-idle-0",
+      "frameIndex": 26,
+      "yaw": 2.135366,
+      "pose": "idle",
+      "foot": {
+        "x": 300,
+        "y": 998,
+        "anchor": [
+          32,
+          66
+        ]
+      },
+      "lamp": {
+        "x": 305.432494648688,
+        "y": 989.4405040778078,
+        "z": 34.344
+      },
+      "oldBodyVisible": false,
+      "nativeScale": 1,
+      "weapon": {
+        "quality": null,
+        "variant": "standard",
+        "visible": false,
+        "behind": true
+      },
+      "attackPhase": "idle",
+      "attackFrame": -1,
+      "gripAnchor": {
+        "x": 301.749,
+        "y": 976.1171032340828,
+        "z": 20.5375
+      },
+      "hitFlash": false,
+      "nativeLights": 8,
+      "masked": true,
+      "contactMasked": true
+    },
+    "flash": false
+  },
+  "texturesReleased": true,
+  "pass": true
+}

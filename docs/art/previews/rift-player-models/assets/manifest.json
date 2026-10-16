@@ -37,7 +37,7 @@
   "variants": [
     {
       "id": "a",
-      "label": "短摆工装",
+      "label": "\u77ed\u6446\u5de5\u88c5",
       "atlas": {
         "review": "a/review.png",
         "rgba": "a/rgba.png",
@@ -3619,7 +3619,7 @@
     },
     {
       "id": "b",
-      "label": "长襟行者",
+      "label": "\u957f\u895f\u884c\u8005",
       "atlas": {
         "review": "b/review.png",
         "rgba": "b/rgba.png",
@@ -7201,7 +7201,7 @@
     },
     {
       "id": "c",
-      "label": "覆肩负重",
+      "label": "\u8986\u80a9\u8d1f\u91cd",
       "atlas": {
         "review": "c/review.png",
         "rgba": "c/rgba.png",
@@ -10783,7 +10783,7 @@
     },
     {
       "id": "haven",
-      "label": "净化点母型",
+      "label": "\u51c0\u5316\u70b9\u6bcd\u578b",
       "atlas": {
         "review": "haven/review.png",
         "rgba": "haven/rgba.png",
@@ -14399,12 +14399,12 @@
     "rotation": 0,
     "collision": "Retain existing gameplay collider; never infer from image bounds.",
     "presentation": "Use externalPresentation anchor. Legacy 32px weaponRig is not compatible and is not included.",
-    "productionCoverage": "Idle phase zero and twelve walk samples × eight world yaws only; no attack/hurt/death/settle integration."
+    "productionCoverage": "Idle phase zero and twelve walk samples \u00d7 eight world yaws only; no attack/hurt/death/settle integration."
   },
   "sourceHashes": {
     "tools/rift-player-models/model.ts": "06db23e2b7aafab494deb69fce83e2a9483d3e7299e6b59daf5201b9848a035c",
     "tools/rift-player-models/export.mjs": "dbfa8a16bccc6d72519d34a8e528e6f95dc5a3c5eb8501f823fc63ac5056bf5c",
-    "docs/art/demos/purification-last-light/actor.ts": "c8d895f0772a48b9bc751d93813bb8da5450bf127912b46668eb769bb3440842",
+    "docs/art/demos/purification-last-light/actor.ts": "0219732fde9324003ca2b9f2eab7a7baf42e271baedd1fbef2481ed3362f1c0b",
     "docs/art/demos/purification-last-light/model.ts": "edabcec3345472bba38f37cfce3cde2510668496ffc0ee4aecf20ddf0106381a",
     "docs/art/demos/purification-last-light/render.ts": "f24698f6c46521af58a198075a9aad38c5804cd01e918572fc4b4cd2395df48d",
     "docs/art/demos/purification-last-light/energy.ts": "34e1a53759dc1e30a816fe4e65337885dde705dcb64b273f9fc670f067d08cf9",
@@ -14524,5 +14524,6 @@
     "haven/material.png": "4e35629fc8c04891605a378ebbcb3de63d0d9e3fdd182a05fcd58774c201418b",
     "haven/depth.png": "631aeb7f2d38c3cf7acf361171220ef36fc5c9a5904d2eab095df97ede13fbda",
     "haven/contact.png": "2f71907bc9430855a1e37dd75ef124522f95d4bc432146161dea45ac10527029"
-  }
+  },
+  "sourceCompatibility": "The optional rightArmPose author hook leaves all 104 default A body frames byte-identical; production export-receipt records the four G-buffer checks. Existing candidate images are unchanged."
 }

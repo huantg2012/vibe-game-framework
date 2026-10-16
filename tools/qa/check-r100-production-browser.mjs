@@ -18,12 +18,20 @@ const grades = (process.env.QA_GRADES ?? 'low,medium,severe').split(',');
 const requestedWorlds = (process.env.QA_WORLDS ?? '').split(',').filter(Boolean);
 const worlds = requestedWorlds.length ? requestedWorlds : [null];
 const enemyMaterial = process.env.QA_ENEMY_MATERIAL === '1';
+const playerAExpectation = process.env.QA_PLAYER_A;
+assert(playerAExpectation === undefined || ['0', '1'].includes(playerAExpectation), 'QA_PLAYER_A must be 0 or 1');
+const worldSeeds = JSON.parse(process.env.QA_WORLD_SEEDS ?? '{}');
+assert(worldSeeds && typeof worldSeeds === 'object' && !Array.isArray(worldSeeds)
+  && Object.entries(worldSeeds).every(([world, seed]) => requestedWorlds.includes(world) && Number.isSafeInteger(seed) && seed >= 0 && seed <= 0xffffffff),
+  'QA_WORLD_SEEDS must map requested world IDs to uint32 seeds');
 const approachMaterial = enemyMaterial && process.env.QA_APPROACH_MATERIAL === '1';
 const rounds = Number(process.env.QA_RUNS ?? 1), seedStart = Number(process.env.QA_SEED_START ?? 0);
 assert(Number.isSafeInteger(rounds) && rounds >= 1 && rounds <= 5, 'QA_RUNS must be 1–5');
 assert(Number.isSafeInteger(seedStart) && seedStart >= 0 && seedStart + rounds * 20000 <= 0xffffffff, 'Invalid QA_SEED_START');
 assert(grades.length > 0 && grades.every(grade => ['low', 'medium', 'severe'].includes(grade)), 'Invalid QA_GRADES');
 report.enemyMaterialProbe = enemyMaterial;
+report.playerAExpectation = playerAExpectation ?? 'not-requested';
+report.worldSeeds = worldSeeds;
 report.rounds = rounds;
 if (requestedWorlds.length) report.method = 'Controlled coverage: one departure seed per world is selected before any play; the enabled formal pool still selects the world. Real grade/departure/reload controls; preparation opened by its scene method. Fresh ordinary inventory. No outcome, map, health, loot, position or clock overrides. Not a natural expedition/economy sample.';
 if (enemyMaterial) report.materialMethod = 'Read-only wrappers observe the actual renderer.attach arguments and completed visual updates. Brief real arrow-key input tests moving shoulder-light ownership. No forms, poses, lights, FOV, damage cells or render output are injected. Missing generated substrates and unobserved visible anatomy remain explicit coverage gaps.';
@@ -67,7 +75,9 @@ async function installEnemyMaterialProbe(page) {
               row.firstLamp ??= { x: lamp.x, y: lamp.y };
               row.maxPlayerTravel = Math.max(row.maxPlayerTravel, Math.hypot(player.x - row.firstPlayer.x, player.y - row.firstPlayer.y));
               row.maxLampTravel = Math.max(row.maxLampTravel, Math.hypot(lamp.x - row.firstLamp.x, lamp.y - row.firstLamp.y));
-              row.maxLampPlayerError = Math.max(row.maxLampPlayerError, Math.hypot(lamp.x - player.x, lamp.y - player.y));
+              const expectedLamp = ctx.scene.lastLightPlayerPresentation?.getLampPosition() ?? player;
+              row.maxLampPlayerError = Math.max(row.maxLampPlayerError, Math.hypot(lamp.x - expectedLamp.x, lamp.y - expectedLamp.y,
+                expectedLamp.z === undefined ? 0 : lamp.z - expectedLamp.z));
             }
           }
         }
@@ -141,7 +151,7 @@ async function captureEnemyMaterial(page, phase) {
     assert(row.frames > 0 && row.nativeFrames > 0, `${row.id}: actual production updates observed`);
     assert.deepEqual(row.violations, [], `${row.id}: stable runtime lighting`);
     assert(row.bridgeSharesNativeLights, `${row.id}: actual native lights supplied`);
-    assert(row.maxLampPlayerError < 1e-6, `${row.id}: shoulder lamp follows the actual player`);
+    assert(row.maxLampPlayerError < 1e-6, `${row.id}: shoulder lamp follows the active model's actual anchor`);
     assert(row.shadow && Number.isFinite(row.shadow.bridge) && row.shadow.bridge >= 0 && row.shadow.bridge <= 1);
     assert.equal(row.shadow.bridge, row.shadow.native, `${row.id}: bridge forwards actual shadow sampling`);
     const visible = row.visibility;
@@ -177,6 +187,110 @@ async function observeMovingShoulder(page) {
     if (Math.hypot(point.x - before.x, point.y - before.y) > 1) break;
   }
   return { before, inputs, method: 'Real arrow keys only; no position, clock or lamp setter' };
+}
+async function capturePlayerA(page, phase, expectedEquipment) {
+  if (playerAExpectation === undefined) return null;
+  const sample = await page.evaluate(async phase => {
+    const scene = window.__game.scene.getScene('RiftScene');
+    const { inventoryStore } = await import('/src/systems/inventory-store.ts');
+    const { WEAPON_DATA } = await import('/src/generated/weapon-data.ts');
+    const equipment = { ...inventoryStore.getEquipment() }, weapon = equipment.weaponId ? inventoryStore.getItem(equipment.weaponId) : null;
+    const definition = weapon?.kind === 'weapon' ? WEAPON_DATA[weapon.weapon.definitionId] : null;
+    const body = scene.player.getSprite().body;
+    return { phase, probe: scene.lastLightPlayerPresentation?.getProbe() ?? null, equipment,
+      weapon: weapon?.kind === 'weapon' ? { id: weapon.id, definitionId: weapon.weapon.definitionId, location: weapon.location.kind, usesRemaining: weapon.weapon.usesRemaining,
+        quality: definition?.quality, variant: definition?.variant } : null,
+      body: { width: body.width, height: body.height, x: body.x, y: body.y },
+      position: { ...scene.player.getPosition() }, groundY: scene.player.getGroundY(),
+      combatWeapon: scene.combat.getWeaponVisualDefinitionId(), lamp: { ...scene.devRuntime.worldMaterialLighting.lights[0] } };
+  }, phase);
+  assert.equal(sample.body.width, 20, `${phase}: player body remains 20px wide`);
+  assert.equal(sample.body.height, 20, `${phase}: player body remains 20px high`);
+  assert.deepEqual(sample.equipment, expectedEquipment, `${phase}: formal equipment is retained`);
+  assert(sample.weapon?.id && sample.weapon.location === 'carried', `${phase}: ordinary weapon remains carried and equipped`);
+  assert.equal(sample.combatWeapon, sample.weapon.definitionId, `${phase}: real combat retains the equipped weapon`);
+  if (playerAExpectation === '0') assert.equal(sample.probe, null, `${phase}: unselected world retains the original player`);
+  else {
+    assert.equal(sample.probe?.model, 'a', `${phase}: selected world mounts A`);
+    assert.equal(sample.probe.ready, true, `${phase}: A has rendered`);
+    assert.equal(sample.probe.oldBodyVisible, false, `${phase}: original body is hidden`);
+    assert.equal(sample.probe.nativeScale, 1, `${phase}: native model scale is unchanged`);
+    assert.equal(sample.probe.masked, true, `${phase}: A receives actual solid occlusion`);
+    assert.equal(sample.probe.contactMasked, true, `${phase}: contact receives actual solid occlusion`);
+    assert.equal(sample.probe.weapon?.visible, true, `${phase}: equipped weapon is actually presented`);
+    assert.equal(sample.probe.weapon.quality, sample.weapon.quality, `${phase}: weapon quality matches inventory`);
+    assert.equal(sample.probe.weapon.variant, sample.weapon.variant, `${phase}: weapon variant matches inventory`);
+    assert(Object.values(sample.probe.gripAnchor).every(Number.isFinite), `${phase}: grip anchor is finite`);
+    assert.equal(sample.probe.foot.x, sample.position.x);
+    assert.equal(sample.probe.foot.y, sample.groundY);
+    for (const axis of ['x', 'y', 'z']) assert(Math.abs(sample.probe.lamp[axis] - sample.lamp[axis]) < 1e-6, `${phase}: shared ${axis} lamp anchor`);
+  }
+  return sample;
+}
+async function observePlayerASwing(page, id) {
+  if (playerAExpectation !== '1') return null;
+  if (screenshots) await page.screenshot({ path: path.join(out, `${id}-player-a-armed.png`) });
+  await page.evaluate(capture => {
+    const game = window.__game, scene = game.scene.getScene('RiftScene');
+    const observation = window.__r100PlayerASwing = { samples: [], screenshot: null, detail: null, captureError: null, complete: false };
+    const seen = new Set();
+    const observe = () => {
+      const pose = { ...scene.combat.getWeaponVisualState() }, phase = pose.phase;
+      if (!seen.has(phase)) {
+        seen.add(phase);
+        observation.samples.push({ phase, frame: game.loop.frame, pose, model: scene.lastLightPlayerPresentation.getProbe() });
+      }
+      if (capture && phase === 'active' && observation.screenshot === null && observation.captureError === null) {
+        try {
+          observation.screenshot = game.canvas.toDataURL('image/png');
+          const foot = scene.lastLightPlayerPresentation.getProbe().foot, camera = scene.cameras.main;
+          const sx = camera.x + (foot.x - camera.worldView.x) * camera.zoomX;
+          const sy = camera.y + (foot.y - camera.worldView.y) * camera.zoomY;
+          const crop = { x: Math.max(0, Math.min(game.canvas.width - 128, Math.floor(sx) - 64)),
+            y: Math.max(0, Math.min(game.canvas.height - 128, Math.floor(sy) - 96)), width: 128, height: 128 };
+          const canvas = document.createElement('canvas'); canvas.width = crop.width; canvas.height = crop.height;
+          const context = canvas.getContext('2d'); context.imageSmoothingEnabled = false;
+          context.drawImage(game.canvas, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
+          observation.detail = canvas.toDataURL('image/png'); observation.detailCrop = crop;
+        }
+        catch (error) { observation.captureError = String(error); }
+      }
+      if (phase === 'idle' && seen.has('recovery')) { observation.complete = true; game.events.off('postrender', observe); }
+    };
+    observation.dispose = () => game.events.off('postrender', observe);
+    game.events.on('postrender', observe);
+  }, screenshots);
+  let waitFailure;
+  try {
+    await page.keyboard.press('Space', { delay: 50 });
+    await page.waitForFunction(() => window.__r100PlayerASwing?.complete, null, { timeout: 4000 });
+  } catch (error) { waitFailure = error; }
+  const observation = await page.evaluate(() => {
+    const { dispose, ...observation } = window.__r100PlayerASwing; dispose(); return observation;
+  });
+  const screenshot = observation.screenshot, detail = observation.detail; delete observation.screenshot; delete observation.detail;
+  observation.method = 'One real Space press; passive postrender observations and active-frame canvas capture. No equipment, position, health or clock mutation.';
+  if (screenshot) {
+    assert(screenshot.startsWith('data:image/png;base64,'), 'Actual swing frame must be a PNG');
+    observation.screenshot = `${id}-player-a-swing.png`;
+    fs.writeFileSync(path.join(out, observation.screenshot), Buffer.from(screenshot.slice('data:image/png;base64,'.length), 'base64'));
+  }
+  if (detail) {
+    observation.detail = `${id}-player-a-swing-detail.png`;
+    fs.writeFileSync(path.join(out, observation.detail), Buffer.from(detail.slice('data:image/png;base64,'.length), 'base64'));
+  }
+  fs.writeFileSync(path.join(out, `${id}-player-a-swing.json`), JSON.stringify(observation, null, 2));
+  if (waitFailure) throw waitFailure;
+  assert.deepEqual(observation.samples.filter(row => row.phase !== 'idle').map(row => row.phase), ['windup', 'active', 'recovery'], 'Actual Space swing traverses all combat phases');
+  for (const { phase, model } of observation.samples.filter(row => row.phase !== 'idle')) {
+    assert.equal(model.attackPhase, phase, `Player A presentation consumes actual ${phase}`);
+    assert(Number.isInteger(model.attackFrame) && model.attackFrame >= 0, `${phase}: an authored attack arm frame is rendered`);
+    assert.equal(model.weapon?.visible, true, `${phase}: equipped weapon remains drawn`);
+    assert(Object.values(model.gripAnchor).every(Number.isFinite), `${phase}: wrist/weapon anchor is finite`);
+  }
+  assert.equal(observation.captureError, null);
+  if (screenshots) assert(observation.screenshot, 'Actual active-frame screenshot is required');
+  return observation;
 }
 async function approachNaturalMaterialActors(page, id) {
   const evidence = { method: 'Read-only native body/LOS navigation to existing natural actors; actual arrow keys only', targets: [], samples: [] };
@@ -305,7 +419,7 @@ try {
     page.on('console', message => result.consoleMessages.push({ type: message.type(), text: message.text() }));
     const recordResponse = response => {
       const url = new URL(response.url());
-      if (!response.ok() || !/^\/(src\/|assets\/r100-materials\/)/.test(url.pathname)) return;
+      if (!response.ok() || !/^\/(src\/|assets\/r100-materials\/|assets\/player-last-light-a\/)/.test(url.pathname)) return;
       // A material worker intentionally terminates after prewarming. Its CDP
       // response body can disappear before Playwright reads it, although the
       // game loaded it successfully. Audit the same frozen URL independently.
@@ -326,8 +440,13 @@ try {
       // deliberately ignored until the menu's actual interaction gate opens.
       await page.waitForFunction(() => window.__game?.scene.getScene('MainMenuScene')?.interactive());
       await page.keyboard.press('Enter', { delay: 100 });
-      await page.waitForFunction(() => window.__game?.scene.isActive('PurificationScene'));
-      await page.waitForTimeout(2200);
+      // Haven activation precedes completion of its menu-arrival transition.
+      // Observe the actual enterRift guard before invoking it once.
+      await page.waitForFunction(() => {
+        const scene = window.__game?.scene.getScene('PurificationScene');
+        return scene?.scene.isActive() && !scene.resting && !scene.restTween
+          && !scene.isAnyPanelOpen() && !scene.transitioning && !scene.menuEntry && !scene.shuttingDown;
+      }, null, { timeout: 60000 });
       await page.evaluate(() => window.__game.scene.getScene('PurificationScene').enterRift());
       const choice = page.locator(`[data-departure-grade="${grade}"]`);
       await choice.waitFor(); await choice.click();
@@ -340,13 +459,20 @@ try {
       }
       result.historyBeforeDeparture = await page.evaluate(async () =>
         (await import('/src/systems/inventory-store.ts')).inventoryStore.getRiftWorldHistory());
+      if (playerAExpectation !== undefined) result.equipmentBeforeDeparture = await page.evaluate(async () =>
+        (await import('/src/systems/inventory-store.ts')).inventoryStore.getEquipment());
       assert.deepEqual(result.historyBeforeDeparture, { version: 1, visits: [] }, 'fresh formal coverage starts with empty history');
       if (world) {
-        result.controlledSeed = await page.evaluate(async ({ world, grade, start }) => {
+        result.controlledSeed = await page.evaluate(async ({ world, grade, start, preferredSeed }) => {
           const { selectR100ProductionRecipe } = await import('/src/generation/world-study/r100-package.ts');
-          let seed = start;
-          while (seed < start + 20000 && selectR100ProductionRecipe(seed, grade).package.id !== `r100-${world}`) seed++;
-          if (seed === start + 20000) throw new Error(`World is not in the enabled pool: ${world}`);
+          let seed = preferredSeed ?? start;
+          if (preferredSeed !== undefined) {
+            if (selectR100ProductionRecipe(seed, grade).package.id !== `r100-${world}`)
+              throw new Error(`Known seed ${seed} does not select ${world}/${grade}`);
+          } else {
+            while (seed < start + 20000 && selectR100ProductionRecipe(seed, grade).package.id !== `r100-${world}`) seed++;
+            if (seed === start + 20000) throw new Error(`World is not in the enabled pool: ${world}`);
+          }
           const original = crypto.getRandomValues;
           crypto.getRandomValues = function(values) {
             if (values instanceof Uint32Array && values.length === 1) {
@@ -355,7 +481,7 @@ try {
             return original.call(this, values);
           };
           return seed;
-        }, { world, grade, start: seedStart + round * 20000 });
+        }, { world, grade, start: seedStart + round * 20000, preferredSeed: round === 0 ? worldSeeds[world] : undefined });
       }
       if (screenshots) await page.screenshot({ path: path.join(out, `${id}-prepare.png`) });
       await installEnemyMaterialProbe(page);
@@ -368,7 +494,7 @@ try {
       await page.waitForFunction(() => {
         const s = window.__game?.scene.getScene('RiftScene');
         return s?.scene.isActive() && s.player && s.nativeWorldPresentation && s.devRuntime && !s.stagedEntry?.isActive() && !s.nativeEntryFence?.isActive();
-      }, null, { timeout: 30000 });
+      }, null, { timeout: 60000 });
       result.departureMs = Date.now() - timing;
       await page.waitForTimeout(800);
       if (process.env.QA_STAGE_TIMING === '1') { result.entryTiming = await page.evaluate(() => window.__r100EntryTiming); result.entryWaitMs = result.entryTiming.readyAt - entryStart; }
@@ -388,6 +514,8 @@ try {
       });
       assert.equal(result.runtime.world.grade, grade);
       assert.equal(result.runtime.bodyGrid, 8);
+      result.playerAEntry = await capturePlayerA(page, 'entry', result.equipmentBeforeDeparture);
+      result.playerASwing = await observePlayerASwing(page, id);
       result.materialMovement = await observeMovingShoulder(page);
       assert(result.materialMovement.inputs.some(input => Math.hypot(input.point.x - result.materialMovement.before.x,
         input.point.y - result.materialMovement.before.y) > 1), 'actual arrow-key input moves the player');
@@ -432,8 +560,9 @@ try {
       await page.waitForFunction(() => {
         const s = window.__game?.scene.getScene('RiftScene');
         return s?.scene.isActive() && s.nativeWorldPresentation && s.devRuntime && !s.stagedEntry?.isActive() && !s.nativeEntryFence?.isActive();
-      }, null, { timeout: 30000 });
+      }, null, { timeout: 60000 });
       if (process.env.QA_STAGE_TIMING === '1') { result.restoreTiming = await page.evaluate(() => window.__r100EntryTiming); result.restoreWaitMs = result.restoreTiming.readyAt - restoreStart; }
+      result.playerARestored = await capturePlayerA(page, 'cold-restore', result.equipmentBeforeDeparture);
       result.enemyMaterialRestored = await captureEnemyMaterial(page, 'cold-restore');
       await page.keyboard.press('Escape', { delay: 100 }); await page.waitForTimeout(150);
       const after = await page.evaluate(() => JSON.parse(localStorage.getItem('coh-save-v1')));

@@ -13,7 +13,7 @@ export async function decodeLastLightDataPng(bytes: Uint8Array): Promise<{ width
     if (type === 'IHDR') {
       width = view.getUint32(start); height = view.getUint32(start + 4);
       if (length !== 13 || bytes[start + 8] !== 8 || bytes[start + 9] !== 6 || bytes[start + 10] !== 0
-        || bytes[start + 11] !== 0 || bytes[start + 12] !== 0 || width !== 832 || height !== 640)
+        || bytes[start + 11] !== 0 || bytes[start + 12] !== 0 || width < 1 || height < 1 || width > 4096 || height > 4096 || width * height > 4_000_000)
         throw new Error('Player data PNG must be the exported non-interlaced RGBA8 atlas');
     } else if (type === 'IDAT') compressed.push(new Uint8Array(bytes.slice(start, start + length)));
     else if (type === 'IEND') { end = true; break; }

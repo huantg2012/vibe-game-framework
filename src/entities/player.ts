@@ -1,3 +1,4 @@
+import type { PlayerExternalVisuals } from './player-external-visuals';
 /**
  * Player - movement, facing and collision.
  *
@@ -118,6 +119,9 @@ export class Player {
   private speedMultiplier = 1;
   private burdenSpeedFactor = 1;
   private weaponRig: PlayerWeaponRig | null = null;
+  private externalVisuals: PlayerExternalVisuals | null = null;
+  private weaponQuality: CrowbarQuality | null = null;
+  private weaponVariant: CrowbarVariant = 'standard';
   private weaponPose: Readonly<WeaponAttackPose> | null = null;
 
   private facingAngle = 0;
@@ -337,7 +341,7 @@ export class Player {
 
   /** Current body pieces, excluding weapon, lamp aura and turning afterimage. */
   getHitFlashImages(): readonly Phaser.GameObjects.Image[] {
-    return this.weaponRig?.getBodyImages() ?? this.bodyImages;
+    return this.externalVisuals?.getHitFlashImages() ?? this.weaponRig?.getBodyImages() ?? this.bodyImages;
   }
 
   private readonly boundsLamp = { x: 0, y: 0 };
@@ -345,6 +349,7 @@ export class Player {
 
   /** Read-only visual extent for nearby UI avoidance, including held equipment. */
   getVisualBounds(out: Phaser.Geom.Rectangle): Phaser.Geom.Rectangle {
+    if (this.externalVisuals) return this.externalVisuals.getVisualBounds(out);
     this.image.getBounds(out);
     this.weaponRig?.includeVisualBounds(out);
     this.getLampWorldPosition(this.boundsLamp);
@@ -354,12 +359,23 @@ export class Player {
 
   // ------------------------------------------------------------------ setters
 
+  setExternalVisuals(visuals: PlayerExternalVisuals | null): void {
+    this.externalVisuals = visuals;
+    if (visuals) {
+      visuals.setWeaponVisual(this.weaponQuality, this.weaponVariant);
+      if (this.weaponPose) visuals.setWeaponAttackPose(this.weaponPose);
+    }
+  }
+
   setWeaponVisual(quality: CrowbarQuality | null, variant: CrowbarVariant = 'standard'): void {
+    this.weaponQuality = quality; this.weaponVariant = variant;
+    this.externalVisuals?.setWeaponVisual(quality, variant);
     this.weaponRig?.equip(quality, variant);
   }
 
   setWeaponAttackPose(pose: Readonly<WeaponAttackPose>): void {
     this.weaponPose = pose;
+    this.externalVisuals?.setWeaponAttackPose(pose);
     if (pose.phase !== 'idle') { this.facingAngle = pose.facing; this.updateFacing4(); }
   }
 
@@ -408,6 +424,7 @@ export class Player {
     this.aura?.destroy();
     this.lag?.destroy();
     this.weaponRig = null; this.aura = null; this.lag = null;
+    this.externalVisuals = null; this.weaponQuality = null; this.weaponVariant = 'standard'; this.weaponPose = null;
     this.image?.destroy();
     this.bodyImages.length = 0;
   }

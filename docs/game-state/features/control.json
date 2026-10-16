@@ -1037,7 +1037,7 @@
     "id": "COH-F009",
     "title": "近战、前兆与受击",
     "domain": "controls",
-    "summary": "装备撬棍后以空格挥击，按合法目标、距离与遮挡结算；有效命中扣耐久，末次挥击完成后卸下损坏武器。R100-I02 DEV可显式提供独立combatGrid：普通实体不吞视野，仍阻断近战；未提供该hook时沿用原sightGrid，正式默认行为保持。 03d4e4c受击闪白改为原生上下身透明轮廓，暂停/结束/死亡清理；真实命中/恢复/死亡及专项通过。",
+    "summary": "装备撬棍后以空格挥击，按合法目标、距离与遮挡结算；有效命中扣耐久，末次挥击完成后卸下损坏武器。R100-I02 DEV可显式提供独立combatGrid：普通实体不吞视野，仍阻断近战；未提供该hook时沿用原sightGrid，正式默认行为保持。 03d4e4c受击闪白改为原生上下身透明轮廓，暂停/结束/死亡清理；真实命中/恢复/死亡及专项通过。 DEC-219三图A通过PlayerExternalVisuals接同一装备/挥击时序/触击停顿和原生tint闪白；真实按键三阶段及受控伤害、暂停、死亡清理已核，数值与命中规则不变。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -1100,7 +1100,8 @@
     "evidence": [
       "COH-E-SRC-control",
       "COH-E-HIST-CYCLE",
-      "COH-E127"
+      "COH-E127",
+      "COH-E262"
     ],
     "unknowns": [
       "战斗场覆盖与少量正式近战样本不代表全部敌人组合难度已平衡。",

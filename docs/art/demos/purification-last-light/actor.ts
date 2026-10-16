@@ -19,7 +19,10 @@ export function actorLampAnchor(position:V3=ACTOR_POSITION,facing=ACTOR_FACING,b
 
 /** Facing is yaw in radians; local +Z is the face, local +X the lamp shoulder.
  * A tiny breath moves the coat, pack and lamp together while the soles stay put. */
-export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACING,breath=0,walkPhase?:number,settle=0):void {
+export interface ActorRightArmPose { shoulder:V3; elbow:V3; wrist:V3 }
+/** Optional articulated right arm. Undefined retains the exact original model;
+ * null omits it for depth-composited combat poses. */
+export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACING,breath=0,walkPhase?:number,settle=0,rightArmPose?:ActorRightArmPose|null):void {
   if(settle>=1){walkPhase=undefined;breath=0;settle=0;}
   const previousLayer=m.layer;
   m.layer='haven';
@@ -106,6 +109,16 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
       torso.beam([.257,.827,-.335],[.262,.897,-.335],.045,.028,'cloth',.55);
     });
 
+    if(rightArmPose!==undefined){
+      const left=walking?lastLightWalkArm(false,cycle,settle):{
+        shoulder:add([-.279,1.142,.012],[0,lift,0]),elbow:add([-.328,.943,.041],[0,lift,0]),wrist:add([-.312,.758,.083],[0,lift,0])};
+      limb(m,left.shoulder,left.elbow,.103,.095,'cloth',1.38);
+      limb(m,left.elbow,left.wrist,.086,.079,'cloth',1.20);
+      posePart(m,handPoint([-.328,.943,.041],[-.312,.758,.083],left.elbow,left.wrist),hand=>{
+        loaf(hand,[[-.311,.707,.083,.073,.062],[-.316,.757,.082,.078,.067],[-.318,.80,.076,.067,.059]],'cloth',.56,10);
+      });
+      if(rightArmPose)buildActorRightArm(m,rightArmPose);
+    }else {
     // The shoulder/elbow/wrist chain is already posed by the shared body rig.
     // Build those joints directly; mapping them through the chest again would
     // rotate twice and pull the elbows and hands away from the sleeves.
@@ -129,6 +142,8 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
       loaf(torso,[[-.311,.707,.083,.073,.062],[-.316,.757,.082,.078,.067],[-.318,.80,.076,.067,.059]],'cloth',.56,10);
       loaf(torso,[[.328,.723,.063,.070,.061],[.329,.775,.065,.076,.068],[.329,.814,.060,.067,.06]],'cloth',.60,10);
     });
+
+    }
 
     posePart(m,point=>walking?lastLightWalkUpperPoint(point,cycle,settle,'head'):add(point,[0,lift,0]),torso=>{
       // The round protective hood/helmet and one black visor slit carry the
@@ -362,4 +377,16 @@ function limb(m:Model,a:V3,b:V3,r0:number,r1:number,material:Material,tint:numbe
 
 function ovalBand(m:Model,c:V3,rx:number,rz:number,height:number,material:Material,tint:number,segments:number):void {
   loaf(m,[[c[0],c[1]-height/2,c[2],rx,rz],[c[0],c[1]+height/2,c[2],rx,rz]],material,tint,segments);
+}
+
+/** The same sleeve and rigid glove geometry used by the mother model. */
+export function buildActorRightArm(m:Model,arm:ActorRightArmPose):void {
+  limb(m,arm.shoulder,arm.elbow,.099,.094,'cloth',1.40);
+  limb(m,arm.elbow,arm.wrist,.084,.078,'cloth',1.25);
+  buildActorRightHand(m,arm);
+}
+export function buildActorRightHand(m:Model,arm:ActorRightArmPose):void {
+  posePart(m,handPoint([.331,.955,.006],[.328,.775,.066],arm.elbow,arm.wrist),hand=>{
+    loaf(hand,[[.328,.723,.063,.070,.061],[.329,.775,.065,.076,.068],[.329,.814,.060,.067,.06]],'cloth',.60,10);
+  });
 }

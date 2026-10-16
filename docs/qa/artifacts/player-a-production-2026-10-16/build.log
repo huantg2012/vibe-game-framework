@@ -1,0 +1,40 @@
+
+> coh@0.1.0 build
+> tsc && vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 496 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/enemy-inspector.html                                0.80 kB │ gzip:     0.42 kB
+dist/combat-lab.html                                     0.80 kB │ gzip:     0.43 kB
+dist/index.html                                          1.23 kB │ gzip:     0.65 kB
+dist/rift-world-play.html                                2.77 kB │ gzip:     1.61 kB
+dist/rift-gym.html                                       4.19 kB │ gzip:     2.32 kB
+dist/rift-worlds.html                                    6.06 kB │ gzip:     2.57 kB
+dist/gym.html                                           20.66 kB │ gzip:     7.04 kB
+dist/assets/rift-gym-worker-CdP50r8D.js              2,199.46 kB
+dist/assets/surface-preparation-worker-DdIk_Y2K.js   2,459.34 kB
+dist/assets/rift-generation-worker-Ysz25SgF.js       5,606.21 kB
+dist/assets/game-config-Cfdr3a8t.css                     2.40 kB │ gzip:     0.98 kB
+dist/assets/inspector-Ci-UdHwW.css                       3.09 kB │ gzip:     1.26 kB
+dist/assets/combatLab-5ZnVYjlV.css                       3.84 kB │ gzip:     1.46 kB
+dist/assets/riftGym-DX4n1pa-.css                         4.60 kB │ gzip:     1.71 kB
+dist/assets/worldPlay-DEM9y-Or.js                        0.12 kB │ gzip:     0.16 kB
+dist/assets/main-D78vNPG6.js                             0.13 kB │ gzip:     0.14 kB
+dist/assets/gym-lexicon-form-DDXSxjGJ.js                 2.10 kB │ gzip:     1.07 kB
+dist/assets/gym-lexicon-arena-BS6wYP2f.js                4.09 kB │ gzip:     2.14 kB
+dist/assets/riftGym-CxxJlZeZ.js                          4.43 kB │ gzip:     1.52 kB
+dist/assets/worldStudy-BYhtZeUI.js                      20.51 kB │ gzip:     8.88 kB
+dist/assets/inspector-CSpWzV9F.js                       29.87 kB │ gzip:    11.26 kB
+dist/assets/combatLab-DuG-KizA.js                       31.85 kB │ gzip:    12.81 kB
+dist/assets/vision-textures-20gYh4N4.js                 45.02 kB │ gzip:    18.73 kB
+dist/assets/gym-DTLDYmhR.js                             64.24 kB │ gzip:    22.25 kB
+dist/assets/game-config-BkEbByq0.js                 10,747.13 kB │ gzip: 3,113.89 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 25.99s

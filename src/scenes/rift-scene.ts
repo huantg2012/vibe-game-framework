@@ -1,4 +1,5 @@
-import { LastLightPlayerPresentation, type LastLightPlayerAssets } from '@/entities/player-last-light-presentation';
+import { LastLightPlayerPresentation, getPreparedLastLightPlayerAssets, type LastLightPlayerAssets } from '@/entities/player-last-light-presentation';
+import { RIFT_PLAYER_PRESENTATIONS } from '@/generated/rift-player-presentations';
 import { nativeRiftPlayerForRestore, NATIVE_BODY_GEOMETRY_VERSION } from '@/systems/native-rift-body-recovery';
 import { nativeBodyCollision, type NativeBodyCollision, type NativeBodyMotion } from '@/generation/world-study/native-body-collision';
 import { createR100WorldPresentation, getPreparedR100Presentation } from '@/systems/r100-world-presentation';
@@ -494,8 +495,12 @@ export class RiftScene extends Phaser.Scene {
     camera.setBackgroundColor(suppressVoidNoise ? 0x000000 : GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
 
     const beforePlayer = createRuntime ? new Set(this.children.list) : null;
-    const playerAssets = this.devFixture?.playerModel === 'last-light-a' ? this.devFixture.playerModelAssets : undefined;
-    if (this.devFixture?.playerModel === 'last-light-a' && !playerAssets) throw new Error('Player A assets must be prepared before entry');
+    const explicitPlayerA = this.devFixture?.playerModel === 'last-light-a';
+    const formalPlayerA = !!productionWorld?.native && !!nativeRecipe
+      && RIFT_PLAYER_PRESENTATIONS[nativeRecipe.package.id] === 'last-light-a';
+    const playerAssets = explicitPlayerA ? this.devFixture?.playerModelAssets
+      : formalPlayerA ? getPreparedLastLightPlayerAssets() : undefined;
+    if ((explicitPlayerA || formalPlayerA) && !playerAssets) throw new Error('Player A assets must be prepared before entry');
     this.player.create(this, { spawn: layout.spawnPoint, depth: DEPTH.player, facing: 'right', readMovementInput: this.devFixture?.readMovementInput, externalPresentation: !!playerAssets });
     if (playerAssets) {
       const scene = this, emptyLights: WorldMaterialLighting['lights'] = [];
@@ -504,6 +509,7 @@ export class RiftScene extends Phaser.Scene {
         shadeAt(x, y, z, light) { return scene.devRuntime?.worldMaterialLighting?.shadeAt?.(x, y, z, light) ?? 1; },
       };
       this.lastLightPlayerPresentation = new LastLightPlayerPresentation(this, this.player, playerAssets, lighting);
+      this.player.setExternalVisuals(this.lastLightPlayerPresentation);
     }
     const playerVisuals = beforePlayer ? this.children.list.filter(child => !beforePlayer.has(child)) : [];
     if (this.nativeBody) {

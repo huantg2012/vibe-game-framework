@@ -17,6 +17,8 @@ import type { NativeVolumeFamily } from '@/generation/world-study/native-volume-
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import { paintGenomePreparationKey, type PreparedPaintGenome } from '@/entities/form-renderers/d/paint-genome/prepared';
 import { resolvePaintVeinVariant } from '@/entities/form-renderers/d/paint-genome/topology';
+import { RIFT_PLAYER_PRESENTATIONS } from '@/generated/rift-player-presentations';
+import { prepareLastLightPlayerAssets } from '@/entities/player-last-light-presentation';
 
 export { r100PresentationIdentity, validR100PresentationState } from './r100-world/presentation-state';
 export type { R100PresentationState } from './r100-world/presentation-state';
@@ -91,7 +93,10 @@ export async function prepareR100Presentation(recipe:WorldProductionRecipeV3,
  let renderer:MasterSurfaceRenderer|undefined;
  try {
   const families=materialFamilies(recipe);
-  const sources=await observeAbort(Promise.all(families.map(family=>loadPaintedMaterial(family,family===recipe.nativeDefinition.family?recipe.appearance?.materialOrganization:undefined))),options.signal);
+  const [sources]=await Promise.all([
+   observeAbort(Promise.all(families.map(family=>loadPaintedMaterial(family,family===recipe.nativeDefinition.family?recipe.appearance?.materialOrganization:undefined))),options.signal),
+   RIFT_PLAYER_PRESENTATIONS[recipe.package.id] === 'last-light-a' ? prepareLastLightPlayerAssets({signal:options.signal}) : Promise.resolve(),
+  ]);
   const material:PaintedMaterial=Object.freeze({...sources[0]!,
    ...(native.appearance?{appearance:native.appearance}:{}),
    ...(families.length>1?{families:Object.freeze(Object.fromEntries(families.map((family,index)=>[family,sources[index]!])))}:{})});

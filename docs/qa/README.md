@@ -1,6 +1,8 @@
 # 验证与质量记录
 
-2026-10-16 已选 A 三场实景试装：[六张静态原图与局部](artifacts/player-a-three-scenes-2026-10-16/index.html) · [限定QA](player-a-three-scenes-2026-10-16.md)。余烬脊／晶化林床／破膜盆地真实灯场、原视域和实体裁切；修正身体被地面 fog 二次压暗。用户实景确认、完整战斗和正式默认切换待进行。
+2026-10-16 A 正式接入三个 Rift 世界：[三关QA](player-a-production-2026-10-16.md)。正式出发／冷续、装备与三阶段挥击通过；完整范围和其他专项见正文。
+
+2026-10-16 已选 A 三场实景试装：[六张静态原图与局部](artifacts/player-a-three-scenes-2026-10-16/index.html) · [限定QA](player-a-three-scenes-2026-10-16.md)。余烬脊／晶化林床／破膜盆地真实灯场、原视域和实体裁切；修正身体被地面 fog 二次压暗。这是此前空手试装记录；后续三关正式接入见上方。
 
 2026-10-16 Rift 玩家模型三版：[专项QA](rift-player-models-2026-10-16.md) · [九视图与行走比较](../art/previews/rift-player-models/index.html)。同源净化点人物的三个衣装构型，416 帧与限定浏览器检查通过；用户已选 A，后续三场实景试装见下方。
 
