@@ -10709,5 +10709,28 @@
     ],
     "date": "2026-10-16",
     "revision": "45f6cbee + DEC-218 A three-scene fitting working tree"
+  },
+  {
+    "id": "COH-E261",
+    "kind": "runtime",
+    "result": "pass",
+    "scope": "F039 A侧身暗部小幅提亮；三场r13六帧重新采集并通过原比例/脚灯/支撑/遮罩/真实存档零读写核对，零浏览器异常，tsc通过；art短核未见明显扁平化或灯面过曝。",
+    "limitations": "同一DEV空手试装范围；仅材质低受光响应小修，不升级正式默认、完整战斗、用户视觉终验或长期性能。此前fog隔离检查未重复，相关代码未改变。",
+    "sources": [
+      {
+        "path": "docs/qa/player-a-three-scenes-2026-10-16.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/player-a-three-scenes-2026-10-16/capture.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/rift-player-three-models.md",
+        "role": "art"
+      }
+    ],
+    "date": "2026-10-16",
+    "revision": "aee09efe + A low-light material refinement"
   }
 ]

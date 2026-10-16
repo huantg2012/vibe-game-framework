@@ -143,7 +143,11 @@ export class LastLightPlayerPresentation {
       const p = i * 11, out = frame.offsets[i]!;
       sampleWorldMaterialLight(this.lighting, this.image.x + pixels[p]!, this.image.y + pixels[p + 1]!, pixels[p + 2]!,
         pixels[p + 3]!, pixels[p + 4]!, pixels[p + 5]!, true, this.light);
-      for (let c = 0; c < 3; c++) target[out + c] = pixels[p + 6 + c]! * (this.light[c]! * pixels[p + 9]! + pixels[p + 10]!);
+      // Gently open low-lit cloth/metal without lifting the lamp or flattening
+      // lit faces. Continuous light weighting avoids a turn-dependent pop.
+      const received = this.light[0] * .2126 + this.light[1] * .7152 + this.light[2] * .0722;
+      const shadeGain = pixels[p + 10]! > 0 ? 1 : 1 + .28 * Math.max(0, 1 - received / .8);
+      for (let c = 0; c < 3; c++) target[out + c] = pixels[p + 6 + c]! * (this.light[c]! * shadeGain * pixels[p + 9]! + pixels[p + 10]!);
       target[out + 3] = 255;
     }
     this.texture.context.putImageData(this.output, 0, 0); this.texture.refresh();
