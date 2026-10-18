@@ -24,6 +24,20 @@ class PreparedImage {
   removeAttribute(): void {}
 }
 Object.defineProperty(globalThis, 'Image', { configurable: true, value: PreparedImage });
+Object.defineProperty(globalThis, 'ImageData', { configurable: true, value: class {
+  constructor(readonly data: Uint8ClampedArray, readonly width: number, readonly height: number) {}
+} });
+// The enabled worlds now share Player A. Read its actual export/manifest while
+// adapting browser bitmap rasterization just like the existing material canvas.
+Object.defineProperty(globalThis, 'fetch', { configurable: true, value: async (url: string, options?: RequestInit) => {
+  options?.signal?.throwIfAborted();
+  assert(url.startsWith('/assets/player-last-light-a/'), `Unexpected fixture asset request: ${url}`);
+  return new Response(readFileSync(`public${url}`));
+} });
+Object.defineProperty(globalThis, 'createImageBitmap', { configurable: true, value: async (blob: Blob) => {
+  const view = new DataView(await blob.arrayBuffer());
+  return { width: view.getUint32(16), height: view.getUint32(20), close() {} };
+} });
 const surfaceHandles = new Set<object>();
 let afterSurfaceAllocation: (() => void) | undefined;
 const allocateSurfaceHandle = (): object => { const handle = {}; surfaceHandles.add(handle); return handle; };
@@ -42,7 +56,7 @@ Object.defineProperty(globalThis, 'document', { configurable: true, value: {
     const canvas = { width: 0, height: 0, getContext: (type: string) => type === 'webgl2' ? (() => {
       const hook = afterSurfaceAllocation; afterSurfaceAllocation = undefined; if (hook) queueMicrotask(hook); return surfaceGl;
     })() : ({
-      drawImage() {}, getImageData: () => ({ data: new Uint8ClampedArray(canvas.width * canvas.height * 4) }),
+      drawImage() {}, getImageData: () => ({ width: canvas.width, height: canvas.height, data: new Uint8ClampedArray(canvas.width * canvas.height * 4) }),
     }) }; return canvas;
   },
 } });
@@ -57,7 +71,12 @@ class ControlledWorker implements RiftGenerationWorkerPort {
     assert(options?.name !== 'r100-surface-preparation', 'surface requests use their own worker adapter');
     ControlledWorker.all.push(this);
   }
-  postMessage(request: RiftGenerationRequest): void { this.request = structuredClone(request); }
+  postMessage(request: RiftGenerationRequest): void {
+    this.request = structuredClone(request);
+    // Match the production worker acknowledgement. Failure scenarios here test
+    // an accepted request, not the separately tested one-time startup retry.
+    this.onmessage?.({ data: { id: request.id, started: true } } as MessageEvent<RiftGenerationResponse>);
+  }
   terminate(): void { this.terminated = true; }
   complete(): void {
     let response: RiftGenerationResponse;
@@ -100,18 +119,17 @@ const { loadExpedition, beginNewExpedition } = await import('../../src/managers/
 const { PurificationScene } = await import('../../src/scenes/purification-scene');
 const { pauseMenu } = await import('../../src/ui/dom/pause-menu');
 const { inventoryPanel } = await import('../../src/ui/dom/inventory-panel');
-const { withPreparedProceduralRecovery, restoreProceduralLayout } = await import('../../src/managers/rift-recovery');
+const { withPreparedProceduralRecovery, restoreProceduralLayout, restoreProceduralWorld } = await import('../../src/managers/rift-recovery');
+const { discardPreparedR100Presentation } = await import('../../src/systems/r100-world-presentation');
 const records = new Map<string, string>();
 let failWrites = false;
 saveManager.setStorage({ getItem: key => records.get(key) ?? null, removeItem: key => { records.delete(key); },
   setItem: (key, value) => { if (failWrites) throw new Error('Injected storage failure'); records.set(key, value); } });
 const key = GAME_CONSTANTS.SAVE.KEY;
 const base = (JSON.parse(readFileSync('tools/recovery/fixtures/prepared-base.json', 'utf8')) as { record: SaveDataV2 }).record;
-const fixture = JSON.parse(readFileSync('tools/recovery/fixtures/formal-active.json', 'utf8'));
-const active = structuredClone(base);
-active.inventory = fixture.inventory; active.riftCheckpoint = fixture.checkpoint;
-active.cycle = fixture.checkpoint.state.conditions.cycle;
-active.checkpointChecksum = checkpointChecksum(active);
+// Keep genuine active checkpoint admission coverage, but use an enabled native
+// world: the old procedural legacy outing now intentionally auto-abandons.
+const active = (JSON.parse(readFileSync('tools/recovery/fixtures/open-native-active.json', 'utf8')) as { record: SaveDataV2 }).record;
 const original = JSON.stringify(active);
 const host = { events: new EventEmitter(), scene: { start: (...args: unknown[]) => { routes.push(args); } } } as unknown as Phaser.Scene;
 const routes: unknown[][] = [], errors: string[] = [];
@@ -191,9 +209,13 @@ await check('admitted original checkpoint routes the saved world without rewriti
   assert.equal(await loadExpedition(host, undefined, undefined, options), 'entered');
   assert.equal(ControlledWorker.all.length, workers, 'already prepared exact identity is reused');
   assert.equal(routes.at(-1)?.[0], 'RiftScene');
-  assert.deepEqual((routes.at(-1)?.[1] as { recovery: { checkpoint: unknown } }).recovery.checkpoint, fixture.checkpoint);
+  assert.deepEqual((routes.at(-1)?.[1] as { recovery: { checkpoint: unknown } }).recovery.checkpoint, active.riftCheckpoint);
   assert.equal(records.get(key), original);
   assert.deepEqual(inventoryStore.getRiftWorldHistory(), { version: 1, visits: [] }, 'old active identity does not invent a historical visit');
+  // This harness records scene.start but does not create/destroy RiftScene.
+  // Complete that successful handoff's ownership before probing later cancels.
+  discardPreparedR100Presentation(restoreProceduralWorld(active.riftCheckpoint!.identity)!);
+  assert.equal(surfaceHandles.size, 0, 'completed checkpoint scene releases its own prepared surface');
 });
 
 await check('SaveManager expected snapshot rejects replacement even at the final synchronous boundary', () => {

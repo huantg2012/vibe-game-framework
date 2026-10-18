@@ -1,6 +1,7 @@
 import { restoreProceduralWorld } from '@/managers/rift-recovery';
 import { installProceduralRiftRecovery, prepareProceduralRecovery, withPreparedProceduralRecovery } from './rift-recovery';
 import { prepareR100Presentation } from '@/systems/r100-world-presentation';
+import { R100_NATIVE_WORLDS } from '@/generated/r100-native-worlds';
 import { inventoryStore } from '@/systems/inventory-store';
 import { showToastInline } from '@/ui/dom/panel-styles';
 /**
@@ -80,8 +81,21 @@ export async function loadExpedition(host: Phaser.Scene, enter?: ExpeditionEntry
   host.events?.once(Phaser.Scenes.Events.SHUTDOWN, cancel);
   host.events?.once(Phaser.Scenes.Events.DESTROY, cancel);
   try {
-    installProceduralRiftRecovery();
     const identity = snapshot.checkpoint?.identity ?? snapshot.departure?.identity;
+    const generation = identity?.generation;
+    // The current release closes unfinished outings in disabled worlds. Reuse
+    // abandonment before any world preparation; settled returns remain intact.
+    if (snapshot.runStatus === 'active' && !(generation?.version === 3
+      && R100_NATIVE_WORLDS.some(world => world.enabled && generation.package.id === `r100-${world.id}`))) {
+      if (!saveManager.load('abandon-active', snapshot)) return fail('这份出行记录暂时无法结束，原记录已保留。');
+      const run = inventoryStore.getRun();
+      if (!run || run.status !== 'active') return fail('这份出行记录暂时无法结束，原记录已保留。');
+      const result = inventoryStore.settleRun(run.id, 'abandon', 0);
+      if (!result.ok) return fail('放弃结果尚未保存，请重试；原记录保留。');
+      enterPurification(host, 'continue', enter);
+      return 'entered';
+    }
+    installProceduralRiftRecovery();
     if (identity?.worldId === 'procedural-rift') await prepareProceduralRecovery(identity, { signal: controller.signal });
     if (identity?.generation?.version === 3) await prepareR100Presentation(identity.generation, { signal: controller.signal, world: restoreProceduralWorld(identity)! });
     if (controller.signal.aborted) return 'cancelled';

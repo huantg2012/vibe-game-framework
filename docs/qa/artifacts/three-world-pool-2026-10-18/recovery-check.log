@@ -1,0 +1,158 @@
+PASS closed native checkpoint abandons before any worker
+PASS closed native departure abandons before any worker
+PASS legacy procedural valid active ledger also closes without generating a world
+PASS legacy sea valid active ledger also closes without generating a world
+PASS missing outing identity valid active ledger also closes without generating a world
+PASS refused abandon write keeps original bytes and retries once without losing base ownership
+PASS already aborted request does not abandon or write
+PASS crystal-fibre/low stays on ordinary cancellable world recovery
+PASS crystal-fibre/medium stays on ordinary cancellable world recovery
+PASS crystal-fibre/severe stays on ordinary cancellable world recovery
+PASS cinder-ridge/low stays on ordinary cancellable world recovery
+PASS cinder-ridge/medium stays on ordinary cancellable world recovery
+PASS cinder-ridge/severe stays on ordinary cancellable world recovery
+PASS ruptured-film/low stays on ordinary cancellable world recovery
+PASS ruptured-film/medium stays on ordinary cancellable world recovery
+PASS ruptured-film/severe stays on ordinary cancellable world recovery
+PASS closed-world settled checkpoint is not abandoned again
+PASS damaged envelope retains the existing explicit-rescue protection
+PASS return after automatic abandonment settles the base once through the existing scene flow
+Closed-world entry: 19 focused checks passed; actual world rendering is not exercised.
+PASS cancel/repeated confirmation leave the entire live state and exact saved bytes unchanged
+PASS shutdown aborts cold load without a scene handoff
+PASS destroy aborts cold load without a scene handoff
+PASS blur aborts cold load without a scene handoff
+Expedition preparation failed; saved record retained Error: Injected generation failure
+    at ControlledWorker.worker.onerror (/Users/yilungao/coh/src/utils/worker-request.ts:71:23)
+    at ControlledWorker.fail (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:84:23)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:163:16)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:137:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:161:7)
+PASS worker failure preserves the live base and record and unlocks retry
+Expedition preparation failed; saved record retained Error: Saved world does not match the current generation contract
+    at requestWorker.signal.signal (/Users/yilungao/coh/src/generation/rift-generation-client.ts:27:34)
+    at ControlledWorker.worker.onmessage (/Users/yilungao/coh/src/utils/worker-request.ts:66:24)
+    at ControlledWorker.complete (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:82:10)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:174:16)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:137:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:167:7)
+PASS bad outing identity retains an explicit base-rescue choice; it never abandons automatically
+Expedition preparation failed; saved record retained Error: Injected generation failure
+    at ControlledWorker.worker.onerror (/Users/yilungao/coh/src/utils/worker-request.ts:71:23)
+    at ControlledWorker.fail (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:84:23)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:183:56)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:137:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:180:7)
+PASS a changed record is never offered the old outing rescue after Worker failure
+Expedition preparation failed; saved record retained ReferenceError: ImageData is not defined
+    at prepareGroup (/Users/yilungao/coh/src/entities/player-last-light-presentation.ts:96:38)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 0)
+    at async prepareLastLightPlayerAssets (/Users/yilungao/coh/src/entities/player-last-light-presentation.ts:102:47)
+    at async Promise.all (index 1)
+    at async prepareR100Presentation (/Users/yilungao/coh/src/systems/r100-world-presentation.ts:96:19)
+    at async loadExpedition (/Users/yilungao/coh/src/managers/session.ts:100:46)
+    at async <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:192:16)
+    at async check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:137:3)
+    at async <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:188:1)
+PASS changed bytes during preparation are rejected before admission mutates state
+PASS prepared-only scope never generates an unprepared foreign identity
+Expedition preparation failed; saved record retained ReferenceError: ImageData is not defined
+    at prepareGroup (/Users/yilungao/coh/src/entities/player-last-light-presentation.ts:96:38)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 0)
+    at async prepareLastLightPlayerAssets (/Users/yilungao/coh/src/entities/player-last-light-presentation.ts:102:47)
+    at async Promise.all (index 1)
+    at async prepareR100Presentation (/Users/yilungao/coh/src/systems/r100-world-presentation.ts:96:19)
+    at async loadExpedition (/Users/yilungao/coh/src/managers/session.ts:100:46)
+    at async <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:205:16)
+    at async check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:137:3)
+    at async <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:203:1)
+node:internal/modules/run_main:122
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'failed'
+- 'entered'
+
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:205:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:137:3)
+    at async <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:203:1) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'failed',
+  expected: 'entered',
+  operator: 'strictEqual'
+}
+
+Node.js v22.14.0
+PASS cancel/repeated confirmation leave the entire live state and exact saved bytes unchanged
+PASS shutdown aborts cold load without a scene handoff
+PASS destroy aborts cold load without a scene handoff
+PASS blur aborts cold load without a scene handoff
+Expedition preparation failed; saved record retained Error: Injected generation failure
+    at ControlledWorker.worker.onerror (/Users/yilungao/coh/src/utils/worker-request.ts:71:23)
+    at ControlledWorker.fail (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:87:23)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:166:16)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:140:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:164:7)
+PASS worker failure preserves the live base and record and unlocks retry
+Expedition preparation failed; saved record retained Error: Saved world does not match the current generation contract
+    at requestWorker.signal.signal (/Users/yilungao/coh/src/generation/rift-generation-client.ts:27:34)
+    at ControlledWorker.worker.onmessage (/Users/yilungao/coh/src/utils/worker-request.ts:66:24)
+    at ControlledWorker.complete (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:85:10)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:177:16)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:140:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:170:7)
+PASS bad outing identity retains an explicit base-rescue choice; it never abandons automatically
+Expedition preparation failed; saved record retained Error: Injected generation failure
+    at ControlledWorker.worker.onerror (/Users/yilungao/coh/src/utils/worker-request.ts:71:23)
+    at ControlledWorker.fail (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:87:23)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:186:56)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:140:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:183:7)
+PASS a changed record is never offered the old outing rescue after Worker failure
+PASS changed bytes during preparation are rejected before admission mutates state
+PASS prepared-only scope never generates an unprepared foreign identity
+PASS admitted original checkpoint routes the saved world without rewriting it
+PASS SaveManager expected snapshot rejects replacement even at the final synchronous boundary
+PASS actual departure cancels before beginRun; duplicate confirm launches only one worker
+PASS actual departure retains one frozen transaction and identity across a failed save and retry
+node:internal/modules/run_main:122
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+6 !== 0
+
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:282:51)
+    at async check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:140:3)
+    at async <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:277:1) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 6,
+  expected: 0,
+  operator: 'strictEqual'
+}
+
+Node.js v22.14.0
+
+=== Execution summary (2026-10-18, scoped recovery worker) ===
+Source behavior: enabled-catalog-only active recovery; other valid active ledgers use existing abandon settlement before any world worker. Settled ledgers and invalid envelopes retain existing paths.
+PASS: node node_modules/typescript/bin/tsc --noEmit (exit 0)
+PASS: TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx --import ./tools/recovery/register-css.mjs tools/recovery/check-closed-world-entry.ts (19 checks)
+PASS: TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx --import ./tools/recovery/register-css.mjs tools/recovery/check-procedural-rescue.ts (existing explicit rescue, bad-base rejection and failed-write rollback)
+PASS: TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/inventory/check-save-migration.ts (12 checks)
+PASS: TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx --import ./tools/recovery/register-css.mjs tools/recovery/check-save-replacement.ts (11 checks)
+PASS: git diff --check -- src/managers/session.ts src/managers/save-manager.ts tools/recovery/check-async-entry.ts tools/recovery/check-closed-world-entry.ts
+PASS: curl -I --max-time 5 http://127.0.0.1:3027/ (HTTP 200 existing Vite server; no interactive browser claim)
+LINT: package.json contains no lint script; not claimed.
+ASYNC-ENTRY ADAPTATION: original legacy active fixture is now intentionally closed, replaced with unmodified real recorded crystal-fibre checkpoint (frozen revision 1). Browser PNG/bitmap APIs adapted, production worker started acknowledgement added.
+ASYNC-ENTRY ATTEMPT 1: failed on missing ImageData adaptation; corrected.
+ASYNC-ENTRY ATTEMPT 2: 13 checks passed, then resource assertion expected 0 but saw 6. The successful native checkpoint handoff earlier in this test intentionally retained its 6 GPU handles, unlike the former legacy fixture. Test host still needs to simulate disposal of that successful scene before asserting zero for the later abandoned scene. This is isolated fixture ownership, not an old-world preparation by the closure path.
+Per code-agent two-failure rule, stopped retrying and handed this precise remaining test adjustment to root. No build or commit performed by this worker. No user's browser storage read or changed.

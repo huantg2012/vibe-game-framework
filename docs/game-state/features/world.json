@@ -3,7 +3,7 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "DEC-216仅接余烬脊、晶化林床、破膜盆地、吸光釉原四张已认可样本，四图现均启用r13。认可medium完整物理母体和20261012几何跨三污染级冻结，内容/污染/氛围按实际grade。前7次内容尝试保留请求seed及派生seed，第8槽使用同档已认证内容seed；24条认证记录随配方冻结。四图三档完整生成/冷回放12/12、24条内容认证与四图中档正式入场/冷续功能4/4通过，持久回执已归档；50ms性能预算未通过。其余104图保留r11，I14/P49及用户最终体验不提升。",
+    "summary": "DEC-220：正式只开放余烬脊、晶化林床、破膜盆地，三污染档共用名单；其余105世界保留定义但不开放。非开放世界的有效旧active局按用户授权自动abandon返回净化点，丢弃随身物及本趟收获，基地进度保留；已结算记录正常返程。 当前三图为r13认可medium物理母体跨三档冻结，实际出发seed决定内容/撤离；108定义与324配方身份保持。开放名单不等于完整体验验收。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1741,6 +1741,18 @@
       {
         "path": "tools/enemy-world-pilot/check-deployment.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/content/rift-open-worlds.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/three-world-pool-2026-10-18.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-three-world-pool.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -1825,7 +1837,8 @@
       "COH-E250",
       "COH-E251",
       "COH-E254",
-      "COH-E255"
+      "COH-E255",
+      "COH-E263"
     ],
     "unknowns": [
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",

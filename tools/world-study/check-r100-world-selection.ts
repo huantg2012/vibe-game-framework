@@ -8,7 +8,9 @@ import { appendRiftWorldVisit, emptyRiftWorldHistory, type RiftWorldHistory } fr
 import { mix32 } from '../../src/generation/seed-fork';
 
 const catalog = R100_NATIVE_WORLDS, enabled = catalog.filter(row => row.enabled);
-assert(enabled.length >= 20);
+assert(enabled.length > 0, 'At least one admitted native world must remain selectable');
+assert.equal(new Set(catalog.map(row => row.id)).size, catalog.length, 'Native world identities must be unique');
+assert(catalog.every(row => /^[a-z][a-z0-9-]+$/.test(row.id) && ['low', 'medium', 'severe'].every(grade => row.definitions.some(definition => definition.grade === grade))), 'Every catalog entry retains a legal identity and all pollution grades');
 const descriptors = new Map(catalog.map(row => [row.id, describeR100World(row)]));
 const neighbors = Object.fromEntries(enabled.map(a => [a.id, enabled.filter(b => a.id !== b.id &&
   r100WorldNeighborDistance(descriptors.get(a.id)!, descriptors.get(b.id)!) <= policy.neighborDistance).map(row => row.id).sort()]));

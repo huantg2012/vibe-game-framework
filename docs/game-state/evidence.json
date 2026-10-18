@@ -10763,5 +10763,40 @@
     ],
     "date": "2026-10-17",
     "revision": "f1bc5c11 + DEC-219 three-world production working tree"
+  },
+  {
+    "id": "COH-E263",
+    "kind": "runtime",
+    "result": "pass",
+    "scope": "DEC-220限定开放：三世界/105关闭，384跨档选择、128反序/关闭ID历史及108定义/324配方不变；19项会话废局/拒写/重试/已结算保护。三图中档正式出发、A人物、挥击、冷续通过；类型/构建/codegen通过。 异步恢复16项、存档迁移12项、替换11项及显式救援回归通过。",
+    "limitations": "废局脚本采用真实保存事务与受控Worker，不渲染地图。浏览器只覆盖三图中档；破膜首轮因1e-13px严格相等误判，改探针容差后同seed复验，原失败保留。未复验108地图，不提升50ms或I14/P49。",
+    "sources": [
+      {
+        "path": "docs/qa/three-world-pool-2026-10-18.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/three-world-pool-2026-10-18/pool-check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/three-world-pool-2026-10-18/recovery-check.log",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/three-world-pool-2026-10-18/browser-summary.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/three-world-pool-2026-10-18/build.log",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/three-world-pool-2026-10-18/async-entry-recheck.log",
+        "role": "test"
+      }
+    ],
+    "date": "2026-10-18",
+    "revision": "2f8eb202 + DEC-220 three-world admission working tree"
   }
 ]

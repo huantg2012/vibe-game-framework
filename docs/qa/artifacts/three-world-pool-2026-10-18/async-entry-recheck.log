@@ -1,0 +1,42 @@
+PASS cancel/repeated confirmation leave the entire live state and exact saved bytes unchanged
+PASS shutdown aborts cold load without a scene handoff
+PASS destroy aborts cold load without a scene handoff
+PASS blur aborts cold load without a scene handoff
+Expedition preparation failed; saved record retained Error: Injected generation failure
+    at ControlledWorker.worker.onerror (/Users/yilungao/coh/src/utils/worker-request.ts:71:23)
+    at ControlledWorker.fail (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:87:23)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:167:16)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:141:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:165:7)
+PASS worker failure preserves the live base and record and unlocks retry
+Expedition preparation failed; saved record retained Error: Saved world does not match the current generation contract
+    at requestWorker.signal.signal (/Users/yilungao/coh/src/generation/rift-generation-client.ts:27:34)
+    at ControlledWorker.worker.onmessage (/Users/yilungao/coh/src/utils/worker-request.ts:66:24)
+    at ControlledWorker.complete (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:85:10)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:178:16)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:141:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:171:7)
+PASS bad outing identity retains an explicit base-rescue choice; it never abandons automatically
+Expedition preparation failed; saved record retained Error: Injected generation failure
+    at ControlledWorker.worker.onerror (/Users/yilungao/coh/src/utils/worker-request.ts:71:23)
+    at ControlledWorker.fail (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:87:23)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:187:56)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:141:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:184:7)
+PASS a changed record is never offered the old outing rescue after Worker failure
+PASS changed bytes during preparation are rejected before admission mutates state
+PASS prepared-only scope never generates an unprepared foreign identity
+PASS admitted original checkpoint routes the saved world without rewriting it
+PASS SaveManager expected snapshot rejects replacement even at the final synchronous boundary
+PASS actual departure cancels before beginRun; duplicate confirm launches only one worker
+PASS actual departure retains one frozen transaction and identity across a failed save and retry
+PASS record replacement after native GPU allocation rejects handoff and releases the abandoned scene
+Expedition preparation failed; saved record retained Error: Injected scene handoff failure
+    at Object.start (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:293:77)
+    at loadExpedition (/Users/yilungao/coh/src/managers/session.ts:114:20)
+    at async <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:295:16)
+    at async check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:141:3)
+    at async <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:292:1)
+PASS scene-start failure retains the durable departure but releases its unconsumed GPU resources
+PASS blur after GPU allocation cancels without retaining an unconsumed renderer
+Async entry: 16 checks passed; actual persistence/session paths, adapted rendering and controlled delivery.

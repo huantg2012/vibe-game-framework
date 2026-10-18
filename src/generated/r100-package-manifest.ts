@@ -21,7 +21,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-native-worlds.csv",
-      "sha256": "4a9fec97d8e615747134af260a246381b0042e59baa1a1be928042308726de55"
+      "sha256": "ac9c03266df9a28816710bf15ec3ee54bd253997232414d5e63001c660e47a84"
     },
     {
       "path": "data/rift-pollution-grades.csv",
@@ -237,7 +237,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/native-volume-raster.ts",
-      "sha256": "573768b2769ee8cae521e84e5997d17a676bf4bdde72b5c13cb024d181f4e32d"
+      "sha256": "beb4c7d58a313e23a2c7fd035f77560d587b66f656b2c8f57c4e126b63c38274"
     },
     {
       "path": "src/generation/world-study/native-volume-settled-projection.ts",
@@ -253,7 +253,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/production-recipe.ts",
-      "sha256": "6f4c1b7a2971cd2b3ad0a2719cf4dfad2ddc21dc1ea97a359a471895b3107341"
+      "sha256": "1f2eefd9d419b03dda7e485f1ab2b81b3fbc8264e1a6965b61d99c8b44bf2772"
     },
     {
       "path": "src/generation/world-study/r100-expedition-v1.ts",
@@ -261,15 +261,15 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-expedition.ts",
-      "sha256": "3c3a548c30bb7a380493c73301da0b870b6946d7782e499d2ddb8c34251ce95e"
+      "sha256": "590017f3d57acd8af445f31a2a80d7da583c40161c50c40a2be55de8f8f1a613"
     },
     {
       "path": "src/generation/world-study/r100-master-world.ts",
-      "sha256": "f2a22f7ae489a467761fa60332145f55f0ba8a0bf3e61898ef2c89a3ca38e1c9"
+      "sha256": "a6056aa98325dcfa5b463914303d310f73cec069f94f3c28568bde4efd4f02a7"
     },
     {
       "path": "src/generation/world-study/r100-package.ts",
-      "sha256": "bcb5defa9f58a9c443bc60fa6889c00c7850eb7c8e71a43e741dd9a37457acb7"
+      "sha256": "346e555b6c58499c330c0a7a469a752f2c0c3acfb5f75cf29588eb1876092d88"
     },
     {
       "path": "src/generation/world-study/r100-patrol-windows.ts",
@@ -277,11 +277,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-pollution.ts",
-      "sha256": "328804c3dd7423627fc31a4c119cff81cbe8078c0575094cc5c2c5d4eb1538dc"
+      "sha256": "57562cdcbba7d92f3b16d927fd569f6182b73c835041e9d40c236d45753345f2"
     },
     {
       "path": "src/generation/world-study/r100-production-map.ts",
-      "sha256": "93a6a73780b37032c49b113a0d64bbb0122a5091f424733bc10c2aa072ad5a78"
+      "sha256": "0eb006453c8cdd1d8b5d57b3c1a4c11091fbe41de39a8d6b24dbe01ca253aec1"
     },
     {
       "path": "src/generation/world-study/r100-spatial-deployment.ts",
@@ -329,7 +329,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/systems/r100-world/ground.ts",
-      "sha256": "36fc10eb24d9d111619c968367e937b82693d31d775a8d07800831794aa57f0d"
+      "sha256": "bb00e288e1eb7e873aee7bb770d3ebfb7fddd582f9a9da058e07ab8b165cfb18"
     },
     {
       "path": "src/systems/r100-world/organization-sampling.ts",
@@ -337,11 +337,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/systems/r100-world/surface-bake.ts",
-      "sha256": "d534603ef7ad06a6cb4d8e7f7ea2224996d6af2ddeac660fdd237dc2e0ce026b"
+      "sha256": "4ac051fe40da3e5baca91f5d268851d3cbef4da180110e7e0571d190adda0ce0"
     },
     {
       "path": "src/systems/r100-world/surface-fields.ts",
-      "sha256": "29da511c97b2ffc4d4b6d73526d853994432356cd5d9c70f9656f4e09fdf32a6"
+      "sha256": "fb6bf2f9985d1802598273cc7609732657af7348c6bb4168b1c1cf6a0f341ccf"
     },
     {
       "path": "src/systems/tile-grid.ts",
@@ -372,7 +372,7 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "2a666f37f57aa8d74904f488cec644f7ced77187a5ee03c804258b529cadb862"
     }
   ],
-  "hash": "928123d5c1308b74c6028518aa323c1f60652b3e4ec8f6c45f84b8bba056a077"
+  "hash": "f1812446ab8d12fa24978e9965736d6f6485d72e94f588f0c06a02d1f4dcc07e"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {

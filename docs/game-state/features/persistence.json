@@ -3,7 +3,7 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "r13冻结完整作者CSV、岸线、意图、认可medium母体、认证内容bank及两world真实敌人forms/材料；恢复消费保存合同。旧r11公开恢复3/3通过，新四图三档完整冷重放与两world六档投放冷恢复通过；四图中档正式冷续保持身份、全身位置和世界历史。50ms性能预算未过。",
+    "summary": "DEC-220：正式只开放余烬脊、晶化林床、破膜盆地，三污染档共用名单；其余105世界保留定义但不开放。非开放世界的有效旧active局按用户授权自动abandon返回净化点，丢弃随身物及本趟收获，基地进度保留；已结算记录正常返程。 r13冻结完整作者CSV、岸线、意图、认可medium母体、认证内容bank及两world真实敌人forms/材料；恢复消费保存合同。旧r11公开恢复3/3通过，新四图三档完整冷重放与两world六档投放冷恢复通过；四图中档正式冷续保持身份、全身位置和世界历史。50ms性能预算未过。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -706,6 +706,22 @@
       {
         "path": "tools/enemy-world-pilot/check-deployment.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/content/rift-open-worlds.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/three-world-pool-2026-10-18.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/recovery/check-closed-world-entry.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/fixtures/open-native-active.json",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -754,7 +770,8 @@
       "COH-E252",
       "COH-E254",
       "COH-E256",
-      "COH-E255"
+      "COH-E255",
+      "COH-E263"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。",

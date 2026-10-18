@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "scope": "Three medium worlds; isolated storage; formal departure and cold recovery; excludes natural full-expedition/50ms acceptance",
+  "commonServedSources": 449,
+  "changedServedSources": [],
+  "cases": [
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "seed": 1,
+      "departureMs": 8123,
+      "status": "passed",
+      "coldIdentityPreserved": true,
+      "worldHistoryPreserved": true,
+      "bodyGeometry": {
+        "version": 1,
+        "fullBodyCheckpointAdmitted": true,
+        "coldBodyPositionPreserved": true
+      },
+      "playerA": true
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "medium",
+      "seed": 0,
+      "departureMs": 7586,
+      "status": "passed",
+      "coldIdentityPreserved": true,
+      "worldHistoryPreserved": true,
+      "bodyGeometry": {
+        "version": 1,
+        "fullBodyCheckpointAdmitted": true,
+        "coldBodyPositionPreserved": true
+      },
+      "playerA": true
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "medium",
+      "seed": 2,
+      "departureMs": 16088,
+      "status": "passed",
+      "coldIdentityPreserved": true,
+      "worldHistoryPreserved": true,
+      "bodyGeometry": {
+        "version": 1,
+        "fullBodyCheckpointAdmitted": true,
+        "coldBodyPositionPreserved": true,
+        "coldBodyPositionErrorPx": 1.1368683772161603e-13
+      },
+      "playerA": true
+    }
+  ],
+  "retainedFailure": "browser/report.json ruptured-film: strict floating point equality; browser-film-recheck/report.json same seed passes 1e-6px tolerance"
+}

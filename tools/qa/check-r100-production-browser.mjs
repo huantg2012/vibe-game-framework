@@ -584,9 +584,14 @@ try {
       }
       if (process.env.QA_REQUIRE_BODY_VERSION === '1') {
         assert.equal(after.riftCheckpoint.state.world.bodyGeometryVersion, 1);
-        assert.deepEqual(after.riftCheckpoint.state.player.bodyPosition, before.riftCheckpoint.state.player.bodyPosition);
+        // Restoring body top-left from the sprite centre can round at sub-pixel
+        // precision. Use the same tolerance as the centre/body check above.
+        const coldBodyPositionErrorPx = Math.hypot(
+          after.riftCheckpoint.state.player.bodyPosition.x - before.riftCheckpoint.state.player.bodyPosition.x,
+          after.riftCheckpoint.state.player.bodyPosition.y - before.riftCheckpoint.state.player.bodyPosition.y);
+        assert(coldBodyPositionErrorPx < 1e-6, `Cold body position moved ${coldBodyPositionErrorPx}px`);
         assert(after.riftCheckpoint.elapsedMs >= before.riftCheckpoint.elapsedMs);
-        result.bodyGeometry = { version: 1, fullBodyCheckpointAdmitted: true, coldBodyPositionPreserved: true };
+        result.bodyGeometry = { version: 1, fullBodyCheckpointAdmitted: true, coldBodyPositionPreserved: true, coldBodyPositionErrorPx };
       }
       assert.deepEqual(after.inventory.riftWorldHistory, result.committedWorldHistory, 'cold recovery preserves the entire recent history without another visit');
       result.worldHistoryPreserved = true;

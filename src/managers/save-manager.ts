@@ -19,7 +19,7 @@ import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 import { GameEvent } from '@/types/events';
 import type { ExpeditionSaveData, SaveDataV2 } from '@/types/game-types';
-import type { InventoryState } from '@/types/inventory-types';
+import type { InventoryState, RunInventoryLedger } from '@/types/inventory-types';
 import { InventoryStore, inventoryStore } from '@/systems/inventory-store';
 import { impactSystem, validImpactForecastState } from '@/systems/impact-system';
 import { checkpointChecksum, validRiftCheckpoint, validRiftDeparture, type RiftDepartureIntent, type RiftCheckpoint } from '@/types/rift-checkpoint';
@@ -36,6 +36,8 @@ export interface SaveLoadSnapshot {
   readonly raw: string | null;
   readonly checkpoint: RiftCheckpoint | null;
   readonly departure: RiftDepartureIntent | null;
+  /** Present only after the complete outer save envelope has passed validation. */
+  readonly runStatus: RunInventoryLedger['status'] | null;
 }
 let injectedStorage: SaveStorage | null = null;
 let newRecordPending = false;
@@ -352,15 +354,17 @@ export const saveManager = {
     try {
       const raw = storage().getItem(SAVE.KEY);
       let checkpoint: RiftCheckpoint | null = null, departure: RiftDepartureIntent | null = null;
+      let runStatus: SaveLoadSnapshot['runStatus'] = null;
       if (raw) {
         try {
           const data = JSON.parse(raw) as ExpeditionSaveData;
           if (validSaveEnvelope(data) && data.version === 2) {
             checkpoint = data.riftCheckpoint ?? null; departure = data.riftDeparture ?? null;
+            runStatus = data.inventory.run?.status ?? null;
           }
         } catch { /* Preserve unreadable bytes; the normal loader rejects them. */ }
       }
-      return { raw, checkpoint, departure };
+      return { raw, checkpoint, departure, runStatus };
     } catch { return null; }
   },
 

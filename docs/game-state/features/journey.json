@@ -75,7 +75,7 @@
     "id": "COH-F002",
     "title": "标题菜单、新游戏与继续记录",
     "domain": "loop",
-    "summary": "标题支持新记录、有效存档继续与明确弃局。I31记录安全语义保持：坏包也须明确替换，首笔完整保存成功后才替换原记录。用户认可48b700c并授权推广，正式默认采用F首页与已认可动效；MainMenuScene保留记录摘要、安全覆盖和在途弃局恢复。DEV比较继续隔离正式存档，生产执行范围按本轮QA记录。 冷续局先以Worker准备原世界，期间显示取消载入；原记录不写入/不替换，场景销毁和迟到载入回调已防护。",
+    "summary": "DEC-220：正式只开放余烬脊、晶化林床、破膜盆地，三污染档共用名单；其余105世界保留定义但不开放。非开放世界的有效旧active局按用户授权自动abandon返回净化点，丢弃随身物及本趟收获，基地进度保留；已结算记录正常返程。 标题支持新记录、有效存档继续与明确弃局。I31记录安全语义保持：坏包也须明确替换，首笔完整保存成功后才替换原记录。用户认可48b700c并授权推广，正式默认采用F首页与已认可动效；MainMenuScene保留记录摘要、安全覆盖和在途弃局恢复。DEV比较继续隔离正式存档，生产执行范围按本轮QA记录。 冷续局先以Worker准备原世界，期间显示取消载入；原记录不写入/不替换，场景销毁和迟到载入回调已防护。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -340,6 +340,18 @@
       {
         "path": "tools/qa/check-r100-production-browser.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/content/rift-open-worlds.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/three-world-pool-2026-10-18.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/recovery/check-closed-world-entry.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -362,7 +374,8 @@
       "COH-E115",
       "COH-E129",
       "COH-E251",
-      "COH-E255"
+      "COH-E255",
+      "COH-E263"
     ],
     "unknowns": [
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
@@ -770,7 +783,7 @@
     "id": "COH-F004",
     "title": "撤离、死亡与归返结算",
     "domain": "loop",
-    "summary": "撤离只结算实际携回物；死亡遗失随身装备和收获；结果页返回净化点后冲击只结算一次，首次归返免伤但仍显示报告。",
+    "summary": "DEC-220：正式只开放余烬脊、晶化林床、破膜盆地，三污染档共用名单；其余105世界保留定义但不开放。非开放世界的有效旧active局按用户授权自动abandon返回净化点，丢弃随身物及本趟收获，基地进度保留；已结算记录正常返程。 撤离只结算实际携回物；死亡遗失随身装备和收获；结果页返回净化点后冲击只结算一次，首次归返免伤但仍显示报告。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -830,6 +843,18 @@
       {
         "path": "docs/qa/artifacts/r100-i14/root/release-gates-through48.json",
         "role": "doc"
+      },
+      {
+        "path": "docs/content/rift-open-worlds.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/three-world-pool-2026-10-18.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/recovery/check-closed-world-entry.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -846,7 +871,8 @@
       "COH-E182",
       "COH-E183",
       "COH-E184",
-      "COH-E191"
+      "COH-E191",
+      "COH-E263"
     ],
     "unknowns": [
       "首归及结算有针对性证据；不等于每种死亡来源和全部物件组合都已自然实玩。"

@@ -3,12 +3,12 @@ status: APPROVED-FOR-IMPLEMENTATION
 phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
-last-modified-date: 2026-10-10
+last-modified-date: 2026-10-18
 last-modified-by: design（P49按用户决定改为先选污染、再配行装；复用净化点单列浏览，领域规则及出发原子性不变）
 interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes, system-map-generation]
 exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, RiftWorldHistory, inventoryStore.getRiftWorldHistory(), inventoryStore.reconcileExpandedToolSlots(previousSlotCount), SaveLoadSnapshot, saveManager.captureLoadSnapshot(), saveManager.matchesLoadSnapshot(snapshot), loadExpedition]
 interface-changed: true
-note: DEC-142统一供奉与有限使用；DEC-158中断政策在迭代27接入正式随机2D。旧active或损坏世界包只在基地/库存有效且玩家明确确认后安全弃局；不删除全档。
+note: DEC-142统一供奉与有限使用；DEC-158一般中断政策保持。DEC-220用户明确授权未开放世界旧active局自动按abandon作废；不删除基地进度。其它损坏记录仍沿原明确确认规则。
 ---
 
 
@@ -20,7 +20,9 @@ note: DEC-142统一供奉与有限使用；DEC-158中断政策在迭代27接入�
 
 `beginRun(runId,versions,worldVisit?)`在同一库存候选里追加世界，正式场景将该候选与cycle、被动消费及冻结的`riftDeparture`一并保存。只有持久化成功才交接世界。准备中取消、Worker失败、旧档被替换或装备校验失败不追加；拒写后保留同一候选并锁住新出发，重试只重写该候选，不再抽样或追加。冷续原世界、已结算归来与DEV隔离入口均不追加；死亡、撤离及安全弃局保留实际已出发历史，新档重置清空。
 
-合法旧库存schema1/2/3没有历史时迁为空，不从cycle或在途身份补造记录。基地旧档可立即持久化迁移；在途旧档保持原存档字节到下一个完整事务，冻结generation不改变。新schema4缺历史、非法等级/ID、超长历史或未知历史版本均拒绝加载，所有领域状态和原字节保持。存档不要求历史ID仍在当前库，以允许世界退休后冷续。
+合法旧库存schema1/2/3没有历史时迁为空，不从cycle或在途身份补造记录。基地旧档可立即持久化迁移；在途旧档保持原存档字节到下一个完整事务，冻结generation不改变。新schema4缺历史、非法等级/ID、超长历史或未知历史版本均拒绝加载，所有领域状态和原字节保持。存档不要求历史ID仍在当前库；历史保留不代表该世界仍可进入。
+
+**当前开放与旧局作废（DEC-220，2026-10-18）。** 三污染档只从 `rift-native-worlds.csv` 的 enabled 世界选择，当前为余烬脊／晶化林床／破膜盆地。经既有校验的 active 存档仅在冻结 v3 包仍属于开放世界时继续恢复；其余有效旧局在任何地图准备前按用户授权沿 `abandon` 结算回净化点，删除随身物与本趟收获，保留基地物资、成长及已提交访问历史，不计成功撤离。已结算待返程不受该废局规则影响，不重复结算。该规则替代允许退休世界继续进入的旧政策，不修改冻结配方合法性；损坏记录和保存失败沿既有保护流程处理，不自动删除全档。
 
 ## 迭代29 R3 · 线性扩槽、容量权益与被动迁移
 

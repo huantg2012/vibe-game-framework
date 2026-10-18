@@ -1,0 +1,18 @@
+cinder-ridge-medium: entry and reload passed (8123 ms including scene transition)
+crystal-fibre-medium: entry and reload passed (7586 ms including scene transition)
+ruptured-film-medium AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  {
+    x: 288.9097440739972,
++   y: 1022.206308931623
+-   y: 1022.2063089316229
+  }
+
+    at file:///Users/yilungao/coh/tools/qa/check-r100-production-browser.mjs:587:16 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [Object],
+  expected: [Object],
+  operator: 'deepStrictEqual'
+}
