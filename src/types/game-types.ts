@@ -271,6 +271,9 @@ export interface SaveDataV1 {
 /** Inventory-backed save. V1 remains readable and is migrated without changing IDs. */
 export interface SaveDataV2 extends Omit<SaveDataV1, 'version' | 'contaminants' | 'defenseSlots' | 'sortieLoadout'> {
   version: 2;
+  /** Missing in older records means an unaffected body and no treatment cycles. */
+  assimilation?: number;
+  healingCycles?: number;
   inventory: import('./inventory-types').InventoryState;
   /** Present only when this run's world implements complete recovery. */
   riftCheckpoint?: import('./rift-checkpoint').RiftCheckpoint;

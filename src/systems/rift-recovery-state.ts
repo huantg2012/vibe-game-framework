@@ -10,6 +10,7 @@ import { validateCombatRuntimeState, type CombatRuntimeState } from '@/systems/c
 import { validateAIRuntimeState, type AIRuntimeState } from '@/systems/ai/runtime-state';
 import { validateToolRuntimeState, type ToolRuntimeState } from '@/systems/tool-system';
 import { getChaosModulators, validateChaosRuntimeState, type ChaosRuntimeState } from '@/systems/chaos-system';
+import { getAssimilationModulators } from '@/systems/assimilation-system';
 import { validateLootSearchRuntimeState, type LootSearchRuntimeState } from '@/systems/loot-search-system';
 import { validateFieldLootRuntimeState, type FieldLootRuntimeState } from '@/systems/field-loot-inventory';
 import { validateTrailRuntimeState, type TrailRuntimeState } from '@/systems/trail-system';
@@ -233,7 +234,9 @@ export function validateRiftRecoveryState(
   if (combat.phase !== 'idle' && combat.weaponId !== combat.swingWeaponId
     && !(combat.weaponId === null && combat.weaponUseCommitted)) return false;
   const chaosFactor = player.speedModifiers.find(([source]) => source === 'chaos')?.[1];
-  if (chaosFactor !== undefined && !near(chaosFactor, getChaosModulators(chaos.lastModulated).speedMult)) return false;
+  const projectedChaos = chaos.assimilationMode
+    ? getAssimilationModulators(chaos.lastModulated, chaos.assimilationValue!) : getChaosModulators(chaos.lastModulated);
+  if (chaosFactor !== undefined && !near(chaosFactor, projectedChaos.speedMult)) return false;
   // create() leaves the initial hearing projection to the first Tool.update.
   if (tools.elapsedMs > 0 && ai.hearingSuppressed !== (tools.muffle.episodeActive || tools.muffle.equipped
     || tools.catalog?.effects.some(effect => effect.resolvedParams.familyId === 'silence') === true)) return false;

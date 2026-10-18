@@ -18,6 +18,9 @@ import { GameEvent } from '@/types/events';
 import { clamp } from '@/utils/math';
 import { sumPollutionResistance } from '@/systems/survival-attributes';
 import { runtimeNumber, runtimeRecord, runtimeStrings } from '@/systems/ai/runtime-validation';
+import { assimilationPerMinute, getAssimilationModulators, POLLUTION_SATURATION } from '@/systems/assimilation-system';
+
+export type AssimilationMode = 'persistent-v1';
 
 /** Simulation time only: wall-clock time never advances a suspended expedition. */
 export interface ChaosRuntimeState {
@@ -38,10 +41,19 @@ export interface ChaosRuntimeState {
   readonly tempRateMult: number;
   readonly reductionDeadlineMs: number;
   readonly reductionMult: number;
+  /** Missing means the frozen historical 0–150 pressure rules. */
+  readonly assimilationMode?: AssimilationMode;
+  readonly assimilationValue?: number;
+  readonly growthResistance?: number;
 }
 
 export function validateChaosRuntimeState(value: unknown): value is ChaosRuntimeState {
   if (!runtimeRecord(value) || value.version !== 1 || typeof value.paused !== 'boolean'
+    || (value.assimilationMode !== undefined && value.assimilationMode !== 'persistent-v1')
+    || (value.assimilationMode === undefined
+      ? value.assimilationValue !== undefined || value.growthResistance !== undefined
+      : !runtimeNumber(value.assimilationValue, 0, 100) || !runtimeNumber(value.growthResistance, 0, 1)
+        || !runtimeNumber(value.value, 0, POLLUTION_SATURATION) || !runtimeNumber(value.peak, 0, POLLUTION_SATURATION))
     || (value.pollutionGrade !== undefined && !isPollutionGrade(value.pollutionGrade))
     || !runtimeNumber(value.value, 0, GAME_CONSTANTS.CHAOS.HARD_CAP)
     || !runtimeNumber(value.peak, value.value, GAME_CONSTANTS.CHAOS.HARD_CAP)
@@ -131,6 +143,11 @@ export interface ChaosSystemAPI {
 }
 
 export interface ChaosSystemConfig {
+  assimilationMode?: AssimilationMode;
+  /** Long-lived physiology belongs to GameState and the enclosing atomic save. */
+  getAssimilation?: () => number;
+  setAssimilation?: (value: number) => void;
+  growthResistance?: number;
   /** Explicit authored grade only; omitted preserves the historical constant rate. */
   pollutionGrade?: PollutionGrade;
   /** Frozen departure rules; future catalog balancing must not rewrite an active run. */
@@ -153,6 +170,11 @@ export interface ChaosSystemConfig {
 const DT_CLAMP_MS = 100;
 
 export class ChaosSystem implements ChaosSystemAPI {
+  private readonly assimilationMode: AssimilationMode | undefined;
+  private readonly getAssimilation: () => number;
+  private readonly setAssimilation: (value: number) => void;
+  private readonly growthResistance: number;
+  private lastAssimilationModulated = 0;
   private readonly pollutionDefinition: PollutionGradeDefinition | null;
   private readonly getPollutionResistance: () => number;
   private value = 0;
@@ -185,6 +207,14 @@ export class ChaosSystem implements ChaosSystemAPI {
   private readonly onEnemyKilled: (payload: { enemyId: string; position: { x: number; y: number } }) => void;
 
   constructor(config?: ChaosSystemConfig) {
+    this.assimilationMode = config?.assimilationMode;
+    if (this.assimilationMode && (!config?.getAssimilation || !config.setAssimilation)) {
+      throw new Error('Persistent assimilation requires its durable state owner');
+    }
+    this.getAssimilation = config?.getAssimilation ?? (() => 0);
+    this.setAssimilation = config?.setAssimilation ?? (() => {});
+    this.growthResistance = config?.growthResistance ?? 0;
+    if (!runtimeNumber(this.growthResistance, 0, 1)) throw new Error('Invalid growth resistance');
     if (config?.pollutionDefinition && (!isPollutionGradeDefinition(config.pollutionDefinition)
       || config.pollutionDefinition.id !== config.pollutionGrade)) throw new Error('Incompatible frozen pollution rules');
     this.pollutionDefinition = config?.pollutionDefinition ? structuredClone(config.pollutionDefinition)
@@ -234,7 +264,7 @@ export class ChaosSystem implements ChaosSystemAPI {
 
   update(deltaMs: number): void {
     if (this.paused) return;
-    const dtMs = Math.min(deltaMs, DT_CLAMP_MS);
+    const dtMs = Math.max(0, Math.min(deltaMs, DT_CLAMP_MS));
     const dtSec = dtMs / 1000;
     this.clockMs += dtMs;
 
@@ -256,8 +286,31 @@ export class ChaosSystem implements ChaosSystemAPI {
     const exposure = this.pollutionDefinition
       ? pollutionExposureBetween(this.pollutionDefinition, (this.clockMs - dtMs) / 1000, this.clockMs / 1000)
       : chaos.BASE_RATE * dtSec;
-    const increment = exposure * this.chaosRateModifier * effectiveRateMult * this.reductionMult * this.resistanceFactor();
-    this.value = Math.min(this.value + increment, chaos.HARD_CAP);
+    const inflowMultiplier = this.chaosRateModifier * effectiveRateMult * this.reductionMult * this.resistanceFactor();
+    const increment = exposure * inflowMultiplier;
+    if (this.assimilationMode) {
+      let saturatedMs = this.value >= POLLUTION_SATURATION ? dtMs : 0;
+      if (this.value < POLLUTION_SATURATION && this.value + increment > POLLUTION_SATURATION) {
+        // Invert the same exact integral only on the one crossing frame. Count
+        // the fraction after saturation; frame size cannot grant extra exposure.
+        const needed = POLLUTION_SATURATION - this.value;
+        let low = 0, high = dtSec;
+        const fromSeconds = (this.clockMs - dtMs) / 1000;
+        for (let i = 0; i < 40; i++) {
+          const middle = (low + high) / 2;
+          const partial = this.pollutionDefinition
+            ? pollutionExposureBetween(this.pollutionDefinition, fromSeconds, fromSeconds + middle)
+            : chaos.BASE_RATE * middle;
+          if (partial * inflowMultiplier < needed) low = middle;
+          else high = middle;
+        }
+        saturatedMs = Math.max(0, dtMs - high * 1000);
+      }
+      if (saturatedMs > 0) this.setAssimilation(Math.min(100, this.getAssimilation()
+        + assimilationPerMinute(this.pollutionDefinition?.id, sumPollutionResistance([this.getPollutionResistance()]) / 100,
+          this.growthResistance) * saturatedMs / 60000));
+    }
+    this.value = Math.min(this.value + increment, this.getCap());
     if (this.value > this.peak) this.peak = this.value;
 
     this.checkThresholds();
@@ -294,12 +347,16 @@ export class ChaosSystem implements ChaosSystemAPI {
       detectionCooldowns: [...this.detectionCooldowns].map(([enemyId, atMs]) => ({ enemyId, atMs })),
       tempRateDeadlineMs: this.tempRateDeadlineMs, tempRateMult: this.tempRateMult,
       reductionDeadlineMs: this.reductionDeadlineMs, reductionMult: this.reductionMult,
+      ...(this.assimilationMode ? { assimilationMode: this.assimilationMode,
+        assimilationValue: this.getAssimilation(), growthResistance: this.growthResistance } : {}),
     };
   }
 
   validateRuntimeState(value: unknown): value is ChaosRuntimeState {
     return validateChaosRuntimeState(value) && value.chaosRateModifier === this.chaosRateModifier
-      && value.pollutionGrade === this.pollutionDefinition?.id;
+      && value.pollutionGrade === this.pollutionDefinition?.id && value.assimilationMode === this.assimilationMode
+      && (!this.assimilationMode || (value.growthResistance === this.growthResistance
+        && value.assimilationValue === this.getAssimilation()));
   }
 
   restoreRuntimeState(value: unknown): void {
@@ -315,7 +372,8 @@ export class ChaosSystem implements ChaosSystemAPI {
     this.reductionDeadlineMs = value.reductionDeadlineMs; this.reductionMult = value.reductionMult;
     this.updateRateMultiplier();
     // Restore the last published projection, without replaying thresholds or inflow.
-    this.onModulate?.(getChaosModulators(this.lastModulated));
+    this.lastAssimilationModulated = this.getAssimilation();
+    this.onModulate?.(this.getModulators());
   }
 
   // ------------------------------------------------------------------ public API
@@ -323,6 +381,15 @@ export class ChaosSystem implements ChaosSystemAPI {
   getValue(): number {
     return this.value;
   }
+
+  isAssimilationEnabled(): boolean { return this.assimilationMode !== undefined; }
+
+  getModulators(): ChaosModulators {
+    return this.assimilationMode ? getAssimilationModulators(this.lastModulated, this.getAssimilation())
+      : getChaosModulators(this.lastModulated);
+  }
+
+  private getCap(): number { return this.assimilationMode ? POLLUTION_SATURATION : GAME_CONSTANTS.CHAOS.HARD_CAP; }
 
   getRate(): number {
     const rate = this.tempRateDeadlineMs > 0 ? Math.max(this.rateMultiplier, this.tempRateMult) : this.rateMultiplier;
@@ -343,9 +410,8 @@ export class ChaosSystem implements ChaosSystemAPI {
 
   addChaos(source: string, amount: number): void {
     void source; // reserved for analytics
-    const chaos = GAME_CONSTANTS.CHAOS;
     const incoming = amount > 0 ? amount * this.resistanceFactor() : amount;
-    this.value = clamp(this.value + incoming, 0, chaos.HARD_CAP);
+    this.value = clamp(this.value + incoming, 0, this.getCap());
     if (this.value > this.peak) this.peak = this.value;
     this.checkThresholds();
     this.checkEmit();
@@ -397,11 +463,12 @@ export class ChaosSystem implements ChaosSystemAPI {
    */
   private applyOpeningValue(startingValue?: number): void {
     const chaos = GAME_CONSTANTS.CHAOS;
-    const start = clamp(startingValue ?? chaos.START_VALUE, 0, chaos.HARD_CAP);
+    const start = clamp(startingValue ?? chaos.START_VALUE, 0, this.getCap());
     this.value = start;
     this.peak = start;
     this.lastEmitted = start;
     this.lastModulated = start;
+    this.lastAssimilationModulated = this.getAssimilation();
     this.thresholdsFired = [
       start >= chaos.THRESHOLD_1,
       start >= chaos.THRESHOLD_2,
@@ -454,9 +521,11 @@ export class ChaosSystem implements ChaosSystemAPI {
 
   private checkModulate(): void {
     const step = GAME_CONSTANTS.CHAOS.MODULATOR_STEP;
-    if (Math.abs(this.value - this.lastModulated) >= step) {
+    if (this.assimilationMode ? this.value !== this.lastModulated || this.getAssimilation() !== this.lastAssimilationModulated
+      : Math.abs(this.value - this.lastModulated) >= step) {
       this.lastModulated = this.value;
-      this.onModulate?.(getChaosModulators(this.value));
+      this.lastAssimilationModulated = this.getAssimilation();
+      this.onModulate?.(this.getModulators());
     }
   }
 }

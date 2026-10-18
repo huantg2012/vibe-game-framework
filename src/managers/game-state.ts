@@ -44,6 +44,8 @@ export interface KindlingYieldRepair {
 export interface GameStateSnapshot {
   kindlingReserve: number;
   cycle: number;
+  assimilation: number;
+  healingCycles: number;
   modules: { id: string; type: string; hp: number; maxHp: number }[];
   moduleMaxHpTier: ModuleMaxHpTier;
   pendingSideEffects: PendingSideEffect[];
@@ -55,6 +57,8 @@ export interface GameStateSnapshot {
 export interface GameStateLoadInput {
   kindlingReserve: number;
   cycle: number;
+  assimilation?: number;
+  healingCycles?: number;
   modules: { id: string; type: string; hp: number; maxHp: number }[];
   moduleMaxHpTier?: number;
   pendingSideEffects?: PendingSideEffect[];
@@ -71,6 +75,8 @@ const P = GAME_CONSTANTS.PURIFICATION;
 
 let kindlingReserve = 0;
 let cycle = 0;
+let assimilation = 0;
+let healingCycles = 0;
 let impactIntensity = 1.0;
 let pendingSideEffects: PendingSideEffect[] = [];
 let moduleMaxHpTier: ModuleMaxHpTier = 0;
@@ -363,6 +369,18 @@ export const gameState = {
     cycle++;
   },
 
+  /** Persistent body burden, independent of the current Rift's pollution. */
+  getAssimilation(): number { return assimilation; },
+  setAssimilation(value: number): void {
+    if (!Number.isFinite(value)) throw new Error('Assimilation must be finite');
+    assimilation = Math.max(0, Math.min(100, value));
+  },
+  getHealingCycles(): number { return healingCycles; },
+  incrementHealingCycles(): number {
+    if (healingCycles >= Number.MAX_SAFE_INTEGER) throw new Error('Healing cycle limit reached');
+    return ++healingCycles;
+  },
+
   // --- Impact intensity ---
 
   getImpactIntensity(): number {
@@ -375,6 +393,8 @@ export const gameState = {
     return {
       kindlingReserve,
       cycle,
+      assimilation,
+      healingCycles,
       modules: modules.map((m) => ({ id: m.id, type: m.type, hp: m.hp, maxHp: m.maxHp })),
       moduleMaxHpTier,
       pendingSideEffects: [...pendingSideEffects],
@@ -387,6 +407,8 @@ export const gameState = {
   loadState(state: GameStateLoadInput): void {
     kindlingReserve = state.kindlingReserve;
     cycle = state.cycle;
+    gameState.setAssimilation(state.assimilation ?? 0);
+    healingCycles = state.healingCycles ?? 0;
     moduleMaxHpTier = clampTier(state.moduleMaxHpTier);
     ensurePurifier(P.MODULE_INITIAL_HP);
     for (const saved of state.modules) {
@@ -464,6 +486,8 @@ export const gameState = {
   reset(): void {
     kindlingReserve = 0;
     cycle = 0;
+    assimilation = 0;
+    healingCycles = 0;
     impactIntensity = 1.0;
     pendingSideEffects = [];
     repairBonusHp = 0;

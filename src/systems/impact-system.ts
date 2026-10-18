@@ -14,6 +14,7 @@ import { eventBus } from '@/core/event-bus';
 import { gameState } from '@/managers/game-state';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { applyDefenseEffects, type DefenseContext, type DefenseResult } from '@/systems/defense-engine';
+import { assimilationImpactMultiplier } from '@/systems/assimilation-system';
 import { GameEvent } from '@/types/events';
 import type { Contaminant } from '@/types/game-types';
 
@@ -210,34 +211,47 @@ let forecastNextNextIntensity = 1;
 const pendingTargetQueue: string[] = [];
 let forecastLookahead: ForecastLookahead | null = null;
 
+/** The target remains frozen; a persistent body change only changes its pressure. */
+function effectiveIntensity(intensity: number): number {
+  return intensity * assimilationImpactMultiplier(gameState.getAssimilation());
+}
+
+function projectSeverity(reading: ForecastDisplay, baseIntensity: number): ForecastSeverity {
+  const offset = SEVERITY_ORDER.indexOf(reading.severity) - SEVERITY_ORDER.indexOf(severityFromIntensity(baseIntensity));
+  const adjusted = SEVERITY_ORDER.indexOf(severityFromIntensity(effectiveIntensity(baseIntensity))) + offset;
+  return SEVERITY_ORDER[Math.max(0, Math.min(SEVERITY_ORDER.length - 1, adjusted))]!;
+}
+
 export const impactSystem = {
   getForecastDisplay(): ForecastDisplay | null {
-    return forecastDisplay;
+    return forecastDisplay ? { ...forecastDisplay, severity: projectSeverity(forecastDisplay, forecastIntensity) } : null;
   },
 
   /** Reading a level reveals facts already frozen in V2, without rolling,
    * committing a predicted target, or running offering-defense effects. */
-  getForecastReading(clarityLevel: number): ForecastReading | null {
+  getForecastReading(clarityLevel: number, options: { forceImpact?: boolean } = {}): ForecastReading | null {
     if (!forecastDisplay) return null;
     const legacy = forecastVersion === 1;
     const level = Number.isFinite(clarityLevel) ? Math.max(0, Math.floor(clarityLevel)) : 0;
     const severityCertain = forecastCommitted || (!legacy && level >= 1);
     const targetCertain = forecastCommitted || (!legacy && level >= 2);
     const targetId = !legacy && targetCertain ? actualPrimaryId! : forecastDisplay.targetId;
+    const intensity = effectiveIntensity(forecastIntensity);
+    const exempt = !options.forceImpact && gameState.getCycle() === 0;
     return {
       targetId,
-      severity: severityCertain ? severityFromIntensity(forecastIntensity) : forecastDisplay.severity,
+      severity: severityCertain ? severityFromIntensity(intensity) : projectSeverity(forecastDisplay, forecastIntensity),
       targetCertain, severityCertain,
-      intensity: !legacy && level >= 3 ? (gameState.getCycle() === 0 ? 0 : forecastIntensity) : null,
+      intensity: !legacy && level >= 3 ? (exempt ? 0 : intensity) : null,
       baseDamagePerModule: !legacy && level >= 3 && actualPrimaryId
-        ? distributeThreatDamage(gameState.getCycle() === 0 ? 0 : P.BASE_IMPACT_DAMAGE * forecastIntensity,
+        ? distributeThreatDamage(exempt ? 0 : P.BASE_IMPACT_DAMAGE * intensity,
           actualPrimaryId, gameState.getModules()) : null,
       legacy,
     };
   },
 
   getForecastLookahead(): ForecastLookahead | null {
-    return forecastLookahead;
+    return forecastLookahead ? { ...forecastLookahead, severity: projectSeverity(forecastLookahead, forecastNextNextIntensity) } : null;
   },
 
   /** Snapshot without mutation, also used to roll back a failed inventory save. */
@@ -290,11 +304,12 @@ export const impactSystem = {
    * @param defenseSlots - The 3 defense-slotted contaminants, passed from the scene layer
    *   to preserve the "systems never import each other" rule (DEC-ARCH-002).
    */
-  run(defenseSlots?: (Contaminant | null)[], offeringIds?: readonly (string | null)[], random: () => number = Math.random, stabilityProgress = 0): ImpactResult {
+  run(defenseSlots?: (Contaminant | null)[], offeringIds?: readonly (string | null)[], random: () => number = Math.random, stabilityProgress = 0,
+    options: { forceImpact?: boolean } = {}): ImpactResult {
     const cycle = gameState.getCycle();
 
     // First sortie: no impact (spec rule 20)
-    if (cycle <= 1) {
+    if (!options.forceImpact && cycle <= 1) {
       // The return still advances the tide. Retire the exempt event's reading
       // so its intensity cannot leak into the next, damaging return.
       forecastConsumed = true;
@@ -308,7 +323,7 @@ export const impactSystem = {
     // defense processing may re-trigger it, so the window is always exactly one sortie.
     gameState.setModuleSwapActive(false);
 
-    const intensity = gameState.getImpactIntensity();
+    const intensity = effectiveIntensity(gameState.getImpactIntensity());
     const totalDamage = P.BASE_IMPACT_DAMAGE * intensity;
 
     // Emit start

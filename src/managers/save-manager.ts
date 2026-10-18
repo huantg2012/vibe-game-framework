@@ -47,6 +47,12 @@ let validateDeparture: ((intent: RiftDepartureIntent) => boolean) | null = null;
 let validateRiftState: ((checkpoint: RiftCheckpoint, inventory: InventoryState) => boolean) | null = null;
 function storage(): SaveStorage { return injectedStorage ?? localStorage; }
 
+function checkpointMatchesAssimilation(checkpoint: RiftCheckpoint, assimilation: number): boolean {
+  const state = checkpoint.state;
+  return !runtimeRecord(state) || !runtimeRecord(state.chaos)
+    || state.chaos.assimilationMode !== 'persistent-v1' || state.chaos.assimilationValue === assimilation;
+}
+
 /** Check the fields consumed by existing loaders before touching live systems. */
 function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   if (!data || (data.version !== 1 && data.version !== 2)) return false;
@@ -92,10 +98,13 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   if (data.moduleSwapActive !== undefined && typeof data.moduleSwapActive !== 'boolean') return false;
   const probe = new InventoryStore();
   if (data.version === 2) {
+    if (data.assimilation !== undefined && !runtimeNumber(data.assimilation, 0, 100)) return false;
+    if (data.healingCycles !== undefined && !runtimeInteger(data.healingCycles, 0)) return false;
     if (!probe.loadState(data.inventory)) return false;
     if (data.riftCheckpoint !== undefined || data.riftDeparture !== undefined) {
       if (data.riftCheckpoint !== undefined && data.riftDeparture !== undefined) return false;
       if (data.riftCheckpoint !== undefined && (!validRiftCheckpoint(data.riftCheckpoint) || data.riftCheckpoint.runId !== data.inventory.run?.id)) return false;
+      if (data.riftCheckpoint && !checkpointMatchesAssimilation(data.riftCheckpoint, data.assimilation ?? 0)) return false;
       if (data.riftDeparture !== undefined && (!validRiftDeparture(data.riftDeparture) || data.riftDeparture.runId !== data.inventory.run?.id
         || data.inventory.run.status !== 'active' || data.riftDeparture.conditions.cycle !== data.cycle)) return false;
       const identity = data.riftCheckpoint?.identity ?? data.riftDeparture?.identity;
@@ -161,6 +170,8 @@ function collectSave(inventory: InventoryState, forecast = true): SaveDataV2 {
     modules: gs.modules,
     moduleMaxHpTier: gs.moduleMaxHpTier,
     cycle: gs.cycle,
+    assimilation: gs.assimilation,
+    healingCycles: gs.healingCycles,
     tide: tideSystem.getState(),
     inventory,
     growth: growthSystem.getState(),
@@ -295,7 +306,8 @@ export const saveManager = {
     if (worldTransaction || pendingWorldSave) throw new Error('Base settlement is still pending');
     const inventory = inventoryStore.getState();
     if (!validRiftCheckpoint(checkpoint) || checkpoint.runId !== inventory.run?.id
-      || !validateRiftState?.(checkpoint, inventory)) throw new Error('Incomplete Rift checkpoint');
+      || !validateRiftState?.(checkpoint, inventory)
+      || !checkpointMatchesAssimilation(checkpoint, gameState.getAssimilation())) throw new Error('Incomplete Rift checkpoint');
     if (currentRiftCheckpoint?.runId === checkpoint.runId && checkpoint.sequence <= currentRiftCheckpoint.sequence) {
       throw new Error('Rift checkpoint sequence must increase');
     }
@@ -424,6 +436,8 @@ export const saveManager = {
       upgradeDiscount: data.upgradeDiscount,
       moduleSwapActive: data.moduleSwapActive,
       cycle: data.cycle,
+      assimilation: data.version === 2 ? data.assimilation : 0,
+      healingCycles: data.version === 2 ? data.healingCycles : 0,
       modules: data.modules,
       moduleMaxHpTier: data.moduleMaxHpTier,
     });

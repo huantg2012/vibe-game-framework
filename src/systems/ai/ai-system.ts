@@ -212,6 +212,8 @@ export interface AISystemAPI {
   demoteEnemyAlertLevel(enemyId: string): void;
   /** scatter: "感知填充速度降低30%". 1 = no effect. */
   setEnemyDetectionFillRateMult(enemyId: string, mult: number): void;
+  /** Derived physiology: passive recognition range only; never damage, noises or a confirmed chase. */
+  setPlayerRecognitionRangeMultiplier(mult: number): void;
   /** muffle: "360度近距检测对玩家无效". Global (muffle is a player loadout passive, not
    * tied to a single enemy), unlike every other override above. */
   setHearingSuppressed(active: boolean): void;
@@ -286,6 +288,7 @@ export class AISystem implements AISystemAPI {
   private readonly scratch: Vector2 = { x: 0, y: 0 };
 
   private context!: AIContext;
+  private playerRecognitionRangeMultiplier = 1;
 
   // --- instrumentation (dev overlay / QA) ---
   private pathCalls = 0;
@@ -309,6 +312,7 @@ export class AISystem implements AISystemAPI {
     options?: { requireExactlyOneRewriter?: boolean; recovery?: AIRuntimeRecoveryOptions },
   ): void {
     const recovery = options?.recovery;
+    this.playerRecognitionRangeMultiplier = 1;
     if (recovery && (!runtimeInteger(recovery.runSeed, 0, 0xffffffff) || !recovery.signature
       || spawns.length > 4096 || new Set(spawns.map(spawn => spawn.id)).size !== spawns.length
       || spawns.filter(spawn => spawn.type === 'rewriter').length > 1
@@ -498,7 +502,8 @@ export class AISystem implements AISystemAPI {
       enemy.activityHearingAccumMs = 0;
       // Explicit noise and damage are already authoritative stimuli, never muffle charges.
       if (this.playerIsMoving && !ai.pendingDamage && ai.pendingNoiseLevel === null) {
-        const range = enemy.config.profile.hearingRange * ai.perceptionRangeMult * this.context.hearingRangeMult;
+        const range = enemy.config.profile.hearingRange * ai.perceptionRangeMult * this.context.hearingRangeMult
+          * (ai.state === AIState.CHASE ? 1 : this.playerRecognitionRangeMultiplier);
         const distance = Math.hypot(this.playerPos.x - ai.position.x, this.playerPos.y - ai.position.y);
         if (distance <= range) {
           const clear = hasLineOfSight(this.occluders, ai.position, this.playerPos);
@@ -863,6 +868,11 @@ export class AISystem implements AISystemAPI {
     if (enemy) enemy.ai.detectionFillRateMult = mult;
   }
 
+  setPlayerRecognitionRangeMultiplier(mult: number): void {
+    if (!Number.isFinite(mult) || mult < 0 || mult > 1) throw new Error('Invalid recognition range multiplier');
+    this.playerRecognitionRangeMultiplier = mult;
+  }
+
   setPlayerActionSilenced(active: boolean): void { this.context.playerActionSilenced = active; }
 
   setHearingSuppressed(active: boolean): void {
@@ -1040,9 +1050,11 @@ export class AISystem implements AISystemAPI {
     out.hearingStill = false;
     out.hearingHit = false;
 
-    const rangeMult = ai.perceptionRangeMult;
-    const hearingMult = rangeMult * this.context.hearingRangeMult;
     const chasing = ai.state === AIState.CHASE;
+    // One attenuation channel for both passive senses. Confidence fill remains
+    // unchanged, and a proven chase retains its original pursuit/attack contract.
+    const rangeMult = ai.perceptionRangeMult * (chasing ? 1 : this.playerRecognitionRangeMultiplier);
+    const hearingMult = rangeMult * this.context.hearingRangeMult;
     const sightRange = (chasing ? sight.chaseRange : sight.rangeCore) * rangeMult;
     const hearingBase = (this.playerIsMoving ? profile.hearingRange : profile.hearingStillRange) * hearingMult;
     const rayRange = Math.max(sightRange, hearingBase);

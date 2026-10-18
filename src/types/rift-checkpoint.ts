@@ -59,7 +59,9 @@ export interface RiftDepartureIntent {
   version: 1;
   runId: string;
   identity: RiftCheckpoint['identity'];
-  conditions: { modifiers: import('@/managers/game-state').SortieModifiers; cycle: number };
+  conditions: { modifiers: import('@/managers/game-state').SortieModifiers; cycle: number;
+    /** Absent on already-paid historical departures, which retain legacy pressure. */
+    assimilationMode?: 'persistent-v1' };
 }
 export function validRiftDeparture(value: unknown): value is RiftDepartureIntent {
   if (!value || typeof value !== 'object') return false;
@@ -67,6 +69,7 @@ export function validRiftDeparture(value: unknown): value is RiftDepartureIntent
   const mods = item.conditions?.modifiers;
   return validRiftCheckpoint({ ...item, sequence: 0, elapsedMs: 0, state: {} })
     && Number.isSafeInteger(item.conditions?.cycle) && item.conditions.cycle >= 0
+    && (item.conditions.assimilationMode === undefined || item.conditions.assimilationMode === 'persistent-v1')
     && !!mods && Object.values(mods).every(Number.isFinite)
     && Number.isFinite(mods.chaosRateModifier) && Number.isFinite(mods.kindlingValueModifier)
     && Number.isFinite(mods.startingChaos);

@@ -66,6 +66,8 @@ import type { WorldProductionRecipeV3 } from '@/generation/world-study/productio
 
 /** Development encounters still use the complete production scene lifecycle. */
 export interface RiftDevFixture {
+  /** Explicit isolated physiology QA; historical fixtures retain their rules. */
+  assimilationMode?: AssimilationMode;
   /** Explicit isolated model review; normal entry never loads candidate assets. */
   playerModel?: 'last-light-a';
   playerModelAssets?: LastLightPlayerAssets;
@@ -168,7 +170,9 @@ export interface RiftDevRuntime {
 }
 import { mix32 } from '@/generation/seed-fork';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
-import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems/chaos-system';
+import { ChaosSystem, type AssimilationMode, type ChaosModulators } from '@/systems/chaos-system';
+import { saveManager } from '@/managers/save-manager';
+import { assimilationHostilityMultiplier } from '@/systems/assimilation-system';
 import { gameState, type SortieModifiers } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { CombatSystem, COMBAT_FX_DEPTH, type CombatCueId, type NoiseLevel } from '@/systems/combat-system';
@@ -396,6 +400,7 @@ export class RiftScene extends Phaser.Scene {
     this.endFrozen = false;
     const restoring = this.recovery?.checkpoint;
     if (restoring && (!validateRiftRecoveryState(restoring.state, inventoryStore.getState(), restoring.elapsedMs) || restoring.state.phase !== 'active')) throw new Error('Cannot resume an incomplete or ended Rift');
+    const restoredChaos = restoring?.state.phase === 'active' ? restoring.state.chaos : undefined;
     const sortieModifiers = restoring?.state.conditions.modifiers ?? data?.modifiers;
     this.recoveryConditions = { modifiers: { ...(sortieModifiers ?? gameState.getSortieModifiers()) }, cycle: data?.cycle ?? gameState.getCycle(), maxHealth: GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus, kindlingAffinity: growthSystem.getModifiers().kindlingAffinity };
     const sortieLoadout = data?.loadout ?? contaminantSystem.getSortieLoadout();
@@ -571,7 +576,14 @@ export class RiftScene extends Phaser.Scene {
 
     // Apply growth modifiers on top of module modifiers
     const growthMods = growthSystem.getModifiers();
-    const effectiveChaosRate = (sortieModifiers?.chaosRateModifier ?? 1.0) * (1 - growthMods.chaosResist);
+    const effectiveChaosRate = restoredChaos?.chaosRateModifier
+      ?? (sortieModifiers?.chaosRateModifier ?? 1.0) * (1 - growthMods.chaosResist);
+    // Paid departures freeze the rule before the scene exists. Missing mode on
+    // either an old departure or checkpoint must never silently opt into new rules.
+    const departure = !restoring && this.recovery ? saveManager.peekRiftDeparture() : null;
+    const assimilationMode = restoring ? restoredChaos?.assimilationMode
+      : this.devFixture?.assimilationMode ?? (departure?.runId === inventoryStore.getRun()?.id
+        ? departure?.conditions.assimilationMode : undefined);
     // growthMods.kindlingAffinity (+N per pickup) applied through LootSearchSystem config below
     // growthMods.vitalityBonus (+HP) applied through combat system max health
 
@@ -583,6 +595,10 @@ export class RiftScene extends Phaser.Scene {
     const openingChaos = clamp(startingChaos + residueChaos, 0, GAME_CONSTANTS.CHAOS.HARD_CAP);
 
     this.chaos = new ChaosSystem({
+      assimilationMode,
+      getAssimilation: () => gameState.getAssimilation(),
+      setAssimilation: value => gameState.setAssimilation(value),
+      growthResistance: restoredChaos?.growthResistance ?? growthMods.chaosResist,
       isEnemyTargetingLure: id => this.ai.getEnemyById(id)?.isTargetingLure?.() ?? false,
       onModulate: this.applyChaosModulators,
       chaosRateModifier: effectiveChaosRate,
@@ -832,6 +848,7 @@ export class RiftScene extends Phaser.Scene {
 
     if (stagedNative) yield;
     this.hud.create({
+      getAssimilation: () => this.chaos.isAssimilationEnabled() ? gameState.getAssimilation() : null,
       canExtract: () => this.extraction.canExtract(),
       isRunEnded: () => this.runController.isRunEnded(),
       suppressExtractPrompt: true,
@@ -844,7 +861,7 @@ export class RiftScene extends Phaser.Scene {
     this.sortieAcquired = [];
     this.sortiePassiveTriggers = new Map();
 
-    this.applyChaosModulators(getChaosModulators(this.chaos.getValue()));
+    this.applyChaosModulators(this.chaos.getModulators());
 
     // Consume pending side effects from defense engine (Slice 4).
     // initial_chaos is already folded into openingChaos — do not add it again.
@@ -1611,6 +1628,8 @@ export class RiftScene extends Phaser.Scene {
 
   /** Wired as the chaos system's onModulate callback. */
   private readonly applyChaosModulators = (mods: ChaosModulators): void => {
+    this.ai.setPlayerRecognitionRangeMultiplier(this.chaos.isAssimilationEnabled()
+      ? assimilationHostilityMultiplier(gameState.getAssimilation()) : 1);
     this.chaosVisionScale = mods.radiusScale;
     this.visibility.setRadiusScale(mods.radiusScale * this.hosts.getVolumeSightMult());
     this.visibility.setAbilityRadiusMultiplier(this.toolSystem.getVisionRadiusMultiplier());

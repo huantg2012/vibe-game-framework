@@ -148,6 +148,8 @@ export interface HUDConfig {
   /** When true, [E] prompt is owned by LootSearchHud (search / extract). */
   suppressExtractPrompt?: boolean;
   onInventory?: () => void;
+  /** null denotes the frozen legacy pollution protocol. */
+  getAssimilation?: () => number | null;
 }
 
 export class RiftHud {
@@ -163,6 +165,11 @@ export class RiftHud {
   private chaosOverflowFill!: HTMLDivElement;
   private chaosValueEl!: HTMLSpanElement;
   private chaosStageEl!: HTMLSpanElement;
+  private chaosLabelEl!: HTMLSpanElement;
+  private assimilationEl!: HTMLDivElement;
+  private assimilationNumberEl!: HTMLSpanElement;
+  private assimilationValue: number | null = null;
+  private lastAssimilationDisplay = '';
   private overflowVeil!: HTMLDivElement;
   private overflowJump!: HTMLDivElement;
   private overflowGrain!: HTMLDivElement;
@@ -303,6 +310,13 @@ export class RiftHud {
    *  (rift-scene merges defense residue + tool-system remaining). Do not tick
    *  remaining here — that would double-count against per-frame set. */
   update(deltaMs: number): void {
+    const assimilation = this.config.getAssimilation?.() ?? null;
+    const display = assimilation === null ? 'legacy' : assimilation.toFixed(1);
+    if (display !== this.lastAssimilationDisplay) {
+      this.lastAssimilationDisplay = display;
+      this.assimilationValue = assimilation;
+      this.updateChaosBar();
+    }
     if (this.controlsIntroRemainingMs > 0) {
       this.controlsIntroRemainingMs = Math.max(0, this.controlsIntroRemainingMs - deltaMs);
       if (this.controlsIntroRemainingMs === 0 && this.controlsEl) this.controlsEl.open = false;
@@ -409,6 +423,7 @@ export class RiftHud {
     const chaosRow = document.createElement('div');
     chaosRow.className = 'rift-readout-header';
     const chaosLabel = document.createElement('span');
+    this.chaosLabelEl = chaosLabel;
     chaosLabel.textContent = '混乱';
     chaosLabel.className = 'rift-hud-label';
 
@@ -420,7 +435,7 @@ export class RiftHud {
     this.chaosOverflowFill.style.cssText = `position:absolute;top:0;height:100%;width:0;background:${CHAOS_OVERFLOW_COLOR};`;
     chaosBarWrap.appendChild(this.chaosFill);
     chaosBarWrap.appendChild(this.chaosOverflowFill);
-    const cap = GAME_CONSTANTS.CHAOS.HARD_CAP;
+    const cap = this.config.getAssimilation?.() != null ? GAME_CONSTANTS.CHAOS.MAX_VALUE : GAME_CONSTANTS.CHAOS.HARD_CAP;
     for (const mark of [GAME_CONSTANTS.CHAOS.THRESHOLD_1, GAME_CONSTANTS.CHAOS.THRESHOLD_2, GAME_CONSTANTS.CHAOS.THRESHOLD_3]) {
       const gate = mark === GAME_CONSTANTS.CHAOS.THRESHOLD_3;
       const tick = document.createElement('div');
@@ -444,6 +459,17 @@ export class RiftHud {
     chaosCluster.appendChild(chaosRow);
     chaosCluster.appendChild(chaosBarWrap);
     chaosCluster.appendChild(this.chaosStageEl);
+    this.assimilationEl = document.createElement('div');
+    this.assimilationEl.className = 'rift-hud-assimilation';
+    const assimilationLabel = document.createElement('span');
+    assimilationLabel.className = 'rift-hud-label'; assimilationLabel.textContent = '同化';
+    this.assimilationNumberEl = document.createElement('span');
+    this.assimilationNumberEl.className = 'rift-hud-value';
+    const assimilationCaption = document.createElement('span');
+    assimilationCaption.className = 'rift-hud-assimilation-caption'; assimilationCaption.textContent = '跨趟保留';
+    this.assimilationEl.append(assimilationLabel, this.assimilationNumberEl, assimilationCaption);
+    this.assimilationEl.hidden = true;
+    chaosCluster.appendChild(this.assimilationEl);
     this.effectsEl = document.createElement('div');
     this.effectsEl.id = 'rift-hud-effects';
     this.effectsEl.className = 'device-plate';
@@ -525,24 +551,33 @@ export class RiftHud {
 
   private updateChaosBar(): void {
     const C = GAME_CONSTANTS.CHAOS;
-    const cap = C.HARD_CAP;
+    this.assimilationValue = this.config.getAssimilation?.() ?? null;
+    const adapted = this.assimilationValue !== null;
+    const cap = adapted ? C.MAX_VALUE : C.HARD_CAP;
     const gate = C.MAX_VALUE;
     const value = Math.max(0, this.chaosValue);
     const overflowing = value > gate;
-    const overflowFrac = overflowing ? Math.min((value - gate) / (cap - gate), 1) : 0;
+    const overflowFrac = !adapted && overflowing ? Math.min((value - gate) / (cap - gate), 1) : 0;
 
     this.chaosFill.style.width = `${CHAOS_BAR_WIDTH * Math.min(value, gate) / cap}px`;
     this.chaosOverflowFill.style.left = `${CHAOS_BAR_WIDTH * gate / cap}px`;
     this.chaosOverflowFill.style.width = `${CHAOS_BAR_WIDTH * Math.max(0, Math.min(value, cap) - gate) / cap}px`;
 
-    this.chaosValueEl.textContent = `${Math.round(value)}`;
+    this.chaosLabelEl.textContent = adapted ? '污染' : '混乱';
+    this.chaosValueEl.textContent = adapted ? `${Math.round(value)} / 100` : `${Math.round(value)}`;
     this.chaosValueEl.style.color = TEXT_BRIGHT;
 
-    this.chaosStageEl.textContent = chaosTierLabel(value);
-    this.chaosStageEl.style.color = overflowing ? TEXT_BRIGHT : TEXT_DIM;
+    this.chaosStageEl.textContent = adapted && value >= gate
+      ? this.assimilationValue! >= 100 ? '污染已满 · 同化达上限' : '污染已满 · 同化加深' : chaosTierLabel(value);
+    this.chaosStageEl.style.color = overflowing || (adapted && value >= gate) ? TEXT_BRIGHT : TEXT_DIM;
 
-    this.overflowVeil.style.opacity = overflowing ? String(0.10 + overflowFrac * 0.22) : '0';
-    this.overflowGrain.style.opacity = overflowing ? String(0.12 + overflowFrac * 0.28) : '0';
+    this.assimilationEl.hidden = !adapted;
+    this.root?.classList.toggle('has-assimilation', adapted);
+    if (adapted) this.assimilationNumberEl.textContent = `${this.assimilationValue!.toFixed(1)}%`;
+    // The world stays contaminated as the character learns to see through it.
+    const pollution = Math.min(1, value / gate);
+    this.overflowVeil.style.opacity = adapted ? String(0.02 + pollution * 0.10) : overflowing ? String(0.10 + overflowFrac * 0.22) : '0';
+    this.overflowGrain.style.opacity = adapted ? String(0.02 + pollution * 0.14) : overflowing ? String(0.12 + overflowFrac * 0.28) : '0';
     this.overflowJump.style.background = `rgba(26,173,150,${0.12 + overflowFrac * 0.20})`;
     if (overflowing !== this.chaosOverflowing) {
       this.chaosOverflowing = overflowing;

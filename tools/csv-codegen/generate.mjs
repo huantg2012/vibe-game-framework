@@ -13,6 +13,9 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { generateContaminantCatalog } from './contaminant-catalog.mjs';
 import { generateAtmosphereCopy } from '../atmosphere-copy/generate.mjs';
+import { generateAssimilation } from './assimilation.mjs';
+
+generateAssimilation();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '../..');
