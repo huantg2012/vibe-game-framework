@@ -8,6 +8,7 @@ import { GROWTH_UPGRADE_DISPLAY, GROWTH_UPGRADE_NAMES, formatGrowthLevel, type G
 import { gameState } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { growthSystem } from '@/systems/growth-system';
+import { tideSystem } from '@/systems/tide-system';
 import { purchaseGrowth, type GrowthPurchaseResult } from '@/managers/growth-purchases';
 import { getHealingPreview } from '@/managers/healing-cycle';
 import { assimilationHostilityMultiplier, assimilationImpactMultiplier, getAssimilationModulators, healingCyclesToClear } from '@/systems/assimilation-system';
@@ -296,14 +297,19 @@ function renderHealing(): void {
     : preview.reason === 'pending-save' ? '记录尚未保存。请先完成保存重试。'
     : !available ? '当前无法开始疗愈。' : '可只疗愈这一轮，保留其余同化。';
   const percent = (value: number): string => `${value.toFixed(1)}%`;
-  const pressure = (value: number): string => `+${Math.round((assimilationImpactMultiplier(value) - 1) * 100)}%`;
+  const pressure = (value: number): string => `+${((assimilationImpactMultiplier(value) - 1) * 100).toFixed(1)}%`;
   const sight = (value: number): string => `${Math.round(getAssimilationModulators(100, value).radiusScale * 100)}%`;
   const hostility = (value: number): string => `−${Math.round((1 - assimilationHostilityMultiplier(value)) * 100)}%`;
+  const tide = tideSystem.getState();
+  const phase = { rise: '涨潮', crest: '潮峰', ebb: '退潮' }[tide.phase];
   const html = `<div class="panel-heading"><div class="panel-title">疗愈</div></div>${pagesHtml()}
     <div class="scroll-area healing-content"><div class="readout-section">深层同化 · 跨趟保留</div>
       <div class="readout-hero healing-change"><span class="growth-before">${percent(before)}</span><span class="readout-note">→</span><strong>${percent(after)}</strong></div>
       <p class="readout-note">本轮降低 ${preview.reduction.toFixed(1)} 个百分点。全部清除还需 ${healingCyclesToClear(before)} 个周期。</p>
-      <div class="healing-cost"><div class="growth-name">承受一次冲击</div><p>按疗愈前的同化承受冲击，然后推进潮汐。供奉照常防御、积累；不会带回薪柴。</p></div>
+      <div class="healing-cost"><div class="growth-name">承受一次冲击</div>
+        <div class="stat-row"><span class="readout-label">净化器完整度</span><span>${Number(preview.purifierHp.toFixed(1))} · 至少 ${preview.requiredPurifierHp}</span></div>
+        <div class="stat-row"><span class="readout-label">当前潮汐</span><span>第 ${tide.tideNumber} 潮 · ${phase}</span></div>
+        <p>按疗愈前的同化承受冲击，然后推进潮汐。供奉照常防御、积累；不会带回薪柴。</p></div>
       <div class="readout-section">疗愈之后</div>
       <div class="stat-row"><span class="readout-label">归返冲击增幅</span><span>${pressure(before)} → ${pressure(after)}</span></div>
       <div class="stat-row"><span class="readout-label">满污染时可见半径</span><span>${sight(before)} → ${sight(after)}</span></div>
