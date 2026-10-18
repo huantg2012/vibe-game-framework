@@ -28,6 +28,7 @@ gameState.setAssimilation(47.5);
 gameState.incrementHealingCycles();
 assert(saveManager.trySave());
 const bodyRecord = record();
+assert.equal(bodyRecord.physiologyVersion, 1);
 assert.equal(bodyRecord.assimilation, 47.5);
 assert.equal(bodyRecord.healingCycles, 1);
 gameState.reset();
@@ -48,13 +49,27 @@ for (const outcome of ['death', 'abandon'] as const) {
 }
 
 const old = structuredClone(bodyRecord);
-delete old.assimilation; delete old.healingCycles;
+delete old.physiologyVersion; delete old.assimilation; delete old.healingCycles;
 records.set(GAME_CONSTANTS.SAVE.KEY, JSON.stringify(old));
 assert(saveManager.load());
 assert.equal(gameState.getAssimilation(), 0);
 assert.equal(gameState.getHealingCycles(), 0);
+assert.equal(record().physiologyVersion, 1, 'a true legacy base is migrated as one complete physiology record');
+assert.equal(record().assimilation, 0);
+assert.equal(record().healingCycles, 0);
+for (const field of ['physiologyVersion', 'assimilation', 'healingCycles'] as const) {
+  const incomplete = structuredClone(bodyRecord);
+  delete incomplete[field];
+  const bytes = JSON.stringify(incomplete);
+  records.set(GAME_CONSTANTS.SAVE.KEY, bytes);
+  const before = gameState.getState();
+  assert.equal(saveManager.load(), false, `missing new physiology field ${field} rejects`);
+  assert.deepEqual(gameState.getState(), before);
+  assert.equal(records.get(GAME_CONSTANTS.SAVE.KEY), bytes);
+}
 for (const patch of [{ assimilation: -1 }, { assimilation: 101 }, { assimilation: null },
-  { assimilation: '20' }, { healingCycles: -1 }, { healingCycles: 1.5 }, { healingCycles: null }]) {
+  { assimilation: '20' }, { healingCycles: -1 }, { healingCycles: 1.5 }, { healingCycles: null },
+  { physiologyVersion: 0 }, { physiologyVersion: 2 }, { physiologyVersion: '1' }, { physiologyVersion: null }]) {
   const bytes = JSON.stringify({ ...bodyRecord, ...patch });
   records.set(GAME_CONSTANTS.SAVE.KEY, bytes);
   const before = gameState.getState();

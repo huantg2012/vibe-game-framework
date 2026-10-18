@@ -59,6 +59,27 @@ small.chaos.addChaos('qa', 99.99 - small.chaos.getValue());
 step(large.chaos, 100, 100); step(small.chaos, 100, 10);
 near(large.value(), small.value()); large.chaos.destroy(); small.chaos.destroy();
 
+// Two independent internal deadlines split one frame into three intervals.
+// 25ms at .5/s, 50ms at .25/s, then 25ms saturated at .5/s.
+for (const frameMs of [100, 10, 1]) {
+  const run = fixture({ start: 99.975 });
+  run.chaos.setTemporaryRateMult(2, 25);
+  run.chaos.setTemporaryRateReduction(.5, 75);
+  step(run.chaos, 100, frameMs);
+  near(run.value(), .00025);
+  const ended = run.chaos.exportRuntimeState();
+  assert.equal(ended.tempRateDeadlineMs, 0); assert.equal(ended.reductionDeadlineMs, 0);
+  run.chaos.destroy();
+}
+const endBoundary = fixture();
+endBoundary.chaos.setTemporaryRateMult(2, 100); endBoundary.chaos.update(100);
+near(endBoundary.chaos.getValue(), .1); near(endBoundary.chaos.getRate(), .5);
+endBoundary.chaos.destroy();
+const oldBoundary = new ChaosSystem();
+oldBoundary.setTemporaryRateMult(2, 100); oldBoundary.update(100);
+near(oldBoundary.getValue(), .05); // Legacy endpoint expiry stays frozen.
+oldBoundary.destroy();
+
 const legacy = new ChaosSystem({ startingValue: 149.99 }); legacy.update(100);
 near(legacy.getValue(), 150); near(legacy.getModulators().speedMult, .5);
 const legacyState = legacy.exportRuntimeState(); assert(validateChaosRuntimeState(legacyState));

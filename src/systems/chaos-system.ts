@@ -265,10 +265,33 @@ export class ChaosSystem implements ChaosSystemAPI {
   update(deltaMs: number): void {
     if (this.paused) return;
     const dtMs = Math.max(0, Math.min(deltaMs, DT_CLAMP_MS));
-    const dtSec = dtMs / 1000;
-    this.clockMs += dtMs;
+    if (this.assimilationMode) {
+      const endMs = this.clockMs + dtMs;
+      this.expireRateModifiers();
+      while (this.clockMs < endMs) {
+        let nextMs = endMs;
+        if (this.tempRateDeadlineMs > this.clockMs) nextMs = Math.min(nextMs, this.tempRateDeadlineMs);
+        if (this.reductionDeadlineMs > this.clockMs) nextMs = Math.min(nextMs, this.reductionDeadlineMs);
+        const intervalMs = nextMs - this.clockMs;
+        this.clockMs = nextMs;
+        // The preceding interval owns the multipliers that were live at its
+        // beginning. Expiry changes only the next interval, never time already run.
+        this.advanceExposure(intervalMs);
+        this.expireRateModifiers();
+      }
+    } else {
+      // Preserve historical end-of-frame expiry for unmarked saved runs.
+      this.clockMs += dtMs;
+      this.expireRateModifiers();
+      this.advanceExposure(dtMs);
+    }
 
-    // Check temporary rate multiplier expiry
+    this.checkThresholds();
+    this.checkEmit();
+    this.checkModulate();
+  }
+
+  private expireRateModifiers(): void {
     if (this.tempRateDeadlineMs > 0 && this.clockMs >= this.tempRateDeadlineMs) {
       this.tempRateDeadlineMs = 0;
       this.tempRateMult = 1.0;
@@ -278,7 +301,10 @@ export class ChaosSystem implements ChaosSystemAPI {
       this.reductionDeadlineMs = 0;
       this.reductionMult = 1.0;
     }
+  }
 
+  private advanceExposure(dtMs: number): void {
+    const dtSec = dtMs / 1000;
     const chaos = GAME_CONSTANTS.CHAOS;
     const effectiveRateMult = this.tempRateDeadlineMs > 0
       ? Math.max(this.rateMultiplier, this.tempRateMult)
@@ -291,8 +317,8 @@ export class ChaosSystem implements ChaosSystemAPI {
     if (this.assimilationMode) {
       let saturatedMs = this.value >= POLLUTION_SATURATION ? dtMs : 0;
       if (this.value < POLLUTION_SATURATION && this.value + increment > POLLUTION_SATURATION) {
-        // Invert the same exact integral only on the one crossing frame. Count
-        // the fraction after saturation; frame size cannot grant extra exposure.
+        // Invert the same exact integral only on the crossing interval. Count
+        // the fraction after saturation; internal rate expiry is already split.
         const needed = POLLUTION_SATURATION - this.value;
         let low = 0, high = dtSec;
         const fromSeconds = (this.clockMs - dtMs) / 1000;
@@ -312,10 +338,6 @@ export class ChaosSystem implements ChaosSystemAPI {
     }
     this.value = Math.min(this.value + increment, this.getCap());
     if (this.value > this.peak) this.peak = this.value;
-
-    this.checkThresholds();
-    this.checkEmit();
-    this.checkModulate();
   }
 
   reset(startingValue?: number): void {

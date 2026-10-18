@@ -98,8 +98,10 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   if (data.moduleSwapActive !== undefined && typeof data.moduleSwapActive !== 'boolean') return false;
   const probe = new InventoryStore();
   if (data.version === 2) {
-    if (data.assimilation !== undefined && !runtimeNumber(data.assimilation, 0, 100)) return false;
-    if (data.healingCycles !== undefined && !runtimeInteger(data.healingCycles, 0)) return false;
+    const hasPhysiology = ['physiologyVersion', 'assimilation', 'healingCycles']
+      .some(field => Object.prototype.hasOwnProperty.call(data, field));
+    if (hasPhysiology && (data.physiologyVersion !== 1 || !runtimeNumber(data.assimilation, 0, 100)
+      || !runtimeInteger(data.healingCycles, 0))) return false;
     if (!probe.loadState(data.inventory)) return false;
     if (data.riftCheckpoint !== undefined || data.riftDeparture !== undefined) {
       if (data.riftCheckpoint !== undefined && data.riftDeparture !== undefined) return false;
@@ -170,6 +172,7 @@ function collectSave(inventory: InventoryState, forecast = true): SaveDataV2 {
     modules: gs.modules,
     moduleMaxHpTier: gs.moduleMaxHpTier,
     cycle: gs.cycle,
+    physiologyVersion: 1,
     assimilation: gs.assimilation,
     healingCycles: gs.healingCycles,
     tide: tideSystem.getState(),
@@ -484,7 +487,7 @@ export const saveManager = {
     // Preserve existing forecasts/checkpoints. Older records without any forecast
     // still initialize their first one, as the original V1 migration did.
     if ((!loadedRun || loadedRun.baseSettled) && (data.version === 1 || data.inventory.version < 4
-      || data.growth.schemaVersion === undefined || repairedSlots)) {
+      || data.growth.schemaVersion === undefined || data.physiologyVersion === undefined || repairedSlots)) {
       try { writeRecord(JSON.stringify(attachCheckpoint(collectSave(inventoryStore.getState(), data.impactForecast === undefined)))); }
       catch { /* trySave exposes retry; do not erase the readable old record */ }
     }

@@ -271,7 +271,8 @@ export interface SaveDataV1 {
 /** Inventory-backed save. V1 remains readable and is migrated without changing IDs. */
 export interface SaveDataV2 extends Omit<SaveDataV1, 'version' | 'contaminants' | 'defenseSlots' | 'sortieLoadout'> {
   version: 2;
-  /** Missing in older records means an unaffected body and no treatment cycles. */
+  /** All three fields absent is legacy. Versioned physiology requires both values. */
+  physiologyVersion?: 1;
   assimilation?: number;
   healingCycles?: number;
   inventory: import('./inventory-types').InventoryState;
