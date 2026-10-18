@@ -2,11 +2,12 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code / art（I30 R11：Last Light承重步态与踝足滚动）
-last-modified-date: 2026-10-04
+last-modified-by: design（同化共同调制接口及炉边休息边界）
+last-modified-date: 2026-10-19
 interface-changed: true
 slice: 1
 interfaces-with:
+  - system-assimilation-healing # 新协议共同视距/移速投影，不改变光学或物理几何
   - system-enemy-ai            # T2：共用 grid-raycast 视线工具；敌人可见性依赖本系统查询
   - system-chaos-scavenge-extract  # T3：混乱值经场景层调用本系统的视野调制器 / 玩家移速调制器
   - system-combat              # T4：共享同一 Player 实体（本 spec 只拥有移动/朝向/碰撞体）
@@ -29,6 +30,12 @@ exposes:
   - OccluderGrid 接口契约（由地图侧实现）
   - 新增事件：无（本系统对外为同步查询 API + setter，不进事件总线）
 ---
+
+## 2026-10-19 同化适应的表现接口
+
+新协议Rift由场景读取`ChaosSystem.getModulators()`，将[同化与疗愈](system-assimilation-healing.md)的共同视距、污染移速与环境侵蚀投影送入既有setter；legacy仍读原0–150调制。新局不能叠加旧溢出瘫痪，也不能用同化恢复将污染表现清零。工具视距、Host缩视、负重、真实LOS/VOID、敌人显隐和小地图发现仍由原通道合成；同化不扩大干净基础视距，不承诺肩灯功率或隔墙可见。半径变化必须沿既有缓存失效路径更新，不能仅改变读数。
+
+本文后述基础光场与几何合同保持；旧混乱调制示意的数值作用域为legacy，新曲线唯一正文在上述规格。培养藏主动疗愈属于装置业务，不是步态、坐姿或普通停留的隐含效果。
 
 ## 2026-10-11 空间重编的视线验收（DEC-198）
 
@@ -58,7 +65,7 @@ WASD/方向键仍表示屏幕八方向；输入通过所在三角形的投影Jac
 
 环境观察偏移取连续XZ位置，坡面高度不拖动外景；近层固定，中远层缓动保持建筑接根。运行时阴影改为GPU片元深度比较，人物对静态光的受光不再由整个人物共用的三点可见率切换。分层、阴影与暂停/减动的具体契约见[技术架构](../architecture.md#迭代30-r11last-light-正式场景)；它们不修改操作资格、碰撞或战术视野。本轮动作验证见[角色QA](../qa/iteration-30-last-light-actor.md)；此前[生产QA](../qa/iteration-30-last-light-production.md)和[动态QA](../qa/iteration-30-last-light-motion.md)保留各自历史范围，不能据此前的可达或编译结果推定当前动态体验通过。
 
-休息点必须从合法站位触达，只切换渲染姿态，不传送物理脚底；E坐下后冻结移动、镜头1.18倍、显示氛围句，E或Esc起身并恢复镜头/行走。无恢复、资源或时间机制。
+休息点必须从合法站位触达，只切换渲染姿态，不传送物理脚底；E坐下后冻结移动、镜头1.18倍、显示氛围句，E或Esc起身并恢复镜头/行走。炉边坐下仍无恢复、资源或时间推进机制；这项限制不禁止玩家在培养藏明确执行有冲击成本的疗愈，后者不由姿态或坐下时长触发。
 
 旧I30合同如下保留历史语境，现役净化点以本节为准；Rift合同仍有效。
 

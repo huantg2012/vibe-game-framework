@@ -3,13 +3,21 @@ status: APPROVED-FOR-IMPLEMENTATION
 phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
-last-modified-date: 2026-10-18
-last-modified-by: design（P49按用户决定改为先选污染、再配行装；复用净化点单列浏览，领域规则及出发原子性不变）
-interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes, system-map-generation]
-exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, RiftWorldHistory, inventoryStore.getRiftWorldHistory(), inventoryStore.reconcileExpandedToolSlots(previousSlotCount), SaveLoadSnapshot, saveManager.captureLoadSnapshot(), saveManager.matchesLoadSnapshot(snapshot), loadExpedition]
+last-modified-date: 2026-10-19
+last-modified-by: design（同化长期状态、疗愈供奉事务及新旧在途协议）
+interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes, system-map-generation, system-assimilation-healing]
+exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, RiftWorldHistory, inventoryStore.getRiftWorldHistory(), inventoryStore.reconcileExpandedToolSlots(previousSlotCount), SaveLoadSnapshot, saveManager.captureLoadSnapshot(), saveManager.matchesLoadSnapshot(snapshot), loadExpedition, SaveDataV2.assimilation, SaveDataV2.healingCycles]
 interface-changed: true
 note: DEC-142统一供奉与有限使用；DEC-158一般中断政策保持。DEC-220用户明确授权未开放世界旧active局自动按abandon作废；不删除基地进度。其它损坏记录仍沿原明确确认规则。
 ---
+
+## 2026-10-19 同化持久化与疗愈供奉
+
+[同化与疗愈](system-assimilation-healing.md)的A和`healingCycles`由GameState持有，经`SaveDataV2.assimilation/healingCycles`与完整世界状态一同保存；库存不拥有第二份同化，也不把它算作携带物。合法旧档缺字段按0导入，非法值仍拒绝。新出发意图带`conditions.assimilationMode = 'persistent-v1'`，新Chaos运行态须与长期A一致；未带标记的旧在途保留原0–150协议，不因重载升级或截断。该标记不意味着同化CSV整包已冻结。
+
+出击帧与死亡/撤离/放弃结算均保存实际A，不只放在结束后会省略的Chaos检查点中；丢弃携带物不会洗掉身体状态。疗愈以独立`healing:<序号>`消费真实冲击的供奉快照，正常成熟/鉴定/回库/清槽，但不调用`beginRun`、不扣携入被动趟数、不写世界访问历史或成功撤离。完整世界事务同时保存同化、模块、潮汐、供奉和回执，拒写保留同一候选重试，禁止再执行一次疗愈来补保存。
+
+首归免伤只属于普通归返；疗愈不借`settled/baseSettled`伪造归返。已有在途、待归返或待保存时疗愈不可开始。普通物件死亡损失、供奉生命周期、未知身份和备行顺序保持；本节不声明新的体验通过。
 
 
 ## R100 I09 · 近期世界与正式出发
@@ -252,7 +260,7 @@ Tab/Esc收起，Esc先取消交换草稿；移动意图退出并交回移动，�
 
 ## 7. 死亡、撤离与中断恢复
 
-死亡丢本趟所有携入装备和拾获物；清引用、工具缓存、附属次数，已消耗/破碎物不恢复。基地收存及未携出的供奉物保留。撤离仅按最终实际携回实例结算，不按“曾经捡到”累计；已丢下、耗尽与破碎物不计收益。
+死亡丢本趟所有携入装备和拾获物；清引用、工具缓存、附属次数，已消耗/破碎物不恢复。基地收存及未携出的供奉物保留；跨局同化属于身体状态，死亡/放弃均不清除。撤离仅按最终实际携回实例结算，不按“曾经捡到”累计；已丢下、耗尽与破碎物不计收益。
 
 所有消费、拾取、交换与结算都先持久化再发布。保存失败不吞物或假报成功；基地结算保存失败留待重试、禁止新出发，重试只保存既成结果，不重复基地收益、潮汐或冲击。
 

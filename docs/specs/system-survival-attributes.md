@@ -3,21 +3,28 @@ status: APPROVED-FOR-IMPLEMENTATION
 phase: IMPLEMENTING
 created-by: director
 created-date: 2026-09-09
-last-modified-date: 2026-09-09
-interfaces-with: [system-player-weapons, system-field-inventory, system-chaos-scavenge-extract, system-growth-tide, system-movement-vision]
+last-modified-date: 2026-10-19
+last-modified-by: design（R/G独立复用于同化；自然污染与负重边界保持）
+interfaces-with: [system-player-weapons, system-field-inventory, system-chaos-scavenge-extract, system-growth-tide, system-movement-vision, system-assimilation-healing]
 exposes: [PollutionResistance, BurdenSpeedFactor, SurvivalAttributeBreakdown]
 interface-changed: true
 note: DEC-138批准实施；公式由survival-attributes.csv生成，正向混乱已接抗性，场景行动与UI派生已接通，实际平衡待试玩。
 ---
 
+## 2026-10-19 与同化的接口
+
+[同化与疗愈](system-assimilation-healing.md)复用最终广谱污染抗性R和成长自然渗透减缓G，各自一次减慢满污染后的同化时间速率。R仍从武器/有效工具/临时状态统一汇总；GR04仍不加入R、不减少离散污染或起始污染，仅在保持原自然时间污染作用外新增对同化速率的作用。不能把先经R/G减免的污染增量再次乘R/G换算同化，也不能因同化提供HP减伤或裂隙内回复。
+
+新协议视距/污染移速由统一同化投影拥有，旧0–150末段减速仅用于legacy；负重、武器攻击方式与其他速度来源保持。本规格只提供抗性与负重事实，同化公式及策划参数不在此复制。
+
 
 ## 迭代28 · 能力来源
 
-新抗污工具通过同一个正向混乱入口叠加武器/成长抗性，总上限仍60%；既有混乱不回退、生命伤害不减少。已封顶时拒绝无效施放。新容量被动改变InventoryStore容量权威值，负重速度、携带判定和UI同读该值；不能只改包内显示。末趟零余次的绑定物件仍占自身重量并生效至结算，撤离回库先于撤销容量。
+新抗污工具通过同一个正向混乱入口叠加武器及其他有效广谱抗性，总上限仍60%；GR04自然渗透减缓不并入该合计。既有混乱不回退、生命伤害不减少。已封顶时拒绝无效施放。新容量被动改变InventoryStore容量权威值，负重速度、携带判定和UI同读该值；不能只改包内显示。末趟零余次的绑定物件仍占自身重量并生效至结算，撤离回库先于撤销容量。
 
 # 生存属性：污染抗性与负重行动
 
-> TL;DR：污染抗性汇总多个有效来源，降低外来混乱的正向累积；负重仍是唯一携带计量，行动变化由已用负重推导。属性不改变同家族武器的攻击方式。
+> TL;DR：污染抗性汇总有效广谱来源，降低外来污染正向累积；新同化速率分别复用该抗性与独立成长减缓。负重仍是唯一携带计量，属性不改变同家族武器的攻击方式。
 
 ## 1. 属性的职责
 
@@ -30,7 +37,7 @@ note: DEC-138批准实施；公式由survival-attributes.csv生成，正向混�
 
 ## 2. 污染抗性：多来源，汇总一次
 
-抗性来源预留玩家基础/永久成长、当前装配武器、明确提供此属性的已装污染物工具、临时状态。当前只有武器同品质成品倾向提供抗性，品质本身不提供抗性基值，不顺手给所有旧工具或成长节点发一份新加成。未装战利品、基地物品和地面物品都不提供属性；不允许背十把撬棍叠抗性。
+广谱抗性来源预留玩家基础/永久成长、当前装配武器、明确提供此属性的已装污染物工具和临时状态；当前读取武器成品倾向及已明确实现的工具来源，GR04仍属于独立自然减缓通道。品质本身不提供抗性基值，不顺手给所有旧工具或成长节点发一份新加成。未装战利品、基地物品和地面物品都不提供属性；不允许背十把撬棍叠抗性。
 
 正式计算（初始平衡值）：
 

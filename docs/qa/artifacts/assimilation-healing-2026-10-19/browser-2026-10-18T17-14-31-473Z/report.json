@@ -1,0 +1,251 @@
+{
+  "startedAt": "2026-10-18T17:14:31.474Z",
+  "scope": "Isolated production base and cultivation preview only. Controlled A30, purifier HP70, money100; actual Tab input. Final 17-14-31 capture additionally tests real scroll-wheel reach and cost/footer layout. No new Rift entry or cycle execution.",
+  "steps": [
+    {
+      "name": "production-start-isolated",
+      "startedAt": "2026-10-18T17:14:31.983Z",
+      "details": {
+        "modules": {
+          "/src/managers/audio-manager.ts": "http://127.0.0.1:3027/src/managers/audio-manager.ts",
+          "/src/managers/game-state.ts": "http://127.0.0.1:3027/src/managers/game-state.ts?t=1792342239920",
+          "/src/managers/save-manager.ts": "http://127.0.0.1:3027/src/managers/save-manager.ts?t=1792342961538",
+          "/src/systems/tide-system.ts": "http://127.0.0.1:3027/src/systems/tide-system.ts",
+          "/src/ui/dom/growth-panel.ts": "http://127.0.0.1:3027/src/ui/dom/growth-panel.ts?t=1792343625867",
+          "/src/managers/healing-cycle.ts": "http://127.0.0.1:3027/src/managers/healing-cycle.ts"
+        },
+        "snapshot": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 0,
+            "assimilation": 30,
+            "healingCycles": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 0,
+            "currentIntensity": 1
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 2,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 30,
+            "healingCycles": 0,
+            "cycle": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 0,
+              "currentIntensity": 1
+            },
+            "run": null
+          },
+          "rift": null,
+          "dom": "薪柴\n0\n潮汐\n第 1 潮\n涨潮\n下次归来\n核心？\n轻微？\nTab\n存续报告\n[E]\n坐下"
+        }
+      },
+      "result": "pass",
+      "finishedAt": "2026-10-18T17:14:36.195Z"
+    },
+    {
+      "name": "healing-preview-public-cost-facts",
+      "startedAt": "2026-10-18T17:14:36.195Z",
+      "details": {
+        "text": "疗愈\n蜕变\n疗愈\nTab 切换\n深层同化 · 跨趟保留\n30.0%\n→\n15.0%\n\n本轮降低 15.0 个百分点。全部清除还需 2 个周期。\n\n承受一次冲击\n净化器完整度\n70 · 至少 25\n当前潮汐\n第 1 潮 · 涨潮\n\n按疗愈前的同化承受冲击，然后推进潮汐。供奉照常防御、积累；不会带回薪柴。\n\n疗愈之后\n归返冲击增幅\n+15.0% → +7.5%\n满污染时可见半径\n66% → 60%\n未激怒敌人的感知距离\n−18% → −9%\n\n压回同化，也会失去一部分裂隙适应。主动攻击和接触污染仍有危险。\n\n可只疗愈这一轮，保留其余同化。\n\nEnter\n疗愈一周期\nEsc\n离开",
+        "layout": {
+          "panel": {
+            "left": 452.933349609375,
+            "top": 241.9385528564453,
+            "right": 1221.86669921875,
+            "bottom": 852.8719024658203
+          },
+          "button": {
+            "left": 452.933349609375,
+            "top": 806.78857421875,
+            "right": 574.0872802734375,
+            "bottom": 841.0219116210938
+          },
+          "cost": {
+            "top": 519.7552490234375,
+            "bottom": 680.3885498046875
+          },
+          "content": {
+            "top": 359.12188720703125,
+            "bottom": 773.8718872070312
+          },
+          "mountedUnderRoot": true,
+          "scroll": {
+            "height": 315,
+            "content": 413
+          }
+        },
+        "scroll": {
+          "top": 98,
+          "height": 315,
+          "total": 413
+        },
+        "snapshot": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 0,
+            "assimilation": 30,
+            "healingCycles": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 0,
+            "currentIntensity": 1
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 2,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 30,
+            "healingCycles": 0,
+            "cycle": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 0,
+              "currentIntensity": 1
+            },
+            "run": null
+          },
+          "rift": null,
+          "dom": "疗愈\n蜕变\n疗愈\nTab 切换\n深层同化 · 跨趟保留\n30.0%\n→\n15.0%\n\n本轮降低 15.0 个百分点。全部清除还需 2 个周期。\n\n承受一次冲击\n净化器完整度\n70 · 至少 25\n当前潮汐\n第 1 潮 · 涨潮\n\n按疗愈前的同化承受冲击，然后推进潮汐。供奉照常防御、积累；不会带回薪柴。\n\n疗愈之后\n归返冲击增幅\n+15.0% → +7.5%\n满污染时可见半径\n66% → 60%\n未激怒敌人的感知距离\n−18% → −9%\n\n压回同化，也会失去一部分裂隙适应。主动攻击和接触污染仍有危险。\n\n可只疗愈这一轮，保留其余同化。\n\nEnter\n疗愈一周期\nEsc\n离开\n培养藏"
+        },
+        "image": "healing-preview-cost-facts.png",
+        "scrolledImage": "healing-preview-effects-scrolled.png"
+      },
+      "result": "pass",
+      "finishedAt": "2026-10-18T17:14:37.326Z"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "sources": {
+    "src/managers/healing-cycle.ts": "d233f94ccae555925a71903c036a6e5ee0b47f77a795af0e6d78af9be7861a59",
+    "src/managers/save-manager.ts": "12f5c3249c3315589fc2a419919cf5297689d46ea66b4fbb9cbe1da1be0b3a37",
+    "src/systems/chaos-system.ts": "150c038ff58a4aa8905c56b5dfd8669595120d0db9e53d4a863621040c930e8d",
+    "src/scenes/purification-scene.ts": "9b32f56ce173ea92167a39f94fac98af369d80e50a308ce250836082aaf5839c",
+    "src/scenes/rift-scene.ts": "ac9f8dc46b8f11ff3c7694e61d4c4c045416ce3c078678b6a4cc83746ea5313f",
+    "src/ui/dom/growth-panel.ts": "78bbfa4950d79a62f480baef3c1448d46c493e25dd0bb0aef250a968fd75bf57",
+    "src/ui/dom/rift-hud.ts": "ef669c59efb8a65b4a83e9a0c4642c3d8eb580fd43328ae3d519764add25e6f5",
+    "src/ui/dom/impact-result-panel.ts": "d22b9458f0f55f1f98341d65755c7b83b104cc86418f45275b6020c847ad1c2b"
+  },
+  "browser": "155.0.8059.80",
+  "result": "pass",
+  "finishedAt": "2026-10-18T17:14:37.328Z",
+  "reviewNotes": {
+    "resolvedUiGaps": [
+      "Eligible preview now displays current purifier HP70 and minimum25, current tide1/rise.",
+      "Impact modifier accurately displays 15.0% to7.5%."
+    ],
+    "humanReview": "Final aesthetic approval remains with the user."
+  }
+}

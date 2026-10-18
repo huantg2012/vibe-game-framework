@@ -2,13 +2,21 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-10-16
+last-modified: 2026-10-19
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
 ---
 
 # 技术架构
+
+## 持久同化与疗愈事务（2026-10-19，DEC-221）
+
+`data/assimilation.csv` → `tools/csv-codegen/assimilation.mjs` → `generated/assimilation-data.ts` 单向提供策划参数；`systems/assimilation-system.ts` 只派生速率、视距、感知距离、冲击预算及疗愈值，不持有第二份状态。`GameState`拥有长期同化及疗愈周期计数，`ChaosSystem`只在新出发冻结的`persistent-v1`协议中投影/推进它；旧在途无标记则保持150混乱规则。新协议内部按满污染时刻与临时减缓到期分段积分，暂停不推进。RiftScene把共同投影交给原视野、速度与AI感知来源；不改变VOID、Host伤害和CHASE反击。
+
+`managers/healing-cycle.ts`负责培养藏的一次疗愈事务：资格检查→治疗前同化预算的强制冲击→供奉/潮汐和真实成长经历→负向稳定度事实→部分降低同化→下一预告→完整保存。疗愈用独立`healing:<sequence>`身份，不伪造run、不消费出击工具趟数，也不授予成功归返或正稳定度。原`ImpactSystem`和`ContaminantSystem`仍分别拥有伤害/预告及供奉生命周期。
+
+`SaveManager`将`physiologyVersion:1`、同化和疗愈周期纳入整帧/世界候选；只有三字段全缺才是合法旧基地档。新协议缺字段或在途内外同化不一致拒绝加载，不静默清零。写入失败冻结候选和操作，重试同一bytes而不重冲击；净化点retry期间Esc也不能穿透到系统菜单。GrowthPanel仅预览与发出一次疗愈动作，ImpactResultPanel展示真实周期结果。规则唯一正文为[同化与疗愈](specs/system-assimilation-healing.md)，实际检查范围见[QA](qa/assimilation-healing-2026-10-19.md)。
 
 ## 世界构型与怪物材料的正式接线（2026-10-16）
 

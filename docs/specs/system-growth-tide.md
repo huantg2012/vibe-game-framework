@@ -1,10 +1,11 @@
 ---
 status: ACTIVE
 slice: 3 (extended in 5, 5.5)
-last-modified-date: 2026-10-04
-last-modified-by: design（R100 P13首两项成长投入与旧档价格边界）
+last-modified-date: 2026-10-19
+last-modified-by: design（疗愈真实潮汐/供奉周期、GR04同化作用与积分边界）
 interface-changed: true
 interfaces-with:
+  - system-assimilation-healing # 疗愈推进真实周期，GR04独立减慢同化
   - system-field-inventory         # 统一物件供奉、实例归属、使用与装配
   - system-purification-impact   # 潮汐模型替代线性递增；污染物防御 slot 扩展净化点
   - system-chaos-scavenge-extract # 出击工具 + 永久改造修正出击参数；新增污染物拾取节点
@@ -16,11 +17,18 @@ exposes:
   - growthSystem.getNextStep() / getRouteProgress() / getState() / loadState(state)
   - purchaseGrowth(id) -> GrowthPurchaseResult（包含thicken；只允许当前路线项）
   - tideSystem.getState() (含 phase / tideNumber / currentIntensity) / getCurrentIntensity() / isHighTide()
+  - tideSystem.advanceCycle(modulesIntact?)（普通归返及疗愈的真实周期）
   - contaminantSystem.getDefenseSlotted() / getDefenseSlotCount() / getSortieLoadout()
   - growthSystem.getLevel(id) / getModifiers()
   - stabilityTracker.getProgress()
   - saveManager.save() / load() / hasSave()
 ---
+
+## 2026-10-19 主动疗愈与成长经济
+
+[同化与疗愈](system-assimilation-healing.md)定义培养藏主动时间周期。一次合法疗愈真实承受冲击、调用`finishOfferingImpact`完成防御积累/成熟，再推进潮汐并记录实际冲击/供奉/退潮经历；不冒充成功出击或消耗携入物余次。供奉在疗愈中获得成熟属于真实周期收益，不能另加“疗愈时不成熟”例外。A与疗愈序号纳入世界持久状态，具体恢复接口见库存规格。
+
+疗愈不发成功归返、完整有限潮峰、潮汐切换等正稳定度积分，保留模块归零负分及潮峰已破损记录；普通归返与成长购买的原积分不变。培养藏疗愈资格不绑22步成长进度；加厚和刻入仍不附送疗愈或HP回复。GR04的自然污染减缓保持，并作为独立G来源减慢新同化速率，不并入广谱污染抗性。具体公式只在同化规格和CSV维护。
 
 
 ## 迭代28 · 污染物目录与版本边界
@@ -164,7 +172,7 @@ interface SaveData {
 ### T — 潮汐冲击模型
 
 1. **替代线性递增**：`impactIntensity` 不再逐 cycle +0.15。改为潮汐状态机驱动。
-2. **Tide 结构**：每个 Tide 由 Rise→Crest→Ebb 三阶段组成。每阶段持续若干 cycle（=出击次数）。
+2. **Tide结构**：每个Tide由Rise→Crest→Ebb三阶段组成，每阶段持续若干有效周期。普通一趟归返或一次主动疗愈各推进一轮；疗愈不增加真实出击计数，不能再将所有潮汐周期等同于出击次数。
 
 3. **数值定义**：
 
@@ -184,7 +192,7 @@ interface SaveData {
 
 5. **高潮冲击**：Crest 阶段的冲击为"高潮冲击"，对污染物的冲击计数为 3 点（一次即转化）。Rise/Ebb 阶段为一般冲击，计 1 点。
 
-6. **第一次出击豁免**：出生据点为 cycle=0，出发先递增，所以第一趟归来为 cycle=1；两者不触发冲击。第2趟起正常结算，死亡/明确放弃也不续免。第一趟仍推进潮汐，跳过的冲击不增加供奉计数。
+6. **第一次出击豁免**：普通归返沿出生cycle=0、首趟cycle=1的免冲击规则，第2趟起正常结算，死亡/明确放弃也不续免。第一趟仍推进潮汐，跳过的冲击不增加供奉计数。疗愈使用独立周期身份和强制真实冲击，不复用此豁免。
 
 7. **潮汐切换**：当 Ebb 阶段的最后一个 cycle 结束后，自动进入下一个 Tide 的 Rise 阶段。intensity 从上一 Tide 的 ebbTarget 开始（= 下一 Tide 的 floor）。
 
@@ -234,13 +242,13 @@ interface SaveData {
 18a. **事实恢复与事务**：旧缺字段保持未记录；成熟旧工具、已见可用目录、非空供奉回执、已结算实际冲击账本和明确退潮/后续潮位可恢复对应事实，不从余额/稳定度/active的cycle数推断成功。开局白板不算供奉完成。`recordReturn`在既有基地结算事务内OR写入，不发奖励；归来拒写保留整帧候选并封锁交互，重试不重新冲击。节点到达前已经取得的事实直接满足，不要求再做一次。
 19. **永久性与交易**：已购等级不因前置缺失而失效。`purchaseGrowth`同笔处理薪柴、成长、稳定度、预告及必要库存迁移，成功后才发事件；拒写恢复全部相关状态，路线不前进。出击扩容把原被动末槽迁至新被动末槽，原ID/余次/品质保留；主动2→3，被动仍1，重量照常计入。供奉每次+1至4，不改变来源、充能速度、单件防御或次数。加厚同样只在轮到该步骤时可买，不回血且不增加成长稳定度。
 19a. **成长schema与旧容量权益**：新写入`GrowthState.schemaVersion=2`，供奉基础1格＋0–3级。缺schema的合法旧档基础3格＋旧0/1级，迁成新2/3级，保留3/4格、物件ID/槽序/积累；不扣款、不补物、不发稳定度。新档明确写2，不能误走旧迁移。重复读新档不再+2；旧非前缀等级与加厚保留，按最早缺项继续，已满足目标不重复收费。所有调价（含R100 P13）不对旧已购自动补扣或追溯退款；新购买按对应原路线`unit/level`节点的当前`cost`，不能按累计已购数重排费用。在途旧装备、出击修正与检查点保持已冻结的原承诺，不按新净化器公式重算。
-20. **效果应用**：`growthSystem.getModifiers()`提供生命/亲和/抗性；预兆等级供公开读取。生命上限、负重与出击快照沿共享入口。GR04渗透抗性维持当前实现：每级使自然时间混乱增速减缓4%，满级20%，自然速率中的成长因子为`1 - growthMods.chaosResist`；不减少离散污染、不改变净化器起始混乱，也不计入武器/工具的统一污染抗性。将它接入广谱抗性通道尚未授权，本轮不改变能力。亲和按 `max(1,floor((node.value+kindlingAffinity)*storageModifier))` 先加基数再乘储藏。旧在途属性不变。预兆第1层准确强度档，第2层增加准确重点，第3层增加三个装置供奉前压力；购买只改变读取，不重抽冲击。入口与常驻HUD均走`getForecastReading(level)`公开读取，不绕过等级显示原始强度倍率；正式合同归`system-purification-impact`。
+20. **效果应用**：`growthSystem.getModifiers()`提供生命/亲和/抗性；预兆等级供公开读取。生命上限、负重与出击快照沿共享入口。GR04仍使自然时间混乱按每级4%、满级20%减缓，成长因子为`1 - growthMods.chaosResist`；不减少离散污染、不改变净化器起始混乱，也不计入武器/工具的统一广谱抗性。新同化协议额外复用该独立因子减慢同化时间速率，各通道只应用一次；这不将GR04改为广谱抗性。亲和按`max(1,floor((node.value+kindlingAffinity)*storageModifier))`先加基数再乘储藏。旧在途属性不变。预兆第1层准确强度档，第2层增加准确重点，第3层增加三个装置供奉前压力；购买只改变读取，不重抽冲击。入口与常驻HUD均走`getForecastReading(level)`公开读取，不绕过等级显示原始强度倍率；正式合同归`system-purification-impact`。
 20a. **呈现**：培养藏世界内交互只呈现当前下一项与只读已获能力；当前级/总级、当前→下一效果、费用/余量、路线进度各自分开展示。至多显示当前项的一个未满足经历，已满足就收起；支出独立，不拼成组合任务。没有后续条目列表、并行轴选择或“尚待经历”总入口。Enter/点击执行同一当前动作，长按不连买；全部完成只保留真实完成态与已有能力。加厚完整代价首屏可读，见净化点spec。真实能力而非余额驱动持久外显。
 20b. **有限规模与验证**：完整路线及阶段因果见[成长设计](../design-notes/purification-growth-renewal.md)，节奏边界见[进度曲线](../content/progression.md)。22步含12次身体数值与3次加厚，不等于22个新玩法；自然1格压力、第三主动累计142薪柴、三主动/四供奉长期供给及尾段四步136薪柴的体验仍待验证，尚无自然长线经济失效的定论。空工具可以出击，无就绪武器沿基地白板替补；不能以随机物件门槛强迫刷取。净化点美术仅标记为迭代30待独立审核/迭代，未开始，不随本轮机制修复宣告通过。
 
 ### S — 净化稳定度
 
-21. **积分规则**：
+21. **普通归返与购买积分规则**：以下正奖励不由主动疗愈发放；疗愈只保留实际模块归零的负分。疗愈仍推进真实潮汐/供奉，不能为避免积分而冻结其时间周期。
 
 | 行为 | 积分 |
 | ---- | ---- |
@@ -261,7 +269,7 @@ interface SaveData {
 
 ### P — 持久存档
 
-24. **保存时机**：每次返回净化点时自动保存（包括分配/改造操作后）。改造与加厚走 `purchaseGrowth` 购买事务：扣薪柴、成长/模块上限、成长稳定度共同写入；拒写时全部还原，成功事件与演出只在写入成功后发送。待保存的归来结算阻止购买。加厚不额外给稳定度，亦不回血。
+24. **保存时机**：每次返回净化点及分配/改造操作后保存；主动疗愈另沿完整世界事务一次保存其冲击、供奉、潮汐、同化和回执，不等下一次归返。改造与加厚走`purchaseGrowth`购买事务：扣薪柴、成长/模块上限、成长稳定度共同写入；拒写时全部还原，成功事件与演出只在写入成功后发送。待保存的归来/疗愈事务阻止购买。加厚不额外给稳定度，亦不回血。
 25. **存储**：`localStorage` key = `'coh-save-v1'`。
 26. **加载**：主菜单"Continue"按钮读取存档恢复全部状态。
 27. **版本迁移**：`SaveData.version` 字段。迭代19库存底座当前写入version=2（`SaveDataV2`）；旧version=1经统一库存导入保留污染物ID、阶段、次数、装配和成长，迁移增加普通白板。V2以`inventory`为唯一物品归属，旧污染物数组不重复写入。下文早期SaveData示意属于V1合同；实际字段以`src/types/game-types.ts`为准。正常出击、拾获、死亡/撤离、归来结算已接通；未完成出击的刷新/退出政策已在DEC-158锁为续原局、明确放弃才结损；完整恢复现已接正式2D随机Rift；旧悬海独立持久旅程保留开发记录；active续同局、settled回执结一次基地冲击、baseSettled不重演。冲击/预告随机流与替补ID绑定run，失败重载结果不重抽，详见`system-field-inventory.md`。库存内部版本2保存武器供奉/余次；旧内部版本1无字段武器仅迁移一次，已消费的余次不因重载回满。

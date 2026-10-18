@@ -2,11 +2,12 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: director（修订10环境状态与全库分批接入）
-last-modified-date: 2026-10-12
+last-modified-by: design（同化新旧协议与统一调制接口收口）
+last-modified-date: 2026-10-19
 slice: 1 (extended in 5.5, 6, 7, 迭代 10)
-interface-changed: false
+interface-changed: true
 interfaces-with:
+  - system-assimilation-healing # 新局污染封顶后按模拟时间累积跨局同化；旧在途保留溢出
   - system-field-inventory     # R100-I03：备行能力/实际消费、等级冻结与恢复，保持死亡和供奉规则
   - system-contamination-lexicon # R100-I03：真实Host阶段与接触危险，不另加全局伤害周期
   - system-movement-vision     # T1：经场景层消费其三个视野调制器 + Player.setSpeedModifier('chaos')；撤离点注册为 glow source
@@ -16,6 +17,7 @@ interfaces-with:
   - system-purification-impact # Slice 7：出击起始混乱由 GameState.getStartingChaos() / SortieModifiers.startingChaos 写入
 exposes:
   - ChaosSystem.getValue() / getRate() / getStage() / addChaos(source, amount) / setPaused(b)
+  - ChaosSystem.isAssimilationEnabled() / getModulators() # 按出击协议选择当前调制，封顶后仍更新同化投影
   - getChaosModulators(value)  # 纯函数：混乱值 → { radiusScale, edgeCorruption, screenFlicker, speedMult }
   - LootSearchSystem.getCarriedKindling() / getRemainingCount() / getUncollectedSearchPositions()  # 迭代 10：触碰拾取（LootSystem）退役，读条翻找上线（DEC-108 / DEC-109）
   - ExtractionSystem.canExtract() / requestExtract()
@@ -28,6 +30,16 @@ exposes:
   - 数据契约 KindlingNode / ExtractionPoint / RunResult（供 T6 固定地图与 HUD 消费）
   - 地图布局约束（薪柴分布原则 / 撤离点位置原则，供 T6 消费）
 ---
+
+> **当前合同摘要（2026-10-19）**：新出发以`conditions.assimilationMode = 'persistent-v1'`进入[同化与疗愈](system-assimilation-healing.md)协议，污染0–100封顶后继续按有效模拟时间累积跨局同化。未带标记的旧在途仍为0–150；不能按当前数值或地图代际猜版本。本文拥有污染来源、搜刮与撤离，新同化数值和后果只在链接规格维护。
+
+## 当前污染协议与接口
+
+`ChaosSystemConfig`接收`assimilationMode`、`getAssimilation/setAssimilation`和`growthResistance`；跨局值权威归GameState，完整候选通过既有在途事务持久化。`ChaosRuntimeState`在新协议中带同化模式/当前值/成长减缓，用于恢复一致性检查；旧运行态不补造新模式。新协议按满污染后的真实模拟时长更新，不把离散超额污染兑换同化，不依赖封顶后可能停发的`CHAOS_CHANGED`。
+
+场景消费`ChaosSystem.getModulators()`，按协议取得共同视距/移速投影；不能继续无条件调用旧`getChaosModulators(value)`。同化变化会刷新适应投影，环境侵蚀仍由污染驱动。现有时间/发现/战斗/Host来源、抗性入口、暂停和唯一结束出口保持；死亡/放弃保留已提交同化，不能在结算时按本趟污染再加一遍。当前同化参数来自`data/assimilation.csv`，仅按模式标记分派，未承诺把该CSV整包冻结进旧快照。
+
+下文旧100–150溢出、调制锚点与相应HUD示意仅适用于legacy协议；原分级曲线、搜刮/撤离和通用事件规则继续适用，遇到新旧差异以本节及同化规格为准。历史QA与旧平衡观察不因此转为新协议验证。
 
 
 <a id="r100-i03-expedition"></a>
@@ -65,7 +77,7 @@ exposes:
 | 中污染 | 0.42 | 60 秒 | 180 秒 | 0.60 | 38.475 | 53.10 |
 | 重度污染 | 0.64 | 40 秒 | 130 秒 | 0.96 | 62.044 | 88.178 |
 
-这是零起始污染、未被追击、无抗性／基地减速／道具的基准。设计目的：低污染允许完整观察，中污染开始为停留付出可见代价；重污染前 40 秒仍能读路，约 2 分钟已逼近 100，不能长期搜空全图。50% 有效抗性将正向增量减半，准备因此直接换来行动时间。现有 50／75／100 阈值与 150 硬上限、视野／移速惩罚保持。
+这是零起始污染、未被追击、无抗性／基地减速／道具的基准。设计目的：低污染允许完整观察，中污染开始为停留付出可见代价；重污染前40秒仍能读路，约2分钟已逼近100，不能长期搜空全图。50%有效抗性将正向增量减半，准备因此直接换来行动时间。该轮legacy协议保留50／75／100阈值、150硬上限与原视野／移速惩罚；新出发的同化协议按文首分派，不能继续采用150末段。
 
 追击倍率、基地修正、临时加速／减速在时间曲线外相乘；被发现／战斗的一次性代价保持。占漆每进入新 32px 接触格仍为 2／4 点（取决于实际膨胀状态），占空的实际危险形体仍额外 1 点／秒，均经统一污染抗性。分级通过污染体数量、实际占据面积与地图基础增长一起施压；不能对同一片重叠油膜偷偷叠加多次踩踏扣费。
 
@@ -96,7 +108,7 @@ exposes:
 独立入口的短入场由RiftScene统一冻结正式模拟与物理，交控后才计出击用时；跳过与自然播完到同一准备态，按住的动作键须松开再按才生效。Esc冻结入场。训练结束继续使用正式RunController及库存结算，但尚不触发基地供奉；不得把单趟收入当作四A连续供给通过。
 
 
-> **TL;DR**: 定义驱动"贪婪 vs 撤退"的三件套——混乱值（随时间单调上涨、可溢出 100 的压力钟，惩罚经 T1 的三个视野调制器 + 移速调制表达）、薪柴搜刮（按"离撤离点的路程 × 巡逻覆盖度"分档定价的散布物；迭代 10 起与污染物节点统一为可翻找对象——外观不泄露内容物，按住 E 读条拾取，读条发声，完成才揭晓）、撤离（按 E 确认，结算带出薪柴）；对外暴露混乱值/薪柴/出击结束的事件与查询，以及供 T6 消费的地图布局约束。
+> **TL;DR**: 定义污染压力、薪柴搜刮与撤离。新协议污染满后累积持久同化，legacy保留旧溢出；通过场景消费统一调制接口。翻找仍以真实路径/巡逻风险定价，完成才揭晓；本系统暴露污染、薪柴、出击结束事件及地图布局约束。
 
 ## 概述
 
@@ -200,6 +212,8 @@ interface RunResult {
 
 ### C — 混乱值
 
+本组通用来源/暂停/结束规则保持。下述`HARD_CAP=150`、旧纯函数与阈值后惩罚曲线为legacy执行合同；新协议上限、跨满值时长积分和调制消费见文首，不把两套惩罚叠加。
+
 1. **初值与起点**：进入裂隙时 `value` **不是恒为 0**。初值由净化器完整度写入（`system-purification-impact` 规则 27b / 31a）：`GameState.getStartingChaos()` → `SortieModifiers.startingChaos`，满完整度时为 0，残血线性带入，hp=0 时为 `CHAOS_HARD_START`（50）。防御残留 `initial_chaos` 叠在该值之上，一次写入，钳制到 `HARD_CAP`。混乱值只在 `RIFT_ENTERED` 之后、出击结束之前累积（`paused = false` 期间）。**本 Slice 不改**基础上涨、阈值、惩罚映射。`CHAOS.START_VALUE = 0` 仅表示「净化器满完整度且无残留」时的初值。
 2. **基础上涨**：每帧 `value += baseRate × rateMultiplier × dt`。**匀速为主**——不随深度、不随位置、不随已拾取薪柴数变化。理由：玩家必须能在脑内做"我还剩多少秒"的估算，估算成立，纠结才成立。
 3. **单调不减**：裂隙内没有任何降低混乱值的手段（`world.md` 机制约束）。因此阈值只会被向上穿越一次，无需处理降级/回滚。
@@ -230,7 +244,7 @@ interface RunResult {
 12. **阶段判定**：`stage` 由 `value` 决定——`< 50` safe，`< 75` warning，`< 100` danger，`≥ 100` overflow。仅用于 HUD 与调试显示，不参与惩罚计算（惩罚走连续曲线）。
 13. **结束即冻结**：出击结束（撤离或死亡）时 `setPaused(true)`，混乱值停止累积，调制器保持结算瞬间的值（不做归零动画——画面应当停在"最糟糕的那一刻"）。
 
-### 混乱值溢出决策（T1 escalate 项 5 的裁定）
+### Legacy混乱值溢出决策（旧在途兼容合同）
 
 **决定：允许混乱值超过 100。`MAX_VALUE = 100` 的语义从"硬上限"改为"HUD 满格刻度与第三阈值"，新增 `HARD_CAP = 150` 作为真正的上限。**
 
@@ -256,7 +270,7 @@ interface RunResult {
 
 **`CHAOS_CHANGED` payload 的 `max` 字段**：继续传 `100`（= 满格闸门 / 第三阈值），**不传 `HARD_CAP`**。`value > max` 是合法状态。HUD **不再**用 `max` 做条的分母——条按 `HARD_CAP`(150) 定长，刻度落在 50 / 75 / 100 的绝对值位置，100 刻度为加粗闸门；100 以上走单独的溢出段（见 HUD 规则 H5）。`max` 仍传 100 是为了非 HUD 消费者（以及"闸门=100"的语义），events.ts 必须注明 `value` 可以大于 `max`。
 
-### 混乱值 → 调制器映射（art §7.2 四档的最终裁定）
+### Legacy混乱值 → 调制器映射（旧在途兼容合同）
 
 T1 给出的四档参考表在本 spec 中被展开为**分段线性曲线**。锚点：
 

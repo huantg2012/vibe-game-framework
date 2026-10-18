@@ -1,10 +1,11 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
-last-modified-by: design（R100 P13首两项成长费用与兼容说明）
-last-modified-date: 2026-10-04
+last-modified-by: design（同化冲击预算、主动疗愈周期及休息边界）
+last-modified-date: 2026-10-19
 interface-changed: true
 interfaces-with:
+  - system-assimilation-healing # 持续冲击预算附加、培养藏主动疗愈、净化器资格
   - system-field-inventory         # 统一物件供奉、实例归属、使用与装配
   - system-chaos-scavenge-extract   # consumes RIFT_EXITED; feeds chaosRateModifier + kindlingValueModifier
                                     # + startingChaos (Slice 7 净化器完整度写入出击初值)
@@ -22,8 +23,9 @@ exposes:
   - GameState.getRepairBonusHp() / grantRepairBonus(hp) / getMaxUsefulRepairKindling(hp,maxHp) / previewModuleRepair(hp,maxHp,kindling)
   - SaveManager.allocateToModule(id, amount) -> number（保存失败完整回滚）
   - GameState.isModuleSwapActive() / setModuleSwapActive(active)
-  - ImpactSystem.run(defenseSlots, offeringIds?) -> ImpactResult （含 defenseResult；Slice 5.5 增 primaryModuleId / trueSeverity / baseDamagePerModule）
-  - ImpactSystem.generateForecast(nextIntensity, _forecastReliabilityBonus, nextNextIntensity) / getForecastReading(level) / getForecastLookahead()（第二入参仅兼容；正式UI读ForecastReading）
+  - ImpactSystem.run(defenseSlots, offeringIds?, random?, stabilityProgress?, options?) -> ImpactResult （options.forceImpact用于主动疗愈，不能复用首归免伤）
+  - getHealingPreview() / performHealingCycle() -> HealingCycleOutcome（培养藏单周期原子事务）
+  - ImpactSystem.generateForecast(nextIntensity, _forecastReliabilityBonus, nextNextIntensity) / getForecastReading(level, options?) / getForecastLookahead()（正式UI读ForecastReading；疗愈预览options.forceImpact与实际非豁免冲击一致）
   - ImpactSystem.getForecastState() / loadForecastState(state?) / resetForecastState()
   - applyDefenseEffects(baseDamage, slots, context, offeringIds?) -> DefenseResult
     （Slice 5 新增出口 healOut / bonusCharges / toolUseGrants / moduleSwapTriggered；
@@ -37,6 +39,14 @@ exposes:
   - getChamberObservation(feet,moduleId) / isChamberObservationRayClear(eye,target)（只读可观察资格）
   - ChamberIntegritySelection / ChamberIntegrityLifecycle（单一读数与world/focused交接）
 ---
+
+## 2026-10-19 同化负担与培养藏疗愈
+
+[同化与疗愈](system-assimilation-healing.md)拥有唯一规则和数值。`ImpactSystem`在原潮汐预算分配/防御之前应用当前同化附加倍率，普通归返读实际结束A，疗愈先以治疗前A承伤再降低A；公开预告沿同一预算投影，不重抽原目标。原首次归返豁免仍只属于普通归返，`forceImpact`疗愈永不豁免。
+
+培养藏沿既有交互新增疗愈动作，不要求成长等级，不替代刻入。`getHealingPreview`读取同化、净化器实际HP、归返/保存互斥及当前公开预告；`performHealingCycle`用独立`healing:<序号>`身份在完整世界事务中完成冲击、防御、供奉成熟、潮汐、真实成长经历、同化降低及新预告。疗愈不伪造Rift归返、不增加真实出击次数/访问历史，不发正稳定度奖励；模块归零负分与潮峰破损事实保留。拒写沿同一候选重试，不能再次执行一轮冲击。
+
+净化器门槛在开始时检查，冲击使其进一步受损不撤销本轮已开始疗愈，下一轮需重新满足资格。炉边坐下、普通停留、加厚及成长仍不自动回血/疗愈；这些旧限制不禁止本次明确的培养藏动作。物理建筑和坐姿不新增抗侵蚀效果。UI沿同化规格与当前Kit，由真实资格和成本驱动。
 
 
 ## 迭代28 · 独立供奉反应与鉴定
@@ -216,7 +226,7 @@ interface SortieModifiers {
     - **旧档已承诺的第二轮预告**（仅 `getForecastLookahead()` 非空）：同样三节点，但时机词必须是 `再下一轮`（不得再用 `下次归来`，以免读成第二份现在）。目标名与档位名同一套。可更淡、无临界脉动，文字节点不得省略。
     - **为什么不给方向**：旧实现把 CORE 映射为"左"、STORAGE 映射为"右"，而 CORE 就在场地正中心——"左"是任选的，玩家无法据此做任何决策；同时它与边界压力主方向（规则 37/42/47）叠成两个互不相关的方向暗示。
     - 舱外结构与接缝动效没有冲击方向含义，不读取隐藏预告；不得将位置/亮度编码为未来重点。
-    - 预告仅在首次建立或实际归来消费（含教学免冲击）后生成，用潮汐推进后的真实下一轮强度；同轮菜单/读档/重复进入只恢复原读数，不重抽。
+    - 预告在首次建立、实际归来消费（含教学免冲击）或主动疗愈完成真实周期后生成，用潮汐推进后的真实下一轮强度及当前同化投影；同轮菜单/读档/重复进入只恢复原读数，不重抽。
     - 档位分界按潮汐强度区间 [1.0, 3.0] 四等分：< 1.5 light / < 2.0 moderate / < 2.5 heavy / 其余 extreme。extreme 档的临界脉动（300ms）可留作第二编码，不能代替可见词「极端」。边界粒子恢复各角度均匀生成，不再做方向暗示。
 
 #### Last Light操作面合同（2026-09-30）
@@ -249,13 +259,13 @@ interface SortieModifiers {
 
 ### I — 冲击系统
 
-19. **触发时机是"返回净化点的那一刻"**，不是"按 E 出击之前"。玩家从裂隙回来、净化点场景 `create()` 时按序执行：潮汐强度同步 → 快照供奉槽实例ID → 冲击/防御完整结算 → 非跳过冲击增加供奉计数并完成转化 → 潮汐推进 → 预告重算 → 同笔世界存档。无待结算归来的菜单/读档入场不触发冲击；若账本为 `settled && !baseSettled`，仍须完成该次归来，即使入口来自菜单恢复或明确放弃本趟。
+19. **普通出击的冲击在返回净化点时触发**，不是按E出击之前。玩家从裂隙回来、净化点场景`create()`时按序执行：潮汐强度同步→快照供奉槽实例ID→冲击/防御完整结算→非跳过冲击增加供奉计数并完成转化→潮汐推进→预告重算→同笔世界存档。无待结算归来的菜单/读档入场不触发冲击；若账本为`settled && !baseSettled`，仍须完成该次归来。**主动疗愈是另一种明确推进周期的入口**，由文首完整事务调用同一冲击/供奉能力，不伪造归返账本；普通停留仍不自动推进。
     - 设计后果：玩家是**带着冲击的结果**开始这一轮的分配与装配决策，而不是分配完再挨打。整个驻留期间看到的模块 hp 就是出击时的 hp。
-20. **首次豁免**：`cycle <= 1` 时跳过冲击（返回 `skipped: true`）。第一次出击是"教学局"。
+20. **首次豁免**：普通归返在`cycle <= 1`时跳过冲击（返回`skipped: true`）。第一次出击是教学局；主动疗愈显式`forceImpact`，不受此豁免且不消费或增加真实出击次数。
     - **豁免伤害不省略归来报告**：实际首次归来（撤离、空手、阵亡或放弃本趟）仍显示一次「归来之后」。主读数为「装置 · 本次损伤」与独立数值 `0`，说明「首次归来，本次免受冲击；供奉积累不增加。」；三模块按实际完整度显示同值前后对照。不得伪造冲击强度、重点目标、预告命中、减伤收益或供奉积累；不播放冲击音效与震屏。
     - 报告沿用当前场景无框结果布局及 `#dom-ui-root`，潮汐/稳定度通知仍并入同一报告。结算保存成功后才发布；保存失败锁输入，重试只保存已结算快照，不重放冲击、收益或潮汐。出生、已 `baseSettled` 的重复归来及普通菜单/读档不再弹出。
     - Enter、Esc、点击「合上」共用一次关闭回调；忽略按键自动重复，清除关闭键边缘输入后交还控制，不能同时打开暂停。销毁报告清除监听及旧回调。机制与首次免伤数值不变。
-21. **基础伤害**：`BASE_IMPACT_DAMAGE`（= 30）× `impactIntensity`。
+21. **基础伤害**：原潮汐预算为`BASE_IMPACT_DAMAGE × impactIntensity`；进入威胁分配前按[同化规格](system-assimilation-healing.md)应用当前同化附加倍率一次。A=0保持原预算，倍率不在供奉减伤后再追加。
 22. **威胁分布**：一个模块为"重点目标"，承受 `THREAT_FOCUS_RATIO`（65%）伤害；**其余伤害在其他全部承血模块之间均分**（两模块时另一个拿 35%；三模块时另外两个各 17.5%，四舍五入后用最后一个模块吃残差，保证总和等于本次总伤害）。预告从**全部**承血模块中均匀抽 ground-truth 目标。version2在生成预告时以 `FORECAST_ACCURACY`（0.8）概率匹配播报，否则在其余模块均匀抽选，并冻结实际重点；结算不再重抽。version1未消费旧档保留原结算时抽签，已承诺目标必定兑现（规则25）。禁止再写死 `modules[0]` / `modules[1]`。
 23. **冲击演出**（在净化点场景 create 阶段，玩家输入被禁用）：
     - emit `IMPACT_STARTED { intensity }`
@@ -293,7 +303,7 @@ interface SortieModifiers {
     - `getNextKindlingYieldRepair(moduleType,affinity)`返回从**当前实际状态一次注入**使至少一组示例增加的最小整数薪柴及投射HP、三组所得；无下一档返回null。一次额度只在该笔计算一次，不能把当前选择预览当新起点再领额度。成本不按储备截断，资金缺口由UI说明；修复非薪柴来源装置、已达到效能上限、剩余容量无法跨档时不伪造台阶。该查询不预测具体未揭晓翻堆或一趟总收入。
     已保存的出发意图或完整检查点按原冻结修正与当前运行态恢复，不调用新公式重算。例如旧趟保存的起始混乱7仍保留7，不能在R3续局时自动降为0；下一趟新出发才按当前基地hp读取100基准。
 29. **裂隙侧应用**：
-    - 自然时间混乱rate先按`BASE_RATE * chaosRateModifier * (1 - growthMods.chaosResist)`，再沿既有速率修正及武器/工具污染抗性处理。GR04成长渗透抗性仍只减缓自然增长，每级4%、上限20%；不减离散污染、不改起始混乱、不加入统一污染抗性。广谱减免改造未授权实施。
+    - 自然时间混乱rate先按`BASE_RATE * chaosRateModifier * (1 - growthMods.chaosResist)`，再沿既有速率修正及武器/工具污染抗性处理。GR04对自然污染仍按原每级4%、上限20%减缓，不减离散污染、不改起始混乱、不加入统一广谱抗性；新协议同时把该独立成长因子传给同化时间速率，按同化规格只应用一次。核心仍只减慢自然污染，不额外乘到同化速率。
     - LootSearchSystem（迭代10前为LootSystem）的实际拾取价值为`max(1,floor((nodeValue + growthMods.kindlingAffinity) * kindlingValueModifier))`，翻找完成结算时应用。
     - ChaosSystem 开局 `value` = `SortieModifiers.startingChaos` 再叠加防御残留（规则 31a）。**不改**基础上涨曲线、阈值、惩罚映射。
 

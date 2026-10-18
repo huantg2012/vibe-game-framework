@@ -1,0 +1,1951 @@
+{
+  "startedAt": "2026-10-18T17:11:14.267Z",
+  "scope": "Isolated Chrome context, production title/base/departure/Rift lifecycle. Controlled A/HP/money and saturation fixtures. Real keyboard/clicks after device-entry calls. Not natural navigation, full expedition economy, balance, sound quality, or human aesthetic acceptance.",
+  "steps": [
+    {
+      "name": "production-start-isolated",
+      "startedAt": "2026-10-18T17:11:14.774Z",
+      "details": {
+        "modules": {
+          "/src/managers/audio-manager.ts": "http://127.0.0.1:3027/src/managers/audio-manager.ts",
+          "/src/managers/game-state.ts": "http://127.0.0.1:3027/src/managers/game-state.ts?t=1792342239920",
+          "/src/managers/save-manager.ts": "http://127.0.0.1:3027/src/managers/save-manager.ts?t=1792342961538",
+          "/src/systems/tide-system.ts": "http://127.0.0.1:3027/src/systems/tide-system.ts",
+          "/src/ui/dom/growth-panel.ts": "http://127.0.0.1:3027/src/ui/dom/growth-panel.ts?t=1792342961538",
+          "/src/managers/healing-cycle.ts": "http://127.0.0.1:3027/src/managers/healing-cycle.ts"
+        },
+        "snapshot": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 0,
+            "assimilation": 30,
+            "healingCycles": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 0,
+            "currentIntensity": 1
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 2,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 30,
+            "healingCycles": 0,
+            "cycle": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 0,
+              "currentIntensity": 1
+            },
+            "run": null
+          },
+          "rift": null,
+          "dom": "薪柴\n0\n潮汐\n第 1 潮\n涨潮\n下次归来\n净化器？\n轻微？\nTab\n存续报告\n[E]\n坐下"
+        }
+      },
+      "result": "pass",
+      "finishedAt": "2026-10-18T17:11:19.169Z"
+    },
+    {
+      "name": "healing-keyboard-preview-and-one-cycle",
+      "startedAt": "2026-10-18T17:11:19.170Z",
+      "details": {
+        "before": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 0,
+            "assimilation": 30,
+            "healingCycles": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 0,
+            "currentIntensity": 1
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 2,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 30,
+            "healingCycles": 0,
+            "cycle": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 70,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 0,
+              "currentIntensity": 1
+            },
+            "run": null
+          },
+          "rift": null,
+          "dom": "疗愈\n蜕变\n疗愈\nTab 切换\n深层同化 · 跨趟保留\n30.0%\n→\n15.0%\n\n本轮降低 15.0 个百分点。全部清除还需 2 个周期。\n\n承受一次冲击\n\n按疗愈前的同化承受冲击，然后推进潮汐。供奉照常防御、积累；不会带回薪柴。\n\n疗愈之后\n归返冲击增幅\n+15% → +7%\n满污染时可见半径\n66% → 60%\n未激怒敌人的感知距离\n−18% → −9%\n\n压回同化，也会失去一部分裂隙适应。主动攻击和接触污染仍有危险。\n\n可只疗愈这一轮，保留其余同化。\n\nEnter\n疗愈一周期\nEsc\n离开\n培养藏"
+        },
+        "after": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 0,
+            "assimilation": 15,
+            "healingCycles": 1,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 63,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 64,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 48,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 1,
+            "currentIntensity": 1.2
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 3,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 15,
+            "healingCycles": 1,
+            "cycle": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 63,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 64,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 48,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 1,
+              "currentIntensity": 1.2
+            },
+            "run": null
+          },
+          "rift": null,
+          "dom": "疗愈周期\n先找还能补上的地方。\n同化\n30.0% → 15.0%\n\n已承受一轮冲击，潮汐与供奉已推进。\n\n净化器 · 最大损伤\n−22\n冲击强度 x1.15 / 轻微\n装置完整度\n核心\n70\n→\n63\n损伤\n−7\n储藏\n70\n→\n64\n损伤\n−6\n净化器\n70\n→\n48\n损伤\n−22\n预告\n净化器\n轻微\n与实际一致\nEnter\n/\nEsc\n合上"
+        },
+        "previewImage": "healing-preview-30.png",
+        "resultImage": "healing-report-15.png"
+      },
+      "result": "pass",
+      "finishedAt": "2026-10-18T17:11:20.203Z"
+    },
+    {
+      "name": "healing-zero-and-low-purifier-gates",
+      "startedAt": "2026-10-18T17:11:20.203Z",
+      "details": [
+        {
+          "a": 0,
+          "hp": 70,
+          "reason": "没有需要疗愈的同化。",
+          "image": "healing-disabled-a0-hp70.png"
+        },
+        {
+          "a": 30,
+          "hp": 24,
+          "reason": "净化器当前完整度 24，疗愈至少需要 25。先向净化器投入薪柴。",
+          "image": "healing-disabled-a30-hp24.png"
+        }
+      ],
+      "result": "pass",
+      "finishedAt": "2026-10-18T17:11:21.668Z"
+    },
+    {
+      "name": "healing-refusal-freezes-esc-and-retry-once",
+      "startedAt": "2026-10-18T17:11:21.668Z",
+      "details": {
+        "before": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 0,
+            "assimilation": 30,
+            "healingCycles": 1,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 63,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 64,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 1,
+            "currentIntensity": 1.2
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 6,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 30,
+            "healingCycles": 1,
+            "cycle": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 63,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 64,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 1,
+              "currentIntensity": 1.2
+            },
+            "run": null
+          },
+          "rift": null,
+          "dom": "疗愈\n蜕变\n疗愈\nTab 切换\n深层同化 · 跨趟保留\n30.0%\n→\n15.0%\n\n本轮降低 15.0 个百分点。全部清除还需 2 个周期。\n\n承受一次冲击\n\n按疗愈前的同化承受冲击，然后推进潮汐。供奉照常防御、积累；不会带回薪柴。\n\n疗愈之后\n归返冲击增幅\n+15% → +7%\n满污染时可见半径\n66% → 60%\n未激怒敌人的感知距离\n−18% → −9%\n\n压回同化，也会失去一部分裂隙适应。主动攻击和接触污染仍有危险。\n\n可只疗愈这一轮，保留其余同化。\n\nEnter\n疗愈一周期\nEsc\n离开\n培养藏"
+        },
+        "refused": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 0,
+            "assimilation": 15,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": true,
+          "storage": {
+            "attempts": 7,
+            "rejected": 1,
+            "reject": true
+          },
+          "saved": {
+            "assimilation": 30,
+            "healingCycles": 1,
+            "cycle": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 63,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 64,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 1,
+              "currentIntensity": 1.2
+            },
+            "run": null
+          },
+          "rift": null,
+          "dom": "尚未保存 · 点击重试"
+        },
+        "blocked": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 0,
+            "assimilation": 15,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": true,
+          "storage": {
+            "attempts": 7,
+            "rejected": 1,
+            "reject": true
+          },
+          "saved": {
+            "assimilation": 30,
+            "healingCycles": 1,
+            "cycle": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 63,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 64,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 70,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 1,
+              "currentIntensity": 1.2
+            },
+            "run": null
+          },
+          "rift": null,
+          "dom": "尚未保存 · 点击重试"
+        },
+        "retried": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 0,
+            "assimilation": 15,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 8,
+            "rejected": 1,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 15,
+            "healingCycles": 2,
+            "cycle": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 2,
+              "currentIntensity": 1.4
+            },
+            "run": null
+          },
+          "rift": null,
+          "dom": "疗愈周期\n有些东西又得修一遍。\n同化\n30.0% → 15.0%\n\n已承受一轮冲击，潮汐与供奉已推进。\n\n储藏 · 最大损伤\n−27\n冲击强度 x1.38 / 轻微\n装置完整度\n核心\n63\n→\n56\n损伤\n−7\n储藏\n64\n→\n37\n损伤\n−27\n净化器\n70\n→\n63\n损伤\n−7\n预告\n核心\n轻微\n实际\n储藏\n轻微\nEnter\n/\nEsc\n合上"
+        },
+        "refusalImage": "healing-refused-esc.png"
+      },
+      "result": "pass",
+      "finishedAt": "2026-10-18T17:11:22.372Z"
+    },
+    {
+      "name": "base-cold-continue-does-not-replay-healing",
+      "startedAt": "2026-10-18T17:11:22.373Z",
+      "details": {
+        "modules": {
+          "/src/managers/audio-manager.ts": "http://127.0.0.1:3027/src/managers/audio-manager.ts",
+          "/src/managers/game-state.ts": "http://127.0.0.1:3027/src/managers/game-state.ts?t=1792342239920",
+          "/src/managers/save-manager.ts": "http://127.0.0.1:3027/src/managers/save-manager.ts?t=1792342961538",
+          "/src/systems/tide-system.ts": "http://127.0.0.1:3027/src/systems/tide-system.ts",
+          "/src/ui/dom/growth-panel.ts": "http://127.0.0.1:3027/src/ui/dom/growth-panel.ts?t=1792342961538",
+          "/src/managers/healing-cycle.ts": "http://127.0.0.1:3027/src/managers/healing-cycle.ts"
+        },
+        "restored": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 0,
+            "assimilation": 15,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 1,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 15,
+            "healingCycles": 2,
+            "cycle": 0,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 2,
+              "currentIntensity": 1.4
+            },
+            "run": null
+          },
+          "rift": null,
+          "dom": "薪柴\n100\n潮汐\n第 1 潮\n涨潮\n下次归来\n储藏？\n轻微？\nTab\n存续报告\n[E]\n坐下"
+        },
+        "image": "base-cold-continue.png"
+      },
+      "result": "pass",
+      "finishedAt": "2026-10-18T17:11:26.173Z"
+    },
+    {
+      "name": "production-departure-grade-equipment-enter",
+      "startedAt": "2026-10-18T17:11:26.173Z",
+      "details": {
+        "entered": {
+          "scenes": [
+            "RiftScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 1,
+            "assimilation": 15,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 4,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 15,
+            "healingCycles": 2,
+            "cycle": 1,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 2,
+              "currentIntensity": 1.4
+            },
+            "run": {
+              "id": "0b252474-9ffc-4266-b19d-1207680f8c68",
+              "status": "active"
+            },
+            "checkpoint": {
+              "sequence": 0,
+              "elapsedMs": 0,
+              "identity": {
+                "worldId": "procedural-rift",
+                "generationWorld": "r100-crystal-fibre",
+                "grade": "low"
+              },
+              "chaos": {
+                "version": 1,
+                "value": 19,
+                "peak": 19,
+                "paused": false,
+                "clockMs": 0,
+                "pollutionGrade": "low",
+                "chaosRateModifier": 0.832,
+                "lastEmitted": 19,
+                "lastModulated": 19,
+                "thresholdsFired": [
+                  false,
+                  false,
+                  false
+                ],
+                "chasingEnemyIds": [],
+                "detectionCooldowns": [],
+                "tempRateDeadlineMs": 0,
+                "tempRateMult": 1,
+                "reductionDeadlineMs": 0,
+                "reductionMult": 1,
+                "assimilationMode": "persistent-v1",
+                "assimilationValue": 15,
+                "growthResistance": 0
+              }
+            }
+          },
+          "rift": {
+            "active": true,
+            "paused": false,
+            "chaos": {
+              "version": 1,
+              "value": 19.0033266688,
+              "peak": 19.0033266688,
+              "paused": false,
+              "clockMs": 16.660000000000036,
+              "pollutionGrade": "low",
+              "chaosRateModifier": 0.832,
+              "lastEmitted": 19,
+              "lastModulated": 19.0033266688,
+              "thresholdsFired": [
+                false,
+                false,
+                false
+              ],
+              "chasingEnemyIds": [],
+              "detectionCooldowns": [],
+              "tempRateDeadlineMs": 0,
+              "tempRateMult": 1,
+              "reductionDeadlineMs": 0,
+              "reductionMult": 1,
+              "assimilationMode": "persistent-v1",
+              "assimilationValue": 15,
+              "growthResistance": 0
+            },
+            "enabled": true,
+            "position": {
+              "x": 1132,
+              "y": 1324
+            },
+            "mods": {
+              "radiusScale": 0.9244617764915201,
+              "edgeCorruption": 0.22632561534975998,
+              "screenFlicker": 0.006500275640660255,
+              "speedMult": 0.9809966733312
+            },
+            "recognition": 0.91,
+            "resistance": 0,
+            "frameBlocked": false
+          },
+          "dom": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\nTab\n拾获\n3.0 / 16.0\n完整度\n100/100\n污染\n19 / 100\n稳定\n同化\n15.0%\n跨趟保留\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见"
+        },
+        "entryMs": 7939,
+        "preparationImage": "departure-equipment.png",
+        "lowPollutionImage": "rift-low-pollution.png"
+      },
+      "result": "pass",
+      "finishedAt": "2026-10-18T17:11:35.215Z"
+    },
+    {
+      "name": "controlled-saturation-adaptation-and-simulation-growth",
+      "startedAt": "2026-10-18T17:11:35.216Z",
+      "details": {
+        "saturatedZero": {
+          "scenes": [
+            "RiftScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 1,
+            "assimilation": 0.0017997000000000028,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 5,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 0.0002,
+            "healingCycles": 2,
+            "cycle": 1,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 2,
+              "currentIntensity": 1.4
+            },
+            "run": {
+              "id": "0b252474-9ffc-4266-b19d-1207680f8c68",
+              "status": "active"
+            },
+            "checkpoint": {
+              "sequence": 1,
+              "elapsedMs": 503.31999999999994,
+              "identity": {
+                "worldId": "procedural-rift",
+                "generationWorld": "r100-crystal-fibre",
+                "grade": "low"
+              },
+              "chaos": {
+                "version": 1,
+                "value": 100,
+                "peak": 100,
+                "paused": false,
+                "clockMs": 503.31999999999994,
+                "pollutionGrade": "low",
+                "chaosRateModifier": 0.832,
+                "lastEmitted": 100,
+                "lastModulated": 100,
+                "thresholdsFired": [
+                  true,
+                  true,
+                  true
+                ],
+                "chasingEnemyIds": [],
+                "detectionCooldowns": [],
+                "tempRateDeadlineMs": 0,
+                "tempRateMult": 1,
+                "reductionDeadlineMs": 0,
+                "reductionMult": 1,
+                "assimilationMode": "persistent-v1",
+                "assimilationValue": 0.0002,
+                "growthResistance": 0
+              }
+            }
+          },
+          "rift": {
+            "active": true,
+            "paused": false,
+            "chaos": {
+              "version": 1,
+              "value": 100,
+              "peak": 100,
+              "paused": false,
+              "clockMs": 663.2900000000002,
+              "pollutionGrade": "low",
+              "chaosRateModifier": 0.832,
+              "lastEmitted": 100,
+              "lastModulated": 100,
+              "thresholdsFired": [
+                true,
+                true,
+                true
+              ],
+              "chasingEnemyIds": [],
+              "detectionCooldowns": [],
+              "tempRateDeadlineMs": 0,
+              "tempRateMult": 1,
+              "reductionDeadlineMs": 0,
+              "reductionMult": 1,
+              "assimilationMode": "persistent-v1",
+              "assimilationValue": 0.0017997000000000028,
+              "growthResistance": 0
+            },
+            "enabled": true,
+            "position": {
+              "x": 1132,
+              "y": 1324
+            },
+            "mods": {
+              "radiusScale": 0.5500062989500001,
+              "edgeCorruption": 0.85,
+              "screenFlicker": 0.18,
+              "speedMult": 0.9
+            },
+            "recognition": 0.9999892018,
+            "resistance": 0,
+            "frameBlocked": false
+          },
+          "dom": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\nTab\n拾获\n3.0 / 16.0\n完整度\n100/100\n污染\n100 / 100\n污染已满 · 同化加深\n同化\n0.0%\n跨趟保留\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n动一下。再动一下。\n退路未见"
+        },
+        "saturated60": {
+          "scenes": [
+            "RiftScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 1,
+            "assimilation": 60.0018001,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 6,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 0.0053331,
+            "healingCycles": 2,
+            "cycle": 1,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 2,
+              "currentIntensity": 1.4
+            },
+            "run": {
+              "id": "0b252474-9ffc-4266-b19d-1207680f8c68",
+              "status": "active"
+            },
+            "checkpoint": {
+              "sequence": 2,
+              "elapsedMs": 1016.63,
+              "identity": {
+                "worldId": "procedural-rift",
+                "generationWorld": "r100-crystal-fibre",
+                "grade": "low"
+              },
+              "chaos": {
+                "version": 1,
+                "value": 100,
+                "peak": 100,
+                "paused": false,
+                "clockMs": 1016.63,
+                "pollutionGrade": "low",
+                "chaosRateModifier": 0.832,
+                "lastEmitted": 100,
+                "lastModulated": 100,
+                "thresholdsFired": [
+                  true,
+                  true,
+                  true
+                ],
+                "chasingEnemyIds": [],
+                "detectionCooldowns": [],
+                "tempRateDeadlineMs": 0,
+                "tempRateMult": 1,
+                "reductionDeadlineMs": 0,
+                "reductionMult": 1,
+                "assimilationMode": "persistent-v1",
+                "assimilationValue": 0.0053331,
+                "growthResistance": 0
+              }
+            }
+          },
+          "rift": {
+            "active": true,
+            "paused": false,
+            "chaos": {
+              "version": 1,
+              "value": 100,
+              "peak": 100,
+              "paused": false,
+              "clockMs": 1296.6200000000003,
+              "pollutionGrade": "low",
+              "chaosRateModifier": 0.832,
+              "lastEmitted": 100,
+              "lastModulated": 100,
+              "thresholdsFired": [
+                true,
+                true,
+                true
+              ],
+              "chasingEnemyIds": [],
+              "detectionCooldowns": [],
+              "tempRateDeadlineMs": 0,
+              "tempRateMult": 1,
+              "reductionDeadlineMs": 0,
+              "reductionMult": 1,
+              "assimilationMode": "persistent-v1",
+              "assimilationValue": 60.0018001,
+              "growthResistance": 0
+            },
+            "enabled": true,
+            "position": {
+              "x": 1132,
+              "y": 1324
+            },
+            "mods": {
+              "radiusScale": 0.76000630035,
+              "edgeCorruption": 0.85,
+              "screenFlicker": 0.18,
+              "speedMult": 0.9
+            },
+            "recognition": 0.6399891994,
+            "resistance": 0,
+            "frameBlocked": false
+          },
+          "dom": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\nTab\n拾获\n3.0 / 16.0\n完整度\n100/100\n污染\n100 / 100\n污染已满 · 同化加深\n同化\n60.0%\n跨趟保留\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n动一下。再动一下。\n退路未见"
+        },
+        "start": {
+          "scenes": [
+            "RiftScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 1,
+            "assimilation": 60.00666630000001,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 7,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 60.004166600000005,
+            "healingCycles": 2,
+            "cycle": 1,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 2,
+              "currentIntensity": 1.4
+            },
+            "run": {
+              "id": "0b252474-9ffc-4266-b19d-1207680f8c68",
+              "status": "active"
+            },
+            "checkpoint": {
+              "sequence": 3,
+              "elapsedMs": 1533.2700000000002,
+              "identity": {
+                "worldId": "procedural-rift",
+                "generationWorld": "r100-crystal-fibre",
+                "grade": "low"
+              },
+              "chaos": {
+                "version": 1,
+                "value": 100,
+                "peak": 100,
+                "paused": false,
+                "clockMs": 1533.2700000000002,
+                "pollutionGrade": "low",
+                "chaosRateModifier": 0.832,
+                "lastEmitted": 100,
+                "lastModulated": 100,
+                "thresholdsFired": [
+                  true,
+                  true,
+                  true
+                ],
+                "chasingEnemyIds": [],
+                "detectionCooldowns": [],
+                "tempRateDeadlineMs": 0,
+                "tempRateMult": 1,
+                "reductionDeadlineMs": 0,
+                "reductionMult": 1,
+                "assimilationMode": "persistent-v1",
+                "assimilationValue": 60.004166600000005,
+                "growthResistance": 0
+              }
+            }
+          },
+          "rift": {
+            "active": true,
+            "paused": false,
+            "chaos": {
+              "version": 1,
+              "value": 100,
+              "peak": 100,
+              "paused": false,
+              "clockMs": 1783.2400000000002,
+              "pollutionGrade": "low",
+              "chaosRateModifier": 0.832,
+              "lastEmitted": 100,
+              "lastModulated": 100,
+              "thresholdsFired": [
+                true,
+                true,
+                true
+              ],
+              "chasingEnemyIds": [],
+              "detectionCooldowns": [],
+              "tempRateDeadlineMs": 0,
+              "tempRateMult": 1,
+              "reductionDeadlineMs": 0,
+              "reductionMult": 1,
+              "assimilationMode": "persistent-v1",
+              "assimilationValue": 60.00666630000001,
+              "growthResistance": 0
+            },
+            "enabled": true,
+            "position": {
+              "x": 1132,
+              "y": 1324
+            },
+            "mods": {
+              "radiusScale": 0.7600233320500001,
+              "edgeCorruption": 0.85,
+              "screenFlicker": 0.18,
+              "speedMult": 0.9
+            },
+            "recognition": 0.6399600021999999,
+            "resistance": 0,
+            "frameBlocked": false
+          },
+          "dom": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\nTab\n拾获\n3.0 / 16.0\n完整度\n100/100\n污染\n100 / 100\n污染已满 · 同化加深\n同化\n60.0%\n跨趟保留\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n动一下。再动一下。\n退路未见"
+        },
+        "end": {
+          "scenes": [
+            "RiftScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 1,
+            "assimilation": 60.02266600000006,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 10,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 60.019666200000046,
+            "healingCycles": 2,
+            "cycle": 1,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 2,
+              "currentIntensity": 1.4
+            },
+            "run": {
+              "id": "0b252474-9ffc-4266-b19d-1207680f8c68",
+              "status": "active"
+            },
+            "checkpoint": {
+              "sequence": 6,
+              "elapsedMs": 3083.2299999999987,
+              "identity": {
+                "worldId": "procedural-rift",
+                "generationWorld": "r100-crystal-fibre",
+                "grade": "low"
+              },
+              "chaos": {
+                "version": 1,
+                "value": 100,
+                "peak": 100,
+                "paused": false,
+                "clockMs": 3083.2299999999987,
+                "pollutionGrade": "low",
+                "chaosRateModifier": 0.832,
+                "lastEmitted": 100,
+                "lastModulated": 100,
+                "thresholdsFired": [
+                  true,
+                  true,
+                  true
+                ],
+                "chasingEnemyIds": [],
+                "detectionCooldowns": [],
+                "tempRateDeadlineMs": 0,
+                "tempRateMult": 1,
+                "reductionDeadlineMs": 0,
+                "reductionMult": 1,
+                "assimilationMode": "persistent-v1",
+                "assimilationValue": 60.019666200000046,
+                "growthResistance": 0
+              }
+            }
+          },
+          "rift": {
+            "active": true,
+            "paused": false,
+            "chaos": {
+              "version": 1,
+              "value": 100,
+              "peak": 100,
+              "paused": false,
+              "clockMs": 3383.209999999998,
+              "pollutionGrade": "low",
+              "chaosRateModifier": 0.832,
+              "lastEmitted": 100,
+              "lastModulated": 100,
+              "thresholdsFired": [
+                true,
+                true,
+                true
+              ],
+              "chasingEnemyIds": [],
+              "detectionCooldowns": [],
+              "tempRateDeadlineMs": 0,
+              "tempRateMult": 1,
+              "reductionDeadlineMs": 0,
+              "reductionMult": 1,
+              "assimilationMode": "persistent-v1",
+              "assimilationValue": 60.02266600000006,
+              "growthResistance": 0
+            },
+            "enabled": true,
+            "position": {
+              "x": 1132,
+              "y": 1324
+            },
+            "mods": {
+              "radiusScale": 0.7600793310000002,
+              "edgeCorruption": 0.85,
+              "screenFlicker": 0.18,
+              "speedMult": 0.9
+            },
+            "recognition": 0.6398640039999997,
+            "resistance": 0,
+            "frameBlocked": false
+          },
+          "dom": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\nTab\n拾获\n3.0 / 16.0\n完整度\n100/100\n污染\n100 / 100\n污染已满 · 同化加深\n同化\n60.0%\n跨趟保留\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n动一下。再动一下。\n退路未见"
+        },
+        "duration": 1599.969999999998,
+        "expected": 0.015999699999999978,
+        "zeroImage": "rift-p100-a0-controlled.png",
+        "adaptedImage": "rift-p100-a60-controlled.png"
+      },
+      "result": "pass",
+      "finishedAt": "2026-10-18T17:11:38.090Z"
+    },
+    {
+      "name": "active-rift-cold-continue-preserves-A-and-mode",
+      "startedAt": "2026-10-18T17:11:38.091Z",
+      "details": {
+        "frozen": {
+          "scenes": [],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 1,
+            "assimilation": 60.02266600000006,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 11,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 60.02266600000006,
+            "healingCycles": 2,
+            "cycle": 1,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 2,
+              "currentIntensity": 1.4
+            },
+            "run": {
+              "id": "0b252474-9ffc-4266-b19d-1207680f8c68",
+              "status": "active"
+            },
+            "checkpoint": {
+              "sequence": 7,
+              "elapsedMs": 3383.209999999998,
+              "identity": {
+                "worldId": "procedural-rift",
+                "generationWorld": "r100-crystal-fibre",
+                "grade": "low"
+              },
+              "chaos": {
+                "version": 1,
+                "value": 100,
+                "peak": 100,
+                "paused": false,
+                "clockMs": 3383.209999999998,
+                "pollutionGrade": "low",
+                "chaosRateModifier": 0.832,
+                "lastEmitted": 100,
+                "lastModulated": 100,
+                "thresholdsFired": [
+                  true,
+                  true,
+                  true
+                ],
+                "chasingEnemyIds": [],
+                "detectionCooldowns": [],
+                "tempRateDeadlineMs": 0,
+                "tempRateMult": 1,
+                "reductionDeadlineMs": 0,
+                "reductionMult": 1,
+                "assimilationMode": "persistent-v1",
+                "assimilationValue": 60.02266600000006,
+                "growthResistance": 0
+              }
+            }
+          },
+          "rift": {
+            "active": false,
+            "paused": true,
+            "chaos": {
+              "version": 1,
+              "value": 100,
+              "peak": 100,
+              "paused": false,
+              "clockMs": 3383.209999999998,
+              "pollutionGrade": "low",
+              "chaosRateModifier": 0.832,
+              "lastEmitted": 100,
+              "lastModulated": 100,
+              "thresholdsFired": [
+                true,
+                true,
+                true
+              ],
+              "chasingEnemyIds": [],
+              "detectionCooldowns": [],
+              "tempRateDeadlineMs": 0,
+              "tempRateMult": 1,
+              "reductionDeadlineMs": 0,
+              "reductionMult": 1,
+              "assimilationMode": "persistent-v1",
+              "assimilationValue": 60.02266600000006,
+              "growthResistance": 0
+            },
+            "enabled": true,
+            "position": {
+              "x": 1132,
+              "y": 1324
+            },
+            "mods": {
+              "radiusScale": 0.7600793310000002,
+              "edgeCorruption": 0.85,
+              "screenFlicker": 0.18,
+              "speedMult": 0.9
+            },
+            "recognition": 0.6398640039999997,
+            "resistance": 0,
+            "frameBlocked": false
+          },
+          "dom": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\n完整度\n100/100\n污染\n100 / 100\n污染已满 · 同化加深\n同化\n60.0%\n跨趟保留\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见\n记录\n当前行动已暂停。关闭或刷新后，继续这一趟。\n合上，继续本趟\n放弃本趟\n↑↓ 选中\nEnter 合上，继续本趟\nEsc 合上\n合上后 Tab 本趟拾获 · 世界继续"
+        },
+        "restored": {
+          "scenes": [
+            "RiftScene"
+          ],
+          "state": {
+            "kindlingReserve": 100,
+            "cycle": 1,
+            "assimilation": 60.02283260000006,
+            "healingCycles": 2,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "moduleMaxHpTier": 0,
+            "pendingSideEffects": [],
+            "upgradeDiscount": 0,
+            "moduleSwapActive": false,
+            "repairBonusHp": 0
+          },
+          "tide": {
+            "tideNumber": 1,
+            "phase": "rise",
+            "cycleInPhase": 2,
+            "currentIntensity": 1.4
+          },
+          "pending": false,
+          "storage": {
+            "attempts": 1,
+            "rejected": 0,
+            "reject": false
+          },
+          "saved": {
+            "assimilation": 60.02266600000006,
+            "healingCycles": 2,
+            "cycle": 1,
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 56,
+                "maxHp": 100
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 37,
+                "maxHp": 100
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 63,
+                "maxHp": 100
+              }
+            ],
+            "tide": {
+              "tideNumber": 1,
+              "phase": "rise",
+              "cycleInPhase": 2,
+              "currentIntensity": 1.4
+            },
+            "run": {
+              "id": "0b252474-9ffc-4266-b19d-1207680f8c68",
+              "status": "active"
+            },
+            "checkpoint": {
+              "sequence": 9,
+              "elapsedMs": 3383.209999999998,
+              "identity": {
+                "worldId": "procedural-rift",
+                "generationWorld": "r100-crystal-fibre",
+                "grade": "low"
+              },
+              "chaos": {
+                "version": 1,
+                "value": 100,
+                "peak": 100,
+                "paused": false,
+                "clockMs": 3383.209999999998,
+                "pollutionGrade": "low",
+                "chaosRateModifier": 0.832,
+                "lastEmitted": 100,
+                "lastModulated": 100,
+                "thresholdsFired": [
+                  true,
+                  true,
+                  true
+                ],
+                "chasingEnemyIds": [],
+                "detectionCooldowns": [],
+                "tempRateDeadlineMs": 0,
+                "tempRateMult": 1,
+                "reductionDeadlineMs": 0,
+                "reductionMult": 1,
+                "assimilationMode": "persistent-v1",
+                "assimilationValue": 60.02266600000006,
+                "growthResistance": 0
+              }
+            }
+          },
+          "rift": {
+            "active": true,
+            "paused": false,
+            "chaos": {
+              "version": 1,
+              "value": 100,
+              "peak": 100,
+              "paused": false,
+              "clockMs": 3399.869999999998,
+              "pollutionGrade": "low",
+              "chaosRateModifier": 0.832,
+              "lastEmitted": 100,
+              "lastModulated": 100,
+              "thresholdsFired": [
+                true,
+                true,
+                true
+              ],
+              "chasingEnemyIds": [],
+              "detectionCooldowns": [],
+              "tempRateDeadlineMs": 0,
+              "tempRateMult": 1,
+              "reductionDeadlineMs": 0,
+              "reductionMult": 1,
+              "assimilationMode": "persistent-v1",
+              "assimilationValue": 60.02283260000006,
+              "growthResistance": 0
+            },
+            "enabled": true,
+            "position": {
+              "x": 1132,
+              "y": 1324
+            },
+            "mods": {
+              "radiusScale": 0.7600799141000002,
+              "edgeCorruption": 0.85,
+              "screenFlicker": 0.18,
+              "speedMult": 0.9
+            },
+            "recognition": 0.6398630043999997,
+            "resistance": 0,
+            "frameBlocked": false,
+            "loadedChaos": {
+              "version": 1,
+              "value": 100,
+              "peak": 100,
+              "paused": false,
+              "clockMs": 3383.209999999998,
+              "pollutionGrade": "low",
+              "chaosRateModifier": 0.832,
+              "lastEmitted": 100,
+              "lastModulated": 100,
+              "thresholdsFired": [
+                true,
+                true,
+                true
+              ],
+              "chasingEnemyIds": [],
+              "detectionCooldowns": [],
+              "tempRateDeadlineMs": 0,
+              "tempRateMult": 1,
+              "reductionDeadlineMs": 0,
+              "reductionMult": 1,
+              "assimilationMode": "persistent-v1",
+              "assimilationValue": 60.02266600000006,
+              "growthResistance": 0
+            }
+          },
+          "dom": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\nTab\n拾获\n3.0 / 16.0\n完整度\n100/100\n污染\n100 / 100\n污染已满 · 同化加深\n同化\n60.0%\n跨趟保留\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见"
+        },
+        "entryMs": 7119,
+        "image": "rift-cold-continue.png"
+      },
+      "result": "pass",
+      "finishedAt": "2026-10-18T17:11:46.843Z"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "sources": {
+    "src/managers/healing-cycle.ts": "d233f94ccae555925a71903c036a6e5ee0b47f77a795af0e6d78af9be7861a59",
+    "src/managers/save-manager.ts": "12f5c3249c3315589fc2a419919cf5297689d46ea66b4fbb9cbe1da1be0b3a37",
+    "src/systems/chaos-system.ts": "150c038ff58a4aa8905c56b5dfd8669595120d0db9e53d4a863621040c930e8d",
+    "src/scenes/purification-scene.ts": "9b32f56ce173ea92167a39f94fac98af369d80e50a308ce250836082aaf5839c",
+    "src/scenes/rift-scene.ts": "ac9f8dc46b8f11ff3c7694e61d4c4c045416ce3c078678b6a4cc83746ea5313f",
+    "src/ui/dom/growth-panel.ts": "5df74cda8ff49ad4e69115930143527cdbf70b5656be39207fae5b9b81d7b9ec",
+    "src/ui/dom/rift-hud.ts": "ef669c59efb8a65b4a83e9a0c4642c3d8eb580fd43328ae3d519764add25e6f5",
+    "src/ui/dom/impact-result-panel.ts": "d22b9458f0f55f1f98341d65755c7b83b104cc86418f45275b6020c847ad1c2b"
+  },
+  "browser": "155.0.8059.80",
+  "result": "pass",
+  "finishedAt": "2026-10-18T17:11:46.846Z",
+  "reviewNotes": {
+    "functionalScope": "The eight named runtime steps passed. Initial fixtures are explicitly controlled. Only crystal-fibre low was randomly selected in both independent contexts.",
+    "captureTiming": "Waited 350ms before every screenshot for the existing UI entrance animation.",
+    "pauseGuardEvidence": "Saved blocked snapshot DOM contains only 尚未保存 · 点击重试 and scene remains active. Original DOM assertion used a nonexistent #pause-menu; script now uses the actual .pause-menu-panel selector. The recorded DOM independently excludes an opened menu.",
+    "visualObservations": [
+      "Healer remains visibly present to the left; one action and numerical before/after are readable after entrance animation.",
+      "Impact report retains the base scene and shows actual HP and damage.",
+      "P100/A60 reveals more terrain than P100/A0 while retaining the same red pollution erosion; edge HUD does not overlap in these captures."
+    ],
+    "openUiContractGaps": [
+      "Eligible preview omits purifier actual HP and the 25-HP threshold; these are only shown when eligibility fails. Current tide/intensity is also absent from that preview, contrary to spec P1.",
+      "A15 actual impact increase is 7.5%, but preview shows +7% due to integer formatting and floating-point rounding."
+    ],
+    "limitations": [
+      "No natural travel to cultivation chamber or rift device; their production scene entry methods were called.",
+      "No natural expedition economy, full ruined-base recovery, long-term balance, sound quality or human aesthetic acceptance.",
+      "Only Chrome on this local desktop; no Firefox/Safari or performance acceptance."
+    ]
+  }
+}

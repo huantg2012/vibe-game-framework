@@ -2,11 +2,12 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code / director（I28：参数化能力与版本控制保护）
-last-modified-date: 2026-09-20
+last-modified-by: design（同化主动感知距离来源与追击边界）
+last-modified-date: 2026-10-19
 interface-changed: true
 slice: 8
 interfaces-with:
+  - system-assimilation-healing # 非CHASE主动感知距离单通道；不取消反击或显式噪声
   - system-movement-vision         # 复用 utils/grid-raycast 做视线遮挡；敌人渲染可见性由 VisibilitySystem 决定；平衡不变量来源（玩家视距/移速）
   - system-chaos-scavenge-extract  # ENEMY_ALERT 经场景层驱动混乱值累加；被看守的薪柴点位依赖巡逻路线
   - system-combat                  # 敌人 HP/受击/攻击归 T4，本 spec 只提供接敌站位与朝向
@@ -14,6 +15,7 @@ interfaces-with:
   - system-contamination-lexicon   # 迭代 1：孔谱决定哪些五态可达；禁止第二份 FSM。乙丙丁走宿主，不进本 FSM
   - ui-detection-pulse             # 屏缘干涉读 getDetection / getState / getPosition / getRole；无新事件；丙丁第一版不接
 exposes:
+  - AISystem.setPlayerRecognitionRangeMultiplier(multiplier)
   - AIState 枚举（patrol | suspicious | alert | chase | return，沿用 src/types/game-types.ts 既有定义）
   - EnemyRole（infiltrator | rewriter）与 PerceptionProfile（感知剖面，禁止复制第二份 FSM）
   - EnemyView.getId() / getRole() / getPosition() / getFacingAngle() / getFacing4() / getState() / isEngaged() / getDetection() / getForm()
@@ -28,6 +30,12 @@ exposes:
 ---
 
 # 系统设计：敌人 AI（五态 FSM · 两种感知剖面）
+
+## 2026-10-19 同化主动感知距离
+
+场景按[同化与疗愈](system-assimilation-healing.md)提供`setPlayerRecognitionRangeMultiplier`。`perceive`仅在非CHASE状态把同化倍率与原感知来源合成，用于主动视距/听距；休眠活动的自动听步也只应用一次。发现累积速度不变，不再同时减距离与填充。下文剖面感知距离是基础值，实际新协议读上述来源；legacy来源为1。
+
+CHASE跳过同化倍率，A变化不降状态/清目标/取消已成立攻击；原FSM从CHASE退到ALERT后重新适用。`reportDamage`受击反击和`reportNoise`显式噪声保持，不承诺翻找/挥击无声。近身防卫仍是原发现、受击和近战合同，不新增一圈强制防卫半径；工具控制/诱饵优先级保持。环境Host不是此FSM，接触、占漆、占空及压制规则不因同化改变。规则与数值由链接规格拥有，本系统只拥有感知应用与状态边界。
 
 ## 迭代21 K：视线与身体通行分离（DEC-155）
 
