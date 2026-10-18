@@ -9,6 +9,8 @@ import { gameState } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { growthSystem } from '@/systems/growth-system';
 import { purchaseGrowth, type GrowthPurchaseResult } from '@/managers/growth-purchases';
+import { getHealingPreview } from '@/managers/healing-cycle';
+import { assimilationHostilityMultiplier, assimilationImpactMultiplier, getAssimilationModulators, healingCyclesToClear } from '@/systems/assimilation-system';
 import { previewThickening } from '@/ui/growth-presentation';
 import type { GrowthUpgradeId } from '@/types/game-types';
 import { renderPanelContent } from './panel-render-state';
@@ -74,6 +76,8 @@ function entriesForDisplay(): GrowthEntry[] {
 let panel: HTMLDivElement | null = null;
 let cleanupWorldInteraction: (() => void) | null = null;
 let onCloseCallback: (() => void) | null = null;
+let onHealCallback: (() => void) | null = null;
+let currentPage: 'growth' | 'healing' = 'growth';
 
 // Keyboard cursor (IA §0.4 / §S7: ↑↓ 选卡 · Enter 刻入或加厚 · Esc 离开).
 // 关闭走底键丝印 + Esc，不再另开「…不了」按钮区。
@@ -88,9 +92,11 @@ export const growthPanel = {
     return panel !== null;
   },
 
-  open(onClose?: () => void, context?: WorldInteractionContext): void {
+  open(onClose?: () => void, context?: WorldInteractionContext, onHeal?: () => void): void {
     if (panel) return;
     onCloseCallback = onClose ?? null;
+    onHealCallback = onHeal ?? null;
+    currentPage = 'growth';
     cursorCard = 0;
     createPanel(context);
     audioManager.playSFX('sfx-ui-open');
@@ -102,6 +108,7 @@ export const growthPanel = {
     destroyPanel();
     onCloseCallback?.();
     onCloseCallback = null;
+    onHealCallback = null;
   },
 };
 
@@ -145,9 +152,19 @@ function onKeyDown(e: KeyboardEvent): void {
     return;
   }
 
-  if (e.key === 'Tab') {
+  if (e.key === 'Tab' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
     e.stopPropagation();
     e.preventDefault();
+    currentPage = currentPage === 'growth' ? 'healing' : 'growth';
+    render();
+    return;
+  }
+
+  if (currentPage === 'healing') {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.stopPropagation(); e.preventDefault();
+      if (!e.repeat) beginHealing();
+    }
     return;
   }
 
@@ -212,6 +229,7 @@ function thickenConsequencesHtml(): string {
 
 function render(selectionOnly = false, revealSelection = false): void {
   if (!panel) return;
+  if (currentPage === 'healing') { renderHealing(); return; }
   const reserve = gameState.getKindlingReserve();
   const entries = entriesForDisplay();
   cursorCard = Math.min(cursorCard, entries.length - 1);
@@ -228,6 +246,7 @@ function render(selectionOnly = false, revealSelection = false): void {
     ${entry.cost !== null ? `<div class="card-cost">${entry.cost}<span class="readout-label"> 薪柴</span></div>` : ''}
   </div>`).join('');
   const html = `<div class="panel-heading"><div class="panel-title">蜕变</div><div class="panel-reserve"><span>薪柴</span><strong>${reserve}</strong></div></div>
+    ${pagesHtml()}
     <div class="growth-route-line"><span class="readout-note" data-growth-progress>已刻入 ${progress.completed} 项 · 共 ${progress.total} 项${progress.completed === progress.total ? ' · 全部完成' : ''}</span><span data-growth-feedback role="status"></span></div>
     <div class="decision-layout"><div class="decision-main scroll-area readout-list">${list}</div>
       <div class="decision-aside readout-detail"><div class="growth-category">${selected.responsibility}</div><div class="growth-name">${selected.name}</div>
@@ -246,6 +265,56 @@ function render(selectionOnly = false, revealSelection = false): void {
   renderPanelContent(panel, html, selectionOnly);
   if (revealSelection) scrollFocusedIntoView(panel);
   wireEvents(selectionOnly);
+  wirePages();
+}
+
+function pagesHtml(): string {
+  return `<div class="crt-tabs" role="tablist" aria-label="培养藏功能"><button type="button" tabindex="-1" class="crt-tab${currentPage === 'growth' ? ' tab-selected' : ''}" role="tab" aria-selected="${currentPage === 'growth'}" data-cultivation-page="growth">蜕变</button><button type="button" tabindex="-1" class="crt-tab${currentPage === 'healing' ? ' tab-selected' : ''}" role="tab" aria-selected="${currentPage === 'healing'}" data-cultivation-page="healing">疗愈</button><span class="readout-note">Tab 切换</span></div>`;
+}
+
+function wirePages(): void {
+  panel?.querySelectorAll<HTMLElement>('[data-cultivation-page]').forEach(button => {
+    button.onclick = () => { currentPage = button.dataset.cultivationPage === 'healing' ? 'healing' : 'growth'; render(); };
+  });
+}
+
+function beginHealing(): void {
+  if (!onHealCallback || !getHealingPreview().available) return;
+  const action = onHealCallback;
+  growthPanel.close();
+  action();
+}
+
+function renderHealing(): void {
+  if (!panel) return;
+  const preview = getHealingPreview();
+  const before = preview.assimilationBefore;
+  const after = preview.assimilationAfter;
+  const available = preview.available && onHealCallback !== null;
+  const reason = preview.reason === 'unaffected' ? '没有需要疗愈的同化。'
+    : preview.reason === 'purifier-damaged' ? `净化器当前完整度 ${preview.purifierHp}，疗愈至少需要 ${preview.requiredPurifierHp}。先向净化器投入薪柴。`
+    : preview.reason === 'pending-save' ? '记录尚未保存。请先完成保存重试。'
+    : !available ? '当前无法开始疗愈。' : '可只疗愈这一轮，保留其余同化。';
+  const percent = (value: number): string => `${value.toFixed(1)}%`;
+  const pressure = (value: number): string => `+${Math.round((assimilationImpactMultiplier(value) - 1) * 100)}%`;
+  const sight = (value: number): string => `${Math.round(getAssimilationModulators(100, value).radiusScale * 100)}%`;
+  const hostility = (value: number): string => `−${Math.round((1 - assimilationHostilityMultiplier(value)) * 100)}%`;
+  const html = `<div class="panel-heading"><div class="panel-title">疗愈</div></div>${pagesHtml()}
+    <div class="scroll-area healing-content"><div class="readout-section">深层同化 · 跨趟保留</div>
+      <div class="readout-hero healing-change"><span class="growth-before">${percent(before)}</span><span class="readout-note">→</span><strong>${percent(after)}</strong></div>
+      <p class="readout-note">本轮降低 ${preview.reduction.toFixed(1)} 个百分点。全部清除还需 ${healingCyclesToClear(before)} 个周期。</p>
+      <div class="healing-cost"><div class="growth-name">承受一次冲击</div><p>按疗愈前的同化承受冲击，然后推进潮汐。供奉照常防御、积累；不会带回薪柴。</p></div>
+      <div class="readout-section">疗愈之后</div>
+      <div class="stat-row"><span class="readout-label">归返冲击增幅</span><span>${pressure(before)} → ${pressure(after)}</span></div>
+      <div class="stat-row"><span class="readout-label">满污染时可见半径</span><span>${sight(before)} → ${sight(after)}</span></div>
+      <div class="stat-row"><span class="readout-label">未激怒敌人的感知距离</span><span>${hostility(before)} → ${hostility(after)}</span></div>
+      <p class="readout-note">压回同化，也会失去一部分裂隙适应。主动攻击和接触污染仍有危险。</p>
+      <p class="${available ? 'readout-note' : 'growth-state-shortfall'}" data-healing-reason>${reason}</p>
+    </div><div class="key-hint-bar"><button type="button" id="healing-confirm-btn" ${available ? '' : 'disabled'}><span class="key">Enter</span> 疗愈一周期</button><span id="growth-close-btn"><span class="key">Esc</span> 离开</span></div>`;
+  renderPanelContent(panel, html, false);
+  wirePages();
+  panel.querySelector('#healing-confirm-btn')?.addEventListener('click', beginHealing);
+  panel.querySelector('#growth-close-btn')?.addEventListener('click', () => growthPanel.close());
 }
 
 function wireEvents(selectionOnly = false): void {

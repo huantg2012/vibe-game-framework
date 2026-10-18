@@ -42,6 +42,7 @@ export interface InventoryPanelItem {
 }
 export interface InventoryEquipmentSlot { id: string; label: string; itemId?: string | null; locked?: boolean }
 export interface InventoryPanelSnapshot {
+  physiology?: { assimilation: number; impactIncreasePercent: number };
   departureGrades?: {
     selected: string;
     options: readonly { id: string; label: string; risk: string; preparation: string; reward: string }[];
@@ -435,6 +436,11 @@ class InventoryPanel {
     this.prepareContext.textContent = this.prepareView === 'equipment'
       ? `备行 2/2 · ${grades?.options.find(option => option.id === grades.selected)?.label ?? '原有出行条件'}`
       : '备行 1/2';
+    const physiology = this.snapshot?.physiology;
+    if (physiology && physiology.assimilation > 0) {
+      this.prepareContext.textContent += ` · 同化 ${physiology.assimilation.toFixed(1)}%`;
+      this.prepareContext.title = `跨趟保留；归返冲击增加 ${physiology.impactIncreasePercent}%。培养藏可疗愈。`;
+    } else this.prepareContext.removeAttribute('title');
     const title = this.panel?.querySelector('.inventory-title');
     if (title) title.textContent = this.prepareView === 'equipment' ? '配置行装' : '裂隙彼端';
     if (!grades) {

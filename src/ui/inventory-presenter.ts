@@ -1,4 +1,5 @@
 import { gameState } from '@/managers/game-state';
+import { assimilationImpactMultiplier } from '@/systems/assimilation-system';
 import { growthSystem } from '@/systems/growth-system';
 import { calculateKindlingYieldExamples } from '@/systems/kindling-yield';
 import { formatChaosRateDelta } from './side-effect-labels';
@@ -122,6 +123,8 @@ function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
   const survival = getSurvivalAttributes();
   const modifiers = gameState.getSortieModifiers();
   return {
+    physiology: options.mode === 'prepare' ? { assimilation: gameState.getAssimilation(),
+      impactIncreasePercent: Math.round((assimilationImpactMultiplier(gameState.getAssimilation()) - 1) * 100) } : undefined,
     departureGrades: options.mode === 'prepare' ? options.getDepartureGrades?.() : undefined,
     departureConditions: options.mode === 'prepare' ? [
       { label: '混乱增速', value: formatChaosRateDelta(modifiers.chaosRateModifier) },

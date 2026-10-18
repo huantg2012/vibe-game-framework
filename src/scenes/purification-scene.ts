@@ -45,6 +45,7 @@ import { PURIFICATION_PLAYER_BODY, PURIFICATION_DEVICE_ANCHORS } from '@/systems
 import { gameState, type SortieModifiers } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
+import { performHealingCycle, type HealingCycleResult } from '@/managers/healing-cycle';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { growthSystem } from '@/systems/growth-system';
 import { recoverGrowthFacts } from '@/systems/growth-evidence';
@@ -521,7 +522,7 @@ export class PurificationScene extends Phaser.Scene {
 
     // Keep the world alive while discarding button edges during the entry.
     // Retain held-key state so OS repeat cannot become a fresh E/Esc/Tab press.
-    if (this.menuEntry) {
+    if (this.menuEntry || saveManager.hasPendingSave()) {
       this.consumeEntryKeys();
       return;
     }
@@ -890,7 +891,48 @@ export class PurificationScene extends Phaser.Scene {
   private openGrowthPanel(): void {
     if (this.resting || this.restTween || this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.focusWorldInteraction(CHAMBER_DEVICE_BASES.growth, 184);
-    growthPanel.open(() => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
+    growthPanel.open(() => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor }, () => this.performHealing());
+  }
+
+  private performHealing(): void {
+    if (this.transitioning || this.shuttingDown || this.menuEntry || saveManager.hasPendingSave()) return;
+    this.restoreInteractionFocus(true);
+    const chargesBefore = this.snapshotDefenseCharges();
+    const outcome = performHealingCycle();
+    if (!outcome.ok && outcome.reason !== 'storage-failed') return;
+    this.player.setInputEnabled(false);
+    const result = outcome.ok ? outcome.result : outcome.pendingResult;
+    const publish = () => this.publishHealing(result, chargesBefore);
+    if (outcome.ok) publish();
+    else this.requestSaveRetry(publish);
+  }
+
+  private publishHealing(result: HealingCycleResult, chargesBefore: ReturnType<PurificationScene['snapshotDefenseCharges']>): void {
+    if (this.shuttingDown) return;
+    const impact = result.impact;
+    this.lastStabilityMilestone = Math.floor(stabilityTracker.getProgress() / 25) * 25;
+    this.syncInvestmentVisuals();
+    purificationHud.refresh();
+    this.playImpactAudio(impact);
+    this.cameras.main.shake(300, 0.005);
+    this.chamber?.pulse('growth', 'player');
+    impactResultPanel.show(impact.damages, impact.intensity, () => {
+      this.consumeEntryKeys();
+      this.panelClosedAt = this.time.now;
+      this.player.setInputEnabled(!this.menuEntry && !saveManager.hasPendingSave());
+      purificationHud.refresh();
+      this.startIsolationBed();
+      this.showNewToolToast(result.transforms);
+    }, {
+      healing: { before: result.before, after: result.after },
+      chargeChanges: this.computeChargeChanges(chargesBefore, result.transforms),
+      defenseResult: impact.defenseResult,
+      baseDamagePerModule: impact.baseDamagePerModule,
+      forecastPrediction: result.forecastBefore,
+      actualPrimaryModuleId: impact.primaryModuleId,
+      actualSeverity: impact.trueSeverity,
+      phaseChange: result.phaseChange,
+    });
   }
 
   /** A1 + B1: Open the combined status & inventory panel. */
@@ -1061,7 +1103,7 @@ export class PurificationScene extends Phaser.Scene {
       gameState.incrementCycle();
       const identity = this.devDeparture?.recoveryIdentity ?? this.productionDeparture;
       if (identity) saveManager.recordRiftDeparture({ version: 1, runId: inventoryStore.getRun()!.id,
-        identity, conditions: { modifiers: gameState.getSortieModifiers(), cycle: gameState.getCycle() } });
+        identity, conditions: { modifiers: gameState.getSortieModifiers(), cycle: gameState.getCycle(), assimilationMode: 'persistent-v1' } });
     });
     if (error) { this.devDeparture?.cancel(); this.devDeparture = null; showToastInline(error, {}); return false; }
     if (!saved) { this.requestSaveRetry(() => this.finishRiftDeparture()); return true; }

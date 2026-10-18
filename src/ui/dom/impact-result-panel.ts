@@ -46,6 +46,7 @@ export interface ChargeChangeEntry {
 }
 
 export interface ImpactPanelOptions {
+  healing?: { before: number; after: number };
   /** First return still has a report, but no impact, defense use or offering charge. */
   firstReturnExempt?: boolean;
   chargeChanges?: readonly ChargeChangeEntry[];
@@ -177,8 +178,9 @@ function buildHtml(
 ): string {
   const severity = options.actualSeverity;
   const exempt = options.firstReturnExempt;
-  let html = `<div class="panel-title">${exempt ? '归来之后' : '冲击之后'}</div>`;
+  let html = `<div class="panel-title">${options.healing ? '疗愈周期' : exempt ? '归来之后' : '冲击之后'}</div>`;
   html += `<div class="scroll-area">`;
+  if (options.healing) html += `<div class="readout-hero"><span class="readout-label">同化</span><strong>${options.healing.before.toFixed(1)}% → ${options.healing.after.toFixed(1)}%</strong></div><p class="readout-note">已承受一轮冲击，潮汐与供奉已推进。</p>`;
   const worst = damages.reduce<ImpactDamageEntry | undefined>((current, entry) =>
     !current || entry.damage > current.damage ? entry : current, undefined);
   html += exempt
