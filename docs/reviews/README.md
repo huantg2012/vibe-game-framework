@@ -6,6 +6,8 @@
 
 ## 从哪里读
 
+- [面向 PC 买断发行的 Godot 迁移评估](2026-10-19-godot-feasibility.md) · [交互摘要](interactive/godot-feasibility-2026-10-19.html) · 技术可行，建议单场景验证后再决定全面迁移；未实施、未授权全面迁移，原游戏状态不提升
+
 - [全库地图与翻找残骸推广：独立复评](2026-10-13-world-upgrades-rollout.md) · [全库图册](../qa/artifacts/world-upgrades-rollout-2026-10-12/index.html) · 1项P2验证工具待修，既有壳类P3润色；游戏新增回归未复现
 
 - [六图翻找物：环境合理性考察](2026-10-12-pickup-grounding.md) · [实景证据](artifacts/pickup-grounding-2026-10-12/index.html) · 来源落点/同场受光/翻后痕迹；仅分析，扩库暂停
