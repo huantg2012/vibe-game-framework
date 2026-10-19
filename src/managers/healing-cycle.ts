@@ -3,7 +3,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { mix32 } from '@/generation/seed-fork';
 import { gameState } from '@/managers/game-state';
 import { saveManager } from '@/managers/save-manager';
-import { assimilationImpactMultiplier, healingAfter, HEALING_PURIFIER_MIN_HP } from '@/systems/assimilation-system';
+import { healingAfter, HEALING_PURIFIER_MIN_HP } from '@/systems/assimilation-system';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { projectItemForPlayer } from '@/systems/contaminant-catalog';
 import { growthSystem } from '@/systems/growth-system';
@@ -23,7 +23,6 @@ export interface HealingPreview {
   readonly reduction: number;
   readonly purifierHp: number;
   readonly requiredPurifierHp: number;
-  readonly impactMultiplier: number;
   readonly forecast: ForecastReading | null;
 }
 export interface HealingCycleResult {
@@ -54,7 +53,6 @@ export function getHealingPreview(): HealingPreview {
             : gameState.getHealingCycles() >= Number.MAX_SAFE_INTEGER ? 'cycle-limit' : null;
   return { available: reason === null, reason, assimilationBefore, assimilationAfter,
     reduction: assimilationBefore - assimilationAfter, purifierHp, requiredPurifierHp: HEALING_PURIFIER_MIN_HP,
-    impactMultiplier: assimilationImpactMultiplier(assimilationBefore),
     forecast: impactSystem.getForecastReading(growthSystem.getLevel('growth_forecast_clarity'), { forceImpact: true }) };
 }
 
@@ -90,7 +88,7 @@ export function performHealingCycle(): HealingCycleOutcome {
     });
     const stabilityBefore = stabilityTracker.getProgress();
     stabilityTracker.addProgress('healing-damage', (impact.newlyZeroModules ?? 0) * GAME_CONSTANTS.STABILITY.LOSS_MODULE_ZERO, false);
-    // Damage used the pre-treatment burden; only now apply the treatment benefit.
+    // A healing cycle costs one normal tide impact; body state never changes its strength.
     gameState.setAssimilation(preview.assimilationAfter);
     impactSystem.generateForecast(tideSystem.getCurrentIntensity(), growthSystem.getModifiers().forecastClarity,
       tideSystem.peekNextIntensity(), () => forecastRandom.next());

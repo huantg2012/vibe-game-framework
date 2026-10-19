@@ -14,7 +14,6 @@ export const ASSIMILATION_RULES = {
   "flicker_max": 0.18,
   "speed_loss": 0.1,
   "hostility_reduction": 0.6,
-  "impact_gain": 0.5,
   "healing_per_cycle": 15,
   "healing_purifier_min_hp": 25
 } as const;

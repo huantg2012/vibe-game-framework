@@ -39,11 +39,6 @@ export function assimilationHostilityMultiplier(assimilation: number): number {
   return 1 - RULES.hostility_reduction * bounded(assimilation) / RULES.maximum;
 }
 
-/** Base upkeep remains a recurring cost even when the player declines healing. */
-export function assimilationImpactMultiplier(assimilation: number): number {
-  return 1 + RULES.impact_gain * bounded(assimilation) / RULES.maximum;
-}
-
 export function healingAfter(assimilation: number): number {
   return Math.max(0, bounded(assimilation) - HEALING_PER_CYCLE);
 }

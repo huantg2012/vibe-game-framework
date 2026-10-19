@@ -14,7 +14,6 @@ import { eventBus } from '@/core/event-bus';
 import { gameState } from '@/managers/game-state';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { applyDefenseEffects, type DefenseContext, type DefenseResult } from '@/systems/defense-engine';
-import { assimilationImpactMultiplier } from '@/systems/assimilation-system';
 import { GameEvent } from '@/types/events';
 import type { Contaminant } from '@/types/game-types';
 
@@ -211,20 +210,9 @@ let forecastNextNextIntensity = 1;
 const pendingTargetQueue: string[] = [];
 let forecastLookahead: ForecastLookahead | null = null;
 
-/** The target remains frozen; a persistent body change only changes its pressure. */
-function effectiveIntensity(intensity: number): number {
-  return intensity * assimilationImpactMultiplier(gameState.getAssimilation());
-}
-
-function projectSeverity(reading: ForecastDisplay, baseIntensity: number): ForecastSeverity {
-  const offset = SEVERITY_ORDER.indexOf(reading.severity) - SEVERITY_ORDER.indexOf(severityFromIntensity(baseIntensity));
-  const adjusted = SEVERITY_ORDER.indexOf(severityFromIntensity(effectiveIntensity(baseIntensity))) + offset;
-  return SEVERITY_ORDER[Math.max(0, Math.min(SEVERITY_ORDER.length - 1, adjusted))]!;
-}
-
 export const impactSystem = {
   getForecastDisplay(): ForecastDisplay | null {
-    return forecastDisplay ? { ...forecastDisplay, severity: projectSeverity(forecastDisplay, forecastIntensity) } : null;
+    return forecastDisplay ? { ...forecastDisplay } : null;
   },
 
   /** Reading a level reveals facts already frozen in V2, without rolling,
@@ -236,11 +224,11 @@ export const impactSystem = {
     const severityCertain = forecastCommitted || (!legacy && level >= 1);
     const targetCertain = forecastCommitted || (!legacy && level >= 2);
     const targetId = !legacy && targetCertain ? actualPrimaryId! : forecastDisplay.targetId;
-    const intensity = effectiveIntensity(forecastIntensity);
+    const intensity = forecastIntensity;
     const exempt = !options.forceImpact && gameState.getCycle() === 0;
     return {
       targetId,
-      severity: severityCertain ? severityFromIntensity(intensity) : projectSeverity(forecastDisplay, forecastIntensity),
+      severity: severityCertain ? severityFromIntensity(intensity) : forecastDisplay.severity,
       targetCertain, severityCertain,
       intensity: !legacy && level >= 3 ? (exempt ? 0 : intensity) : null,
       baseDamagePerModule: !legacy && level >= 3 && actualPrimaryId
@@ -251,7 +239,7 @@ export const impactSystem = {
   },
 
   getForecastLookahead(): ForecastLookahead | null {
-    return forecastLookahead ? { ...forecastLookahead, severity: projectSeverity(forecastLookahead, forecastNextNextIntensity) } : null;
+    return forecastLookahead ? { ...forecastLookahead } : null;
   },
 
   /** Snapshot without mutation, also used to roll back a failed inventory save. */
@@ -323,7 +311,7 @@ export const impactSystem = {
     // defense processing may re-trigger it, so the window is always exactly one sortie.
     gameState.setModuleSwapActive(false);
 
-    const intensity = effectiveIntensity(gameState.getImpactIntensity());
+    const intensity = gameState.getImpactIntensity();
     const totalDamage = P.BASE_IMPACT_DAMAGE * intensity;
 
     // Emit start
