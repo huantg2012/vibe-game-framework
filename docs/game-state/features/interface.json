@@ -3,11 +3,11 @@
     "id": "COH-F032",
     "title": "Rift 战况与装备 HUD",
     "domain": "interface",
-    "summary": "随身界面显示生命、混乱、薪柴、装备余量/热键、效果和当前可执行提示；拾获入口打开场内物件管理。",
+    "summary": "DEC-222：战斗HUD保留即时生命、污染、装备、薪柴和实际动作；移除常驻同化与机制介绍，操作帮助默认收起、主动展开。Tab随身入口与面板/暂停提示统一。新100与旧150协议读数保持；有限实景与组件验证通过，用户审美待确认。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
-      "进入 Rift 自动显示；HUD 拾获入口"
+      "进入Rift自动显示即时战况；点击或键盘打开Tab随身查询；操作帮助主动展开。"
     ],
     "sources": [
       {
@@ -29,6 +29,22 @@
       {
         "path": "docs/specs/system-chaos-scavenge-extract.md",
         "role": "spec"
+      },
+      {
+        "path": "docs/qa/rift-hud-polish-2026-10-19.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/tasks/rift-experience-polish-2026-10-19.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-rift-hud-polish.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-rift-hud-polish.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -41,9 +57,12 @@
     ],
     "evidence": [
       "COH-E-SRC-interface",
-      "COH-E-HIST-CATALOG"
+      "COH-E-HIST-CATALOG",
+      "COH-E266"
     ],
-    "unknowns": []
+    "unknowns": [
+      "DEC-222第一阶段限定通过；未代签用户审美、自然物件交易、完整旧档、跨世界动态背景或后续视野/混合同化形象。"
+    ]
   },
   {
     "id": "COH-F033",
@@ -279,13 +298,13 @@
   },
   {
     "id": "COH-F035",
-    "title": "本趟拾获、丢放与交换",
+    "title": "随身身体查询、拾获与交换",
     "domain": "interface",
-    "summary": "Rift Tab 查看携入重量及收获，管理附近实际可见物件的取放/交换；不能现场换装，打开界面时世界继续。",
+    "summary": "Tab随身保持原未装配物件/附近物件浏览、丢放与交换；新同化协议上方增加只读身体四事实，A0显示、legacy隐藏，阅读不暂停。身体字段在完整帧提交后按显示精度更新，不重建列表。受控真内容投影及键鼠/滚动复核通过，本轮未重测真实丢放交换交易。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
-      "Rift Tab 或 HUD 拾获入口；超重拾取进入整理"
+      "Rift Tab或HUD随身入口；超重拾取仍进入原整理流程；身体状态与物件分组。"
     ],
     "sources": [
       {
@@ -307,19 +326,39 @@
       {
         "path": "docs/specs/system-field-inventory.md",
         "role": "spec"
+      },
+      {
+        "path": "docs/qa/rift-hud-polish-2026-10-19.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/tasks/rift-experience-polish-2026-10-19.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-rift-hud-polish.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-rift-hud-polish.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
       "COH-F007",
       "COH-F010",
       "COH-F023",
-      "COH-F038"
+      "COH-F038",
+      "COH-F054"
     ],
     "evidence": [
       "COH-E-SRC-interface",
-      "COH-E-HIST-CATALOG"
+      "COH-E-HIST-CATALOG",
+      "COH-E266"
     ],
-    "unknowns": []
+    "unknowns": [
+      "DEC-222第一阶段限定通过；未代签用户审美、自然物件交易、完整旧档、跨世界动态背景或后续视野/混合同化形象。"
+    ]
   },
   {
     "id": "COH-F036",

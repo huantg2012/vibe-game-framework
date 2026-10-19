@@ -1,0 +1,192 @@
+{
+  "startedAt": "2026-10-19T03:12:32.121Z",
+  "revision": "6a32075440d5c00bcc3311ac998feea73681e0ea",
+  "features": [
+    "COH-F032",
+    "COH-F035",
+    "COH-F054"
+  ],
+  "scope": "Final text-only follow-up in isolated production Rift inventory component: A60, six real CSV projections. Checks removed obsolete header sentence and retained body/list layout only. Earlier actual-scene evidence predates this sentence removal; no world re-entry.",
+  "sourcesBefore": {
+    "src/ui/dom/rift-hud.ts": "ce49f08e546cc2c72338406fb45aa0a17b03fe278255bb34000073a01d9fad4c",
+    "src/ui/dom/inventory-panel.ts": "0a2946af7b8095e9f4c70a19df29e4e7376c79074838d13b2dc6ada8b67543a5",
+    "src/ui/dom/inventory-panel-styles.ts": "cb29e82f825b18471ff7c54e90e2db10a2cc069c27f1f6dcf2754b753b571380",
+    "src/ui/inventory-presenter.ts": "5ebe8fe9a34837bcacf1e0f7d070d5af444a433f6cda1fca9d2ee255e1854db7",
+    "src/scenes/rift-scene.ts": "a391e8002b72bb49c1c733c2688e1e262797525a31135dba8c44ecdc9966fbdb",
+    "src/ui/dom/pause-menu.ts": "c855ae8d8a86c66326328949f48e05ab6f333af546896462b8b886f3712466ea",
+    "src/systems/assimilation-system.ts": "ef779ffabba4610f63d21fd399f993d8afdad60df08e59bf48970d301e997723",
+    "src/generated/assimilation-data.ts": "7f47d7621b2e32df2b00b3cbe3b3a7dc567bd4750ac726260b2b2aee532167f9"
+  },
+  "checks": [
+    {
+      "name": "final header omits obsolete item-only sentence",
+      "result": "pass",
+      "detail": "随身\n负重12 / 16\n移动 −0% · 抗性 0%\nEsc 收起\n身体\n同化\n60.0%\n归返冲击增幅\n+30.0%\n满污染时视距\n基础\n76.0%\n未激怒敌人感知距离\n基础\n64.0%\n全部\n武器\n污染物\n原来顺序\n按名称\n按负重\n本趟拾获\n凝滞的石块\n随身 · 已成熟 · 普通\n2\n重影碎片\n随身 · 已成熟 · 普通\n2\n记忆碎片\n随身 · 已成熟 · 普通\n2\n不落的砂砾\n随身 · 已成熟 · 优良\n2\n附着的空壳\n随身 · 已成熟 · 优良\n2\n带缺口的石头\n随身 · 已成熟 · 优良\n2\n1–3 / 6\n凝滞的石块\n普通 · 已成熟 · 随身 · 负重 2\n剩余次数\n5\n\n停滞4秒，受伤解除。\n\n品质\n普通\n类型\n主动\n余次\n5 / 5\n物件说明\n向下滚动查看 ↓\n放在脚边\n世界仍在继续 · 已装配占 0\n↑↓ 查看 · Enter 操作 · Tab / Esc 合上\nEnter 放在脚边"
+    },
+    {
+      "name": "final A60 body and six-item list remain",
+      "result": "pass",
+      "detail": {
+        "hidden": false,
+        "text": "身体\n同化\n60.0%\n归返冲击增幅\n+30.0%\n满污染时视距\n基础\n76.0%\n未激怒敌人感知距离\n基础\n64.0%",
+        "values": [
+          "60.0%",
+          "+30.0%",
+          "76.0%",
+          "64.0%"
+        ],
+        "labels": [
+          "同化",
+          "归返冲击增幅",
+          "满污染时视距",
+          "未激怒敌人感知距离"
+        ],
+        "baselines": [
+          "基础",
+          "基础"
+        ],
+        "facts": [
+          {
+            "x": 330,
+            "y": 186,
+            "width": 287,
+            "height": 21
+          },
+          {
+            "x": 641,
+            "y": 186,
+            "width": 287,
+            "height": 21
+          },
+          {
+            "x": 330,
+            "y": 211,
+            "width": 287,
+            "height": 21
+          },
+          {
+            "x": 641,
+            "y": 211,
+            "width": 287,
+            "height": 21
+          }
+        ],
+        "parent": true
+      }
+    },
+    {
+      "name": "source files stable during browser QA",
+      "result": "pass"
+    },
+    {
+      "name": "no runtime page errors",
+      "result": "pass",
+      "detail": []
+    },
+    {
+      "name": "no console errors",
+      "result": "pass",
+      "detail": []
+    }
+  ],
+  "steps": [
+    {
+      "name": "legacy-and-catalog-production-components",
+      "startedAt": "2026-10-19T03:12:33.217Z",
+      "details": {
+        "text": "随身\n负重12 / 16\n移动 −0% · 抗性 0%\nEsc 收起\n身体\n同化\n60.0%\n归返冲击增幅\n+30.0%\n满污染时视距\n基础\n76.0%\n未激怒敌人感知距离\n基础\n64.0%\n全部\n武器\n污染物\n原来顺序\n按名称\n按负重\n本趟拾获\n凝滞的石块\n随身 · 已成熟 · 普通\n2\n重影碎片\n随身 · 已成熟 · 普通\n2\n记忆碎片\n随身 · 已成熟 · 普通\n2\n不落的砂砾\n随身 · 已成熟 · 优良\n2\n附着的空壳\n随身 · 已成熟 · 优良\n2\n带缺口的石头\n随身 · 已成熟 · 优良\n2\n1–3 / 6\n凝滞的石块\n普通 · 已成熟 · 随身 · 负重 2\n剩余次数\n5\n\n停滞4秒，受伤解除。\n\n品质\n普通\n类型\n主动\n余次\n5 / 5\n物件说明\n向下滚动查看 ↓\n放在脚边\n世界仍在继续 · 已装配占 0\n↑↓ 查看 · Enter 操作 · Tab / Esc 合上\nEnter 放在脚边",
+        "view": {
+          "hidden": false,
+          "text": "身体\n同化\n60.0%\n归返冲击增幅\n+30.0%\n满污染时视距\n基础\n76.0%\n未激怒敌人感知距离\n基础\n64.0%",
+          "values": [
+            "60.0%",
+            "+30.0%",
+            "76.0%",
+            "64.0%"
+          ],
+          "labels": [
+            "同化",
+            "归返冲击增幅",
+            "满污染时视距",
+            "未激怒敌人感知距离"
+          ],
+          "baselines": [
+            "基础",
+            "基础"
+          ],
+          "facts": [
+            {
+              "x": 330,
+              "y": 186,
+              "width": 287,
+              "height": 21
+            },
+            {
+              "x": 641,
+              "y": 186,
+              "width": 287,
+              "height": 21
+            },
+            {
+              "x": 330,
+              "y": 211,
+              "width": 287,
+              "height": 21
+            },
+            {
+              "x": 641,
+              "y": 211,
+              "width": 287,
+              "height": 21
+            }
+          ],
+          "parent": true
+        },
+        "layout": {
+          "panel": {
+            "x": 330,
+            "y": 102,
+            "width": 598,
+            "height": 490
+          },
+          "body": {
+            "x": 330,
+            "y": 164,
+            "width": 598,
+            "height": 68
+          },
+          "list": {
+            "x": 330,
+            "y": 304,
+            "width": 390,
+            "height": 205
+          }
+        },
+        "image": "final-header-a60-component.png"
+      },
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:12:33.942Z"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "final-header-a60-component.png",
+      "name": "final-header-a60-component"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "browser": "155.0.8059.80",
+  "sourcesAfter": {
+    "src/ui/dom/rift-hud.ts": "ce49f08e546cc2c72338406fb45aa0a17b03fe278255bb34000073a01d9fad4c",
+    "src/ui/dom/inventory-panel.ts": "0a2946af7b8095e9f4c70a19df29e4e7376c79074838d13b2dc6ada8b67543a5",
+    "src/ui/dom/inventory-panel-styles.ts": "cb29e82f825b18471ff7c54e90e2db10a2cc069c27f1f6dcf2754b753b571380",
+    "src/ui/inventory-presenter.ts": "5ebe8fe9a34837bcacf1e0f7d070d5af444a433f6cda1fca9d2ee255e1854db7",
+    "src/scenes/rift-scene.ts": "a391e8002b72bb49c1c733c2688e1e262797525a31135dba8c44ecdc9966fbdb",
+    "src/ui/dom/pause-menu.ts": "c855ae8d8a86c66326328949f48e05ab6f333af546896462b8b886f3712466ea",
+    "src/systems/assimilation-system.ts": "ef779ffabba4610f63d21fd399f993d8afdad60df08e59bf48970d301e997723",
+    "src/generated/assimilation-data.ts": "7f47d7621b2e32df2b00b3cbe3b3a7dc567bd4750ac726260b2b2aee532167f9"
+  },
+  "result": "pass",
+  "finishedAt": "2026-10-19T03:12:33.943Z"
+}

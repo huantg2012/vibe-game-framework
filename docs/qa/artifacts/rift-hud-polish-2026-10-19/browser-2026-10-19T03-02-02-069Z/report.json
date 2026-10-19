@@ -1,0 +1,1456 @@
+{
+  "startedAt": "2026-10-19T03:02:02.069Z",
+  "revision": "6a32075440d5c00bcc3311ac998feea73681e0ea",
+  "features": [
+    "COH-F032",
+    "COH-F035",
+    "COH-F054"
+  ],
+  "scope": "One isolated Chrome context; title → new record → base → real preparation → one low-grade Rift. Controlled A/P and six real inventory-item fixtures. Legacy is a presentation fixture only. No user storage, natural expedition/economy/balance, other worlds, Firefox/Safari or human aesthetic acceptance.",
+  "sourcesBefore": {
+    "src/ui/dom/rift-hud.ts": "ce49f08e546cc2c72338406fb45aa0a17b03fe278255bb34000073a01d9fad4c",
+    "src/ui/dom/inventory-panel.ts": "9ff0bcc02d04c26fb998df7339e87c1129beb275a45356e1338276d4ba572c63",
+    "src/ui/dom/inventory-panel-styles.ts": "cb29e82f825b18471ff7c54e90e2db10a2cc069c27f1f6dcf2754b753b571380",
+    "src/ui/inventory-presenter.ts": "5ebe8fe9a34837bcacf1e0f7d070d5af444a433f6cda1fca9d2ee255e1854db7",
+    "src/scenes/rift-scene.ts": "a391e8002b72bb49c1c733c2688e1e262797525a31135dba8c44ecdc9966fbdb",
+    "src/ui/dom/pause-menu.ts": "c855ae8d8a86c66326328949f48e05ab6f333af546896462b8b886f3712466ea",
+    "src/systems/assimilation-system.ts": "ef779ffabba4610f63d21fd399f993d8afdad60df08e59bf48970d301e997723",
+    "src/generated/assimilation-data.ts": "7f47d7621b2e32df2b00b3cbe3b3a7dc567bd4750ac726260b2b2aee532167f9"
+  },
+  "checks": [
+    {
+      "name": "isolated new record begins with A0",
+      "result": "pass"
+    },
+    {
+      "name": "prepare contains no Rift body section",
+      "result": "pass"
+    },
+    {
+      "name": "new departure is persistent-v1",
+      "result": "pass",
+      "detail": {
+        "version": 1,
+        "value": 15.003160632,
+        "peak": 15.003160632,
+        "paused": false,
+        "clockMs": 16.670000000000073,
+        "pollutionGrade": "low",
+        "chaosRateModifier": 0.79,
+        "lastEmitted": 15,
+        "lastModulated": 15.003160632,
+        "thresholdsFired": [
+          false,
+          false,
+          false
+        ],
+        "chasingEnemyIds": [],
+        "detectionCooldowns": [],
+        "tempRateDeadlineMs": 0,
+        "tempRateMult": 1,
+        "reductionDeadlineMs": 0,
+        "reductionMult": 1,
+        "assimilationMode": "persistent-v1",
+        "assimilationValue": 0,
+        "growthResistance": 0
+      }
+    },
+    {
+      "name": "HUD omits assimilation and mechanism sentences",
+      "result": "pass",
+      "detail": "操作 · 展开 / 收起\nTab\n随身\n3.0 / 16.0\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—"
+    },
+    {
+      "name": "help initially collapsed",
+      "result": "pass"
+    },
+    {
+      "name": "HUD entry named 随身",
+      "result": "pass"
+    },
+    {
+      "name": "hud-entry: new text sampled contrast >= 4.5:1",
+      "result": "pass",
+      "detail": {
+        "name": "hud-entry",
+        "image": "hud-entry-contrast-visible.png",
+        "background": "hud-entry-contrast-background.png",
+        "method": "Freeze engine frame only for paired capture; retain actual scene, HUD veils and scene-menu compositing. First capture visible text; second makes only selected text colors transparent without changing layout. Sample every pixel in tight DOM Range text rectangles. WCAG sRGB luminance contrast uses computed opaque foreground against each captured background pixel, excluding antialiasing from the foreground. Conservative rectangle minimum; scoped to these positions/frames/world only, not all possible backgrounds or full font-rendering legibility.",
+        "samples": [
+          {
+            "text": "随身",
+            "rect": {
+              "x": 1115.1961669921875,
+              "y": 64.51666259765625,
+              "width": 28.9666748046875,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(146, 158, 145)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 7.362045660297933,
+            "worstBackground": {
+              "x": 1119,
+              "y": 70,
+              "rgb": [
+                2,
+                4,
+                4
+              ]
+            },
+            "pixels": 660
+          }
+        ]
+      }
+    },
+    {
+      "name": "help click expands",
+      "result": "pass"
+    },
+    {
+      "name": "help keyboard collapses without attack",
+      "result": "pass"
+    },
+    {
+      "name": "six real CSV-defined inventory items accepted",
+      "result": "pass",
+      "detail": [
+        {
+          "id": "QA_HUD_0",
+          "type": "solidify",
+          "result": {
+            "ok": true,
+            "value": "QA_HUD_0"
+          }
+        },
+        {
+          "id": "QA_HUD_1",
+          "type": "scatter",
+          "result": {
+            "ok": true,
+            "value": "QA_HUD_1"
+          }
+        },
+        {
+          "id": "QA_HUD_2",
+          "type": "retrograde",
+          "result": {
+            "ok": true,
+            "value": "QA_HUD_2"
+          }
+        },
+        {
+          "id": "QA_HUD_3",
+          "type": "delay",
+          "result": {
+            "ok": true,
+            "value": "QA_HUD_3"
+          }
+        },
+        {
+          "id": "QA_HUD_4",
+          "type": "siphon",
+          "result": {
+            "ok": true,
+            "value": "QA_HUD_4"
+          }
+        },
+        {
+          "id": "QA_HUD_5",
+          "type": "expand",
+          "result": {
+            "ok": true,
+            "value": "QA_HUD_5"
+          }
+        }
+      ]
+    },
+    {
+      "name": "legacy projection preserves 150 label",
+      "result": "fail",
+      "detail": "完整度\n100/100"
+    },
+    {
+      "name": "source files stable during browser QA",
+      "result": "pass"
+    },
+    {
+      "name": "no runtime page errors",
+      "result": "pass",
+      "detail": []
+    },
+    {
+      "name": "no console errors",
+      "result": "fail",
+      "detail": [
+        "Rift checkpoint validation failed; previous record retained Error: Incomplete Rift checkpoint\n    at Object.prepareRiftCommit (http://127.0.0.1:3027/src/managers/save-manager.ts?t=1792342961538:251:213)\n    at RiftFrameCommit.finish (http://127.0.0.1:3027/src/systems/rift-frame-commit.ts?t=1792342961538:41:34)\n    at RiftScene.commitRuntimeFrame (http://127.0.0.1:3027/src/scenes/rift-scene.ts?t=1792378752709:2191:31)\n    at RiftScene.onPostUpdate (http://127.0.0.1:3027/src/scenes/rift-scene.ts?t=1792378752709:950:15)\n    at EventEmitter2.emit (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:120:43)\n    at Systems2.step (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:112599:28)\n    at SceneManager2.update (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:110750:29)\n    at Game2.step (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:8625:32)\n    at TimeStep2.step (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:9079:26)\n    at step (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:16406:29)"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "name": "isolated-production-start",
+      "startedAt": "2026-10-19T03:02:03.153Z",
+      "details": {
+        "modules": {
+          "/src/managers/audio-manager.ts": "http://127.0.0.1:3027/src/managers/audio-manager.ts",
+          "/src/managers/game-state.ts": "http://127.0.0.1:3027/src/managers/game-state.ts?t=1792342239920",
+          "/src/managers/save-manager.ts": "http://127.0.0.1:3027/src/managers/save-manager.ts?t=1792342961538",
+          "/src/systems/inventory-store.ts": "http://127.0.0.1:3027/src/systems/inventory-store.ts",
+          "/src/ui/dom/inventory-panel.ts": "http://127.0.0.1:3027/src/ui/dom/inventory-panel.ts?t=1792378752709",
+          "/src/ui/inventory-presenter.ts": "http://127.0.0.1:3027/src/ui/inventory-presenter.ts?t=1792378752709",
+          "/src/systems/assimilation-system.ts": "http://127.0.0.1:3027/src/systems/assimilation-system.ts",
+          "/src/generated/contaminant-data.ts": "http://127.0.0.1:3027/src/generated/contaminant-data.ts",
+          "/src/ui/dom/rift-hud.ts": "http://127.0.0.1:3027/src/ui/dom/rift-hud.ts?t=1792378524307"
+        },
+        "snapshot": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "assimilation": 0,
+          "savedA": 0,
+          "pending": false,
+          "run": null,
+          "items": [
+            {
+              "id": "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b",
+              "kind": "weapon",
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "rift": null,
+          "dom": "薪柴\n0\n潮汐\n第 1 潮\n涨潮\n下次归来\n核心？\n轻微？\nTab\n存续报告\n[E]\n坐下"
+        }
+      },
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:02:07.582Z"
+    },
+    {
+      "name": "one-real-new-departure",
+      "startedAt": "2026-10-19T03:02:07.582Z",
+      "details": {
+        "entryMs": 6381,
+        "preparationImage": "prepare-shared-production.png",
+        "state": {
+          "scenes": [
+            "RiftScene"
+          ],
+          "assimilation": 0,
+          "savedA": 0,
+          "pending": false,
+          "run": {
+            "id": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+            "status": "active",
+            "carriedOutIds": [
+              "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b"
+            ],
+            "revealedNodes": {},
+            "destroyedIds": [],
+            "catalogVersion": "contaminant-v1",
+            "lootAlgorithmVersion": 1,
+            "combatRulesVersion": 2,
+            "actionReceipts": {},
+            "passiveReceipts": [],
+            "dropPlan": {
+              "sourceRegions": {
+                "r100-contaminant-contested-1": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                },
+                "r100-contaminant-safe-1": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                },
+                "r100-kindling-contested-1": {
+                  "sourceTag": "optical",
+                  "hint": "多见与观察有关的残留"
+                },
+                "r100-kindling-contested-2": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                },
+                "r100-kindling-deep-1": {
+                  "sourceTag": "optical",
+                  "hint": "多见与观察有关的残留"
+                },
+                "r100-kindling-safe-1": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                }
+              },
+              "version": 1,
+              "catalogVersion": "contaminant-v1",
+              "lootAlgorithmVersion": 1,
+              "runId": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+              "runSeed": 2612384565,
+              "tutorialNodeId": "r100-contaminant-contested-1",
+              "entries": [
+                {
+                  "nodeId": "r100-contaminant-contested-1",
+                  "tier": "contested",
+                  "sourceTag": "inhibition",
+                  "contaminant": {
+                    "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-contested-1",
+                    "type": "catalog",
+                    "rarity": "common",
+                    "quality": "ordinary",
+                    "stage": "defense",
+                    "impactCharges": 0,
+                    "usesRemaining": 0,
+                    "catalog": {
+                      "catalogVersion": "contaminant-v1",
+                      "definitionId": "amber_beetle",
+                      "appearanceId": "thin_shell_ovoid",
+                      "offeringProfileId": "resist_35",
+                      "acquiredOrdinal": 0,
+                      "identification": "unidentified"
+                    }
+                  }
+                },
+                {
+                  "nodeId": "r100-contaminant-safe-1",
+                  "tier": "safe",
+                  "sourceTag": "inhibition",
+                  "contaminant": {
+                    "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-safe-1",
+                    "type": "catalog",
+                    "rarity": "common",
+                    "quality": "ordinary",
+                    "stage": "defense",
+                    "impactCharges": 0,
+                    "usesRemaining": 0,
+                    "catalog": {
+                      "catalogVersion": "contaminant-v1",
+                      "definitionId": "wrinkled_bottom_satchel",
+                      "appearanceId": "wax_parcel",
+                      "offeringProfileId": "resist_25",
+                      "acquiredOrdinal": 0,
+                      "identification": "unidentified"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "items": [
+            {
+              "id": "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b",
+              "kind": "weapon",
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "rift": {
+            "paused": false,
+            "chaos": {
+              "version": 1,
+              "value": 15.003160632,
+              "peak": 15.003160632,
+              "paused": false,
+              "clockMs": 16.670000000000073,
+              "pollutionGrade": "low",
+              "chaosRateModifier": 0.79,
+              "lastEmitted": 15,
+              "lastModulated": 15.003160632,
+              "thresholdsFired": [
+                false,
+                false,
+                false
+              ],
+              "chasingEnemyIds": [],
+              "detectionCooldowns": [],
+              "tempRateDeadlineMs": 0,
+              "tempRateMult": 1,
+              "reductionDeadlineMs": 0,
+              "reductionMult": 1,
+              "assimilationMode": "persistent-v1",
+              "assimilationValue": 0,
+              "growthResistance": 0
+            },
+            "position": {
+              "x": 292,
+              "y": 1028
+            },
+            "attackSequence": 0,
+            "attackPhase": "idle",
+            "frameBlocked": false
+          },
+          "dom": "操作 · 展开 / 收起\nTab\n随身\n3.0 / 16.0\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见"
+        }
+      },
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:02:14.600Z"
+    },
+    {
+      "name": "clean-hud-and-help",
+      "startedAt": "2026-10-19T03:02:14.601Z",
+      "details": {
+        "hud": "操作 · 展开 / 收起\nTab\n随身\n3.0 / 16.0\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—",
+        "clean": "hud-clean.png",
+        "help": "hud-help-expanded.png",
+        "contrastResult": {
+          "name": "hud-entry",
+          "image": "hud-entry-contrast-visible.png",
+          "background": "hud-entry-contrast-background.png",
+          "method": "Freeze engine frame only for paired capture; retain actual scene, HUD veils and scene-menu compositing. First capture visible text; second makes only selected text colors transparent without changing layout. Sample every pixel in tight DOM Range text rectangles. WCAG sRGB luminance contrast uses computed opaque foreground against each captured background pixel, excluding antialiasing from the foreground. Conservative rectangle minimum; scoped to these positions/frames/world only, not all possible backgrounds or full font-rendering legibility.",
+          "samples": [
+            {
+              "text": "随身",
+              "rect": {
+                "x": 1115.1961669921875,
+                "y": 64.51666259765625,
+                "width": 28.9666748046875,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(146, 158, 145)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 7.362045660297933,
+              "worstBackground": {
+                "x": 1119,
+                "y": 70,
+                "rgb": [
+                  2,
+                  4,
+                  4
+                ]
+              },
+              "pixels": 660
+            }
+          ]
+        }
+      },
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:02:16.340Z"
+    },
+    {
+      "name": "six-real-items-and-a0-body",
+      "startedAt": "2026-10-19T03:02:16.340Z",
+      "result": "error",
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#rift-hud-burden')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"rift-hud-burden\" aria-label=\"查看随身（Tab）\" aria-keyshortcuts=\"Tab\" class=\"hud-report-entry\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    56 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at /Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:58:559\n    at async step (/Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:27:21)\n    at async file:///Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:58:2",
+      "snapshot": {
+        "scenes": [],
+        "assimilation": 0,
+        "savedA": 0,
+        "pending": false,
+        "run": {
+          "id": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": [],
+          "catalogVersion": "contaminant-v1",
+          "lootAlgorithmVersion": 1,
+          "combatRulesVersion": 2,
+          "actionReceipts": {},
+          "passiveReceipts": [],
+          "dropPlan": {
+            "sourceRegions": {
+              "r100-contaminant-contested-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-contaminant-safe-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-kindling-contested-1": {
+                "sourceTag": "optical",
+                "hint": "多见与观察有关的残留"
+              },
+              "r100-kindling-contested-2": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-kindling-deep-1": {
+                "sourceTag": "optical",
+                "hint": "多见与观察有关的残留"
+              },
+              "r100-kindling-safe-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              }
+            },
+            "version": 1,
+            "catalogVersion": "contaminant-v1",
+            "lootAlgorithmVersion": 1,
+            "runId": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+            "runSeed": 2612384565,
+            "tutorialNodeId": "r100-contaminant-contested-1",
+            "entries": [
+              {
+                "nodeId": "r100-contaminant-contested-1",
+                "tier": "contested",
+                "sourceTag": "inhibition",
+                "contaminant": {
+                  "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-contested-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "amber_beetle",
+                    "appearanceId": "thin_shell_ovoid",
+                    "offeringProfileId": "resist_35",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              },
+              {
+                "nodeId": "r100-contaminant-safe-1",
+                "tier": "safe",
+                "sourceTag": "inhibition",
+                "contaminant": {
+                  "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-safe-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "wrinkled_bottom_satchel",
+                    "appearanceId": "wax_parcel",
+                    "offeringProfileId": "resist_25",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b",
+            "kind": "weapon",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_0",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_1",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_2",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_3",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_4",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_5",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "rift": {
+          "paused": true,
+          "chaos": {
+            "version": 1,
+            "value": 15.294822312004525,
+            "peak": 15.294822312004525,
+            "paused": false,
+            "clockMs": 1554.9700000238429,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 15,
+            "lastModulated": 15.294822312004525,
+            "thresholdsFired": [
+              false,
+              false,
+              false
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 292,
+            "y": 1028
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "frameBlocked": false
+        },
+        "dom": "操作 · 展开 / 收起\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见\n当前状态未通过检查，行动已停住。上一次完整记录仍在；返回标题可继续已保存的出行。\n返回标题，保留已存记录"
+      },
+      "image": "error-4.png",
+      "finishedAt": "2026-10-19T03:02:46.972Z"
+    },
+    {
+      "name": "a60-a100-helper-projections",
+      "startedAt": "2026-10-19T03:02:46.972Z",
+      "result": "error",
+      "error": "locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#inventory-panel') to be visible\u001b[22m\n\n    at openBag (/Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:40:98)\n    at async file:///Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:59:68\n    at async step (/Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:27:21)\n    at async file:///Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:59:2",
+      "snapshot": {
+        "scenes": [],
+        "assimilation": 60,
+        "savedA": 0,
+        "pending": false,
+        "run": {
+          "id": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": [],
+          "catalogVersion": "contaminant-v1",
+          "lootAlgorithmVersion": 1,
+          "combatRulesVersion": 2,
+          "actionReceipts": {},
+          "passiveReceipts": [],
+          "dropPlan": {
+            "sourceRegions": {
+              "r100-contaminant-contested-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-contaminant-safe-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-kindling-contested-1": {
+                "sourceTag": "optical",
+                "hint": "多见与观察有关的残留"
+              },
+              "r100-kindling-contested-2": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-kindling-deep-1": {
+                "sourceTag": "optical",
+                "hint": "多见与观察有关的残留"
+              },
+              "r100-kindling-safe-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              }
+            },
+            "version": 1,
+            "catalogVersion": "contaminant-v1",
+            "lootAlgorithmVersion": 1,
+            "runId": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+            "runSeed": 2612384565,
+            "tutorialNodeId": "r100-contaminant-contested-1",
+            "entries": [
+              {
+                "nodeId": "r100-contaminant-contested-1",
+                "tier": "contested",
+                "sourceTag": "inhibition",
+                "contaminant": {
+                  "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-contested-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "amber_beetle",
+                    "appearanceId": "thin_shell_ovoid",
+                    "offeringProfileId": "resist_35",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              },
+              {
+                "nodeId": "r100-contaminant-safe-1",
+                "tier": "safe",
+                "sourceTag": "inhibition",
+                "contaminant": {
+                  "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-safe-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "wrinkled_bottom_satchel",
+                    "appearanceId": "wax_parcel",
+                    "offeringProfileId": "resist_25",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b",
+            "kind": "weapon",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_0",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_1",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_2",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_3",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_4",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_5",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "rift": {
+          "paused": true,
+          "chaos": {
+            "version": 1,
+            "value": 15.294822312004525,
+            "peak": 15.294822312004525,
+            "paused": false,
+            "clockMs": 1554.9700000238429,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 15,
+            "lastModulated": 15.294822312004525,
+            "thresholdsFired": [
+              false,
+              false,
+              false
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 60,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 292,
+            "y": 1028
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "frameBlocked": false
+        },
+        "dom": "操作 · 展开 / 收起\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见\n当前状态未通过检查，行动已停住。上一次完整记录仍在；返回标题可继续已保存的出行。\n返回标题，保留已存记录"
+      },
+      "image": "error-5.png",
+      "finishedAt": "2026-10-19T03:02:52.573Z"
+    },
+    {
+      "name": "real-saturated-tick-preserves-list-and-scroll",
+      "startedAt": "2026-10-19T03:02:52.574Z",
+      "result": "error",
+      "error": "locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#inventory-panel') to be visible\u001b[22m\n\n    at openBag (/Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:40:98)\n    at async file:///Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:60:228\n    at async step (/Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:27:21)\n    at async file:///Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:60:2",
+      "snapshot": {
+        "scenes": [],
+        "assimilation": 0.03,
+        "savedA": 0,
+        "pending": false,
+        "run": {
+          "id": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": [],
+          "catalogVersion": "contaminant-v1",
+          "lootAlgorithmVersion": 1,
+          "combatRulesVersion": 2,
+          "actionReceipts": {},
+          "passiveReceipts": [],
+          "dropPlan": {
+            "sourceRegions": {
+              "r100-contaminant-contested-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-contaminant-safe-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-kindling-contested-1": {
+                "sourceTag": "optical",
+                "hint": "多见与观察有关的残留"
+              },
+              "r100-kindling-contested-2": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-kindling-deep-1": {
+                "sourceTag": "optical",
+                "hint": "多见与观察有关的残留"
+              },
+              "r100-kindling-safe-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              }
+            },
+            "version": 1,
+            "catalogVersion": "contaminant-v1",
+            "lootAlgorithmVersion": 1,
+            "runId": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+            "runSeed": 2612384565,
+            "tutorialNodeId": "r100-contaminant-contested-1",
+            "entries": [
+              {
+                "nodeId": "r100-contaminant-contested-1",
+                "tier": "contested",
+                "sourceTag": "inhibition",
+                "contaminant": {
+                  "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-contested-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "amber_beetle",
+                    "appearanceId": "thin_shell_ovoid",
+                    "offeringProfileId": "resist_35",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              },
+              {
+                "nodeId": "r100-contaminant-safe-1",
+                "tier": "safe",
+                "sourceTag": "inhibition",
+                "contaminant": {
+                  "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-safe-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "wrinkled_bottom_satchel",
+                    "appearanceId": "wax_parcel",
+                    "offeringProfileId": "resist_25",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b",
+            "kind": "weapon",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_0",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_1",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_2",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_3",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_4",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_5",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "rift": {
+          "paused": true,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 1554.9700000238429,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.03,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 292,
+            "y": 1028
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "frameBlocked": false
+        },
+        "dom": "操作 · 展开 / 收起\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见\n当前状态未通过检查，行动已停住。上一次完整记录仍在；返回标题可继续已保存的出行。\n返回标题，保留已存记录"
+      },
+      "image": "error-6.png",
+      "finishedAt": "2026-10-19T03:02:58.054Z"
+    },
+    {
+      "name": "keyboard-click-and-movement-exit",
+      "startedAt": "2026-10-19T03:02:58.054Z",
+      "result": "error",
+      "error": "locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#inventory-panel') to be visible\u001b[22m\n\n    at openBag (/Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:40:98)\n    at async file:///Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:61:110\n    at async step (/Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:27:21)\n    at async file:///Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:61:2",
+      "snapshot": {
+        "scenes": [],
+        "assimilation": 0.03,
+        "savedA": 0,
+        "pending": false,
+        "run": {
+          "id": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": [],
+          "catalogVersion": "contaminant-v1",
+          "lootAlgorithmVersion": 1,
+          "combatRulesVersion": 2,
+          "actionReceipts": {},
+          "passiveReceipts": [],
+          "dropPlan": {
+            "sourceRegions": {
+              "r100-contaminant-contested-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-contaminant-safe-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-kindling-contested-1": {
+                "sourceTag": "optical",
+                "hint": "多见与观察有关的残留"
+              },
+              "r100-kindling-contested-2": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-kindling-deep-1": {
+                "sourceTag": "optical",
+                "hint": "多见与观察有关的残留"
+              },
+              "r100-kindling-safe-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              }
+            },
+            "version": 1,
+            "catalogVersion": "contaminant-v1",
+            "lootAlgorithmVersion": 1,
+            "runId": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+            "runSeed": 2612384565,
+            "tutorialNodeId": "r100-contaminant-contested-1",
+            "entries": [
+              {
+                "nodeId": "r100-contaminant-contested-1",
+                "tier": "contested",
+                "sourceTag": "inhibition",
+                "contaminant": {
+                  "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-contested-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "amber_beetle",
+                    "appearanceId": "thin_shell_ovoid",
+                    "offeringProfileId": "resist_35",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              },
+              {
+                "nodeId": "r100-contaminant-safe-1",
+                "tier": "safe",
+                "sourceTag": "inhibition",
+                "contaminant": {
+                  "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-safe-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "wrinkled_bottom_satchel",
+                    "appearanceId": "wax_parcel",
+                    "offeringProfileId": "resist_25",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b",
+            "kind": "weapon",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_0",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_1",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_2",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_3",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_4",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_5",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "rift": {
+          "paused": true,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 1554.9700000238429,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.03,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 292,
+            "y": 1028
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "frameBlocked": false
+        },
+        "dom": "操作 · 展开 / 收起\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见\n当前状态未通过检查，行动已停住。上一次完整记录仍在；返回标题可继续已保存的出行。\n返回标题，保留已存记录"
+      },
+      "image": "error-7.png",
+      "finishedAt": "2026-10-19T03:03:03.541Z"
+    },
+    {
+      "name": "legacy150-and-shared-catalog-component-fixtures",
+      "startedAt": "2026-10-19T03:03:03.542Z",
+      "result": "error",
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#rift-hud-burden')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"rift-hud-burden\" aria-label=\"查看随身（Tab）\" aria-keyshortcuts=\"Tab\" class=\"hud-report-entry\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    56 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at /Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:62:704\n    at async step (/Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:27:21)\n    at async file:///Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:62:2",
+      "snapshot": {
+        "scenes": [],
+        "assimilation": 0.03,
+        "savedA": 0,
+        "pending": false,
+        "run": {
+          "id": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": [],
+          "catalogVersion": "contaminant-v1",
+          "lootAlgorithmVersion": 1,
+          "combatRulesVersion": 2,
+          "actionReceipts": {},
+          "passiveReceipts": [],
+          "dropPlan": {
+            "sourceRegions": {
+              "r100-contaminant-contested-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-contaminant-safe-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-kindling-contested-1": {
+                "sourceTag": "optical",
+                "hint": "多见与观察有关的残留"
+              },
+              "r100-kindling-contested-2": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              },
+              "r100-kindling-deep-1": {
+                "sourceTag": "optical",
+                "hint": "多见与观察有关的残留"
+              },
+              "r100-kindling-safe-1": {
+                "sourceTag": "inhibition",
+                "hint": "多见压住侵蚀的残留"
+              }
+            },
+            "version": 1,
+            "catalogVersion": "contaminant-v1",
+            "lootAlgorithmVersion": 1,
+            "runId": "41bb7e07-713a-4f3b-a93d-895df67db2dd",
+            "runSeed": 2612384565,
+            "tutorialNodeId": "r100-contaminant-contested-1",
+            "entries": [
+              {
+                "nodeId": "r100-contaminant-contested-1",
+                "tier": "contested",
+                "sourceTag": "inhibition",
+                "contaminant": {
+                  "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-contested-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "amber_beetle",
+                    "appearanceId": "thin_shell_ovoid",
+                    "offeringProfileId": "resist_35",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              },
+              {
+                "nodeId": "r100-contaminant-safe-1",
+                "tier": "safe",
+                "sourceTag": "inhibition",
+                "contaminant": {
+                  "id": "CAT_41bb7e07-713a-4f3b-a93d-895df67db2dd_r100-contaminant-safe-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "wrinkled_bottom_satchel",
+                    "appearanceId": "wax_parcel",
+                    "offeringProfileId": "resist_25",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "WPN_dbe0b83b-3eea-4f6e-ae8c-140751afa84b",
+            "kind": "weapon",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_0",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_1",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_2",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_3",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_4",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "id": "QA_HUD_5",
+            "kind": "contaminant",
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "rift": {
+          "paused": true,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 1554.9700000238429,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.03,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 292,
+            "y": 1028
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "frameBlocked": false
+        },
+        "dom": "退路未见\n当前状态未通过检查，行动已停住。上一次完整记录仍在；返回标题可继续已保存的出行。\n返回标题，保留已存记录\n操作 · 展开 / 收起\n完整度\n100/100\n混乱\n150\n临界\n薪柴\n0"
+      },
+      "image": "error-8.png",
+      "finishedAt": "2026-10-19T03:03:34.076Z"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "prepare-shared-production.png",
+      "name": "prepare-shared-production"
+    },
+    {
+      "file": "hud-clean.png",
+      "name": "hud-clean"
+    },
+    {
+      "file": "hud-help-expanded.png",
+      "name": "hud-help-expanded"
+    },
+    {
+      "file": "error-4.png",
+      "name": "error-4"
+    },
+    {
+      "file": "error-5.png",
+      "name": "error-5"
+    },
+    {
+      "file": "error-6.png",
+      "name": "error-6"
+    },
+    {
+      "file": "error-7.png",
+      "name": "error-7"
+    },
+    {
+      "file": "error-8.png",
+      "name": "error-8"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [
+    "Rift checkpoint validation failed; previous record retained Error: Incomplete Rift checkpoint\n    at Object.prepareRiftCommit (http://127.0.0.1:3027/src/managers/save-manager.ts?t=1792342961538:251:213)\n    at RiftFrameCommit.finish (http://127.0.0.1:3027/src/systems/rift-frame-commit.ts?t=1792342961538:41:34)\n    at RiftScene.commitRuntimeFrame (http://127.0.0.1:3027/src/scenes/rift-scene.ts?t=1792378752709:2191:31)\n    at RiftScene.onPostUpdate (http://127.0.0.1:3027/src/scenes/rift-scene.ts?t=1792378752709:950:15)\n    at EventEmitter2.emit (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:120:43)\n    at Systems2.step (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:112599:28)\n    at SceneManager2.update (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:110750:29)\n    at Game2.step (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:8625:32)\n    at TimeStep2.step (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:9079:26)\n    at step (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:16406:29)"
+  ],
+  "browser": "155.0.8059.80",
+  "sourcesAfter": {
+    "src/ui/dom/rift-hud.ts": "ce49f08e546cc2c72338406fb45aa0a17b03fe278255bb34000073a01d9fad4c",
+    "src/ui/dom/inventory-panel.ts": "9ff0bcc02d04c26fb998df7339e87c1129beb275a45356e1338276d4ba572c63",
+    "src/ui/dom/inventory-panel-styles.ts": "cb29e82f825b18471ff7c54e90e2db10a2cc069c27f1f6dcf2754b753b571380",
+    "src/ui/inventory-presenter.ts": "5ebe8fe9a34837bcacf1e0f7d070d5af444a433f6cda1fca9d2ee255e1854db7",
+    "src/scenes/rift-scene.ts": "a391e8002b72bb49c1c733c2688e1e262797525a31135dba8c44ecdc9966fbdb",
+    "src/ui/dom/pause-menu.ts": "c855ae8d8a86c66326328949f48e05ab6f333af546896462b8b886f3712466ea",
+    "src/systems/assimilation-system.ts": "ef779ffabba4610f63d21fd399f993d8afdad60df08e59bf48970d301e997723",
+    "src/generated/assimilation-data.ts": "7f47d7621b2e32df2b00b3cbe3b3a7dc567bd4750ac726260b2b2aee532167f9"
+  },
+  "result": "fail",
+  "finishedAt": "2026-10-19T03:03:34.077Z"
+}

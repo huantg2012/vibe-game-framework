@@ -1,0 +1,2774 @@
+{
+  "startedAt": "2026-10-19T03:05:39.931Z",
+  "revision": "6a32075440d5c00bcc3311ac998feea73681e0ea",
+  "features": [
+    "COH-F032",
+    "COH-F035",
+    "COH-F054"
+  ],
+  "scope": "One isolated Chrome context; title → new record → base → real preparation → one low-grade Rift. Controlled A/P and six CSV-derived item projections injected only into the production panel snapshot; inventory ownership/storage is untouched. Legacy is a presentation fixture only. No user storage, natural expedition/economy/balance, other worlds, Firefox/Safari or human aesthetic acceptance.",
+  "sourcesBefore": {
+    "src/ui/dom/rift-hud.ts": "ce49f08e546cc2c72338406fb45aa0a17b03fe278255bb34000073a01d9fad4c",
+    "src/ui/dom/inventory-panel.ts": "9ff0bcc02d04c26fb998df7339e87c1129beb275a45356e1338276d4ba572c63",
+    "src/ui/dom/inventory-panel-styles.ts": "cb29e82f825b18471ff7c54e90e2db10a2cc069c27f1f6dcf2754b753b571380",
+    "src/ui/inventory-presenter.ts": "5ebe8fe9a34837bcacf1e0f7d070d5af444a433f6cda1fca9d2ee255e1854db7",
+    "src/scenes/rift-scene.ts": "a391e8002b72bb49c1c733c2688e1e262797525a31135dba8c44ecdc9966fbdb",
+    "src/ui/dom/pause-menu.ts": "c855ae8d8a86c66326328949f48e05ab6f333af546896462b8b886f3712466ea",
+    "src/systems/assimilation-system.ts": "ef779ffabba4610f63d21fd399f993d8afdad60df08e59bf48970d301e997723",
+    "src/generated/assimilation-data.ts": "7f47d7621b2e32df2b00b3cbe3b3a7dc567bd4750ac726260b2b2aee532167f9"
+  },
+  "checks": [
+    {
+      "name": "isolated new record begins with A0",
+      "result": "pass"
+    },
+    {
+      "name": "prepare contains no Rift body section",
+      "result": "pass"
+    },
+    {
+      "name": "new departure is persistent-v1",
+      "result": "pass",
+      "detail": {
+        "version": 1,
+        "value": 15.003162528,
+        "peak": 15.003162528,
+        "paused": false,
+        "clockMs": 16.67999999999993,
+        "pollutionGrade": "low",
+        "chaosRateModifier": 0.79,
+        "lastEmitted": 15,
+        "lastModulated": 15.003162528,
+        "thresholdsFired": [
+          false,
+          false,
+          false
+        ],
+        "chasingEnemyIds": [],
+        "detectionCooldowns": [],
+        "tempRateDeadlineMs": 0,
+        "tempRateMult": 1,
+        "reductionDeadlineMs": 0,
+        "reductionMult": 1,
+        "assimilationMode": "persistent-v1",
+        "assimilationValue": 0,
+        "growthResistance": 0
+      }
+    },
+    {
+      "name": "HUD omits assimilation and mechanism sentences",
+      "result": "pass",
+      "detail": "操作 · 展开 / 收起\nTab\n随身\n3.0 / 16.0\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—"
+    },
+    {
+      "name": "help initially collapsed",
+      "result": "pass"
+    },
+    {
+      "name": "HUD entry named 随身",
+      "result": "pass"
+    },
+    {
+      "name": "hud-entry: new text sampled contrast >= 4.5:1",
+      "result": "pass",
+      "detail": {
+        "name": "hud-entry",
+        "image": "hud-entry-contrast-visible.png",
+        "background": "hud-entry-contrast-background.png",
+        "method": "Freeze engine frame only for paired capture; retain actual scene, HUD veils and scene-menu compositing. First capture visible text; second makes only selected text colors transparent without changing layout. Sample every pixel in tight DOM Range text rectangles. WCAG sRGB luminance contrast uses computed opaque foreground against each captured background pixel, excluding antialiasing from the foreground. Conservative rectangle minimum; scoped to these positions/frames/world only, not all possible backgrounds or full font-rendering legibility.",
+        "samples": [
+          {
+            "text": "随身",
+            "rect": {
+              "x": 1115.1961669921875,
+              "y": 64.51666259765625,
+              "width": 28.9666748046875,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(146, 158, 145)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 7.362045660297933,
+            "worstBackground": {
+              "x": 1119,
+              "y": 70,
+              "rgb": [
+                2,
+                4,
+                4
+              ]
+            },
+            "pixels": 660
+          }
+        ]
+      }
+    },
+    {
+      "name": "help click expands",
+      "result": "pass"
+    },
+    {
+      "name": "help keyboard collapses without attack",
+      "result": "pass"
+    },
+    {
+      "name": "six real CSV-derived item projections without storage writes",
+      "result": "pass",
+      "detail": [
+        {
+          "id": "QA_HUD_0",
+          "name": "凝滞的石块",
+          "description": "停滞4秒，受伤解除。",
+          "weight": 20
+        },
+        {
+          "id": "QA_HUD_1",
+          "name": "重影碎片",
+          "description": "被动。新怀疑填充减速30%。",
+          "weight": 20
+        },
+        {
+          "id": "QA_HUD_2",
+          "name": "记忆碎片",
+          "description": "被动。失去视线时保留最后位置6秒。",
+          "weight": 20
+        },
+        {
+          "id": "QA_HUD_3",
+          "name": "不落的砂砾",
+          "description": "推迟尚未释放的危险5秒。",
+          "weight": 20
+        },
+        {
+          "id": "QA_HUD_4",
+          "name": "附着的空壳",
+          "description": "受伤后抗污+20，持续8秒。",
+          "weight": 20
+        },
+        {
+          "id": "QA_HUD_5",
+          "name": "带缺口的石头",
+          "description": "越过薄墙，实体化1秒。",
+          "weight": 20
+        }
+      ]
+    },
+    {
+      "name": "click opens named 随身 body at A0",
+      "result": "pass",
+      "detail": {
+        "hidden": false,
+        "text": "身体\n同化\n0.0%\n归返冲击增幅\n+0.0%\n满污染时视距\n基础\n55.0%\n未激怒敌人感知距离\n基础\n100.0%",
+        "values": [
+          "0.0%",
+          "+0.0%",
+          "55.0%",
+          "100.0%"
+        ],
+        "labels": [
+          "同化",
+          "归返冲击增幅",
+          "满污染时视距",
+          "未激怒敌人感知距离"
+        ],
+        "baselines": [
+          "基础",
+          "基础"
+        ],
+        "facts": [
+          {
+            "x": 434.5000305175781,
+            "y": 323.5718994140625,
+            "width": 377.8833312988281,
+            "height": 27.649993896484375
+          },
+          {
+            "x": 843.9833984375,
+            "y": 323.5718994140625,
+            "width": 377.88330078125,
+            "height": 27.649993896484375
+          },
+          {
+            "x": 434.5000305175781,
+            "y": 356.4885559082031,
+            "width": 377.8833312988281,
+            "height": 27.649993896484375
+          },
+          {
+            "x": 843.9833984375,
+            "y": 356.4885559082031,
+            "width": 377.88330078125,
+            "height": 27.649993896484375
+          }
+        ],
+        "parent": true
+      }
+    },
+    {
+      "name": "all four A0 values match shared helpers",
+      "result": "pass",
+      "detail": {
+        "view": {
+          "hidden": false,
+          "text": "身体\n同化\n0.0%\n归返冲击增幅\n+0.0%\n满污染时视距\n基础\n55.0%\n未激怒敌人感知距离\n基础\n100.0%",
+          "values": [
+            "0.0%",
+            "+0.0%",
+            "55.0%",
+            "100.0%"
+          ],
+          "labels": [
+            "同化",
+            "归返冲击增幅",
+            "满污染时视距",
+            "未激怒敌人感知距离"
+          ],
+          "baselines": [
+            "基础",
+            "基础"
+          ],
+          "facts": [
+            {
+              "x": 434.5000305175781,
+              "y": 323.5718994140625,
+              "width": 377.8833312988281,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 843.9833984375,
+              "y": 323.5718994140625,
+              "width": 377.88330078125,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 434.5000305175781,
+              "y": 356.4885559082031,
+              "width": 377.8833312988281,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 843.9833984375,
+              "y": 356.4885559082031,
+              "width": 377.88330078125,
+              "height": 27.649993896484375
+            }
+          ],
+          "parent": true
+        },
+        "expected": [
+          0,
+          0,
+          55.00000000000001,
+          100
+        ]
+      }
+    },
+    {
+      "name": "body two columns two rows and independent labels/baselines",
+      "result": "pass",
+      "detail": {
+        "hidden": false,
+        "text": "身体\n同化\n0.0%\n归返冲击增幅\n+0.0%\n满污染时视距\n基础\n55.0%\n未激怒敌人感知距离\n基础\n100.0%",
+        "values": [
+          "0.0%",
+          "+0.0%",
+          "55.0%",
+          "100.0%"
+        ],
+        "labels": [
+          "同化",
+          "归返冲击增幅",
+          "满污染时视距",
+          "未激怒敌人感知距离"
+        ],
+        "baselines": [
+          "基础",
+          "基础"
+        ],
+        "facts": [
+          {
+            "x": 434.5000305175781,
+            "y": 323.5718994140625,
+            "width": 377.8833312988281,
+            "height": 27.649993896484375
+          },
+          {
+            "x": 843.9833984375,
+            "y": 323.5718994140625,
+            "width": 377.88330078125,
+            "height": 27.649993896484375
+          },
+          {
+            "x": 434.5000305175781,
+            "y": 356.4885559082031,
+            "width": 377.8833312988281,
+            "height": 27.649993896484375
+          },
+          {
+            "x": 843.9833984375,
+            "y": 356.4885559082031,
+            "width": 377.88330078125,
+            "height": 27.649993896484375
+          }
+        ],
+        "parent": true
+      }
+    },
+    {
+      "name": "reading warns world continues",
+      "result": "pass"
+    },
+    {
+      "name": "body-a0: new text sampled contrast >= 4.5:1",
+      "result": "pass",
+      "detail": {
+        "name": "body-a0",
+        "image": "body-a0-contrast-visible.png",
+        "background": "body-a0-contrast-background.png",
+        "method": "Freeze engine frame only for paired capture; retain actual scene, HUD veils and scene-menu compositing. First capture visible text; second makes only selected text colors transparent without changing layout. Sample every pixel in tight DOM Range text rectangles. WCAG sRGB luminance contrast uses computed opaque foreground against each captured background pixel, excluding antialiasing from the foreground. Conservative rectangle minimum; scoped to these positions/frames/world only, not all possible backgrounds or full font-rendering legibility.",
+        "samples": [
+          {
+            "text": "身体",
+            "rect": {
+              "x": 434.5000305175781,
+              "y": 217.25,
+              "width": 28.966644287109375,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.616574343133577,
+            "worstBackground": {
+              "x": 447,
+              "y": 219,
+              "rgb": [
+                3,
+                7,
+                6
+              ]
+            },
+            "pixels": 660
+          },
+          {
+            "text": "同化",
+            "rect": {
+              "x": 434.5000305175781,
+              "y": 247.5333251953125,
+              "width": 28.966644287109375,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.614201229739267,
+            "worstBackground": {
+              "x": 461,
+              "y": 265,
+              "rgb": [
+                3,
+                7,
+                7
+              ]
+            },
+            "pixels": 660
+          },
+          {
+            "text": "0.0%",
+            "rect": {
+              "x": 774.4468994140625,
+              "y": 248.85000610351562,
+              "width": 37.93646240234375,
+              "height": 18.433349609375
+            },
+            "foreground": "rgb(175, 179, 173)",
+            "fontSize": "12px",
+            "opacity": "1",
+            "minimumRatio": 9.221703676176107,
+            "worstBackground": {
+              "x": 777,
+              "y": 251,
+              "rgb": [
+                11,
+                12,
+                9
+              ]
+            },
+            "pixels": 780
+          },
+          {
+            "text": "归返冲击增幅",
+            "rect": {
+              "x": 843.9833984375,
+              "y": 247.5333251953125,
+              "width": 86.89996337890625,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.537944130939293,
+            "worstBackground": {
+              "x": 843,
+              "y": 259,
+              "rgb": [
+                7,
+                9,
+                8
+              ]
+            },
+            "pixels": 1936
+          },
+          {
+            "text": "+0.0%",
+            "rect": {
+              "x": 1174.4461669921875,
+              "y": 248.85000610351562,
+              "width": 47.4205322265625,
+              "height": 18.433349609375
+            },
+            "foreground": "rgb(175, 179, 173)",
+            "fontSize": "12px",
+            "opacity": "1",
+            "minimumRatio": 9.52292757335329,
+            "worstBackground": {
+              "x": 1175,
+              "y": 248,
+              "rgb": [
+                3,
+                7,
+                6
+              ]
+            },
+            "pixels": 960
+          },
+          {
+            "text": "满污染时视距",
+            "rect": {
+              "x": 434.5000305175781,
+              "y": 280.45001220703125,
+              "width": 86.89999389648438,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.558408830725805,
+            "worstBackground": {
+              "x": 469,
+              "y": 299,
+              "rgb": [
+                4,
+                9,
+                8
+              ]
+            },
+            "pixels": 1936
+          },
+          {
+            "text": "基础",
+            "rect": {
+              "x": 729.4127807617188,
+              "y": 280.45001220703125,
+              "width": 28.9666748046875,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.26404046238545,
+            "worstBackground": {
+              "x": 743,
+              "y": 300,
+              "rgb": [
+                14,
+                17,
+                16
+              ]
+            },
+            "pixels": 660
+          },
+          {
+            "text": "55.0%",
+            "rect": {
+              "x": 764.9627685546875,
+              "y": 281.7666931152344,
+              "width": 47.42059326171875,
+              "height": 18.433319091796875
+            },
+            "foreground": "rgb(175, 179, 173)",
+            "fontSize": "12px",
+            "opacity": "1",
+            "minimumRatio": 9.15074863577003,
+            "worstBackground": {
+              "x": 778,
+              "y": 281,
+              "rgb": [
+                13,
+                13,
+                10
+              ]
+            },
+            "pixels": 980
+          },
+          {
+            "text": "未激怒敌人感知距离",
+            "rect": {
+              "x": 843.9833984375,
+              "y": 280.45001220703125,
+              "width": 130.3499755859375,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.537944130939293,
+            "worstBackground": {
+              "x": 849,
+              "y": 301,
+              "rgb": [
+                7,
+                9,
+                8
+              ]
+            },
+            "pixels": 2904
+          },
+          {
+            "text": "基础",
+            "rect": {
+              "x": 1129.4119873046875,
+              "y": 280.45001220703125,
+              "width": 28.9666748046875,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.616574343133577,
+            "worstBackground": {
+              "x": 1129,
+              "y": 280,
+              "rgb": [
+                3,
+                7,
+                6
+              ]
+            },
+            "pixels": 660
+          },
+          {
+            "text": "100.0%",
+            "rect": {
+              "x": 1164.9620361328125,
+              "y": 281.7666931152344,
+              "width": 56.9046630859375,
+              "height": 18.433319091796875
+            },
+            "foreground": "rgb(175, 179, 173)",
+            "fontSize": "12px",
+            "opacity": "1",
+            "minimumRatio": 9.52292757335329,
+            "worstBackground": {
+              "x": 1164,
+              "y": 281,
+              "rgb": [
+                3,
+                7,
+                6
+              ]
+            },
+            "pixels": 1160
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tab closes without pause",
+      "result": "pass"
+    },
+    {
+      "name": "A60: four values match helpers",
+      "result": "pass",
+      "detail": {
+        "view": {
+          "hidden": false,
+          "text": "身体\n同化\n60.0%\n归返冲击增幅\n+30.0%\n满污染时视距\n基础\n76.0%\n未激怒敌人感知距离\n基础\n64.0%",
+          "values": [
+            "60.0%",
+            "+30.0%",
+            "76.0%",
+            "64.0%"
+          ],
+          "labels": [
+            "同化",
+            "归返冲击增幅",
+            "满污染时视距",
+            "未激怒敌人感知距离"
+          ],
+          "baselines": [
+            "基础",
+            "基础"
+          ],
+          "facts": [
+            {
+              "x": 434.5000305175781,
+              "y": 323.5718994140625,
+              "width": 377.8833312988281,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 843.9833984375,
+              "y": 323.5718994140625,
+              "width": 377.88330078125,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 434.5000305175781,
+              "y": 356.4885559082031,
+              "width": 377.8833312988281,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 843.9833984375,
+              "y": 356.4885559082031,
+              "width": 377.88330078125,
+              "height": 27.649993896484375
+            }
+          ],
+          "parent": true
+        },
+        "expected": [
+          60,
+          30.000000000000004,
+          76,
+          64
+        ]
+      }
+    },
+    {
+      "name": "A60: impact has explicit increase sign",
+      "result": "pass",
+      "detail": "+30.0%"
+    },
+    {
+      "name": "A100: four values match helpers",
+      "result": "pass",
+      "detail": {
+        "view": {
+          "hidden": false,
+          "text": "身体\n同化\n100.0%\n归返冲击增幅\n+50.0%\n满污染时视距\n基础\n90.0%\n未激怒敌人感知距离\n基础\n40.0%",
+          "values": [
+            "100.0%",
+            "+50.0%",
+            "90.0%",
+            "40.0%"
+          ],
+          "labels": [
+            "同化",
+            "归返冲击增幅",
+            "满污染时视距",
+            "未激怒敌人感知距离"
+          ],
+          "baselines": [
+            "基础",
+            "基础"
+          ],
+          "facts": [
+            {
+              "x": 434.5000305175781,
+              "y": 323.5718994140625,
+              "width": 377.8833312988281,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 843.9833984375,
+              "y": 323.5718994140625,
+              "width": 377.88330078125,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 434.5000305175781,
+              "y": 356.4885559082031,
+              "width": 377.8833312988281,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 843.9833984375,
+              "y": 356.4885559082031,
+              "width": 377.88330078125,
+              "height": 27.649993896484375
+            }
+          ],
+          "parent": true
+        },
+        "expected": [
+          100,
+          50,
+          90,
+          40
+        ]
+      }
+    },
+    {
+      "name": "A100: impact has explicit increase sign",
+      "result": "pass",
+      "detail": "+50.0%"
+    },
+    {
+      "name": "body-a60: new text sampled contrast >= 4.5:1",
+      "result": "pass",
+      "detail": {
+        "name": "body-a60",
+        "image": "body-a60-contrast-visible.png",
+        "background": "body-a60-contrast-background.png",
+        "method": "Freeze engine frame only for paired capture; retain actual scene, HUD veils and scene-menu compositing. First capture visible text; second makes only selected text colors transparent without changing layout. Sample every pixel in tight DOM Range text rectangles. WCAG sRGB luminance contrast uses computed opaque foreground against each captured background pixel, excluding antialiasing from the foreground. Conservative rectangle minimum; scoped to these positions/frames/world only, not all possible backgrounds or full font-rendering legibility.",
+        "samples": [
+          {
+            "text": "身体",
+            "rect": {
+              "x": 434.5000305175781,
+              "y": 217.25,
+              "width": 28.966644287109375,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.616574343133577,
+            "worstBackground": {
+              "x": 447,
+              "y": 219,
+              "rgb": [
+                3,
+                7,
+                6
+              ]
+            },
+            "pixels": 660
+          },
+          {
+            "text": "同化",
+            "rect": {
+              "x": 434.5000305175781,
+              "y": 247.5333251953125,
+              "width": 28.966644287109375,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.614201229739267,
+            "worstBackground": {
+              "x": 461,
+              "y": 251,
+              "rgb": [
+                3,
+                7,
+                7
+              ]
+            },
+            "pixels": 660
+          },
+          {
+            "text": "60.0%",
+            "rect": {
+              "x": 764.9627685546875,
+              "y": 248.85000610351562,
+              "width": 47.42059326171875,
+              "height": 18.433349609375
+            },
+            "foreground": "rgb(175, 179, 173)",
+            "fontSize": "12px",
+            "opacity": "1",
+            "minimumRatio": 9.19318287493638,
+            "worstBackground": {
+              "x": 767,
+              "y": 266,
+              "rgb": [
+                13,
+                12,
+                10
+              ]
+            },
+            "pixels": 980
+          },
+          {
+            "text": "归返冲击增幅",
+            "rect": {
+              "x": 843.9833984375,
+              "y": 247.5333251953125,
+              "width": 86.89996337890625,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.537944130939293,
+            "worstBackground": {
+              "x": 847,
+              "y": 253,
+              "rgb": [
+                7,
+                9,
+                8
+              ]
+            },
+            "pixels": 1936
+          },
+          {
+            "text": "+30.0%",
+            "rect": {
+              "x": 1164.9620361328125,
+              "y": 248.85000610351562,
+              "width": 56.9046630859375,
+              "height": 18.433349609375
+            },
+            "foreground": "rgb(175, 179, 173)",
+            "fontSize": "12px",
+            "opacity": "1",
+            "minimumRatio": 9.52292757335329,
+            "worstBackground": {
+              "x": 1167,
+              "y": 248,
+              "rgb": [
+                3,
+                7,
+                6
+              ]
+            },
+            "pixels": 1160
+          },
+          {
+            "text": "满污染时视距",
+            "rect": {
+              "x": 434.5000305175781,
+              "y": 280.45001220703125,
+              "width": 86.89999389648438,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.558408830725805,
+            "worstBackground": {
+              "x": 469,
+              "y": 299,
+              "rgb": [
+                4,
+                9,
+                8
+              ]
+            },
+            "pixels": 1936
+          },
+          {
+            "text": "基础",
+            "rect": {
+              "x": 729.4127807617188,
+              "y": 280.45001220703125,
+              "width": 28.9666748046875,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.26404046238545,
+            "worstBackground": {
+              "x": 743,
+              "y": 300,
+              "rgb": [
+                14,
+                17,
+                16
+              ]
+            },
+            "pixels": 660
+          },
+          {
+            "text": "76.0%",
+            "rect": {
+              "x": 764.9627685546875,
+              "y": 281.7666931152344,
+              "width": 47.42059326171875,
+              "height": 18.433319091796875
+            },
+            "foreground": "rgb(175, 179, 173)",
+            "fontSize": "12px",
+            "opacity": "1",
+            "minimumRatio": 9.15074863577003,
+            "worstBackground": {
+              "x": 778,
+              "y": 281,
+              "rgb": [
+                13,
+                13,
+                10
+              ]
+            },
+            "pixels": 980
+          },
+          {
+            "text": "未激怒敌人感知距离",
+            "rect": {
+              "x": 843.9833984375,
+              "y": 280.45001220703125,
+              "width": 130.3499755859375,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.537944130939293,
+            "worstBackground": {
+              "x": 844,
+              "y": 289,
+              "rgb": [
+                7,
+                9,
+                8
+              ]
+            },
+            "pixels": 2904
+          },
+          {
+            "text": "基础",
+            "rect": {
+              "x": 1138.8961181640625,
+              "y": 280.45001220703125,
+              "width": 28.9666748046875,
+              "height": 21.066680908203125
+            },
+            "foreground": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "opacity": "1",
+            "minimumRatio": 5.616574343133577,
+            "worstBackground": {
+              "x": 1139,
+              "y": 280,
+              "rgb": [
+                3,
+                7,
+                6
+              ]
+            },
+            "pixels": 660
+          },
+          {
+            "text": "64.0%",
+            "rect": {
+              "x": 1174.4461669921875,
+              "y": 281.7666931152344,
+              "width": 47.4205322265625,
+              "height": 18.433319091796875
+            },
+            "foreground": "rgb(175, 179, 173)",
+            "fontSize": "12px",
+            "opacity": "1",
+            "minimumRatio": 9.52292757335329,
+            "worstBackground": {
+              "x": 1174,
+              "y": 281,
+              "rgb": [
+                3,
+                7,
+                6
+              ]
+            },
+            "pixels": 960
+          }
+        ]
+      }
+    },
+    {
+      "name": "Esc closes inventory without opening pause",
+      "result": "pass"
+    },
+    {
+      "name": "P100 is capped at 100 under new protocol",
+      "result": "pass",
+      "detail": 100
+    },
+    {
+      "name": "inventory remains live during real full-pollution ticks",
+      "result": "pass",
+      "detail": {
+        "before": {
+          "a": 0.03533309999999995,
+          "clock": 5953.363999988082,
+          "scroll": 107,
+          "client": 205,
+          "total": 312,
+          "selection": "QA_HUD_5",
+          "attack": 0,
+          "detail": "带缺口的石头\n优良 · 已成熟 · 随身 · 负重 2\n剩余次数\n3\n\n越过薄墙，实体化1秒。\n\n品质\n优良\n类型\n主动\n余次\n3 / 4\n物件说明",
+          "values": [
+            "0.0%",
+            "+0.0%",
+            "55.0%",
+            "100.0%"
+          ]
+        },
+        "after": {
+          "a": 0.08549770000000019,
+          "clock": 10969.823999988077,
+          "p": 100,
+          "scroll": 107,
+          "selection": "QA_HUD_5",
+          "sameList": true,
+          "sameRow": true,
+          "paused": false,
+          "attack": 0,
+          "changes": [
+            {
+              "at": 19606.5,
+              "a": 0.05016579999999974,
+              "value": "0.1%"
+            },
+            {
+              "at": 22940.5,
+              "a": 0.08349760000000013,
+              "value": "0.1%"
+            }
+          ],
+          "values": [
+            "0.1%",
+            "+0.0%",
+            "55.0%",
+            "99.9%"
+          ]
+        }
+      }
+    },
+    {
+      "name": "real A tick crosses displayed 0.1 precision",
+      "result": "pass",
+      "detail": {
+        "before": {
+          "a": 0.03533309999999995,
+          "clock": 5953.363999988082,
+          "scroll": 107,
+          "client": 205,
+          "total": 312,
+          "selection": "QA_HUD_5",
+          "attack": 0,
+          "detail": "带缺口的石头\n优良 · 已成熟 · 随身 · 负重 2\n剩余次数\n3\n\n越过薄墙，实体化1秒。\n\n品质\n优良\n类型\n主动\n余次\n3 / 4\n物件说明",
+          "values": [
+            "0.0%",
+            "+0.0%",
+            "55.0%",
+            "100.0%"
+          ]
+        },
+        "after": {
+          "a": 0.08549770000000019,
+          "clock": 10969.823999988077,
+          "p": 100,
+          "scroll": 107,
+          "selection": "QA_HUD_5",
+          "sameList": true,
+          "sameRow": true,
+          "paused": false,
+          "attack": 0,
+          "changes": [
+            {
+              "at": 19606.5,
+              "a": 0.05016579999999974,
+              "value": "0.1%"
+            },
+            {
+              "at": 22940.5,
+              "a": 0.08349760000000013,
+              "value": "0.1%"
+            }
+          ],
+          "values": [
+            "0.1%",
+            "+0.0%",
+            "55.0%",
+            "99.9%"
+          ]
+        }
+      }
+    },
+    {
+      "name": "scroll and selected real item retained without node replacement",
+      "result": "pass",
+      "detail": {
+        "before": {
+          "a": 0.03533309999999995,
+          "clock": 5953.363999988082,
+          "scroll": 107,
+          "client": 205,
+          "total": 312,
+          "selection": "QA_HUD_5",
+          "attack": 0,
+          "detail": "带缺口的石头\n优良 · 已成熟 · 随身 · 负重 2\n剩余次数\n3\n\n越过薄墙，实体化1秒。\n\n品质\n优良\n类型\n主动\n余次\n3 / 4\n物件说明",
+          "values": [
+            "0.0%",
+            "+0.0%",
+            "55.0%",
+            "100.0%"
+          ]
+        },
+        "after": {
+          "a": 0.08549770000000019,
+          "clock": 10969.823999988077,
+          "p": 100,
+          "scroll": 107,
+          "selection": "QA_HUD_5",
+          "sameList": true,
+          "sameRow": true,
+          "paused": false,
+          "attack": 0,
+          "changes": [
+            {
+              "at": 19606.5,
+              "a": 0.05016579999999974,
+              "value": "0.1%"
+            },
+            {
+              "at": 22940.5,
+              "a": 0.08349760000000013,
+              "value": "0.1%"
+            }
+          ],
+          "values": [
+            "0.1%",
+            "+0.0%",
+            "55.0%",
+            "99.9%"
+          ]
+        }
+      }
+    },
+    {
+      "name": "new labels show four real facts after tick",
+      "result": "pass"
+    },
+    {
+      "name": "W closes and restores live movement without pause/attack",
+      "result": "pass",
+      "detail": {
+        "before": {
+          "paused": false,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 12086.443999988076,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.09666390000000043,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 300,
+            "y": 988
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "world": "r100-cinder-ridge",
+          "frameBlocked": false
+        },
+        "after": {
+          "paused": false,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 12319.763999988076,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.09899710000000049,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 300,
+            "y": 974.6999499999996
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "world": "r100-cinder-ridge",
+          "frameBlocked": false
+        }
+      }
+    },
+    {
+      "name": "A closes and restores live movement without pause/attack",
+      "result": "pass",
+      "detail": {
+        "before": {
+          "paused": false,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 12869.743999988075,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.10449690000000064,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 300,
+            "y": 970.5001899999996
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "world": "r100-cinder-ridge",
+          "frameBlocked": false
+        },
+        "after": {
+          "paused": false,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 13103.063999988075,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.1068301000000007,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 286.7005500000001,
+            "y": 970.5001899999996
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "world": "r100-cinder-ridge",
+          "frameBlocked": false
+        }
+      }
+    },
+    {
+      "name": "S closes and restores live movement without pause/attack",
+      "result": "pass",
+      "detail": {
+        "before": {
+          "paused": false,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 13669.713999988075,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.11249660000000086,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 282.5010300000001,
+            "y": 970.5001899999996
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "world": "r100-cinder-ridge",
+          "frameBlocked": false
+        },
+        "after": {
+          "paused": false,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 13886.383999988075,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.11466330000000093,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 282.5010300000001,
+            "y": 982.5999400000001
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "world": "r100-cinder-ridge",
+          "frameBlocked": false
+        }
+      }
+    },
+    {
+      "name": "D closes and restores live movement without pause/attack",
+      "result": "pass",
+      "detail": {
+        "before": {
+          "paused": false,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 14453.033999988074,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.12032980000000108,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 282.5010300000001,
+            "y": 986.7997000000001
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "world": "r100-cinder-ridge",
+          "frameBlocked": false
+        },
+        "after": {
+          "paused": false,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 14669.673999988074,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.12249620000000114,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 294.60033000000004,
+            "y": 986.7997000000001
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "world": "r100-cinder-ridge",
+          "frameBlocked": false
+        }
+      }
+    },
+    {
+      "name": "movement after close changes real position",
+      "result": "pass",
+      "detail": [
+        {
+          "key": "w",
+          "dx": 0,
+          "dy": -13.300050000000397
+        },
+        {
+          "key": "a",
+          "dx": -13.299449999999922,
+          "dy": 0
+        },
+        {
+          "key": "s",
+          "dx": 0,
+          "dy": 12.099750000000427
+        },
+        {
+          "key": "d",
+          "dx": 12.099299999999914,
+          "dy": 0
+        }
+      ]
+    },
+    {
+      "name": "standalone Esc still pauses",
+      "result": "pass"
+    },
+    {
+      "name": "pause refers to 随身 rather than 拾获 entry",
+      "result": "pass",
+      "detail": "记录\n当前行动已暂停。关闭或刷新后，继续这一趟。\n合上，继续本趟\n放弃本趟\n↑↓ 选中\nEnter 合上，继续本趟\nEsc 合上\n合上后 Tab 随身 · 世界继续"
+    },
+    {
+      "name": "Esc resumes standalone pause",
+      "result": "fail"
+    },
+    {
+      "name": "legacy projection preserves 150 label",
+      "result": "pass",
+      "detail": "操作 · 展开 / 收起\n完整度\n100/100\n混乱\n150\n临界\n薪柴\n0"
+    },
+    {
+      "name": "source files stable during browser QA",
+      "result": "pass"
+    },
+    {
+      "name": "no runtime page errors",
+      "result": "pass",
+      "detail": []
+    },
+    {
+      "name": "no console errors",
+      "result": "pass",
+      "detail": []
+    }
+  ],
+  "steps": [
+    {
+      "name": "isolated-production-start",
+      "startedAt": "2026-10-19T03:05:40.966Z",
+      "details": {
+        "modules": {
+          "/src/managers/audio-manager.ts": "http://127.0.0.1:3027/src/managers/audio-manager.ts",
+          "/src/managers/game-state.ts": "http://127.0.0.1:3027/src/managers/game-state.ts?t=1792342239920",
+          "/src/managers/save-manager.ts": "http://127.0.0.1:3027/src/managers/save-manager.ts?t=1792342961538",
+          "/src/systems/inventory-store.ts": "http://127.0.0.1:3027/src/systems/inventory-store.ts",
+          "/src/ui/dom/inventory-panel.ts": "http://127.0.0.1:3027/src/ui/dom/inventory-panel.ts?t=1792378752709",
+          "/src/ui/inventory-presenter.ts": "http://127.0.0.1:3027/src/ui/inventory-presenter.ts?t=1792378752709",
+          "/src/systems/assimilation-system.ts": "http://127.0.0.1:3027/src/systems/assimilation-system.ts",
+          "/src/generated/contaminant-data.ts": "http://127.0.0.1:3027/src/generated/contaminant-data.ts",
+          "/src/ui/dom/rift-hud.ts": "http://127.0.0.1:3027/src/ui/dom/rift-hud.ts?t=1792378524307"
+        },
+        "snapshot": {
+          "scenes": [
+            "PurificationScene"
+          ],
+          "assimilation": 0,
+          "savedA": 0,
+          "pending": false,
+          "run": null,
+          "items": [
+            {
+              "id": "WPN_cb33d3ea-ec99-4079-8cc0-4a1d2ac403e4",
+              "kind": "weapon",
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "rift": null,
+          "dom": "薪柴\n0\n潮汐\n第 1 潮\n涨潮\n下次归来\n核心？\n轻微？\nTab\n存续报告\n[E]\n坐下"
+        }
+      },
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:05:45.346Z"
+    },
+    {
+      "name": "one-real-new-departure",
+      "startedAt": "2026-10-19T03:05:45.346Z",
+      "details": {
+        "entryMs": 6355,
+        "preparationImage": "prepare-shared-production.png",
+        "state": {
+          "scenes": [
+            "RiftScene"
+          ],
+          "assimilation": 0,
+          "savedA": 0,
+          "pending": false,
+          "run": {
+            "id": "22e5be50-5602-4c00-8b2a-d6baf5e0ac21",
+            "status": "active",
+            "carriedOutIds": [
+              "WPN_cb33d3ea-ec99-4079-8cc0-4a1d2ac403e4"
+            ],
+            "revealedNodes": {},
+            "destroyedIds": [],
+            "catalogVersion": "contaminant-v1",
+            "lootAlgorithmVersion": 1,
+            "combatRulesVersion": 2,
+            "actionReceipts": {},
+            "passiveReceipts": [],
+            "dropPlan": {
+              "sourceRegions": {
+                "r100-contaminant-contested-1": {
+                  "sourceTag": "imprint",
+                  "hint": "多见留住形迹的残留"
+                },
+                "r100-contaminant-safe-1": {
+                  "sourceTag": "imprint",
+                  "hint": "多见留住形迹的残留"
+                },
+                "r100-kindling-contested-1": {
+                  "sourceTag": "acoustic",
+                  "hint": "多见会改变声音的残留"
+                },
+                "r100-kindling-contested-2": {
+                  "sourceTag": "acoustic",
+                  "hint": "多见会改变声音的残留"
+                },
+                "r100-kindling-deep-1": {
+                  "sourceTag": "acoustic",
+                  "hint": "多见会改变声音的残留"
+                },
+                "r100-kindling-safe-1": {
+                  "sourceTag": "imprint",
+                  "hint": "多见留住形迹的残留"
+                }
+              },
+              "version": 1,
+              "catalogVersion": "contaminant-v1",
+              "lootAlgorithmVersion": 1,
+              "runId": "22e5be50-5602-4c00-8b2a-d6baf5e0ac21",
+              "runSeed": 1329899271,
+              "tutorialNodeId": "r100-contaminant-safe-1",
+              "entries": [
+                {
+                  "nodeId": "r100-contaminant-contested-1",
+                  "tier": "contested",
+                  "sourceTag": "imprint",
+                  "contaminant": {
+                    "id": "CAT_22e5be50-5602-4c00-8b2a-d6baf5e0ac21_r100-contaminant-contested-1",
+                    "type": "catalog",
+                    "rarity": "common",
+                    "quality": "ordinary",
+                    "stage": "defense",
+                    "impactCharges": 0,
+                    "usesRemaining": 0,
+                    "catalog": {
+                      "catalogVersion": "contaminant-v1",
+                      "definitionId": "hollow_reed_joint",
+                      "appearanceId": "ceramic_seal",
+                      "offeringProfileId": "quickening",
+                      "acquiredOrdinal": 0,
+                      "identification": "unidentified"
+                    }
+                  }
+                },
+                {
+                  "nodeId": "r100-contaminant-safe-1",
+                  "tier": "safe",
+                  "sourceTag": "imprint",
+                  "contaminant": {
+                    "id": "CAT_22e5be50-5602-4c00-8b2a-d6baf5e0ac21_r100-contaminant-safe-1",
+                    "type": "catalog",
+                    "rarity": "common",
+                    "quality": "ordinary",
+                    "stage": "defense",
+                    "impactCharges": 0,
+                    "usesRemaining": 0,
+                    "catalog": {
+                      "catalogVersion": "contaminant-v1",
+                      "definitionId": "amber_beetle",
+                      "appearanceId": "salt_case",
+                      "offeringProfileId": "resist_35",
+                      "acquiredOrdinal": 0,
+                      "identification": "unidentified"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "items": [
+            {
+              "id": "WPN_cb33d3ea-ec99-4079-8cc0-4a1d2ac403e4",
+              "kind": "weapon",
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "rift": {
+            "paused": false,
+            "chaos": {
+              "version": 1,
+              "value": 15.003162528,
+              "peak": 15.003162528,
+              "paused": false,
+              "clockMs": 16.67999999999993,
+              "pollutionGrade": "low",
+              "chaosRateModifier": 0.79,
+              "lastEmitted": 15,
+              "lastModulated": 15.003162528,
+              "thresholdsFired": [
+                false,
+                false,
+                false
+              ],
+              "chasingEnemyIds": [],
+              "detectionCooldowns": [],
+              "tempRateDeadlineMs": 0,
+              "tempRateMult": 1,
+              "reductionDeadlineMs": 0,
+              "reductionMult": 1,
+              "assimilationMode": "persistent-v1",
+              "assimilationValue": 0,
+              "growthResistance": 0
+            },
+            "position": {
+              "x": 300,
+              "y": 988
+            },
+            "attackSequence": 0,
+            "attackPhase": "idle",
+            "world": "r100-cinder-ridge",
+            "frameBlocked": false
+          },
+          "dom": "操作 · 展开 / 收起\nTab\n随身\n3.0 / 16.0\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见"
+        }
+      },
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:05:52.341Z"
+    },
+    {
+      "name": "clean-hud-and-help",
+      "startedAt": "2026-10-19T03:05:52.341Z",
+      "details": {
+        "hud": "操作 · 展开 / 收起\nTab\n随身\n3.0 / 16.0\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—",
+        "clean": "hud-clean.png",
+        "help": "hud-help-expanded.png",
+        "contrastResult": {
+          "name": "hud-entry",
+          "image": "hud-entry-contrast-visible.png",
+          "background": "hud-entry-contrast-background.png",
+          "method": "Freeze engine frame only for paired capture; retain actual scene, HUD veils and scene-menu compositing. First capture visible text; second makes only selected text colors transparent without changing layout. Sample every pixel in tight DOM Range text rectangles. WCAG sRGB luminance contrast uses computed opaque foreground against each captured background pixel, excluding antialiasing from the foreground. Conservative rectangle minimum; scoped to these positions/frames/world only, not all possible backgrounds or full font-rendering legibility.",
+          "samples": [
+            {
+              "text": "随身",
+              "rect": {
+                "x": 1115.1961669921875,
+                "y": 64.51666259765625,
+                "width": 28.9666748046875,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(146, 158, 145)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 7.362045660297933,
+              "worstBackground": {
+                "x": 1119,
+                "y": 70,
+                "rgb": [
+                  2,
+                  4,
+                  4
+                ]
+              },
+              "pixels": 660
+            }
+          ]
+        }
+      },
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:05:54.091Z"
+    },
+    {
+      "name": "six-real-items-and-a0-body",
+      "startedAt": "2026-10-19T03:05:54.091Z",
+      "details": {
+        "fixtures": [
+          {
+            "id": "QA_HUD_0",
+            "name": "凝滞的石块",
+            "description": "停滞4秒，受伤解除。",
+            "weight": 20
+          },
+          {
+            "id": "QA_HUD_1",
+            "name": "重影碎片",
+            "description": "被动。新怀疑填充减速30%。",
+            "weight": 20
+          },
+          {
+            "id": "QA_HUD_2",
+            "name": "记忆碎片",
+            "description": "被动。失去视线时保留最后位置6秒。",
+            "weight": 20
+          },
+          {
+            "id": "QA_HUD_3",
+            "name": "不落的砂砾",
+            "description": "推迟尚未释放的危险5秒。",
+            "weight": 20
+          },
+          {
+            "id": "QA_HUD_4",
+            "name": "附着的空壳",
+            "description": "受伤后抗污+20，持续8秒。",
+            "weight": 20
+          },
+          {
+            "id": "QA_HUD_5",
+            "name": "带缺口的石头",
+            "description": "越过薄墙，实体化1秒。",
+            "weight": 20
+          }
+        ],
+        "view": {
+          "hidden": false,
+          "text": "身体\n同化\n0.0%\n归返冲击增幅\n+0.0%\n满污染时视距\n基础\n55.0%\n未激怒敌人感知距离\n基础\n100.0%",
+          "values": [
+            "0.0%",
+            "+0.0%",
+            "55.0%",
+            "100.0%"
+          ],
+          "labels": [
+            "同化",
+            "归返冲击增幅",
+            "满污染时视距",
+            "未激怒敌人感知距离"
+          ],
+          "baselines": [
+            "基础",
+            "基础"
+          ],
+          "facts": [
+            {
+              "x": 434.5000305175781,
+              "y": 323.5718994140625,
+              "width": 377.8833312988281,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 843.9833984375,
+              "y": 323.5718994140625,
+              "width": 377.88330078125,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 434.5000305175781,
+              "y": 356.4885559082031,
+              "width": 377.8833312988281,
+              "height": 27.649993896484375
+            },
+            {
+              "x": 843.9833984375,
+              "y": 356.4885559082031,
+              "width": 377.88330078125,
+              "height": 27.649993896484375
+            }
+          ],
+          "parent": true
+        },
+        "image": "body-a0-six-items.png",
+        "contrastResult": {
+          "name": "body-a0",
+          "image": "body-a0-contrast-visible.png",
+          "background": "body-a0-contrast-background.png",
+          "method": "Freeze engine frame only for paired capture; retain actual scene, HUD veils and scene-menu compositing. First capture visible text; second makes only selected text colors transparent without changing layout. Sample every pixel in tight DOM Range text rectangles. WCAG sRGB luminance contrast uses computed opaque foreground against each captured background pixel, excluding antialiasing from the foreground. Conservative rectangle minimum; scoped to these positions/frames/world only, not all possible backgrounds or full font-rendering legibility.",
+          "samples": [
+            {
+              "text": "身体",
+              "rect": {
+                "x": 434.5000305175781,
+                "y": 217.25,
+                "width": 28.966644287109375,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.616574343133577,
+              "worstBackground": {
+                "x": 447,
+                "y": 219,
+                "rgb": [
+                  3,
+                  7,
+                  6
+                ]
+              },
+              "pixels": 660
+            },
+            {
+              "text": "同化",
+              "rect": {
+                "x": 434.5000305175781,
+                "y": 247.5333251953125,
+                "width": 28.966644287109375,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.614201229739267,
+              "worstBackground": {
+                "x": 461,
+                "y": 265,
+                "rgb": [
+                  3,
+                  7,
+                  7
+                ]
+              },
+              "pixels": 660
+            },
+            {
+              "text": "0.0%",
+              "rect": {
+                "x": 774.4468994140625,
+                "y": 248.85000610351562,
+                "width": 37.93646240234375,
+                "height": 18.433349609375
+              },
+              "foreground": "rgb(175, 179, 173)",
+              "fontSize": "12px",
+              "opacity": "1",
+              "minimumRatio": 9.221703676176107,
+              "worstBackground": {
+                "x": 777,
+                "y": 251,
+                "rgb": [
+                  11,
+                  12,
+                  9
+                ]
+              },
+              "pixels": 780
+            },
+            {
+              "text": "归返冲击增幅",
+              "rect": {
+                "x": 843.9833984375,
+                "y": 247.5333251953125,
+                "width": 86.89996337890625,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.537944130939293,
+              "worstBackground": {
+                "x": 843,
+                "y": 259,
+                "rgb": [
+                  7,
+                  9,
+                  8
+                ]
+              },
+              "pixels": 1936
+            },
+            {
+              "text": "+0.0%",
+              "rect": {
+                "x": 1174.4461669921875,
+                "y": 248.85000610351562,
+                "width": 47.4205322265625,
+                "height": 18.433349609375
+              },
+              "foreground": "rgb(175, 179, 173)",
+              "fontSize": "12px",
+              "opacity": "1",
+              "minimumRatio": 9.52292757335329,
+              "worstBackground": {
+                "x": 1175,
+                "y": 248,
+                "rgb": [
+                  3,
+                  7,
+                  6
+                ]
+              },
+              "pixels": 960
+            },
+            {
+              "text": "满污染时视距",
+              "rect": {
+                "x": 434.5000305175781,
+                "y": 280.45001220703125,
+                "width": 86.89999389648438,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.558408830725805,
+              "worstBackground": {
+                "x": 469,
+                "y": 299,
+                "rgb": [
+                  4,
+                  9,
+                  8
+                ]
+              },
+              "pixels": 1936
+            },
+            {
+              "text": "基础",
+              "rect": {
+                "x": 729.4127807617188,
+                "y": 280.45001220703125,
+                "width": 28.9666748046875,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.26404046238545,
+              "worstBackground": {
+                "x": 743,
+                "y": 300,
+                "rgb": [
+                  14,
+                  17,
+                  16
+                ]
+              },
+              "pixels": 660
+            },
+            {
+              "text": "55.0%",
+              "rect": {
+                "x": 764.9627685546875,
+                "y": 281.7666931152344,
+                "width": 47.42059326171875,
+                "height": 18.433319091796875
+              },
+              "foreground": "rgb(175, 179, 173)",
+              "fontSize": "12px",
+              "opacity": "1",
+              "minimumRatio": 9.15074863577003,
+              "worstBackground": {
+                "x": 778,
+                "y": 281,
+                "rgb": [
+                  13,
+                  13,
+                  10
+                ]
+              },
+              "pixels": 980
+            },
+            {
+              "text": "未激怒敌人感知距离",
+              "rect": {
+                "x": 843.9833984375,
+                "y": 280.45001220703125,
+                "width": 130.3499755859375,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.537944130939293,
+              "worstBackground": {
+                "x": 849,
+                "y": 301,
+                "rgb": [
+                  7,
+                  9,
+                  8
+                ]
+              },
+              "pixels": 2904
+            },
+            {
+              "text": "基础",
+              "rect": {
+                "x": 1129.4119873046875,
+                "y": 280.45001220703125,
+                "width": 28.9666748046875,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.616574343133577,
+              "worstBackground": {
+                "x": 1129,
+                "y": 280,
+                "rgb": [
+                  3,
+                  7,
+                  6
+                ]
+              },
+              "pixels": 660
+            },
+            {
+              "text": "100.0%",
+              "rect": {
+                "x": 1164.9620361328125,
+                "y": 281.7666931152344,
+                "width": 56.9046630859375,
+                "height": 18.433319091796875
+              },
+              "foreground": "rgb(175, 179, 173)",
+              "fontSize": "12px",
+              "opacity": "1",
+              "minimumRatio": 9.52292757335329,
+              "worstBackground": {
+                "x": 1164,
+                "y": 281,
+                "rgb": [
+                  3,
+                  7,
+                  6
+                ]
+              },
+              "pixels": 1160
+            }
+          ]
+        }
+      },
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:05:55.747Z"
+    },
+    {
+      "name": "a60-a100-helper-projections",
+      "startedAt": "2026-10-19T03:05:55.748Z",
+      "details": {
+        "results": [
+          {
+            "a": 60,
+            "view": {
+              "hidden": false,
+              "text": "身体\n同化\n60.0%\n归返冲击增幅\n+30.0%\n满污染时视距\n基础\n76.0%\n未激怒敌人感知距离\n基础\n64.0%",
+              "values": [
+                "60.0%",
+                "+30.0%",
+                "76.0%",
+                "64.0%"
+              ],
+              "labels": [
+                "同化",
+                "归返冲击增幅",
+                "满污染时视距",
+                "未激怒敌人感知距离"
+              ],
+              "baselines": [
+                "基础",
+                "基础"
+              ],
+              "facts": [
+                {
+                  "x": 434.5000305175781,
+                  "y": 323.5718994140625,
+                  "width": 377.8833312988281,
+                  "height": 27.649993896484375
+                },
+                {
+                  "x": 843.9833984375,
+                  "y": 323.5718994140625,
+                  "width": 377.88330078125,
+                  "height": 27.649993896484375
+                },
+                {
+                  "x": 434.5000305175781,
+                  "y": 356.4885559082031,
+                  "width": 377.8833312988281,
+                  "height": 27.649993896484375
+                },
+                {
+                  "x": 843.9833984375,
+                  "y": 356.4885559082031,
+                  "width": 377.88330078125,
+                  "height": 27.649993896484375
+                }
+              ],
+              "parent": true
+            },
+            "image": "body-a60.png"
+          },
+          {
+            "a": 100,
+            "view": {
+              "hidden": false,
+              "text": "身体\n同化\n100.0%\n归返冲击增幅\n+50.0%\n满污染时视距\n基础\n90.0%\n未激怒敌人感知距离\n基础\n40.0%",
+              "values": [
+                "100.0%",
+                "+50.0%",
+                "90.0%",
+                "40.0%"
+              ],
+              "labels": [
+                "同化",
+                "归返冲击增幅",
+                "满污染时视距",
+                "未激怒敌人感知距离"
+              ],
+              "baselines": [
+                "基础",
+                "基础"
+              ],
+              "facts": [
+                {
+                  "x": 434.5000305175781,
+                  "y": 323.5718994140625,
+                  "width": 377.8833312988281,
+                  "height": 27.649993896484375
+                },
+                {
+                  "x": 843.9833984375,
+                  "y": 323.5718994140625,
+                  "width": 377.88330078125,
+                  "height": 27.649993896484375
+                },
+                {
+                  "x": 434.5000305175781,
+                  "y": 356.4885559082031,
+                  "width": 377.8833312988281,
+                  "height": 27.649993896484375
+                },
+                {
+                  "x": 843.9833984375,
+                  "y": 356.4885559082031,
+                  "width": 377.88330078125,
+                  "height": 27.649993896484375
+                }
+              ],
+              "parent": true
+            },
+            "image": "body-a100.png"
+          }
+        ],
+        "contrastResult": {
+          "name": "body-a60",
+          "image": "body-a60-contrast-visible.png",
+          "background": "body-a60-contrast-background.png",
+          "method": "Freeze engine frame only for paired capture; retain actual scene, HUD veils and scene-menu compositing. First capture visible text; second makes only selected text colors transparent without changing layout. Sample every pixel in tight DOM Range text rectangles. WCAG sRGB luminance contrast uses computed opaque foreground against each captured background pixel, excluding antialiasing from the foreground. Conservative rectangle minimum; scoped to these positions/frames/world only, not all possible backgrounds or full font-rendering legibility.",
+          "samples": [
+            {
+              "text": "身体",
+              "rect": {
+                "x": 434.5000305175781,
+                "y": 217.25,
+                "width": 28.966644287109375,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.616574343133577,
+              "worstBackground": {
+                "x": 447,
+                "y": 219,
+                "rgb": [
+                  3,
+                  7,
+                  6
+                ]
+              },
+              "pixels": 660
+            },
+            {
+              "text": "同化",
+              "rect": {
+                "x": 434.5000305175781,
+                "y": 247.5333251953125,
+                "width": 28.966644287109375,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.614201229739267,
+              "worstBackground": {
+                "x": 461,
+                "y": 251,
+                "rgb": [
+                  3,
+                  7,
+                  7
+                ]
+              },
+              "pixels": 660
+            },
+            {
+              "text": "60.0%",
+              "rect": {
+                "x": 764.9627685546875,
+                "y": 248.85000610351562,
+                "width": 47.42059326171875,
+                "height": 18.433349609375
+              },
+              "foreground": "rgb(175, 179, 173)",
+              "fontSize": "12px",
+              "opacity": "1",
+              "minimumRatio": 9.19318287493638,
+              "worstBackground": {
+                "x": 767,
+                "y": 266,
+                "rgb": [
+                  13,
+                  12,
+                  10
+                ]
+              },
+              "pixels": 980
+            },
+            {
+              "text": "归返冲击增幅",
+              "rect": {
+                "x": 843.9833984375,
+                "y": 247.5333251953125,
+                "width": 86.89996337890625,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.537944130939293,
+              "worstBackground": {
+                "x": 847,
+                "y": 253,
+                "rgb": [
+                  7,
+                  9,
+                  8
+                ]
+              },
+              "pixels": 1936
+            },
+            {
+              "text": "+30.0%",
+              "rect": {
+                "x": 1164.9620361328125,
+                "y": 248.85000610351562,
+                "width": 56.9046630859375,
+                "height": 18.433349609375
+              },
+              "foreground": "rgb(175, 179, 173)",
+              "fontSize": "12px",
+              "opacity": "1",
+              "minimumRatio": 9.52292757335329,
+              "worstBackground": {
+                "x": 1167,
+                "y": 248,
+                "rgb": [
+                  3,
+                  7,
+                  6
+                ]
+              },
+              "pixels": 1160
+            },
+            {
+              "text": "满污染时视距",
+              "rect": {
+                "x": 434.5000305175781,
+                "y": 280.45001220703125,
+                "width": 86.89999389648438,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.558408830725805,
+              "worstBackground": {
+                "x": 469,
+                "y": 299,
+                "rgb": [
+                  4,
+                  9,
+                  8
+                ]
+              },
+              "pixels": 1936
+            },
+            {
+              "text": "基础",
+              "rect": {
+                "x": 729.4127807617188,
+                "y": 280.45001220703125,
+                "width": 28.9666748046875,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.26404046238545,
+              "worstBackground": {
+                "x": 743,
+                "y": 300,
+                "rgb": [
+                  14,
+                  17,
+                  16
+                ]
+              },
+              "pixels": 660
+            },
+            {
+              "text": "76.0%",
+              "rect": {
+                "x": 764.9627685546875,
+                "y": 281.7666931152344,
+                "width": 47.42059326171875,
+                "height": 18.433319091796875
+              },
+              "foreground": "rgb(175, 179, 173)",
+              "fontSize": "12px",
+              "opacity": "1",
+              "minimumRatio": 9.15074863577003,
+              "worstBackground": {
+                "x": 778,
+                "y": 281,
+                "rgb": [
+                  13,
+                  13,
+                  10
+                ]
+              },
+              "pixels": 980
+            },
+            {
+              "text": "未激怒敌人感知距离",
+              "rect": {
+                "x": 843.9833984375,
+                "y": 280.45001220703125,
+                "width": 130.3499755859375,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.537944130939293,
+              "worstBackground": {
+                "x": 844,
+                "y": 289,
+                "rgb": [
+                  7,
+                  9,
+                  8
+                ]
+              },
+              "pixels": 2904
+            },
+            {
+              "text": "基础",
+              "rect": {
+                "x": 1138.8961181640625,
+                "y": 280.45001220703125,
+                "width": 28.9666748046875,
+                "height": 21.066680908203125
+              },
+              "foreground": "rgb(126, 138, 126)",
+              "fontSize": "11px",
+              "opacity": "1",
+              "minimumRatio": 5.616574343133577,
+              "worstBackground": {
+                "x": 1139,
+                "y": 280,
+                "rgb": [
+                  3,
+                  7,
+                  6
+                ]
+              },
+              "pixels": 660
+            },
+            {
+              "text": "64.0%",
+              "rect": {
+                "x": 1174.4461669921875,
+                "y": 281.7666931152344,
+                "width": 47.4205322265625,
+                "height": 18.433319091796875
+              },
+              "foreground": "rgb(175, 179, 173)",
+              "fontSize": "12px",
+              "opacity": "1",
+              "minimumRatio": 9.52292757335329,
+              "worstBackground": {
+                "x": 1174,
+                "y": 281,
+                "rgb": [
+                  3,
+                  7,
+                  6
+                ]
+              },
+              "pixels": 960
+            }
+          ]
+        }
+      },
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:05:58.566Z"
+    },
+    {
+      "name": "real-saturated-tick-preserves-list-and-scroll",
+      "startedAt": "2026-10-19T03:05:58.567Z",
+      "details": {
+        "before": {
+          "a": 0.03533309999999995,
+          "clock": 5953.363999988082,
+          "scroll": 107,
+          "client": 205,
+          "total": 312,
+          "selection": "QA_HUD_5",
+          "attack": 0,
+          "detail": "带缺口的石头\n优良 · 已成熟 · 随身 · 负重 2\n剩余次数\n3\n\n越过薄墙，实体化1秒。\n\n品质\n优良\n类型\n主动\n余次\n3 / 4\n物件说明",
+          "values": [
+            "0.0%",
+            "+0.0%",
+            "55.0%",
+            "100.0%"
+          ]
+        },
+        "after": {
+          "a": 0.08549770000000019,
+          "clock": 10969.823999988077,
+          "p": 100,
+          "scroll": 107,
+          "selection": "QA_HUD_5",
+          "sameList": true,
+          "sameRow": true,
+          "paused": false,
+          "attack": 0,
+          "changes": [
+            {
+              "at": 19606.5,
+              "a": 0.05016579999999974,
+              "value": "0.1%"
+            },
+            {
+              "at": 22940.5,
+              "a": 0.08349760000000013,
+              "value": "0.1%"
+            }
+          ],
+          "values": [
+            "0.1%",
+            "+0.0%",
+            "55.0%",
+            "99.9%"
+          ]
+        },
+        "image": "body-real-tick-retained-scroll.png"
+      },
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:06:04.875Z"
+    },
+    {
+      "name": "keyboard-click-and-movement-exit",
+      "startedAt": "2026-10-19T03:06:04.876Z",
+      "details": [
+        {
+          "key": "w",
+          "dx": 0,
+          "dy": -13.300050000000397
+        },
+        {
+          "key": "a",
+          "dx": -13.299449999999922,
+          "dy": 0
+        },
+        {
+          "key": "s",
+          "dx": 0,
+          "dy": 12.099750000000427
+        },
+        {
+          "key": "d",
+          "dx": 12.099299999999914,
+          "dy": 0
+        }
+      ],
+      "result": "completed",
+      "finishedAt": "2026-10-19T03:06:08.361Z"
+    },
+    {
+      "name": "legacy150-and-shared-catalog-component-fixtures",
+      "startedAt": "2026-10-19T03:06:08.362Z",
+      "result": "error",
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#rift-hud-burden')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"rift-hud-burden\" aria-label=\"查看随身（Tab）\" aria-keyshortcuts=\"Tab\" class=\"hud-report-entry\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    56 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at /Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:63:697\n    at async step (/Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:27:21)\n    at async file:///Users/yilungao/coh/tools/qa/capture-rift-hud-polish.mjs:63:2",
+      "snapshot": {
+        "scenes": [],
+        "assimilation": 0.12466260000000119,
+        "savedA": 0.12466260000000119,
+        "pending": false,
+        "run": {
+          "id": "22e5be50-5602-4c00-8b2a-d6baf5e0ac21",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_cb33d3ea-ec99-4079-8cc0-4a1d2ac403e4"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": [],
+          "catalogVersion": "contaminant-v1",
+          "lootAlgorithmVersion": 1,
+          "combatRulesVersion": 2,
+          "actionReceipts": {},
+          "passiveReceipts": [],
+          "dropPlan": {
+            "sourceRegions": {
+              "r100-contaminant-contested-1": {
+                "sourceTag": "imprint",
+                "hint": "多见留住形迹的残留"
+              },
+              "r100-contaminant-safe-1": {
+                "sourceTag": "imprint",
+                "hint": "多见留住形迹的残留"
+              },
+              "r100-kindling-contested-1": {
+                "sourceTag": "acoustic",
+                "hint": "多见会改变声音的残留"
+              },
+              "r100-kindling-contested-2": {
+                "sourceTag": "acoustic",
+                "hint": "多见会改变声音的残留"
+              },
+              "r100-kindling-deep-1": {
+                "sourceTag": "acoustic",
+                "hint": "多见会改变声音的残留"
+              },
+              "r100-kindling-safe-1": {
+                "sourceTag": "imprint",
+                "hint": "多见留住形迹的残留"
+              }
+            },
+            "version": 1,
+            "catalogVersion": "contaminant-v1",
+            "lootAlgorithmVersion": 1,
+            "runId": "22e5be50-5602-4c00-8b2a-d6baf5e0ac21",
+            "runSeed": 1329899271,
+            "tutorialNodeId": "r100-contaminant-safe-1",
+            "entries": [
+              {
+                "nodeId": "r100-contaminant-contested-1",
+                "tier": "contested",
+                "sourceTag": "imprint",
+                "contaminant": {
+                  "id": "CAT_22e5be50-5602-4c00-8b2a-d6baf5e0ac21_r100-contaminant-contested-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "hollow_reed_joint",
+                    "appearanceId": "ceramic_seal",
+                    "offeringProfileId": "quickening",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              },
+              {
+                "nodeId": "r100-contaminant-safe-1",
+                "tier": "safe",
+                "sourceTag": "imprint",
+                "contaminant": {
+                  "id": "CAT_22e5be50-5602-4c00-8b2a-d6baf5e0ac21_r100-contaminant-safe-1",
+                  "type": "catalog",
+                  "rarity": "common",
+                  "quality": "ordinary",
+                  "stage": "defense",
+                  "impactCharges": 0,
+                  "usesRemaining": 0,
+                  "catalog": {
+                    "catalogVersion": "contaminant-v1",
+                    "definitionId": "amber_beetle",
+                    "appearanceId": "salt_case",
+                    "offeringProfileId": "resist_35",
+                    "acquiredOrdinal": 0,
+                    "identification": "unidentified"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "WPN_cb33d3ea-ec99-4079-8cc0-4a1d2ac403e4",
+            "kind": "weapon",
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "rift": {
+          "paused": true,
+          "chaos": {
+            "version": 1,
+            "value": 100,
+            "peak": 100,
+            "paused": false,
+            "clockMs": 14886.313999988073,
+            "pollutionGrade": "low",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 100,
+            "lastModulated": 100,
+            "thresholdsFired": [
+              true,
+              true,
+              true
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 0.12466260000000119,
+            "growthResistance": 0
+          },
+          "position": {
+            "x": 298.8009300000001,
+            "y": 986.7997000000001
+          },
+          "attackSequence": 0,
+          "attackPhase": "idle",
+          "world": "r100-cinder-ridge",
+          "frameBlocked": false
+        },
+        "dom": "退路未见\n记录\n当前行动已暂停。关闭或刷新后，继续这一趟。\n合上，继续本趟\n放弃本趟\n↑↓ 选中\nEnter 合上，继续本趟\nEsc 合上\n合上后 Tab 随身 · 世界继续\n操作 · 展开 / 收起\n完整度\n100/100\n混乱\n150\n临界\n薪柴\n0"
+      },
+      "image": "error-8.png",
+      "finishedAt": "2026-10-19T03:06:38.942Z"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "prepare-shared-production.png",
+      "name": "prepare-shared-production"
+    },
+    {
+      "file": "hud-clean.png",
+      "name": "hud-clean"
+    },
+    {
+      "file": "hud-help-expanded.png",
+      "name": "hud-help-expanded"
+    },
+    {
+      "file": "body-a0-six-items.png",
+      "name": "body-a0-six-items"
+    },
+    {
+      "file": "body-a60.png",
+      "name": "body-a60"
+    },
+    {
+      "file": "body-a100.png",
+      "name": "body-a100"
+    },
+    {
+      "file": "body-real-tick-retained-scroll.png",
+      "name": "body-real-tick-retained-scroll"
+    },
+    {
+      "file": "error-8.png",
+      "name": "error-8"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "browser": "155.0.8059.80",
+  "sourcesAfter": {
+    "src/ui/dom/rift-hud.ts": "ce49f08e546cc2c72338406fb45aa0a17b03fe278255bb34000073a01d9fad4c",
+    "src/ui/dom/inventory-panel.ts": "9ff0bcc02d04c26fb998df7339e87c1129beb275a45356e1338276d4ba572c63",
+    "src/ui/dom/inventory-panel-styles.ts": "cb29e82f825b18471ff7c54e90e2db10a2cc069c27f1f6dcf2754b753b571380",
+    "src/ui/inventory-presenter.ts": "5ebe8fe9a34837bcacf1e0f7d070d5af444a433f6cda1fca9d2ee255e1854db7",
+    "src/scenes/rift-scene.ts": "a391e8002b72bb49c1c733c2688e1e262797525a31135dba8c44ecdc9966fbdb",
+    "src/ui/dom/pause-menu.ts": "c855ae8d8a86c66326328949f48e05ab6f333af546896462b8b886f3712466ea",
+    "src/systems/assimilation-system.ts": "ef779ffabba4610f63d21fd399f993d8afdad60df08e59bf48970d301e997723",
+    "src/generated/assimilation-data.ts": "7f47d7621b2e32df2b00b3cbe3b3a7dc567bd4750ac726260b2b2aee532167f9"
+  },
+  "result": "fail",
+  "finishedAt": "2026-10-19T03:06:38.944Z"
+}
