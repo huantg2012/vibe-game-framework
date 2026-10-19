@@ -385,7 +385,6 @@ export class RiftHud {
     for (const eventName of ['keydown', 'keyup', 'pointerdown'] as const) {
       controls.addEventListener(eventName, event => { if (!(event instanceof KeyboardEvent) || ['Enter', ' '].includes(event.key)) event.stopPropagation(); });
     }
-    root.appendChild(controls);
     const statusPlate = document.createElement('div');
     statusPlate.id = 'rift-hud-status';
     statusPlate.className = 'device-plate';
@@ -481,9 +480,7 @@ export class RiftHud {
     this.burdenEl.addEventListener('click', event => { event.stopPropagation(); if (!this.config.isRunEnded()) this.config.onInventory?.(); });
     for (const name of ['pointerdown', 'keydown', 'keyup'] as const) this.burdenEl.addEventListener(name, event => { if (!(event instanceof KeyboardEvent) || ['Enter', ' '].includes(event.key)) event.stopPropagation(); });
     this.burdenEl.id = 'rift-hud-burden';
-    this.burdenEl.style.cssText = 'position:absolute;right:20px;top:44px';
     this.lastBurden = "";
-    root.appendChild(this.burdenEl);
 
     this.assimilationEl = document.createElement('div');
     this.assimilationEl.id = 'rift-hud-assimilation';
@@ -495,7 +492,6 @@ export class RiftHud {
     this.assimilationValueEl.className = 'rift-assimilation-value';
     this.assimilationEl.append(assimilationLabel, this.assimilationValueEl);
     this.lastAssimilation = null;
-    root.appendChild(this.assimilationEl);
 
     this.extractPromptEl = document.createElement('div');
     this.extractPromptEl.id = 'rift-extract-prompt';
@@ -522,10 +518,13 @@ export class RiftHud {
     root.appendChild(this.overflowVeil);
     root.appendChild(this.overflowGrain);
     root.appendChild(this.overflowJump);
-    root.appendChild(statusPlate);
-    root.appendChild(chaosCluster);
-    root.appendChild(this.effectsEl);
-    root.appendChild(this.kindlingEl);
+    const statusStack = document.createElement('div');
+    statusStack.id = 'rift-hud-status-stack';
+    statusStack.append(statusPlate, chaosCluster, this.effectsEl, controls);
+    const resourceStack = document.createElement('div');
+    resourceStack.id = 'rift-hud-resource-stack';
+    resourceStack.append(this.kindlingEl, this.burdenEl, this.assimilationEl);
+    root.append(statusStack, resourceStack);
     root.appendChild(this.extractPromptEl);
 
     // --- Tool slot display (bottom-left) ---
@@ -683,7 +682,7 @@ export class RiftHud {
   private showPickupFlash(amount: number): void {
     if (!this.active) return;
     showToastInline(`+${amount}`, {
-      position: 'top:66px;right:12px;',
+      position: 'top:92px;right:24px;',
       color: KINDLING_COLOR,
       extraStyle: 'font-size:11px;padding:2px 4px;',
       durationMs: 800,

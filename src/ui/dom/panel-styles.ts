@@ -362,12 +362,13 @@ const CSS = `
 .hud-report-entry:hover,.hud-report-entry:focus-visible{color:#c0c3b0}.hud-report-entry:focus-visible{outline:1px solid #727e66;outline-offset:1px}.hud-report-entry.is-heavy .hud-entry-weight{color:#b0a689}
 .hud-report-entry[hidden],#dom-ui-root:has(.game-panel,.inventory-wrap) .hud-report-entry{visibility:hidden;pointer-events:none}
 #purif-report-entry{align-self:flex-end;margin-right:-4px}
-#rift-hud-burden{opacity:.8}
-#rift-hud-assimilation{position:absolute;right:24px;top:80px;display:flex;align-items:baseline;gap:8px;white-space:nowrap;text-shadow:0 1px 3px #000}
+#rift-hud-burden{opacity:.8;padding:2px 4px;margin-right:-4px;line-height:16px}
+#rift-hud-burden .hud-entry-weight{line-height:16px}
+#rift-hud-assimilation{display:flex;align-items:baseline;gap:8px;white-space:nowrap;text-shadow:0 1px 3px #000}
 #rift-hud-assimilation[hidden],#dom-ui-root:has(.game-panel,.inventory-wrap) #rift-hud-assimilation{display:none}
 .rift-assimilation-label{font:10px/14px var(--ui-font);color:#7e8a7e}
 .rift-assimilation-value{font:11px/16px var(--ui-mono);color:#a5b09a}
-.rift-equipment-row{display:grid;grid-template-columns:24px 25px minmax(0,1fr) max-content;gap:6px;align-items:center;min-height:28px}.rift-equipment-row img{width:24px;height:24px;image-rendering:pixelated;object-fit:contain}.rift-equipment-row .rift-equipment-name{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rift-equipment-row.is-empty{opacity:.45}.rift-equipment-key{font:9px/14px var(--ui-mono);color:#8e9e81}.rift-equipment-uses{font:10px/14px var(--ui-mono);text-align:right;color:#b1b49c}
+.rift-equipment-row{display:grid;grid-template-columns:24px 25px minmax(0,1fr) max-content;gap:6px;align-items:center;min-height:24px}.rift-equipment-row img{width:24px;height:24px;image-rendering:pixelated;object-fit:contain}.rift-equipment-row .rift-equipment-name{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rift-equipment-row.is-empty{opacity:.45}.rift-equipment-key{font:9px/14px var(--ui-mono);color:#8e9e81}.rift-equipment-uses{font:10px/14px var(--ui-mono);text-align:right;color:#b1b49c}
 #purif-hud { top:22px; right:24px; width:auto; min-width:162px; z-index:999; opacity:.68; }
 .purif-hud-inner { display:flex; flex-direction:column; gap:5px; }
 .purif-hud-kindling { display:flex; justify-content:flex-end; align-items:baseline; gap:8px; }
@@ -380,20 +381,22 @@ const CSS = `
 .purif-prompt-inner .purif-readout-slot { justify-content:center; }
 .purif-prompt-inner .purif-readout-slot + .purif-readout-slot { opacity:.6; margin-top:3px; }
 #rift-hud { position:absolute; inset:0; pointer-events:none; font:11px/16px var(--ui-font); }
-#rift-hud-status { top:24px; left:24px; width:144px; opacity:.8; }
-#rift-hud-chaos { top:66px; left:24px; width:144px; opacity:.75; }
-.rift-readout-header { display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:5px; }
+#rift-hud-status-stack { position:absolute; top:24px; left:24px; width:218px; display:flex; flex-direction:column; gap:8px; }
+#rift-hud-resource-stack { position:absolute; top:24px; right:24px; display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+#rift-hud-status { position:relative; width:144px; opacity:.8; }
+#rift-hud-chaos { position:relative; width:144px; opacity:.75; }
+.rift-readout-header { display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:3px; }
 .rift-hud-label { font-size:10px; line-height:14px; color:#71816e; }
 .rift-hud-value { font:11px/16px var(--ui-mono); color:#a5b09a; }
-.rift-hud-state { display:block; margin-top:4px; font-size:10px; line-height:14px; color:#8e9b83; }
+.rift-hud-state { display:block; margin-top:2px; font-size:10px; line-height:14px; color:#8e9b83; }
 .rift-hud-state[hidden] { display:none; }
-#rift-hud-kindling { top:24px; right:24px; display:flex; align-items:baseline; gap:8px; opacity:.7; }
+#rift-hud-kindling { position:relative; display:flex; align-items:baseline; gap:8px; opacity:.7; }
 #rift-hud-kindling .rift-hud-value { color:#b39b75; }
-#rift-hud-effects { top:116px; left:24px; max-width:190px; display:flex; flex-direction:column; gap:3px; opacity:.7; }
+#rift-hud-effects { position:relative; max-width:190px; display:flex; flex-direction:column; gap:2px; opacity:.7; }
 .device-effect { display:flex; align-items:baseline; gap:8px; }
 .device-effect-name, .device-effect-time { font-size:10px; line-height:15px; }
 #rift-hud-effects:empty { display:none; }
-#rift-hud-tools { left:24px; bottom:24px; width:180px; display:flex; flex-direction:column; gap:6px; opacity:.75; }
+#rift-hud-tools { left:24px; bottom:24px; width:180px; display:flex; flex-direction:column; gap:2px; opacity:.75; }
 .rift-tool-row { display:grid; grid-template-columns:24px minmax(0,1fr) 20px; gap:6px; font-size:11px; line-height:16px; }
 .rift-tool-key, .rift-tool-uses { font:10px/16px var(--ui-mono); color:#879a80; }
 .rift-tool-uses { text-align:right; }
@@ -408,8 +411,8 @@ const CSS = `
 .kindling-value { color:#b39b75; }
 #rift-minimap.device-plate { right:20px; bottom:20px; padding:0; border:0; outline:none; opacity:.85; z-index:999; }
 #rift-minimap canvas { display:block; width:66px; height:66px; border:0; clip-path:circle(50%); image-rendering:pixelated; }
-.rift-minimap-legend { margin-top:5px; text-align:center; color:#8a9c92; font:10px/14px var(--ui-font); letter-spacing:1px; opacity:.8; }
-#rift-hud-help { position:absolute; left:24px; top:182px; width:218px; color:#9ba696; font:11px/19px var(--ui-font); text-shadow:0 1px 3px #000; pointer-events:auto; }
+.rift-minimap-legend { margin-top:2px; text-align:center; color:#8a9c92; font:10px/14px var(--ui-font); letter-spacing:1px; opacity:.8; }
+#rift-hud-help { position:relative; width:218px; color:#9ba696; font:11px/17px var(--ui-font); text-shadow:0 1px 3px #000; pointer-events:auto; }
 #rift-hud-help summary { width:max-content; cursor:pointer; opacity:.7; list-style:none; }
 #rift-hud-help summary:focus-visible { outline:1px solid #81917a; outline-offset:3px; }
 #rift-hud-help[open] summary { opacity:.9; margin-bottom:4px; }
