@@ -10,6 +10,10 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
+## Rift视野美术样片（2026-10-19，F007，DEV）
+
+`dev/rift-vision-study.ts`通过既有内存gym载入三开放世界；`RiftDevFixture.readVisionPreview`只在DEV投影受控P/A。`VisibilitySystem`默认legacy，显式perceptual使用`vision-perception.ts`的2世界像素透射／缓慢污染场；范围及LOS几何缓存与动画绘制分开，原mask仍供角色revealBody使用。新canvas纹理按需分配、随VisibilitySystem销毁，静止污染以20Hz刷新、移动即时重建。不另建地表渲染器、不修改肩灯或生产默认；正式规则与验证范围见[视野spec](specs/system-movement-vision.md)及[三阶段任务](tasks/rift-experience-polish-2026-10-19.md)。
+
 ## 持久同化与疗愈事务（2026-10-19，DEC-221）
 
 `data/assimilation.csv` → `tools/csv-codegen/assimilation.mjs` → `generated/assimilation-data.ts` 单向提供策划参数；`systems/assimilation-system.ts` 只派生速率、视距、感知距离及疗愈值，不持有第二份状态。`GameState`拥有长期同化及疗愈周期计数，`ChaosSystem`只在新出发冻结的`persistent-v1`协议中投影/推进它；旧在途无标记则保持150混乱规则。新协议内部按满污染时刻与临时减缓到期分段积分，暂停不推进。RiftScene把共同投影交给原视野、速度与AI感知来源；不改变VOID、Host伤害和CHASE反击。

@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: design（同化共同调制接口及炉边休息边界）
+last-modified-by: design/code（F007隔离视野美术样片）
 last-modified-date: 2026-10-19
 interface-changed: true
 slice: 1
@@ -25,11 +25,20 @@ exposes:
   - VisibilitySystem.setEdgeCorruption(level)     # 混乱值钩子：teal 噪点渗入 + 边缘抖动
   - VisibilitySystem.setScreenFlicker(intensity)  # 混乱值钩子：全屏微闪
   - VisibilitySystem.isPointVisible(p) / getVisibilityAt(p) / getEffectiveRadius(angle)
+  - VisibilitySystem.setPresentation('legacy' | 'perceptual') # 显式DEV对照，默认legacy
   - VisibilitySystem.registerGlowSource(id, pos, radius) / unregisterGlowSource(id)
   - utils/grid-raycast：castRay(grid, origin, angle, maxDist) / hasLineOfSight(grid, a, b)
   - OccluderGrid 接口契约（由地图侧实现）
   - 新增事件：无（本系统对外为同步查询 API + setter，不进事件总线）
 ---
+
+## 2026-10-19 视野美术样片（DEV，未切正式默认）
+
+入口`docs/art/previews/rift-vision-study/`复用正式RiftScene、三开放世界和内存存档。`VisionConfig.presentation`省略时仍为`legacy`；`setPresentation`只换表现，不改变战术查询、记忆、Host缩视、工具视距或实体可见性。正式出击与净化点不提供此开关。
+
+`perceptual`以2世界像素的透射场替代双光盘等照线：脚边保持清晰，朝原有效射程连续降低透光，所有格必须同时满足原范围及真实LOS；未知仍完全遮蔽。局部污染场在世界坐标慢速漂移，灰暗浑浊及吞光取代青绿包边、外伸尾和全屏闪烁；只消费模拟delta，暂停冻结。肩灯、地表材质、角色受光与原mask对象保持，角色上身仍走原有revealBody避免二次压暗。
+
+样片的`RiftDevFixture.readVisionPreview`仅在DEV读取受控污染／同化投影，复用同化公式驱动光学；**不改存档、战斗与经济值**。样片隐藏战况HUD并在场景外明确显示光学参数，避免把该演示当平衡试玩。正式HUD无变化。视距恢复不清除污染场。动态样片、自动合同检查、正常实景和人审分别登记，不能因样片存在称视野已正式翻新。
 
 ## 2026-10-19 同化适应的表现接口
 

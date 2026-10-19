@@ -66,6 +66,8 @@ import type { WorldProductionRecipeV3 } from '@/generation/world-study/productio
 
 /** Development encounters still use the complete production scene lifecycle. */
 export interface RiftDevFixture {
+  /** Isolated optical study: projected P/A, not save, economy or combat values. */
+  readVisionPreview?: () => Readonly<{ pollution: number; assimilation: number; presentation: 'legacy' | 'perceptual' }>;
   /** Explicit isolated physiology QA; historical fixtures retain their rules. */
   assimilationMode?: AssimilationMode;
   /** Explicit isolated model review; normal entry never loads candidate assets. */
@@ -172,7 +174,7 @@ import { mix32 } from '@/generation/seed-fork';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem, type AssimilationMode, type ChaosModulators } from '@/systems/chaos-system';
 import { saveManager } from '@/managers/save-manager';
-import { assimilationHostilityMultiplier } from '@/systems/assimilation-system';
+import { assimilationHostilityMultiplier, getAssimilationModulators } from '@/systems/assimilation-system';
 import { gameState, type SortieModifiers } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { CombatSystem, COMBAT_FX_DEPTH, type CombatCueId, type NoiseLevel } from '@/systems/combat-system';
@@ -1049,6 +1051,14 @@ export class RiftScene extends Phaser.Scene {
 
   private onPostUpdate(_time: number, delta: number): void {
     if (this.stagedEntry?.isActive() || this.frameCommit?.isBlocked()) return;
+    const visionPreview = import.meta.env.DEV ? this.devFixture?.readVisionPreview?.() : undefined;
+    if (visionPreview) {
+      const projected = getAssimilationModulators(visionPreview.pollution, visionPreview.assimilation);
+      this.visibility.setPresentation(visionPreview.presentation);
+      this.visibility.setEdgeCorruption(projected.edgeCorruption);
+      this.visibility.setScreenFlicker(projected.screenFlicker);
+      this.chaosVisionScale = projected.radiusScale;
+    }
     if (this.nativeEntryFence?.isActive()) {
       if (!this.nativeEntryFence.needsPresentation()) return;
       // This frame paints the restored/fresh instant without an AI, physics,

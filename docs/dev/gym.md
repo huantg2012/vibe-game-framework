@@ -5,6 +5,10 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 # 开发练习场
 
+## 视野美术样片（2026-10-19，DEV）
+
+[打开动态样片](http://127.0.0.1:3027/docs/art/previews/rift-vision-study/)：三开放世界、正式材质与A角色，独立内存会话；原/新表现同站位切换、污染／同化光学投影与暂停。仅改光学参数，HUD在样片隐藏，战斗／经济值保留；不能用于平衡试玩。生产默认尚未切换。见[三阶段任务](../tasks/rift-experience-polish-2026-10-19.md)。
+
 ## 四种材质重点样本（2026-10-15，DEC-215）
 
 当前入口 `/native-construction.html?sample=cinder-ridge`，下拉可选余烬脊、晶化林床、破膜盆地、吸光釉原以及原三图回归组。中污染／20261012，保留原配色和完整主体，共享矩形拼合／断缘／宽臂算法。材质和剪影同构型；仅DEV几何，不含玩法内容或撤离。[材质总览与剪影](../qa/artifacts/native-diverse-samples-2026-10-15/browser/index.html)与[QA及残余](../qa/native-diverse-samples-2026-10-15.md)。

@@ -29,6 +29,14 @@ import type { OccluderGrid, TileMapData } from '@/types/map-types';
 import { castRay, createRayHit, hasLineOfSight, type RayHit } from '@/utils/grid-raycast';
 import { clamp, degToRad } from '@/utils/math';
 import {
+  advancePerceptionTime,
+  paintPerceptionField,
+  PERCEPTION_PIXEL_SIZE,
+  rebuildPerceptionField,
+  type PerceptionGeometryScratch,
+  type VisionPresentation,
+} from '@/systems/vision-perception';
+import {
   computeFieldBandRadii,
   computeLevelEraseAlphas,
   fillVoidNoise,
@@ -103,6 +111,8 @@ function mixRgb(a: number, b: number, t: number): number {
 }
 
 export interface VisionConfig {
+  /** DEV look-development opt-in. Omitted configurations retain the original rendering. */
+  readonly presentation?: VisionPresentation;
   readonly mode: VisionMode;
   readonly radiusForward: number;
   readonly radiusAmbient: number;
@@ -222,6 +232,32 @@ export class VisibilitySystem {
   private flicker!: Phaser.GameObjects.Rectangle;
   /** Island stencil so the warm lamp/beam cannot paint void as tan. */
   private lightClipGraphics: Phaser.GameObjects.Graphics | null = null;
+  private presentation: VisionPresentation = 'legacy';
+  private perceptionTexture: Phaser.Textures.CanvasTexture | null = null;
+  private perceptionImage: Phaser.GameObjects.Image | null = null;
+  private perceptionPixels: ImageData | null = null;
+  private perceptionField: Float32Array | null = null;
+  private perceptionGeometryScratch: PerceptionGeometryScratch | null = null;
+  private perceptionRevision = -1;
+  private perceptionWorldX = NaN;
+  private perceptionWorldY = NaN;
+  private perceptionPaintTick = -1;
+  private perceptionCorruption = -1;
+  private readonly perceptionPoint: Vector2 = { x: 0, y: 0 };
+  private readonly perceptionRangeAt = (angle: number): number => this.getEffectiveRadius(angle - this.facingCache);
+  private readonly perceptionLineOfSightAt = (x: number, y: number): boolean => {
+    this.perceptionPoint.x = x; this.perceptionPoint.y = y;
+    return hasLineOfSight(this.occluders, this.origin, this.perceptionPoint);
+  };
+  private readonly perceptionRaster = {
+    width: 0, height: 0, worldX: 0, worldY: 0, originX: 0, originY: 0,
+    clearRadius: 24, maximumRange: 0,
+    rangeAt: this.perceptionRangeAt, lineOfSightAt: this.perceptionLineOfSightAt,
+  };
+  private readonly perceptionPaint = {
+    width: 0, worldX: 0, worldY: 0, originX: 0, originY: 0,
+    clearRadius: 24, corruption: 0, elapsedMs: 0, voidColor: 0, contaminationColor: 0,
+  };
 
   private subdiv2Radii: Float32Array[] | null = null;
   private subdiv2Alphas: Float32Array | null = null;
@@ -271,6 +307,7 @@ export class VisibilitySystem {
     this.scene = scene;
     this.config = config;
     this.occluders = occluders;
+    this.presentation = config.presentation ?? 'legacy';
 
     // Reset mutable state for scene re-entry
     this.degradeLevel = 0;
@@ -352,7 +389,7 @@ export class VisibilitySystem {
   /** Call once per frame after the physics step. */
   update(origin: Vector2, facingAngle: number, deltaMs: number): void {
     this.frameIndex++;
-    this.elapsedMs += deltaMs;
+    this.elapsedMs = advancePerceptionTime(this.elapsedMs, deltaMs);
     this.origin.x = origin.x;
     this.origin.y = origin.y;
 
@@ -390,6 +427,18 @@ export class VisibilitySystem {
   }
 
   // ------------------------------------------------------------ chaos modulators
+
+  /** Display-only comparison switch: deliberately does not invalidate tactical queries. */
+  setPresentation(presentation: VisionPresentation): void {
+    if (this.presentation === presentation) return;
+    this.presentation = presentation;
+    this.perceptionRevision = -1;
+    this.perceptionPaintTick = -1;
+  }
+
+  getPresentation(): VisionPresentation {
+    return this.presentation;
+  }
 
   getRadiusScale(): number {
     return this.radiusScale;
@@ -636,6 +685,14 @@ export class VisibilitySystem {
     this.corruptionGraphics?.destroy();
     this.flicker?.destroy();
     this.mask?.destroy();
+    this.perceptionImage?.destroy();
+    this.perceptionImage = null;
+    if (this.perceptionTexture) this.scene.textures.remove(this.perceptionTexture.key);
+    this.perceptionTexture = null;
+    this.perceptionPixels = null;
+    this.perceptionField = null;
+    this.perceptionGeometryScratch = null;
+    this.perceptionRevision = -1;
     this.glowSources.clear();
     this.subdiv2Radii = null;
     this.subdiv2Alphas = null;
@@ -799,13 +856,72 @@ export class VisibilitySystem {
     this.mask.setPosition(this.maskOriginX, this.maskOriginY);
     this.flicker.setPosition(this.maskOriginX, this.maskOriginY);
 
-    this.buildPolygons(facingAngle);
-    this.drawMask();
+    if (this.presentation === 'perceptual') {
+      this.drawPerceptionMask();
+      this.corruptionGraphics.clear();
+      this.flicker.setAlpha(0);
+    } else {
+      this.buildPolygons(facingAngle);
+      this.drawMask();
+      this.drawCorruption(facingAngle);
+      this.drawFlicker();
+    }
     this.drawLamp();
     this.drawFlashlight(facingAngle);
-    this.drawCorruption(facingAngle);
     this.drawGlowSources();
-    this.drawFlicker();
+  }
+
+  /** A world-anchored alpha field replaces the two isolux pools in the DEV sample. */
+  private drawPerceptionMask(): void {
+    const pixel = PERCEPTION_PIXEL_SIZE;
+    const worldX = Math.floor(this.maskOriginX / pixel) * pixel;
+    const worldY = Math.floor(this.maskOriginY / pixel) * pixel;
+    if (!this.perceptionTexture) {
+      const width = Math.ceil(this.maskWidth / pixel) + 1;
+      const height = Math.ceil(this.maskHeight / pixel) + 1;
+      const key = `vision-perception-${perceptionTextureSerial++}`;
+      this.perceptionTexture = this.scene.textures.createCanvas(key, width, height);
+      if (!this.perceptionTexture) return;
+      this.perceptionTexture.setFilter(Phaser.Textures.FilterMode.NEAREST);
+      this.perceptionPixels = this.perceptionTexture.getContext().createImageData(width, height);
+      this.perceptionField = new Float32Array(width * height);
+      this.perceptionGeometryScratch = { cornerVisibility: new Uint8Array((width + 1) * (height + 1)) };
+      this.perceptionImage = this.scene.make.image({ key, x: 0, y: 0 }, false).setOrigin(0, 0).setScale(pixel);
+    }
+    const texture = this.perceptionTexture;
+    const pixels = this.perceptionPixels!;
+    const field = this.perceptionField!;
+    const revision = this.getQueryRevision();
+    const geometryChanged = revision !== this.perceptionRevision || worldX !== this.perceptionWorldX || worldY !== this.perceptionWorldY;
+    if (geometryChanged) {
+      const raster = this.perceptionRaster;
+      raster.width = texture.width; raster.height = texture.height;
+      raster.worldX = worldX; raster.worldY = worldY;
+      raster.originX = this.origin.x; raster.originY = this.origin.y;
+      raster.clearRadius = Math.min(24, this.config.minSolidRadius);
+      raster.maximumRange = Math.max(this.getEffectiveRadius(0), this.getEffectiveRadius(Math.PI));
+      rebuildPerceptionField(field, raster, this.perceptionGeometryScratch!);
+      this.perceptionRevision = revision;
+      this.perceptionWorldX = worldX; this.perceptionWorldY = worldY;
+    }
+    // Slow deposits need no 60Hz texture upload; movement/turns still update immediately.
+    const tick = Math.floor(this.elapsedMs / 50);
+    if (geometryChanged || this.perceptionCorruption !== this.edgeCorruption ||
+        (this.edgeCorruption > 0 && tick !== this.perceptionPaintTick)) {
+      const paint = this.perceptionPaint;
+      paint.width = texture.width; paint.worldX = worldX; paint.worldY = worldY;
+      paint.originX = this.origin.x; paint.originY = this.origin.y;
+      paint.clearRadius = Math.min(24, this.config.minSolidRadius);
+      paint.corruption = this.edgeCorruption; paint.elapsedMs = this.elapsedMs;
+      paint.voidColor = this.config.voidColor; paint.contaminationColor = GAME_CONSTANTS.VISIBILITY.CORRUPTION_COLOR;
+      paintPerceptionField(pixels.data, field, paint);
+      texture.getContext().putImageData(pixels, 0, 0);
+      texture.refresh();
+      this.perceptionPaintTick = tick;
+      this.perceptionCorruption = this.edgeCorruption;
+    }
+    this.mask.clear();
+    this.mask.draw(this.perceptionImage!, worldX - this.maskOriginX, worldY - this.maskOriginY);
   }
 
   /**
@@ -1062,6 +1178,7 @@ export class VisibilitySystem {
 // ---------------------------------------------------------------------------
 
 const NOISE_TEXTURE_KEY = 'vision-void-noise';
+let perceptionTextureSerial = 0;
 const LAMP_TEXTURE_KEY = 'vision-player-lamp';
 const FLASHLIGHT_TEXTURE_KEY = 'vision-flashlight';
 
