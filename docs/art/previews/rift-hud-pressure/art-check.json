@@ -1,106 +1,79 @@
 {
   "pass": true,
-  "scope": "Art study only; 16x20 symbols, at most 2 colors and 128 opaque pixels, palette, monotonic interior fill, three aligned numeric rows, distinct states, animation and controls. Not gameplay integration or human visual approval.",
+  "scope": "Text HUD preview only: preserved numeric colors, aligned rows, independent controls, no page errors. Not production integration or human visual approval.",
   "errors": [],
   "samples": [
-    {
-      "type": "burden",
-      "value": 0.1875,
-      "opaque": 58,
-      "partial": 0,
-      "colors": [
-        "#8a8f96",
-        "#c8cdd4"
-      ]
-    },
-    {
-      "type": "burden",
-      "value": 0.875,
-      "opaque": 105,
-      "partial": 0,
-      "colors": [
-        "#8a8f96",
-        "#e0a848"
-      ]
-    },
-    {
-      "type": "burden",
-      "value": 1,
-      "opaque": 114,
-      "partial": 0,
-      "colors": [
-        "#8a8f96",
-        "#e0a848"
-      ]
-    },
-    {
-      "type": "assimilation",
-      "value": 0,
-      "opaque": 89,
-      "partial": 0,
-      "colors": [
-        "#8a8f96"
-      ]
-    },
-    {
-      "type": "assimilation",
-      "value": 60,
-      "opaque": 89,
-      "partial": 0,
-      "colors": [
-        "#8a8f96",
-        "#1aad96"
-      ]
-    },
-    {
-      "type": "assimilation",
-      "value": 100,
-      "opaque": 89,
-      "partial": 0,
-      "colors": [
-        "#1aad96"
-      ]
-    }
-  ],
-  "motion": {
-    "stableFrames": 1,
-    "growingFrames": 2,
-    "burdenFrames": 2
-  },
-  "fill": [
-    {
-      "ratio": 0,
-      "opaque": 45
-    },
-    {
-      "ratio": 0.25,
-      "opaque": 62
-    },
-    {
-      "ratio": 0.5,
-      "opaque": 80
-    },
-    {
-      "ratio": 0.75,
-      "opaque": 97
-    },
-    {
-      "ratio": 1,
-      "opaque": 114
-    }
-  ],
-  "alignment": [
-    {
-      "right": 109,
-      "bottom": 12
-    },
-    {
-      "right": 109,
-      "bottom": 12
-    },
-    {
-      "right": 109,
-      "bottom": 12
-    }
+    [
+      {
+        "right": 109,
+        "bottom": 12,
+        "colors": [
+          "#b89040"
+        ]
+      },
+      {
+        "right": 109,
+        "bottom": 12,
+        "colors": [
+          "#8a8f96",
+          "#c8cdd4"
+        ]
+      },
+      {
+        "right": 109,
+        "bottom": 12,
+        "colors": [
+          "#c8cdd4"
+        ]
+      }
+    ],
+    [
+      {
+        "right": 109,
+        "bottom": 12,
+        "colors": [
+          "#b89040"
+        ]
+      },
+      {
+        "right": 109,
+        "bottom": 12,
+        "colors": [
+          "#8a8f96",
+          "#e0a848"
+        ]
+      },
+      {
+        "right": 109,
+        "bottom": 12,
+        "colors": [
+          "#1aad96"
+        ]
+      }
+    ],
+    [
+      {
+        "right": 109,
+        "bottom": 12,
+        "colors": [
+          "#b89040"
+        ]
+      },
+      {
+        "right": 109,
+        "bottom": 12,
+        "colors": [
+          "#8a8f96",
+          "#e0a848"
+        ]
+      },
+      {
+        "right": 109,
+        "bottom": 12,
+        "colors": [
+          "#1aad96"
+        ]
+      }
+    ]
   ]
 }
