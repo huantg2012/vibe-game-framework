@@ -1,11 +1,11 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
-last-modified-by: design（同化冲击预算、主动疗愈周期及休息边界）
+last-modified-by: director（DEC-223解除同化与冲击强度关联）
 last-modified-date: 2026-10-19
 interface-changed: true
 interfaces-with:
-  - system-assimilation-healing # 持续冲击预算附加、培养藏主动疗愈、净化器资格
+  - system-assimilation-healing # 培养藏主动疗愈、净化器资格；同化不改变冲击预算
   - system-field-inventory         # 统一物件供奉、实例归属、使用与装配
   - system-chaos-scavenge-extract   # consumes RIFT_EXITED; feeds chaosRateModifier + kindlingValueModifier
                                     # + startingChaos (Slice 7 净化器完整度写入出击初值)
@@ -40,9 +40,9 @@ exposes:
   - ChamberIntegritySelection / ChamberIntegrityLifecycle（单一读数与world/focused交接）
 ---
 
-## 2026-10-19 同化负担与培养藏疗愈
+## 2026-10-19 培养藏疗愈周期（DEC-223修正）
 
-[同化与疗愈](system-assimilation-healing.md)拥有唯一规则和数值。`ImpactSystem`在原潮汐预算分配/防御之前应用当前同化附加倍率，普通归返读实际结束A，疗愈先以治疗前A承伤再降低A；公开预告沿同一预算投影，不重抽原目标。原首次归返豁免仍只属于普通归返，`forceImpact`疗愈永不豁免。
+[同化与疗愈](system-assimilation-healing.md)拥有唯一规则和数值。`ImpactSystem`预算仅沿原潮汐、分配与防御规则，同化A不影响普通归返、死亡、放弃或疗愈的冲击强度。疗愈承受一次正常冲击后降低A；公开预告不随A变化，不重抽原目标。原首次归返豁免仍只属于普通归返，`forceImpact`疗愈永不豁免。
 
 培养藏沿既有交互新增疗愈动作，不要求成长等级，不替代刻入。`getHealingPreview`读取同化、净化器实际HP、归返/保存互斥及当前公开预告；`performHealingCycle`用独立`healing:<序号>`身份在完整世界事务中完成冲击、防御、供奉成熟、潮汐、真实成长经历、同化降低及新预告。疗愈不伪造Rift归返、不增加真实出击次数/访问历史，不发正稳定度奖励；模块归零负分与潮峰破损事实保留。拒写沿同一候选重试，不能再次执行一轮冲击。
 
@@ -226,7 +226,7 @@ interface SortieModifiers {
     - **旧档已承诺的第二轮预告**（仅 `getForecastLookahead()` 非空）：同样三节点，但时机词必须是 `再下一轮`（不得再用 `下次归来`，以免读成第二份现在）。目标名与档位名同一套。可更淡、无临界脉动，文字节点不得省略。
     - **为什么不给方向**：旧实现把 CORE 映射为"左"、STORAGE 映射为"右"，而 CORE 就在场地正中心——"左"是任选的，玩家无法据此做任何决策；同时它与边界压力主方向（规则 37/42/47）叠成两个互不相关的方向暗示。
     - 舱外结构与接缝动效没有冲击方向含义，不读取隐藏预告；不得将位置/亮度编码为未来重点。
-    - 预告在首次建立、实际归来消费（含教学免冲击）或主动疗愈完成真实周期后生成，用潮汐推进后的真实下一轮强度及当前同化投影；同轮菜单/读档/重复进入只恢复原读数，不重抽。
+    - 预告在首次建立、实际归来消费（含教学免冲击）或主动疗愈完成真实周期后生成，用潮汐推进后的真实下一轮强度；同轮菜单/读档/重复进入只恢复原读数，不重抽。
     - 档位分界按潮汐强度区间 [1.0, 3.0] 四等分：< 1.5 light / < 2.0 moderate / < 2.5 heavy / 其余 extreme。extreme 档的临界脉动（300ms）可留作第二编码，不能代替可见词「极端」。边界粒子恢复各角度均匀生成，不再做方向暗示。
 
 #### Last Light操作面合同（2026-09-30）
@@ -265,7 +265,7 @@ interface SortieModifiers {
     - **豁免伤害不省略归来报告**：实际首次归来（撤离、空手、阵亡或放弃本趟）仍显示一次「归来之后」。主读数为「装置 · 本次损伤」与独立数值 `0`，说明「首次归来，本次免受冲击；供奉积累不增加。」；三模块按实际完整度显示同值前后对照。不得伪造冲击强度、重点目标、预告命中、减伤收益或供奉积累；不播放冲击音效与震屏。
     - 报告沿用当前场景无框结果布局及 `#dom-ui-root`，潮汐/稳定度通知仍并入同一报告。结算保存成功后才发布；保存失败锁输入，重试只保存已结算快照，不重放冲击、收益或潮汐。出生、已 `baseSettled` 的重复归来及普通菜单/读档不再弹出。
     - Enter、Esc、点击「合上」共用一次关闭回调；忽略按键自动重复，清除关闭键边缘输入后交还控制，不能同时打开暂停。销毁报告清除监听及旧回调。机制与首次免伤数值不变。
-21. **基础伤害**：原潮汐预算为`BASE_IMPACT_DAMAGE × impactIntensity`；进入威胁分配前按[同化规格](system-assimilation-healing.md)应用当前同化附加倍率一次。A=0保持原预算，倍率不在供奉减伤后再追加。
+21. **基础伤害**：潮汐预算为`BASE_IMPACT_DAMAGE × impactIntensity`；同化不参与预算、分配或伤害修正。疗愈也使用该正常预算。
 22. **威胁分布**：一个模块为"重点目标"，承受 `THREAT_FOCUS_RATIO`（65%）伤害；**其余伤害在其他全部承血模块之间均分**（两模块时另一个拿 35%；三模块时另外两个各 17.5%，四舍五入后用最后一个模块吃残差，保证总和等于本次总伤害）。预告从**全部**承血模块中均匀抽 ground-truth 目标。version2在生成预告时以 `FORECAST_ACCURACY`（0.8）概率匹配播报，否则在其余模块均匀抽选，并冻结实际重点；结算不再重抽。version1未消费旧档保留原结算时抽签，已承诺目标必定兑现（规则25）。禁止再写死 `modules[0]` / `modules[1]`。
 23. **冲击演出**（在净化点场景 create 阶段，玩家输入被禁用）：
     - emit `IMPACT_STARTED { intensity }`
