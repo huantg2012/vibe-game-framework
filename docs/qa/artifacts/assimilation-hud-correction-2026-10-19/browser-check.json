@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-19T03:38:41.425Z",
+  "revision": "b2d03dea44434de086860cac5f7606a305c05269",
+  "browser": "155.0.8059.80",
+  "scope": "One fresh isolated real production departure, controlled assimilation 30% and six read-only CSV-derived item projections (no domain inventory mutation). No player storage, broad balance, other-world or historical-save migration validation.",
+  "errors": [],
+  "checks": [
+    {
+      "name": "zero assimilation remains visible",
+      "pass": true
+    },
+    {
+      "name": "scene commit refreshes secondary readout",
+      "pass": true
+    },
+    {
+      "name": "HUD has no mechanic explanation or impact claim",
+      "pass": true,
+      "detail": "操作 · 展开 / 收起\nTab\n随身\n3.0 / 16.0\n同化\n30.0%\n完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—"
+    },
+    {
+      "name": "assimilation is separate from primary bars",
+      "pass": true
+    },
+    {
+      "name": "expanded help and entry remain separate",
+      "pass": true,
+      "detail": {
+        "separate": true,
+        "assimilation": {
+          "x": 1152.0628662109375,
+          "y": 184.00521850585938,
+          "width": 80.337158203125,
+          "height": 21.066665649414062,
+          "top": 184.00521850585938,
+          "right": 1232.4000244140625,
+          "bottom": 205.07188415527344,
+          "left": 1152.0628662109375
+        },
+        "help": {
+          "x": 31.60000228881836,
+          "y": 318.30523681640625,
+          "width": 287.0333557128906,
+          "height": 155.36666870117188,
+          "top": 318.30523681640625,
+          "right": 318.633358001709,
+          "bottom": 473.6719055175781,
+          "left": 31.60000228881836
+        },
+        "entry": {
+          "x": 1074.6263427734375,
+          "y": 136.60520935058594,
+          "width": 163.0404052734375,
+          "height": 35.55000305175781,
+          "top": 136.60520935058594,
+          "right": 1237.666748046875,
+          "bottom": 172.15521240234375,
+          "left": 1074.6263427734375
+        }
+      }
+    },
+    {
+      "name": "body query hides underlying secondary HUD",
+      "pass": true
+    },
+    {
+      "name": "body exposes three facts and no impact claim",
+      "pass": true,
+      "detail": "身体\n同化\n30.0%\n满污染时视距\n基础\n65.5%\n未激怒敌人感知距离\n基础\n82.0%"
+    },
+    {
+      "name": "six item list retains three full rows and fixed actions",
+      "pass": true,
+      "detail": {
+        "listHeight": 180,
+        "rowHeight": 52.00000403094026,
+        "rows": 6,
+        "footerInside": true
+      }
+    },
+    {
+      "name": "Tab closes and restores secondary HUD",
+      "pass": true
+    },
+    {
+      "name": "no page errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "screenshots": [
+    "hud-assimilation-secondary.png",
+    "hud-help-expanded.png",
+    "body-three-facts.png"
+  ],
+  "world": "r100-ruptured-film",
+  "bodyLayout": {
+    "listHeight": 180,
+    "rowHeight": 52.00000403094026,
+    "rows": 6,
+    "footerInside": true
+  },
+  "pass": true
+}

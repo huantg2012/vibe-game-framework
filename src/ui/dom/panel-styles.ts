@@ -363,6 +363,10 @@ const CSS = `
 .hud-report-entry[hidden],#dom-ui-root:has(.game-panel,.inventory-wrap) .hud-report-entry{visibility:hidden;pointer-events:none}
 #purif-report-entry{align-self:flex-end;margin-right:-4px}
 #rift-hud-burden{opacity:.8}
+#rift-hud-assimilation{position:absolute;right:24px;top:80px;display:flex;align-items:baseline;gap:8px;white-space:nowrap;text-shadow:0 1px 3px #000}
+#rift-hud-assimilation[hidden],#dom-ui-root:has(.game-panel,.inventory-wrap) #rift-hud-assimilation{display:none}
+.rift-assimilation-label{font:10px/14px var(--ui-font);color:#7e8a7e}
+.rift-assimilation-value{font:11px/16px var(--ui-mono);color:#a5b09a}
 .rift-equipment-row{display:grid;grid-template-columns:24px 25px minmax(0,1fr) max-content;gap:6px;align-items:center;min-height:28px}.rift-equipment-row img{width:24px;height:24px;image-rendering:pixelated;object-fit:contain}.rift-equipment-row .rift-equipment-name{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rift-equipment-row.is-empty{opacity:.45}.rift-equipment-key{font:9px/14px var(--ui-mono);color:#8e9e81}.rift-equipment-uses{font:10px/14px var(--ui-mono);text-align:right;color:#b1b49c}
 #purif-hud { top:22px; right:24px; width:auto; min-width:162px; z-index:999; opacity:.68; }
 .purif-hud-inner { display:flex; flex-direction:column; gap:5px; }

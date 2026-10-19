@@ -43,7 +43,6 @@ export interface InventoryPanelItem {
 export interface InventoryEquipmentSlot { id: string; label: string; itemId?: string | null; locked?: boolean }
 export interface InventoryPhysiology {
   assimilation: number;
-  impactIncreasePercent: number;
   /** Percent of the unmodified baseline, limited to this physiology channel. */
   saturatedVisionPercent?: number;
   unprovokedPerceptionPercent?: number;
@@ -391,11 +390,11 @@ class InventoryPanel {
         this.physiology.append(element('h3', 'inventory-physiology-title', '身体'));
         const facts = element('dl', 'inventory-physiology-facts');
         this.physiologyValues = [];
-        for (const label of ['同化', '归返冲击增幅', '满污染时视距', '未激怒敌人感知距离']) {
+        for (const label of ['同化', '满污染时视距', '未激怒敌人感知距离']) {
           const fact = element('div', 'inventory-physiology-fact');
           const value = element('span', 'inventory-physiology-value');
           const reading = element('dd');
-          if (this.physiologyValues.length >= 2) reading.append(element('span', 'inventory-physiology-baseline', '基础'));
+          if (this.physiologyValues.length >= 1) reading.append(element('span', 'inventory-physiology-baseline', '基础'));
           reading.append(value); fact.append(element('dt', '', label), reading); facts.append(fact);
           this.physiologyValues.push(value);
         }
@@ -474,9 +473,9 @@ class InventoryPanel {
     const body = this.snapshot?.physiology;
     this.physiology.hidden = !body || body.saturatedVisionPercent === undefined || body.unprovokedPerceptionPercent === undefined;
     if (this.physiology.hidden || !body) return;
-    const values = [body.assimilation, body.impactIncreasePercent, body.saturatedVisionPercent!, body.unprovokedPerceptionPercent!];
+    const values = [body.assimilation, body.saturatedVisionPercent!, body.unprovokedPerceptionPercent!];
     for (let index = 0; index < values.length; index++) {
-      const text = `${index === 1 ? '+' : ''}${values[index]!.toFixed(1)}%`;
+      const text = `${values[index]!.toFixed(1)}%`;
       const node = this.physiologyValues[index]!;
       if (node.textContent !== text) node.textContent = text;
     }
@@ -492,7 +491,7 @@ class InventoryPanel {
     const physiology = this.snapshot?.physiology;
     if (physiology && physiology.assimilation > 0) {
       this.prepareContext.textContent += ` · 同化 ${physiology.assimilation.toFixed(1)}%`;
-      this.prepareContext.title = `跨趟保留；归返冲击增加 ${physiology.impactIncreasePercent}%。培养藏可疗愈。`;
+      this.prepareContext.title = '培养藏可疗愈。';
     } else this.prepareContext.removeAttribute('title');
     const title = this.panel?.querySelector('.inventory-title');
     if (title) title.textContent = this.prepareView === 'equipment' ? '配置行装' : '裂隙彼端';

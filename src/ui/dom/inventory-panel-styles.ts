@@ -14,7 +14,7 @@ const CSS = `
 .inventory-catalog{position:relative;min-height:0;flex:1;width:100%;height:100%}
 #inventory-panel.is-rift .inventory-physiology{flex:none;color:#7e8a7e}
 #inventory-panel.is-rift .inventory-physiology-title{margin:0 0 4px;font:11px/18px var(--ui-font);font-weight:400}
-#inventory-panel.is-rift .inventory-physiology-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px;margin:0}
+#inventory-panel.is-rift .inventory-physiology-facts{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;margin:0}
 #inventory-panel.is-rift .inventory-physiology-fact{display:flex;align-items:baseline;justify-content:space-between;gap:8px;min-width:0;min-height:21px}
 #inventory-panel.is-rift .inventory-physiology-fact dt{font:11px/18px var(--ui-font);white-space:nowrap}
 #inventory-panel.is-rift .inventory-physiology-fact dd{display:flex;align-items:baseline;gap:5px;margin:0;white-space:nowrap}

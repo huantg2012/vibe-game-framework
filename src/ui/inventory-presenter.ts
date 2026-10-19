@@ -1,5 +1,5 @@
 import { gameState } from '@/managers/game-state';
-import { assimilationHostilityMultiplier, assimilationImpactMultiplier, getAssimilationModulators, POLLUTION_SATURATION } from '@/systems/assimilation-system';
+import { assimilationHostilityMultiplier, getAssimilationModulators, POLLUTION_SATURATION } from '@/systems/assimilation-system';
 import { growthSystem } from '@/systems/growth-system';
 import { calculateKindlingYieldExamples } from '@/systems/kindling-yield';
 import { formatChaosRateDelta } from './side-effect-labels';
@@ -108,13 +108,11 @@ export function projectInventoryItem(item: InventoryItem, mode: InventoryPanelMo
 }
 
 function projectPhysiology(options: InventoryPresenterOptions): InventoryPanelSnapshot['physiology'] {
-  if (options.mode === 'prepare') return { assimilation: gameState.getAssimilation(),
-    impactIncreasePercent: Math.round((assimilationImpactMultiplier(gameState.getAssimilation()) - 1) * 100) };
+  if (options.mode === 'prepare') return { assimilation: gameState.getAssimilation() };
   const assimilation = options.mode === 'rift' ? options.getAssimilation?.() : null;
   if (assimilation == null) return undefined;
   return {
     assimilation,
-    impactIncreasePercent: (assimilationImpactMultiplier(assimilation) - 1) * 100,
     saturatedVisionPercent: getAssimilationModulators(POLLUTION_SATURATION, assimilation).radiusScale * 100,
     unprovokedPerceptionPercent: assimilationHostilityMultiplier(assimilation) * 100,
   };

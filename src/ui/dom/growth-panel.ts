@@ -11,7 +11,7 @@ import { growthSystem } from '@/systems/growth-system';
 import { tideSystem } from '@/systems/tide-system';
 import { purchaseGrowth, type GrowthPurchaseResult } from '@/managers/growth-purchases';
 import { getHealingPreview } from '@/managers/healing-cycle';
-import { assimilationHostilityMultiplier, assimilationImpactMultiplier, getAssimilationModulators, healingCyclesToClear } from '@/systems/assimilation-system';
+import { assimilationHostilityMultiplier, getAssimilationModulators, healingCyclesToClear } from '@/systems/assimilation-system';
 import { previewThickening } from '@/ui/growth-presentation';
 import type { GrowthUpgradeId } from '@/types/game-types';
 import { renderPanelContent } from './panel-render-state';
@@ -297,7 +297,6 @@ function renderHealing(): void {
     : preview.reason === 'pending-save' ? '记录尚未保存。请先完成保存重试。'
     : !available ? '当前无法开始疗愈。' : '可只疗愈这一轮，保留其余同化。';
   const percent = (value: number): string => `${value.toFixed(1)}%`;
-  const pressure = (value: number): string => `+${((assimilationImpactMultiplier(value) - 1) * 100).toFixed(1)}%`;
   const sight = (value: number): string => `${Math.round(getAssimilationModulators(100, value).radiusScale * 100)}%`;
   const hostility = (value: number): string => `−${Math.round((1 - assimilationHostilityMultiplier(value)) * 100)}%`;
   const tide = tideSystem.getState();
@@ -309,9 +308,8 @@ function renderHealing(): void {
       <div class="healing-cost"><div class="growth-name">承受一次冲击</div>
         <div class="stat-row"><span class="readout-label">净化器完整度</span><span>${Number(preview.purifierHp.toFixed(1))} · 至少 ${preview.requiredPurifierHp}</span></div>
         <div class="stat-row"><span class="readout-label">当前潮汐</span><span>第 ${tide.tideNumber} 潮 · ${phase}</span></div>
-        <p>按疗愈前的同化承受冲击，然后推进潮汐。供奉照常防御、积累；不会带回薪柴。</p></div>
+        <p>每轮疗愈推进一个周期，承受一次当前潮汐的冲击。供奉照常防御、积累；不会带回薪柴。</p></div>
       <div class="readout-section">疗愈之后</div>
-      <div class="stat-row"><span class="readout-label">归返冲击增幅</span><span>${pressure(before)} → ${pressure(after)}</span></div>
       <div class="stat-row"><span class="readout-label">满污染时可见半径</span><span>${sight(before)} → ${sight(after)}</span></div>
       <div class="stat-row"><span class="readout-label">未激怒敌人的感知距离</span><span>${hostility(before)} → ${hostility(after)}</span></div>
       <p class="readout-note">压回同化，也会失去一部分裂隙适应。主动攻击和接触污染仍有危险。</p>

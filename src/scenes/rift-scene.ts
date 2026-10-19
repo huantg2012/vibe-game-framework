@@ -1696,7 +1696,10 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private lastToolResistanceBonus = 0;
-  private readonly refreshInventoryPhysiology = (): void => { inventoryPanel.refreshPhysiology(); };
+  private readonly refreshInventoryPhysiology = (): void => {
+    this.hud.refreshAssimilation();
+    inventoryPanel.refreshPhysiology();
+  };
   private readonly refreshInventorySnapshot = (): void => { inventoryPanel.update(); };
   private syncHudActiveEffects(): void {
     const resistanceBonus = this.toolSystem.getPollutionResistanceBonus();
@@ -1704,7 +1707,7 @@ export class RiftScene extends Phaser.Scene {
       this.lastToolResistanceBonus = resistanceBonus;
       if (inventoryPanel.isOpen()) afterStateCommit(this.refreshInventorySnapshot);
     }
-    if (inventoryPanel.isOpen()) afterStateCommit(this.refreshInventoryPhysiology);
+    afterStateCommit(this.refreshInventoryPhysiology);
     const toolLines: ActiveEffectInfo[] = this.toolSystem.getActiveTimedEffects().map((e) => ({
       label: e.type === 'siphon' ? `抗污 +${resistanceBonus}` : e.type === 'expand' ? '身体归位' : e.type === 'abyss' ? '附近旧影 · 非实时' : getToolName(e.type),
       remainingMs: e.remainingMs,

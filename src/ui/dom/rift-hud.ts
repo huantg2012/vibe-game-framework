@@ -175,6 +175,9 @@ export class RiftHud {
   private burdenEl!: HTMLButtonElement;
   private burdenValueEl!: HTMLSpanElement;
   private lastBurden = "";
+  private assimilationEl!: HTMLDivElement;
+  private assimilationValueEl!: HTMLSpanElement;
+  private lastAssimilation: string | null = null;
   private extractPromptEl!: HTMLDivElement;
   private extractPromptVisible = false;
   private extractPromptSuppressed = false;
@@ -255,6 +258,7 @@ export class RiftHud {
     this.updateHealthBar();
     this.updateChaosBar();
     this.updateKindlingText();
+    this.refreshAssimilation();
     this.updateToolSlotText();
 
     eventBus.on(GameEvent.CHAOS_CHANGED, this.onChaosChanged);
@@ -275,6 +279,17 @@ export class RiftHud {
     this.lastBurden = next;
     this.burdenValueEl.textContent = `${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
     this.burdenEl.classList.toggle('is-heavy', weight >= capacity * .875);
+  }
+
+  /** Read persistent body state only after the scene commits it. */
+  refreshAssimilation(): void {
+    if (!this.active || !this.assimilationEl) return;
+    const assimilation = this.config.getAssimilation?.() ?? null;
+    const text = assimilation === null ? null : `${assimilation.toFixed(1)}%`;
+    if (text === this.lastAssimilation) return;
+    this.lastAssimilation = text;
+    this.assimilationEl.hidden = text === null;
+    this.assimilationValueEl.textContent = text ?? '';
   }
 
   setEquipment(slots: readonly RiftEquipmentSlot[]): void {
@@ -322,7 +337,7 @@ export class RiftHud {
     this.healthCurrent = value.health; this.healthMax = value.maxHealth;
     this.healthFrac = value.maxHealth > 0 ? value.health / value.maxHealth : 0;
     this.chaosValue = value.chaos; this.kindling = value.kindling;
-    this.updateHealthBar(); this.updateChaosBar(); this.updateKindlingText();
+    this.updateHealthBar(); this.updateChaosBar(); this.updateKindlingText(); this.refreshAssimilation();
   }
 
   reset(): void {
@@ -336,6 +351,7 @@ export class RiftHud {
     this.updateChaosBar();
     this.updateHealthBar();
     this.updateKindlingText();
+    this.refreshAssimilation();
     this.renderEffectsText();
     this.extractPromptVisible = false;
     this.extractPromptEl.style.display = 'none';
@@ -468,6 +484,18 @@ export class RiftHud {
     this.burdenEl.style.cssText = 'position:absolute;right:20px;top:44px';
     this.lastBurden = "";
     root.appendChild(this.burdenEl);
+
+    this.assimilationEl = document.createElement('div');
+    this.assimilationEl.id = 'rift-hud-assimilation';
+    this.assimilationEl.hidden = true;
+    const assimilationLabel = document.createElement('span');
+    assimilationLabel.className = 'rift-assimilation-label';
+    assimilationLabel.textContent = '同化';
+    this.assimilationValueEl = document.createElement('span');
+    this.assimilationValueEl.className = 'rift-assimilation-value';
+    this.assimilationEl.append(assimilationLabel, this.assimilationValueEl);
+    this.lastAssimilation = null;
+    root.appendChild(this.assimilationEl);
 
     this.extractPromptEl = document.createElement('div');
     this.extractPromptEl.id = 'rift-extract-prompt';
