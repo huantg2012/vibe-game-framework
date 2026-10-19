@@ -1,5 +1,5 @@
 import { gameState } from '@/managers/game-state';
-import { assimilationImpactMultiplier } from '@/systems/assimilation-system';
+import { assimilationHostilityMultiplier, assimilationImpactMultiplier, getAssimilationModulators, POLLUTION_SATURATION } from '@/systems/assimilation-system';
 import { growthSystem } from '@/systems/growth-system';
 import { calculateKindlingYieldExamples } from '@/systems/kindling-yield';
 import { formatChaosRateDelta } from './side-effect-labels';
@@ -46,6 +46,8 @@ export interface InventoryPresenterOptions {
   getPreparationActorRegion?: InventoryPanelOptions['getPreparationActorRegion'];
   isPreparationPaused?: InventoryPanelOptions['isPreparationPaused'];
   getPollutionResistanceBonus?: () => number;
+  /** null denotes the frozen legacy pollution protocol; zero is a visible state. */
+  getAssimilation?: () => number | null;
   getNearby?: () => readonly InventoryItem[];
   getDropPosition?: () => Vector2;
   canTake?: (item: InventoryItem) => boolean;
@@ -105,6 +107,19 @@ export function projectInventoryItem(item: InventoryItem, mode: InventoryPanelMo
   };
 }
 
+function projectPhysiology(options: InventoryPresenterOptions): InventoryPanelSnapshot['physiology'] {
+  if (options.mode === 'prepare') return { assimilation: gameState.getAssimilation(),
+    impactIncreasePercent: Math.round((assimilationImpactMultiplier(gameState.getAssimilation()) - 1) * 100) };
+  const assimilation = options.mode === 'rift' ? options.getAssimilation?.() : null;
+  if (assimilation == null) return undefined;
+  return {
+    assimilation,
+    impactIncreasePercent: (assimilationImpactMultiplier(assimilation) - 1) * 100,
+    saturatedVisionPercent: getAssimilationModulators(POLLUTION_SATURATION, assimilation).radiusScale * 100,
+    unprovokedPerceptionPercent: assimilationHostilityMultiplier(assimilation) * 100,
+  };
+}
+
 function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
   const eq = inventoryStore.getEquipment();
   const nearby = new Set(options.getNearby?.().map(item => item.id));
@@ -123,8 +138,7 @@ function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
   const survival = getSurvivalAttributes();
   const modifiers = gameState.getSortieModifiers();
   return {
-    physiology: options.mode === 'prepare' ? { assimilation: gameState.getAssimilation(),
-      impactIncreasePercent: Math.round((assimilationImpactMultiplier(gameState.getAssimilation()) - 1) * 100) } : undefined,
+    physiology: projectPhysiology(options),
     departureGrades: options.mode === 'prepare' ? options.getDepartureGrades?.() : undefined,
     departureConditions: options.mode === 'prepare' ? [
       { label: '混乱增速', value: formatChaosRateDelta(modifiers.chaosRateModifier) },
@@ -173,7 +187,7 @@ export function openInventory(options: InventoryPresenterOptions): void {
   // Close before subscribing so replacing one panel cannot retain its listener.
   inventoryPanel.close();
   let unsubscribe: (() => void) | undefined;
-  inventoryPanel.open({ ...options, getSnapshot: () => snapshot(options), onAction: action => {
+  inventoryPanel.open({ ...options, getSnapshot: () => snapshot(options), getPhysiology: () => projectPhysiology(options), onAction: action => {
     const result = act(action, options);
     return result.ok && options.afterMutation ? options.afterMutation().then(() => result) : result;
   },

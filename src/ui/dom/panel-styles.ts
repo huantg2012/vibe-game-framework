@@ -383,11 +383,6 @@ const CSS = `
 .rift-hud-value { font:11px/16px var(--ui-mono); color:#a5b09a; }
 .rift-hud-state { display:block; margin-top:4px; font-size:10px; line-height:14px; color:#8e9b83; }
 .rift-hud-state[hidden] { display:none; }
-.rift-hud-assimilation { margin-top:7px; display:grid; grid-template-columns:1fr auto; gap:1px 8px; font:10px/16px var(--ui-mono); color:#8e9b83; }
-.rift-hud-assimilation-caption { grid-column:1 / -1; font:10px/14px var(--ui-font); }
-.rift-hud-assimilation[hidden] { display:none; }
-#rift-hud.has-assimilation #rift-hud-effects { top:160px; }
-#rift-hud.has-assimilation #rift-hud-help { top:270px; }
 #rift-hud-kindling { top:24px; right:24px; display:flex; align-items:baseline; gap:8px; opacity:.7; }
 #rift-hud-kindling .rift-hud-value { color:#b39b75; }
 #rift-hud-effects { top:116px; left:24px; max-width:190px; display:flex; flex-direction:column; gap:3px; opacity:.7; }

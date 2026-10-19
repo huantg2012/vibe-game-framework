@@ -41,8 +41,15 @@ export interface InventoryPanelItem {
   maxDurability?: number;
 }
 export interface InventoryEquipmentSlot { id: string; label: string; itemId?: string | null; locked?: boolean }
+export interface InventoryPhysiology {
+  assimilation: number;
+  impactIncreasePercent: number;
+  /** Percent of the unmodified baseline, limited to this physiology channel. */
+  saturatedVisionPercent?: number;
+  unprovokedPerceptionPercent?: number;
+}
 export interface InventoryPanelSnapshot {
-  physiology?: { assimilation: number; impactIncreasePercent: number };
+  physiology?: InventoryPhysiology;
   departureGrades?: {
     selected: string;
     options: readonly { id: string; label: string; risk: string; preparation: string; reward: string }[];
@@ -71,6 +78,8 @@ export interface InventoryPanelActionResult { ok: boolean; message?: string }
 export interface InventoryPanelOptions {
   mode: InventoryPanelMode;
   getSnapshot: () => InventoryPanelSnapshot;
+  /** Lightweight committed-state read, without rebuilding the inventory snapshot. */
+  getPhysiology?: () => InventoryPhysiology | undefined;
   onAction: (action: InventoryPanelAction) => void | InventoryPanelActionResult | Promise<void | InventoryPanelActionResult>;
   onClose: () => void;
   onDepart?: () => void;
@@ -132,6 +141,8 @@ class InventoryPanel {
   private detailActions!: HTMLElement;
   private detailHint!: HTMLElement;
   private weight!: HTMLElement;
+  private physiology: HTMLElement | null = null;
+  private physiologyValues: HTMLSpanElement[] = [];
   private message!: HTMLElement;
   private primary!: HTMLButtonElement;
   private exchangeInspect!: HTMLElement;
@@ -265,6 +276,7 @@ class InventoryPanel {
     document.removeEventListener('visibilitychange', this.cancelDiscardHold);
     window.removeEventListener('blur', this.cancelDiscardHold);
     this.panel.remove(); this.backdrop?.remove(); this.backdrop = null; this.panel = null; this.options = null; this.snapshot = null; this.lists = {};
+    this.physiology = null; this.physiologyValues = [];
     this.picks.clear(); this.takes.clear(); this.busy = false;
     if (this.previousFocus?.isConnected) this.previousFocus.focus({ preventScroll: true });
     this.previousFocus = null;
@@ -289,6 +301,13 @@ class InventoryPanel {
     this.render();
   }
 
+  /** Called only after the scene commits; leaves list nodes, focus and scroll intact. */
+  refreshPhysiology(): void {
+    if (!this.panel || this.options?.mode !== 'rift' || !this.snapshot) return;
+    if (this.options.getPhysiology) this.snapshot.physiology = this.options.getPhysiology();
+    this.renderPhysiology();
+  }
+
   private get exchange(): boolean { return this.options?.mode === 'rift' && !!this.snapshot?.items.some(item => item.location === 'ground'); }
   private get items(): readonly InventoryPanelItem[] { return this.snapshot?.items ?? []; }
   private item(id: string | null): InventoryPanelItem | undefined { return this.items.find(item => item.id === id) ?? this.snapshot?.discoveries?.find(item => item.id === id); }
@@ -298,15 +317,15 @@ class InventoryPanel {
   private create(): void {
     const embedded = this.options!.mode === 'catalog';
     const panel = element('div', `inventory-wrap ${embedded ? 'inventory-catalog' : 'game-panel crt-stack scene-menu'} is-${this.options!.mode}`); panel.id = 'inventory-panel'; panel.tabIndex = -1;
-    panel.setAttribute('role', embedded ? 'region' : 'dialog'); if (!embedded) panel.setAttribute('aria-modal', 'true'); panel.setAttribute('aria-label', this.options!.mode === 'prepare' ? '备行' : embedded ? '物件' : '本趟拾获');
+    panel.setAttribute('role', embedded ? 'region' : 'dialog'); if (!embedded) panel.setAttribute('aria-modal', 'true'); panel.setAttribute('aria-label', this.options!.mode === 'prepare' ? '备行' : embedded ? '物件' : '随身');
     const header = element('header', 'inventory-header');
-    header.append(element('h2', 'inventory-title', this.options!.mode === 'prepare' ? '裂隙彼端' : '本趟拾获'));
+    header.append(element('h2', 'inventory-title', this.options!.mode === 'prepare' ? '裂隙彼端' : '随身'));
     header.hidden = embedded;
-    this.prepareContext = element('span', 'inventory-context', this.options!.mode === 'rift' ? '只收好这次带回的物件' : '');
+    this.prepareContext = element('span', 'inventory-context');
     header.append(this.prepareContext);
     this.equipment = element('div', 'inventory-equipment');
     this.weight = element('div', 'inventory-weight'); header.append(this.weight);
-    const close = button('inventory-close', this.options!.mode === 'prepare' ? '离开备行' : 'Esc 收起', () => this.close()); close.setAttribute('aria-label', this.options!.mode === 'prepare' ? '离开备行' : '合上拾获'); header.append(close);
+    const close = button('inventory-close', this.options!.mode === 'prepare' ? '离开备行' : 'Esc 收起', () => this.close()); close.setAttribute('aria-label', this.options!.mode === 'prepare' ? '离开备行' : '合上随身'); header.append(close);
     this.equipment.setAttribute('aria-label', '本趟装备'); this.equipment.hidden = this.options!.mode !== 'prepare';
     const filters = element('nav', 'inventory-filters'); filters.setAttribute('aria-label', '物件筛选');
     for (const [value, label] of [['all', '全部'], ['weapon', '武器'], ['contaminant', '污染物']] as const) {
@@ -363,7 +382,27 @@ class InventoryPanel {
       this.prepareViewport.append(this.preparePollution);
       panel.append(header, this.prepareViewport, bottom);
       panel.dataset.prepareView = 'pollution';
-    } else panel.append(header, this.equipment, this.gradePanel, filters, this.exchangeInspect, body, bottom);
+    } else {
+      panel.append(header, this.equipment, this.gradePanel);
+      if (this.options!.mode === 'rift') {
+        this.physiology = element('section', 'inventory-physiology');
+        this.physiology.setAttribute('aria-label', '身体');
+        this.physiology.hidden = true;
+        this.physiology.append(element('h3', 'inventory-physiology-title', '身体'));
+        const facts = element('dl', 'inventory-physiology-facts');
+        this.physiologyValues = [];
+        for (const label of ['同化', '归返冲击增幅', '满污染时视距', '未激怒敌人感知距离']) {
+          const fact = element('div', 'inventory-physiology-fact');
+          const value = element('span', 'inventory-physiology-value');
+          const reading = element('dd');
+          if (this.physiologyValues.length >= 2) reading.append(element('span', 'inventory-physiology-baseline', '基础'));
+          reading.append(value); fact.append(element('dt', '', label), reading); facts.append(fact);
+          this.physiologyValues.push(value);
+        }
+        this.physiology.append(facts); panel.append(this.physiology);
+      }
+      panel.append(filters, this.exchangeInspect, body, bottom);
+    }
     panel.addEventListener('pointerdown', event => event.stopPropagation());
     panel.addEventListener('click', event => event.stopPropagation());
     panel.addEventListener('wheel', event => event.stopPropagation(), { passive: true });
@@ -409,6 +448,7 @@ class InventoryPanel {
 
   private render(): void {
     if (!this.panel || !this.snapshot) return;
+    this.renderPhysiology();
     this.panel.classList.toggle('is-exchange', this.exchange);
     this.lists.nearby!.column.hidden = !this.exchange;
     this.lists.nearby!.heading.textContent = '附近';
@@ -427,6 +467,19 @@ class InventoryPanel {
     for (const [lane, scroll] of this.pendingScroll) { this.lists[lane]!.list.scrollTop = scroll; this.renderPosition(lane); }
     this.pendingScroll.clear();
     this.renderSelection(); this.renderDetail(); this.renderFooter();
+  }
+
+  private renderPhysiology(): void {
+    if (!this.physiology) return;
+    const body = this.snapshot?.physiology;
+    this.physiology.hidden = !body || body.saturatedVisionPercent === undefined || body.unprovokedPerceptionPercent === undefined;
+    if (this.physiology.hidden || !body) return;
+    const values = [body.assimilation, body.impactIncreasePercent, body.saturatedVisionPercent!, body.unprovokedPerceptionPercent!];
+    for (let index = 0; index < values.length; index++) {
+      const text = `${index === 1 ? '+' : ''}${values[index]!.toFixed(1)}%`;
+      const node = this.physiologyValues[index]!;
+      if (node.textContent !== text) node.textContent = text;
+    }
   }
 
   private renderDepartureGrades(): void {

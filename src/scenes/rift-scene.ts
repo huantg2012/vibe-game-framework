@@ -1696,12 +1696,15 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private lastToolResistanceBonus = 0;
+  private readonly refreshInventoryPhysiology = (): void => { inventoryPanel.refreshPhysiology(); };
+  private readonly refreshInventorySnapshot = (): void => { inventoryPanel.update(); };
   private syncHudActiveEffects(): void {
     const resistanceBonus = this.toolSystem.getPollutionResistanceBonus();
     if (resistanceBonus !== this.lastToolResistanceBonus) {
       this.lastToolResistanceBonus = resistanceBonus;
-      if (inventoryPanel.isOpen()) inventoryPanel.update();
+      if (inventoryPanel.isOpen()) afterStateCommit(this.refreshInventorySnapshot);
     }
+    if (inventoryPanel.isOpen()) afterStateCommit(this.refreshInventoryPhysiology);
     const toolLines: ActiveEffectInfo[] = this.toolSystem.getActiveTimedEffects().map((e) => ({
       label: e.type === 'siphon' ? `抗污 +${resistanceBonus}` : e.type === 'expand' ? '身体归位' : e.type === 'abyss' ? '附近旧影 · 非实时' : getToolName(e.type),
       remainingMs: e.remainingMs,
@@ -2023,7 +2026,8 @@ export class RiftScene extends Phaser.Scene {
     this.extractKey?.reset();
     for (const key of this.toolKeys) key.reset();
     this.player.setInputEnabled(false);
-    openInventory({ mode: 'rift', getPollutionResistanceBonus: () => this.toolSystem.getPollutionResistanceBonus(), onClose: () => {
+    openInventory({ mode: 'rift', getPollutionResistanceBonus: () => this.toolSystem.getPollutionResistanceBonus(),
+      getAssimilation: () => this.chaos.isAssimilationEnabled() ? gameState.getAssimilation() : null, onClose: () => {
       this.inventoryClosedAt = this.time.now;
       this.syncPlayerInput();
     }, getNearby: () => this.fieldInventory.getNearby(),

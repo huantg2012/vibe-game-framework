@@ -182,7 +182,7 @@ function paint(): void {
     warning +
     `<div class="pause-menu-list">${rows}</div>` +
     buildKeyHintBar() +
-    (mode === 'root' ? `<div class="readout-note">合上后 <span class="key">Tab</span> ${host?.scene.key === 'PurificationScene' ? '存续报告 · 物件' : '本趟拾获 · 世界继续'}</div>` : '');
+    (mode === 'root' ? `<div class="readout-note">合上后 <span class="key">Tab</span> ${host?.scene.key === 'PurificationScene' ? '存续报告 · 物件' : '随身 · 世界继续'}</div>` : '');
 
   panel.querySelectorAll<HTMLElement>('.pause-menu-row').forEach((row) => {
     row.addEventListener('pointermove', () => {

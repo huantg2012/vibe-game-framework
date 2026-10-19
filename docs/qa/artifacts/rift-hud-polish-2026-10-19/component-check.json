@@ -1,0 +1,98 @@
+{
+  "recordedDate": "2026-10-19",
+  "scope": "Production RiftHud, InventoryPresenter and InventoryPanel components in an isolated 960×640 blank browser document; not a production scene or aesthetic acceptance.",
+  "method": {
+    "executedScript": "/tmp/coh-hud-refinement-check.mjs",
+    "persistedScript": "tools/qa/check-rift-hud-polish.mjs",
+    "browser": "Headless installed Google Chrome through Playwright; fresh isolated context",
+    "server": "Task-owned Vite at http://127.0.0.1:3079; stopped after the check",
+    "fixtures": "Direct production imports; supplied A values and a 30-item panel snapshot; real keyboard Enter/Tab and pointer click; commitEffects begin/flush/discard",
+    "helpTiming": "One RiftHud.update(13000) call; no 13-second wall-clock wait",
+    "receiptType": "Manual concise record of observed tool results, not captured stdout",
+    "persistenceValidation": "Persistent copy only changes launch configuration and adds an explicit missing-import diagnostic; node --check and JSON parsing are run after saving, with no browser rerun during this follow-up"
+  },
+  "results": {
+    "finalExitCode": 0,
+    "bodyValues": [
+      {
+        "assimilation": 0,
+        "display": [
+          "0.0%",
+          "+0.0%",
+          "55.0%",
+          "100.0%"
+        ]
+      },
+      {
+        "assimilation": 30,
+        "display": [
+          "30.0%",
+          "+15.0%",
+          "65.5%",
+          "82.0%"
+        ]
+      },
+      {
+        "assimilation": 60,
+        "display": [
+          "60.0%",
+          "+30.0%",
+          "76.0%",
+          "64.0%"
+        ]
+      },
+      {
+        "assimilation": 100,
+        "display": [
+          "100.0%",
+          "+50.0%",
+          "90.0%",
+          "40.0%"
+        ]
+      }
+    ],
+    "bodyValuesOrder": [
+      "同化",
+      "归返冲击增幅",
+      "满污染时视距（基础）",
+      "未激怒敌人感知距离（基础）"
+    ],
+    "title": "随身",
+    "worldContinuesVisible": true,
+    "legacyBodyHidden": true,
+    "bodyBounds": {
+      "x": 330,
+      "y": 164,
+      "width": 598,
+      "height": 68
+    },
+    "fourFactWidthsFit": true,
+    "listNodeAndFocusRetained": true,
+    "retainedScrollTop": 180,
+    "commitDeferredUntilFlush": true,
+    "discardedCommitNotDisplayed": true,
+    "tabClosesPanel": true,
+    "helpDefaultsClosed": true,
+    "helpKeyboardEnterAndPointerToggle": true,
+    "helpRemainsOpenAfterUpdate13000": true,
+    "hudAssimilationRowAbsent": true,
+    "saturatedPollutionLabel": "临界",
+    "legacyHudStillDisplaysChaos150": true,
+    "pageErrors": []
+  },
+  "fixtureFailure": {
+    "when": "First rerun after adding the impact + prefix; the initial pre-prefix component run had passed",
+    "exitCode": 1,
+    "observedError": "page.evaluate: TypeError: Cannot read properties of undefined (reading 'focus')",
+    "cause": "Vite HMR made presenter import inventory-panel with a ?t suffix while the fixture imported the bare URL; two module singletons left the fixture querying the other panel.",
+    "correction": "The fixture fetches transformed presenter source and imports its exact inventory-panel URL.",
+    "recheck": "The corrected fixture passed with exit code 0; no production source change was needed for this fixture failure."
+  },
+  "notVerified": [
+    "Production Rift lifecycle and save refusal UI",
+    "Natural combat/exploration or long-run balance",
+    "Real-scene contrast, scene composition and player aesthetic approval",
+    "Sound, FPS and memory budgets",
+    "Full prepare/catalog interaction regression"
+  ]
+}

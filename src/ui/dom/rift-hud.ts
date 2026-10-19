@@ -58,7 +58,6 @@ const NOISE_SVG =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10  0 0 0 0 0.68  0 0 0 0 0.59  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")";
 
 const PULSE_STYLE_ID = 'rift-hud-pulse-style';
-let controlsIntroduced = false;
 
 /** Idempotent - same critical-pulse idiom as purification-hud.ts's
  *  `hud-critical-pulse` (alpha 0.6-1.0, 300ms cycle, ui-art-overhaul.md A6). Moving
@@ -166,10 +165,6 @@ export class RiftHud {
   private chaosValueEl!: HTMLSpanElement;
   private chaosStageEl!: HTMLSpanElement;
   private chaosLabelEl!: HTMLSpanElement;
-  private assimilationEl!: HTMLDivElement;
-  private assimilationNumberEl!: HTMLSpanElement;
-  private assimilationValue: number | null = null;
-  private lastAssimilationDisplay = '';
   private overflowVeil!: HTMLDivElement;
   private overflowJump!: HTMLDivElement;
   private overflowGrain!: HTMLDivElement;
@@ -189,8 +184,6 @@ export class RiftHud {
   private toolSlotData: ToolSlotInfo[] = [];
   private equipmentData: readonly RiftEquipmentSlot[] = [];
   private equipmentSignature = "";
-  private controlsEl: HTMLDetailsElement | null = null;
-  private controlsIntroRemainingMs = 0;
 
   // State
   private chaosValue = 0;
@@ -277,7 +270,7 @@ export class RiftHud {
    */
   setBurden(weight: number, capacity: number): void {
     if (!this.burdenEl) return;
-    const next = `Tab 拾获 ${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
+    const next = `Tab 随身 ${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
     if (next === this.lastBurden) return;
     this.lastBurden = next;
     this.burdenValueEl.textContent = `${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
@@ -309,18 +302,7 @@ export class RiftHud {
    *  Effect remainingMs is authoritative from `setActiveEffects` each frame
    *  (rift-scene merges defense residue + tool-system remaining). Do not tick
    *  remaining here — that would double-count against per-frame set. */
-  update(deltaMs: number): void {
-    const assimilation = this.config.getAssimilation?.() ?? null;
-    const display = assimilation === null ? 'legacy' : assimilation.toFixed(1);
-    if (display !== this.lastAssimilationDisplay) {
-      this.lastAssimilationDisplay = display;
-      this.assimilationValue = assimilation;
-      this.updateChaosBar();
-    }
-    if (this.controlsIntroRemainingMs > 0) {
-      this.controlsIntroRemainingMs = Math.max(0, this.controlsIntroRemainingMs - deltaMs);
-      if (this.controlsIntroRemainingMs === 0 && this.controlsEl) this.controlsEl.open = false;
-    }
+  update(_deltaMs: number): void {
     if (this.extractPromptSuppressed) {
       if (this.extractPromptVisible) {
         this.extractPromptVisible = false;
@@ -371,8 +353,6 @@ export class RiftHud {
     this.root?.remove();
     this.root = null;
     this.toolSlotEl = null;
-    this.controlsEl = null;
-    this.controlsIntroRemainingMs = 0;
   }
 
   // ------------------------------------------------------------------ internal
@@ -385,14 +365,10 @@ export class RiftHud {
     const controls = document.createElement('details');
     controls.id = 'rift-hud-help';
     controls.innerHTML = '<summary>操作 · 展开 / 收起</summary><div><span class="rift-control-key">WASD / 方向键</span> 移动与转向</div><div><span class="rift-control-key">Space</span> 朝面向挥击 · 走位避开攻击</div><div><span class="rift-control-key">E</span> 按住翻找 · 退路处按下撤离</div><div><span class="rift-control-key">Tab</span> 随身物品 · <span class="rift-control-key">Esc</span> 暂停</div><div>右下刻记只记已见地形与退路方向</div>';
-    controls.open = !controlsIntroduced;
-    this.controlsIntroRemainingMs = controls.open ? 12_000 : 0;
-    controlsIntroduced = true;
-    controls.querySelector('summary')!.addEventListener('click', () => { this.controlsIntroRemainingMs = 0; });
+    controls.open = false;
     for (const eventName of ['keydown', 'keyup', 'pointerdown'] as const) {
       controls.addEventListener(eventName, event => { if (!(event instanceof KeyboardEvent) || ['Enter', ' '].includes(event.key)) event.stopPropagation(); });
     }
-    this.controlsEl = controls;
     root.appendChild(controls);
     const statusPlate = document.createElement('div');
     statusPlate.id = 'rift-hud-status';
@@ -459,17 +435,6 @@ export class RiftHud {
     chaosCluster.appendChild(chaosRow);
     chaosCluster.appendChild(chaosBarWrap);
     chaosCluster.appendChild(this.chaosStageEl);
-    this.assimilationEl = document.createElement('div');
-    this.assimilationEl.className = 'rift-hud-assimilation';
-    const assimilationLabel = document.createElement('span');
-    assimilationLabel.className = 'rift-hud-label'; assimilationLabel.textContent = '同化';
-    this.assimilationNumberEl = document.createElement('span');
-    this.assimilationNumberEl.className = 'rift-hud-value';
-    const assimilationCaption = document.createElement('span');
-    assimilationCaption.className = 'rift-hud-assimilation-caption'; assimilationCaption.textContent = '跨趟保留';
-    this.assimilationEl.append(assimilationLabel, this.assimilationNumberEl, assimilationCaption);
-    this.assimilationEl.hidden = true;
-    chaosCluster.appendChild(this.assimilationEl);
     this.effectsEl = document.createElement('div');
     this.effectsEl.id = 'rift-hud-effects';
     this.effectsEl.className = 'device-plate';
@@ -490,10 +455,10 @@ export class RiftHud {
     this.burdenEl = document.createElement('button');
     this.burdenEl.type = 'button';
     this.burdenEl.className = 'hud-report-entry';
-    this.burdenEl.setAttribute('aria-label', '查看本趟拾获（Tab）');
+    this.burdenEl.setAttribute('aria-label', '查看随身（Tab）');
     this.burdenEl.setAttribute('aria-keyshortcuts', 'Tab');
     this.burdenEl.hidden = !this.config.onInventory;
-    this.burdenEl.innerHTML = '<span class="hud-entry-key">Tab</span><span>拾获</span>';
+    this.burdenEl.innerHTML = '<span class="hud-entry-key">Tab</span><span>随身</span>';
     this.burdenValueEl = document.createElement('span');
     this.burdenValueEl.className = 'hud-entry-weight';
     this.burdenEl.append(this.burdenValueEl);
@@ -551,8 +516,7 @@ export class RiftHud {
 
   private updateChaosBar(): void {
     const C = GAME_CONSTANTS.CHAOS;
-    this.assimilationValue = this.config.getAssimilation?.() ?? null;
-    const adapted = this.assimilationValue !== null;
+    const adapted = (this.config.getAssimilation?.() ?? null) !== null;
     const cap = adapted ? C.MAX_VALUE : C.HARD_CAP;
     const gate = C.MAX_VALUE;
     const value = Math.max(0, this.chaosValue);
@@ -567,13 +531,9 @@ export class RiftHud {
     this.chaosValueEl.textContent = adapted ? `${Math.round(value)} / 100` : `${Math.round(value)}`;
     this.chaosValueEl.style.color = TEXT_BRIGHT;
 
-    this.chaosStageEl.textContent = adapted && value >= gate
-      ? this.assimilationValue! >= 100 ? '污染已满 · 同化达上限' : '污染已满 · 同化加深' : chaosTierLabel(value);
+    this.chaosStageEl.textContent = chaosTierLabel(value);
     this.chaosStageEl.style.color = overflowing || (adapted && value >= gate) ? TEXT_BRIGHT : TEXT_DIM;
 
-    this.assimilationEl.hidden = !adapted;
-    this.root?.classList.toggle('has-assimilation', adapted);
-    if (adapted) this.assimilationNumberEl.textContent = `${this.assimilationValue!.toFixed(1)}%`;
     // The world stays contaminated as the character learns to see through it.
     const pollution = Math.min(1, value / gate);
     this.overflowVeil.style.opacity = adapted ? String(0.02 + pollution * 0.10) : overflowing ? String(0.10 + overflowFrac * 0.22) : '0';
