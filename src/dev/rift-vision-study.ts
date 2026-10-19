@@ -37,6 +37,11 @@ function initialize(): void {
     if (!state.running) return;
     const scale = getAssimilationModulators(preview.pollution, preview.assimilation).radiusScale;
     el('pause').textContent = state.paused ? '继续画面' : '暂停画面';
+    // Pausing freezes the rendered field too. Never imply that a changed slider
+    // has already affected a frozen frame; resume before comparing another state.
+    for (const input of document.querySelectorAll<HTMLInputElement | HTMLButtonElement>('.controls input,.controls button,.switch button')) {
+      input.disabled = state.paused;
+    }
     el('status').textContent = `${world.selectedOptions[0]?.text} · ${preview.presentation === 'perceptual' ? '新表现' : '当前正式表现'} · 视距 ${(scale * 100).toFixed(0)}%${state.paused ? ' · 已暂停' : state.probe?.ended ? ' · 本趟结束，请回到出生点' : ' · 动态运行中'}`;
   }
   const runtime = createRiftGymRuntime({

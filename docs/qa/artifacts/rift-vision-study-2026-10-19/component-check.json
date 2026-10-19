@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "checks": [
+    "bounded monotonic attenuation; exact zero at/outside every range",
+    "elapsed time freezes at zero delta",
+    "invalid/negative delta cannot reverse or corrupt time",
+    "deterministic world-space veil",
+    "normal config keeps legacy default",
+    "presentation switch preserves tactical query revision",
+    "VOID blocks actual tactical query",
+    "both directions of mode switch preserve 180 tactical samples",
+    "texture has nonempty visible field",
+    "occluded wall-back cells remain zero",
+    "paused texture pixels remain identical",
+    "unknown/VOID cells stay opaque even at full contamination",
+    "body safety region stays clear",
+    "three seconds produce local moving deposits"
+  ],
+  "visibleCells": 8907,
+  "changedPixels": 4459,
+  "geometryMs": 7.128,
+  "scope": "Display math plus real query/LOS and toggle contract; browser art/performance reviewed separately."
+}

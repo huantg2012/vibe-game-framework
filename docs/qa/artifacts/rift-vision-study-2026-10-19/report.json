@@ -1,0 +1,170 @@
+{
+  "sourcesBefore": {
+    "src/systems/visibility-system.ts": "a1aa359289c8f573f68724767867770fcb950a0c6bd109fb975098da1881cfc1",
+    "src/systems/vision-perception.ts": "f706a74dc374b44c94cf9f0077646f755ae36a4bea6310b767436f11dbb21323",
+    "src/scenes/rift-scene.ts": "88df8215a32e67f866b8fee273c35a5a427a444d9e5cd3ecab973201a137bc47",
+    "src/dev/rift-vision-study.ts": "31296b1eaf5366437dac0d584baea62b8fe5421ced0af4bd9c18cbb5d8db2eea",
+    "src/dev/rift-vision-study.css": "99d53000ddaf8c8e7ac178204fc12cf4344c16c03efccbc5f048e1f003add247"
+  },
+  "revision": "9c896b03aae708a0dc37acf3dbae037faa749267",
+  "date": "2026-10-19",
+  "errors": [],
+  "checks": [
+    {
+      "name": "presentation switch retains 1089 tactical queries",
+      "pass": true,
+      "detail": {
+        "beforeRadius": 0.685,
+        "afterRadius": 0.685
+      }
+    },
+    {
+      "name": "simulation advances atmosphere",
+      "pass": true
+    },
+    {
+      "name": "assimilation restores range without clearing pollution",
+      "pass": true,
+      "detail": {
+        "clean": 1,
+        "saturated": 0.55,
+        "adapted": 0.8300000000000001
+      }
+    },
+    {
+      "name": "pause freezes atmosphere clock",
+      "pass": true
+    },
+    {
+      "name": "cinder-ridge uses real production layout",
+      "pass": true
+    },
+    {
+      "name": "ruptured-film uses real production layout",
+      "pass": true
+    },
+    {
+      "name": "capture sources unchanged",
+      "pass": true
+    },
+    {
+      "name": "no page errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "samples": [
+    {
+      "name": "crystal-before",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 70,
+        "assimilation": 0,
+        "presentation": "legacy"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-after",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 70,
+        "assimilation": 0,
+        "presentation": "perceptual"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-motion",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 70,
+        "assimilation": 0,
+        "presentation": "perceptual"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-clear",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 0,
+        "assimilation": 0,
+        "presentation": "perceptual"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-saturated",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 100,
+        "assimilation": 0,
+        "presentation": "perceptual"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-adapted",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 100,
+        "assimilation": 80,
+        "presentation": "perceptual"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "cinder-ridge",
+      "world": "cinder-ridge",
+      "preview": {
+        "pollution": 70,
+        "assimilation": 0,
+        "presentation": "perceptual"
+      },
+      "player": {
+        "x": 300,
+        "y": 988
+      }
+    },
+    {
+      "name": "ruptured-film",
+      "world": "ruptured-film",
+      "preview": {
+        "pollution": 70,
+        "assimilation": 0,
+        "presentation": "perceptual"
+      },
+      "player": {
+        "x": 292,
+        "y": 1028
+      }
+    }
+  ],
+  "scope": "DEV real RiftScene; 3 admitted medium worlds; optical P/A projection only; HUD hidden in study, actual combat/economy unchanged. Not production-default integration, full combat/economy/performance acceptance or human visual acceptance.",
+  "sourcesAfter": {
+    "src/systems/visibility-system.ts": "a1aa359289c8f573f68724767867770fcb950a0c6bd109fb975098da1881cfc1",
+    "src/systems/vision-perception.ts": "f706a74dc374b44c94cf9f0077646f755ae36a4bea6310b767436f11dbb21323",
+    "src/scenes/rift-scene.ts": "88df8215a32e67f866b8fee273c35a5a427a444d9e5cd3ecab973201a137bc47",
+    "src/dev/rift-vision-study.ts": "31296b1eaf5366437dac0d584baea62b8fe5421ced0af4bd9c18cbb5d8db2eea",
+    "src/dev/rift-vision-study.css": "99d53000ddaf8c8e7ac178204fc12cf4344c16c03efccbc5f048e1f003add247"
+  }
+}
