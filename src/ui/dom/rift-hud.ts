@@ -274,10 +274,10 @@ export class RiftHud {
    */
   setBurden(weight: number, capacity: number): void {
     if (!this.burdenEl) return;
-    const next = `Tab 随身 ${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
+    const next = `${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
     if (next === this.lastBurden) return;
     this.lastBurden = next;
-    this.burdenValueEl.textContent = `${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
+    this.burdenValueEl.textContent = next;
     this.burdenEl.classList.toggle('is-heavy', weight >= capacity * .875);
   }
 
@@ -471,13 +471,17 @@ export class RiftHud {
     this.burdenEl = document.createElement('button');
     this.burdenEl.type = 'button';
     this.burdenEl.className = 'hud-report-entry';
-    this.burdenEl.setAttribute('aria-label', '查看随身（Tab）');
+    this.burdenEl.setAttribute('aria-label', '查看负重与随身物品（Tab）');
     this.burdenEl.setAttribute('aria-keyshortcuts', 'Tab');
     this.burdenEl.hidden = !this.config.onInventory;
-    this.burdenEl.innerHTML = '<span class="hud-entry-key">Tab</span><span>随身</span>';
+    this.burdenEl.innerHTML = '<span>负重</span>';
     this.burdenValueEl = document.createElement('span');
     this.burdenValueEl.className = 'hud-entry-weight';
     this.burdenEl.append(this.burdenValueEl);
+    const burdenKey = document.createElement('span');
+    burdenKey.className = 'hud-entry-key';
+    burdenKey.textContent = 'Tab';
+    this.burdenEl.append(burdenKey);
     this.burdenEl.addEventListener('click', event => { event.stopPropagation(); if (!this.config.isRunEnded()) this.config.onInventory?.(); });
     for (const name of ['pointerdown', 'keydown', 'keyup'] as const) this.burdenEl.addEventListener(name, event => { if (!(event instanceof KeyboardEvent) || ['Enter', ' '].includes(event.key)) event.stopPropagation(); });
     this.burdenEl.id = 'rift-hud-burden';

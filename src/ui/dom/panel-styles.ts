@@ -363,6 +363,7 @@ const CSS = `
 .hud-report-entry[hidden],#dom-ui-root:has(.game-panel,.inventory-wrap) .hud-report-entry{visibility:hidden;pointer-events:none}
 #purif-report-entry{align-self:flex-end;margin-right:-4px}
 #rift-hud-burden{opacity:.8}
+#rift-hud-burden .hud-entry-key{font-size:9px;color:#7e8a7e}
 #rift-hud-assimilation{position:absolute;right:24px;top:80px;display:flex;align-items:baseline;gap:8px;white-space:nowrap;text-shadow:0 1px 3px #000}
 #rift-hud-assimilation[hidden],#dom-ui-root:has(.game-panel,.inventory-wrap) #rift-hud-assimilation{display:none}
 .rift-assimilation-label{font:10px/14px var(--ui-font);color:#7e8a7e}
