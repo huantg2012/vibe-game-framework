@@ -3,7 +3,7 @@ import { drawBurden, drawAssimilation } from './pixel-marks.js';
 const presets = [
   { weight:3, assimilation:0, title:'轻载 · 未同化' },
   { weight:14, assimilation:60, title:'临满 · 中度同化' },
-  { weight:16, assimilation:100, title:'满载 · 完全同化' },
+  { weight:16, assimilation:100, title:'满载 · 同化上限' },
 ];
 const state = { ...presets[1], growing:true, feedbackStart:-Infinity };
 const hud = document.querySelector('#hud');
@@ -12,7 +12,7 @@ const scene = document.querySelector('.scene img');
 const comparison = document.querySelector('#comparison');
 const marks = document.querySelector('#marks');
 const digits = {
-  '0':['01110','11011','11011','11011','11011','11011','01110'],
+  '0':['01110','10001','10001','10001','10001','10001','01110'],
   '1':['00100','01100','00100','00100','00100','00100','01110'],
   '2':['01110','10001','00001','00010','00100','01000','11111'],
   '3':['11110','00001','00001','01110','00001','00001','11110'],

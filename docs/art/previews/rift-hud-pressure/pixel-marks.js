@@ -69,7 +69,8 @@ export function drawBurden(ctx, x, y, ratio, time = 0, feedback = 0) {
   const right = 23 + Math.round(r * 5);
   const top = 12 - Math.round(r * 4) + squash;
   const bottom = 29 + Math.round(r * 7);
-  const warm = r >= .84;
+  const warm = r >= .875;
+  const full = r >= .985;
   const strap = warm ? P.strain : P.thread;
   const strapFace = warm ? P.strain : P.face;
 
@@ -90,6 +91,15 @@ export function drawBurden(ctx, x, y, ratio, time = 0, feedback = 0) {
   polygon(put, [[left+2,top+8],[left+6,top+7],[left+5,bottom-6],[left+2,bottom-4]], P.face);
   polygon(put, [[right-8,top+10],[right-5,top+8],[right-5,bottom-6],[right-8,bottom-8]], P.fold);
   rect(put,left+3,top,Math.max(4,right-left-8),1,P.thread);
+  if (full) {
+    // The final slack is gone: two blunt cloth corners squeeze past the band.
+    polygon(put, [[left,top+7],[left-2,top+9],[left-2,top+13],[left+2,top+15],
+      [left+3,top+12],[left+2,top+8]], P.face);
+    polygon(put, [[right-2,top+10],[right+2,top+12],[right+2,top+16],
+      [right-1,top+18],[right-3,top+16]], P.side);
+    rect(put,left-2,top+9,2,1,P.thread);
+    rect(put,right,top+12,2,1,P.face);
+  }
 
   // The lashing's profile changes from bowed slack to a straight, taut harness.
   const waist = top + 8;
@@ -99,12 +109,18 @@ export function drawBurden(ctx, x, y, ratio, time = 0, feedback = 0) {
   polygon(put, [[right-6,top+2],[right-4,top+3],[right-3+bow,waist+4],
     [right-5,bottom-3],[right-7,bottom-3],[right-5+bow,waist+4]], strap);
   // Tight cross-band visually cuts into the load. It is not a filling gauge.
-  polygon(put, [[left+1,waist],[right-1,waist+1],[right-1,waist+3],
+  polygon(put, [[left+1,waist],[right-1,waist+(full?0:1)],[right-1,waist+3],
     [left+1,waist+2]], P.fold);
   rect(put,left+2,waist,Math.max(4,right-left-4),1,strap);
-  rect(put,14,waist-1,5,5,warm ? P.strain : P.thread);
-  rect(put,15,waist,3,3,P.leather);
-  rect(put,17,waist+1,2,1,warm ? P.strainLight : P.buckle);
+  const buckleX = full ? 17 : 14;
+  rect(put,buckleX,waist-1,5,5,warm ? P.strain : P.thread);
+  rect(put,buckleX+1,waist,3,3,P.leather);
+  rect(put,buckleX+3,waist+1,2,1,warm ? P.strainLight : P.buckle);
+  if(full) {
+    rect(put,buckleX+5,waist,3,2,P.strain);
+    rect(put,left+2,waist+3,4,2,P.fold);
+    rect(put,right-6,waist+3,3,2,P.fold);
+  }
 
   // Spare strap hangs below a light load; it is taken up when the bag is full.
   const tail = Math.round((1-r)*5);
@@ -112,7 +128,7 @@ export function drawBurden(ctx, x, y, ratio, time = 0, feedback = 0) {
     rect(put,left+4,bottom-1,2,tail,P.face);
     rect(put,left+5,bottom+tail-2,2,1,P.thread);
   }
-  if (r >= .84) {
+  if (r >= .875) {
     // Small exposed folds immediately outside the constricting band.
     rect(put,left,waist-2,2,2,P.thread);
     rect(put,right-2,waist+3,2,2,P.face);
@@ -172,30 +188,28 @@ export function drawAssimilation(ctx, x, y, amount, time = 0, growing = false) {
     const count = Math.floor(progress * pixels.length);
     for(let k=0;k<count;k++) {
       const [px,py]=pixels[k];
-      const local = (px + 2*py + index*3) % 13;
-      const tone = local < 3 ? P.alienDark : (plate.tone ? P.alien : P.alienDark);
-      put(px,py,tone);
+      put(px,py,plate.tone ? P.alien : P.alienDark);
       corrupted.add(py*32+px);
     }
-    // A cropped face on each foreign plate, not a luminous silhouette outline.
-    for(let k=0;k<count;k++) {
-      const [px,py]=pixels[k];
-      if ((px+2*py+index*3)%13===3 && body[py*32+px-1] && body[py*32+px+1]) {
-        put(px,py,P.alien);
-      }
-    }
   }
-  // Broken displaced registration remains inside the human silhouette.
+  // Broad offset layers: no point texture, camouflage or whole-body colour wash.
   if(a>34) {
-    for(const [px,py,w] of [[18,21,3],[16,28,3],[19,16,2]]) {
-      for(let i=0;i<w;i++) if(corrupted.has(py*32+px+i)) put(px+i,py,P.thread);
-    }
+    polygon((px,py,c)=>{if(corrupted.has(py*32+px))put(px,py,c)},
+      [[17,22],[23,20],[24,22],[19,24],[19,28],[16,29],[16,26]],P.alien);
+    polygon((px,py,c)=>{if(corrupted.has(py*32+px))put(px,py,c)},
+      [[12,30],[19,29],[21,31],[17,33],[14,33]],P.alien);
+    rect(put,18,22,3,1,P.face);
   }
   if(a>72) {
-    // Wrong alignment across collar/face, no paired eyes or completed halo.
-    for(const [px,py] of [[17,11],[18,11],[16,12],[15,24],[15,25],[16,26]]) {
-      if(corrupted.has(py*32+px)) put(px,py,P.alien);
-    }
+    // Two blunt, offset plates displace the shoulder; the human remains legible.
+    polygon(put,[[25,17],[28,17],[28,20],[30,20],[30,23],[27,23],[27,21],[25,20]],P.alienDark);
+    rect(put,25,17,3,1,P.alien);
+    rect(put,28,20,2,1,P.alien);
+    polygon(put,[[8,22],[11,23],[11,26],[9,27],[7,27],[7,25]],P.alienDark);
+    rect(put,8,22,3,1,P.alien);
+    polygon((px,py,c)=>{if(corrupted.has(py*32+px))put(px,py,c)},
+      [[12,5],[17,4],[19,6],[19,9],[16,10],[13,9]],P.alien);
+    rect(put,13,12,3,1,P.face);
   }
   if(growing && a>0 && a<100) {
     // Three local pixels advance through one existing intrusion every 560 ms.
