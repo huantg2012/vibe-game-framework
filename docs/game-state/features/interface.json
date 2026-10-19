@@ -3,12 +3,12 @@
     "id": "COH-F032",
     "title": "Rift 战况与装备 HUD",
     "domain": "interface",
-    "summary": "DEC-223：HUD生命/污染为主层，右上随身入口下方常驻次级同化短读数；不加第三根条或机制介绍。操作帮助入口及正文已按用户要求删除。Tab查询适应详情；新100与旧150协议保持，最终审美待用户确认。 同日收紧为左上8px组距与右上4px行距，装备四行102px；右上仅“负重 当前 / 上限”，无Tab文字。",
+    "summary": "DEC-223：生命/污染为主层，同化为右上次级常驻；移除机制介绍与操作帮助。用户选定的右上三行文字已正式接入：标签左缘/数字右缘一致、18px步进、5×7点阵数字及等价DOM文本；负重按容量比例连续染铁锈红，同化按持久值连续染灰橄榄绿。点击负重/Tab随身、legacy150/null保持；左上组距8px、装备四行102px。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "进入Rift自动显示即时战况；点击或键盘打开Tab随身查询。",
-      "纯美术DEV预览：docs/art/previews/rift-hud-pressure/index.html，用户已停止图标方向，负重与同化恢复文字，当前样例为灰白→铁锈红/灰橄榄绿的连续色移，待人审；正式HUD未切换。"
+      "获选美术参考：docs/art/previews/rift-hud-pressure/index.html；其文字、点阵数值与连续压力色已接入正式RiftHud，真实入口和三状态截图见本轮QA。"
     ],
     "sources": [
       {
@@ -54,6 +54,18 @@
       {
         "path": "docs/art/previews/rift-hud-pressure/README.md",
         "role": "art"
+      },
+      {
+        "path": "src/ui/dom/rift-pressure-readout.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/rift-pressure-hud-2026-10-19.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/capture-rift-pressure-hud.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -69,11 +81,12 @@
       "COH-E-HIST-CATALOG",
       "COH-E266",
       "COH-E267",
-      "COH-E268"
+      "COH-E268",
+      "COH-E269"
     ],
     "unknowns": [
-      "DEC-222原完全隐藏同化方向已被用户否决；DEC-223改为次级常驻；未代签用户审美、自然物件交易、完整旧档、跨世界动态背景或后续视野/混合同化形象。",
-      "右上压力表达像素样例尚待用户看图；预览动效与状态不等于正式机制/保存/性能接入。"
+      "样例外观已获用户选定与接入授权；限定正式实景与交互已核，不代签自然物件交易、跨世界动态背景、跨设备、长期性能或玩家最终体验。",
+      "后续视野美术与跨世界混合同化形象尚未实施，HUD接入不提升其状态。"
     ]
   },
   {

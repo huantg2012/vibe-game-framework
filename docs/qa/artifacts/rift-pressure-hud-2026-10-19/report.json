@@ -1,0 +1,754 @@
+{
+  "date": "2026-10-19",
+  "startedAt": "2026-10-19T11:20:16.372Z",
+  "revision": "63bee2da8522d42c029b601936b51f78400fec04",
+  "features": [
+    "COH-F032",
+    "COH-F054"
+  ],
+  "browser": "155.0.8059.80",
+  "sourcesBefore": {
+    "src/ui/dom/rift-hud.ts": "5605b6fb1da7ac780fbdb7525ae8786bead06491fe9355059e6860a15f50bf35",
+    "src/ui/dom/panel-styles.ts": "cdba5a18af9731f7ce442b70f8345936945785a56fc620cc4a45dffffb1019e9",
+    "src/ui/dom/rift-pressure-readout.ts": "8987f40ce80f629e727b9c35b162ca5716224487d1a01d5691efe0d51dba075a"
+  },
+  "scope": "Isolated Chrome profile: title → new record → Haven → preparation → one real low-grade Rift. Freeze the engine on one camera frame, then set the real game-state assimilation and production HUD burden readout to three controlled pairs (30/160 + A0, 140/160 + A60, 160/160 + A100). This does not represent naturally acquired weight or assimilation. Resume for real click/Tab inventory interaction. No player profile/storage, natural expedition/economy, legacy save migration, other worlds, full combat or human aesthetic acceptance.",
+  "errors": [],
+  "checks": [
+    {
+      "name": "real preparation entered persistent Rift protocol at A0",
+      "pass": true,
+      "detail": {
+        "world": "r100-cinder-ridge",
+        "protocol": "persistent-v1",
+        "position": {
+          "x": 300,
+          "y": 988
+        },
+        "assimilation": 0
+      }
+    },
+    {
+      "name": "sample 0: three labels and exact values",
+      "pass": true,
+      "detail": [
+        {
+          "label": "薪柴",
+          "value": "0"
+        },
+        {
+          "label": "负重",
+          "value": "3.0 / 16.0"
+        },
+        {
+          "label": "同化",
+          "value": "0.0%"
+        }
+      ]
+    },
+    {
+      "name": "sample 0: approved numeric colors",
+      "pass": true,
+      "detail": [
+        [
+          "#b89040"
+        ],
+        [
+          "#b3baae",
+          "#8a8f96"
+        ],
+        [
+          "#b3baae"
+        ]
+      ]
+    },
+    {
+      "name": "sample 0: equal 18px row pitch and shared left/right edges",
+      "pass": true,
+      "detail": [
+        {
+          "row": {
+            "x": 824,
+            "y": 64,
+            "right": 936,
+            "width": 112,
+            "height": 16
+          },
+          "labelBox": {
+            "x": 824,
+            "y": 64,
+            "right": 848,
+            "width": 24,
+            "height": 16
+          },
+          "canvas": {
+            "x": 929,
+            "y": 66,
+            "right": 934,
+            "width": 5,
+            "height": 11
+          }
+        },
+        {
+          "row": {
+            "x": 824,
+            "y": 82,
+            "right": 936,
+            "width": 112,
+            "height": 16
+          },
+          "labelBox": {
+            "x": 824,
+            "y": 82,
+            "right": 848,
+            "width": 24,
+            "height": 16
+          },
+          "canvas": {
+            "x": 886,
+            "y": 84,
+            "right": 934,
+            "width": 48,
+            "height": 11
+          }
+        },
+        {
+          "row": {
+            "x": 824,
+            "y": 100,
+            "right": 936,
+            "width": 112,
+            "height": 16
+          },
+          "labelBox": {
+            "x": 824,
+            "y": 100,
+            "right": 848,
+            "width": 24,
+            "height": 16
+          },
+          "canvas": {
+            "x": 911,
+            "y": 102,
+            "right": 934,
+            "width": 23,
+            "height": 11
+          }
+        }
+      ]
+    },
+    {
+      "name": "sample 0: hard pixels inside overlay without icon or mechanism copy",
+      "pass": true
+    },
+    {
+      "name": "sample 1: three labels and exact values",
+      "pass": true,
+      "detail": [
+        {
+          "label": "薪柴",
+          "value": "0"
+        },
+        {
+          "label": "负重",
+          "value": "14.0 / 16.0"
+        },
+        {
+          "label": "同化",
+          "value": "60.0%"
+        }
+      ]
+    },
+    {
+      "name": "sample 1: approved numeric colors",
+      "pass": true,
+      "detail": [
+        [
+          "#b89040"
+        ],
+        [
+          "#bb756b",
+          "#8a8f96"
+        ],
+        [
+          "#9aa588"
+        ]
+      ]
+    },
+    {
+      "name": "sample 1: equal 18px row pitch and shared left/right edges",
+      "pass": true,
+      "detail": [
+        {
+          "row": {
+            "x": 824,
+            "y": 64,
+            "right": 936,
+            "width": 112,
+            "height": 16
+          },
+          "labelBox": {
+            "x": 824,
+            "y": 64,
+            "right": 848,
+            "width": 24,
+            "height": 16
+          },
+          "canvas": {
+            "x": 929,
+            "y": 66,
+            "right": 934,
+            "width": 5,
+            "height": 11
+          }
+        },
+        {
+          "row": {
+            "x": 824,
+            "y": 82,
+            "right": 936,
+            "width": 112,
+            "height": 16
+          },
+          "labelBox": {
+            "x": 824,
+            "y": 82,
+            "right": 848,
+            "width": 24,
+            "height": 16
+          },
+          "canvas": {
+            "x": 880,
+            "y": 84,
+            "right": 934,
+            "width": 54,
+            "height": 11
+          }
+        },
+        {
+          "row": {
+            "x": 824,
+            "y": 100,
+            "right": 936,
+            "width": 112,
+            "height": 16
+          },
+          "labelBox": {
+            "x": 824,
+            "y": 100,
+            "right": 848,
+            "width": 24,
+            "height": 16
+          },
+          "canvas": {
+            "x": 905,
+            "y": 102,
+            "right": 934,
+            "width": 29,
+            "height": 11
+          }
+        }
+      ]
+    },
+    {
+      "name": "sample 1: hard pixels inside overlay without icon or mechanism copy",
+      "pass": true
+    },
+    {
+      "name": "sample 2: three labels and exact values",
+      "pass": true,
+      "detail": [
+        {
+          "label": "薪柴",
+          "value": "0"
+        },
+        {
+          "label": "负重",
+          "value": "16.0 / 16.0"
+        },
+        {
+          "label": "同化",
+          "value": "100.0%"
+        }
+      ]
+    },
+    {
+      "name": "sample 2: approved numeric colors",
+      "pass": true,
+      "detail": [
+        [
+          "#b89040"
+        ],
+        [
+          "#bd685e",
+          "#8a8f96"
+        ],
+        [
+          "#8c9973"
+        ]
+      ]
+    },
+    {
+      "name": "sample 2: equal 18px row pitch and shared left/right edges",
+      "pass": true,
+      "detail": [
+        {
+          "row": {
+            "x": 824,
+            "y": 64,
+            "right": 936,
+            "width": 112,
+            "height": 16
+          },
+          "labelBox": {
+            "x": 824,
+            "y": 64,
+            "right": 848,
+            "width": 24,
+            "height": 16
+          },
+          "canvas": {
+            "x": 929,
+            "y": 66,
+            "right": 934,
+            "width": 5,
+            "height": 11
+          }
+        },
+        {
+          "row": {
+            "x": 824,
+            "y": 82,
+            "right": 936,
+            "width": 112,
+            "height": 16
+          },
+          "labelBox": {
+            "x": 824,
+            "y": 82,
+            "right": 848,
+            "width": 24,
+            "height": 16
+          },
+          "canvas": {
+            "x": 880,
+            "y": 84,
+            "right": 934,
+            "width": 54,
+            "height": 11
+          }
+        },
+        {
+          "row": {
+            "x": 824,
+            "y": 100,
+            "right": 936,
+            "width": 112,
+            "height": 16
+          },
+          "labelBox": {
+            "x": 824,
+            "y": 100,
+            "right": 848,
+            "width": 24,
+            "height": 16
+          },
+          "canvas": {
+            "x": 899,
+            "y": 102,
+            "right": 934,
+            "width": 35,
+            "height": 11
+          }
+        }
+      ]
+    },
+    {
+      "name": "sample 2: hard pixels inside overlay without icon or mechanism copy",
+      "pass": true
+    },
+    {
+      "name": "click burden opens live inventory",
+      "pass": true
+    },
+    {
+      "name": "Tab closes inventory and restores secondary HUD",
+      "pass": true
+    },
+    {
+      "name": "Tab opens inventory",
+      "pass": true
+    },
+    {
+      "name": "second Tab closes without pausing",
+      "pass": true
+    },
+    {
+      "name": "production sources unchanged during verification",
+      "pass": true
+    },
+    {
+      "name": "no runtime page errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "samples": [
+    {
+      "index": 0,
+      "weight": 30,
+      "assimilation": 0,
+      "result": {
+        "assimilation": 0,
+        "body": "完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n负重\n3.0 / 16.0\n同化\n0.0%\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—",
+        "root": true,
+        "icons": 0,
+        "rows": [
+          {
+            "id": "rift-hud-kindling",
+            "label": "薪柴",
+            "value": "0",
+            "row": {
+              "x": 824,
+              "y": 64,
+              "right": 936,
+              "width": 112,
+              "height": 16
+            },
+            "labelBox": {
+              "x": 824,
+              "y": 64,
+              "right": 848,
+              "width": 24,
+              "height": 16
+            },
+            "canvas": {
+              "x": 929,
+              "y": 66,
+              "right": 934,
+              "width": 5,
+              "height": 11
+            },
+            "colors": [
+              "#b89040"
+            ],
+            "partialAlpha": 0,
+            "smoothing": false,
+            "imageRendering": "pixelated"
+          },
+          {
+            "id": "rift-hud-burden",
+            "label": "负重",
+            "value": "3.0 / 16.0",
+            "row": {
+              "x": 824,
+              "y": 82,
+              "right": 936,
+              "width": 112,
+              "height": 16
+            },
+            "labelBox": {
+              "x": 824,
+              "y": 82,
+              "right": 848,
+              "width": 24,
+              "height": 16
+            },
+            "canvas": {
+              "x": 886,
+              "y": 84,
+              "right": 934,
+              "width": 48,
+              "height": 11
+            },
+            "colors": [
+              "#b3baae",
+              "#8a8f96"
+            ],
+            "partialAlpha": 0,
+            "smoothing": false,
+            "imageRendering": "pixelated"
+          },
+          {
+            "id": "rift-hud-assimilation",
+            "label": "同化",
+            "value": "0.0%",
+            "row": {
+              "x": 824,
+              "y": 100,
+              "right": 936,
+              "width": 112,
+              "height": 16
+            },
+            "labelBox": {
+              "x": 824,
+              "y": 100,
+              "right": 848,
+              "width": 24,
+              "height": 16
+            },
+            "canvas": {
+              "x": 911,
+              "y": 102,
+              "right": 934,
+              "width": 23,
+              "height": 11
+            },
+            "colors": [
+              "#b3baae"
+            ],
+            "partialAlpha": 0,
+            "smoothing": false,
+            "imageRendering": "pixelated"
+          }
+        ]
+      }
+    },
+    {
+      "index": 1,
+      "weight": 140,
+      "assimilation": 60,
+      "result": {
+        "assimilation": 60,
+        "body": "完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n负重\n14.0 / 16.0\n同化\n60.0%\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—",
+        "root": true,
+        "icons": 0,
+        "rows": [
+          {
+            "id": "rift-hud-kindling",
+            "label": "薪柴",
+            "value": "0",
+            "row": {
+              "x": 824,
+              "y": 64,
+              "right": 936,
+              "width": 112,
+              "height": 16
+            },
+            "labelBox": {
+              "x": 824,
+              "y": 64,
+              "right": 848,
+              "width": 24,
+              "height": 16
+            },
+            "canvas": {
+              "x": 929,
+              "y": 66,
+              "right": 934,
+              "width": 5,
+              "height": 11
+            },
+            "colors": [
+              "#b89040"
+            ],
+            "partialAlpha": 0,
+            "smoothing": false,
+            "imageRendering": "pixelated"
+          },
+          {
+            "id": "rift-hud-burden",
+            "label": "负重",
+            "value": "14.0 / 16.0",
+            "row": {
+              "x": 824,
+              "y": 82,
+              "right": 936,
+              "width": 112,
+              "height": 16
+            },
+            "labelBox": {
+              "x": 824,
+              "y": 82,
+              "right": 848,
+              "width": 24,
+              "height": 16
+            },
+            "canvas": {
+              "x": 880,
+              "y": 84,
+              "right": 934,
+              "width": 54,
+              "height": 11
+            },
+            "colors": [
+              "#bb756b",
+              "#8a8f96"
+            ],
+            "partialAlpha": 0,
+            "smoothing": false,
+            "imageRendering": "pixelated"
+          },
+          {
+            "id": "rift-hud-assimilation",
+            "label": "同化",
+            "value": "60.0%",
+            "row": {
+              "x": 824,
+              "y": 100,
+              "right": 936,
+              "width": 112,
+              "height": 16
+            },
+            "labelBox": {
+              "x": 824,
+              "y": 100,
+              "right": 848,
+              "width": 24,
+              "height": 16
+            },
+            "canvas": {
+              "x": 905,
+              "y": 102,
+              "right": 934,
+              "width": 29,
+              "height": 11
+            },
+            "colors": [
+              "#9aa588"
+            ],
+            "partialAlpha": 0,
+            "smoothing": false,
+            "imageRendering": "pixelated"
+          }
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "weight": 160,
+      "assimilation": 100,
+      "result": {
+        "assimilation": 100,
+        "body": "完整度\n100/100\n污染\n15 / 100\n稳定\n薪柴\n0\n负重\n16.0 / 16.0\n同化\n100.0%\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—",
+        "root": true,
+        "icons": 0,
+        "rows": [
+          {
+            "id": "rift-hud-kindling",
+            "label": "薪柴",
+            "value": "0",
+            "row": {
+              "x": 824,
+              "y": 64,
+              "right": 936,
+              "width": 112,
+              "height": 16
+            },
+            "labelBox": {
+              "x": 824,
+              "y": 64,
+              "right": 848,
+              "width": 24,
+              "height": 16
+            },
+            "canvas": {
+              "x": 929,
+              "y": 66,
+              "right": 934,
+              "width": 5,
+              "height": 11
+            },
+            "colors": [
+              "#b89040"
+            ],
+            "partialAlpha": 0,
+            "smoothing": false,
+            "imageRendering": "pixelated"
+          },
+          {
+            "id": "rift-hud-burden",
+            "label": "负重",
+            "value": "16.0 / 16.0",
+            "row": {
+              "x": 824,
+              "y": 82,
+              "right": 936,
+              "width": 112,
+              "height": 16
+            },
+            "labelBox": {
+              "x": 824,
+              "y": 82,
+              "right": 848,
+              "width": 24,
+              "height": 16
+            },
+            "canvas": {
+              "x": 880,
+              "y": 84,
+              "right": 934,
+              "width": 54,
+              "height": 11
+            },
+            "colors": [
+              "#bd685e",
+              "#8a8f96"
+            ],
+            "partialAlpha": 0,
+            "smoothing": false,
+            "imageRendering": "pixelated"
+          },
+          {
+            "id": "rift-hud-assimilation",
+            "label": "同化",
+            "value": "100.0%",
+            "row": {
+              "x": 824,
+              "y": 100,
+              "right": 936,
+              "width": 112,
+              "height": 16
+            },
+            "labelBox": {
+              "x": 824,
+              "y": 100,
+              "right": 848,
+              "width": 24,
+              "height": 16
+            },
+            "canvas": {
+              "x": 899,
+              "y": 102,
+              "right": 934,
+              "width": 35,
+              "height": 11
+            },
+            "colors": [
+              "#8c9973"
+            ],
+            "partialAlpha": 0,
+            "smoothing": false,
+            "imageRendering": "pixelated"
+          }
+        ]
+      }
+    }
+  ],
+  "screenshots": [
+    "scene-0.png",
+    "scene-1.png",
+    "scene-2.png",
+    "inventory-click.png"
+  ],
+  "modules": {
+    "/src/managers/audio-manager.ts": "http://127.0.0.1:3027/src/managers/audio-manager.ts",
+    "/src/managers/game-state.ts": "http://127.0.0.1:3027/src/managers/game-state.ts?t=1792342239920"
+  },
+  "entry": {
+    "world": "r100-cinder-ridge",
+    "protocol": "persistent-v1",
+    "position": {
+      "x": 300,
+      "y": 988
+    },
+    "assimilation": 0
+  },
+  "sourcesAfter": {
+    "src/ui/dom/rift-hud.ts": "5605b6fb1da7ac780fbdb7525ae8786bead06491fe9355059e6860a15f50bf35",
+    "src/ui/dom/panel-styles.ts": "cdba5a18af9731f7ce442b70f8345936945785a56fc620cc4a45dffffb1019e9",
+    "src/ui/dom/rift-pressure-readout.ts": "8987f40ce80f629e727b9c35b162ca5716224487d1a01d5691efe0d51dba075a"
+  },
+  "result": "pass",
+  "finishedAt": "2026-10-19T11:20:29.702Z"
+}

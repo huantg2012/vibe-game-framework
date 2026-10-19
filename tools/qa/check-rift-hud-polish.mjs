@@ -75,6 +75,35 @@ try {
     hud.create({ canExtract: () => false, isRunEnded: () => false, getAssimilation: () => window.__assimilation, onInventory() {} });
     hud.restoreReadouts({ health: 100, maxHealth: 100, chaos: 100, kindling: 0 });
   });
+  const pressure = await page.evaluate(() => {
+    const color = selector => {
+      const c = document.querySelector(selector), d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+      const colors = new Set();
+      for (let i = 0; i < d.length; i += 4) if (d[i + 3]) colors.add('#' + [d[i], d[i + 1], d[i + 2]].map(v => v.toString(16).padStart(2, '0')).join(''));
+      return [...colors].sort();
+    };
+    const weight = [];
+    for (const [w, cap] of [[30, 160], [140, 160], [160, 160], [160, 320]]) {
+      window.__hud.setBurden(w, cap);
+      weight.push({ text: document.querySelector('.hud-entry-weight').textContent, colors: color('.hud-entry-weight canvas') });
+    }
+    const body = [];
+    for (const a of [0, 60, 100]) {
+      window.__assimilation = a; window.__hud.refreshAssimilation();
+      body.push(color('.rift-assimilation-value canvas'));
+    }
+    window.__assimilation = 30; window.__hud.refreshAssimilation(); window.__hud.setBurden(30, 160);
+    const rows = [...document.querySelector('#rift-hud-resource-stack').children].map(el => {
+      const label = el.firstElementChild.getBoundingClientRect(), value = el.querySelector('canvas').getBoundingClientRect();
+      return { left: label.left, right: value.right, top: value.top };
+    });
+    return { weight, body, rows };
+  });
+  assert.deepEqual(pressure.weight.map(s => s.colors), [['#8a8f96', '#b3baae'], ['#8a8f96', '#bb756b'], ['#8a8f96', '#bd685e'], ['#8a8f96', '#b3baae']]);
+  assert.deepEqual(pressure.weight.map(s => s.text), ['3.0 / 16.0', '14.0 / 16.0', '16.0 / 16.0', '16.0 / 32.0']);
+  assert.deepEqual(pressure.body, [['#b3baae'], ['#9aa588'], ['#8c9973']]);
+  assert(pressure.rows.every(r => r.left === pressure.rows[0].left && r.right === pressure.rows[0].right));
+  assert(pressure.rows[1].top - pressure.rows[0].top === 18 && pressure.rows[2].top - pressure.rows[1].top === 18);
   assert.equal(await page.locator('#rift-hud-help').count(), 0);
   assert.equal(await page.locator('.rift-assimilation-value').textContent(), '30.0%');
   assert.equal(await page.locator('#rift-hud-assimilation').isVisible(), true);
@@ -119,5 +148,5 @@ try {
   const legacyText = await page.locator('#rift-hud').textContent(); assert(legacyText.includes('混乱')); assert(legacyText.includes('150')); assert(!legacyText.includes('/ 100'));
   assert.equal(await page.locator('#rift-hud-assimilation').isVisible(), false);
   assert.deepEqual(errors, []);
-  console.log(JSON.stringify({ pass: true, scope: 'Production UI modules in isolated blank browser document, not production scene art QA', ...result, assimilation, layout }, null, 2));
+  console.log(JSON.stringify({ pass: true, scope: 'Production UI modules in isolated blank browser document, not production scene art QA', ...result, assimilation, layout, pressure }, null, 2));
 } finally { await browser.close(); }
