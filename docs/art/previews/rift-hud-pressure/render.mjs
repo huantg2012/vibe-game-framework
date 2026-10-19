@@ -24,24 +24,42 @@ try{
  }
  const result=await page.evaluate(async()=>{
   const m=await import('./pixel-marks.js');
-  const c=document.createElement('canvas');c.width=16;c.height=16;const g=c.getContext('2d',{willReadFrequently:true});
+  const c=document.createElement('canvas');c.width=m.markSize.width;c.height=m.markSize.height;const g=c.getContext('2d',{willReadFrequently:true});
   const samples=[];
   for(const [type,values] of [['burden',[3/16,14/16,1]],['assimilation',[0,60,100]]]){
-   for(const value of values){g.clearRect(0,0,16,16);if(type==='burden')m.drawBurden(g,0,0,value,0,0);else m.drawAssimilation(g,0,0,value,0,false);
-    const d=g.getImageData(0,0,16,16).data;let opaque=0,partial=0;const colors=new Set();
+   for(const value of values){g.clearRect(0,0,c.width,c.height);if(type==='burden')m.drawBurden(g,0,0,value,0,0);else m.drawAssimilation(g,0,0,value,0,false);
+    const d=g.getImageData(0,0,c.width,c.height).data;let opaque=0,partial=0;const colors=new Set();
     for(let i=0;i<d.length;i+=4){if(d[i+3]===255){opaque++;colors.add('#'+[d[i],d[i+1],d[i+2]].map(x=>x.toString(16).padStart(2,'0')).join(''));}else if(d[i+3])partial++;}
     samples.push({type,value,opaque,partial,colors:[...colors],signature:c.toDataURL()});
    }
   }
   const motion={};
-  for(const growing of [false,true]){const frames=[];for(const time of [0,450,900,1400,2000]){g.clearRect(0,0,16,16);m.drawAssimilation(g,0,0,60,time,growing);frames.push(c.toDataURL());}motion[growing?'growingFrames':'stableFrames']=new Set(frames).size;}
-  const frames=[];for(const f of [0,.3,.7,1]){g.clearRect(0,0,16,16);m.drawBurden(g,0,0,.875,170,f);frames.push(c.toDataURL());}motion.burdenFrames=new Set(frames).size;
-  return {samples,motion};
+  for(const growing of [false,true]){const frames=[];for(const time of [0,450,900,1400,2000]){g.clearRect(0,0,c.width,c.height);m.drawAssimilation(g,0,0,60,time,growing);frames.push(c.toDataURL());}motion[growing?'growingFrames':'stableFrames']=new Set(frames).size;}
+  const frames=[];for(const f of [0,.3,.7,1]){g.clearRect(0,0,c.width,c.height);m.drawBurden(g,0,0,.875,170,f);frames.push(c.toDataURL());}motion.burdenFrames=new Set(frames).size;
+  const fill=[];
+  for(const ratio of [0,.25,.5,.75,1]){
+   g.clearRect(0,0,c.width,c.height);m.drawBurden(g,0,0,ratio);
+   const d=g.getImageData(0,0,c.width,c.height).data;
+   fill.push({ratio,pixels:Array.from({length:c.width*c.height},(_,i)=>d[i*4+3]===255?i:-1).filter(i=>i>=0)});
+  }
+  window.__hudArt.renderPreset(1);
+  const hud=document.querySelector('#hud'),h=hud.getContext('2d');
+  const alignment=[0,24,48].map(y=>{
+   const d=h.getImageData(28,y,hud.width-28,20).data,points=[];
+   for(let i=0;i<d.length/4;i++)if(d[i*4+3])points.push({x:28+i%(hud.width-28),y:Math.floor(i/(hud.width-28))});
+   return {right:Math.max(...points.map(p=>p.x)),bottom:Math.max(...points.map(p=>p.y))};
+  });
+  return {samples,motion,fill,alignment};
  });
  const palette=JSON.parse(await fs.readFile(path.join(root,'docs/art/palette.json'),'utf8')).colors;
- for(const s of result.samples){assert(s.opaque>0 && s.opaque<=100);assert(s.partial===0);assert(s.colors.length<=2);assert(s.colors.every(c=>palette.includes(c)));}
+ for(const s of result.samples){assert(s.opaque>0 && s.opaque<=128);assert(s.partial===0);assert(s.colors.length<=2);assert(s.colors.every(c=>palette.includes(c)));}
  assert(new Set(result.samples.slice(0,3).map(s=>s.signature)).size===3);
  assert(new Set(result.samples.slice(3).map(s=>s.signature)).size===3);
+ for(let i=1;i<result.fill.length;i++){
+  assert(result.fill[i].pixels.length>result.fill[i-1].pixels.length);
+  assert(result.fill[i-1].pixels.every(p=>result.fill[i].pixels.includes(p)));
+ }
+ assert(result.alignment.every(p=>p.right===109 && p.bottom===12));
  assert(result.motion.stableFrames===1);assert(result.motion.growingFrames>1);assert(result.motion.burdenFrames>1);
  await page.locator('#weight').fill('7.5');assert((await page.evaluate(()=>window.__hudArt.getState())).weight===7.5);
  await page.locator('#assimilation').fill('32');assert((await page.evaluate(()=>window.__hudArt.getState())).assimilation===32);
@@ -49,6 +67,7 @@ try{
  const url=await page.evaluate(()=>window.__hudArt.getSpriteSheet());await fs.writeFile(out+'/marks-native.png',Buffer.from(url.split(',')[1],'base64'));
  assert.deepEqual(errors,[]);
  for(const s of result.samples)delete s.signature;
- await fs.writeFile(out+'/art-check.json',JSON.stringify({pass:true,scope:'Art study only; 16x16 symbols, at most 2 colors and 100 opaque pixels, palette, distinct states, animation and controls. Not gameplay integration or human visual approval.',errors,...result},null,2)+'\n');
+ for(const f of result.fill){f.opaque=f.pixels.length;delete f.pixels;}
+ await fs.writeFile(out+'/art-check.json',JSON.stringify({pass:true,scope:'Art study only; 16x20 symbols, at most 2 colors and 128 opaque pixels, palette, monotonic interior fill, three aligned numeric rows, distinct states, animation and controls. Not gameplay integration or human visual approval.',errors,...result},null,2)+'\n');
  console.log(JSON.stringify({pass:true,motion:result.motion}));
 }finally{await browser.close();}
