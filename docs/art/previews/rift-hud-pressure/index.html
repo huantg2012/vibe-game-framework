@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>右上角 HUD · 像素样例</title>
+  <link rel="stylesheet" href="./study.css">
+</head>
+<body>
+  <main>
+    <header><p class="eyebrow">COH / HUD ART STUDY</p><h1>负重与同化</h1><p>一套像素画法，三组观察状态。仅美术样例，未接入游戏。</p></header>
+    <nav aria-label="观察状态">
+      <button data-preset="0">轻载 · 未同化</button>
+      <button data-preset="1" class="selected">临满 · 中度同化</button>
+      <button data-preset="2">满载 · 完全同化</button>
+    </nav>
+    <div class="scene" id="scene"><img src="./scene.png" alt="当前裂隙真实场景参考" width="960" height="640"><canvas id="hud" width="168" height="116" aria-label="负重与同化像素样例"></canvas></div>
+    <div class="controls">
+      <label>负重 <input id="weight" type="range" min="0" max="16" value="14" step="0.1"><output id="weight-value">14.0 / 16.0</output></label>
+      <label>同化 <input id="assimilation" type="range" min="0" max="100" value="60" step="1"><output id="assimilation-value">60.0%</output></label>
+      <label class="toggle"><input id="growing" type="checkbox" checked>演示同化增长</label>
+      <button id="replay">重播受力动作</button>
+    </div>
+    <p class="caption">上图为 960 × 640 实景原尺寸。负重与同化可独立调整；增长开关只演示像素动效，不运行机制。</p>
+    <section><div class="section-heading"><h2>右上角细看</h2><span>三种状态 · 2× 最近邻</span></div><canvas id="comparison" width="960" height="360"></canvas></section>
+    <section><div class="section-heading"><h2>像素形体</h2><span>透明底原稿 · 4× 最近邻</span></div><canvas id="marks" width="960" height="218"></canvas></section>
+    <footer>负重：束带绷紧与包体受压。 同化：原身体轮廓中的材质侵入。<br>演示速度不代表游戏增长速度；100%是同化上限，不表示死亡。</footer>
+  </main>
+  <script type="module" src="./study.js"></script>
+</body>
+</html>
