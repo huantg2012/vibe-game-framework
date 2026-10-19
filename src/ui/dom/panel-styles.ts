@@ -362,9 +362,6 @@ const CSS = `
 .hud-report-entry:hover,.hud-report-entry:focus-visible{color:#c0c3b0}.hud-report-entry:focus-visible{outline:1px solid #727e66;outline-offset:1px}.hud-report-entry.is-heavy .hud-entry-weight{color:#b0a689}
 .hud-report-entry[hidden],#dom-ui-root:has(.game-panel,.inventory-wrap) .hud-report-entry{visibility:hidden;pointer-events:none}
 #purif-report-entry{align-self:flex-end;margin-right:-4px}
-#rift-hud-burden{opacity:.8;padding:2px 4px;margin-right:-4px;line-height:16px}
-#rift-hud-burden .hud-entry-weight{line-height:16px}
-#rift-hud-assimilation{display:flex;align-items:baseline;gap:8px;white-space:nowrap;text-shadow:0 1px 3px #000}
 #rift-hud-assimilation[hidden],#dom-ui-root:has(.game-panel,.inventory-wrap) #rift-hud-assimilation{display:none}
 .rift-assimilation-label{font:10px/14px var(--ui-font);color:#7e8a7e}
 .rift-assimilation-value{font:11px/16px var(--ui-mono);color:#a5b09a}
@@ -382,7 +379,12 @@ const CSS = `
 .purif-prompt-inner .purif-readout-slot + .purif-readout-slot { opacity:.6; margin-top:3px; }
 #rift-hud { position:absolute; inset:0; pointer-events:none; font:11px/16px var(--ui-font); }
 #rift-hud-status-stack { position:absolute; top:24px; left:24px; width:218px; display:flex; flex-direction:column; gap:8px; }
-#rift-hud-resource-stack { position:absolute; top:24px; right:24px; display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+#rift-hud-resource-stack { position:absolute; top:24px; right:24px; min-width:112px; display:flex; flex-direction:column; gap:2px; }
+#rift-hud-resource-stack > div,#rift-hud-resource-stack > button { position:relative; display:grid; grid-template-columns:24px minmax(0,1fr); column-gap:8px; align-items:start; height:16px; box-sizing:border-box; padding:0 2px 0 0; margin:0; opacity:1; white-space:nowrap; }
+#rift-hud-resource-stack > * > span:first-child { font:11px/16px var(--ui-font); color:#8a8f96; text-align:left; }
+#rift-hud-resource-stack .rift-pixel-value { justify-self:end; font-size:0; line-height:0; text-shadow:none; margin-top:2px; }
+.rift-pixel-value canvas { display:block; image-rendering:pixelated; }
+#rift-hud-resource-stack #rift-hud-assimilation[hidden],#dom-ui-root:has(.game-panel,.inventory-wrap) #rift-hud-resource-stack #rift-hud-assimilation { display:none; }
 #rift-hud-status { position:relative; width:144px; opacity:.8; }
 #rift-hud-chaos { position:relative; width:144px; opacity:.75; }
 .rift-readout-header { display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:3px; }
@@ -390,7 +392,7 @@ const CSS = `
 .rift-hud-value { font:11px/16px var(--ui-mono); color:#a5b09a; }
 .rift-hud-state { display:block; margin-top:2px; font-size:10px; line-height:14px; color:#8e9b83; }
 .rift-hud-state[hidden] { display:none; }
-#rift-hud-kindling { position:relative; display:flex; align-items:baseline; gap:8px; opacity:.7; }
+#rift-hud-kindling { position:relative; }
 #rift-hud-kindling .rift-hud-value { color:#b39b75; }
 #rift-hud-effects { position:relative; max-width:190px; display:flex; flex-direction:column; gap:2px; opacity:.7; }
 .device-effect { display:flex; align-items:baseline; gap:8px; }

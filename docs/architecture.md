@@ -582,6 +582,7 @@ src/
 │   └── dom/
 │       ├── panel-styles.ts     # 共享面板样式层：全部 DOM 面板的单一 <style> 注入点
 │       ├── rift-hud.ts         # 裂隙读数（DOM，非 Phaser hud.ts）
+│       ├── rift-pressure-readout.ts # 右上三行点阵数字与连续压力色，DOM等价文本保留
 │       ├── detection-pulse.ts  # 裂隙屏缘被发现干涉（#rift-detection-rim）
 │       ├── encounter-narration.ts # 遭遇识别旁白（#rift-encounter-log）
 │       ├── purification-hud.ts # 净化点贴顶装置读数 + 底栏提示条（.device-plate）

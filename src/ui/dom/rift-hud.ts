@@ -1,4 +1,5 @@
 import { commitEffects } from '@/core/commit-effects';
+import { PixelHudReadout, pressureReadoutColor } from './rift-pressure-readout';
 /**
  * RiftHud - DOM overlay for the rift scene (A-class world-in-device readout,
  * ui-art-overhaul.md v2 §A0 #2/#3/#4).
@@ -174,6 +175,9 @@ export class RiftHud {
   private kindlingEl!: HTMLDivElement;
   private burdenEl!: HTMLButtonElement;
   private burdenValueEl!: HTMLSpanElement;
+  private burdenReadout!: PixelHudReadout;
+  private kindlingReadout!: PixelHudReadout;
+  private assimilationReadout!: PixelHudReadout;
   private lastBurden = "";
   private assimilationEl!: HTMLDivElement;
   private assimilationValueEl!: HTMLSpanElement;
@@ -277,8 +281,11 @@ export class RiftHud {
     const next = `${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
     if (next === this.lastBurden) return;
     this.lastBurden = next;
-    this.burdenValueEl.textContent = next;
-    this.burdenEl.classList.toggle('is-heavy', weight >= capacity * .875);
+    this.burdenEl.setAttribute('aria-label', `查看随身物品，负重 ${next}`);
+    this.burdenReadout.set(next, [
+      { text: (weight / 10).toFixed(1), color: pressureReadoutColor('burden', capacity > 0 ? weight / capacity : weight > 0 ? 1 : 0) },
+      { text: `/${(capacity / 10).toFixed(1)}`, color: '#8a8f96', gap: 2 },
+    ]);
   }
 
   /** Read persistent body state only after the scene commits it. */
@@ -289,7 +296,7 @@ export class RiftHud {
     if (text === this.lastAssimilation) return;
     this.lastAssimilation = text;
     this.assimilationEl.hidden = text === null;
-    this.assimilationValueEl.textContent = text ?? '';
+    this.assimilationReadout.set(text ?? '', [{ text: text ?? '', color: pressureReadoutColor('assimilation', (assimilation ?? 0) / 100) }]);
   }
 
   setEquipment(slots: readonly RiftEquipmentSlot[]): void {
@@ -458,6 +465,7 @@ export class RiftHud {
     kindlingLabel.className = 'rift-hud-label';
     const kindlingValue = document.createElement('span');
     kindlingValue.className = 'rift-hud-value';
+    this.kindlingReadout = new PixelHudReadout(kindlingValue);
     this.kindlingEl.appendChild(kindlingLabel);
     this.kindlingEl.appendChild(kindlingValue);
     this.burdenEl = document.createElement('button');
@@ -469,6 +477,7 @@ export class RiftHud {
     this.burdenEl.innerHTML = '<span>负重</span>';
     this.burdenValueEl = document.createElement('span');
     this.burdenValueEl.className = 'hud-entry-weight';
+    this.burdenReadout = new PixelHudReadout(this.burdenValueEl);
     this.burdenEl.append(this.burdenValueEl);
     this.burdenEl.addEventListener('click', event => { event.stopPropagation(); if (!this.config.isRunEnded()) this.config.onInventory?.(); });
     for (const name of ['pointerdown', 'keydown', 'keyup'] as const) this.burdenEl.addEventListener(name, event => { if (!(event instanceof KeyboardEvent) || ['Enter', ' '].includes(event.key)) event.stopPropagation(); });
@@ -483,6 +492,7 @@ export class RiftHud {
     assimilationLabel.textContent = '同化';
     this.assimilationValueEl = document.createElement('span');
     this.assimilationValueEl.className = 'rift-assimilation-value';
+    this.assimilationReadout = new PixelHudReadout(this.assimilationValueEl);
     this.assimilationEl.append(assimilationLabel, this.assimilationValueEl);
     this.lastAssimilation = null;
 
@@ -637,8 +647,7 @@ export class RiftHud {
   }
 
   private updateKindlingText(): void {
-    const valueEl = this.kindlingEl.lastElementChild;
-    if (valueEl) valueEl.textContent = String(this.kindling);
+    this.kindlingReadout.set(String(this.kindling), [{ text: String(this.kindling), color: '#b89040' }]);
   }
 
   private renderEffectsText(): void {
