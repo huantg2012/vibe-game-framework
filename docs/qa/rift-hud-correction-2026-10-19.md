@@ -46,3 +46,10 @@ root执行生产构建通过（19.55秒），保留既有大chunk警告；源码
 [当前实景](artifacts/rift-hud-spacing-2026-10-19/hud-compact.png) · [展开与临界状态](artifacts/rift-hud-spacing-2026-10-19/hud-compact-expanded-stress.png) · [组件回执](artifacts/rift-hud-spacing-2026-10-19/component-check.json)。
 
 Art子代理与root复核两帧：分组连续、主次仍可辨，低血／三效果／帮助不互压，不遮中央人物，装备仍可读。本次限定布局无阻断；用户审美、其他世界动态背景、性能与后两阶段不因此通过。
+
+
+## 同日移除操作帮助入口（COH-F032）
+
+用户明确要求删除左上“操作 · 展开 / 收起”。已移除整个details、正文与专属CSS，更新既有检查脚本；键位与其他HUD读数保留。类型检查、既有生产组件回归通过，隔离正式新出发破膜盆地的[5项检查](artifacts/rift-hud-spacing-2026-10-19/no-help-browser-check.json)通过、零pageerror。采集于d0f65f8b上的本次工作树，未访问用户存档。
+
+[最新实景](artifacts/rift-hud-spacing-2026-10-19/hud-no-help.png) · [组件回执](artifacts/rift-hud-spacing-2026-10-19/no-help-component-check.json)。root复看实际截图，Art短核认为删组沿现有自然流收拢、无新增层级或遮挡问题。本批仅删除入口；前述含展开帮助的截图是修改前历史证据。

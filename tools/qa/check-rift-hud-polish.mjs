@@ -75,7 +75,7 @@ try {
     hud.create({ canExtract: () => false, isRunEnded: () => false, getAssimilation: () => window.__assimilation, onInventory() {} });
     hud.restoreReadouts({ health: 100, maxHealth: 100, chaos: 100, kindling: 0 });
   });
-  assert.equal(await page.locator('#rift-hud-help').evaluate(x => x.open), false);
+  assert.equal(await page.locator('#rift-hud-help').count(), 0);
   assert.equal(await page.locator('.rift-assimilation-value').textContent(), '30.0%');
   assert.equal(await page.locator('#rift-hud-assimilation').isVisible(), true);
   assert(!(await page.locator('#rift-hud-status').textContent()).includes('同化'));
@@ -106,20 +106,15 @@ try {
   assert.deepEqual(assimilation.samples, [{ a: 0, text: '0.0%', visible: true }, { a: 100, text: '100.0%', visible: true }]);
   for (const key of ['deferred', 'flushed', 'discarded', 'unchangedPrecisionPreservesNode', 'hiddenBehindPanel']) assert(assimilation[key], key);
   assert((await page.locator('#rift-hud').textContent()).includes('临界'));
-  await page.locator('#rift-hud-help summary').focus(); await page.keyboard.press('Enter');
-  assert.equal(await page.locator('#rift-hud-help').evaluate(x => x.open), true);
   const layout = await page.evaluate(() => {
     const readout = document.querySelector('#rift-hud-assimilation').getBoundingClientRect();
-    const help = document.querySelector('#rift-hud-help').getBoundingClientRect();
     const entry = document.querySelector('#rift-hud-burden').getBoundingClientRect();
     return { insideCanvas: readout.left >= 0 && readout.right <= 960 && readout.bottom <= 640,
-      separateFromHelp: readout.left >= help.right || readout.bottom <= help.top,
       belowEntry: readout.top > entry.bottom };
   });
   for (const [key, pass] of Object.entries(layout)) assert(pass, key);
   await page.evaluate(() => window.__hud.update(13000));
-  assert.equal(await page.locator('#rift-hud-help').evaluate(x => x.open), true);
-  await page.locator('#rift-hud-help summary').click(); assert.equal(await page.locator('#rift-hud-help').evaluate(x => x.open), false);
+  assert.equal(await page.locator('#rift-hud-help').count(), 0);
   await page.evaluate(() => { window.__hud.destroy(); window.__hud.create({ canExtract: () => false, isRunEnded: () => false, getAssimilation: () => null }); window.__hud.restoreReadouts({ health: 100, maxHealth: 100, chaos: 150, kindling: 0 }); });
   const legacyText = await page.locator('#rift-hud').textContent(); assert(legacyText.includes('混乱')); assert(legacyText.includes('150')); assert(!legacyText.includes('/ 100'));
   assert.equal(await page.locator('#rift-hud-assimilation').isVisible(), false);

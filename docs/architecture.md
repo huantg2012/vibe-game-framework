@@ -1507,8 +1507,8 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 
 - `managers/growth-purchases.ts`是成长/加厚的持久化应用服务：快照游戏、成长、稳定度，执行真实消费与升级，一次保存后发布成功事件；拒写完整回滚，活动出击/未结算纪录阻止购买。UI只消费结果，不自行扣资源或先发奖励。数据仍由CSV与既有系统常量定义。
 - `Minimap`保留原66px显示窗与约1056世界像素范围（32px地图33格，8px地图132格）及真实可见细格累积，只为已见撤离口加圆外方向刻记；不生成通路/揭示未知。可选 `abyss` 保存旧目标位置及剩余/总时钟，恢复不重新查询目标。66px原生画布及简短已记状态挂原overlay根。
-- Rift HUD沿`#dom-ui-root`固定960×640屏幕空间：左上状态／效果／帮助共用纵向流式容器（组距8px），右上薪柴／负重／同化共用纵向容器（行距4px），空项不占位；装备保留24px图标并缩至2px行距。
-- `RiftHud`输入帮助按DEC-222默认收起，只保留主动展开入口；生命/污染保持即时主层；DEC-223纠正后，同化常驻右上次级短读数，Tab“随身”的身体小节提供详细效果，均不显示冲击增幅。`InventoryPresenter`从场景注入的新/旧协议判据生成身体投影，`RiftHud.refreshAssimilation()`与`InventoryPanel.refreshPhysiology()`在完整帧提交后刷新显示精度变化的字段；后者只在已打开时更新，不重建列表。初始读数由实际系统状态hydrate，恢复不重发拾取/阈值事件；随身阅读仍不停世界。
+- Rift HUD沿`#dom-ui-root`固定960×640屏幕空间：左上状态／效果共用纵向流式容器（组距8px），右上薪柴／负重／同化共用纵向容器（行距4px），空项不占位；装备保留24px图标并缩至2px行距。
+- `RiftHud`按用户要求移除操作帮助入口及正文；生命/污染保持即时主层；DEC-223纠正后，同化常驻右上次级短读数，Tab“随身”的身体小节提供详细效果，均不显示冲击增幅。`InventoryPresenter`从场景注入的新/旧协议判据生成身体投影，`RiftHud.refreshAssimilation()`与`InventoryPanel.refreshPhysiology()`在完整帧提交后刷新显示精度变化的字段；后者只在已打开时更新，不重建列表。初始读数由实际系统状态hydrate，恢复不重发拾取/阈值事件；随身阅读仍不停世界。
 - `managers/rift-recovery.ts`拥有正式随机2D的生成身份、有限布局缓存与入场预校验。最终recipe仅校准，不强制覆盖原seed生成器的重试分支。Host核清单复用生产油膜纯烘焙/可走裁切/核位选择，保持生成遍历顺序；固定搜寻节点绑定种类、位置、基础产值与来源，包不能自行定义合法对象。
 - `ContaminationHostSystem`导出活动/反相节律、受伤核、危险源与抑制时钟，先恢复Host权威时钟，再由Tool恢复来源和显示；不重演施放。AI恢复全体正式甲身体/活动及视觉诱饵，Combat绑定真实身体与Host核ID。临时效果可引用已死对象，但只能引用原始清单。Player/Search的maxHealth与kindlingAffinity同时受存档成长等级约束。
 - `SaveManager`的基地入场闸门校验模块完整身份、HP/tier容量、CSV成长级别、潮汐阶段与时钟、稳定度及库存。显式`load('abandon-active')`只剥离世界包，仍完整校验基地/库存，随后Session才做一次正式弃局结算；不存在“损坏即重置全档”的分支。

@@ -412,11 +412,6 @@ const CSS = `
 #rift-minimap.device-plate { right:20px; bottom:20px; padding:0; border:0; outline:none; opacity:.85; z-index:999; }
 #rift-minimap canvas { display:block; width:66px; height:66px; border:0; clip-path:circle(50%); image-rendering:pixelated; }
 .rift-minimap-legend { margin-top:2px; text-align:center; color:#8a9c92; font:10px/14px var(--ui-font); letter-spacing:1px; opacity:.8; }
-#rift-hud-help { position:relative; width:218px; color:#9ba696; font:11px/17px var(--ui-font); text-shadow:0 1px 3px #000; pointer-events:auto; }
-#rift-hud-help summary { width:max-content; cursor:pointer; opacity:.7; list-style:none; }
-#rift-hud-help summary:focus-visible { outline:1px solid #81917a; outline-offset:3px; }
-#rift-hud-help[open] summary { opacity:.9; margin-bottom:4px; }
-#rift-hud-help .rift-control-key { color:#c0b49a; }
 #rift-encounter-log { position:absolute; left:50%; bottom:90px; transform:translateX(-50%); width:520px; max-width:520px; display:none; font:13px/23px var(--ui-title); letter-spacing:1px; color:#a1ac97; text-align:center; pointer-events:none; text-shadow:0 2px 5px #000; z-index:40; }
 #rift-encounter-log.is-recording { display:block; }
 .encounter-log { display:inline-block; max-width:100%; padding:3px 12px; }
