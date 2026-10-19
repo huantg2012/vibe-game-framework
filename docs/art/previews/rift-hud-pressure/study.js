@@ -8,6 +8,14 @@ const hud = document.querySelector('#hud');
 const ctx = hud.getContext('2d');
 const scene = document.querySelector('.scene img');
 const comparison = document.querySelector('#comparison');
+// Existing UI Kit endpoints; intermediate shades are continuous blends, not
+// new palette entries or gameplay tiers. Keep resource and bodily costs distinct.
+const tones={rest:[179,186,174],burden:[191,150,91],assimilation:[189,104,94]};
+function pressureColor(kind,amount){
+  const t=Math.max(0,Math.min(1,kind==='burden'?(amount/16-.5)/.5:amount/100));
+  const blend=t*t*(3-2*t);
+  return '#'+tones.rest.map((value,i)=>Math.round(value+(tones[kind][i]-value)*blend).toString(16).padStart(2,'0')).join('');
+}
 const digits = {
   '0':['01110','10001','10001','10001','10001','10001','01110'],
   '1':['00100','01100','00100','00100','00100','00100','01110'],
@@ -50,10 +58,10 @@ function paintHud(target,s) {
   pixelText(target,'0',hudLayout.valueRight,4,'#b89040',11,'right');
   pixelText(target,'负重',0,22,'#8a8f96',10);
   const weight=s.weight.toFixed(1),capacity='/16.0';
-  pixelText(target,weight,hudLayout.valueRight-capacity.length*6-2,22,s.weight>=14?'#e0a848':'#c8cdd4',12,'right');
+  pixelText(target,weight,hudLayout.valueRight-capacity.length*6-2,22,pressureColor('burden',s.weight),12,'right');
   pixelText(target,capacity,hudLayout.valueRight,22,'#8a8f96',10,'right');
   pixelText(target,'同化',0,40,'#8a8f96',10);
-  pixelText(target,`${s.assimilation.toFixed(1)}%`,hudLayout.valueRight,40,s.assimilation>=60?'#1aad96':'#c8cdd4',12,'right');
+  pixelText(target,`${s.assimilation.toFixed(1)}%`,hudLayout.valueRight,40,pressureColor('assimilation',s.assimilation),12,'right');
 }
 
 function paintComparison() {
