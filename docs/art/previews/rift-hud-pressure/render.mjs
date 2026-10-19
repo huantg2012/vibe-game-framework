@@ -40,8 +40,8 @@ try{
  for(const [i,rows] of samples.entries()){
   assert(rows.every(r=>r.right===109 && r.bottom===12));
   assert.deepEqual(rows[0].colors,['#b89040']);
-  assert.deepEqual(rows[1].colors,['#8a8f96',['#b3baae','#bd9c68','#bf965b'][i]]);
-  assert.deepEqual(rows[2].colors,[['#b3baae','#b9857a','#bd685e'][i]]);
+  assert.deepEqual(rows[1].colors,['#8a8f96',['#b3baae','#bb756b','#bd685e'][i]]);
+  assert.deepEqual(rows[2].colors,[['#b3baae','#9aa588','#8c9973'][i]]);
   assert(rows.every(r=>r.minContrast>=4.5));
  }
  await page.locator('#weight').fill('7.5');assert((await page.evaluate(()=>window.__hudArt.getState())).weight===7.5);

@@ -8,9 +8,9 @@ const hud = document.querySelector('#hud');
 const ctx = hud.getContext('2d');
 const scene = document.querySelector('.scene img');
 const comparison = document.querySelector('#comparison');
-// Existing UI Kit endpoints; intermediate shades are continuous blends, not
-// new palette entries or gameplay tiers. Keep resource and bodily costs distinct.
-const tones={rest:[179,186,174],burden:[191,150,91],assimilation:[189,104,94]};
+// Existing UI cost red and a local grey-olive art candidate. Continuous blends
+// create no gameplay tiers and do not alter the locked production palette.
+const tones={rest:[179,186,174],burden:[189,104,94],assimilation:[140,153,115]};
 function pressureColor(kind,amount){
   const t=Math.max(0,Math.min(1,kind==='burden'?(amount/16-.5)/.5:amount/100));
   const blend=t*t*(3-2*t);
