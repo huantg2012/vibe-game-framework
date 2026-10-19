@@ -12,9 +12,9 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 ## 持久同化与疗愈事务（2026-10-19，DEC-221）
 
-`data/assimilation.csv` → `tools/csv-codegen/assimilation.mjs` → `generated/assimilation-data.ts` 单向提供策划参数；`systems/assimilation-system.ts` 只派生速率、视距、感知距离、冲击预算及疗愈值，不持有第二份状态。`GameState`拥有长期同化及疗愈周期计数，`ChaosSystem`只在新出发冻结的`persistent-v1`协议中投影/推进它；旧在途无标记则保持150混乱规则。新协议内部按满污染时刻与临时减缓到期分段积分，暂停不推进。RiftScene把共同投影交给原视野、速度与AI感知来源；不改变VOID、Host伤害和CHASE反击。
+`data/assimilation.csv` → `tools/csv-codegen/assimilation.mjs` → `generated/assimilation-data.ts` 单向提供策划参数；`systems/assimilation-system.ts` 只派生速率、视距、感知距离及疗愈值，不持有第二份状态。`GameState`拥有长期同化及疗愈周期计数，`ChaosSystem`只在新出发冻结的`persistent-v1`协议中投影/推进它；旧在途无标记则保持150混乱规则。新协议内部按满污染时刻与临时减缓到期分段积分，暂停不推进。RiftScene把共同投影交给原视野、速度与AI感知来源；不改变VOID、Host伤害和CHASE反击。
 
-`managers/healing-cycle.ts`负责培养藏的一次疗愈事务：资格检查→治疗前同化预算的强制冲击→供奉/潮汐和真实成长经历→负向稳定度事实→部分降低同化→下一预告→完整保存。疗愈用独立`healing:<sequence>`身份，不伪造run、不消费出击工具趟数，也不授予成功归返或正稳定度。原`ImpactSystem`和`ContaminantSystem`仍分别拥有伤害/预告及供奉生命周期。
+`managers/healing-cycle.ts`负责培养藏的一次疗愈事务：资格检查→当前潮汐正常预算的强制冲击→供奉/潮汐和真实成长经历→负向稳定度事实→部分降低同化→下一预告→完整保存。疗愈用独立`healing:<sequence>`身份，不伪造run、不消费出击工具趟数，也不授予成功归返或正稳定度。原`ImpactSystem`和`ContaminantSystem`仍分别拥有伤害/预告及供奉生命周期。
 
 `SaveManager`将`physiologyVersion:1`、同化和疗愈周期纳入整帧/世界候选；只有三字段全缺才是合法旧基地档。新协议缺字段或在途内外同化不一致拒绝加载，不静默清零。写入失败冻结候选和操作，重试同一bytes而不重冲击；净化点retry期间Esc也不能穿透到系统菜单。GrowthPanel仅预览与发出一次疗愈动作，ImpactResultPanel展示真实周期结果。规则唯一正文为[同化与疗愈](specs/system-assimilation-healing.md)，实际检查范围见[QA](qa/assimilation-healing-2026-10-19.md)。
 
@@ -1507,7 +1507,7 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 
 - `managers/growth-purchases.ts`是成长/加厚的持久化应用服务：快照游戏、成长、稳定度，执行真实消费与升级，一次保存后发布成功事件；拒写完整回滚，活动出击/未结算纪录阻止购买。UI只消费结果，不自行扣资源或先发奖励。数据仍由CSV与既有系统常量定义。
 - `Minimap`保留原66px显示窗与约1056世界像素范围（32px地图33格，8px地图132格）及真实可见细格累积，只为已见撤离口加圆外方向刻记；不生成通路/揭示未知。可选 `abyss` 保存旧目标位置及剩余/总时钟，恢复不重新查询目标。66px原生画布及简短已记状态挂原overlay根。
-- `RiftHud`输入帮助按DEC-222默认收起，只保留主动展开入口；生命/污染保持即时层，同化从常驻HUD移至Tab“随身”的身体小节。`InventoryPresenter`从场景注入的新/旧协议判据生成身体投影，`InventoryPanel.refreshPhysiology()`只在已打开时刷新显示精度变化的身体字段，不重建列表；更新排在完整帧提交之后。初始读数由实际系统状态hydrate，恢复不重发拾取/阈值事件；随身阅读仍不停世界。
+- `RiftHud`输入帮助按DEC-222默认收起，只保留主动展开入口；生命/污染保持即时主层；DEC-223纠正后，同化常驻右上次级短读数，Tab“随身”的身体小节提供详细效果，均不显示冲击增幅。`InventoryPresenter`从场景注入的新/旧协议判据生成身体投影，`RiftHud.refreshAssimilation()`与`InventoryPanel.refreshPhysiology()`在完整帧提交后刷新显示精度变化的字段；后者只在已打开时更新，不重建列表。初始读数由实际系统状态hydrate，恢复不重发拾取/阈值事件；随身阅读仍不停世界。
 - `managers/rift-recovery.ts`拥有正式随机2D的生成身份、有限布局缓存与入场预校验。最终recipe仅校准，不强制覆盖原seed生成器的重试分支。Host核清单复用生产油膜纯烘焙/可走裁切/核位选择，保持生成遍历顺序；固定搜寻节点绑定种类、位置、基础产值与来源，包不能自行定义合法对象。
 - `ContaminationHostSystem`导出活动/反相节律、受伤核、危险源与抑制时钟，先恢复Host权威时钟，再由Tool恢复来源和显示；不重演施放。AI恢复全体正式甲身体/活动及视觉诱饵，Combat绑定真实身体与Host核ID。临时效果可引用已死对象，但只能引用原始清单。Player/Search的maxHealth与kindlingAffinity同时受存档成长等级约束。
 - `SaveManager`的基地入场闸门校验模块完整身份、HP/tier容量、CSV成长级别、潮汐阶段与时钟、稳定度及库存。显式`load('abandon-active')`只剥离世界包，仍完整校验基地/库存，随后Session才做一次正式弃局结算；不存在“损坏即重置全档”的分支。
