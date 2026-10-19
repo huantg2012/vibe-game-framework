@@ -1,4 +1,4 @@
-import { drawBurden, drawAssimilation } from './pixel-marks.js';
+import { drawBurden, drawAssimilation, markSize } from './pixel-marks.js';
 
 const presets = [
   { weight:3, assimilation:0, title:'轻载 · 未同化' },
@@ -46,40 +46,40 @@ function pixelText(target,text,x,y,color,size=11,align='left') {
 }
 
 function paintHud(target,s,time=0,feedback=0) {
-  target.clearRect(0,0,168,116);target.imageSmoothingEnabled=false;
-  pixelText(target,'薪柴',136,0,'#71816e',10,'right');
-  pixelText(target,'0',168,0,'#b39b75',11,'right');
-  drawBurden(target,34,22,s.weight/16,time,feedback);
-  pixelText(target,'负重',78,24,'#8e9b83',10);
-  pixelText(target,s.weight.toFixed(1),78,40,s.weight>=14?'#e0a848':'#c8cdd4',12);
-  pixelText(target,'/16.0',111,40,'#8a8f96',10);
-  drawAssimilation(target,34,68,s.assimilation,time,s.growing&&s.assimilation<100&&s.assimilation>0);
-  pixelText(target,'同化',78,70,'#8e9b83',10);
-  pixelText(target,`${s.assimilation.toFixed(1)}%`,78,86,s.assimilation>=60?'#a5b09a':'#c8cdd4',12);
+  target.clearRect(0,0,148,64);target.imageSmoothingEnabled=false;
+  pixelText(target,'薪柴',123,0,'#71816e',10,'right');
+  pixelText(target,'0',144,0,'#b39b75',11,'right');
+  drawBurden(target,0,20,s.weight/16,time,feedback);
+  pixelText(target,'负重',24,22,'#8e9b83',10);
+  pixelText(target,s.weight.toFixed(1),109,23,s.weight>=14?'#e0a848':'#c8cdd4',12,'right');
+  pixelText(target,'/16.0',115,23,'#8a8f96',10);
+  drawAssimilation(target,0,42,s.assimilation,time,s.growing&&s.assimilation<100&&s.assimilation>0);
+  pixelText(target,'同化',24,44,'#8e9b83',10);
+  pixelText(target,`${s.assimilation.toFixed(1)}%`,144,45,s.assimilation>=60?'#a5b09a':'#c8cdd4',12,'right');
 }
 
 function paintComparison() {
-  const c=comparison.getContext('2d');c.imageSmoothingEnabled=false;c.fillStyle='#080d10';c.fillRect(0,0,960,360);
+  const c=comparison.getContext('2d');c.imageSmoothingEnabled=false;c.fillStyle='#080d10';c.fillRect(0,0,960,220);
   presets.forEach((s,i)=>{
     const x=i*320;
-    c.drawImage(scene,800,8,160,144,x,44,320,288);
-    const tile=document.createElement('canvas');tile.width=168;tile.height=116;
+    c.drawImage(scene,784,8,160,80,x,44,320,160);
+    const tile=document.createElement('canvas');tile.width=148;tile.height=64;
     paintHud(tile.getContext('2d'),s,0,0);
-    c.drawImage(tile,32,0,136,116,x,76,272,232);
-    c.font='16px "PingFang SC",sans-serif';c.fillStyle='#b5c1b5';c.fillText(s.title,x+24,28);
+    c.drawImage(tile,x+8,76,296,128);
+    c.font='16px "PingFang SC",sans-serif';c.fillStyle='#b5c1b5';c.fillText(s.title,x+16,28);
     c.fillStyle='#52645b';c.font='12px monospace';c.fillText(`0${i+1}`,x+283,28);
   });
 }
 
 function paintMarks() {
-  const c=marks.getContext('2d');c.imageSmoothingEnabled=false;c.fillStyle='#0b1013';c.fillRect(0,0,960,218);
-  const tile=document.createElement('canvas');tile.width=32;tile.height=40;const t=tile.getContext('2d');
+  const c=marks.getContext('2d');c.imageSmoothingEnabled=false;c.fillStyle='#0b1013';c.fillRect(0,0,960,138);
+  const tile=document.createElement('canvas');tile.width=16;tile.height=16;const t=tile.getContext('2d');
   [3/16,14/16,1,0,60,100].forEach((v,i)=>{
-    t.clearRect(0,0,32,40);
+    t.clearRect(0,0,16,16);
     if(i<3)drawBurden(t,0,0,v,0,0);else drawAssimilation(t,0,0,v,0,false);
-    c.drawImage(tile,i*160+16,12,128,160);
+    c.drawImage(tile,i*160+48,20,64,64);
     c.fillStyle='#98a79d';c.textAlign='center';c.font='11px "PingFang SC",sans-serif';
-    c.fillText(i<3?`负重 ${(v*16).toFixed(1)} / 16.0`:`同化 ${v}%`,i*160+80,195);
+    c.fillText(i<3?`负重 ${(v*16).toFixed(1)} / 16.0`:`同化 ${v}%`,i*160+80,118);
   });
 }
 
@@ -99,12 +99,12 @@ document.querySelector('#replay').addEventListener('click',()=>state.feedbackSta
 await scene.decode();await document.fonts.ready;
 paintComparison();paintMarks();sync();
 window.__hudArt = {
-  presets,
+  presets, markSize,
   renderPreset(index){Object.assign(state,presets[index]);state.growing=false;sync();paintHud(ctx,state,0,0);},
   getState(){return {...state};},
   getSpriteSheet(){
-    const c=document.createElement('canvas');c.width=192;c.height=40;const g=c.getContext('2d');
-    presets.forEach((s,i)=>{drawBurden(g,i*32,0,s.weight/16,0,0);drawAssimilation(g,(i+3)*32,0,s.assimilation,0,false);});
+    const c=document.createElement('canvas');c.width=96;c.height=16;const g=c.getContext('2d');
+    presets.forEach((s,i)=>{drawBurden(g,i*16,0,s.weight/16,0,0);drawAssimilation(g,(i+3)*16,0,s.assimilation,0,false);});
     return c.toDataURL('image/png');
   },
 };
