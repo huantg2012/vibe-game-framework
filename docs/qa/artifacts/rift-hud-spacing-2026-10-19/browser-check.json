@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-19T07:52:51.441Z",
+  "revision": "0337fa75182ca249f7d0df3b054b054407b1ce15",
+  "browser": "155.0.8059.80",
+  "scope": "Current production HUD normal fresh departure plus UI-only critical-health/three-effects/expanded-help layout fixture; no user save access.",
+  "errors": [],
+  "checks": [
+    {
+      "name": "zero assimilation remains visible",
+      "pass": true
+    },
+    {
+      "name": "HUD has no mechanic explanation or impact claim",
+      "pass": true,
+      "detail": "完整度\n100/100\n污染\n15 / 100\n稳定\n操作 · 展开 / 收起\n薪柴\n0\n负重\n3.0 / 16.0\n同化\n0.0%\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—"
+    },
+    {
+      "name": "assimilation is separate from primary bars",
+      "pass": true
+    },
+    {
+      "name": "weight label is explicit with no Tab text",
+      "pass": true,
+      "detail": "负重\n3.0 / 16.0"
+    },
+    {
+      "name": "four equipment rows occupy 102 logical pixels",
+      "pass": true,
+      "detail": {
+        "top": 573.7508344046677,
+        "bottom": 675.7508251335048,
+        "height": 101.99999072883702
+      }
+    },
+    {
+      "name": "primary status groups have 8px spacing",
+      "pass": true
+    },
+    {
+      "name": "help follows pollution with 8px spacing",
+      "pass": true
+    },
+    {
+      "name": "right readouts have 4px spacing",
+      "pass": true
+    },
+    {
+      "name": "critical health and three effects keep help clear",
+      "pass": true,
+      "detail": {
+        "noOverlap": true,
+        "aboveEquipment": true,
+        "dangerVisible": true
+      }
+    }
+  ],
+  "screenshots": [
+    "hud-compact.png",
+    "hud-compact-expanded-stress.png"
+  ],
+  "world": "r100-cinder-ridge",
+  "layout": {
+    "rift-hud-status": {
+      "top": 83.750795774822,
+      "bottom": 104.7507911392405,
+      "height": 20.999995364418513
+    },
+    "rift-hud-chaos": {
+      "top": 112.75078495846519,
+      "bottom": 149.7507911392405,
+      "height": 37.000006180775316
+    },
+    "rift-hud-help": {
+      "top": 157.7507965474189,
+      "bottom": 174.7507950022251,
+      "height": 16.99999845480617
+    },
+    "rift-hud-kindling": {
+      "top": 83.750795774822,
+      "bottom": 99.75079500222508,
+      "height": 15.999999227403086
+    },
+    "rift-hud-burden": {
+      "top": 103.75079191183742,
+      "bottom": 123.75078804885285,
+      "height": 19.999996137015426
+    },
+    "rift-hud-assimilation": {
+      "top": 127.75079654741891,
+      "bottom": 143.750795774822,
+      "height": 15.999999227403086
+    },
+    "rift-hud-tools": {
+      "top": 573.7508344046677,
+      "bottom": 675.7508251335048,
+      "height": 101.99999072883702
+    }
+  },
+  "stress": {
+    "noOverlap": true,
+    "aboveEquipment": true,
+    "dangerVisible": true
+  },
+  "pass": true,
+  "implementationRevision": "afc99843",
+  "revisionNote": "Captured on 0337fa75 with HUD spacing working-tree changes, committed unchanged as afc99843."
+}
