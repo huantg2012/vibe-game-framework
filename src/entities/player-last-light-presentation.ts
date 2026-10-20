@@ -14,6 +14,7 @@ import {
 import { sampleWorldMaterialLight, type WorldMaterialLighting } from './form-renderers/d/world-material-light';
 import { LAST_LIGHT_PLAYER_CAMERA as CAMERA, LAST_LIGHT_PLAYER_BASIS as BASIS,
   lastLightToNative, lastLightScreenHeading, nearestLastLightYaw } from './player-last-light-math';
+import type { AssimilationModelFrame } from '@/dev/assimilation-model-protocol';
 
 interface ExportFrame {
   key: string; yawIndex: number; yaw: number; pose: 'idle' | 'walk' | 'attack'; phase: number | string;
@@ -165,6 +166,7 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
   private readonly assimilationMetrics = createAssimilationLookMetrics();
   private readonly assimilationSurfaces = new Map<PreparedFrame, AssimilationFrameSurface>();
   private readonly assimilationScratch = new Float32Array(5);
+  private assimilationModel: PreparedFrame | null = null;
   constructor(private readonly scene: Phaser.Scene, private readonly player: PlayerPresentationSource,
     private readonly assets: LastLightPlayerAssets, private readonly lighting: WorldMaterialLighting) {
     const key = `last-light-player-a-${++nextTextureId}`;
@@ -195,9 +197,9 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     const row = nearestLastLightYaw(this.player.getFacingAngle(), this.assets.headings);
     const column = this.player.isMoving() ? 1 + Math.floor(this.distance / (LAST_LIGHT_STRIDE_METRES * CAMERA.scale) * 12) % 12 : 0;
     this.frameIndex = row * 13 + column;
-    const frame = this.assets.frames[this.frameIndex]!;
+    const frame = this.assimilationModel ?? this.assets.frames[this.frameIndex]!;
     this.image.setPosition(position.x, groundY); this.contact.setPosition(position.x, groundY); this.glove.setPosition(position.x, groundY);
-    const sample = this.quality ? lastLightAttackSampleIndex(this.attackPose) : -1;
+    const sample = this.quality && !this.assimilationModel ? lastLightAttackSampleIndex(this.attackPose) : -1;
     this.attackIndex = sample < 0 ? -1 : row * 15 + sample;
     const arm = this.attackIndex < 0 ? null : this.assets.attackArm[this.attackIndex]!;
     let wrist = frame.source.wrist;
@@ -221,15 +223,64 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     this.lamp.x = position.x + frame.lamp[0]; this.lamp.y = groundY + frame.lamp[1]; this.lamp.z = frame.lamp[2];
   }
   getLampPosition = (): Readonly<{ x: number; y: number; z: number }> => this.lamp;
+  getAssimilationModelPose(): { yaw: number; phase: number | null; breath: number } {
+    const source = this.assets.frames[this.frameIndex]!.source;
+    return { yaw: source.yaw, phase: source.pose === 'walk' ? Number(source.phase) : null, breath: 0 };
+  }
+  /** DEV frame override: the complete authored geometry and its sockets arrive
+   * together. No shared production atlas is mutated. */
+  setAssimilationModel(value: AssimilationModelFrame | null): void {
+    if (!import.meta.env.DEV || this.destroyed) return;
+    if (this.assimilationModel) {
+      const old = this.assimilationSurfaces.get(this.assimilationModel);
+      if (old) this.assimilationMetrics.maskBytes -= old.pixels.byteLength;
+      this.assimilationSurfaces.delete(this.assimilationModel);
+    }
+    this.assimilationModel = null;
+    if (value) {
+      const offsets: number[] = [], pixels: number[] = [], glovePixels: number[] = [];
+      const depths = new Float32Array(64 * 80).fill(-Infinity);
+      for (let y = 0; y < 80; y++) for (let x = 0; x < 64; x++) {
+        const j = (y * 64 + x) * 4;
+        if (!value.albedo[j + 3]) continue;
+        const d = (value.depth[j]! * 256 + value.depth[j + 1]!) / 256 - 80;
+        depths[j / 4] = d;
+        const point = unprojectLastLight(x + .5, y + .5, d, CAMERA, BASIS), p = lastLightToNative(point);
+        const n = lastLightToNative([value.normal[j]! / 127.5 - 1, value.normal[j + 1]! / 127.5 - 1, value.normal[j + 2]! / 127.5 - 1]);
+        offsets.push(j);
+        pixels.push(p[0] * CAMERA.scale, p[1] * CAMERA.scale, p[2] * CAMERA.scale, ...n,
+          value.albedo[j]!, value.albedo[j + 1]!, value.albedo[j + 2]!, value.material[j + 2]! / 255, value.material[j + 3]! / 255 * 2);
+        if (Math.hypot(...point.map((v, i) => v - value.meta.wrist.world[i]!)) < .1) glovePixels.push(j / 4);
+      }
+      const screen = (socket: AssimilationModelFrame['meta']['wrist']): LightVector =>
+        [socket.screen[0], socket.screen[1], socket.world.reduce((v, p, i) => v + p * BASIS.back[i]!, 0)];
+      const lamp = lastLightToNative(value.meta.lamp);
+      const frame: PreparedFrame = {
+        source: { key: `study-${value.id}`, yawIndex: 0, yaw: value.meta.yaw, pose: value.meta.phase === null ? 'idle' : 'walk',
+          phase: value.meta.phase ?? 0, rect: [0, 0, 64, 80], lampWorld: value.meta.lamp,
+          wristWorld: value.meta.wrist.world, shoulderWorld: value.meta.shoulder.world,
+          wrist: screen(value.meta.wrist), shoulder: screen(value.meta.shoulder), glovePixels },
+        offsets: new Uint16Array(offsets), pixels: new Float32Array(pixels), depths, contact: null,
+        lamp: [lamp[0] * CAMERA.scale, lamp[1] * CAMERA.scale, lamp[2] * CAMERA.scale],
+        wrist: lastLightToNative(value.meta.wrist.world), shoulder: lastLightToNative(value.meta.shoulder.world),
+      };
+      this.assimilationModel = frame;
+      this.prepareAssimilationSurface(frame);
+    }
+    this.syncPose(); this.render();
+  }
   /** Explicit DEV opt-in. Preparation is bounded by the existing frame set. */
   setAssimilationLook(state: AssimilationLookState | null): void {
     if (!import.meta.env.DEV || this.destroyed) return;
     this.assimilationLook.set(state);
     if (!state || this.assimilationSurfaces.size) return;
     getAssimilationLookPalettes();
+    for (const frames of [this.assets.frames, this.assets.bodyWithoutArm])
+      for (const frame of frames) this.prepareAssimilationSurface(frame);
+  }
+  private prepareAssimilationSurface(frame: PreparedFrame): void {
     const backLength = Math.hypot(BASIS.back[0], BASIS.back[2]);
     const backX = BASIS.back[0] / backLength, backZ = BASIS.back[2] / backLength;
-    for (const frames of [this.assets.frames, this.assets.bodyWithoutArm]) for (const frame of frames) {
       const surface = new Uint8Array(frame.offsets.length * ASSIMILATION_SURFACE_STRIDE);
       const c = Math.cos(frame.source.yaw), s = Math.sin(frame.source.yaw), pixels = frame.pixels;
       const leftWrist = frame.source.pose === 'walk'
@@ -251,7 +302,6 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
       });
       this.assimilationMetrics.maskBytes += surface.byteLength;
       this.assimilationMetrics.preparedFrames++;
-    }
   }
   /** CPU render duration includes the original lighting and texture uploads. */
   getAssimilationLookMetrics(): Readonly<AssimilationLookMetrics> { return this.assimilationMetrics; }
@@ -259,7 +309,7 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     if (this.destroyed) return;
     const measure = this.assimilationLook.enabled, start = measure ? performance.now() : 0;
     if (measure) this.assimilationMetrics.changedPixels = 0;
-    const original = this.assets.frames[this.frameIndex]!;
+    const original = this.assimilationModel ?? this.assets.frames[this.frameIndex]!;
     const arm = this.attackIndex < 0 ? null : this.assets.attackArm[this.attackIndex]!;
     const body = arm ? this.assets.bodyWithoutArm[this.frameIndex]! : original;
     this.output.data.fill(0); this.composedDepth.fill(-Infinity); this.composedArm.fill(0);
@@ -281,8 +331,9 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
       }
     }
     this.gloveTexture.context.putImageData(this.gloveOutput,0,0); this.gloveTexture.refresh();
-    if (this.previousContactFrame !== this.frameIndex && original.contact) {
-      this.contactTexture.context.putImageData(original.contact, 0, 0); this.contactTexture.refresh();
+    const contactFrame = this.assets.frames[this.frameIndex]!;
+    if (this.previousContactFrame !== this.frameIndex && contactFrame.contact) {
+      this.contactTexture.context.putImageData(contactFrame.contact, 0, 0); this.contactTexture.refresh();
       this.previousContactFrame = this.frameIndex;
     }
     this.rendered = true;

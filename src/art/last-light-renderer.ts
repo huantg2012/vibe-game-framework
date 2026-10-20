@@ -7,6 +7,7 @@ import {
   getAssimilationLookPalettes, recordAssimilationLookTime,
   type AssimilationLookMetrics, type AssimilationLookState,
 } from './assimilation-appearance';
+import type { AssimilationModelFrame } from '@/dev/assimilation-model-protocol';
 
 export interface LastLightFrame {
   x: number; y: number; width: number; height: number;
@@ -221,6 +222,11 @@ export class LastLightRenderer {
   private readonly assimilationLook = new AssimilationLookParameters();
   private readonly assimilationMetrics = createAssimilationLookMetrics();
   private assimilationPaletteUploaded = false;
+  private assimilationModel: LastLightFrame | null = null;
+  private readonly assimilationTextures = new Map<keyof LastLightRenderImages, WebGLTexture>();
+  private readonly assimilationUpload = new Uint8Array(64 * 80 * 4);
+  private assimilationBounds = { x: 0, y: 0, width: 64, height: 80 };
+  private assimilationRenderState: LastLightRenderState | null = null;
 
   constructor(private readonly pack: LastLightRenderPack) {
     this.canvas = document.createElement('canvas');
@@ -320,19 +326,58 @@ export class LastLightRenderer {
   }
   /** CPU draw/submission time only: this is deliberately not called GPU time. */
   getAssimilationLookMetrics(): Readonly<AssimilationLookMetrics> { return this.assimilationMetrics; }
+  getAssimilationModelPose(): { yaw: number; phase: number | null; breath: number } | null {
+    const state = this.assimilationRenderState;
+    if (!state || state.gaitPose === 'sit') return null;
+    const frame = this.frame(state);
+    return { yaw: frame.yaw, phase: frame.pose === 'walk' ? frame.phase / 12 * Math.PI * 2 : null, breath: 0 };
+  }
+  /** Four small textures replace the same four actor samplers. They never
+   * duplicate the original atlas and never add a compositing pass. */
+  setAssimilationModel(value: AssimilationModelFrame | null): void {
+    if (!import.meta.env.DEV || this.destroyed) return;
+    this.assimilationModel = value ? { x: 0, y: 0, width: 64, height: 80, anchor: value.meta.anchor,
+      yaw: value.meta.yaw, pose: value.meta.phase === null ? 'idle' : 'walk', phase: value.meta.phase ?? 0,
+      lamp: value.meta.lamp, shadowCapsules: value.meta.shadowCapsules } : null;
+    if (value) {
+      const gl = this.gl;
+      let left = 64, top = 80, right = 0, bottom = 0;
+      for (let i = 0; i < 64 * 80; i++) if (value.albedo[i * 4 + 3]) {
+        const x = i % 64, y = Math.floor(i / 64);
+        left = Math.min(left, x); top = Math.min(top, y); right = Math.max(right, x + 1); bottom = Math.max(bottom, y + 1);
+      }
+      this.assimilationBounds = { x: left, y: top, width: right - left, height: bottom - top };
+      // Typed arrays are not flipped by UNPACK_FLIP_Y_WEBGL. Match the existing
+      // image-backed atlas orientation explicitly for all four data channels.
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+      for (const [key, data] of [['actorColor', value.albedo], ['actorNormal', value.normal],
+        ['actorDepth', value.depth], ['actorRough', value.material]] as const) {
+        let texture = this.assimilationTextures.get(key);
+        if (!texture) { texture = this.texture(null, 64, 80); this.assimilationTextures.set(key, texture); }
+        for (let y = 0; y < 80; y++) this.assimilationUpload.set(data.subarray(y * 256, (y + 1) * 256), (79 - y) * 256);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 64, 80, gl.RGBA, gl.UNSIGNED_BYTE, this.assimilationUpload);
+      }
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    }
+    if (this.assimilationRenderState) this.draw(this.assimilationRenderState);
+  }
   draw(state: LastLightRenderState): void {
     if (this.destroyed) return;
     if (this.gl.isContextLost()) throw new Error('Last Light rendering context was lost.');
     const measure = this.assimilationLook.enabled, start = measure ? performance.now() : 0;
-    const gl = this.gl, frame = this.frame(state); this.currentFrame = frame;
+    if (import.meta.env.DEV) this.assimilationRenderState = state;
+    const geometry = state.gaitPose === 'sit' ? null : this.assimilationModel;
+    const gl = this.gl, frame = geometry ?? this.frame(state); this.currentFrame = frame;
     const projected = projectLastLight(state.world, this.pack.camera, this.basis);
     const top = [Math.round(projected[0] - frame.anchor[0]), Math.round(projected[1] - frame.anchor[1])];
-    const bounds = this.frameBounds.get(frame)!;
+    const bounds = geometry ? this.assimilationBounds : this.frameBounds.get(frame)!;
     this.actorBounds.x = top[0]! + bounds.x; this.actorBounds.y = top[1]! + bounds.y; this.actorBounds.width = bounds.width; this.actorBounds.height = bounds.height;
     const lamp: LightVector = [state.world[0] + frame.lamp[0], state.world[1] + frame.lamp[1], state.world[2] + frame.lamp[2]];
     const lampScreen = projectLastLight(lamp, this.pack.camera, this.basis); this.lampPosition.x = lampScreen[0]; this.lampPosition.y = lampScreen[1];
     this.shadows.updateShoulder(lamp);
-    const image = (key: keyof LastLightRenderImages): WebGLTexture => this.images.get(key)!;
+    const image = (key: keyof LastLightRenderImages): WebGLTexture =>
+      (geometry ? this.assimilationTextures.get(key) : null) ?? this.images.get(key)!;
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
     const p = this.environment;
     this.begin(p, [['uScene',image('scene')],['uBackground',image('background')],['uFar',image('far')],['uMiddle',image('middle')],['uNear',image('near')],['uExteriorDepth',image('exteriorDepth')],['uExteriorFields',image('exteriorFields')]]);
@@ -382,10 +427,10 @@ export class LastLightRenderer {
     }
     for (const [name, value] of [['uRight', this.basis.right], ['uUp', this.basis.up], ['uBack', this.basis.back], ['uTarget', this.pack.camera.target], ['uActorWorld', state.world], ['uLamp', lamp]] as const) gl.uniform3fv(this.uniform(c, name), value);
     gl.uniform2fv(this.uniform(c, 'uOrigin'), this.pack.camera.origin); gl.uniform1f(this.uniform(c, 'uScale'), this.pack.camera.scale);
-    gl.uniform1f(this.uniform(c, 'uActorDepthOffset'), this.pack.actorDepthOffset); gl.uniform1f(this.uniform(c, 'uActorDepthScale'), this.pack.actorDepthScale);
+    gl.uniform1f(this.uniform(c, 'uActorDepthOffset'), geometry ? 80 : this.pack.actorDepthOffset); gl.uniform1f(this.uniform(c, 'uActorDepthScale'), geometry ? 256 : this.pack.actorDepthScale);
     gl.uniform1f(this.uniform(c, 'uResting'), state.resting ? 1 : 0);
     gl.uniform4f(this.uniform(c, 'uActorRect'), frame.x, frame.y, frame.width, frame.height);
-    gl.uniform2f(this.uniform(c, 'uActorTop'), top[0]!, top[1]!); gl.uniform2f(this.uniform(c, 'uActorAtlasSize'), this.pack.images.actorColor.width, this.pack.images.actorColor.height);
+    gl.uniform2f(this.uniform(c, 'uActorTop'), top[0]!, top[1]!); gl.uniform2f(this.uniform(c, 'uActorAtlasSize'), geometry ? 64 : this.pack.images.actorColor.width, geometry ? 80 : this.pack.images.actorColor.height);
     const capsules=frame.shadowCapsules??[];
     gl.uniform1i(this.uniform(c,'uCapsuleCount'),Math.min(14,capsules.length));
     capsules.slice(0,14).forEach((v,i)=>{

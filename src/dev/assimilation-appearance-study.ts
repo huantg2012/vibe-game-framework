@@ -16,8 +16,9 @@ import type { AssimilationLookState } from '@/art/assimilation-appearance';
 import type { Player } from '@/entities/player';
 import { lastLightScreenHeading } from '@/entities/player-last-light-math';
 import { setArtStudyNarrationStorage } from '@/narrative/atmosphere';
+import { AssimilationModelClient, type AssimilationModelConsumer } from './assimilation-model-client';
 
-interface LookRenderer {
+interface LookRenderer extends AssimilationModelConsumer {
   setAssimilationLook(state: AssimilationLookState | null): void;
   getAssimilationLookMetrics(): { count:number;totalMs:number;lastMs:number;maxMs:number;maskBytes:number;preparedFrames:number;changedPixels:number };
 }
@@ -55,6 +56,8 @@ function initialize(): void {
   let frame = 0, last = 0, cycle = 0, refreshMs = 0, detailMs = 0;
   let inspector = true, detailRequested = false, hookedGame = false, failed = false, lastRender = 0;
   let preparationMs = 0;
+  let geometry = true;
+  const model = new AssimilationModelClient(error);
   const intervals: number[] = [], cpuSamples:number[]=[], controller = new AbortController();
   let lastMeasuredCount=0;
   const canvas = el<HTMLCanvasElement>('detail'), context = canvas.getContext('2d')!;
@@ -63,7 +66,7 @@ function initialize(): void {
     const sorted = values.slice().sort((a,b) => a-b); return sorted[Math.floor((sorted.length - 1)*quantile)] ?? 0;
   };
   function error(reason: unknown): void {
-    failed=true; renderer?.setAssimilationLook(null); active=null; renderer=null;
+    failed=true; model.destroy(); renderer?.setAssimilationLook(null); active=null; renderer=null;
     game?.events.off(Phaser.Core.Events.POST_RENDER,postrender);
     if(gym)gym.destroy();else game?.destroy(true);
     el('error').hidden = false; el('error').textContent = String(reason); el('waiting').hidden = true;
@@ -80,7 +83,7 @@ function initialize(): void {
     el('description').textContent = automatic ? '连续演示：同化加深 → 混合残留 → 疗愈退去。拖动滑杆接管。' : '手动观察：参数平滑抵达；原角色对照保留相同光照与姿态。';
     el('metrics').textContent = JSON.stringify({ samples: intervals.length, frameIntervalMedianMs: +percent(intervals,.5).toFixed(2),
       frameIntervalP95Ms: +percent(intervals,.95).toFixed(2),cpuP95Ms:+percent(cpuSamples,.95).toFixed(3), renderer: renderer?.getAssimilationLookMetrics() ?? null,
-      preparationMs,note: 'CPU提交与全场帧间隔；未测GPU执行时间。' }, null, 2);
+      preparationMs,geometry:model.metrics,note: 'CPU提交与全场帧间隔；建模光栅耗时来自独立Worker；未测GPU执行时间。' }, null, 2);
   }
   function set(a: number, f: number, immediate = false): void {
     automatic = false; target.amount = Math.max(0,Math.min(1,a)); target.fibre = Math.max(0,Math.min(1,f));
@@ -90,6 +93,7 @@ function initialize(): void {
   function apply(): void {
     if (baseline) { zeroLook.seconds=state.seconds; renderer?.setAssimilationLook(zeroLook); }
     else renderer?.setAssimilationLook(state);
+    if (renderer) model.update(renderer, baseline || !geometry ? 0 : state.amount, state.fibre, state.seconds, state.motion);
   }
   function pause(value: boolean): void {
     if (paused === value) return;
@@ -162,6 +166,8 @@ function initialize(): void {
       detailMs+=dt; if (detailMs>66) { detailMs=0; detailRequested=true; }
       refreshMs+=dt; if (refreshMs>400) { refreshMs=0; readouts(); }
     }
+    if (active && renderer && !document.hidden)
+      model.update(renderer, baseline || !geometry ? 0 : state.amount, state.fibre, state.seconds, state.motion);
     frame=requestAnimationFrame(tick);
   }
   if (selected==='haven') {
@@ -196,13 +202,23 @@ function initialize(): void {
   for(const button of document.querySelectorAll<HTMLButtonElement>('[data-yaw]'))button.onclick=()=>face(Number(button.dataset.yaw));
   el('motion').onclick=()=>{state.motion=!state.motion;el('motion').setAttribute('aria-pressed',String(state.motion));apply();};
   el('subjective').onclick=()=>{state.subjective=!state.subjective;el('subjective').setAttribute('aria-pressed',String(state.subjective));apply();};
+  el('geometry').onclick=()=>{geometry=!geometry;el('geometry').setAttribute('aria-pressed',String(geometry));apply();};
   function setInspector(value:boolean):void{inspector=value;el('inspector').setAttribute('aria-pressed',String(value));el('inspector').textContent=value?'局部放大开':'局部放大关';}
   el('inspector').onclick=()=>setInspector(!inspector);
   const api={set,pause,face,auto:(value:boolean)=>{automatic=value;cycle=0;readouts();},baseline:(value:boolean)=>{baseline=value;apply();readouts();},
+    geometry:(value:boolean)=>{geometry=value;apply();},
     snapshot:()=>({world:selected,state:{...state},target:{...target},automatic,baseline,paused,ready:!!renderer,
+      geometry,modelSettled:model.settled,modelMetrics:{...model.metrics},
       frameP50:percent(intervals,.5),frameP95:percent(intervals,.95),cpuP95:percent(cpuSamples,.95),preparationMs,metrics:renderer?.getAssimilationLookMetrics(),player:active?.player.getPosition()}),
     clearSamples:()=>{intervals.length=0;cpuSamples.length=0;},inspector:setInspector,captureDetail:()=>{detailRequested=true;}};
   Object.assign(window,{__assimilationStudy:api});
   readouts();frame=requestAnimationFrame(tick);
-  window.addEventListener('pagehide',()=>{disposed=true;cancelAnimationFrame(frame);controller.abort();renderer?.setAssimilationLook(null);if(gym)gym.destroy();else game?.destroy(true);delete(window as unknown as Record<string,unknown>).__assimilationStudy;},{once:true});
+  // This sample validates standing/walking deformation; combat and device
+  // interactions require separate morphed action chains, so do not trigger them.
+  window.addEventListener('keydown',event=>{
+    if (['Space','KeyE','KeyQ','KeyF','Tab'].includes(event.code) && event.target === el('game-container')) {
+      event.preventDefault(); event.stopImmediatePropagation();
+    }
+  },true);
+  window.addEventListener('pagehide',()=>{disposed=true;cancelAnimationFrame(frame);controller.abort();model.destroy();renderer?.setAssimilationLook(null);if(gym)gym.destroy();else game?.destroy(true);delete(window as unknown as Record<string,unknown>).__assimilationStudy;},{once:true});
 }
