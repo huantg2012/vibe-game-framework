@@ -1,0 +1,257 @@
+{
+  "scope": "Combined finite production checks across the recorded runs; not a claim that the uninterrupted main script passed. Controlled A/source/seed fixtures, isolated contexts, actual action clock/UI. No user save access.",
+  "methods": {
+    "main": "report.json",
+    "supplement": "haven-supplement/report.json",
+    "earlier": "report-first-attempt.json"
+  },
+  "checks": [
+    {
+      "name": "Three open worlds: normal departure, A0 baseline, real A85 and actual world source, complete ready bank, screenshot",
+      "pass": true
+    },
+    {
+      "name": "Crystal mixed sources: real movement/active attack pixels, synchronous body/arm geometry and live action samples",
+      "pass": true
+    },
+    {
+      "name": "Actual pause and cold Continue preserve sources and checkpoint",
+      "pass": true
+    },
+    {
+      "name": "Explicit abandon and return to Haven preserve sources and settle loss outcome",
+      "pass": true
+    },
+    {
+      "name": "Haven mixed standing and real keyboard sitting use full ready geometry",
+      "pass": true
+    },
+    {
+      "name": "Actual healing cycle proportionally reduces A and sources, then ready geometry reflects A70",
+      "pass": true
+    }
+  ],
+  "failures": [
+    {
+      "attempt": "Startup before browser",
+      "reason": "QA source-hash list used src/art/last-light-visual.ts instead of src/scenes/last-light-visual.ts. Corrected path; no product execution."
+    },
+    {
+      "attempt": "report-first-attempt.json",
+      "reason": "QA pressed return before the result panel accepted input. Fixed by waiting for and clicking the actual return button. Original numeric failure record remains; its failure PNG was overwritten by the second attempt before unique failure names were added. The current crystal-fibre-failure.png belongs to the second attempt."
+    },
+    {
+      "attempt": "report.json",
+      "reason": "Zero-duration E press did not span a Haven update frame. Main report remains failed. Haven-only supplement uses a real 80ms E press and passes the unchanged 5s sit assertion and actual healing path."
+    }
+  ],
+  "measurements": {
+    "rift": [
+      {
+        "world": "ruptured-film",
+        "readyBankMs": 5061.5,
+        "baseline": {
+          "wallMs": 2020.300000011921,
+          "rafMs": {
+            "count": 121,
+            "mean": 16.665289256198346,
+            "p50": 16.69999999999709,
+            "p95": 16.799999999999272,
+            "p99": 16.799999999999272,
+            "max": 16.799999999999272
+          },
+          "cpuMs": {
+            "count": 122,
+            "mean": 0.31639344477262654,
+            "p50": 0.30000001192092896,
+            "p95": 0.40000003576278687,
+            "p99": 0.40000003576278687,
+            "max": 0.40000003576278687
+          },
+          "rendererCount": 122,
+          "rendererTotalMs": 38.60000026226044,
+          "maskBytes": 998487,
+          "preparedFrames": 328
+        },
+        "ready": {
+          "wallMs": 2016.199999988079,
+          "rafMs": {
+            "count": 120,
+            "mean": 16.665833333333346,
+            "p50": 16.700000000000728,
+            "p95": 16.700000000000728,
+            "p99": 16.799999999999272,
+            "max": 16.799999999999272
+          },
+          "cpuMs": {
+            "count": 121,
+            "mean": 0.34380164964139953,
+            "p50": 0.30000001192092896,
+            "p95": 0.40000003576278687,
+            "p99": 0.5,
+            "max": 0.5
+          },
+          "rendererCount": 121,
+          "rendererTotalMs": 41.599999606609344,
+          "maskBytes": 1002807,
+          "preparedFrames": 329
+        }
+      },
+      {
+        "world": "cinder-ridge",
+        "readyBankMs": 5546.799999952316,
+        "baseline": {
+          "wallMs": 2026,
+          "rafMs": {
+            "count": 121,
+            "mean": 16.666115702479328,
+            "p50": 16.700000000000728,
+            "p95": 16.700000000000728,
+            "p99": 16.799999999999272,
+            "max": 16.80000000000291
+          },
+          "cpuMs": {
+            "count": 122,
+            "mean": 0.42213114851810896,
+            "p50": 0.40000003576278687,
+            "p95": 0.5,
+            "p99": 0.6000000238418579,
+            "max": 0.9000000357627869
+          },
+          "rendererCount": 122,
+          "rendererTotalMs": 51.50000011920929,
+          "maskBytes": 998487,
+          "preparedFrames": 328
+        },
+        "ready": {
+          "wallMs": 2028.6000000238419,
+          "rafMs": {
+            "count": 121,
+            "mean": 16.666115702479328,
+            "p50": 16.700000000000728,
+            "p95": 16.700000000000728,
+            "p99": 16.799999999999272,
+            "max": 16.80000000000291
+          },
+          "cpuMs": {
+            "count": 122,
+            "mean": 0.46885246185005686,
+            "p50": 0.5,
+            "p95": 0.6000000238418579,
+            "p99": 0.7000000476837158,
+            "max": 0.800000011920929
+          },
+          "rendererCount": 122,
+          "rendererTotalMs": 57.20000034570694,
+          "maskBytes": 1002780,
+          "preparedFrames": 329
+        }
+      },
+      {
+        "world": "crystal-fibre",
+        "readyBankMs": 5114.5,
+        "baseline": {
+          "wallMs": 2011.199999988079,
+          "rafMs": {
+            "count": 120,
+            "mean": 16.666666666666668,
+            "p50": 16.69999999999891,
+            "p95": 16.700000000000728,
+            "p99": 16.80000000000109,
+            "max": 16.80000000000109
+          },
+          "cpuMs": {
+            "count": 121,
+            "mean": 0.21074380510109514,
+            "p50": 0.19999998807907104,
+            "p95": 0.30000001192092896,
+            "p99": 0.30000001192092896,
+            "max": 0.30000001192092896
+          },
+          "rendererCount": 121,
+          "rendererTotalMs": 25.500000417232513,
+          "maskBytes": 998487,
+          "preparedFrames": 328
+        },
+        "ready": {
+          "wallMs": 2013.199999988079,
+          "rafMs": {
+            "count": 120,
+            "mean": 16.665833333333314,
+            "p50": 16.700000000000728,
+            "p95": 16.799999999999272,
+            "p99": 16.799999999999272,
+            "max": 16.80000000000291
+          },
+          "cpuMs": {
+            "count": 121,
+            "mean": 0.2735537172349031,
+            "p50": 0.30000001192092896,
+            "p95": 0.3999999761581421,
+            "p99": 0.40000003576278687,
+            "max": 0.5
+          },
+          "rendererCount": 121,
+          "rendererTotalMs": 33.09999978542328,
+          "maskBytes": 1002951,
+          "preparedFrames": 329
+        }
+      }
+    ],
+    "havenAfterReturn": {
+      "readyBankMs": 22015.399999976158,
+      "steady": {
+        "wallMs": 2015.699999988079,
+        "rafMs": {
+          "count": 120,
+          "mean": 16.665833333333346,
+          "p50": 16.69999999999709,
+          "p95": 16.700000000004366,
+          "p99": 16.80000000000291,
+          "max": 16.80000000000291
+        },
+        "cpuMs": {
+          "count": 121,
+          "mean": 0.3611570246948684,
+          "p50": 0.30000001192092896,
+          "p95": 0.5999999642372131,
+          "p99": 2.5,
+          "max": 2.5
+        },
+        "rendererCount": 121,
+        "rendererTotalMs": 43.69999998807907,
+        "maskBytes": 0,
+        "preparedFrames": 0
+      }
+    },
+    "havenSupplement": {
+      "readyBankMs": 13706.699999988079,
+      "healedBankMs": 13571.300000011921,
+      "steady": {
+        "wallMs": 2009.1000000238419,
+        "rafMs": {
+          "count": 120,
+          "mean": 16.666666666666668,
+          "p50": 16.700000000000728,
+          "p95": 16.799999999999272,
+          "p99": 16.80000000000291,
+          "max": 16.80000000000291
+        },
+        "cpuMs": {
+          "count": 121,
+          "mean": 0.3297520664112627,
+          "p50": 0.20000004768371582,
+          "p95": 0.6000000238418579,
+          "p99": 1.800000011920929,
+          "max": 3
+        },
+        "rendererCount": 121,
+        "rendererTotalMs": 39.90000003576279,
+        "maskBytes": 0,
+        "preparedFrames": 0
+      }
+    }
+  },
+  "limits": "Headless Chrome on this machine, short stationary 2s frame samples. CPU draw/submission only, not GPU time. First bank preparation is asynchronous and can take seconds; complete action bank appears atomically. No long expedition, natural combat, long-term memory, alternate browser or human art approval claim. Hurt/death lifecycle is covered by the separate renderer execution checks, not this browser journey.",
+  "allListedChecksPassed": true
+}

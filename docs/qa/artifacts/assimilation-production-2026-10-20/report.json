@@ -1,0 +1,6640 @@
+{
+  "revision": "6d49b140172fc8094ad6ee156ad03fd7158c5e43",
+  "startedAt": "2026-10-20T12:42:00.996Z",
+  "sourcesBefore": {
+    "src/scenes/rift-scene.ts": "f15fa3b03990218d64c3b0f31519abbede5cbe942230a299f441983dafea17ed",
+    "src/scenes/purification-scene.ts": "9b32f56ce173ea92167a39f94fac98af369d80e50a308ce250836082aaf5839c",
+    "src/scenes/last-light-visual.ts": "e174792568aceb67c7453cd421e569d52544636fe4fe005cc1fec58f3b8ca271",
+    "src/art/last-light-renderer.ts": "588fa0ab8c6088fe624fa3a29cc7abd6106d29b9fcd001318b350d68d98ad990",
+    "src/entities/player-last-light-presentation.ts": "30b53222cc5ead1281c222bd89dd368208215891d0afff41c141549c04888fe5",
+    "src/art/assimilation-appearance.ts": "e1d7d3060a7cf1c1a0e51c07c9446e332d2515686071c0e5b877861cd94aa0a4",
+    "src/art/assimilation-state-presentation.ts": "efc4079da5f6a0d08e5f3c308d1c541d79efc8798586fef2558aa5ec2d0798e9",
+    "src/art/assimilation-presentation.ts": "984f0700221af3a91d87d2d5955b98a66934738110bc49a7a3832c5ad8a452a5",
+    "src/art/assimilation-model/client.ts": "9e244c8f33e4ed8bc3ce7b1684ea297eadfb71c7df7ccc5d9ee8f7a66117a7aa",
+    "src/art/assimilation-model/geometry.ts": "6a8662f202dad83814dd2c581fbb5be58e23207d8b5edcdfa86d7599cc97ccee"
+  },
+  "scope": "Normal title → haven → preparation → seeded Rift. Separate Chrome contexts protect user saves. Controlled fixtures set A85 with the actual selected world source at low natural P; Haven mix uses two genuine attributed increases. Movement, attack, pause, cold Continue, abandon, rest and one healing cycle use gameplay/UI paths. Growth panel opening uses the scene interaction handler. No art-study query, godmode, teleport or simulated attack clock. Screenshots wait for complete ready geometry. This does not certify long expeditions, balance, other browsers, GPU time or human art acceptance.",
+  "measurement": "DEV server, headless Chrome. rAF intervals measure whole-page scheduling; renderer timers measure CPU draw/submission, including existing work. Warmup is complete-bank wall time. No CPU delta is attributed exclusively to assimilation and no GPU timing is inferred.",
+  "worlds": [
+    {
+      "world": "ruptured-film",
+      "checks": [
+        "actual A/source projection drives ready full-body model and correct source family at low P"
+      ],
+      "images": {
+        "baseline": "ruptured-film-a0.png",
+        "ready": "ruptured-film-a85-ready.png"
+      },
+      "seed": 20261020,
+      "entry": {
+        "profile": "rift",
+        "amount": 0,
+        "sources": {
+          "version": 1,
+          "worlds": {},
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "idle",
+          "completed": 0,
+          "total": 0,
+          "error": ""
+        },
+        "cache": {
+          "requests": 0,
+          "completed": 0,
+          "cancelled": 0,
+          "lastBuildMs": 0,
+          "lastBakeMs": 0,
+          "maxBakeMs": 0,
+          "lastBankMs": 0,
+          "unpacked": 0,
+          "failed": 0,
+          "bankCount": 0,
+          "packedBytes": 0,
+          "hotFrames": 0,
+          "hotBytes": 0,
+          "activeSource": null,
+          "desiredSource": {
+            "amount": 0,
+            "fibre": 0,
+            "structure": 0
+          },
+          "activeFrames": 0,
+          "warmupMs": 0
+        },
+        "cpu": {
+          "count": 2,
+          "totalMs": 2.099999964237213,
+          "lastMs": 0.5999999642372131,
+          "maxMs": 1.5,
+          "maskBytes": 998487,
+          "preparedFrames": 328,
+          "changedPixels": 0
+        },
+        "look": {
+          "amount": 0,
+          "fibre": 0,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 0.019989999999999782
+        },
+        "position": {
+          "x": 292,
+          "y": 1028
+        },
+        "world": "r100-ruptured-film",
+        "chaos": {
+          "version": 1,
+          "value": 15.006632682,
+          "peak": 15.006632682,
+          "paused": false,
+          "clockMs": 19.98999999999978,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 15,
+          "lastModulated": 15.006632682,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 0,
+          "growthResistance": 0
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 292,
+            "y": 1038,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 297.432494648688,
+            "y": 1029.4405040778076,
+            "z": 34.344
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 293.749,
+            "y": 1016.1171032340828,
+            "z": 20.5375
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0,
+            "frame": null,
+            "body": null,
+            "arm": null,
+            "preparedFrames": 0
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "artFixture": false,
+        "godMode": false,
+        "paused": false,
+        "health": 100
+      },
+      "baseline": {
+        "wallMs": 2020.300000011921,
+        "rafMs": {
+          "count": 121,
+          "mean": 16.665289256198346,
+          "p50": 16.69999999999709,
+          "p95": 16.799999999999272,
+          "p99": 16.799999999999272,
+          "max": 16.799999999999272
+        },
+        "cpuMs": {
+          "count": 122,
+          "mean": 0.31639344477262654,
+          "p50": 0.30000001192092896,
+          "p95": 0.40000003576278687,
+          "p99": 0.40000003576278687,
+          "max": 0.40000003576278687
+        },
+        "rendererCount": 122,
+        "rendererTotalMs": 38.60000026226044,
+        "maskBytes": 998487,
+        "preparedFrames": 328
+      },
+      "warming": {
+        "profile": "rift",
+        "amount": 85,
+        "sources": {
+          "version": 1,
+          "worlds": {
+            "ruptured-film": 85
+          },
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "warming",
+          "completed": 0,
+          "total": 328,
+          "error": ""
+        },
+        "cache": {
+          "requests": 1,
+          "completed": 0,
+          "cancelled": 0,
+          "lastBuildMs": 0,
+          "lastBakeMs": 0,
+          "maxBakeMs": 0,
+          "lastBankMs": 0,
+          "unpacked": 0,
+          "failed": 0,
+          "bankCount": 2,
+          "packedBytes": 0,
+          "hotFrames": 0,
+          "hotBytes": 0,
+          "activeSource": null,
+          "desiredSource": {
+            "amount": 0.85,
+            "fibre": 0,
+            "structure": 1
+          },
+          "activeFrames": 0,
+          "warmupMs": 0
+        },
+        "cpu": {
+          "count": 139,
+          "totalMs": 46.1000000834465,
+          "lastMs": 0.40000003576278687,
+          "maxMs": 1.5,
+          "maskBytes": 998487,
+          "preparedFrames": 328,
+          "changedPixels": 397
+        },
+        "look": {
+          "amount": 0.9392499999999999,
+          "fibre": 0,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 2.4082500000000002
+        },
+        "position": {
+          "x": 292,
+          "y": 1028
+        },
+        "world": "r100-ruptured-film",
+        "chaos": {
+          "version": 1,
+          "value": 15.799057349999973,
+          "peak": 15.799057349999973,
+          "paused": false,
+          "clockMs": 2408.250000000001,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 15,
+          "lastModulated": 15.799057349999973,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 85,
+          "growthResistance": 0
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 292,
+            "y": 1038,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 297.432494648688,
+            "y": 1029.4405040778076,
+            "z": 34.344
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 293.749,
+            "y": 1016.1171032340828,
+            "z": 20.5375
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": null,
+            "body": null,
+            "arm": null,
+            "preparedFrames": 0
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "artFixture": false,
+        "godMode": false,
+        "paused": false,
+        "health": 100
+      },
+      "warmingSample": {
+        "wallMs": 2013.5999999642372,
+        "rafMs": {
+          "count": 120,
+          "mean": 16.665833333333314,
+          "p50": 16.700000000000728,
+          "p95": 16.700000000000728,
+          "p99": 16.799999999999272,
+          "max": 16.80000000000291
+        },
+        "cpuMs": {
+          "count": 121,
+          "mean": 0.3471074414647315,
+          "p50": 0.30000001192092896,
+          "p95": 0.40000003576278687,
+          "p99": 0.5,
+          "max": 0.6000000238418579
+        },
+        "rendererCount": 121,
+        "rendererTotalMs": 42.00000041723251,
+        "maskBytes": 998487,
+        "preparedFrames": 328
+      },
+      "ready": {
+        "waitWallMs": 3222,
+        "state": {
+          "profile": "rift",
+          "amount": 85,
+          "sources": {
+            "version": 1,
+            "worlds": {
+              "ruptured-film": 85
+            },
+            "unattributed": 0
+          },
+          "healingCycles": 0,
+          "status": {
+            "state": "ready",
+            "completed": 328,
+            "total": 328,
+            "error": ""
+          },
+          "cache": {
+            "requests": 333,
+            "completed": 333,
+            "cancelled": 0,
+            "lastBuildMs": 1,
+            "lastBakeMs": 6.300000011920929,
+            "maxBakeMs": 16.5,
+            "lastBankMs": 5061.5,
+            "unpacked": 1,
+            "failed": 0,
+            "bankCount": 2,
+            "packedBytes": 2066526,
+            "hotFrames": 1,
+            "hotBytes": 81920,
+            "activeSource": {
+              "amount": 0.85,
+              "fibre": 0,
+              "structure": 1
+            },
+            "desiredSource": {
+              "amount": 0.85,
+              "fibre": 0,
+              "structure": 1
+            },
+            "activeFrames": 328,
+            "warmupMs": 5061.5
+          },
+          "cpu": {
+            "count": 453,
+            "totalMs": 154.70000052452087,
+            "lastMs": 0.3999999761581421,
+            "maxMs": 1.5,
+            "maskBytes": 1002807,
+            "preparedFrames": 329,
+            "changedPixels": 394
+          },
+          "look": {
+            "amount": 0.9392499999999999,
+            "fibre": 0,
+            "neutralFraction": 0,
+            "fibrePalette": {
+              "dark": [
+                36,
+                45,
+                96
+              ],
+              "mid": [
+                80,
+                98,
+                167
+              ],
+              "light": [
+                139,
+                155,
+                207
+              ]
+            },
+            "membranePalette": {
+              "dark": [
+                107,
+                38,
+                62
+              ],
+              "mid": [
+                190,
+                80,
+                102
+              ],
+              "light": [
+                228,
+                146,
+                149
+              ]
+            },
+            "neutralPalette": {
+              "dark": [
+                44,
+                46,
+                51
+              ],
+              "mid": [
+                58,
+                61,
+                66
+              ],
+              "light": [
+                74,
+                78,
+                85
+              ]
+            },
+            "paletteRevision": 27,
+            "seconds": 7.683030000000014
+          },
+          "position": {
+            "x": 292,
+            "y": 1028
+          },
+          "world": "r100-ruptured-film",
+          "chaos": {
+            "version": 1,
+            "value": 17.54922935399976,
+            "peak": 17.54922935399976,
+            "paused": false,
+            "clockMs": 7683.029999999997,
+            "pollutionGrade": "medium",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 17.001782579999833,
+            "lastModulated": 17.54922935399976,
+            "thresholdsFired": [
+              false,
+              false,
+              false
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 85,
+            "growthResistance": 0
+          },
+          "probe": {
+            "ready": true,
+            "model": "a",
+            "frame": "2-idle-0",
+            "frameIndex": 26,
+            "yaw": 2.135366,
+            "pose": "idle",
+            "foot": {
+              "x": 292,
+              "y": 1038,
+              "anchor": [
+                32,
+                66
+              ]
+            },
+            "lamp": {
+              "x": 301.8260111965924,
+              "y": 1029.440497253266,
+              "z": 31.649825923261243
+            },
+            "oldBodyVisible": false,
+            "nativeScale": 1,
+            "weapon": {
+              "quality": "ordinary",
+              "variant": "standard",
+              "visible": true,
+              "behind": true
+            },
+            "attackPhase": "idle",
+            "attackFrame": -1,
+            "gripAnchor": {
+              "x": 293.7935791435121,
+              "y": 1016.7940003261481,
+              "z": 19.72050412578366
+            },
+            "hitFlash": false,
+            "assimilation": {
+              "amount": 0.9392499999999999,
+              "frame": "assimilation-83",
+              "body": null,
+              "arm": null,
+              "preparedFrames": 1
+            },
+            "nativeLights": 8,
+            "masked": true,
+            "contactMasked": true
+          },
+          "artFixture": false,
+          "godMode": false,
+          "paused": false,
+          "health": 100
+        }
+      },
+      "steady": {
+        "wallMs": 2016.199999988079,
+        "rafMs": {
+          "count": 120,
+          "mean": 16.665833333333346,
+          "p50": 16.700000000000728,
+          "p95": 16.700000000000728,
+          "p99": 16.799999999999272,
+          "max": 16.799999999999272
+        },
+        "cpuMs": {
+          "count": 121,
+          "mean": 0.34380164964139953,
+          "p50": 0.30000001192092896,
+          "p95": 0.40000003576278687,
+          "p99": 0.5,
+          "max": 0.5
+        },
+        "rendererCount": 121,
+        "rendererTotalMs": 41.599999606609344,
+        "maskBytes": 1002807,
+        "preparedFrames": 329
+      },
+      "pass": true
+    },
+    {
+      "world": "cinder-ridge",
+      "checks": [
+        "actual A/source projection drives ready full-body model and correct source family at low P"
+      ],
+      "images": {
+        "baseline": "cinder-ridge-a0.png",
+        "ready": "cinder-ridge-a85-ready.png"
+      },
+      "seed": 20261024,
+      "entry": {
+        "profile": "rift",
+        "amount": 0,
+        "sources": {
+          "version": 1,
+          "worlds": {},
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "idle",
+          "completed": 0,
+          "total": 0,
+          "error": ""
+        },
+        "cache": {
+          "requests": 0,
+          "completed": 0,
+          "cancelled": 0,
+          "lastBuildMs": 0,
+          "lastBakeMs": 0,
+          "maxBakeMs": 0,
+          "lastBankMs": 0,
+          "unpacked": 0,
+          "failed": 0,
+          "bankCount": 0,
+          "packedBytes": 0,
+          "hotFrames": 0,
+          "hotBytes": 0,
+          "activeSource": null,
+          "desiredSource": {
+            "amount": 0,
+            "fibre": 0,
+            "structure": 0
+          },
+          "activeFrames": 0,
+          "warmupMs": 0
+        },
+        "cpu": {
+          "count": 2,
+          "totalMs": 2.600000023841858,
+          "lastMs": 0.9000000357627869,
+          "maxMs": 1.699999988079071,
+          "maskBytes": 998487,
+          "preparedFrames": 328,
+          "changedPixels": 0
+        },
+        "look": {
+          "amount": 0,
+          "fibre": 0,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 0.02167000000000007
+        },
+        "position": {
+          "x": 300,
+          "y": 988
+        },
+        "world": "r100-cinder-ridge",
+        "chaos": {
+          "version": 1,
+          "value": 15.007190106,
+          "peak": 15.007190106,
+          "paused": false,
+          "clockMs": 21.670000000000073,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 15,
+          "lastModulated": 15.007190106,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 0,
+          "growthResistance": 0
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 300,
+            "y": 998,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 305.432494648688,
+            "y": 989.4405040778078,
+            "z": 34.344
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 301.749,
+            "y": 976.1171032340828,
+            "z": 20.5375
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0,
+            "frame": null,
+            "body": null,
+            "arm": null,
+            "preparedFrames": 0
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "artFixture": false,
+        "godMode": false,
+        "paused": false,
+        "health": 100
+      },
+      "baseline": {
+        "wallMs": 2026,
+        "rafMs": {
+          "count": 121,
+          "mean": 16.666115702479328,
+          "p50": 16.700000000000728,
+          "p95": 16.700000000000728,
+          "p99": 16.799999999999272,
+          "max": 16.80000000000291
+        },
+        "cpuMs": {
+          "count": 122,
+          "mean": 0.42213114851810896,
+          "p50": 0.40000003576278687,
+          "p95": 0.5,
+          "p99": 0.6000000238418579,
+          "max": 0.9000000357627869
+        },
+        "rendererCount": 122,
+        "rendererTotalMs": 51.50000011920929,
+        "maskBytes": 998487,
+        "preparedFrames": 328
+      },
+      "warming": {
+        "profile": "rift",
+        "amount": 85,
+        "sources": {
+          "version": 1,
+          "worlds": {
+            "cinder-ridge": 85
+          },
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "warming",
+          "completed": 0,
+          "total": 328,
+          "error": ""
+        },
+        "cache": {
+          "requests": 1,
+          "completed": 0,
+          "cancelled": 0,
+          "lastBuildMs": 0,
+          "lastBakeMs": 0,
+          "maxBakeMs": 0,
+          "lastBankMs": 0,
+          "unpacked": 0,
+          "failed": 0,
+          "bankCount": 2,
+          "packedBytes": 0,
+          "hotFrames": 0,
+          "hotBytes": 0,
+          "activeSource": null,
+          "desiredSource": {
+            "amount": 0.85,
+            "fibre": 0,
+            "structure": 0
+          },
+          "activeFrames": 0,
+          "warmupMs": 0
+        },
+        "cpu": {
+          "count": 137,
+          "totalMs": 60.70000010728836,
+          "lastMs": 0.40000003576278687,
+          "maxMs": 1.699999988079071,
+          "maskBytes": 998487,
+          "preparedFrames": 328,
+          "changedPixels": 397
+        },
+        "look": {
+          "amount": 0.9392499999999999,
+          "fibre": 0,
+          "neutralFraction": 1,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              67,
+              39,
+              40
+            ],
+            "mid": [
+              146,
+              65,
+              57
+            ],
+            "light": [
+              203,
+              121,
+              83
+            ]
+          },
+          "paletteRevision": 36,
+          "seconds": 2.404879999999996
+        },
+        "position": {
+          "x": 300,
+          "y": 988
+        },
+        "world": "r100-cinder-ridge",
+        "chaos": {
+          "version": 1,
+          "value": 15.797939183999972,
+          "peak": 15.797939183999972,
+          "paused": false,
+          "clockMs": 2404.8799999999987,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 15,
+          "lastModulated": 15.797939183999972,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 85,
+          "growthResistance": 0
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 300,
+            "y": 998,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 305.432494648688,
+            "y": 989.4405040778078,
+            "z": 34.344
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 301.749,
+            "y": 976.1171032340828,
+            "z": 20.5375
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": null,
+            "body": null,
+            "arm": null,
+            "preparedFrames": 0
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "artFixture": false,
+        "godMode": false,
+        "paused": false,
+        "health": 100
+      },
+      "warmingSample": {
+        "wallMs": 2016,
+        "rafMs": {
+          "count": 120,
+          "mean": 16.665833333333346,
+          "p50": 16.69999999999709,
+          "p95": 16.799999999999272,
+          "p99": 16.799999999999272,
+          "max": 16.80000000000291
+        },
+        "cpuMs": {
+          "count": 121,
+          "mean": 0.5338842977177013,
+          "p50": 0.5,
+          "p95": 0.699999988079071,
+          "p99": 0.699999988079071,
+          "max": 1
+        },
+        "rendererCount": 121,
+        "rendererTotalMs": 64.60000002384186,
+        "maskBytes": 998487,
+        "preparedFrames": 328
+      },
+      "ready": {
+        "waitWallMs": 3635,
+        "state": {
+          "profile": "rift",
+          "amount": 85,
+          "sources": {
+            "version": 1,
+            "worlds": {
+              "cinder-ridge": 85
+            },
+            "unattributed": 0
+          },
+          "healingCycles": 0,
+          "status": {
+            "state": "ready",
+            "completed": 328,
+            "total": 328,
+            "error": ""
+          },
+          "cache": {
+            "requests": 332,
+            "completed": 332,
+            "cancelled": 0,
+            "lastBuildMs": 1.2999999523162842,
+            "lastBakeMs": 9.200000047683716,
+            "maxBakeMs": 18.19999998807907,
+            "lastBankMs": 5546.799999952316,
+            "unpacked": 1,
+            "failed": 0,
+            "bankCount": 2,
+            "packedBytes": 2013228,
+            "hotFrames": 1,
+            "hotBytes": 81920,
+            "activeSource": {
+              "amount": 0.85,
+              "fibre": 0,
+              "structure": 0
+            },
+            "desiredSource": {
+              "amount": 0.85,
+              "fibre": 0,
+              "structure": 0
+            },
+            "activeFrames": 328,
+            "warmupMs": 5546.799999952316
+          },
+          "cpu": {
+            "count": 477,
+            "totalMs": 226.9000000357628,
+            "lastMs": 0.5999999642372131,
+            "maxMs": 1.699999988079071,
+            "maskBytes": 1002780,
+            "preparedFrames": 329,
+            "changedPixels": 393
+          },
+          "look": {
+            "amount": 0.9392499999999999,
+            "fibre": 0,
+            "neutralFraction": 1,
+            "fibrePalette": {
+              "dark": [
+                36,
+                45,
+                96
+              ],
+              "mid": [
+                80,
+                98,
+                167
+              ],
+              "light": [
+                139,
+                155,
+                207
+              ]
+            },
+            "membranePalette": {
+              "dark": [
+                107,
+                38,
+                62
+              ],
+              "mid": [
+                190,
+                80,
+                102
+              ],
+              "light": [
+                228,
+                146,
+                149
+              ]
+            },
+            "neutralPalette": {
+              "dark": [
+                67,
+                39,
+                40
+              ],
+              "mid": [
+                146,
+                65,
+                57
+              ],
+              "light": [
+                203,
+                121,
+                83
+              ]
+            },
+            "paletteRevision": 36,
+            "seconds": 8.129660000000017
+          },
+          "position": {
+            "x": 300,
+            "y": 988
+          },
+          "world": "r100-cinder-ridge",
+          "chaos": {
+            "version": 1,
+            "value": 17.697421187999808,
+            "peak": 17.697421187999808,
+            "paused": false,
+            "clockMs": 8129.659999999997,
+            "pollutionGrade": "medium",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 17.006202155999866,
+            "lastModulated": 17.697421187999808,
+            "thresholdsFired": [
+              false,
+              false,
+              false
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 85,
+            "growthResistance": 0
+          },
+          "probe": {
+            "ready": true,
+            "model": "a",
+            "frame": "2-idle-0",
+            "frameIndex": 26,
+            "yaw": 2.135366,
+            "pose": "idle",
+            "foot": {
+              "x": 300,
+              "y": 998,
+              "anchor": [
+                32,
+                66
+              ]
+            },
+            "lamp": {
+              "x": 309.8260111965924,
+              "y": 989.4404972532659,
+              "z": 31.649825923261243
+            },
+            "oldBodyVisible": false,
+            "nativeScale": 1,
+            "weapon": {
+              "quality": "ordinary",
+              "variant": "standard",
+              "visible": true,
+              "behind": true
+            },
+            "attackPhase": "idle",
+            "attackFrame": -1,
+            "gripAnchor": {
+              "x": 301.7935791435121,
+              "y": 976.7940003261481,
+              "z": 19.72050412578366
+            },
+            "hitFlash": false,
+            "assimilation": {
+              "amount": 0.9392499999999999,
+              "frame": "assimilation-83",
+              "body": null,
+              "arm": null,
+              "preparedFrames": 1
+            },
+            "nativeLights": 8,
+            "masked": true,
+            "contactMasked": true
+          },
+          "artFixture": false,
+          "godMode": false,
+          "paused": false,
+          "health": 100
+        }
+      },
+      "steady": {
+        "wallMs": 2028.6000000238419,
+        "rafMs": {
+          "count": 121,
+          "mean": 16.666115702479328,
+          "p50": 16.700000000000728,
+          "p95": 16.700000000000728,
+          "p99": 16.799999999999272,
+          "max": 16.80000000000291
+        },
+        "cpuMs": {
+          "count": 122,
+          "mean": 0.46885246185005686,
+          "p50": 0.5,
+          "p95": 0.6000000238418579,
+          "p99": 0.7000000476837158,
+          "max": 0.800000011920929
+        },
+        "rendererCount": 122,
+        "rendererTotalMs": 57.20000034570694,
+        "maskBytes": 1002780,
+        "preparedFrames": 329
+      },
+      "pass": true
+    },
+    {
+      "world": "crystal-fibre",
+      "checks": [
+        "actual A/source projection drives ready full-body model and correct source family at low P",
+        "real movement and live attack samples retain body/arm depth, held-tool and mask path",
+        "pause freezes material clock and A/sources; cold Continue preserves sources and exact chaos checkpoint"
+      ],
+      "images": {
+        "baseline": "crystal-fibre-a0.png",
+        "ready": "crystal-fibre-a85-ready.png",
+        "mixedIdle": "crystal-fibre-mixed-idle-ready.png",
+        "mixedAttack": "crystal-fibre-mixed-attack.png",
+        "continued": "crystal-fibre-continued-ready.png",
+        "havenStanding": "haven-mixed-standing-ready.png",
+        "failure": "crystal-fibre-failure.png"
+      },
+      "seed": 20261021,
+      "entry": {
+        "profile": "rift",
+        "amount": 0,
+        "sources": {
+          "version": 1,
+          "worlds": {},
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "idle",
+          "completed": 0,
+          "total": 0,
+          "error": ""
+        },
+        "cache": {
+          "requests": 0,
+          "completed": 0,
+          "cancelled": 0,
+          "lastBuildMs": 0,
+          "lastBakeMs": 0,
+          "maxBakeMs": 0,
+          "lastBankMs": 0,
+          "unpacked": 0,
+          "failed": 0,
+          "bankCount": 0,
+          "packedBytes": 0,
+          "hotFrames": 0,
+          "hotBytes": 0,
+          "activeSource": null,
+          "desiredSource": {
+            "amount": 0,
+            "fibre": 0,
+            "structure": 0
+          },
+          "activeFrames": 0,
+          "warmupMs": 0
+        },
+        "cpu": {
+          "count": 2,
+          "totalMs": 1.699999988079071,
+          "lastMs": 0.3999999761581421,
+          "maxMs": 1.300000011920929,
+          "maskBytes": 998487,
+          "preparedFrames": 328,
+          "changedPixels": 0
+        },
+        "look": {
+          "amount": 0,
+          "fibre": 0,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 0.025010000000000036
+        },
+        "position": {
+          "x": 1132,
+          "y": 1324
+        },
+        "world": "r100-crystal-fibre",
+        "chaos": {
+          "version": 1,
+          "value": 15.008298318,
+          "peak": 15.008298318,
+          "paused": false,
+          "clockMs": 25.010000000000037,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 15,
+          "lastModulated": 15.008298318,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 0,
+          "growthResistance": 0
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1132,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1137.432494648688,
+            "y": 1325.4405040778076,
+            "z": 34.344
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1133.749,
+            "y": 1312.1171032340828,
+            "z": 20.5375
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0,
+            "frame": null,
+            "body": null,
+            "arm": null,
+            "preparedFrames": 0
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "artFixture": false,
+        "godMode": false,
+        "paused": false,
+        "health": 100
+      },
+      "baseline": {
+        "wallMs": 2011.199999988079,
+        "rafMs": {
+          "count": 120,
+          "mean": 16.666666666666668,
+          "p50": 16.69999999999891,
+          "p95": 16.700000000000728,
+          "p99": 16.80000000000109,
+          "max": 16.80000000000109
+        },
+        "cpuMs": {
+          "count": 121,
+          "mean": 0.21074380510109514,
+          "p50": 0.19999998807907104,
+          "p95": 0.30000001192092896,
+          "p99": 0.30000001192092896,
+          "max": 0.30000001192092896
+        },
+        "rendererCount": 121,
+        "rendererTotalMs": 25.500000417232513,
+        "maskBytes": 998487,
+        "preparedFrames": 328
+      },
+      "warming": {
+        "profile": "rift",
+        "amount": 85,
+        "sources": {
+          "version": 1,
+          "worlds": {
+            "crystal-fibre": 85
+          },
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "warming",
+          "completed": 0,
+          "total": 328,
+          "error": ""
+        },
+        "cache": {
+          "requests": 1,
+          "completed": 0,
+          "cancelled": 0,
+          "lastBuildMs": 0,
+          "lastBakeMs": 0,
+          "maxBakeMs": 0,
+          "lastBankMs": 0,
+          "unpacked": 0,
+          "failed": 0,
+          "bankCount": 2,
+          "packedBytes": 0,
+          "hotFrames": 0,
+          "hotBytes": 0,
+          "activeSource": null,
+          "desiredSource": {
+            "amount": 0.85,
+            "fibre": 1,
+            "structure": 1
+          },
+          "activeFrames": 0,
+          "warmupMs": 0
+        },
+        "cpu": {
+          "count": 135,
+          "totalMs": 30.60000044107437,
+          "lastMs": 0.19999998807907104,
+          "maxMs": 1.300000011920929,
+          "maskBytes": 998487,
+          "preparedFrames": 328,
+          "changedPixels": 397
+        },
+        "look": {
+          "amount": 0.9392499999999999,
+          "fibre": 1,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 2.38491
+        },
+        "position": {
+          "x": 1132,
+          "y": 1324
+        },
+        "world": "r100-crystal-fibre",
+        "chaos": {
+          "version": 1,
+          "value": 15.791313137999966,
+          "peak": 15.791313137999966,
+          "paused": false,
+          "clockMs": 2384.9100000000003,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 15,
+          "lastModulated": 15.791313137999966,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 85,
+          "growthResistance": 0
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1132,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1137.432494648688,
+            "y": 1325.4405040778076,
+            "z": 34.344
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1133.749,
+            "y": 1312.1171032340828,
+            "z": 20.5375
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": null,
+            "body": null,
+            "arm": null,
+            "preparedFrames": 0
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "artFixture": false,
+        "godMode": false,
+        "paused": false,
+        "health": 100
+      },
+      "warmingSample": {
+        "wallMs": 2014.300000011921,
+        "rafMs": {
+          "count": 120,
+          "mean": 16.665833333333346,
+          "p50": 16.69999999999709,
+          "p95": 16.799999999999272,
+          "p99": 16.799999999999272,
+          "max": 16.80000000000291
+        },
+        "cpuMs": {
+          "count": 121,
+          "mean": 0.30165288812858015,
+          "p50": 0.30000001192092896,
+          "p95": 0.40000003576278687,
+          "p99": 0.5,
+          "max": 0.5
+        },
+        "rendererCount": 121,
+        "rendererTotalMs": 36.4999994635582,
+        "maskBytes": 998487,
+        "preparedFrames": 328
+      },
+      "ready": {
+        "waitWallMs": 3237,
+        "state": {
+          "profile": "rift",
+          "amount": 85,
+          "sources": {
+            "version": 1,
+            "worlds": {
+              "crystal-fibre": 85
+            },
+            "unattributed": 0
+          },
+          "healingCycles": 0,
+          "status": {
+            "state": "ready",
+            "completed": 328,
+            "total": 328,
+            "error": ""
+          },
+          "cache": {
+            "requests": 332,
+            "completed": 332,
+            "cancelled": 0,
+            "lastBuildMs": 1,
+            "lastBakeMs": 7.200000047683716,
+            "maxBakeMs": 16.600000023841858,
+            "lastBankMs": 5114.5,
+            "unpacked": 1,
+            "failed": 0,
+            "bankCount": 2,
+            "packedBytes": 2092374,
+            "hotFrames": 1,
+            "hotBytes": 81920,
+            "activeSource": {
+              "amount": 0.85,
+              "fibre": 1,
+              "structure": 1
+            },
+            "desiredSource": {
+              "amount": 0.85,
+              "fibre": 1,
+              "structure": 1
+            },
+            "activeFrames": 328,
+            "warmupMs": 5114.5
+          },
+          "cpu": {
+            "count": 450,
+            "totalMs": 123.29999989271164,
+            "lastMs": 0.19999998807907104,
+            "maxMs": 1.300000011920929,
+            "maskBytes": 1002951,
+            "preparedFrames": 329,
+            "changedPixels": 406
+          },
+          "look": {
+            "amount": 0.9392499999999999,
+            "fibre": 1,
+            "neutralFraction": 0,
+            "fibrePalette": {
+              "dark": [
+                36,
+                45,
+                96
+              ],
+              "mid": [
+                80,
+                98,
+                167
+              ],
+              "light": [
+                139,
+                155,
+                207
+              ]
+            },
+            "membranePalette": {
+              "dark": [
+                107,
+                38,
+                62
+              ],
+              "mid": [
+                190,
+                80,
+                102
+              ],
+              "light": [
+                228,
+                146,
+                149
+              ]
+            },
+            "neutralPalette": {
+              "dark": [
+                44,
+                46,
+                51
+              ],
+              "mid": [
+                58,
+                61,
+                66
+              ],
+              "light": [
+                74,
+                78,
+                85
+              ]
+            },
+            "paletteRevision": 27,
+            "seconds": 7.676350000000014
+          },
+          "position": {
+            "x": 1132,
+            "y": 1324
+          },
+          "world": "r100-crystal-fibre",
+          "chaos": {
+            "version": 1,
+            "value": 17.547012929999784,
+            "peak": 17.547012929999784,
+            "paused": false,
+            "clockMs": 7676.349999999998,
+            "pollutionGrade": "medium",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 17.005090625999834,
+            "lastModulated": 17.547012929999784,
+            "thresholdsFired": [
+              false,
+              false,
+              false
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 85,
+            "growthResistance": 0
+          },
+          "probe": {
+            "ready": true,
+            "model": "a",
+            "frame": "2-idle-0",
+            "frameIndex": 26,
+            "yaw": 2.135366,
+            "pose": "idle",
+            "foot": {
+              "x": 1132,
+              "y": 1334,
+              "anchor": [
+                32,
+                66
+              ]
+            },
+            "lamp": {
+              "x": 1142.608556769749,
+              "y": 1325.4404970345156,
+              "z": 31.04315071300512
+            },
+            "oldBodyVisible": false,
+            "nativeScale": 1,
+            "weapon": {
+              "quality": "ordinary",
+              "variant": "standard",
+              "visible": true,
+              "behind": true
+            },
+            "attackPhase": "idle",
+            "attackFrame": -1,
+            "gripAnchor": {
+              "x": 1133.79136320397,
+              "y": 1312.875230641815,
+              "z": 19.622461445839207
+            },
+            "hitFlash": false,
+            "assimilation": {
+              "amount": 0.9392499999999999,
+              "frame": "assimilation-83",
+              "body": null,
+              "arm": null,
+              "preparedFrames": 1
+            },
+            "nativeLights": 8,
+            "masked": true,
+            "contactMasked": true
+          },
+          "artFixture": false,
+          "godMode": false,
+          "paused": false,
+          "health": 100
+        }
+      },
+      "steady": {
+        "wallMs": 2013.199999988079,
+        "rafMs": {
+          "count": 120,
+          "mean": 16.665833333333314,
+          "p50": 16.700000000000728,
+          "p95": 16.799999999999272,
+          "p99": 16.799999999999272,
+          "max": 16.80000000000291
+        },
+        "cpuMs": {
+          "count": 121,
+          "mean": 0.2735537172349031,
+          "p50": 0.30000001192092896,
+          "p95": 0.3999999761581421,
+          "p99": 0.40000003576278687,
+          "max": 0.5
+        },
+        "rendererCount": 121,
+        "rendererTotalMs": 33.09999978542328,
+        "maskBytes": 1002951,
+        "preparedFrames": 329
+      },
+      "riftMixedReady": {
+        "waitWallMs": 5241,
+        "state": {
+          "profile": "rift",
+          "amount": 85,
+          "sources": {
+            "version": 1,
+            "worlds": {
+              "crystal-fibre": 42.5,
+              "ruptured-film": 42.5
+            },
+            "unattributed": 0
+          },
+          "healingCycles": 0,
+          "status": {
+            "state": "ready",
+            "completed": 328,
+            "total": 328,
+            "error": ""
+          },
+          "cache": {
+            "requests": 709,
+            "completed": 709,
+            "cancelled": 1,
+            "lastBuildMs": 1.100000023841858,
+            "lastBakeMs": 9.699999988079071,
+            "maxBakeMs": 16.600000023841858,
+            "lastBankMs": 5097.199999988079,
+            "unpacked": 2,
+            "failed": 0,
+            "bankCount": 3,
+            "packedBytes": 4103820,
+            "hotFrames": 2,
+            "hotBytes": 163840,
+            "activeSource": {
+              "amount": 0.85,
+              "fibre": 0.5,
+              "structure": 1
+            },
+            "desiredSource": {
+              "amount": 0.85,
+              "fibre": 0.5,
+              "structure": 1
+            },
+            "activeFrames": 328,
+            "warmupMs": 5097.199999988079
+          },
+          "cpu": {
+            "count": 899,
+            "totalMs": 246.99999952316284,
+            "lastMs": 0.30000001192092896,
+            "maxMs": 1.300000011920929,
+            "maskBytes": 1007289,
+            "preparedFrames": 330,
+            "changedPixels": 400
+          },
+          "look": {
+            "amount": 0.9392499999999999,
+            "fibre": 0.5,
+            "neutralFraction": 0,
+            "fibrePalette": {
+              "dark": [
+                36,
+                45,
+                96
+              ],
+              "mid": [
+                80,
+                98,
+                167
+              ],
+              "light": [
+                139,
+                155,
+                207
+              ]
+            },
+            "membranePalette": {
+              "dark": [
+                107,
+                38,
+                62
+              ],
+              "mid": [
+                190,
+                80,
+                102
+              ],
+              "light": [
+                228,
+                146,
+                149
+              ]
+            },
+            "neutralPalette": {
+              "dark": [
+                44,
+                46,
+                51
+              ],
+              "mid": [
+                58,
+                61,
+                66
+              ],
+              "light": [
+                74,
+                78,
+                85
+              ]
+            },
+            "paletteRevision": 27,
+            "seconds": 15.226059999999881
+          },
+          "position": {
+            "x": 1132,
+            "y": 1324
+          },
+          "world": "r100-crystal-fibre",
+          "chaos": {
+            "version": 1,
+            "value": 20.052006707999496,
+            "peak": 20.052006707999496,
+            "paused": false,
+            "clockMs": 15226.05999999999,
+            "pollutionGrade": "medium",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 20.007767813999504,
+            "lastModulated": 20.052006707999496,
+            "thresholdsFired": [
+              false,
+              false,
+              false
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 85,
+            "growthResistance": 0
+          },
+          "probe": {
+            "ready": true,
+            "model": "a",
+            "frame": "2-idle-0",
+            "frameIndex": 26,
+            "yaw": 2.135366,
+            "pose": "idle",
+            "foot": {
+              "x": 1132,
+              "y": 1334,
+              "anchor": [
+                32,
+                66
+              ]
+            },
+            "lamp": {
+              "x": 1142.2218361620946,
+              "y": 1325.4404971426181,
+              "z": 31.352991782069708
+            },
+            "oldBodyVisible": false,
+            "nativeScale": 1,
+            "weapon": {
+              "quality": "ordinary",
+              "variant": "standard",
+              "visible": true,
+              "behind": true
+            },
+            "attackPhase": "idle",
+            "attackFrame": -1,
+            "gripAnchor": {
+              "x": 1133.7931413768044,
+              "y": 1312.8346280341189,
+              "z": 19.671467638026098
+            },
+            "hitFlash": false,
+            "assimilation": {
+              "amount": 0.9392499999999999,
+              "frame": "assimilation-460",
+              "body": null,
+              "arm": null,
+              "preparedFrames": 2
+            },
+            "nativeLights": 8,
+            "masked": true,
+            "contactMasked": true
+          },
+          "artFixture": false,
+          "godMode": false,
+          "paused": false,
+          "health": 100
+        }
+      },
+      "moved": {
+        "profile": "rift",
+        "amount": 85,
+        "sources": {
+          "version": 1,
+          "worlds": {
+            "crystal-fibre": 42.5,
+            "ruptured-film": 42.5
+          },
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "ready",
+          "completed": 328,
+          "total": 328,
+          "error": ""
+        },
+        "cache": {
+          "requests": 717,
+          "completed": 717,
+          "cancelled": 1,
+          "lastBuildMs": 1.4000000357627869,
+          "lastBakeMs": 7.699999988079071,
+          "maxBakeMs": 16.600000023841858,
+          "lastBankMs": 5097.199999988079,
+          "unpacked": 6,
+          "failed": 0,
+          "bankCount": 3,
+          "packedBytes": 4172976,
+          "hotFrames": 6,
+          "hotBytes": 491520,
+          "activeSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "desiredSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "activeFrames": 328,
+          "warmupMs": 5097.199999988079
+        },
+        "cpu": {
+          "count": 916,
+          "totalMs": 252.79999953508377,
+          "lastMs": 0.2999999523162842,
+          "maxMs": 1.300000011920929,
+          "maskBytes": 1024461,
+          "preparedFrames": 334,
+          "changedPixels": 400
+        },
+        "look": {
+          "amount": 0.9392499999999999,
+          "fibre": 0.5,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 15.624369999999878
+        },
+        "position": {
+          "x": 1146.327320287708,
+          "y": 1324
+        },
+        "world": "r100-crystal-fibre",
+        "chaos": {
+          "version": 1,
+          "value": 20.184165965999487,
+          "peak": 20.184165965999487,
+          "paused": false,
+          "clockMs": 15624.36999999999,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 20.007767813999504,
+          "lastModulated": 20.184165965999487,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 85,
+          "growthResistance": 0
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1146.327320287708,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1156.5491564498027,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.1204616645125,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 6
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "artFixture": false,
+        "godMode": false,
+        "paused": false,
+        "health": 100
+      },
+      "attacks": [
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 6
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "windup",
+          "attackFrame": 30,
+          "gripAnchor": {
+            "x": 1150.0041400606951,
+            "y": 1312.6792010214006,
+            "z": 20.236471933164886
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-486",
+            "preparedFrames": 8
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "windup",
+          "attackFrame": 31,
+          "gripAnchor": {
+            "x": 1152.6022238705405,
+            "y": 1311.0621687160267,
+            "z": 21.65949764725395
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-487",
+            "preparedFrames": 9
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "windup",
+          "attackFrame": 32,
+          "gripAnchor": {
+            "x": 1153.5548921372579,
+            "y": 1307.4750430343158,
+            "z": 23.897789119869135
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-488",
+            "preparedFrames": 10
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "windup",
+          "attackFrame": 33,
+          "gripAnchor": {
+            "x": 1153.0164350823566,
+            "y": 1305.402713519904,
+            "z": 25.229920754791415
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-489",
+            "preparedFrames": 11
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": false
+          },
+          "attackPhase": "active",
+          "attackFrame": 36,
+          "gripAnchor": {
+            "x": 1156.1379512871792,
+            "y": 1308.3659819838651,
+            "z": 24.281145122493783
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-492",
+            "preparedFrames": 12
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": false
+          },
+          "attackPhase": "active",
+          "attackFrame": 38,
+          "gripAnchor": {
+            "x": 1156.1379527059914,
+            "y": 1311.0590017200363,
+            "z": 24.46110362314292
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-494",
+            "preparedFrames": 13
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 41,
+          "gripAnchor": {
+            "x": 1152.7600297212289,
+            "y": 1312.1847434852555,
+            "z": 24.730815500131673
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-497",
+            "preparedFrames": 14
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 41,
+          "gripAnchor": {
+            "x": 1152.7600297212289,
+            "y": 1312.1847434852555,
+            "z": 24.730815500131673
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-497",
+            "preparedFrames": 14
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 41,
+          "gripAnchor": {
+            "x": 1152.7600297212289,
+            "y": 1312.1847434852555,
+            "z": 24.730815500131673
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-497",
+            "preparedFrames": 14
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 41,
+          "gripAnchor": {
+            "x": 1152.7600297212289,
+            "y": 1312.1847434852555,
+            "z": 24.730815500131673
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-497",
+            "preparedFrames": 14
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 41,
+          "gripAnchor": {
+            "x": 1152.7600297212289,
+            "y": 1312.1847434852555,
+            "z": 24.730815500131673
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-497",
+            "preparedFrames": 14
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 42,
+          "gripAnchor": {
+            "x": 1151.6383266487728,
+            "y": 1312.7531823880825,
+            "z": 22.031699521077567
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-498",
+            "preparedFrames": 15
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 42,
+          "gripAnchor": {
+            "x": 1151.6383266487728,
+            "y": 1312.7531823880825,
+            "z": 22.031699521077567
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-498",
+            "preparedFrames": 15
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 42,
+          "gripAnchor": {
+            "x": 1151.6383266487728,
+            "y": 1312.7531823880825,
+            "z": 22.031699521077567
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-498",
+            "preparedFrames": 15
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 43,
+          "gripAnchor": {
+            "x": 1149.8418815992015,
+            "y": 1312.8290100854633,
+            "z": 20.28393859400019
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-499",
+            "preparedFrames": 16
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 43,
+          "gripAnchor": {
+            "x": 1149.8418815992015,
+            "y": 1312.8290100854633,
+            "z": 20.28393859400019
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-499",
+            "preparedFrames": 16
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 43,
+          "gripAnchor": {
+            "x": 1149.8418815992015,
+            "y": 1312.8290100854633,
+            "z": 20.28393859400019
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-499",
+            "preparedFrames": 16
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 44,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-500",
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "recovery",
+          "attackFrame": 44,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": "assimilation-473",
+            "arm": "assimilation-500",
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        }
+      ],
+      "attackImageProbe": {
+        "ready": true,
+        "model": "a",
+        "frame": "2-idle-0",
+        "frameIndex": 26,
+        "yaw": 2.135366,
+        "pose": "idle",
+        "foot": {
+          "x": 1147.0675973100679,
+          "y": 1334,
+          "anchor": [
+            32,
+            66
+          ]
+        },
+        "lamp": {
+          "x": 1157.2894334721625,
+          "y": 1325.4404971426181,
+          "z": 31.352991782069708
+        },
+        "oldBodyVisible": false,
+        "nativeScale": 1,
+        "weapon": {
+          "quality": "ordinary",
+          "variant": "standard",
+          "visible": true,
+          "behind": false
+        },
+        "attackPhase": "active",
+        "attackFrame": 36,
+        "gripAnchor": {
+          "x": 1156.1379512871792,
+          "y": 1308.3659819838651,
+          "z": 24.281145122493783
+        },
+        "hitFlash": false,
+        "assimilation": {
+          "amount": 0.9392499999999999,
+          "frame": "assimilation-460",
+          "body": "assimilation-473",
+          "arm": "assimilation-492",
+          "preparedFrames": 12
+        },
+        "nativeLights": 8,
+        "masked": true,
+        "contactMasked": true
+      },
+      "paused": {
+        "profile": "rift",
+        "amount": 85,
+        "sources": {
+          "version": 1,
+          "worlds": {
+            "crystal-fibre": 42.5,
+            "ruptured-film": 42.5
+          },
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "ready",
+          "completed": 328,
+          "total": 328,
+          "error": ""
+        },
+        "cache": {
+          "requests": 737,
+          "completed": 736,
+          "cancelled": 1,
+          "lastBuildMs": 1.4000000357627869,
+          "lastBakeMs": 6.599999964237213,
+          "maxBakeMs": 16.600000023841858,
+          "lastBankMs": 5097.199999988079,
+          "unpacked": 17,
+          "failed": 0,
+          "bankCount": 3,
+          "packedBytes": 4333482,
+          "hotFrames": 17,
+          "hotBytes": 1392640,
+          "activeSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "desiredSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "activeFrames": 328,
+          "warmupMs": 5097.199999988079
+        },
+        "cpu": {
+          "count": 975,
+          "totalMs": 269.899999499321,
+          "lastMs": 0.30000001192092896,
+          "maxMs": 1.300000011920929,
+          "maskBytes": 1032363,
+          "preparedFrames": 345,
+          "changedPixels": 400
+        },
+        "look": {
+          "amount": 0.9392499999999999,
+          "fibre": 0.5,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 16.725959999999883
+        },
+        "position": {
+          "x": 1147.0675973100679,
+          "y": 1324
+        },
+        "world": "r100-crystal-fibre",
+        "chaos": {
+          "version": 1,
+          "value": 20.549673527999467,
+          "peak": 20.549673527999467,
+          "paused": false,
+          "clockMs": 16725.95999999998,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 20.007767813999504,
+          "lastModulated": 20.549673527999467,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 85,
+          "growthResistance": 0
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "artFixture": false,
+        "godMode": false,
+        "paused": true,
+        "health": 100
+      },
+      "pausedLater": {
+        "profile": "rift",
+        "amount": 85,
+        "sources": {
+          "version": 1,
+          "worlds": {
+            "crystal-fibre": 42.5,
+            "ruptured-film": 42.5
+          },
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "ready",
+          "completed": 328,
+          "total": 328,
+          "error": ""
+        },
+        "cache": {
+          "requests": 757,
+          "completed": 757,
+          "cancelled": 1,
+          "lastBuildMs": 1.199999988079071,
+          "lastBakeMs": 6.900000035762787,
+          "maxBakeMs": 16.600000023841858,
+          "lastBankMs": 5097.199999988079,
+          "unpacked": 17,
+          "failed": 0,
+          "bankCount": 3,
+          "packedBytes": 4518612,
+          "hotFrames": 17,
+          "hotBytes": 1392640,
+          "activeSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "desiredSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "activeFrames": 328,
+          "warmupMs": 5097.199999988079
+        },
+        "cpu": {
+          "count": 975,
+          "totalMs": 269.899999499321,
+          "lastMs": 0.30000001192092896,
+          "maxMs": 1.300000011920929,
+          "maskBytes": 1032363,
+          "preparedFrames": 345,
+          "changedPixels": 400
+        },
+        "look": {
+          "amount": 0.9392499999999999,
+          "fibre": 0.5,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 16.725959999999883
+        },
+        "position": {
+          "x": 1147.0675973100679,
+          "y": 1324
+        },
+        "world": "r100-crystal-fibre",
+        "chaos": {
+          "version": 1,
+          "value": 20.549673527999467,
+          "peak": 20.549673527999467,
+          "paused": false,
+          "clockMs": 16725.95999999998,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 20.007767813999504,
+          "lastModulated": 20.549673527999467,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 85,
+          "growthResistance": 0
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1157.2894334721625,
+            "y": 1325.4404971426181,
+            "z": 31.352991782069708
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.8607386868723,
+            "y": 1312.8346280341189,
+            "z": 19.671467638026098
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": "assimilation-460",
+            "body": null,
+            "arm": null,
+            "preparedFrames": 17
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "artFixture": false,
+        "godMode": false,
+        "paused": true,
+        "health": 100
+      },
+      "saved": {
+        "assimilation": 85,
+        "assimilationSources": {
+          "version": 1,
+          "worlds": {
+            "crystal-fibre": 42.5,
+            "ruptured-film": 42.5
+          },
+          "unattributed": 0
+        },
+        "chaos": {
+          "version": 1,
+          "value": 20.549673527999467,
+          "peak": 20.549673527999467,
+          "paused": false,
+          "clockMs": 16725.95999999998,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 20.007767813999504,
+          "lastModulated": 20.549673527999467,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 85,
+          "growthResistance": 0
+        }
+      },
+      "restoredImmediate": {
+        "profile": "rift",
+        "amount": 85,
+        "sources": {
+          "version": 1,
+          "worlds": {
+            "crystal-fibre": 42.5,
+            "ruptured-film": 42.5
+          },
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "warming",
+          "completed": 1,
+          "total": 328,
+          "error": ""
+        },
+        "cache": {
+          "requests": 1,
+          "completed": 1,
+          "cancelled": 0,
+          "lastBuildMs": 9,
+          "lastBakeMs": 20.19999998807907,
+          "maxBakeMs": 20.19999998807907,
+          "lastBankMs": 0,
+          "unpacked": 0,
+          "failed": 0,
+          "bankCount": 2,
+          "packedBytes": 9198,
+          "hotFrames": 0,
+          "hotBytes": 0,
+          "activeSource": null,
+          "desiredSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "activeFrames": 0,
+          "warmupMs": 0
+        },
+        "cpu": {
+          "count": 2,
+          "totalMs": 2.399999976158142,
+          "lastMs": 0.7999999523162842,
+          "maxMs": 1.600000023841858,
+          "maskBytes": 998487,
+          "preparedFrames": 328,
+          "changedPixels": 397
+        },
+        "look": {
+          "amount": 0.9392499999999999,
+          "fibre": 0.5,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 0.024989999999999964
+        },
+        "position": {
+          "x": 1147.0675973100679,
+          "y": 1324
+        },
+        "world": "r100-crystal-fibre",
+        "chaos": {
+          "version": 1,
+          "value": 20.557965209999466,
+          "peak": 20.557965209999466,
+          "paused": false,
+          "clockMs": 16750.949999999983,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 20.007767813999504,
+          "lastModulated": 20.557965209999466,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 85,
+          "growthResistance": 0
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1147.0675973100679,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1152.5000919587558,
+            "y": 1325.4405040778076,
+            "z": 34.344
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 1,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1148.816597310068,
+            "y": 1312.1171032340828,
+            "z": 20.5375
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0.9392499999999999,
+            "frame": null,
+            "body": null,
+            "arm": null,
+            "preparedFrames": 0
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "artFixture": false,
+        "godMode": false,
+        "paused": false,
+        "health": 100,
+        "loadedChaos": {
+          "version": 1,
+          "value": 20.549673527999467,
+          "peak": 20.549673527999467,
+          "paused": false,
+          "clockMs": 16725.95999999998,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 20.007767813999504,
+          "lastModulated": 20.549673527999467,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 85,
+          "growthResistance": 0
+        }
+      },
+      "restoredReady": {
+        "waitWallMs": 5656,
+        "state": {
+          "profile": "rift",
+          "amount": 85,
+          "sources": {
+            "version": 1,
+            "worlds": {
+              "crystal-fibre": 42.5,
+              "ruptured-film": 42.5
+            },
+            "unattributed": 0
+          },
+          "healingCycles": 0,
+          "status": {
+            "state": "ready",
+            "completed": 328,
+            "total": 328,
+            "error": ""
+          },
+          "cache": {
+            "requests": 332,
+            "completed": 332,
+            "cancelled": 0,
+            "lastBuildMs": 1.399999976158142,
+            "lastBakeMs": 9.300000011920929,
+            "maxBakeMs": 53.80000001192093,
+            "lastBankMs": 5695.600000023842,
+            "unpacked": 1,
+            "failed": 0,
+            "bankCount": 2,
+            "packedBytes": 2047230,
+            "hotFrames": 1,
+            "hotBytes": 81920,
+            "activeSource": {
+              "amount": 0.85,
+              "fibre": 0.5,
+              "structure": 1
+            },
+            "desiredSource": {
+              "amount": 0.85,
+              "fibre": 0.5,
+              "structure": 1
+            },
+            "activeFrames": 328,
+            "warmupMs": 5695.600000023842
+          },
+          "cpu": {
+            "count": 341,
+            "totalMs": 108.49999982118607,
+            "lastMs": 0.3999999761581421,
+            "maxMs": 3.300000011920929,
+            "maskBytes": 1002825,
+            "preparedFrames": 329,
+            "changedPixels": 400
+          },
+          "look": {
+            "amount": 0.9392499999999999,
+            "fibre": 0.5,
+            "neutralFraction": 0,
+            "fibrePalette": {
+              "dark": [
+                36,
+                45,
+                96
+              ],
+              "mid": [
+                80,
+                98,
+                167
+              ],
+              "light": [
+                139,
+                155,
+                207
+              ]
+            },
+            "membranePalette": {
+              "dark": [
+                107,
+                38,
+                62
+              ],
+              "mid": [
+                190,
+                80,
+                102
+              ],
+              "light": [
+                228,
+                146,
+                149
+              ]
+            },
+            "neutralPalette": {
+              "dark": [
+                44,
+                46,
+                51
+              ],
+              "mid": [
+                58,
+                61,
+                66
+              ],
+              "light": [
+                74,
+                78,
+                85
+              ]
+            },
+            "paletteRevision": 27,
+            "seconds": 5.7930899999999985
+          },
+          "position": {
+            "x": 1147.0675973100679,
+            "y": 1324
+          },
+          "world": "r100-crystal-fibre",
+          "chaos": {
+            "version": 1,
+            "value": 22.471820789999505,
+            "peak": 22.471820789999505,
+            "paused": false,
+            "clockMs": 22519.049999999865,
+            "pollutionGrade": "medium",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 22.012838531999474,
+            "lastModulated": 22.471820789999505,
+            "thresholdsFired": [
+              false,
+              false,
+              false
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 85,
+            "growthResistance": 0
+          },
+          "probe": {
+            "ready": true,
+            "model": "a",
+            "frame": "2-idle-0",
+            "frameIndex": 26,
+            "yaw": 2.135366,
+            "pose": "idle",
+            "foot": {
+              "x": 1147.0675973100679,
+              "y": 1334,
+              "anchor": [
+                32,
+                66
+              ]
+            },
+            "lamp": {
+              "x": 1157.2894334721625,
+              "y": 1325.4404971426181,
+              "z": 31.352991782069708
+            },
+            "oldBodyVisible": false,
+            "nativeScale": 1,
+            "weapon": {
+              "quality": "ordinary",
+              "variant": "standard",
+              "visible": true,
+              "behind": true
+            },
+            "attackPhase": "idle",
+            "attackFrame": -1,
+            "gripAnchor": {
+              "x": 1148.8607386868723,
+              "y": 1312.8346280341189,
+              "z": 19.671467638026098
+            },
+            "hitFlash": false,
+            "assimilation": {
+              "amount": 0.9392499999999999,
+              "frame": "assimilation-83",
+              "body": null,
+              "arm": null,
+              "preparedFrames": 1
+            },
+            "nativeLights": 8,
+            "masked": true,
+            "contactMasked": true
+          },
+          "artFixture": false,
+          "godMode": false,
+          "paused": false,
+          "health": 100,
+          "loadedChaos": {
+            "version": 1,
+            "value": 20.549673527999467,
+            "peak": 20.549673527999467,
+            "paused": false,
+            "clockMs": 16725.95999999998,
+            "pollutionGrade": "medium",
+            "chaosRateModifier": 0.79,
+            "lastEmitted": 20.007767813999504,
+            "lastModulated": 20.549673527999467,
+            "thresholdsFired": [
+              false,
+              false,
+              false
+            ],
+            "chasingEnemyIds": [],
+            "detectionCooldowns": [],
+            "tempRateDeadlineMs": 0,
+            "tempRateMult": 1,
+            "reductionDeadlineMs": 0,
+            "reductionMult": 1,
+            "assimilationMode": "persistent-v1",
+            "assimilationValue": 85,
+            "growthResistance": 0
+          }
+        }
+      },
+      "returned": {
+        "profile": "haven",
+        "amount": 85,
+        "sources": {
+          "version": 1,
+          "worlds": {
+            "crystal-fibre": 42.5,
+            "ruptured-film": 42.5
+          },
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "warming",
+          "completed": 48,
+          "total": 1035,
+          "error": ""
+        },
+        "cache": {
+          "requests": 378,
+          "completed": 376,
+          "cancelled": 1,
+          "lastBuildMs": 1.5,
+          "lastBakeMs": 11.400000035762787,
+          "maxBakeMs": 53.80000001192093,
+          "lastBankMs": 5695.600000023842,
+          "unpacked": 1,
+          "failed": 0,
+          "bankCount": 2,
+          "packedBytes": 2426940,
+          "hotFrames": 1,
+          "hotBytes": 81920,
+          "activeSource": null,
+          "desiredSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "activeFrames": 0,
+          "warmupMs": 0
+        },
+        "cpu": {
+          "count": 5,
+          "totalMs": 2.600000023841858,
+          "lastMs": 0.09999996423721313,
+          "maxMs": 2.100000023841858,
+          "maskBytes": 0,
+          "preparedFrames": 0,
+          "changedPixels": 0
+        },
+        "look": {
+          "amount": 0.9392499999999999,
+          "fibre": 0.5,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 0.06667000000000044
+        },
+        "position": {
+          "x": 509.1935363330473,
+          "y": 356.8080750016289
+        },
+        "journey": {
+          "player": {
+            "x": 509.1935363330473,
+            "y": 356.8080750016289
+          },
+          "route": "main",
+          "transitioning": false,
+          "pendingSave": false,
+          "worldPlayer": {
+            "x": 3.8,
+            "y": 0,
+            "z": 3.8
+          },
+          "resting": false,
+          "rest": {
+            "x": 528.7701417249435,
+            "y": 391.868164617227,
+            "depth": 5.843310565925061
+          },
+          "nearTarget": "rest",
+          "fps": 54.63770189182833,
+          "camera": {
+            "zoom": 1,
+            "scrollX": 0,
+            "scrollY": 0
+          },
+          "devices": {
+            "core": {
+              "x": 684.1171244047266,
+              "y": 391.69284342892763
+            },
+            "storage": {
+              "x": 730.2721281671445,
+              "y": 249.0266190132017
+            },
+            "purifier": {
+              "x": 435.60091566112055,
+              "y": 294.1897074452697
+            },
+            "entrance": {
+              "x": 458.0525543975513,
+              "y": 334.63152000519256
+            },
+            "offering": {
+              "x": 465.42557207627164,
+              "y": 234.51720081356174
+            },
+            "growth": {
+              "x": 659.5419039172348,
+              "y": 227.8069946921345
+            }
+          },
+          "panels": {
+            "inventory": false,
+            "status": false,
+            "offering": false,
+            "impact": false,
+            "allocation": false,
+            "growth": false
+          }
+        },
+        "pose": "idle",
+        "model": null
+      },
+      "returnSave": {
+        "outcome": "abandon",
+        "baseSettled": true
+      },
+      "havenMixedReady": {
+        "waitWallMs": 13643,
+        "state": {
+          "profile": "haven",
+          "amount": 85,
+          "sources": {
+            "version": 1,
+            "worlds": {
+              "crystal-fibre": 42.5,
+              "ruptured-film": 42.5
+            },
+            "unattributed": 0
+          },
+          "healingCycles": 0,
+          "status": {
+            "state": "ready",
+            "completed": 1035,
+            "total": 1035,
+            "error": ""
+          },
+          "cache": {
+            "requests": 1364,
+            "completed": 1363,
+            "cancelled": 1,
+            "lastBuildMs": 0.8999999761581421,
+            "lastBakeMs": 8,
+            "maxBakeMs": 53.80000001192093,
+            "lastBankMs": 22015.399999976158,
+            "unpacked": 2,
+            "failed": 0,
+            "bankCount": 2,
+            "packedBytes": 11730060,
+            "hotFrames": 2,
+            "hotBytes": 163840,
+            "activeSource": {
+              "amount": 0.85,
+              "fibre": 0.5,
+              "structure": 1
+            },
+            "desiredSource": {
+              "amount": 0.85,
+              "fibre": 0.5,
+              "structure": 1
+            },
+            "activeFrames": 1035,
+            "warmupMs": 22015.399999976158
+          },
+          "cpu": {
+            "count": 829,
+            "totalMs": 176.40000081062317,
+            "lastMs": 0.19999998807907104,
+            "maxMs": 4.400000035762787,
+            "maskBytes": 0,
+            "preparedFrames": 0,
+            "changedPixels": 0
+          },
+          "look": {
+            "amount": 0.9392499999999999,
+            "fibre": 0.5,
+            "neutralFraction": 0,
+            "fibrePalette": {
+              "dark": [
+                36,
+                45,
+                96
+              ],
+              "mid": [
+                80,
+                98,
+                167
+              ],
+              "light": [
+                139,
+                155,
+                207
+              ]
+            },
+            "membranePalette": {
+              "dark": [
+                107,
+                38,
+                62
+              ],
+              "mid": [
+                190,
+                80,
+                102
+              ],
+              "light": [
+                228,
+                146,
+                149
+              ]
+            },
+            "neutralPalette": {
+              "dark": [
+                44,
+                46,
+                51
+              ],
+              "mid": [
+                58,
+                61,
+                66
+              ],
+              "light": [
+                74,
+                78,
+                85
+              ]
+            },
+            "paletteRevision": 27,
+            "seconds": 13.799459999999907
+          },
+          "position": {
+            "x": 509.1935363330473,
+            "y": 356.8080750016289
+          },
+          "journey": {
+            "player": {
+              "x": 509.1935363330473,
+              "y": 356.8080750016289
+            },
+            "route": "main",
+            "transitioning": false,
+            "pendingSave": false,
+            "worldPlayer": {
+              "x": 3.8,
+              "y": 0,
+              "z": 3.8
+            },
+            "resting": false,
+            "rest": {
+              "x": 528.7701417249435,
+              "y": 391.868164617227,
+              "depth": 5.843310565925061
+            },
+            "nearTarget": "rest",
+            "fps": 60.302434468194306,
+            "camera": {
+              "zoom": 1,
+              "scrollX": 0,
+              "scrollY": 0
+            },
+            "devices": {
+              "core": {
+                "x": 684.1171244047266,
+                "y": 391.69284342892763
+              },
+              "storage": {
+                "x": 730.2721281671445,
+                "y": 249.0266190132017
+              },
+              "purifier": {
+                "x": 435.60091566112055,
+                "y": 294.1897074452697
+              },
+              "entrance": {
+                "x": 458.0525543975513,
+                "y": 334.63152000519256
+              },
+              "offering": {
+                "x": 465.42557207627164,
+                "y": 234.51720081356174
+              },
+              "growth": {
+                "x": 659.5419039172348,
+                "y": 227.8069946921345
+              }
+            },
+            "panels": {
+              "inventory": false,
+              "status": false,
+              "offering": false,
+              "impact": false,
+              "allocation": false,
+              "growth": false
+            }
+          },
+          "pose": "idle",
+          "model": {
+            "id": 884,
+            "meta": {
+              "yaw": 1.6479457603510148,
+              "phase": null,
+              "settle": 0,
+              "breath": 1.5707963267948966,
+              "amount": 0.85,
+              "fibre": 0.5,
+              "structure": 1,
+              "part": "body",
+              "pose": "idle",
+              "anchor": [
+                32,
+                66
+              ],
+              "lamp": [
+                0.3740373219277429,
+                1.197528047555127,
+                -0.3528777996915818
+              ],
+              "wrist": {
+                "world": [
+                  0.045226675083797865,
+                  0.7509146213412305,
+                  -0.3324747119796479
+                ],
+                "screen": [
+                  37.726640577144885,
+                  45.70419393602776
+                ]
+              },
+              "shoulder": {
+                "world": [
+                  0.1014677969078941,
+                  1.0999454118064915,
+                  -0.28466717415120674
+                ],
+                "screen": [
+                  38.3078929004531,
+                  39.08680854347577
+                ]
+              },
+              "shadowCapsules": [
+                [
+                  -0.005224868213172673,
+                  0.7324947710581479,
+                  0.0004038972781295012,
+                  0.12319806451186503,
+                  1.132149887335007,
+                  -0.009523563254995447,
+                  0.218
+                ],
+                [
+                  0.2503817661575379,
+                  1.3448824893072902,
+                  -0.01935522767623626,
+                  0.26515095832187163,
+                  1.4844552928256214,
+                  -0.02049692853297877,
+                  0.17
+                ],
+                [
+                  -0.24671424063166067,
+                  0.9095070334904357,
+                  0.01907171744843038,
+                  -0.14970254188098225,
+                  1.1944412822192185,
+                  0.011572435270684243,
+                  0.188
+                ],
+                [
+                  -0.10589387997648578,
+                  0.7781180857565922,
+                  0.13733004487439343,
+                  -0.08031954946229822,
+                  0.38,
+                  0.15465047679904975,
+                  0.091
+                ],
+                [
+                  -0.08031954946229822,
+                  0.38,
+                  0.15465047679904975,
+                  -0.03844448021489261,
+                  0.13,
+                  0.15141341400617953,
+                  0.079
+                ],
+                [
+                  0.025742374174578052,
+                  0.7327174430957003,
+                  -0.12677112604344082,
+                  0.05179117579062176,
+                  0.38,
+                  -0.1474302347221387,
+                  0.091
+                ],
+                [
+                  0.05179117579062176,
+                  0.38,
+                  -0.1474302347221387,
+                  0.09366624503802738,
+                  0.13,
+                  -0.1506672975150089,
+                  0.079
+                ],
+                [
+                  0.1471891708575088,
+                  1.171051827055002,
+                  0.26845422857898243,
+                  0.12093065163847196,
+                  0.972218976472452,
+                  0.3196302747103588,
+                  0.09
+                ],
+                [
+                  0.12093065163847196,
+                  0.972218976472452,
+                  0.3196302747103588,
+                  0.1040786599432924,
+                  0.7517340119658212,
+                  0.304885247280081,
+                  0.073
+                ],
+                [
+                  0.1014677969078941,
+                  1.0999454118064915,
+                  -0.28466717415120674,
+                  0.04023123195732056,
+                  0.918738719515329,
+                  -0.335097500165919,
+                  0.089
+                ],
+                [
+                  0.04023123195732056,
+                  0.918738719515329,
+                  -0.335097500165919,
+                  0.03967080312367198,
+                  0.7344312395038938,
+                  -0.33204522716380636,
+                  0.073
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "havenSteady": {
+        "wallMs": 2015.699999988079,
+        "rafMs": {
+          "count": 120,
+          "mean": 16.665833333333346,
+          "p50": 16.69999999999709,
+          "p95": 16.700000000004366,
+          "p99": 16.80000000000291,
+          "max": 16.80000000000291
+        },
+        "cpuMs": {
+          "count": 121,
+          "mean": 0.3611570246948684,
+          "p50": 0.30000001192092896,
+          "p95": 0.5999999642372131,
+          "p99": 2.5,
+          "max": 2.5
+        },
+        "rendererCount": 121,
+        "rendererTotalMs": 43.69999998807907,
+        "maskBytes": 0,
+        "preparedFrames": 0
+      },
+      "pass": false,
+      "error": "page.waitForFunction: Timeout 5000ms exceeded.\n    at journey (/Users/yilungao/coh/tools/qa/check-assimilation-production-browser.mjs:281:14)\n    at async file:///Users/yilungao/coh/tools/qa/check-assimilation-production-browser.mjs:348:38",
+      "failure": {
+        "profile": "haven",
+        "amount": 85,
+        "sources": {
+          "version": 1,
+          "worlds": {
+            "crystal-fibre": 42.5,
+            "ruptured-film": 42.5
+          },
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "ready",
+          "completed": 1035,
+          "total": 1035,
+          "error": ""
+        },
+        "cache": {
+          "requests": 1364,
+          "completed": 1363,
+          "cancelled": 1,
+          "lastBuildMs": 0.8999999761581421,
+          "lastBakeMs": 8,
+          "maxBakeMs": 53.80000001192093,
+          "lastBankMs": 22015.399999976158,
+          "unpacked": 9,
+          "failed": 0,
+          "bankCount": 2,
+          "packedBytes": 11730060,
+          "hotFrames": 9,
+          "hotBytes": 737280,
+          "activeSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "desiredSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "activeFrames": 1035,
+          "warmupMs": 22015.399999976158
+        },
+        "cpu": {
+          "count": 1256,
+          "totalMs": 301.20000141859055,
+          "lastMs": 0.20000004768371582,
+          "maxMs": 4.400000035762787,
+          "maskBytes": 0,
+          "preparedFrames": 0,
+          "changedPixels": 0
+        },
+        "look": {
+          "amount": 0.9392499999999999,
+          "fibre": 0.5,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 20.94913999999997
+        },
+        "position": {
+          "x": 509.1935363330473,
+          "y": 356.8080750016289
+        },
+        "journey": {
+          "player": {
+            "x": 509.1935363330473,
+            "y": 356.8080750016289
+          },
+          "route": "main",
+          "transitioning": false,
+          "pendingSave": false,
+          "worldPlayer": {
+            "x": 3.8,
+            "y": 0,
+            "z": 3.8
+          },
+          "resting": false,
+          "rest": {
+            "x": 528.7701417249435,
+            "y": 391.868164617227,
+            "depth": 5.843310565925061
+          },
+          "nearTarget": "rest",
+          "fps": 60.126612804073545,
+          "camera": {
+            "zoom": 1,
+            "scrollX": 0,
+            "scrollY": 0
+          },
+          "devices": {
+            "core": {
+              "x": 684.1171244047266,
+              "y": 391.69284342892763
+            },
+            "storage": {
+              "x": 730.2721281671445,
+              "y": 249.0266190132017
+            },
+            "purifier": {
+              "x": 435.60091566112055,
+              "y": 294.1897074452697
+            },
+            "entrance": {
+              "x": 458.0525543975513,
+              "y": 334.63152000519256
+            },
+            "offering": {
+              "x": 465.42557207627164,
+              "y": 234.51720081356174
+            },
+            "growth": {
+              "x": 659.5419039172348,
+              "y": 227.8069946921345
+            }
+          },
+          "panels": {
+            "inventory": false,
+            "status": false,
+            "offering": false,
+            "impact": false,
+            "allocation": false,
+            "growth": false
+          }
+        },
+        "pose": "idle",
+        "model": {
+          "id": 886,
+          "meta": {
+            "yaw": 1.6479457603510148,
+            "phase": null,
+            "settle": 0,
+            "breath": 3.141592653589793,
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1,
+            "part": "body",
+            "pose": "idle",
+            "anchor": [
+              32,
+              66
+            ],
+            "lamp": [
+              0.35968783319150177,
+              1.183131765361121,
+              -0.35176854311196015
+            ],
+            "wrist": {
+              "world": [
+                0.04218461030889578,
+                0.7423195335104188,
+                -0.3322395516593591
+              ],
+              "screen": [
+                37.655201416848065,
+                45.87170102304897
+              ]
+            },
+            "shoulder": {
+              "world": [
+                0.09798844838660235,
+                1.088464044621098,
+                -0.2843982105448385
+              ],
+              "screen": [
+                38.22618466767917,
+                39.3146380477212
+              ]
+            },
+            "shadowCapsules": [
+              [
+                -0.006760884088656258,
+                0.7205789739065583,
+                0.0005226357048150625,
+                0.11971871599057327,
+                1.1206685201496134,
+                -0.009254599648627217,
+                0.218
+              ],
+              [
+                0.24827460070358387,
+                1.333070067006086,
+                -0.01919233775122823,
+                0.2630437928679177,
+                1.472642870524417,
+                -0.020334038607970745,
+                0.17
+              ],
+              [
+                -0.25091608237487645,
+                0.8966195233406512,
+                0.01939653185024383,
+                -0.153181890402274,
+                1.1829599150338248,
+                0.011841398877052472,
+                0.188
+              ],
+              [
+                -0.10836378762486423,
+                0.7632230919191854,
+                0.1375209758100094,
+                -0.08031954946229822,
+                0.38,
+                0.15465047679904975,
+                0.091
+              ],
+              [
+                -0.08031954946229822,
+                0.38,
+                0.15465047679904975,
+                -0.03844448021489261,
+                0.13,
+                0.15141341400617953,
+                0.079
+              ],
+              [
+                0.02380306033217039,
+                0.7226336040079278,
+                -0.12662121152877182,
+                0.05179117579062176,
+                0.38,
+                -0.1474302347221387,
+                0.091
+              ],
+              [
+                0.05179117579062176,
+                0.38,
+                -0.1474302347221387,
+                0.09366624503802738,
+                0.13,
+                -0.1506672975150089,
+                0.079
+              ],
+              [
+                0.14370982233621704,
+                1.1595704598696084,
+                0.2687231921853506,
+                0.1174513031171802,
+                0.9606844623211159,
+                0.319899238316727,
+                0.09
+              ],
+              [
+                0.1174513031171802,
+                0.9606844623211159,
+                0.319899238316727,
+                0.10195833010966315,
+                0.7393277057616595,
+                0.3050491548493438,
+                0.073
+              ],
+              [
+                0.09798844838660235,
+                1.088464044621098,
+                -0.2843982105448385,
+                0.036751883436028795,
+                0.9072573523299354,
+                -0.3348285365595508,
+                0.089
+              ],
+              [
+                0.036751883436028795,
+                0.9072573523299354,
+                -0.3348285365595508,
+                0.0372685367123419,
+                0.7257742450327216,
+                -0.33185952508955463,
+                0.073
+              ]
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "browser": "155.0.8059.85",
+  "pass": false,
+  "failure": "page.waitForFunction: Timeout 5000ms exceeded.\n    at journey (/Users/yilungao/coh/tools/qa/check-assimilation-production-browser.mjs:281:14)\n    at async file:///Users/yilungao/coh/tools/qa/check-assimilation-production-browser.mjs:348:38",
+  "finishedAt": "2026-10-20T12:44:10.635Z"
+}

@@ -1,0 +1,1055 @@
+{
+  "revision": "6d49b140172fc8094ad6ee156ad03fd7158c5e43",
+  "startedAt": "2026-10-20T12:46:22.412Z",
+  "sourcesBefore": {
+    "src/scenes/rift-scene.ts": "f15fa3b03990218d64c3b0f31519abbede5cbe942230a299f441983dafea17ed",
+    "src/scenes/purification-scene.ts": "9b32f56ce173ea92167a39f94fac98af369d80e50a308ce250836082aaf5839c",
+    "src/scenes/last-light-visual.ts": "e174792568aceb67c7453cd421e569d52544636fe4fe005cc1fec58f3b8ca271",
+    "src/art/last-light-renderer.ts": "588fa0ab8c6088fe624fa3a29cc7abd6106d29b9fcd001318b350d68d98ad990",
+    "src/entities/player-last-light-presentation.ts": "30b53222cc5ead1281c222bd89dd368208215891d0afff41c141549c04888fe5",
+    "src/art/assimilation-appearance.ts": "e1d7d3060a7cf1c1a0e51c07c9446e332d2515686071c0e5b877861cd94aa0a4",
+    "src/art/assimilation-state-presentation.ts": "efc4079da5f6a0d08e5f3c308d1c541d79efc8798586fef2558aa5ec2d0798e9",
+    "src/art/assimilation-presentation.ts": "984f0700221af3a91d87d2d5955b98a66934738110bc49a7a3832c5ad8a452a5",
+    "src/art/assimilation-model/client.ts": "9e244c8f33e4ed8bc3ce7b1684ea297eadfb71c7df7ccc5d9ee8f7a66117a7aa",
+    "src/art/assimilation-model/geometry.ts": "6a8662f202dad83814dd2c581fbb5be58e23207d8b5edcdfa86d7599cc97ccee"
+  },
+  "mode": "Haven-only supplement: normal New Game entrance, attributed A85 fixture, ready standing/sitting/healing",
+  "scope": "Normal title → haven → preparation → seeded Rift. Separate Chrome contexts protect user saves. Controlled fixtures set A85 with the actual selected world source at low natural P; Haven mix uses two genuine attributed increases. Movement, attack, pause, cold Continue, abandon, rest and one healing cycle use gameplay/UI paths. Growth panel opening uses the scene interaction handler. No art-study query, godmode, teleport or simulated attack clock. Screenshots wait for complete ready geometry. This does not certify long expeditions, balance, other browsers, GPU time or human art acceptance.",
+  "measurement": "DEV server, headless Chrome. rAF intervals measure whole-page scheduling; renderer timers measure CPU draw/submission, including existing work. Warmup is complete-bank wall time. No CPU delta is attributed exclusively to assimilation and no GPU timing is inferred.",
+  "worlds": [
+    {
+      "world": "haven-supplement",
+      "checks": [
+        "mixed-source Haven has real standing and seated geometry through keyboard input",
+        "real healing cycle reduces A85→70 and both source weights proportionally, with updated ready geometry"
+      ],
+      "images": {
+        "havenStanding": "haven-mixed-standing-ready.png",
+        "havenSeated": "haven-mixed-seated-ready.png",
+        "havenHealed": "haven-mixed-healed-ready.png"
+      },
+      "havenMixedReady": {
+        "waitWallMs": 13804,
+        "state": {
+          "profile": "haven",
+          "amount": 85,
+          "sources": {
+            "version": 1,
+            "worlds": {
+              "crystal-fibre": 42.5,
+              "ruptured-film": 42.5
+            },
+            "unattributed": 0
+          },
+          "healingCycles": 0,
+          "status": {
+            "state": "ready",
+            "completed": 1035,
+            "total": 1035,
+            "error": ""
+          },
+          "cache": {
+            "requests": 1035,
+            "completed": 1035,
+            "cancelled": 0,
+            "lastBuildMs": 0.8999999761581421,
+            "lastBakeMs": 8.199999988079071,
+            "maxBakeMs": 17.099999964237213,
+            "lastBankMs": 13706.699999988079,
+            "unpacked": 1,
+            "failed": 0,
+            "bankCount": 1,
+            "packedBytes": 9717552,
+            "hotFrames": 1,
+            "hotBytes": 81920,
+            "activeSource": {
+              "amount": 0.85,
+              "fibre": 0.5,
+              "structure": 1
+            },
+            "desiredSource": {
+              "amount": 0.85,
+              "fibre": 0.5,
+              "structure": 1
+            },
+            "activeFrames": 1035,
+            "warmupMs": 13706.699999988079
+          },
+          "cpu": {
+            "count": 935,
+            "totalMs": 175.30000042915344,
+            "lastMs": 0.10000002384185791,
+            "maxMs": 3.600000023841858,
+            "maskBytes": 0,
+            "preparedFrames": 0,
+            "changedPixels": 0
+          },
+          "look": {
+            "amount": 0.9392499999999999,
+            "fibre": 0.5,
+            "neutralFraction": 0,
+            "fibrePalette": {
+              "dark": [
+                36,
+                45,
+                96
+              ],
+              "mid": [
+                80,
+                98,
+                167
+              ],
+              "light": [
+                139,
+                155,
+                207
+              ]
+            },
+            "membranePalette": {
+              "dark": [
+                107,
+                38,
+                62
+              ],
+              "mid": [
+                190,
+                80,
+                102
+              ],
+              "light": [
+                228,
+                146,
+                149
+              ]
+            },
+            "neutralPalette": {
+              "dark": [
+                44,
+                46,
+                51
+              ],
+              "mid": [
+                58,
+                61,
+                66
+              ],
+              "light": [
+                74,
+                78,
+                85
+              ]
+            },
+            "paletteRevision": 27,
+            "seconds": 15.564323333333185
+          },
+          "position": {
+            "x": 509.1935363330473,
+            "y": 356.8080750016289
+          },
+          "journey": {
+            "player": {
+              "x": 509.1935363330473,
+              "y": 356.8080750016289
+            },
+            "route": "main",
+            "transitioning": false,
+            "pendingSave": false,
+            "worldPlayer": {
+              "x": 3.8,
+              "y": 0,
+              "z": 3.8
+            },
+            "resting": false,
+            "rest": {
+              "x": 528.7701417249435,
+              "y": 391.868164617227,
+              "depth": 5.843310565925061
+            },
+            "nearTarget": "rest",
+            "fps": 60.20199052034877,
+            "camera": {
+              "zoom": 1,
+              "scrollX": 0,
+              "scrollY": 0
+            },
+            "devices": {
+              "core": {
+                "x": 684.1171244047266,
+                "y": 391.69284342892763
+              },
+              "storage": {
+                "x": 730.2721281671445,
+                "y": 249.0266190132017
+              },
+              "purifier": {
+                "x": 435.60091566112055,
+                "y": 294.1897074452697
+              },
+              "entrance": {
+                "x": 458.0525543975513,
+                "y": 334.63152000519256
+              },
+              "offering": {
+                "x": 465.42557207627164,
+                "y": 234.51720081356174
+              },
+              "growth": {
+                "x": 659.5419039172348,
+                "y": 227.8069946921345
+              }
+            },
+            "panels": {
+              "inventory": false,
+              "status": false,
+              "offering": false,
+              "impact": false,
+              "allocation": false,
+              "growth": false
+            }
+          },
+          "pose": "idle",
+          "model": {
+            "id": 559,
+            "meta": {
+              "yaw": 1.6479457603510148,
+              "phase": null,
+              "settle": 0,
+              "breath": 4.71238898038469,
+              "amount": 0.85,
+              "fibre": 0.5,
+              "structure": 1,
+              "part": "body",
+              "pose": "idle",
+              "anchor": [
+                32,
+                66
+              ],
+              "lamp": [
+                0.34495723703942444,
+                1.1688993009581417,
+                -0.35062982583751306
+              ],
+              "wrist": {
+                "world": [
+                  0.03945657665987065,
+                  0.733712408476312,
+                  -0.33202866684455956
+                ],
+                "screen": [
+                  37.59113689239884,
+                  46.04166135477741
+                ]
+              },
+              "shoulder": {
+                "world": [
+                  0.09450909986531059,
+                  1.0769826774357043,
+                  -0.28412924693847025
+                ],
+                "screen": [
+                  38.14447643490524,
+                  39.54246755196664
+                ]
+              },
+              "shadowCapsules": [
+                [
+                  -0.007856079074092498,
+                  0.7086004551437227,
+                  0.0006072974140852704,
+                  0.1162393674692815,
+                  1.1091871529642197,
+                  -0.008985636042258988,
+                  0.218
+                ],
+                [
+                  0.24616743524962983,
+                  1.3212576447048812,
+                  -0.019029447826220198,
+                  0.2609366274139637,
+                  1.4608304482232124,
+                  -0.020171148682962714,
+                  0.17
+                ],
+                [
+                  -0.2552785386162303,
+                  0.8830749623233355,
+                  0.019733762212801043,
+                  -0.15666123892356576,
+                  1.171478547848431,
+                  0.012110362483420699,
+                  0.188
+                ],
+                [
+                  -0.1103852985763599,
+                  0.7482379471967551,
+                  0.13767724439664278,
+                  -0.08031954946229822,
+                  0.38,
+                  0.15465047679904975,
+                  0.091
+                ],
+                [
+                  -0.08031954946229822,
+                  0.38,
+                  0.15465047679904975,
+                  -0.03844448021489261,
+                  0.13,
+                  0.15141341400617953,
+                  0.079
+                ],
+                [
+                  0.02228429194525828,
+                  0.7124386994622189,
+                  -0.12650380638235367,
+                  0.05179117579062176,
+                  0.38,
+                  -0.1474302347221387,
+                  0.091
+                ],
+                [
+                  0.05179117579062176,
+                  0.38,
+                  -0.1474302347221387,
+                  0.09366624503802738,
+                  0.13,
+                  -0.1506672975150089,
+                  0.079
+                ],
+                [
+                  0.1402304738149253,
+                  1.1480890926842149,
+                  0.26899215579171887,
+                  0.11397195459588844,
+                  0.9488746236342575,
+                  0.32016820192309525,
+                  0.09
+                ],
+                [
+                  0.11397195459588844,
+                  0.9488746236342575,
+                  0.32016820192309525,
+                  0.10023754042278007,
+                  0.7270018385694074,
+                  0.3051821768208862,
+                  0.073
+                ],
+                [
+                  0.09450909986531059,
+                  1.0769826774357043,
+                  -0.28412924693847025,
+                  0.03327253491473703,
+                  0.8958291321104841,
+                  -0.33455957295318256,
+                  0.089
+                ],
+                [
+                  0.03327253491473703,
+                  0.8958291321104841,
+                  -0.33455957295318256,
+                  0.03525316990364524,
+                  0.71702529306249,
+                  -0.3317037314627579,
+                  0.073
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "havenSteady": {
+        "wallMs": 2009.1000000238419,
+        "rafMs": {
+          "count": 120,
+          "mean": 16.666666666666668,
+          "p50": 16.700000000000728,
+          "p95": 16.799999999999272,
+          "p99": 16.80000000000291,
+          "max": 16.80000000000291
+        },
+        "cpuMs": {
+          "count": 121,
+          "mean": 0.3297520664112627,
+          "p50": 0.20000004768371582,
+          "p95": 0.6000000238418579,
+          "p99": 1.800000011920929,
+          "max": 3
+        },
+        "rendererCount": 121,
+        "rendererTotalMs": 39.90000003576279,
+        "maskBytes": 0,
+        "preparedFrames": 0
+      },
+      "seated": {
+        "profile": "haven",
+        "amount": 85,
+        "sources": {
+          "version": 1,
+          "worlds": {
+            "crystal-fibre": 42.5,
+            "ruptured-film": 42.5
+          },
+          "unattributed": 0
+        },
+        "healingCycles": 0,
+        "status": {
+          "state": "ready",
+          "completed": 1035,
+          "total": 1035,
+          "error": ""
+        },
+        "cache": {
+          "requests": 1035,
+          "completed": 1035,
+          "cancelled": 0,
+          "lastBuildMs": 0.8999999761581421,
+          "lastBakeMs": 8.199999988079071,
+          "maxBakeMs": 17.099999964237213,
+          "lastBankMs": 13706.699999988079,
+          "unpacked": 8,
+          "failed": 0,
+          "bankCount": 1,
+          "packedBytes": 9717552,
+          "hotFrames": 8,
+          "hotBytes": 655360,
+          "activeSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "desiredSource": {
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1
+          },
+          "activeFrames": 1035,
+          "warmupMs": 13706.699999988079
+        },
+        "cpu": {
+          "count": 1108,
+          "totalMs": 227.50000059604645,
+          "lastMs": 0.30000001192092896,
+          "maxMs": 3.600000023841858,
+          "maskBytes": 0,
+          "preparedFrames": 0,
+          "changedPixels": 0
+        },
+        "look": {
+          "amount": 0.9392499999999999,
+          "fibre": 0.5,
+          "neutralFraction": 0,
+          "fibrePalette": {
+            "dark": [
+              36,
+              45,
+              96
+            ],
+            "mid": [
+              80,
+              98,
+              167
+            ],
+            "light": [
+              139,
+              155,
+              207
+            ]
+          },
+          "membranePalette": {
+            "dark": [
+              107,
+              38,
+              62
+            ],
+            "mid": [
+              190,
+              80,
+              102
+            ],
+            "light": [
+              228,
+              146,
+              149
+            ]
+          },
+          "neutralPalette": {
+            "dark": [
+              44,
+              46,
+              51
+            ],
+            "mid": [
+              58,
+              61,
+              66
+            ],
+            "light": [
+              74,
+              78,
+              85
+            ]
+          },
+          "paletteRevision": 27,
+          "seconds": 18.480873333333264
+        },
+        "position": {
+          "x": 509.1935363330473,
+          "y": 356.8080750016289
+        },
+        "journey": {
+          "player": {
+            "x": 509.1935363330473,
+            "y": 356.8080750016289
+          },
+          "route": "main",
+          "transitioning": false,
+          "pendingSave": false,
+          "worldPlayer": {
+            "x": 3.8,
+            "y": 0,
+            "z": 3.8
+          },
+          "resting": true,
+          "rest": {
+            "x": 528.7701417249435,
+            "y": 391.868164617227,
+            "depth": 5.843310565925061
+          },
+          "nearTarget": "stand",
+          "fps": 59.72583975077214,
+          "camera": {
+            "zoom": 1.18,
+            "scrollX": 14,
+            "scrollY": 21
+          },
+          "devices": {
+            "core": {
+              "x": 684.1171244047266,
+              "y": 391.69284342892763
+            },
+            "storage": {
+              "x": 730.2721281671445,
+              "y": 249.0266190132017
+            },
+            "purifier": {
+              "x": 435.60091566112055,
+              "y": 294.1897074452697
+            },
+            "entrance": {
+              "x": 458.0525543975513,
+              "y": 334.63152000519256
+            },
+            "offering": {
+              "x": 465.42557207627164,
+              "y": 234.51720081356174
+            },
+            "growth": {
+              "x": 659.5419039172348,
+              "y": 227.8069946921345
+            }
+          },
+          "panels": {
+            "inventory": false,
+            "status": false,
+            "offering": false,
+            "impact": false,
+            "allocation": false,
+            "growth": false
+          }
+        },
+        "pose": "sit",
+        "model": {
+          "id": 1035,
+          "meta": {
+            "yaw": 2.7187387274568526,
+            "phase": null,
+            "settle": 0,
+            "breath": 0,
+            "amount": 0.85,
+            "fibre": 0.5,
+            "structure": 1,
+            "part": "body",
+            "pose": "sit",
+            "seatHeight": 0.48,
+            "anchor": [
+              32,
+              66
+            ],
+            "lamp": [
+              -0.16088265963225812,
+              0.9831317653611211,
+              -0.42958776086453787
+            ],
+            "wrist": {
+              "world": [
+                -0.0018814668509121169,
+                0.6336788218735583,
+                -0.388152925232781
+              ],
+              "screen": [
+                37.46145208151481,
+                47.20618363343375
+              ]
+            },
+            "shoulder": {
+              "world": [
+                -0.22681574054140713,
+                0.8998988290155684,
+                -0.15635324391398583
+              ],
+              "screen": [
+                29.1390299042352,
+                42.48111752081994
+              ]
+            },
+            "shadowCapsules": [
+              [
+                -0.008207293546575956,
+                0.61,
+                0.018238430103502127,
+                0.020380596287327954,
+                0.9551881528888024,
+                -0.04529021397183991,
+                0.205
+              ],
+              [
+                0.07792657470637752,
+                1.1379919096315876,
+                -0.17317016601417232,
+                0.08472814961133378,
+                1.2874083984009224,
+                -0.1882847769140751,
+                0.165
+              ],
+              [
+                -0.1272130499719273,
+                0.6,
+                0.28269566660428297,
+                -0.08766985650236928,
+                0.9829599150338246,
+                0.19482190333859845,
+                0.185
+              ],
+              [
+                0.13439899143270717,
+                0.576,
+                0.014422950525849458,
+                0.2911309405271527,
+                0.498,
+                -0.2911765366024115,
+                0.095
+              ],
+              [
+                0.2911309405271527,
+                0.498,
+                -0.2911765366024115,
+                0.34037470180660845,
+                0.13,
+                -0.40060711722342424,
+                0.081
+              ],
+              [
+                -0.10394081315985862,
+                0.576,
+                -0.09282996154080511,
+                0.03670484058329798,
+                0.498,
+                -0.4495317059760687,
+                0.095
+              ],
+              [
+                0.03670484058329798,
+                0.498,
+                -0.4495317059760687,
+                0.09210407202268572,
+                0.13,
+                -0.5726411091747081,
+                0.081
+              ],
+              [
+                0.27095941257561196,
+                0.9748323666592105,
+                0.06312990877118865,
+                0.3039878232842679,
+                0.709279160090064,
+                0.05796543403916622,
+                0.089
+              ],
+              [
+                0.3039878232842679,
+                0.709279160090064,
+                0.05796543403916622,
+                0.276420506700344,
+                0.6265291729329405,
+                -0.24630239909869148,
+                0.073
+              ],
+              [
+                -0.22681574054140713,
+                0.8998988290155684,
+                -0.15635324391398583,
+                -0.24132818095401876,
+                0.6747878580328489,
+                -0.2069565113061471,
+                0.087
+              ],
+              [
+                -0.24132818095401876,
+                0.6747878580328489,
+                -0.2069565113061471,
+                0.010085953760452265,
+                0.6258757621999231,
+                -0.4001260517917276,
+                0.072
+              ]
+            ]
+          }
+        }
+      },
+      "healedReady": {
+        "waitWallMs": 13704,
+        "state": {
+          "profile": "haven",
+          "amount": 70,
+          "sources": {
+            "version": 1,
+            "worlds": {
+              "crystal-fibre": 35,
+              "ruptured-film": 35
+            },
+            "unattributed": 0
+          },
+          "healingCycles": 1,
+          "status": {
+            "state": "ready",
+            "completed": 1035,
+            "total": 1035,
+            "error": ""
+          },
+          "cache": {
+            "requests": 2070,
+            "completed": 2070,
+            "cancelled": 0,
+            "lastBuildMs": 0.9000000357627869,
+            "lastBakeMs": 8.099999964237213,
+            "maxBakeMs": 17.099999964237213,
+            "lastBankMs": 13571.300000011921,
+            "unpacked": 10,
+            "failed": 0,
+            "bankCount": 2,
+            "packedBytes": 19411146,
+            "hotFrames": 10,
+            "hotBytes": 819200,
+            "activeSource": {
+              "amount": 0.7,
+              "fibre": 0.5,
+              "structure": 1
+            },
+            "desiredSource": {
+              "amount": 0.7,
+              "fibre": 0.5,
+              "structure": 1
+            },
+            "activeFrames": 1035,
+            "warmupMs": 13571.300000011921
+          },
+          "cpu": {
+            "count": 1968,
+            "totalMs": 391.80000150203705,
+            "lastMs": 0.19999998807907104,
+            "maxMs": 3.600000023841858,
+            "maskBytes": 0,
+            "preparedFrames": 0,
+            "changedPixels": 0
+          },
+          "look": {
+            "amount": 0.7839999999999999,
+            "fibre": 0.5,
+            "neutralFraction": 0,
+            "fibrePalette": {
+              "dark": [
+                36,
+                45,
+                96
+              ],
+              "mid": [
+                80,
+                98,
+                167
+              ],
+              "light": [
+                139,
+                155,
+                207
+              ]
+            },
+            "membranePalette": {
+              "dark": [
+                107,
+                38,
+                62
+              ],
+              "mid": [
+                190,
+                80,
+                102
+              ],
+              "light": [
+                228,
+                146,
+                149
+              ]
+            },
+            "neutralPalette": {
+              "dark": [
+                44,
+                46,
+                51
+              ],
+              "mid": [
+                58,
+                61,
+                66
+              ],
+              "light": [
+                74,
+                78,
+                85
+              ]
+            },
+            "paletteRevision": 27,
+            "seconds": 32.83032333333354
+          },
+          "position": {
+            "x": 509.1935363330473,
+            "y": 356.8080750016289
+          },
+          "journey": {
+            "player": {
+              "x": 509.1935363330473,
+              "y": 356.8080750016289
+            },
+            "route": "main",
+            "transitioning": false,
+            "pendingSave": false,
+            "worldPlayer": {
+              "x": 3.8,
+              "y": 0,
+              "z": 3.8
+            },
+            "resting": false,
+            "rest": {
+              "x": 528.7701417249435,
+              "y": 391.868164617227,
+              "depth": 5.843310565925061
+            },
+            "nearTarget": "rest",
+            "fps": 60.38848559940946,
+            "camera": {
+              "zoom": 1,
+              "scrollX": 0,
+              "scrollY": 0
+            },
+            "devices": {
+              "core": {
+                "x": 684.1171244047266,
+                "y": 391.69284342892763
+              },
+              "storage": {
+                "x": 730.2721281671445,
+                "y": 249.0266190132017
+              },
+              "purifier": {
+                "x": 435.60091566112055,
+                "y": 294.1897074452697
+              },
+              "entrance": {
+                "x": 458.0525543975513,
+                "y": 334.63152000519256
+              },
+              "offering": {
+                "x": 465.42557207627164,
+                "y": 234.51720081356174
+              },
+              "growth": {
+                "x": 659.5419039172348,
+                "y": 227.8069946921345
+              }
+            },
+            "panels": {
+              "inventory": false,
+              "status": false,
+              "offering": false,
+              "impact": false,
+              "allocation": false,
+              "growth": false
+            }
+          },
+          "pose": "idle",
+          "model": {
+            "id": 1591,
+            "meta": {
+              "yaw": 1.6479457603510148,
+              "phase": null,
+              "settle": 0,
+              "breath": 2.356194490192345,
+              "amount": 0.7,
+              "fibre": 0.5,
+              "structure": 1,
+              "part": "body",
+              "pose": "idle",
+              "anchor": [
+                32,
+                66
+              ],
+              "lamp": [
+                0.3408079761019812,
+                1.2163727775251998,
+                -0.35030907608258965
+              ],
+              "wrist": {
+                "world": [
+                  0.04398987777935248,
+                  0.7542537882774121,
+                  -0.33237910400553594
+                ],
+                "screen": [
+                  37.69759590932061,
+                  45.62225881305608
+                ]
+              },
+              "shoulder": {
+                "world": [
+                  0.08211683638970586,
+                  1.1082997327281214,
+                  -0.28317128947744924
+                ],
+                "screen": [
+                  37.85345932567795,
+                  38.7684967722481
+                ]
+              },
+              "shadowCapsules": [
+                [
+                  -0.004782723539281165,
+                  0.7288525064565495,
+                  0.00036971822843136595,
+                  0.1041073712674849,
+                  1.1343229915991753,
+                  -0.008047797986970003,
+                  0.218
+                ],
+                [
+                  0.21251849539905696,
+                  1.3594054999660679,
+                  -0.016428288397294225,
+                  0.22320964505905702,
+                  1.499351976479828,
+                  -0.017254744887979012,
+                  0.17
+                ],
+                [
+                  -0.2546110698965515,
+                  0.8937013434232273,
+                  0.019682164968982497,
+                  -0.17149662207506786,
+                  1.1831956502402563,
+                  0.013257180093057878,
+                  0.188
+                ],
+                [
+                  -0.10684604390790092,
+                  0.7687568443164903,
+                  0.13740364987351322,
+                  -0.08031954946229822,
+                  0.38,
+                  0.15465047679904975,
+                  0.091
+                ],
+                [
+                  -0.08031954946229822,
+                  0.38,
+                  0.15465047679904975,
+                  -0.03844448021489261,
+                  0.13,
+                  0.15141341400617953,
+                  0.079
+                ],
+                [
+                  0.025925671205337772,
+                  0.7319793209402798,
+                  -0.12678529542892433,
+                  0.05179117579062176,
+                  0.38,
+                  -0.1474302347221387,
+                  0.091
+                ],
+                [
+                  0.05179117579062176,
+                  0.38,
+                  -0.1474302347221387,
+                  0.09366624503802738,
+                  0.13,
+                  -0.1506672975150089,
+                  0.079
+                ],
+                [
+                  0.12803077513737568,
+                  1.167134997270062,
+                  0.26993522744229936,
+                  0.11147301329133957,
+                  0.9670698980176495,
+                  0.32036137724349245,
+                  0.09
+                ],
+                [
+                  0.11147301329133957,
+                  0.9670698980176495,
+                  0.32036137724349245,
+                  0.10424425070971252,
+                  0.7489260217427628,
+                  0.3048724466395458,
+                  0.073
+                ],
+                [
+                  0.08211683638970586,
+                  1.1082997327281214,
+                  -0.28317128947744924,
+                  0.029756304331669797,
+                  0.9245213844331528,
+                  -0.33428775825780016,
+                  0.089
+                ],
+                [
+                  0.029756304331669797,
+                  0.9245213844331528,
+                  -0.33428775825780016,
+                  0.039426321728463026,
+                  0.7365962032715903,
+                  -0.3320263280517045,
+                  0.073
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "browser": "155.0.8059.85",
+  "sourcesAfter": {
+    "src/scenes/rift-scene.ts": "f15fa3b03990218d64c3b0f31519abbede5cbe942230a299f441983dafea17ed",
+    "src/scenes/purification-scene.ts": "9b32f56ce173ea92167a39f94fac98af369d80e50a308ce250836082aaf5839c",
+    "src/scenes/last-light-visual.ts": "e174792568aceb67c7453cd421e569d52544636fe4fe005cc1fec58f3b8ca271",
+    "src/art/last-light-renderer.ts": "588fa0ab8c6088fe624fa3a29cc7abd6106d29b9fcd001318b350d68d98ad990",
+    "src/entities/player-last-light-presentation.ts": "30b53222cc5ead1281c222bd89dd368208215891d0afff41c141549c04888fe5",
+    "src/art/assimilation-appearance.ts": "e1d7d3060a7cf1c1a0e51c07c9446e332d2515686071c0e5b877861cd94aa0a4",
+    "src/art/assimilation-state-presentation.ts": "efc4079da5f6a0d08e5f3c308d1c541d79efc8798586fef2558aa5ec2d0798e9",
+    "src/art/assimilation-presentation.ts": "984f0700221af3a91d87d2d5955b98a66934738110bc49a7a3832c5ad8a452a5",
+    "src/art/assimilation-model/client.ts": "9e244c8f33e4ed8bc3ce7b1684ea297eadfb71c7df7ccc5d9ee8f7a66117a7aa",
+    "src/art/assimilation-model/geometry.ts": "6a8662f202dad83814dd2c581fbb5be58e23207d8b5edcdfa86d7599cc97ccee"
+  },
+  "pass": true,
+  "finishedAt": "2026-10-20T12:46:59.233Z"
+}
