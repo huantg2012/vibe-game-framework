@@ -15,6 +15,10 @@ export interface NativeSpatialRouteLayout {
   readonly kindlingNodes:readonly Readonly<{id:string;position:Point}>[];
   readonly contaminantNodes:readonly Readonly<{id:string;position:Point}>[];
 }
+export interface NativeSpatialRouteOptions {
+  /** Revision 14 opts in. Omission preserves revision 12/13 measurements exactly. */
+  readonly transverseMode?:'legacy-complete'|'per-leg';
+}
 export interface NativeRouteHoleShareClassification {
   readonly accepted:boolean;
   readonly continuousAccepted:boolean;
@@ -79,7 +83,15 @@ function solidRay(root:NativeSpatialBvh,p:Point,dx:number,dy:number,limit:number
     visit(node.left!);visit(node.right!);
   }visit(root);return best;
 }
-function crossSections(points:readonly Point[],geometry:NativeSpatialGeometry,solidTree:NativeSpatialBvh,policy:NativeSpatialPolicy):Record<string,unknown> {
+interface TransverseMeasurement {
+  readonly lengthPx:number;readonly narrowPx:number;readonly narrowRatio:number;
+  readonly maxNarrowOrUncertainRunPx:number;readonly uncertainPx:number;
+  readonly sections:readonly Record<string,unknown>[];readonly accepted:boolean;
+}
+interface LegTransverseMeasurement extends TransverseMeasurement {
+  readonly legIndex:number;readonly startAtPx:number;
+}
+function crossSections(points:readonly Point[],geometry:NativeSpatialGeometry,solidTree:NativeSpatialBvh,policy:NativeSpatialPolicy):TransverseMeasurement {
   const path=samplePath(points),records:Record<string,unknown>[]=[],hit=createRayHit();let narrowPx=0,uncertainPx=0,run=0,maxRun=0;
   for(const sample of path.samples){const p=sample.point,a=path.at(sample.at-32),b=path.at(sample.at+32),inX=p.x-a.x,inY=p.y-a.y,outX=b.x-p.x,outY=b.y-p.y,inLength=Math.hypot(inX,inY),outLength=Math.hypot(outX,outY),axisX=b.x-a.x,axisY=b.y-a.y,axisLength=Math.hypot(axisX,axisY);
     const turn=inLength>1e-7&&outLength>1e-7?(inX*outX+inY*outY)/(inLength*outLength):1;
@@ -92,7 +104,23 @@ function crossSections(points:readonly Point[],geometry:NativeSpatialGeometry,so
   }
   return{lengthPx:path.length,narrowPx,narrowRatio:path.length?narrowPx/path.length:0,maxNarrowOrUncertainRunPx:maxRun,uncertainPx,sections:records,accepted:(path.length?narrowPx/path.length:0)<=policy.maxNarrowRatio&&maxRun<=policy.maxNarrowRunPx};
 }
-export function evaluateNativeSpatialRoutes(geometry:NativeSpatialGeometry,structures:readonly NativeSpatialStructure[],policy:NativeSpatialPolicy,layout:NativeSpatialRouteLayout):NativeSpatialGateResult {
+/** A stop separates physical legs, not travelled distance. Keep uncertain turns
+ * conservative within each leg, but never join its narrow run to the next leg. */
+function legCrossSections(paths:readonly (readonly Point[])[],geometry:NativeSpatialGeometry,solidTree:NativeSpatialBvh,policy:NativeSpatialPolicy):TransverseMeasurement&{scope:'per-leg';legs:readonly LegTransverseMeasurement[]} {
+  const legs:LegTransverseMeasurement[]=[],sections:Record<string,unknown>[]=[];
+  let lengthPx=0,narrowPx=0,uncertainPx=0,maxRun=0;
+  for(const [legIndex,points] of paths.entries()){
+    const measured=crossSections(points,geometry,solidTree,policy);
+    legs.push({legIndex,startAtPx:lengthPx,...measured});
+    for(const section of measured.sections)sections.push({...section,at:lengthPx+(section.at as number),legIndex,legAtPx:section.at});
+    lengthPx+=measured.lengthPx;narrowPx+=measured.narrowPx;uncertainPx+=measured.uncertainPx;
+    maxRun=Math.max(maxRun,measured.maxNarrowOrUncertainRunPx);
+  }
+  const narrowRatio=lengthPx?narrowPx/lengthPx:0;
+  return{scope:'per-leg',lengthPx,narrowPx,narrowRatio,maxNarrowOrUncertainRunPx:maxRun,uncertainPx,sections,legs,accepted:narrowRatio<=policy.maxNarrowRatio&&maxRun<=policy.maxNarrowRunPx};
+}
+export function evaluateNativeSpatialRoutes(geometry:NativeSpatialGeometry,structures:readonly NativeSpatialStructure[],policy:NativeSpatialPolicy,layout:NativeSpatialRouteLayout,options:NativeSpatialRouteOptions={}):NativeSpatialGateResult {
+  const perLeg=options.transverseMode==='per-leg';
   const {cols}=geometry.terrain,start=cellAt(layout.spawnPoint,cols),exit=cellAt(layout.extractionPoint.position,cols),reasons:string[]=[],qualityDiagnostics:string[]=[];
   if(!geometry.reachable[start]||!geometry.reachable[exit])return{accepted:false,reasons:['route-endpoint-outside-body-domain'],metrics:{start,exit}};
   const fromSpawn=nativeSpatialShortestPaths(geometry,[start]),fromExit=nativeSpatialShortestPaths(geometry,[exit]);
@@ -118,9 +146,12 @@ export function evaluateNativeSpatialRoutes(geometry:NativeSpatialGeometry,struc
     const holes=events.filter(event=>event.kind==='hole').length,eligible=path.length>=policy.minRouteLengthPx&&events.length>=policy.minRouteEncounters,share=events.length?holes/events.length:null,windowFailures:number[]=[];
     const holeShareAdmission=eligible?classifyNativeRouteHoleShare(holes,events.length,policy):null;
     if(eligible){sufficient++;if(!holeShareAdmission!.accepted)qualityDiagnostics.push(`${route.id}:hole-share`);for(let i=0;i+policy.windowSize<=events.length;i++)if(events.slice(i,i+policy.windowSize).filter(e=>e.kind==='hole').length<policy.minWindowHoles)windowFailures.push(i);if(windowFailures.length)qualityDiagnostics.push(`${route.id}:six-encounter-window`);}
-    const sections=crossSections(points,geometry,solidTree,policy);
-    if((sections.narrowRatio as number)>policy.maxNarrowRatio)qualityDiagnostics.push(`${route.id}:narrow-ratio`);
-    if((sections.maxNarrowOrUncertainRunPx as number)>policy.maxNarrowRunPx)reasons.push(`${route.id}:max-narrow-run`);
+    const byLeg=perLeg?legCrossSections(legPaths,geometry,solidTree,policy):undefined;
+    const sections=byLeg??crossSections(points,geometry,solidTree,policy);
+    if(sections.narrowRatio>policy.maxNarrowRatio)qualityDiagnostics.push(`${route.id}:narrow-ratio`);
+    if(byLeg){
+      for(const leg of byLeg.legs)if(leg.maxNarrowOrUncertainRunPx>policy.maxNarrowRunPx)reasons.push(`${route.id}:leg:${leg.legIndex}:max-narrow-run`);
+    }else if(sections.maxNarrowOrUncertainRunPx>policy.maxNarrowRunPx)reasons.push(`${route.id}:max-narrow-run`);
     const legs=legPaths.map(leg=>{const sampled=samplePath(leg),identities=new Set<string>();for(const point of sampled.samples)for(const structure of ordered)if(!identities.has(structure.id)&&encounters(point.point,structure,geometry,policy.encounterRadiusPx))identities.add(structure.id);return{lengthPx:sampled.length,encounters:[...identities],diagnosticOnly:true,short:sampled.length<policy.minRouteLengthPx};});
     results.push({id:route.id,kind:route.kind,target:route.target,interactionSeats:route.interactionSeats,cells:route.cells,smoothedPoints:points,lengthPx:path.length,events,holeShare:share,holeShareAdmission,eligible,windowFailures,legs,transverse:sections});
   }
@@ -143,5 +174,5 @@ export function evaluateNativeSpatialRoutes(geometry:NativeSpatialGeometry,struc
   const holeEncounters=firstEvents.filter(event=>event.kind==='hole').length,solidEncounters=firstEvents.length-holeEncounters;
   const overallHoleShare=firstEvents.length?holeEncounters/firstEvents.length:null;
   if(overallHoleShare===null||overallHoleShare<policy.minRouteHoleShare||overallHoleShare>policy.maxRouteHoleShare)reasons.push('overall-route-hole-share');
-  return{accepted:reasons.length===0,reasons,qualityDiagnostics,metrics:{algorithm:'native-spatial-v1',pathOrder:'direct exit; node ID; 4x3 region row/column',pathTie:'integer 8-neighbour cost then y,x; equal parent y,x',interactionChoice:'minimum complete spawn-seat-exit graph distance among every legal 48px LOS seat; y,x ties',smoothing:'per leg, greedy farthest feasible 20px swept-body segment',routes:results,qualifyingCompleteRoutes:sufficient,overallEncounters:{holes:holeEncounters,solids:solidEncounters,total:firstEvents.length,holeShare:overallHoleShare,minHoleShare:policy.minRouteHoleShare,maxHoleShare:policy.maxRouteHoleShare,basis:'All complete routes, including short samples; each structure once per route. Repeated structures and shared trunks across routes count again.'},uniqueUndirectedEdges:uniqueEdges.size,regionalEventBasis:'first encounters on the same smoothed complete routes; shared body-edge + identity, then original event region + identity',regionalEvents,repeatedTrunkEvents,repeatedRegionEvents,regions:regionReports,excludedRegions:12-eligibleRegions.length,regionalMeanHoleShare:eligibleRegions.length?eligibleRegions.reduce((sum,row)=>sum+row.holeShare!,0)/eligibleRegions.length:null,regionalCalibrationOnly:true,shoreBays:'Excluded from H/S; no bays promoted to internal holes',transverseScope:'8px samples; +/-32px local axis; first actual VOID or solid boundary each side within224px; clipped widths are lower bounds; uncertain turns cannot reset a narrow run',transverseAdmission:'Only maxNarrowOrUncertainRunPx is hard; narrowRatio is quality-only. Per-route transverse.accepted retains the original combined diagnostic.'}};
+  return{accepted:reasons.length===0,reasons,qualityDiagnostics,metrics:{algorithm:'native-spatial-v1',pathOrder:'direct exit; node ID; 4x3 region row/column',pathTie:'integer 8-neighbour cost then y,x; equal parent y,x',interactionChoice:'minimum complete spawn-seat-exit graph distance among every legal 48px LOS seat; y,x ties',smoothing:'per leg, greedy farthest feasible 20px swept-body segment',routes:results,qualifyingCompleteRoutes:sufficient,overallEncounters:{holes:holeEncounters,solids:solidEncounters,total:firstEvents.length,holeShare:overallHoleShare,minHoleShare:policy.minRouteHoleShare,maxHoleShare:policy.maxRouteHoleShare,basis:'All complete routes, including short samples; each structure once per route. Repeated structures and shared trunks across routes count again.'},uniqueUndirectedEdges:uniqueEdges.size,regionalEventBasis:'first encounters on the same smoothed complete routes; shared body-edge + identity, then original event region + identity',regionalEvents,repeatedTrunkEvents,repeatedRegionEvents,regions:regionReports,excludedRegions:12-eligibleRegions.length,regionalMeanHoleShare:eligibleRegions.length?eligibleRegions.reduce((sum,row)=>sum+row.holeShare!,0)/eligibleRegions.length:null,regionalCalibrationOnly:true,shoreBays:'Excluded from H/S; no bays promoted to internal holes',transverseScope:perLeg?'Per actual leg: 8px samples; +/-32px local axis clamped to that leg; first actual VOID or solid boundary each side within224px; clipped widths are lower bounds; uncertain turns cannot reset a run within a leg; runs never cross a stop; route narrowRatio uses summed travelled narrowPx / summed leg lengthPx':'8px samples; +/-32px local axis; first actual VOID or solid boundary each side within224px; clipped widths are lower bounds; uncertain turns cannot reset a narrow run',transverseAdmission:perLeg?'Each actual leg maxNarrowOrUncertainRunPx is hard; route maximum is the maximum of its legs. Aggregate mileage-weighted narrowRatio is quality-only; transverse.accepted retains the combined diagnostic.':'Only maxNarrowOrUncertainRunPx is hard; narrowRatio is quality-only. Per-route transverse.accepted retains the original combined diagnostic.'}};
 }
