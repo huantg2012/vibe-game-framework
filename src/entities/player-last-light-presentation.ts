@@ -9,12 +9,14 @@ import { LAST_LIGHT_STRIDE_METRES } from '@/art/last-light-gait';
 import {
   ASSIMILATION_SURFACE_STRIDE, AssimilationLookParameters, createAssimilationLookMetrics,
   getAssimilationLookPalettes, recordAssimilationLookTime, sampleAssimilationSurface, writeAssimilationSurface,
+  ASSIMILATION_GRIP_CONTACT_RADIUS,
   type AssimilationLookMetrics, type AssimilationLookState,
 } from '@/art/assimilation-appearance';
 import { sampleWorldMaterialLight, type WorldMaterialLighting } from './form-renderers/d/world-material-light';
 import { LAST_LIGHT_PLAYER_CAMERA as CAMERA, LAST_LIGHT_PLAYER_BASIS as BASIS,
   lastLightToNative, lastLightScreenHeading, nearestLastLightYaw } from './player-last-light-math';
-import type { AssimilationModelFrame } from '@/dev/assimilation-model-protocol';
+import type { AssimilationModelFrame, AssimilationModelFrameSource, AssimilationModelFrameQuery } from '@/art/assimilation-model/protocol';
+type MutableModelQuery = { -readonly [K in keyof AssimilationModelFrameQuery]: AssimilationModelFrameQuery[K] };
 
 interface ExportFrame {
   key: string; yawIndex: number; yaw: number; pose: 'idle' | 'walk' | 'attack'; phase: number | string;
@@ -167,6 +169,12 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
   private readonly assimilationSurfaces = new Map<PreparedFrame, AssimilationFrameSurface>();
   private readonly assimilationScratch = new Float32Array(5);
   private assimilationModel: PreparedFrame | null = null;
+  private assimilationBodyWithoutArm: PreparedFrame | null = null;
+  private assimilationAttackArm: PreparedFrame | null = null;
+  private assimilationModelSource: AssimilationModelFrameSource | null = null;
+  private readonly assimilationFrames = new Map<number, PreparedFrame>();
+  private readonly assimilationPose: MutableModelQuery = { yaw: 0, phase: null, breath: 0, part: 'body', pose: 'idle' };
+  private assimilationBasePrepared = false;
   constructor(private readonly scene: Phaser.Scene, private readonly player: PlayerPresentationSource,
     private readonly assets: LastLightPlayerAssets, private readonly lighting: WorldMaterialLighting) {
     const key = `last-light-player-a-${++nextTextureId}`;
@@ -197,11 +205,12 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     const row = nearestLastLightYaw(this.player.getFacingAngle(), this.assets.headings);
     const column = this.player.isMoving() ? 1 + Math.floor(this.distance / (LAST_LIGHT_STRIDE_METRES * CAMERA.scale) * 12) % 12 : 0;
     this.frameIndex = row * 13 + column;
+    const sample = this.quality ? lastLightAttackSampleIndex(this.attackPose) : -1;
+    this.attackIndex = sample < 0 ? -1 : row * 15 + sample;
+    this.selectAssimilationFrames(sample);
     const frame = this.assimilationModel ?? this.assets.frames[this.frameIndex]!;
     this.image.setPosition(position.x, groundY); this.contact.setPosition(position.x, groundY); this.glove.setPosition(position.x, groundY);
-    const sample = this.quality && !this.assimilationModel ? lastLightAttackSampleIndex(this.attackPose) : -1;
-    this.attackIndex = sample < 0 ? -1 : row * 15 + sample;
-    const arm = this.attackIndex < 0 ? null : this.assets.attackArm[this.attackIndex]!;
+    const arm = this.attackIndex < 0 ? null : this.assimilationAttackArm ?? this.assets.attackArm[this.attackIndex]!;
     let wrist = frame.source.wrist;
     this.armOffsetX = this.armOffsetY = this.armDepthDelta = 0; this.armNativeDelta.fill(0);
     if (arm) {
@@ -216,7 +225,7 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     this.grip.y = groundY + wrist[1] - 66 + this.armOffsetY;
     this.grip.z = nativeWrist[2] * CAMERA.scale + this.armNativeDelta[2];
     const gx = Math.max(0,Math.min(63,Math.floor(wrist[0]+this.armOffsetX))), gy = Math.max(0,Math.min(79,Math.floor(wrist[1]+this.armOffsetY)));
-    const body = arm ? this.assets.bodyWithoutArm[this.frameIndex]! : frame;
+    const body = arm ? this.assimilationBodyWithoutArm ?? this.assets.bodyWithoutArm[this.frameIndex]! : frame;
     this.weaponBehind = wrist[2] + this.armDepthDelta < body.depths[gy * 64 + gx]! - .03;
     this.weapon.setPosition(this.grip.x, this.grip.y).setRotation(lastLightScreenHeading(frame.source.yaw) + (arm?.source.sweep ?? .55) + Math.PI / 2);
     this.weapon.setDepth(this.groundDepth + (this.weaponBehind ? .08 : .14));
@@ -227,89 +236,133 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     const source = this.assets.frames[this.frameIndex]!.source;
     return { yaw: source.yaw, phase: source.pose === 'walk' ? Number(source.phase) : null, breath: 0 };
   }
-  /** DEV frame override: the complete authored geometry and its sockets arrive
-   * together. No shared production atlas is mutated. */
+  /** A completed cache epoch is queried synchronously from the current pose.
+   * Worker completion never advances movement or combat clocks. */
+  setAssimilationModelSource(source: AssimilationModelFrameSource | null): void {
+    if (this.destroyed || this.assimilationModelSource === source) return;
+    this.assimilationModelSource = source;
+    this.assimilationModel = this.assimilationBodyWithoutArm = this.assimilationAttackArm = null;
+  }
+  private selectAssimilationFrames(attackSample: number): void {
+    const source = this.assimilationModelSource;
+    if (!source) {
+      // The isolated single-frame study has no split body. Never combine a
+      // complete rest arm with a second attack arm.
+      if (attackSample >= 0) this.assimilationModel = null;
+      return;
+    }
+    if (this.assimilationLook.amount <= 0) {
+      this.assimilationModel = this.assimilationBodyWithoutArm = this.assimilationAttackArm = null;
+      return;
+    }
+    const base = this.assets.frames[this.frameIndex]!.source, pose = this.assimilationPose;
+    pose.yaw = base.yaw; pose.pose = base.pose === 'walk' ? 'walk' : 'idle';
+    pose.phase = base.pose === 'walk' ? Number(base.phase) : null; pose.breath = 0;
+    pose.part = 'body'; pose.attackSample = undefined;
+    const full = source.getFrame(pose);
+    this.assimilationModel = full ? this.prepareModelFrame(full) : null;
+    this.assimilationBodyWithoutArm = this.assimilationAttackArm = null;
+    if (attackSample < 0) return;
+    pose.part = 'withoutArm';
+    const body = source.getFrame(pose);
+    pose.part = 'arm'; pose.attackSample = attackSample; pose.phase = null; pose.breath = 0; pose.settle = 0;
+    const arm = source.getFrame(pose);
+    // Incomplete caches fall back to this exact live pose, never a stale one.
+    if (!full || !body || !arm) { this.assimilationModel = null; return; }
+    this.assimilationBodyWithoutArm = this.prepareModelFrame(body);
+    this.assimilationAttackArm = this.prepareModelFrame(arm);
+  }
+  /** Compatibility hook for the isolated one-frame study. */
   setAssimilationModel(value: AssimilationModelFrame | null): void {
     if (!import.meta.env.DEV || this.destroyed) return;
-    if (this.assimilationModel) {
-      const old = this.assimilationSurfaces.get(this.assimilationModel);
-      if (old) this.assimilationMetrics.maskBytes -= old.pixels.byteLength;
-      this.assimilationSurfaces.delete(this.assimilationModel);
-    }
-    this.assimilationModel = null;
-    if (value) {
-      const offsets: number[] = [], pixels: number[] = [], glovePixels: number[] = [];
-      const depths = new Float32Array(64 * 80).fill(-Infinity);
-      for (let y = 0; y < 80; y++) for (let x = 0; x < 64; x++) {
-        const j = (y * 64 + x) * 4;
-        if (!value.albedo[j + 3]) continue;
-        const d = (value.depth[j]! * 256 + value.depth[j + 1]!) / 256 - 80;
-        depths[j / 4] = d;
-        const point = unprojectLastLight(x + .5, y + .5, d, CAMERA, BASIS), p = lastLightToNative(point);
-        const n = lastLightToNative([value.normal[j]! / 127.5 - 1, value.normal[j + 1]! / 127.5 - 1, value.normal[j + 2]! / 127.5 - 1]);
-        offsets.push(j);
-        pixels.push(p[0] * CAMERA.scale, p[1] * CAMERA.scale, p[2] * CAMERA.scale, ...n,
-          value.albedo[j]!, value.albedo[j + 1]!, value.albedo[j + 2]!, value.material[j + 2]! / 255, value.material[j + 3]! / 255 * 2);
-        if (Math.hypot(...point.map((v, i) => v - value.meta.wrist.world[i]!)) < .1) glovePixels.push(j / 4);
-      }
-      const screen = (socket: AssimilationModelFrame['meta']['wrist']): LightVector =>
-        [socket.screen[0], socket.screen[1], socket.world.reduce((v, p, i) => v + p * BASIS.back[i]!, 0)];
-      const lamp = lastLightToNative(value.meta.lamp);
-      const frame: PreparedFrame = {
-        source: { key: `study-${value.id}`, yawIndex: 0, yaw: value.meta.yaw, pose: value.meta.phase === null ? 'idle' : 'walk',
-          phase: value.meta.phase ?? 0, rect: [0, 0, 64, 80], lampWorld: value.meta.lamp,
-          wristWorld: value.meta.wrist.world, shoulderWorld: value.meta.shoulder.world,
-          wrist: screen(value.meta.wrist), shoulder: screen(value.meta.shoulder), glovePixels },
-        offsets: new Uint16Array(offsets), pixels: new Float32Array(pixels), depths, contact: null,
-        lamp: [lamp[0] * CAMERA.scale, lamp[1] * CAMERA.scale, lamp[2] * CAMERA.scale],
-        wrist: lastLightToNative(value.meta.wrist.world), shoulder: lastLightToNative(value.meta.shoulder.world),
-      };
-      this.assimilationModel = frame;
-      this.prepareAssimilationSurface(frame);
-    }
-    this.syncPose(); this.render();
+    this.assimilationModel = value ? this.prepareModelFrame(value) : null;
   }
-  /** Explicit DEV opt-in. Preparation is bounded by the existing frame set. */
+  private prepareModelFrame(value: AssimilationModelFrame): PreparedFrame {
+    const cached = this.assimilationFrames.get(value.id);
+    if (cached) {
+      this.assimilationFrames.delete(value.id); this.assimilationFrames.set(value.id, cached);
+      return cached;
+    }
+    const offsets: number[] = [], pixels: number[] = [], glovePixels: number[] = [];
+    const depths = new Float32Array(64 * 80).fill(-Infinity);
+    for (let y = 0; y < 80; y++) for (let x = 0; x < 64; x++) {
+      const j = (y * 64 + x) * 4;
+      if (!value.albedo[j + 3]) continue;
+      const d = (value.depth[j]! * 256 + value.depth[j + 1]!) / 256 - 80;
+      depths[j / 4] = d;
+      const point = unprojectLastLight(x + .5, y + .5, d, CAMERA, BASIS), p = lastLightToNative(point);
+      const n = lastLightToNative([value.normal[j]! / 127.5 - 1, value.normal[j + 1]! / 127.5 - 1, value.normal[j + 2]! / 127.5 - 1]);
+      offsets.push(j);
+      pixels.push(p[0] * CAMERA.scale, p[1] * CAMERA.scale, p[2] * CAMERA.scale, ...n,
+        value.albedo[j]!, value.albedo[j + 1]!, value.albedo[j + 2]!, value.material[j + 2]! / 255, value.material[j + 3]! / 255 * 2);
+      if (Math.hypot(...point.map((v, i) => v - value.meta.wrist.world[i]!)) < .1) glovePixels.push(j / 4);
+    }
+    const screen = (socket: AssimilationModelFrame['meta']['wrist']): LightVector =>
+      [socket.screen[0], socket.screen[1], socket.world.reduce((v, p, i) => v + p * BASIS.back[i]!, 0)];
+    const lamp = lastLightToNative(value.meta.lamp);
+    const frame: PreparedFrame = {
+      source: { key: `assimilation-${value.id}`, yawIndex: 0, yaw: value.meta.yaw,
+        pose: value.meta.part === 'arm' ? 'attack' : value.meta.phase === null ? 'idle' : 'walk',
+        phase: value.meta.phase ?? 0, rect: [0, 0, 64, 80], lampWorld: value.meta.lamp,
+        wristWorld: value.meta.wrist.world, shoulderWorld: value.meta.shoulder.world,
+        wrist: screen(value.meta.wrist), shoulder: screen(value.meta.shoulder), glovePixels, sweep: value.meta.sweep },
+      offsets: new Uint16Array(offsets), pixels: new Float32Array(pixels), depths, contact: null,
+      lamp: [lamp[0] * CAMERA.scale, lamp[1] * CAMERA.scale, lamp[2] * CAMERA.scale],
+      wrist: lastLightToNative(value.meta.wrist.world), shoulder: lastLightToNative(value.meta.shoulder.world),
+    };
+    this.assimilationFrames.set(value.id, frame);
+    this.prepareAssimilationSurface(frame);
+    while (this.assimilationFrames.size > 64) {
+      const oldest = this.assimilationFrames.keys().next().value!;
+      const oldFrame = this.assimilationFrames.get(oldest)!;
+      const oldSurface = this.assimilationSurfaces.get(oldFrame);
+      if (oldSurface) this.assimilationMetrics.maskBytes -= oldSurface.pixels.byteLength;
+      this.assimilationSurfaces.delete(oldFrame); this.assimilationFrames.delete(oldest);
+    }
+    return frame;
+  }
+  /** Presentation inputs only; their gameplay ownership stays with the scene. */
   setAssimilationLook(state: AssimilationLookState | null): void {
-    if (!import.meta.env.DEV || this.destroyed) return;
+    if (this.destroyed) return;
     this.assimilationLook.set(state);
-    if (!state || this.assimilationSurfaces.size) return;
+    if (!state || this.assimilationBasePrepared) return;
     getAssimilationLookPalettes();
-    for (const frames of [this.assets.frames, this.assets.bodyWithoutArm])
+    for (const frames of [this.assets.frames, this.assets.bodyWithoutArm, this.assets.attackArm])
       for (const frame of frames) this.prepareAssimilationSurface(frame);
+    this.assimilationBasePrepared = true;
   }
   private prepareAssimilationSurface(frame: PreparedFrame): void {
     const backLength = Math.hypot(BASIS.back[0], BASIS.back[2]);
     const backX = BASIS.back[0] / backLength, backZ = BASIS.back[2] / backLength;
-      const surface = new Uint8Array(frame.offsets.length * ASSIMILATION_SURFACE_STRIDE);
-      const c = Math.cos(frame.source.yaw), s = Math.sin(frame.source.yaw), pixels = frame.pixels;
-      for (let i = 0; i < frame.offsets.length; i++) {
-        const p = i * 11, nx = pixels[p]! / CAMERA.scale, ny = pixels[p + 1]! / CAMERA.scale;
-        const worldX = nx * BASIS.right[0] + ny * backX, worldZ = nx * BASIS.right[2] + ny * backZ;
-        const localX = worldX * c - worldZ * s, localY = pixels[p + 2]! / CAMERA.scale, localZ = worldX * s + worldZ * c;
-        const wrist = frame.source.wristWorld;
-        const gripContact = (worldX - wrist[0]) ** 2 + (localY - wrist[1]) ** 2 + (worldZ - wrist[2]) ** 2 < .065 ** 2;
-        writeAssimilationSurface(localX, localY, localZ, Math.max(pixels[p + 6]!, pixels[p + 7]!, pixels[p + 8]!),
-          pixels[p + 10]!, surface, i * ASSIMILATION_SURFACE_STRIDE,
-          gripContact);
-      }
-      this.assimilationSurfaces.set(frame, {
-        pixels: surface,
-        normalX: c * BASIS.right[0] - s * BASIS.right[2],
-        normalY: c * backX - s * backZ,
-      });
-      this.assimilationMetrics.maskBytes += surface.byteLength;
-      this.assimilationMetrics.preparedFrames++;
+    const surface = new Uint8Array(frame.offsets.length * ASSIMILATION_SURFACE_STRIDE);
+    const c = Math.cos(frame.source.yaw), s = Math.sin(frame.source.yaw), pixels = frame.pixels;
+    for (let i = 0; i < frame.offsets.length; i++) {
+      const p = i * 11, nx = pixels[p]! / CAMERA.scale, ny = pixels[p + 1]! / CAMERA.scale;
+      const worldX = nx * BASIS.right[0] + ny * backX, worldZ = nx * BASIS.right[2] + ny * backZ;
+      const localX = worldX * c - worldZ * s, localY = pixels[p + 2]! / CAMERA.scale, localZ = worldX * s + worldZ * c;
+      const wrist = frame.source.wristWorld;
+      const gripContact = (worldX - wrist[0]) ** 2 + (localY - wrist[1]) ** 2 + (worldZ - wrist[2]) ** 2 < ASSIMILATION_GRIP_CONTACT_RADIUS ** 2;
+      writeAssimilationSurface(localX, localY, localZ, Math.max(pixels[p + 6]!, pixels[p + 7]!, pixels[p + 8]!),
+        pixels[p + 10]!, surface, i * ASSIMILATION_SURFACE_STRIDE,
+        gripContact);
+    }
+    this.assimilationSurfaces.set(frame, {
+      pixels: surface,
+      normalX: c * BASIS.right[0] - s * BASIS.right[2],
+      normalY: c * backX - s * backZ,
+    });
+    this.assimilationMetrics.maskBytes += surface.byteLength;
+    this.assimilationMetrics.preparedFrames++;
   }
   /** CPU render duration includes the original lighting and texture uploads. */
   getAssimilationLookMetrics(): Readonly<AssimilationLookMetrics> { return this.assimilationMetrics; }
   render(): void {
     if (this.destroyed) return;
-    const measure = this.assimilationLook.enabled, start = measure ? performance.now() : 0;
+    const measure = import.meta.env.DEV && this.assimilationLook.enabled, start = measure ? performance.now() : 0;
     if (measure) this.assimilationMetrics.changedPixels = 0;
     const original = this.assimilationModel ?? this.assets.frames[this.frameIndex]!;
-    const arm = this.attackIndex < 0 ? null : this.assets.attackArm[this.attackIndex]!;
-    const body = arm ? this.assets.bodyWithoutArm[this.frameIndex]! : original;
+    const arm = this.attackIndex < 0 ? null : this.assimilationAttackArm ?? this.assets.attackArm[this.attackIndex]!;
+    const body = arm ? this.assimilationBodyWithoutArm ?? this.assets.bodyWithoutArm[this.frameIndex]! : original;
     this.output.data.fill(0); this.composedDepth.fill(-Infinity); this.composedArm.fill(0);
     this.drawFrame(body, 0, 0, 0, 0, 0, 0, false);
     if (arm) {
@@ -342,7 +395,7 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
   private drawFrame(frame:PreparedFrame, dx:number, dy:number, wx:number, wy:number, wz:number, depthDelta:number, arm:boolean):void {
     const pixels=frame.pixels,target=this.output.data;
     const look=this.assimilationLook;
-    const surface=look.amount>0&&!arm?this.assimilationSurfaces.get(frame):undefined;
+    const surface=look.amount>0?this.assimilationSurfaces.get(frame):undefined;
     for(let i=0;i<frame.offsets.length;i++) {
       const source=frame.offsets[i]!/4, x=source%64+dx,y=Math.floor(source/64)+dy;
       if(x<0||x>=64||y<0||y>=80)continue;
@@ -356,7 +409,7 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
           pixels[p+6]!,pixels[p+7]!,pixels[p+8]!,this.assimilationScratch);
         const relief=this.assimilationScratch[3]!;
         if(this.assimilationScratch[4]!>0){
-          this.assimilationMetrics.changedPixels++;
+          if (import.meta.env.DEV) this.assimilationMetrics.changedPixels++;
           nx+=surface.normalX*relief;ny+=surface.normalY*relief;
           const length=Math.hypot(nx,ny,nz);nx/=length;ny/=length;nz/=length;
         }
@@ -383,7 +436,10 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     }
     this.weapon.setTexture(key);
   }
-  setWeaponAttackPose(pose:Readonly<WeaponAttackPose>):void { this.attackPose=pose; }
+  setWeaponAttackPose(pose:Readonly<WeaponAttackPose>):void {
+    this.attackPose=pose;
+    if (pose.phase === 'idle') { this.attackIndex = -1; this.assimilationAttackArm = this.assimilationBodyWithoutArm = null; }
+  }
   getHitFlashImages():readonly Phaser.GameObjects.Image[] { return this.bodyImages; }
   getVisualBounds(out:Phaser.Geom.Rectangle):Phaser.Geom.Rectangle {
     this.image.getBounds(out);
@@ -403,6 +459,9 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
       yaw: frame.source.yaw, pose: frame.source.pose, foot: { x: this.image.x, y: this.image.y, anchor: [32, 66] },
       lamp: { ...this.lamp }, oldBodyVisible: this.player.getSprite().visible, nativeScale: this.image.scaleX,
       weapon:{quality:this.quality,variant:this.variant,visible:this.weapon.visible,behind:this.weaponBehind},attackPhase:this.attackPose?.phase??'idle',attackFrame:this.attackIndex,gripAnchor:{...this.grip},hitFlash:this.image.tintFill,
+      assimilation: { amount: this.assimilationLook.amount, frame: this.assimilationModel?.source.key ?? null,
+        body: this.assimilationBodyWithoutArm?.source.key ?? null, arm: this.assimilationAttackArm?.source.key ?? null,
+        preparedFrames: this.assimilationFrames.size },
       nativeLights: this.lighting.lights.length, masked: !!this.image.mask, contactMasked: !!this.contact.mask };
   }
   destroy(): void {
@@ -411,6 +470,7 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     this.scene.textures.remove(this.gloveTexture.key);
     this.scene.textures.remove(this.texture.key); this.scene.textures.remove(this.contactTexture.key);
     this.assimilationSurfaces.clear();
+    this.assimilationFrames.clear(); this.assimilationModelSource = null;
     this.assimilationMetrics.maskBytes = 0;
   }
 }

@@ -4,11 +4,12 @@ import { LastLightShadowMaps, LAST_LIGHT_SHADOW_GLSL } from './last-light-shadow
 import { createLastLightEnvironmentShader, getLastLightExteriorObserver } from './last-light-exterior';
 import {
   ASSIMILATION_APPEARANCE_GLSL, AssimilationLookParameters, createAssimilationLookMetrics,
-  getAssimilationLookPalettes, recordAssimilationLookTime,
-  type AssimilationLookMetrics, type AssimilationLookState,
+  recordAssimilationLookTime,
+  type AssimilationLookMetrics, type AssimilationLookState, type AssimilationPalette,
 } from './assimilation-appearance';
-import type { AssimilationModelFrame } from '@/dev/assimilation-model-protocol';
-import { LAST_LIGHT_WALK_FRAMES, LAST_LIGHT_SETTLE_STAGES } from './last-light-gait';
+import type { AssimilationModelFrame, AssimilationModelFrameQuery, AssimilationModelFrameSource } from './assimilation-model/protocol';
+import { LAST_LIGHT_IDLE_FRAMES, LAST_LIGHT_WALK_FRAMES, LAST_LIGHT_SETTLE_STAGES } from './last-light-gait';
+type MutableModelQuery = { -readonly [K in keyof AssimilationModelFrameQuery]: AssimilationModelFrameQuery[K] };
 
 export interface LastLightFrame {
   x: number; y: number; width: number; height: number;
@@ -79,6 +80,7 @@ uniform vec3 uCapsuleB[14];
 uniform vec3 uShadowLights[2];
 uniform float uCoreGain;
 uniform vec2 uAssimilationAnchor,uAssimilationSubjective;
+uniform float uAssimilationSeatHeight;
 ${ASSIMILATION_APPEARANCE_GLSL}
 ${LAST_LIGHT_SHADOW_GLSL}
 vec4 energyFrame(vec2 uv,float frame){return texture(uEnergy,(vec2(mod(frame,4.),1.-floor(frame/4.))+uv)/vec2(4,2));}
@@ -169,7 +171,12 @@ void main(){
    vec4 mat=texture(uActorRough,auv);
    vec3 materialPoint=uRight*((local.x-uAssimilationAnchor.x)/uScale)+
     uUp*((uAssimilationAnchor.y-local.y)/uScale)+uBack*relative;
-   assimilationMaterial(materialPoint,actor.rgb,an,mat);
+   // Sitting lowers the real faceplate with the torso. Protect only its narrow
+   // black front surface; the seated coat and limbs still receive materials.
+   float faceZ=materialPoint.x*uAssimilationYaw.y+materialPoint.z*uAssimilationYaw.x;
+   bool seatedVisor=uAssimilationSeatHeight>0.&&materialPoint.y>uAssimilationSeatHeight+.54&&
+     faceZ>.05&&max(actor.r,max(actor.g,actor.b))<20./255.;
+   if(!seatedVisor)assimilationMaterial(materialPoint,actor.rgb,an,mat);
    vec3 lit=actor.rgb*(.18+.12*max(an.y,0.)+.19*max(0.,dot(an,uBack)))*mat.b*vec3(.97,1.,1.025);
    for(int i=0;i<40;i++){
     if(i>=uLightCount)break;
@@ -222,12 +229,18 @@ export class LastLightRenderer {
   private readonly frameBounds = new Map<LastLightFrame, { x: number; y: number; width: number; height: number }>();
   private readonly assimilationLook = new AssimilationLookParameters();
   private readonly assimilationMetrics = createAssimilationLookMetrics();
-  private assimilationPaletteUploaded = false;
+  private assimilationFibrePalette: AssimilationPalette | null = null;
+  private assimilationMembranePalette: AssimilationPalette | null = null;
+  private assimilationNeutralPalette: AssimilationPalette | null = null;
+  private assimilationPaletteRevision = -1;
   private assimilationModel: LastLightFrame | null = null;
   private readonly assimilationTextures = new Map<keyof LastLightRenderImages, WebGLTexture>();
   private assimilationUpload: Uint8Array | null = null;
   private assimilationBounds = { x: 0, y: 0, width: 64, height: 80 };
   private assimilationRenderState: LastLightRenderState | null = null;
+  private assimilationModelSource: AssimilationModelFrameSource | null = null;
+  private assimilationUploadedFrame: AssimilationModelFrame | null = null;
+  private readonly assimilationPose: MutableModelQuery = { yaw: 0, phase: null, breath: 0, part: 'body', pose: 'idle', settle: 0 };
 
   constructor(private readonly pack: LastLightRenderPack) {
     this.canvas = document.createElement('canvas');
@@ -320,28 +333,46 @@ export class LastLightRenderer {
     this.observer = getLastLightExteriorObserver(world, this.pack.camera);
     this.lastSeconds = seconds;
   }
-  /** Explicit DEV opt-in. No scene/gameplay state is inferred or persisted. */
+  /** Presentation inputs only; gameplay state remains owned by the scene. */
   setAssimilationLook(state: AssimilationLookState | null): void {
-    if (!import.meta.env.DEV || this.destroyed) return;
+    if (this.destroyed) return;
     this.assimilationLook.set(state);
   }
   /** CPU draw/submission time only: this is deliberately not called GPU time. */
   getAssimilationLookMetrics(): Readonly<AssimilationLookMetrics> { return this.assimilationMetrics; }
-  getAssimilationModelPose(): { yaw: number; phase: number | null; breath: number; settle: number } | null {
+  getAssimilationModelPose(): AssimilationModelFrameQuery | null {
     const state = this.assimilationRenderState;
-    if (!state || state.gaitPose === 'sit') return null;
+    if (!state) return null;
     const frame = this.frame(state);
+    return this.modelPose(frame);
+  }
+  private modelPose(frame: LastLightFrame): AssimilationModelFrameQuery {
     const isSettle = frame.pose === 'walk' && frame.phase >= LAST_LIGHT_WALK_FRAMES;
     const walkFrame = isSettle ? Math.floor((frame.phase - LAST_LIGHT_WALK_FRAMES) / LAST_LIGHT_SETTLE_STAGES) : frame.phase;
-    return { yaw: frame.yaw, phase: frame.pose === 'walk' ? walkFrame / LAST_LIGHT_WALK_FRAMES * Math.PI * 2 : null, breath: 0,
-      settle: isSettle ? ((frame.phase - LAST_LIGHT_WALK_FRAMES) % LAST_LIGHT_SETTLE_STAGES + 1) / LAST_LIGHT_SETTLE_STAGES : 0 };
+    const pose = this.assimilationPose;
+    pose.yaw = frame.yaw; pose.pose = frame.pose;
+    pose.phase = frame.pose === 'walk' ? walkFrame / LAST_LIGHT_WALK_FRAMES * Math.PI * 2 : null;
+    pose.breath = frame.pose === 'idle' ? frame.phase / LAST_LIGHT_IDLE_FRAMES * Math.PI * 2 : 0;
+    pose.settle = isSettle ? ((frame.phase - LAST_LIGHT_WALK_FRAMES) % LAST_LIGHT_SETTLE_STAGES + 1) / LAST_LIGHT_SETTLE_STAGES : 0;
+    pose.seatHeight = frame.pose === 'sit' ? .48 : undefined;
+    return pose;
+  }
+  setAssimilationModelSource(source: AssimilationModelFrameSource | null): void {
+    if (this.destroyed || this.assimilationModelSource === source) return;
+    this.assimilationModelSource = source;
+    this.assimilationModel = null; this.assimilationUploadedFrame = null;
   }
   /** Four small textures replace the same four actor samplers. They never
    * duplicate the original atlas and never add a compositing pass. */
   setAssimilationModel(value: AssimilationModelFrame | null): void {
     if (!import.meta.env.DEV || this.destroyed) return;
+    this.uploadAssimilationModel(value);
+  }
+  private uploadAssimilationModel(value: AssimilationModelFrame | null): void {
+    if (this.assimilationUploadedFrame?.id === value?.id) return;
+    this.assimilationUploadedFrame = value;
     this.assimilationModel = value ? { x: 0, y: 0, width: 64, height: 80, anchor: value.meta.anchor,
-      yaw: value.meta.yaw, pose: value.meta.phase === null ? 'idle' : 'walk', phase: value.meta.phase ?? 0,
+      yaw: value.meta.yaw, pose: value.meta.pose, phase: value.meta.phase ?? 0,
       lamp: value.meta.lamp, shadowCapsules: value.meta.shadowCapsules } : null;
     if (value) {
       const gl = this.gl;
@@ -365,15 +396,23 @@ export class LastLightRenderer {
       }
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     }
-    if (this.assimilationRenderState) this.draw(this.assimilationRenderState);
+  }
+  private uploadAssimilationPalette(name: string, profile: AssimilationPalette): void {
+    for (let index = 0; index < 3; index++) {
+      const color = index === 0 ? profile.dark : index === 1 ? profile.mid : profile.light;
+      this.gl.uniform3f(this.uniform(this.composite, `${name}[${index}]`), color[0] / 255, color[1] / 255, color[2] / 255);
+    }
   }
   draw(state: LastLightRenderState): void {
     if (this.destroyed) return;
     if (this.gl.isContextLost()) throw new Error('Last Light rendering context was lost.');
-    const measure = this.assimilationLook.enabled, start = measure ? performance.now() : 0;
-    if (import.meta.env.DEV) this.assimilationRenderState = state;
-    const geometry = state.gaitPose === 'sit' ? null : this.assimilationModel;
-    const gl = this.gl, frame = geometry ?? this.frame(state); this.currentFrame = frame;
+    const measure = import.meta.env.DEV && this.assimilationLook.enabled, start = measure ? performance.now() : 0;
+    this.assimilationRenderState = state;
+    const baseFrame = this.frame(state);
+    if (this.assimilationModelSource)
+      this.uploadAssimilationModel(this.assimilationLook.amount > 0 ? this.assimilationModelSource.getFrame(this.modelPose(baseFrame)) : null);
+    const geometry = this.assimilationModel;
+    const gl = this.gl, frame = geometry ?? baseFrame; this.currentFrame = frame;
     const projected = projectLastLight(state.world, this.pack.camera, this.basis);
     const top = [Math.round(projected[0] - frame.anchor[0]), Math.round(projected[1] - frame.anchor[1])];
     const bounds = geometry ? this.assimilationBounds : this.frameBounds.get(frame)!;
@@ -411,24 +450,29 @@ export class LastLightRenderer {
     gl.activeTexture(gl.TEXTURE15); gl.bindTexture(gl.TEXTURE_2D_ARRAY,this.shadows.sourceTexture); gl.uniform1i(this.uniform(c,'uSourceShadows'),15);
     gl.uniform1f(this.uniform(c, 'uSeconds'), state.reducedMotion ? 0 : state.seconds);
     const look = this.assimilationLook;
-    // The study covers the standing/walking mother model. Seated geometry has
-    // different anatomical coordinates and must never inherit a standing mask.
-    gl.uniform4f(this.uniform(c, 'uAssimilation'), frame.pose === 'sit' ? 0 : look.amount, look.fibre,
+    gl.uniform4f(this.uniform(c, 'uAssimilation'), look.amount, look.fibre,
       state.reducedMotion ? 0 : look.fibrePhase, state.reducedMotion ? 0 : look.membranePhase);
+    gl.uniform1f(this.uniform(c, 'uAssimilationNeutralFraction'), look.neutralFraction);
+    gl.uniform1f(this.uniform(c, 'uAssimilationSeatHeight'), frame.pose === 'sit' ? .48 : 0);
     gl.uniform2f(this.uniform(c, 'uAssimilationSubjective'), look.subjective ? 1 : 0,
       state.reducedMotion ? 0 : look.seconds);
     if (look.enabled) {
       gl.uniform2f(this.uniform(c, 'uAssimilationYaw'), Math.cos(frame.yaw), Math.sin(frame.yaw));
       gl.uniform2f(this.uniform(c, 'uAssimilationAnchor'), frame.anchor[0], frame.anchor[1]);
-      if (!this.assimilationPaletteUploaded) {
-        const palettes = getAssimilationLookPalettes();
-        for (let source = 0; source < 2; source++) {
-          const profile = palettes[source]!, name = source === 0 ? 'uAssimilationFibre' : 'uAssimilationMembrane';
-          for (const [index, color] of [profile.dark, profile.mid, profile.light].entries())
-            gl.uniform3f(this.uniform(c, `${name}[${index}]`), color[0] / 255, color[1] / 255, color[2] / 255);
-        }
-        this.assimilationPaletteUploaded = true;
+      const paletteChanged = this.assimilationPaletteRevision !== look.paletteRevision;
+      if (paletteChanged || this.assimilationFibrePalette !== look.fibrePalette) {
+        this.uploadAssimilationPalette('uAssimilationFibre', look.fibrePalette);
+        this.assimilationFibrePalette = look.fibrePalette;
       }
+      if (paletteChanged || this.assimilationMembranePalette !== look.membranePalette) {
+        this.uploadAssimilationPalette('uAssimilationMembrane', look.membranePalette);
+        this.assimilationMembranePalette = look.membranePalette;
+      }
+      if (paletteChanged || this.assimilationNeutralPalette !== look.neutralPalette) {
+        this.uploadAssimilationPalette('uAssimilationNeutral', look.neutralPalette);
+        this.assimilationNeutralPalette = look.neutralPalette;
+      }
+      this.assimilationPaletteRevision = look.paletteRevision;
     }
     for (const [name, value] of [['uRight', this.basis.right], ['uUp', this.basis.up], ['uBack', this.basis.back], ['uTarget', this.pack.camera.target], ['uActorWorld', state.world], ['uLamp', lamp]] as const) gl.uniform3fv(this.uniform(c, name), value);
     gl.uniform2fv(this.uniform(c, 'uOrigin'), this.pack.camera.origin); gl.uniform1f(this.uniform(c, 'uScale'), this.pack.camera.scale);
@@ -456,7 +500,10 @@ export class LastLightRenderer {
     if (measure) recordAssimilationLookTime(this.assimilationMetrics, start);
   }
   portrait(): string {
-    const frame = this.currentFrame ?? this.pack.frames[0]!;
+    // This existing portrait is an authored atlas. A runtime model's local
+    // [0,0] rectangle is not an atlas location.
+    const frame = this.assimilationModel && this.assimilationRenderState
+      ? this.frame(this.assimilationRenderState) : this.currentFrame ?? this.pack.frames[0]!;
     const canvas = document.createElement('canvas'); canvas.width = 96; canvas.height = 96;
     const ctx = canvas.getContext('2d')!; ctx.imageSmoothingEnabled = false;
     const scale = Math.min(3, 84 / frame.height), w = frame.width * scale, h = frame.height * scale;
@@ -474,6 +521,7 @@ export class LastLightRenderer {
     for (const shader of this.shaders) gl.deleteShader(shader);
     gl.deleteProgram(this.environment.program); gl.deleteProgram(this.composite.program);
     gl.deleteBuffer(this.buffer); gl.deleteFramebuffer(this.frameBuffer);
+    this.assimilationModelSource = null; this.assimilationUploadedFrame = null; this.assimilationRenderState = null;
     gl.getExtension('WEBGL_lose_context')?.loseContext();
   }
 }
