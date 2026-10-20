@@ -907,6 +907,7 @@ export class RiftScene extends Phaser.Scene {
     );
 
     const updateBurden = (): void => {
+      if (this.shutdownComplete) return;
       const id = inventoryStore.getEquipment().weaponId;
       const equipped = id ? inventoryStore.getItem(id) : undefined;
       this.combat.configureWeapon(equipped?.kind === 'weapon' ? equipped.weapon.definitionId : null);
@@ -2582,6 +2583,9 @@ export class RiftScene extends Phaser.Scene {
   private onShutdown(): void {
     if (this.shutdownComplete) return;
     this.shutdownComplete = true;
+    // Cancelling the pending frame publishes an inventory rollback. Phaser may
+    // already have destroyed the display list, so retire its UI/weapon consumer first.
+    this.unsubscribeInventory?.(); this.unsubscribeInventory = null;
     this.stagedEntry?.destroy(); this.stagedEntry = null;
     if (this.constructionClockPaused !== null) { this.time.paused = this.constructionClockPaused; this.constructionClockPaused = null; }
     this.events.off(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
@@ -2616,7 +2620,6 @@ export class RiftScene extends Phaser.Scene {
     this.input.keyboard?.off('keydown-TAB', this.openBag, this);
     inventoryPanel.close();
     this.fieldInventory.destroy();
-    this.unsubscribeInventory?.(); this.unsubscribeInventory = null;
     this.input.keyboard?.off('keydown-F1');
     eventBus.off(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
     eventBus.off(GameEvent.ENEMY_KILLED, this.onEnemyKilled);

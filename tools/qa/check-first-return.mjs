@@ -18,15 +18,33 @@ const out = process.env.QA_OUTPUT_DIR ?? '/tmp/coh-first-return-check';
 await mkdir(out, { recursive: true });
 const results = [];
 const errors = [];
+const formalReturns = [];
 
-async function fixture() {
+async function fixture({ formalEntry = false } = {}) {
   const context = await browser.newContext({ viewport: { width: 1440, height: 960 } });
   assert.deepEqual(await context.storageState(), { cookies: [], origins: [] });
   const page = await context.newPage();
-  await page.route('**/@vite/client', route => route.fulfill({ contentType: 'application/javascript', body: '' }));
+  // CSS modules import createHotContext; preserve the client module while
+  // preventing another agent's edits from hot-reloading an active fixture.
+  await page.routeWebSocket(/ws:\/\/127\.0\.0\.1:/, socket => socket.close());
   page.on('pageerror', error => errors.push(String(error)));
-  await page.goto(`${process.env.GAME_URL ?? 'http://127.0.0.1:3021'}/#purif`);
+  // Inventory subscriber errors are caught and logged by the store, so they do
+  // not surface as pageerror. Teardown regressions must observe both channels.
+  page.on('console', message => {
+    if (message.type() === 'error') errors.push(`console: ${message.text()}`);
+  });
+  await page.goto(`${process.env.GAME_URL ?? 'http://127.0.0.1:3021'}/${formalEntry ? '' : '#purif'}`);
+  if (formalEntry) {
+    await page.waitForFunction(() => window.__game?.scene.getScene('MainMenuScene')?.interactive());
+    await page.getByRole('button', { name: '开始', exact: true }).click();
+  }
   await page.waitForFunction(() => window.__game?.scene.isActive('PurificationScene'));
+  if (formalEntry) {
+    await page.waitForFunction(() => {
+      const scene = window.__game.scene.getScene('PurificationScene');
+      return !scene.menuEntry && !scene.transitioning;
+    });
+  }
   await page.evaluate(async () => {
     // Vite may stamp a changed dependency URL even in a fresh page. Instrument
     // the module instance the running scene loaded, not a second plain-URL copy.
@@ -109,8 +127,8 @@ async function settleFixture(page, { outcome = 'extract', loot = 0, offering = f
   }, { outcome, loot, offering, fail, fromMenu });
 }
 
-async function check(name, run) {
-  const f = await fixture();
+async function check(name, run, options) {
+  const f = await fixture(options);
   try { await run(f.page); results.push(name); console.log(`PASS ${name}`); }
   finally { await f.context.close(); }
 }
@@ -205,7 +223,9 @@ try {
     assert.deepEqual(duplicate.forecast, saved.forecast, 'duplicate arrival does not consume or reroll the saved promise');
     assert.equal(duplicate.reserve, saved.reserve);
     await page.evaluate(() => history.replaceState({}, '', '/'));
-    await page.reload(); await page.waitForFunction(() => window.__game?.scene.isActive('MainMenuScene'));
+    await page.reload();
+    // An active scene can still be revealing its menu and reject early input.
+    await page.waitForFunction(() => window.__game?.scene.getScene('MainMenuScene')?.interactive());
     await page.keyboard.press('Enter');
     await page.waitForFunction(() => window.__game?.scene.isActive('PurificationScene'));
     const reloaded = await page.evaluate(async () => {
@@ -238,9 +258,87 @@ try {
     assert.equal(await page.evaluate(() => window.__firstReturnCheck.closed), 0);
     assert.equal(await page.locator('#impact-backdrop').count(), 0);
   });
+
+  await check('formal Rift: first R return and next held-Enter return retain their reports; pending-frame shutdown is safe', async page => {
+    for (let trip = 0; trip < 2; trip++) {
+      await page.evaluate(() => window.__game.scene.getScene('PurificationScene').enterRift());
+      await page.locator('[data-departure-grade="low"]').click();
+      await page.locator('[data-prepare-action="next"]').click();
+      await page.locator('[data-prepare-action="depart"]').click();
+      await page.waitForFunction(() => {
+        const scene = window.__game?.scene.getScene('RiftScene');
+        return scene?.scene.isActive() && scene.nativeWorldPresentation
+          && !scene.stagedEntry?.isActive() && !scene.nativeEntryFence?.isActive() && !scene.entryView?.active;
+      }, null, { timeout: 90000 });
+      const before = await read(page);
+      await page.evaluate(trip => {
+        const scene = window.__game.scene.getScene('RiftScene');
+        if (trip === 0) scene.runController.endRun('extract');
+        else scene.abandonRecoveredRun();
+      }, trip);
+      await page.locator('#rift-result-continue').waitFor();
+      // Exercise shutdown with an outstanding frame even if this browser's
+      // event scheduling would otherwise close it before the scene stops.
+      // The extraction case retains its equipped weapon and catches rebinds of
+      // disposed player images; abandonment has already removed the weapon.
+      await page.evaluate(() => {
+        const scene = window.__game.scene.getScene('RiftScene');
+        const configureWeapon = scene.combat.configureWeapon;
+        scene.combat.configureWeapon = function (...args) {
+          if (scene.shutdownComplete) {
+            const q = window.__firstReturnCheck;
+            q.shutdownWeaponUpdates = (q.shutdownWeaponUpdates ?? 0) + 1;
+          }
+          return configureWeapon.apply(this, args);
+        };
+        const destroy = scene.frameCommit.destroy;
+        scene.frameCommit.destroy = function () {
+          const q = window.__firstReturnCheck;
+          if (!q.inventoryStore.hasFrameTransaction()) q.inventoryStore.beginFrameTransaction();
+          q.shutdownRollbacks = (q.shutdownRollbacks ?? 0) + 1;
+          return destroy.call(this);
+        };
+      });
+      if (trip === 0) await page.keyboard.press('r');
+      else {
+        await page.locator('#rift-result-continue').focus();
+        await page.keyboard.down('Enter');
+      }
+      await page.locator('#impact-result-panel').waitFor();
+      if (trip === 1) {
+        await page.keyboard.down('Enter'); // real repeat while still held
+        await page.keyboard.up('Enter');
+      }
+      assert.equal(await page.evaluate(() => window.__firstReturnCheck.shutdownRollbacks), trip + 1);
+      assert.equal(await page.evaluate(() => window.__firstReturnCheck.shutdownWeaponUpdates ?? 0), 0,
+        'shutdown rollback must not update retired weapon visuals');
+      const after = await read(page);
+      assert(after.panel); assert(!after.input);
+      assert.equal(after.shows, trip + 1); assert.equal(after.impacts, trip + 1);
+      assert.equal(after.inventory.run.baseSettled, true);
+      assert.equal(after.inventory.run.outcome, trip === 0 ? 'extract' : 'abandon');
+      if (trip === 0) {
+        assert.deepEqual(after.modules, before.modules);
+        assert.match(after.text, /首次归来，本次免受冲击/);
+      } else {
+        assert(after.modules.some((module, i) => module.hp < before.modules[i].hp));
+        assert.match(after.text, /冲击之后/);
+      }
+      formalReturns.push({ outcome: after.inventory.run.outcome, cycle: after.cycle,
+        modulesBefore: before.modules, modulesAfter: after.modules,
+        reportShows: after.shows, settlements: after.impacts, baseSettled: after.inventory.run.baseSettled,
+        shutdownWeaponUpdates: 0 });
+      await page.locator('#impact-result-panel').evaluate(element =>
+        Promise.all(element.getAnimations().map(animation => animation.finished)));
+      await page.screenshot({ path: path.join(out, `formal-return-${trip + 1}.png`), timeout: 60000 });
+      await page.keyboard.press('Enter');
+      assert.equal((await read(page)).panel, false);
+      assert.equal((await read(page)).input, true);
+    }
+  }, { formalEntry: true });
   assert.deepEqual(errors, []);
 } finally {
-  await writeFile(path.join(out, 'results.json'), JSON.stringify({ method: 'Fresh isolated browser contexts; production base scene and systems with synthetic ended-run fixtures. No traversal or visual acceptance claimed.', results, errors }, null, 2));
+  await writeFile(path.join(out, 'results.json'), JSON.stringify({ method: 'Fresh isolated browser contexts. Base settlement fixtures plus two formal low-grade departures with controlled extraction/abandon endings; real R/held-Enter result return, pending-frame shutdown, settlement and save retry. No natural traversal or visual acceptance claimed.', results, formalReturns, errors }, null, 2));
   await browser.close();
 }
 console.log(`First-return regression: ${results.length} passed; evidence ${out}`);
