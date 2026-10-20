@@ -1,6 +1,8 @@
 /** Pure offline package/replay check. Never starts a game or touches saves. */
 import assert from 'node:assert/strict';
 import { writeFileSync, existsSync } from 'node:fs';
+import { basename } from 'node:path';
+import { gzipSync } from 'node:zlib';
 import { R100_NATIVE_WORLDS } from '../../src/generated/r100-native-worlds';
 import { createR100AutomaticRecipe, validR100ProductionRecipe } from '../../src/generation/world-study/r100-package';
 import { createR100ProductionMap } from '../../src/generation/world-study/r100-production-map';
@@ -23,7 +25,7 @@ if (!worldId) {
   console.log(JSON.stringify({ status: 'pass', count, scope: 'all catalog grade inputs and frozen package validation; not map admission' }));
 } else {
   assert(['low', 'medium', 'severe'].includes(gradeArg!), 'Need a pollution grade');
-  assert(output && !existsSync(output), 'Need a new report path; never overwrite evidence');
+  assert(output && !existsSync(output) && !existsSync(`${output}.gz`), 'Need a new report path; never overwrite evidence');
   const seed = Number(seedArg), started = performance.now();
   const report: Record<string, unknown> = { worldId, grade: gradeArg, seed, scope: 'offline complete map and JSON recipe replay; no gameplay' };
   try {
@@ -39,6 +41,12 @@ if (!worldId) {
     report.recipe = recipe;
     report.metadata = map.metadata;
     report.diagnostics = map.native.diagnostics;
+    report.content = {
+      kindling: map.layout.kindlingNodes.length,
+      contaminants: map.layout.contaminantNodes.length,
+      spawn: map.layout.spawnPoint,
+      extraction: map.layout.extractionPoint.position,
+    };
   } catch (error) {
     report.status = 'failed';
     report.error = error instanceof Error ? error.message : String(error);
@@ -46,6 +54,13 @@ if (!worldId) {
     process.exitCode = 1;
   }
   report.elapsedMs = performance.now() - started;
-  writeFileSync(output!, JSON.stringify(report, null, 2) + '\n');
+  // Preserve every diagnostic without checking megabytes of repeated path
+  // vertices into the readable evidence index.
+  writeFileSync(`${output}.gz`, gzipSync(JSON.stringify(report)));
+  writeFileSync(output!, JSON.stringify({
+    worldId, grade: gradeArg, seed, status: report.status, error: report.error,
+    scope: report.scope, elapsedMs: report.elapsedMs, content: report.content,
+    fullTrace: basename(`${output}.gz`),
+  }, null, 2) + '\n');
   console.log(JSON.stringify({ status: report.status, error: report.error, elapsedMs: report.elapsedMs, output }));
 }

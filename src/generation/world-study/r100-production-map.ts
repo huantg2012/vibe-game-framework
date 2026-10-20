@@ -207,7 +207,8 @@ export function completeNativeSpatialCandidate(recipe:WorldProductionRecipeV3,ca
     const deployed=deployR100Expedition(master,recipe.contentDefinition,recipe.searchSitePolicy,recipe.automaticSupplyPolicy),layout=deployed.layout;
     checkpoint();
     stageDiagnostics.deployment=deployed.diagnostics;stage='routes';
-    const routes=evaluateNativeSpatialRoutes(candidate.geometry,candidate.groups.structures,input.policy,layout);
+    const routes=evaluateNativeSpatialRoutes(candidate.geometry,candidate.groups.structures,input.policy,layout,
+      recipe.package.algorithmRevision===14?{transverseMode:'per-leg'}:undefined);
     if(!routes.accepted){
       trace.deploymentRejections.push({candidate:selected,stage,reason:routes.reasons.join('; '),gate:routes,diagnostics:stageDiagnostics});rejected.push({seed,reason:`candidate ${selected}: ${routes.reasons.join('; ')}`});
       // Per-route quality diagnostics do not launch the old tuple/probe loop.
