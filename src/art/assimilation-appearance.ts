@@ -71,8 +71,10 @@ export function getAssimilationLookPalettes(): readonly [EnemyWorldAdaptation, E
 }
 
 /** rank, fibre tone 0/1, membrane tone 0/1, source boundary, moving material.
- * Sparse storage for the two body groups is under 1 MiB; attack arms are protected. */
+ * Sparse storage for the original two body groups is under 1 MiB. */
 export const ASSIMILATION_SURFACE_STRIDE = 7;
+/** Actual palm/tool contact radius around the posed right wrist; not a glove mask. */
+export const ASSIMILATION_GRIP_CONTACT_RADIUS = .065;
 
 function fibreTone(x: number, y: number, z: number, phase: number): number {
   // Long, joined diagonals with a single fork near the shoulder.
@@ -88,20 +90,24 @@ function membraneTone(x: number, y: number, z: number, phase: number): number {
 }
 
 /** Author-space metres: +Y up, +Z face, +X lamp/held-tool shoulder.
- * This is evaluated during opt-in preparation, never against screen coordinates. */
+ * This is evaluated during opt-in preparation, never against screen coordinates.
+ * protectedPixel is a small actual right-palm/tool contact, never a whole hand. */
 export function writeAssimilationSurface(
   x: number, y: number, z: number, albedoMax: number, emission: number,
   target: Uint8Array, offset: number, protectedPixel = false,
 ): void {
-  if (protectedPixel || y <= .27 || y >= 1.20 || (z < -.17 && y > .68) || (x > .22 && y > .6)
-    || (Math.abs(x) > .23 && y < .84)
-    || emission > 0 || albedoMax < 38 || (Math.abs(x) < .036 && z > .08)) return;
+  target.fill(0, offset, offset + ASSIMILATION_SURFACE_STRIDE);
+  const visor = albedoMax < 20 && y > 1.22 && z > .12 && Math.abs(x) < .24;
+  if (y <= .09 || emission > 0 || visor || protectedPixel) return;
+  // Short, thin remnants of the original material, interleaved with the
+  // continuous organism. They are counted in the full opaque denominator.
+  const trace = fract((x + z * .46 + y * .07) / .22 + Math.sin(y * 5 + z) * .15);
+  if (trace > .81 && Math.sin(y * 11 + z * 3) > 0) return;
   const shoulder = 1 - ((x + .265) / .17) ** 2 - ((y - 1.035) / .185) ** 2;
   const flank = 1 - ((x + .145) / .14) ** 2 - ((y - .79) / .24) ** 2;
   const hem = 1 - ((x - .14) / .145) ** 2 - ((y - .76) / .235) ** 2;
-  const mass = Math.max(shoulder, flank, hem);
-  if (mass <= 0) return;
-  target[offset] = Math.round(24 + (1 - Math.min(1, mass)) * 200);
+  const distance = Math.max(0, 1 - Math.max(shoulder, flank, hem));
+  target[offset] = Math.round(32 + unit(distance / 3) * 168 + unit((y - 1.18) / .48) * 30);
   target[offset + 1] = Math.round(fibreTone(x, y, z, 0) * 255);
   target[offset + 2] = Math.round(fibreTone(x, y, z, 1) * 255);
   target[offset + 3] = Math.round(membraneTone(x, y, z, 0) * 255);
@@ -163,19 +169,19 @@ float assimilationMembraneTone(vec3 q,float phase){
 }
 void assimilationMaterial(vec3 relative,inout vec3 albedo,inout vec3 normal,vec4 material){
  if(uAssimilation.x<=0.)return;
- // Pose-matched forearm endpoints are the actual hand positions, including
- // walking and settling. Coarse body regions alone cannot protect every grip.
- if(uCapsuleCount>10&&(length(relative-uCapsuleB[8])<.13||length(relative-uCapsuleB[10])<.13))return;
  float c=uAssimilationYaw.x,s=uAssimilationYaw.y;
  vec3 q=vec3(relative.x*c-relative.z*s,relative.y,relative.x*s+relative.z*c);
  float x=q.x,y=q.y,z=q.z;
- if(y<=.27||y>=1.20||(z<-.17&&y>.68)||(x>.22&&y>.6)||(abs(x)>.23&&y<.84)||material.a>0.||
-   max(albedo.r,max(albedo.g,albedo.b))<38./255.||(abs(x)<.036&&z>.08))return;
+ bool visor=max(albedo.r,max(albedo.g,albedo.b))<20./255.&&y>1.22&&z>.12&&abs(x)<.24;
+ bool grip=uCapsuleCount>10&&length(relative-uCapsuleB[10])<${ASSIMILATION_GRIP_CONTACT_RADIUS};
+ if(y<=.09||material.a>0.||visor||grip)return;
+ float trace=fract((x+z*.46+y*.07)/.22+sin(y*5.+z)*.15);
+ if(trace>.81&&sin(y*11.+z*3.)>0.)return;
  float shoulder=1.-pow((x+.265)/.17,2.)-pow((y-1.035)/.185,2.);
  float flank=1.-pow((x+.145)/.14,2.)-pow((y-.79)/.24,2.);
  float hem=1.-pow((x-.14)/.145,2.)-pow((y-.76)/.235,2.);
- float mass=max(shoulder,max(flank,hem));if(mass<=0.)return;
- float rank=floor(24.+(1.-min(1.,mass))*200.+.5)/255.;
+ float distance=max(0.,1.-max(shoulder,max(flank,hem)));
+ float rank=floor(32.+clamp(distance/3.,0.,1.)*168.+clamp((y-1.18)/.48,0.,1.)*30.+.5)/255.;
  float coverage=uAssimilation.x*assimilationSmooth((uAssimilation.x-rank+.12)/.24);if(coverage<=0.)return;
  float moving=x<-.21||y<.81?1.:0.;
  float fphase=moving*uAssimilation.z,mphase=moving*uAssimilation.w;
