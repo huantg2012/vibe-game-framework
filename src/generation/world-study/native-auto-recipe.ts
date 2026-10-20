@@ -9,6 +9,7 @@ import {nativePrimitiveDistance,nativePrimitiveTree} from './native-spatial-geom
 import {nativeRectUnionArea,describeNativeSpatialLand} from './native-spatial-land';
 import {nativeAutoHole} from './native-auto-layout';
 import {nativeAutoCounts} from './native-auto-counts';
+import {nativeAutoBudgetSource} from './native-auto-source';
 import {validNativeSpatialRuntimeInput} from './native-spatial-recipe';
 import type {MasterDefinition} from './r100-master-world';
 import type {PollutionGrade} from './pollution-grade';
@@ -28,10 +29,8 @@ export function createNativeAutoRuntimeInput(native:MasterDefinition,grade:Pollu
   if(!policy)throw new Error(`Missing shared automatic policy: ${grade}`);
   const solids=native.instances.filter(instance=>instance.role==='solid');
   if(!solids.length)throw new Error('Automatic construction needs complete solid source material');
-  const source=nativeConstructionFootprints(native.instances,native.family,seed),footprints=source.supportBounds;
-  if(!footprints.length)throw new Error('Automatic source has no projected support');
-  const sourceWidth=Math.max(...footprints.map(r=>r[0]+r[2]))-Math.min(...footprints.map(r=>r[0]));
-  const sourceHeight=Math.max(...footprints.map(r=>r[1]+r[3]))-Math.min(...footprints.map(r=>r[1]));
+  const budgetedSource=nativeAutoBudgetSource(native,seed,policy.targetWalkAreaPx2*policy.maxSourceAreaPercent/100);
+  const source=budgetedSource.footprint,sourceWidth=budgetedSource.width,sourceHeight=budgetedSource.height;
   let coreWidth=Math.max(policy.coreWidthPx,ceil16(sourceWidth+policy.sourcePaddingPx*2));
   let coreHeight=Math.max(policy.coreHeightPx,ceil16(sourceHeight+policy.sourcePaddingPx*2));
   const {solids:solidCount,holes:holeCount}=nativeAutoCounts(policy.targetWalkAreaPx2,NATIVE_SPATIAL_POLICY);
@@ -94,7 +93,7 @@ export function createNativeAutoRuntimeInput(native:MasterDefinition,grade:Pollu
       holeProfiles:NATIVE_SPATIAL_HOLE_PROFILES,bayProfiles,
       assemblies:[{worldId:native.profile,grade:'all',id:'source-whole',sourceInstanceIds:solids.map(instance=>instance.id),
         attachedReliefIds:native.instances.filter(instance=>instance.role==='relief').map(instance=>instance.id),
-        sourceScale:1,minScale:1,maxScale:1,rotationOffsetsRad:[0],maxSpanPx:ceil16(Math.max(sourceWidth,sourceHeight)+16),mode:'unique-once'}],
+        sourceScale:budgetedSource.scale,minScale:1,maxScale:1,rotationOffsetsRad:[0],maxSpanPx:ceil16(Math.max(sourceWidth,sourceHeight)+16),mode:'unique-once'}],
       subordinateProfiles:NATIVE_SPATIAL_SUBORDINATE_PROFILES.filter(profile=>profile.family===native.family),
       extraction:{minPathDistancePx:CONFIG.extraction_min_path_distance,minEuclideanDistancePx:CONFIG.extraction_min_euclidean_distance,
         minPathFraction:CONFIG.extraction_min_path_fraction,maxPathFraction:CONFIG.extraction_max_path_fraction,
@@ -114,13 +113,13 @@ export function validNativeAutoRuntimeInput(value:unknown,native:MasterDefinitio
     ||input.grade!==native.grade||!Number.isSafeInteger(input.geometrySeed)||input.geometrySeed<0||input.geometrySeed>0xffffffff
     ||input.sourceFingerprint!==nativeAutoSourceFingerprint(native)||!p||p.grade!==input.grade||!/^[0-9a-f]{64}$/.test(p.sourceHash))return false;
   const numbers=['targetWalkAreaPx2','coreWidthPx','coreHeightPx','armWidthPx','armHeightPx','armOverlapPx','armOffsetPx','siteSpacingPx',
-    'siteJitterPx','edgeClearancePx','objectClearancePx','sourcePaddingPx','maxSiteEvaluations','maxPlacementStates','placementBranchLimit','refinementPasses','maxRefinementEvaluations','minWidePercent','targetWidePercent','shoreSegmentMinPx','shoreSegmentMaxPx',
+    'siteJitterPx','edgeClearancePx','objectClearancePx','sourcePaddingPx','maxSiteEvaluations','maxPlacementStates','placementBranchLimit','refinementPasses','maxRefinementEvaluations','minWidePercent','targetWidePercent','maxSourceAreaPercent','shoreSegmentMinPx','shoreSegmentMaxPx',
     'shoreDepthMinPx','shoreDepthMaxPx','shoreProtectedGapPx','maxCleanRunPx'] as const;
   if(Object.keys(p).length!==numbers.length+2||numbers.some(key=>!Number.isSafeInteger(p[key])||p[key]<=0||p[key]>8388608)
     ||p.maxSiteEvaluations>2048||p.maxPlacementStates>2048||p.placementBranchLimit>8||p.refinementPasses>3||p.maxRefinementEvaluations>8192||p.armOverlapPx>=p.armWidthPx||p.siteJitterPx>=p.siteSpacingPx/4
     ||p.coreWidthPx>3072||p.coreHeightPx>2304||p.armWidthPx>3072||p.armHeightPx>2304
     ||p.shoreSegmentMinPx>p.shoreSegmentMaxPx||p.shoreDepthMinPx>p.shoreDepthMaxPx
-    ||p.minWidePercent<50||p.minWidePercent>p.targetWidePercent||p.targetWidePercent>100
+    ||p.minWidePercent<50||p.minWidePercent>p.targetWidePercent||p.targetWidePercent>100||p.maxSourceAreaPercent>100
     ||numbers.some(key=>key.endsWith('Px')&&p[key]%8!==0))return false;
   const intent=input.intent;
   if(!intent||Object.keys(intent).sort().join(',')!==['coreWidthPx','coreHeightPx','estimatedBlockedAreaPx2','estimatedBoundaryLossPx2','estimatedGrossAreaPx2'].sort().join(',')
@@ -131,7 +130,7 @@ export function validNativeAutoRuntimeInput(value:unknown,native:MasterDefinitio
   const assemblies=input.nativeSpatial.assemblies;
   if(assemblies.length!==1||assemblies[0]!.id!=='source-whole')return false;
   const assembly=assemblies[0]!;
-  return assembly.sourceScale===1&&assembly.minScale===1&&assembly.maxScale===1
+  return assembly.sourceScale>0&&assembly.sourceScale<=1&&assembly.minScale===1&&assembly.maxScale===1
     &&assembly.rotationOffsetsRad.length===1&&assembly.rotationOffsetsRad[0]===0
     &&[...assembly.sourceInstanceIds,...assembly.attachedReliefIds].sort((a,b)=>a-b).join(',')===native.instances.map(i=>i.id).sort((a,b)=>a-b).join(',');
 }

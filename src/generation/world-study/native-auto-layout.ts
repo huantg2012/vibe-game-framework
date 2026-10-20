@@ -3,6 +3,7 @@
 import {mix32} from '@/generation/seed-fork';
 import {nativeConstructionFootprints,constructNativeMacroShore} from './native-spatial-construction-shore';
 import {nativeAutoCounts} from './native-auto-counts';
+import {nativeAutoSourceInstances} from './native-auto-source';
 import {nativePrimitive,nativePrimitiveTree,nativePrimitiveDistance,type NativeSpatialPrimitive,type NativeSpatialBvh} from './native-spatial-geometry';
 import {createNativeSpatialPlanningGround,nativeSpatialLandJoins} from './native-spatial-bay-layout';
 import type {NativeSpatialHoleProfile} from './native-spatial-types';
@@ -57,18 +58,20 @@ export function nativeAutoHole(index:number,seed:number,profiles:readonly Native
 
 export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRuntimeInput,checkpoint:()=>void):NativeAutoPlan {
   const {policy:p,nativeSpatial:spatial,geometrySeed:seed}=input,world=spatial.world;
-  const rawSource=nativeConstructionFootprints(native.instances,native.family,seed),sourceBox=bounds(rawSource.supportBounds);
+  const sourceInstances=nativeAutoSourceInstances(native,spatial.assemblies[0]!.sourceScale);
+  const rawSource=nativeConstructionFootprints(sourceInstances,native.family,seed),sourceBox=bounds(rawSource.supportBounds);
+  // A later bounded proposal may change geometrySeed while keeping the frozen
+  // scale. Seed-dependent projection must still respect the same mother budget.
+  if(sourceBox[2]*sourceBox[3]>world.targetWalkAreaPx2*p.maxSourceAreaPercent/100)
+    throw new Error('Frozen automatic source exceeds projected area budget for proposal seed');
   const width=input.intent.coreWidthPx,height=input.intent.coreHeightPx;
   const cx=snap(world.frameWidthPx/2),cy=snap(world.frameHeightPx/2),core:Rect=[cx-width/2,cy-height/2,width,height];
   const side=(mix32(seed,'auto-arm-side')&1)?1:-1;
   const land:Rect[]=[core,
     [core[0]-p.armWidthPx+p.armOverlapPx,snap(cy-p.armHeightPx/2-side*p.armOffsetPx),p.armWidthPx,p.armHeightPx],
     [core[0]+width-p.armOverlapPx,snap(cy-p.armHeightPx/2+side*p.armOffsetPx),p.armWidthPx,p.armHeightPx]];
-  const solids=native.instances.filter(instance=>instance.role==='solid');
-  const anchorX=solids.reduce((sum,i)=>sum+i.x,0)/solids.length,anchorY=solids.reduce((sum,i)=>sum+i.y,0)/solids.length;
-  const assemblyX=snap(cx-sourceBox[0]-sourceBox[2]/2+anchorX),assemblyY=snap(cy-sourceBox[1]-sourceBox[3]/2+anchorY);
-  const sourceDx=assemblyX-anchorX,sourceDy=assemblyY-anchorY;
-  const source=nativeConstructionFootprints(native.instances.map(instance=>({...instance,x:instance.x+sourceDx,y:instance.y+sourceDy})),native.family,seed);
+  const assemblyX=snap(cx-sourceBox[0]-sourceBox[2]/2),assemblyY=snap(cy-sourceBox[1]-sourceBox[3]/2);
+  const source=nativeConstructionFootprints(sourceInstances.map(instance=>({...instance,x:instance.x+assemblyX,y:instance.y+assemblyY})),native.family,seed);
   const sourceTree=nativePrimitiveTree(source.solidPrimitives),referenceId='automatic-native-layout';
   const rows:Row[]=[],row=(values:Partial<Row>):Row=>({...Object.fromEntries(NATIVE_CONSTRUCTION_REFERENCE_COLUMNS.map(key=>[key,''])),
     reference_id:referenceId,world_id:input.worldId,grade:input.grade,seed:String(seed),seed_salt:'0',...values}) as Row;

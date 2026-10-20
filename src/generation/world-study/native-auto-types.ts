@@ -15,6 +15,7 @@ export interface NativeAutoConstructionPolicy {
   readonly maxPlacementStates:number;readonly placementBranchLimit:number;
   readonly refinementPasses:number;readonly maxRefinementEvaluations:number;
   readonly minWidePercent:number;readonly targetWidePercent:number;
+  readonly maxSourceAreaPercent:number;
   readonly shoreSegmentMinPx:number;readonly shoreSegmentMaxPx:number;
   readonly shoreDepthMinPx:number;readonly shoreDepthMaxPx:number;
   readonly shoreProtectedGapPx:number;readonly maxCleanRunPx:number;
