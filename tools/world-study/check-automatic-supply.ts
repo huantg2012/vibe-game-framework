@@ -27,6 +27,10 @@ for (const grade of ['low', 'medium', 'severe'] as const) {
   assert.ok(validAutomaticSupplyPolicy(JSON.parse(JSON.stringify(p))));
   assert.ok(!validAutomaticSupplyPolicy({...p, worldId:'test'}));
   assert.ok(!validAutomaticSupplyPolicy({...p, maxNodes:33}));
+  assert.ok(!validAutomaticSupplyPolicy({...p, contestedApproachMinPx:0}));
+  assert.equal(p.contestedApproachMinPx,480);
+  const {contestedApproachMinPx:_threshold,...missingThreshold}=p;
+  assert.ok(!validAutomaticSupplyPolicy(missingThreshold),'Frozen long-approach threshold cannot be filled from current data');
   assert.ok(!validAutomaticSupplyPolicy({...p, p95CoveragePx:p.maxCoveragePx+1}));
 }
 const open = gridOf(60, 44), openStart = 5 * open.cols + 5;

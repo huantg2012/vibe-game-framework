@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url';
 
 const source = 'data/rift-auto-supply-policy.csv';
 const target = 'src/generated/rift-auto-supply-policy.ts';
-const fields = ['grade', 'bodyAreaPerNodePx2', 'routePerNodePx', 'maxCoveragePx', 'p95CoveragePx', 'maxNodes', 'earlyFuelNodes', 'maxBodyCells', 'maxWorkEdges'];
+const fields = ['grade', 'bodyAreaPerNodePx2', 'routePerNodePx', 'maxCoveragePx', 'p95CoveragePx', 'maxNodes', 'earlyFuelNodes', 'maxBodyCells', 'maxWorkEdges', 'contestedApproachMinPx'];
 export function compileAutomaticSupplyCSV(raw) {
   const lines = raw.trim().split(/\r?\n/);
   if (lines.shift() !== fields.join(',')) throw new Error('Invalid automatic supply header');

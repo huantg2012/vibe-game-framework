@@ -4,6 +4,8 @@ import { isPollutionGrade, type PollutionGrade } from './pollution-grade';
 /** Grade-level engineering defaults; no world identity, coordinates or certified seeds. */
 export interface R100AutomaticSupplyPolicy {
   readonly version: 1;
+  /** v1 admits contested travel by either extra return-trip distance or the
+   * frozen long-approach threshold. Safe/deep eligibility remains unchanged. */
   readonly algorithm: 'body-geodesic-cover-v1';
   readonly grade: PollutionGrade;
   readonly sourceHash: string;
@@ -15,8 +17,10 @@ export interface R100AutomaticSupplyPolicy {
   readonly earlyFuelNodes: number;
   readonly maxBodyCells: number;
   readonly maxWorkEdges: number;
+  /** Actual 20px-body shortest approach, independent of today's spatial CSV. */
+  readonly contestedApproachMinPx: number;
 }
-const numericKeys = ['bodyAreaPerNodePx2', 'routePerNodePx', 'maxCoveragePx', 'p95CoveragePx', 'maxNodes', 'earlyFuelNodes', 'maxBodyCells', 'maxWorkEdges'] as const;
+const numericKeys = ['bodyAreaPerNodePx2', 'routePerNodePx', 'maxCoveragePx', 'p95CoveragePx', 'maxNodes', 'earlyFuelNodes', 'maxBodyCells', 'maxWorkEdges', 'contestedApproachMinPx'] as const;
 const keys = ['version', 'algorithm', 'grade', 'sourceHash', ...numericKeys].sort().join(',');
 export function validAutomaticSupplyPolicy(value: unknown): value is R100AutomaticSupplyPolicy {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;

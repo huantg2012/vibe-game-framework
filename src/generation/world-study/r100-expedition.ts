@@ -161,7 +161,11 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
       tiers: TIERS.filter(tier => {
         const minimum = spatial ? tier === 'safe' ? 0 : spatial[`${tier}_min_extra_travel_px`] : maxDistance * (tier === 'safe' ? 0 : tier === 'contested' ? .32 : .65);
         const maximum = spatial ? spatial[`${tier}_max_extra_travel_px`] : maxDistance * (tier === 'safe' ? .4 : tier === 'contested' ? .8 : 1);
-        return seat.distance >= minimum && seat.distance <= maximum
+        // Long exposure on the main route also carries travel cost. Its entry
+        // threshold belongs to the frozen automatic policy, never today's CSV.
+        const travelEligible = seat.distance >= minimum && seat.distance <= maximum
+          || tier === 'contested' && seat.approachDistance >= frozenSupplyPolicy.contestedApproachMinPx;
+        return travelEligible
           && (!spatial || seat.approachDistance <= (tier === 'safe' ? spatial.safe_max_approach_px : spatial.max_search_approach_px))
           && seat.pollutionDistance >= (tier === 'safe' ? 34 : 16)
           && (tier !== 'safe' || safePoints.some(point => Math.hypot(point.x - seat.position.x, point.y - seat.position.y) < 30))
