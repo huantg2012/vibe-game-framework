@@ -6,6 +6,11 @@ import type { PlayerExternalVisuals } from './player-external-visuals';
 import { lastLightAttackSampleIndex } from './player-last-light-combat';
 import { unprojectLastLight, type LightVector } from '@/art/last-light-spatial';
 import { LAST_LIGHT_STRIDE_METRES } from '@/art/last-light-gait';
+import {
+  ASSIMILATION_SURFACE_STRIDE, AssimilationLookParameters, createAssimilationLookMetrics,
+  getAssimilationLookPalettes, recordAssimilationLookTime, sampleAssimilationSurface, writeAssimilationSurface,
+  type AssimilationLookMetrics, type AssimilationLookState,
+} from '@/art/assimilation-appearance';
 import { sampleWorldMaterialLight, type WorldMaterialLighting } from './form-renderers/d/world-material-light';
 import { LAST_LIGHT_PLAYER_CAMERA as CAMERA, LAST_LIGHT_PLAYER_BASIS as BASIS,
   lastLightToNative, lastLightScreenHeading, nearestLastLightYaw } from './player-last-light-math';
@@ -116,6 +121,11 @@ interface PlayerPresentationSource {
   isMoving(): boolean;
   getSprite(): { visible: boolean };
 }
+interface AssimilationFrameSurface {
+  readonly pixels: Uint8Array;
+  readonly normalX: number;
+  readonly normalY: number;
+}
 let nextTextureId = 0;
 export class LastLightPlayerPresentation implements PlayerExternalVisuals {
   private readonly image: Phaser.GameObjects.Image;
@@ -151,6 +161,10 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
   private distance = 0;
   private rendered = false;
   private destroyed = false;
+  private readonly assimilationLook = new AssimilationLookParameters();
+  private readonly assimilationMetrics = createAssimilationLookMetrics();
+  private readonly assimilationSurfaces = new Map<PreparedFrame, AssimilationFrameSurface>();
+  private readonly assimilationScratch = new Float32Array(5);
   constructor(private readonly scene: Phaser.Scene, private readonly player: PlayerPresentationSource,
     private readonly assets: LastLightPlayerAssets, private readonly lighting: WorldMaterialLighting) {
     const key = `last-light-player-a-${++nextTextureId}`;
@@ -207,8 +221,40 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     this.lamp.x = position.x + frame.lamp[0]; this.lamp.y = groundY + frame.lamp[1]; this.lamp.z = frame.lamp[2];
   }
   getLampPosition = (): Readonly<{ x: number; y: number; z: number }> => this.lamp;
+  /** Explicit DEV opt-in. Preparation is bounded by the existing frame set. */
+  setAssimilationLook(state: AssimilationLookState | null): void {
+    if (!import.meta.env.DEV || this.destroyed) return;
+    this.assimilationLook.set(state);
+    if (!state || this.assimilationSurfaces.size) return;
+    getAssimilationLookPalettes();
+    const backLength = Math.hypot(BASIS.back[0], BASIS.back[2]);
+    const backX = BASIS.back[0] / backLength, backZ = BASIS.back[2] / backLength;
+    for (const frames of [this.assets.frames, this.assets.bodyWithoutArm]) for (const frame of frames) {
+      const surface = new Uint8Array(frame.offsets.length * ASSIMILATION_SURFACE_STRIDE);
+      const c = Math.cos(frame.source.yaw), s = Math.sin(frame.source.yaw), pixels = frame.pixels;
+      for (let i = 0; i < frame.offsets.length; i++) {
+        const p = i * 11, nx = pixels[p]! / CAMERA.scale, ny = pixels[p + 1]! / CAMERA.scale;
+        const worldX = nx * BASIS.right[0] + ny * backX, worldZ = nx * BASIS.right[2] + ny * backZ;
+        writeAssimilationSurface(worldX * c - worldZ * s, pixels[p + 2]! / CAMERA.scale,
+          worldX * s + worldZ * c, Math.max(pixels[p + 6]!, pixels[p + 7]!, pixels[p + 8]!),
+          pixels[p + 10]!, surface, i * ASSIMILATION_SURFACE_STRIDE,
+          frame.source.glovePixels.includes(frame.offsets[i]! / 4));
+      }
+      this.assimilationSurfaces.set(frame, {
+        pixels: surface,
+        normalX: c * BASIS.right[0] - s * BASIS.right[2],
+        normalY: c * backX - s * backZ,
+      });
+      this.assimilationMetrics.maskBytes += surface.byteLength;
+      this.assimilationMetrics.preparedFrames++;
+    }
+  }
+  /** CPU render duration includes the original lighting and texture uploads. */
+  getAssimilationLookMetrics(): Readonly<AssimilationLookMetrics> { return this.assimilationMetrics; }
   render(): void {
     if (this.destroyed) return;
+    const measure = this.assimilationLook.enabled, start = measure ? performance.now() : 0;
+    if (measure) this.assimilationMetrics.changedPixels = 0;
     const original = this.assets.frames[this.frameIndex]!;
     const arm = this.attackIndex < 0 ? null : this.assets.attackArm[this.attackIndex]!;
     const body = arm ? this.assets.bodyWithoutArm[this.frameIndex]! : original;
@@ -236,9 +282,12 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
       this.previousContactFrame = this.frameIndex;
     }
     this.rendered = true;
+    if (measure) recordAssimilationLookTime(this.assimilationMetrics, start);
   }
   private drawFrame(frame:PreparedFrame, dx:number, dy:number, wx:number, wy:number, wz:number, depthDelta:number, arm:boolean):void {
     const pixels=frame.pixels,target=this.output.data;
+    const look=this.assimilationLook;
+    const surface=look.amount>0&&!arm?this.assimilationSurfaces.get(frame):undefined;
     for(let i=0;i<frame.offsets.length;i++) {
       const source=frame.offsets[i]!/4, x=source%64+dx,y=Math.floor(source/64)+dy;
       if(x<0||x>=64||y<0||y>=80)continue;
@@ -246,11 +295,22 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
       if(depth<this.composedDepth[index]!)continue;
       this.composedDepth[index]=depth;this.composedArm[index]=arm?1:0;
       const p=i*11,out=index*4;
+      let nx=pixels[p+3]!,ny=pixels[p+4]!,nz=pixels[p+5]!;
+      if(surface){
+        sampleAssimilationSurface(surface.pixels,i*ASSIMILATION_SURFACE_STRIDE,look,
+          pixels[p+6]!,pixels[p+7]!,pixels[p+8]!,this.assimilationScratch);
+        const relief=this.assimilationScratch[3]!;
+        if(this.assimilationScratch[4]!>0){
+          this.assimilationMetrics.changedPixels++;
+          nx+=surface.normalX*relief;ny+=surface.normalY*relief;
+          const length=Math.hypot(nx,ny,nz);nx/=length;ny/=length;nz/=length;
+        }
+      }
       sampleWorldMaterialLight(this.lighting,this.image.x+pixels[p]!+wx,this.image.y+pixels[p+1]!+wy,pixels[p+2]!+wz,
-        pixels[p+3]!,pixels[p+4]!,pixels[p+5]!,true,this.light);
+        nx,ny,nz,true,this.light);
       const received=this.light[0]*.2126+this.light[1]*.7152+this.light[2]*.0722;
       const shadeGain=pixels[p+10]!>0?1:1+.28*Math.max(0,1-received/.8);
-      for(let c=0;c<3;c++)target[out+c]=pixels[p+6+c]!*(this.light[c]!*shadeGain*pixels[p+9]!+pixels[p+10]!);
+      for(let c=0;c<3;c++)target[out+c]=(surface?this.assimilationScratch[c]!:pixels[p+6+c]!)*(this.light[c]!*shadeGain*pixels[p+9]!+pixels[p+10]!);
       target[out+3]=255;
     }
   }
@@ -295,5 +355,7 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     this.image.destroy(); this.contact.destroy();this.weapon.destroy();this.glove.destroy();
     this.scene.textures.remove(this.gloveTexture.key);
     this.scene.textures.remove(this.texture.key); this.scene.textures.remove(this.contactTexture.key);
+    this.assimilationSurfaces.clear();
+    this.assimilationMetrics.maskBytes = 0;
   }
 }

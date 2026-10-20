@@ -2,6 +2,11 @@ import { lastLightBasis, projectLastLight,
   type LastLightCamera, type LightVector } from './last-light-spatial';
 import { LastLightShadowMaps, LAST_LIGHT_SHADOW_GLSL } from './last-light-shadows';
 import { createLastLightEnvironmentShader, getLastLightExteriorObserver } from './last-light-exterior';
+import {
+  ASSIMILATION_APPEARANCE_GLSL, AssimilationLookParameters, createAssimilationLookMetrics,
+  getAssimilationLookPalettes, recordAssimilationLookTime,
+  type AssimilationLookMetrics, type AssimilationLookState,
+} from './assimilation-appearance';
 
 export interface LastLightFrame {
   x: number; y: number; width: number; height: number;
@@ -71,6 +76,8 @@ uniform vec4 uCapsuleA[14];
 uniform vec3 uCapsuleB[14];
 uniform vec3 uShadowLights[2];
 uniform float uCoreGain;
+uniform vec2 uAssimilationAnchor,uAssimilationSubjective;
+${ASSIMILATION_APPEARANCE_GLSL}
 ${LAST_LIGHT_SHADOW_GLSL}
 vec4 energyFrame(vec2 uv,float frame){return texture(uEnergy,(vec2(mod(frame,4.),1.-floor(frame/4.))+uv)/vec2(4,2));}
 vec3 worldAt(vec2 pixel,float d){return uTarget+uRight*((pixel.x-uOrigin.x)/uScale)+uUp*((uOrigin.y-pixel.y)/uScale)+uBack*d;}
@@ -117,6 +124,7 @@ void main(){
  vec3 color=texture(uEnvironment,uv).rgb;
  vec4 depthData=texture(uResolvedDepth,uv),stableDepthData=texture(uDepth,uv);
  float depth=decodeDepth(depthData),stableDepth=decodeDepth(stableDepthData);
+ float depthGradient=abs(dFdx(depth))+abs(dFdy(depth));
  vec3 point=worldAt(pixel,depth);
  // Full-scene material maps are authoritative only where their haven surface
  // is still the visible haven surface. Shifted exterior plates receive neither
@@ -134,6 +142,19 @@ void main(){
   float shoulder=lastLightShoulderVisibility(point,geometricNormal(point,n),uLamp,6.2);
   color+=lightSurface(point,n,texture(uAlbedo,uv).rgb,material.rg,uLamp,vec3(1,.83,.55),3.2,6.2,false)*shoulder*(1.-bodyShadow(point,uLamp,.055,false));
  }
+ // Only existing far/middle opaque surfaces. Haven, near architecture, sky
+ // and depth boundaries are excluded; actor and energy are composed afterwards.
+ float exteriorLayer=floor(depthData.b*255.+.5);
+ if(uAssimilationSubjective.x>0.&&!stableHaven&&depthData.a>.5&&exteriorLayer>=1.&&exteriorLayer<2.5){
+  float luminance=dot(color,vec3(.2126,.7152,.0722));
+  float dark=smoothstep(.015,.035,luminance)*(1.-smoothstep(.085,.13,luminance));
+  float continuous=1.-smoothstep(.025,.12,depthGradient);
+  float delayed=uAssimilationSubjective.y-.08;
+  float fibre=pow(max(0.,sin(point.x*10.+point.z*3.+delayed*.17)),8.);
+  float membrane=pow(max(0.,sin(point.y*2.3+point.z*1.4-delayed*.11)),3.);
+  float recognition=mix(membrane,fibre,uAssimilation.y)*dark*continuous;
+  color+=vec3(3.5/255.*uAssimilation.x*recognition);
+ }
  vec2 local=pixel-uActorTop;
  if(local.x>=0.&&local.y>=0.&&local.x<uActorRect.z&&local.y<uActorRect.w){
   vec2 auv=vec2((uActorRect.x+local.x)/uActorAtlasSize.x,1.-(uActorRect.y+local.y)/uActorAtlasSize.y);
@@ -144,6 +165,9 @@ void main(){
   if(actor.a>.01&&actorDepth>depth+.006){
    vec3 ap=worldAt(pixel,actorDepth),an=normalize(texture(uActorNormal,auv).rgb*2.-1.);
    vec4 mat=texture(uActorRough,auv);
+   vec3 materialPoint=uRight*((local.x-uAssimilationAnchor.x)/uScale)+
+    uUp*((uAssimilationAnchor.y-local.y)/uScale)+uBack*relative;
+   assimilationMaterial(materialPoint,actor.rgb,an,mat);
    vec3 lit=actor.rgb*(.18+.12*max(an.y,0.)+.19*max(0.,dot(an,uBack)))*mat.b*vec3(.97,1.,1.025);
    for(int i=0;i<40;i++){
     if(i>=uLightCount)break;
@@ -194,6 +218,9 @@ export class LastLightRenderer {
   private lastSeconds = 0;
   private currentFrame?: LastLightFrame;
   private readonly frameBounds = new Map<LastLightFrame, { x: number; y: number; width: number; height: number }>();
+  private readonly assimilationLook = new AssimilationLookParameters();
+  private readonly assimilationMetrics = createAssimilationLookMetrics();
+  private assimilationPaletteUploaded = false;
 
   constructor(private readonly pack: LastLightRenderPack) {
     this.canvas = document.createElement('canvas');
@@ -286,9 +313,17 @@ export class LastLightRenderer {
     this.observer = getLastLightExteriorObserver(world, this.pack.camera);
     this.lastSeconds = seconds;
   }
+  /** Explicit DEV opt-in. No scene/gameplay state is inferred or persisted. */
+  setAssimilationLook(state: AssimilationLookState | null): void {
+    if (!import.meta.env.DEV || this.destroyed) return;
+    this.assimilationLook.set(state);
+  }
+  /** CPU draw/submission time only: this is deliberately not called GPU time. */
+  getAssimilationLookMetrics(): Readonly<AssimilationLookMetrics> { return this.assimilationMetrics; }
   draw(state: LastLightRenderState): void {
     if (this.destroyed) return;
     if (this.gl.isContextLost()) throw new Error('Last Light rendering context was lost.');
+    const measure = this.assimilationLook.enabled, start = measure ? performance.now() : 0;
     const gl = this.gl, frame = this.frame(state); this.currentFrame = frame;
     const projected = projectLastLight(state.world, this.pack.camera, this.basis);
     const top = [Math.round(projected[0] - frame.anchor[0]), Math.round(projected[1] - frame.anchor[1])];
@@ -325,6 +360,26 @@ export class LastLightRenderer {
     gl.activeTexture(gl.TEXTURE14); gl.bindTexture(gl.TEXTURE_CUBE_MAP,this.shadows.shoulderTexture); gl.uniform1i(this.uniform(c,'uShoulderShadow'),14);
     gl.activeTexture(gl.TEXTURE15); gl.bindTexture(gl.TEXTURE_2D_ARRAY,this.shadows.sourceTexture); gl.uniform1i(this.uniform(c,'uSourceShadows'),15);
     gl.uniform1f(this.uniform(c, 'uSeconds'), state.reducedMotion ? 0 : state.seconds);
+    const look = this.assimilationLook;
+    // The study covers the standing/walking mother model. Seated geometry has
+    // different anatomical coordinates and must never inherit a standing mask.
+    gl.uniform4f(this.uniform(c, 'uAssimilation'), frame.pose === 'sit' ? 0 : look.amount, look.fibre,
+      state.reducedMotion ? 0 : look.fibrePhase, state.reducedMotion ? 0 : look.membranePhase);
+    gl.uniform2f(this.uniform(c, 'uAssimilationSubjective'), look.subjective ? 1 : 0,
+      state.reducedMotion ? 0 : look.seconds);
+    if (look.enabled) {
+      gl.uniform2f(this.uniform(c, 'uAssimilationYaw'), Math.cos(frame.yaw), Math.sin(frame.yaw));
+      gl.uniform2f(this.uniform(c, 'uAssimilationAnchor'), frame.anchor[0], frame.anchor[1]);
+      if (!this.assimilationPaletteUploaded) {
+        const palettes = getAssimilationLookPalettes();
+        for (let source = 0; source < 2; source++) {
+          const profile = palettes[source]!, name = source === 0 ? 'uAssimilationFibre' : 'uAssimilationMembrane';
+          for (const [index, color] of [profile.dark, profile.mid, profile.light].entries())
+            gl.uniform3f(this.uniform(c, `${name}[${index}]`), color[0] / 255, color[1] / 255, color[2] / 255);
+        }
+        this.assimilationPaletteUploaded = true;
+      }
+    }
     for (const [name, value] of [['uRight', this.basis.right], ['uUp', this.basis.up], ['uBack', this.basis.back], ['uTarget', this.pack.camera.target], ['uActorWorld', state.world], ['uLamp', lamp]] as const) gl.uniform3fv(this.uniform(c, name), value);
     gl.uniform2fv(this.uniform(c, 'uOrigin'), this.pack.camera.origin); gl.uniform1f(this.uniform(c, 'uScale'), this.pack.camera.scale);
     gl.uniform1f(this.uniform(c, 'uActorDepthOffset'), this.pack.actorDepthOffset); gl.uniform1f(this.uniform(c, 'uActorDepthScale'), this.pack.actorDepthScale);
@@ -348,6 +403,7 @@ export class LastLightRenderer {
       gl.uniform2f(this.uniform(c, `uLightParams[${i}]`),core?1:light.id==='haven-furnace'?2:0,core ? .25 + .75 * state.health[0] : light.id.startsWith('storage-') ? .25 + .75 * state.health[1] : light.id.startsWith('purifier-') ? .25 + .75 * state.health[2] : 1);
     });
     gl.drawArrays(gl.TRIANGLES, 0, 6);
+    if (measure) recordAssimilationLookTime(this.assimilationMetrics, start);
   }
   portrait(): string {
     const frame = this.currentFrame ?? this.pack.frames[0]!;
