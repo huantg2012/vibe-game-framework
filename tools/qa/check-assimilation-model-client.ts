@@ -44,6 +44,46 @@ async function ready(client: ReturnType<typeof createAssimilationModelClient>): 
   }
   throw new Error('Finite model cache check exceeded five seconds');
 }
+async function checkHandoff(): Promise<void> {
+  const rift = createAssimilationModelClient({ profile: 'rift', yaws: [0] });
+  const source = { amount: 1, fibre: .5 };
+  rift.update(source); await ready(rift);
+  const baseline = FakeWorker.requests;
+  rift.prewarm({ profile: 'haven', yaws: [0] });
+  for (let i = 0; i < 100 && FakeWorker.requests < baseline + 3; i++) await tick();
+  const retained = FakeWorker.requests - baseline;
+  assert(retained > 0 && retained < 69, 'The prewarm is deliberately incomplete at scene shutdown');
+  rift.destroy();
+  const paused = FakeWorker.requests;
+  await new Promise(resolve => setTimeout(resolve, 40));
+  assert.equal(FakeWorker.requests, paused, 'Unwatched prewarming pauses during the handoff grace period');
+  const haven = createAssimilationModelClient({ profile: 'haven', yaws: [0] });
+  haven.update(source);
+  assert.equal(haven.status.completed, retained, 'The next scene acquires completed prewarm frames without rebaking');
+  assert.equal(haven.getFrame({ yaw: 0, phase: null, breath: 0 }), null, 'A partial handoff bank still cannot render');
+  await ready(haven);
+  assert.equal(FakeWorker.requests, baseline + 69, 'Every Haven frame is baked exactly once across scene handoff');
+
+  const expired = createAssimilationModelClient({ profile: 'rift', yaws: [1] });
+  expired.update(source);
+  for (let i = 0; i < 100 && expired.status.completed < 1; i++) await tick();
+  assert(expired.status.completed > 0);
+  expired.destroy();
+  const banksBeforeExpiry = haven.metrics.bankCount;
+  await new Promise(resolve => setTimeout(resolve, 2050));
+  assert.equal(haven.metrics.bankCount, banksBeforeExpiry - 1, 'Unclaimed partial bank expires after the bounded grace');
+  const afterExpiry = createAssimilationModelClient({ profile: 'rift', yaws: [1] });
+  afterExpiry.update(source);
+  assert.equal(afterExpiry.status.completed, 0, 'An expired partial bank starts fresh');
+  afterExpiry.destroy(); haven.destroy(); disposeAssimilationModelCache();
+  assert.equal(FakeWorker.live, 0, 'Disposal clears grace timers and terminates the worker');
+  console.log(JSON.stringify({ pass: true, check: 'partial-bank scene handoff', retainedFrames: retained,
+    graceMs: 2000, duplicateHavenFrames: 0 }, null, 2));
+}
+if (process.argv.includes('--handoff-only')) {
+  await checkHandoff();
+  process.exit(0);
+}
 const yaw = 0, baseQuery = { yaw, phase: null, breath: 0 } as const;
 const rift = createAssimilationModelClient({ profile: 'rift', yaws: [yaw] });
 rift.update({ amount: 0, fibre: .5 });

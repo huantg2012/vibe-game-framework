@@ -44,10 +44,12 @@ interface Bank {
   elapsedMs: number;
   startedAt: number;
   usedAt: number;
+  handoffTimer: ReturnType<typeof setTimeout> | null;
 }
 interface Lease { readonly bank: Bank; release(): void }
 const TAU = Math.PI * 2;
 const MAX_BANKS = 4, MAX_BANK_BYTES = 32 * 1024 * 1024, MAX_HOT_FRAMES = 32, MAX_BANK_FRAMES = 1100;
+const HANDOFF_GRACE_MS = 2000;
 const banks = new Map<string, Bank>(), hot = new Map<number, Channels>();
 let worker: Worker | null = null;
 let pending: { bank: Bank; request: AssimilationModelRequest; frameKey: string; timer: ReturnType<typeof setTimeout> } | null = null;
@@ -164,6 +166,8 @@ function stopWorker(): void {
   idleTimer = null;
 }
 function drop(bank: Bank): void {
+  if (bank.handoffTimer) clearTimeout(bank.handoffTimer);
+  bank.handoffTimer = null;
   if (pending?.bank === bank) stopWorker();
   for (const frame of bank.frames.values()) hot.delete(frame.view.id);
   packedBytes -= bank.bytes; bank.bytes = 0; bank.frames.clear(); banks.delete(bank.key);
@@ -243,9 +247,11 @@ function acquire(source: Source, options: AssimilationModelClientOptions, onChan
   if (!bank) {
     if (!prune(0, 1)) throw new Error('Assimilation cache already has four live action banks');
     bank = { key, source, options, requests: poseRequests(options), frames: new Map(), watchers: new Set(),
-      state: 'building', completed: 0, bytes: 0, error: '', elapsedMs: 0, startedAt: performance.now(), usedAt: ++clock };
+      state: 'building', completed: 0, bytes: 0, error: '', elapsedMs: 0, startedAt: performance.now(), usedAt: ++clock, handoffTimer: null };
     banks.set(key, bank);
   }
+  if (bank.handoffTimer) clearTimeout(bank.handoffTimer);
+  bank.handoffTimer = null;
   bank.usedAt = ++clock;
   const watcher: Watcher = { notify: onChange, priority: options.priority ?? 'foreground' };
   bank.watchers.add(watcher); schedule();
@@ -253,7 +259,21 @@ function acquire(source: Source, options: AssimilationModelClientOptions, onChan
   return { bank, release: () => {
     if (released) return;
     released = true; bank!.watchers.delete(watcher);
-    if (bank!.watchers.size === 0 && bank!.state !== 'ready') { totals.cancelled++; drop(bank!); schedule(); }
+    if (bank!.watchers.size === 0 && bank!.state !== 'ready') {
+      totals.cancelled++;
+      if (bank!.state === 'failed') drop(bank!);
+      else {
+        // Scene shutdown can precede the next scene's acquire in the same
+        // transition. Stop work now, but retain completed frames briefly.
+        // Unwatched banks remain eligible for ordinary budget eviction.
+        if (pending?.bank === bank) stopWorker();
+        bank!.handoffTimer = setTimeout(() => {
+          bank!.handoffTimer = null;
+          if (bank!.watchers.size === 0 && banks.get(key) === bank) { drop(bank!); schedule(); }
+        }, HANDOFF_GRACE_MS);
+      }
+      schedule();
+    }
   } };
 }
 
@@ -334,6 +354,8 @@ export function disposeAssimilationModelCache(): void {
   if (scheduled) clearTimeout(scheduled);
   scheduled = null; stopWorker();
   for (const bank of banks.values()) {
+    if (bank.handoffTimer) clearTimeout(bank.handoffTimer);
+    bank.handoffTimer = null;
     bank.state = 'failed'; bank.error = 'Assimilation cache disposed';
     bank.frames.clear(); bank.bytes = 0; notify(bank);
   }
