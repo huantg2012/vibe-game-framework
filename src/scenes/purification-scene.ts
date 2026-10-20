@@ -1049,7 +1049,10 @@ export class PurificationScene extends Phaser.Scene {
     const before = preparationState();
     const savedRecord = saveManager.captureLoadSnapshot();
     inventoryPanel.close();
-    pauseMenu.open(this, { preparation: { message: '正在辨认裂隙。行装尚未消耗。', cancel } });
+    pauseMenu.open(this, { preparation: {
+      title: '临行', stage: 'layout', message: '我还看不清那边。', cancel,
+      onVisualFrame: (time, delta) => this.updateChamberVisuals(time, delta),
+    } });
     window.addEventListener('blur', cancel, { once: true });
     this.events.once(Phaser.Scenes.Events.DESTROY, destroy);
     let retainedForDeparture = false;
@@ -1057,7 +1060,9 @@ export class PurificationScene extends Phaser.Scene {
       installProceduralRiftRecovery();
       const identity = await prepareProceduralDeparture({ signal: controller.signal, pollutionGrade: this.departureGrade,
         worldHistory: inventoryStore.getRiftWorldHistory() });
+      if (controller.signal.aborted || this.shuttingDown || this.departureAbort !== controller) return;
       if (identity.generation?.version === 3) {
+        pauseMenu.setPreparationStage('surface', '脚下有了些轮廓。');
         const world = restoreProceduralWorld(identity)!;
         await prepareR100Presentation(identity.generation, { signal: controller.signal, world });
         this.preparedDepartureWorld = world;
@@ -1149,7 +1154,7 @@ export class PurificationScene extends Phaser.Scene {
         // as text on black). Same bright text colour the chaos-threshold narration uses.
         "font:14px 'Courier New',monospace", 'color:#c8cdd4',
       ].join(';');
-      overlay.textContent = '进入裂隙。';
+      overlay.textContent = '该走了。';
       getDomUiRoot().appendChild(overlay);
       this.transitionOverlay = overlay;
 
