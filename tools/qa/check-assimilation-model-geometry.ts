@@ -1,12 +1,14 @@
 import assert from 'node:assert/strict';
+import { isDeepStrictEqual } from 'node:util';
 import { Model, type V3 } from '../../docs/art/demos/purification-last-light/model';
-import { buildActor, actorLampAnchor } from '../../docs/art/demos/purification-last-light/actor';
+import { buildActor, actorLampAnchor, buildActorRightArm, buildSeatedActor } from '../../docs/art/demos/purification-last-light/actor';
 import { render } from '../../docs/art/demos/purification-last-light/render';
 import {
-  ASSIMILATION_MODEL_CAMERA, buildAssimilationModel, morphAssimilationPoint,
-} from '../../src/dev/assimilation-model-geometry';
-import { bakeAssimilationModel } from '../../src/dev/assimilation-model-worker';
-import type { AssimilationModelFrame, AssimilationModelRequest } from '../../src/dev/assimilation-model-protocol';
+  ASSIMILATION_MODEL_CAMERA, buildAssimilationModel, morphAssimilationPoint, morphAssimilationPosePoint,
+} from '../../src/art/assimilation-model/geometry';
+import { bakeAssimilationModel } from '../../src/art/assimilation-model/worker';
+import type { AssimilationModelFrame, AssimilationModelRequest } from '../../src/art/assimilation-model/protocol';
+import { LAST_LIGHT_ATTACK_SAMPLES, lastLightAttackArm } from '../../src/entities/player-last-light-combat';
 import { lastLightBasis, unprojectLastLight } from '../../src/art/last-light-spatial';
 import {
   ASSIMILATION_GRIP_CONTACT_RADIUS, ASSIMILATION_SURFACE_STRIDE, AssimilationLookParameters,
@@ -16,6 +18,8 @@ import {
 const base: AssimilationModelRequest = { id: 1, amount: 0, fibre: .5, phase: null, yaw: 0, breath: 0 };
 const distance = (a: V3, b: V3): number => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
 const coverageContract = { minimum: .75, maximum: .90, materialWeight: .5 };
+const compareBaker = process.argv.includes('--compare-baker');
+const bakerComparisons: { buildMs: number; materialMs: number; originalMs: number }[] = [];
 const basis = lastLightBasis(ASSIMILATION_MODEL_CAMERA);
 function materialCoverage(frame: AssimilationModelFrame) {
   const look = new AssimilationLookParameters();
@@ -60,6 +64,18 @@ for (const phase of [null, Math.PI / 2]) {
     assert.deepEqual(unchanged.material, new Uint8Array(originalFrame.roughSpec.buffer), 'A0 materials are byte-identical');
     for (const fibre of [0, .5, 1]) {
       const high = bakeAssimilationModel({ ...request, amount: 1, fibre });
+      if (compareBaker) {
+        const model = buildAssimilationModel({ ...request, amount: 1, fibre }).model;
+        const start = performance.now();
+        const reference = render(model, ASSIMILATION_MODEL_CAMERA, undefined, { transparentBackground: true, skipEnergy: true });
+        const originalMs = performance.now() - start;
+        assert.deepEqual(high.albedo, new Uint8Array(reference.albedo.buffer), 'Fast baker preserves the original albedo byte-for-byte');
+        assert.deepEqual(high.normal, new Uint8Array(reference.normal.buffer), 'Fast baker preserves the original normals byte-for-byte');
+        assert.deepEqual(high.material, new Uint8Array(reference.roughSpec.buffer), 'Fast baker retains the original four-ray AO byte-for-byte');
+        for (let i = 0; i < reference.opaqueDepth.length; i++) if (high.albedo[i * 4 + 3])
+          assert.equal(high.depth[i * 4]! * 256 + high.depth[i * 4 + 1]!, Math.round((reference.opaqueDepth[i]! + 80) * 256), 'Fast baker preserves encoded depth');
+        bakerComparisons.push({ buildMs: high.buildMs, materialMs: high.bakeMs, originalMs });
+      }
       let changed = 0;
       for (let i = 3; i < high.albedo.length; i += 4) {
         if (high.albedo[i] !== unchanged.albedo[i]) changed++;
@@ -85,6 +101,9 @@ for (const phase of [null, Math.PI / 2]) {
   }
 }
 const local = new Model(); buildActor(local, [0, 0, 0], 0, 0);
+const untyped = buildAssimilationModel({ ...base, amount: 1, structure: 0 });
+assert.equal(untyped.model.triangles.length, local.triangles.length, 'Untyped sources keep generic morph without fibre or membrane growth');
+assert(!isDeepStrictEqual(untyped.model.triangles, local.triangles), 'Untyped sources still receive true geometry deformation');
 for (const t of local.triangles) for (const point of [t.a, t.b, t.c]) {
   if (point[1] <= .56) assert.deepEqual(morphAssimilationPoint(point, 1, .5), point, 'Soles/lower legs are not moved by the posture field');
 }
@@ -118,6 +137,39 @@ for (const settle of [.25, .5, .75, 1]) {
   }
 }
 assert.throws(() => buildAssimilationModel({ ...base, settle: 2 }), /Invalid/);
+const poseContracts: { part: string; yaw: number; sample?: number; pixels: number; ms: number }[] = [];
+for (const yaw of [0, Math.PI / 2]) {
+  const request = { ...base, pose: 'sit' as const, yaw, seatHeight: .48 };
+  const original = new Model(); buildSeatedActor(original, [0, 0, 0], yaw, request.seatHeight);
+  assert(isDeepStrictEqual(buildAssimilationModel(request).model.triangles, original.triangles), 'A0 seated model is the exact author pose');
+  for (const p of [[.151, .055, .637], [0, .53, 0]] satisfies V3[])
+    assert.deepEqual(morphAssimilationPosePoint(p, { ...request, amount: 1 }), p, 'Seated soles and loaded hips stay planted');
+  const high = bakeAssimilationModel({ ...request, amount: 1 });
+  assert(distance(high.meta.lamp, buildAssimilationModel(request).meta.lamp) > .05, 'Seated shoulder lamp follows upper body');
+  assert.equal(high.meta.pose, 'sit');
+  poseContracts.push({ part: 'sit', yaw, pixels: high.albedo.filter((_, i) => i % 4 === 3 && high.albedo[i] > 0).length,
+    ms: high.buildMs + high.bakeMs });
+}
+const armlessRequest = { ...base, part: 'withoutArm' as const, yaw: .5, phase: Math.PI / 2 };
+const armlessOriginal = new Model(); buildActor(armlessOriginal, [0, 0, 0], .5, 0, Math.PI / 2, 0, null);
+assert(isDeepStrictEqual(buildAssimilationModel(armlessRequest).model.triangles, armlessOriginal.triangles), 'A0 armless body matches combat source');
+for (const attackSample of [0, 7, 14]) {
+  const request = { ...base, part: 'arm' as const, yaw: .5, attackSample };
+  const sample = LAST_LIGHT_ATTACK_SAMPLES[attackSample]!, arm = lastLightAttackArm(sample.phase, sample.progress);
+  const original = new Model();
+  original.at([0, 0, 0], request.yaw, 7, () => buildActorRightArm(original, {
+    shoulder: [...arm.shoulder], elbow: [...arm.elbow], wrist: [...arm.wrist],
+  }));
+  assert(isDeepStrictEqual(buildAssimilationModel(request).model.triangles, original.triangles), 'A0 attack fragment matches existing articulated arm');
+  const high = bakeAssimilationModel({ ...request, amount: 1 });
+  const body = buildAssimilationModel({ ...base, yaw: request.yaw, amount: 1 });
+  assert.deepEqual(high.meta.shoulder, body.meta.shoulder, 'Attack arm and standing body share the same morphed shoulder');
+  assert.deepEqual(high.meta.shadowCapsules[10]!.slice(3, 6), high.meta.wrist.world, 'Attack shadow ends at its actual morphed grip');
+  const pixels = high.albedo.filter((_, i) => i % 4 === 3 && high.albedo[i] > 0).length;
+  assert(pixels > 0, 'Attack fragment remains visible');
+  poseContracts.push({ part: 'arm', yaw: request.yaw, sample: attackSample, pixels, ms: high.buildMs + high.bakeMs });
+}
+assert.throws(() => buildAssimilationModel({ ...base, part: 'arm', attackSample: 15 }), /Invalid/);
 const coverageRange = (frames: typeof results) => ({
   minimum: Math.min(...frames.map(frame => frame.coverage.ratio)),
   maximum: Math.max(...frames.map(frame => frame.coverage.ratio)),
@@ -125,11 +177,18 @@ const coverageRange = (frames: typeof results) => ({
     / frames.reduce((n, frame) => n + frame.coverage.visiblePixels, 0),
 });
 const outsideContract = results.filter(frame => !frame.coverage.withinContract);
+const timingRange = (values: number[]) => ({ minimum: Math.min(...values), maximum: Math.max(...values),
+  mean: values.reduce((a, b) => a + b, 0) / values.length, median: [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)] });
 console.log(JSON.stringify({ pass: outsideContract.length === 0, frames: results.length,
   coverageContract, coverageRange: coverageRange(results),
   coverageBySource: [0, .5, 1].map(fibre => ({ fibre, ...coverageRange(results.filter(frame => frame.fibre === fibre)) })),
   coverageByPose: [null, Math.PI / 2].map(phase => ({ phase, ...coverageRange(results.filter(frame => frame.phase === phase)) })),
   outsideCoverageContract: outsideContract.map(({ yaw, fibre, phase, coverage }) => ({ yaw, fibre, phase, ...coverage })),
-  results,
-  limits: 'Finite author-geometry/raster and shared CPU material checks; no scene integration, GPU parity, combat, seated morph, browser Worker throughput or human visual acceptance.' }, null, 2));
+  results, poseContracts,
+  bakerComparison: compareBaker ? { samples: bakerComparisons.length,
+    build: timingRange(bakerComparisons.map(value => value.buildMs)),
+    materialOnly: timingRange(bakerComparisons.map(value => value.materialMs)),
+    original: timingRange(bakerComparisons.map(value => value.originalMs)),
+    allMaterialAndDepthBytesEqual: true } : undefined,
+  limits: 'Finite author-geometry/raster and shared CPU material checks, including seated and three attack fragments; no scene integration, GPU parity, full combat timing, browser Worker throughput or human visual acceptance.' }, null, 2));
 assert.equal(outsideContract.length, 0, 'Every A100 sample must cover 75–90% of all visible alpha pixels at material weight >= .5; inspect the printed ranges without changing the mask to pass.');

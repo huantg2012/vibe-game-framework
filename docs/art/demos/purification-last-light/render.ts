@@ -127,6 +127,51 @@ function lightFalloff(light:Light,distance:number):number {
   return light.power/((core?2.2:1)+distance*distance*(core?.13:.27))*clamp(1-(distance/light.radius)**4);
 }
 
+export type MaterialBuffers=Pick<Rendered,'albedo'|'normal'|'roughSpec'|'opaqueDepth'>;
+/** Worker actor baking needs the original surface and four-ray AO, but none of
+ * the scene light fields, air, motion or energy composites. Keep this opt-in:
+ * ordinary author exports still use render below. */
+export function renderMaterialBuffers(model:Model,camera:Camera=CAMERA,options:Pick<RenderOptions,'shadowModel'|'sampleOffset'>={}):MaterialBuffers {
+  const {width:W,height:H}=camera,N=W*H,basis=cameraBasis(camera);
+  const depth=new Float32Array(N).fill(-Infinity),indices=new Int32Array(N).fill(-1),positions=new Float32Array(N*3);
+  const albedo=new Uint8ClampedArray(N*4),normal=new Uint8ClampedArray(N*4),roughSpec=new Uint8ClampedArray(N*4);
+  model.triangles.forEach((t,id)=>{
+    if(transparent(t))return;
+    const a=project(t.a,camera),b=project(t.b,camera),c=project(t.c,camera);
+    const det=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1]);if(Math.abs(det)<1e-7)return;
+    const x0=Math.max(0,Math.floor(Math.min(a[0],b[0],c[0]))),x1=Math.min(W-1,Math.ceil(Math.max(a[0],b[0],c[0])));
+    const y0=Math.max(0,Math.floor(Math.min(a[1],b[1],c[1]))),y1=Math.min(H-1,Math.ceil(Math.max(a[1],b[1],c[1])));
+    for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){
+      const u=((b[1]-c[1])*(x+.5-c[0])+(c[0]-b[0])*(y+.5-c[1]))/det;
+      const v=((c[1]-a[1])*(x+.5-c[0])+(a[0]-c[0])*(y+.5-c[1]))/det,w=1-u-v;
+      if(u<-.000001||v<-.000001||w<-.000001)continue;
+      const d=u*a[2]+v*b[2]+w*c[2],i=y*W+x;if(d<=depth[i]!)continue;
+      depth[i]=d;indices[i]=id;
+      for(let k=0;k<3;k++)positions[i*3+k]=u*t.a[k]!+v*t.b[k]!+w*t.c[k]!;
+    }
+  });
+  const bvh=new BVH((options.shadowModel??model).triangles.filter(t=>!transparent(t)&&t.material!=='energy'));
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const i=y*W+x,o=i*4,id=indices[i]!;if(id<0)continue;
+    const t=model.triangles[id]!,p:V3=[positions[i*3]!,positions[i*3+1]!,positions[i*3+2]!];
+    let n=t.normal;if(dot(n,basis.back)<0)n=mul(n,-1);
+    const start=add(p,mul(n,.035));
+    const surf=sampleSurface(t,p,n);n=surf.normal;
+    let ao=1;
+    if(t.layer==='haven'||t.layer==='near'){
+      const tangent=unit(cross(n,Math.abs(n[1])>.93?[1,0,0]:[0,1,0])),bitangent=unit(cross(n,tangent));
+      const angle=hash((x-(options.sampleOffset?.[0]??0))>>1,(y-(options.sampleOffset?.[1]??0))>>1,41)*Math.PI*2;
+      let block=0;
+      for(let k=0;k<4;k++){const a=angle+k*Math.PI/2,ray=unit(add(mul(n,.65),add(mul(tangent,Math.cos(a)*.76),mul(bitangent,Math.sin(a)*.76))));if(bvh.blocked(start,ray,1.05))block++;}
+      ao=1-block*.155;
+    }
+    for(let k=0;k<3;k++){albedo[o+k]=surf.color[k]!;normal[o+k]=(n[k]!*.5+.5)*255;}
+    albedo[o+3]=255;normal[o+3]=255;
+    roughSpec.set([surf.roughness*255,surf.specular*255,ao*255,clamp(surf.emission/2)*255],o);
+  }
+  return {albedo,normal,roughSpec,opaqueDepth:depth};
+}
+
 /** Fixed camera geometry is lit once into additive source fields. The viewer
  * varies these physically occluded contributions, not a screen-wide colour wash. */
 export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:string)=>void,options:RenderOptions={}):Rendered {
