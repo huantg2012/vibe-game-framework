@@ -33,10 +33,10 @@ export const RIFT_LOW_EXPEDITION_OVERRIDES = [
     "kindling_deep_count": 1,
     "kindling_safe_allow_weapon": false,
     "contentSeeds": [
-      2761755553,
-      2936677010
+      156,
+      42
     ],
-    "contentIdentity": "19159d24",
-    "sourceHash": "ae1064f6f5a0d9a7569585f2abfe24cb555d79130c8456073a0bedef468a89b5"
+    "contentIdentity": "69f54d99",
+    "sourceHash": "6a54c7f791b15404d0dcdd2cda1ab1488e1fe41bfb376c8b003d219ea35daf0c"
   }
 ] as const;

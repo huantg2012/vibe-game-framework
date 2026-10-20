@@ -41,5 +41,26 @@ export const NATIVE_LOW_CONSTRUCTION_SOURCES = [
     "assemblyScaleMultiplier": 1,
     "minWideRatio": 0.53,
     "sourceHash": "5ee018bb29aa6edb149e36e5518042b8686747362a5cf21e49f64e27e9d639d6"
+  },
+  {
+    "worldId": "ruptured-film",
+    "enabled": true,
+    "reference": {
+      "csv": "reference_id,world_id,grade,seed,seed_salt,kind,id,profile_id,x_px,y_px,width_px,height_px,length_px,rotation_rad,scale,parent_id,rects\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,land,land-0,core,64,600,1040,704,,,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,land,land-1,core,704,480,1120,896,,,,land-0,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,land,land-2,core,1440,320,608,896,,,,land-1,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,land,land-3,core,320,984,736,384,,,,land-0,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,assembly,main,ruptured-film-all-whole,1112,928,,,,0,0.8,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,solid,solid-0,native-membrane-curled-remnant,384,1000,88,38,176,0.28,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,solid,solid-1,native-membrane-curled-remnant,952,1248,88,38,176,0.28,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,solid,solid-2,native-membrane-curled-remnant,1824,784,88,38,176,0.28,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,solid,solid-4,native-membrane-curled-remnant,1552,904,88,38,176,0.28,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-0,offset-cut-small,232,840,,,,,,,168:792:112:80|232:808:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-1,offset-cut-small,544,736,,,,,,,504:696:80:72|576:720:48:40|520:752:40:24\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-2,offset-cut-small,1552,600,,,,,,,1488:552:112:80|1552:568:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-3,offset-cut-small,304,1224,,,,,,,240:1176:112:80|304:1192:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-4,offset-cut-small,1256,1280,,,,,,,1192:1240:80:72|1264:1264:48:40|1208:1296:40:24\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-7,offset-cut-small,1528,1176,,,,,,,1488:1136:80:72|1560:1160:48:40|1504:1192:40:24\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-8,offset-cut-small,1928,1096,,,,,,,1864:1048:112:80|1928:1064:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-9,offset-cut-small,1192,568,,,,,,,1128:528:88:88|1192:560:64:48\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-10,offset-cut-small,600,1216,,,,,,,560:1176:80:72|632:1200:48:40|576:1232:40:24\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-11,offset-cut-small,776,1024,,,,,,,712:976:112:80|776:992:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,spawn,spawn,,396,796,,,,,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-12,offset-cut-small,1856,528,,,,,,,1792:480:112:80|1856:496:56:72\n",
+      "sourceHash": "054f5cbbd7b56e884004e29bfcaaad5b03e9852056a002a8ed4fc7fc8692290c"
+    },
+    "shore": {
+      "csv": "reference_id,algorithm,segment_min_px,segment_max_px,depth_min_px,depth_max_px,protected_gap_px,max_clean_run_px\nruptured-film-fixed-reference,macro-shore-step-v1,80,160,16,32,48,384\n",
+      "sourceHash": "e2da9b3edbe00d085cb6ed308f48301073e668334214787ddb8f0b9691e54804"
+    },
+    "intent": {
+      "frameWidthPx": 2304,
+      "frameHeightPx": 1792,
+      "targetWalkAreaPx2": 1290000,
+      "planningCellFactor": 0.787353515625
+    },
+    "assemblyScaleMultiplier": 0.9,
+    "minWideRatio": 0.53,
+    "sourceHash": "cf16aeef9cdef04a47e56c110101ad986550649af41d5ae4054d05eea402bf9b"
   }
 ] as const;

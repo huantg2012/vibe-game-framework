@@ -62,6 +62,7 @@ try {
           row.accepted.push({ seed, exit, spawn: layout.spawnPoint, signature: metadata.signature,
             kindling: layout.kindlingNodes, contaminants: layout.contaminantNodes, expedition: native.diagnostics.expedition,
             routes: { accepted: gate.accepted, reasons: gate.reasons, qualityDiagnostics: gate.qualityDiagnostics,
+              overallEncounters: gate.metrics.overallEncounters,
               values: gate.metrics.routes.map(route => ({ id: route.id, lengthPx: route.lengthPx,
                 minSampledWidthLowerPx: Math.min(...route.transverse.sections
                   .filter(section => typeof section.widthLowerPx === 'number').map(section => section.widthLowerPx)),
