@@ -1,0 +1,425 @@
+{
+  "sourcesBefore": {
+    "src/systems/vision-light-eater.ts": "2df1e29d2afdc04b4ef1f1a58d68bac4428c1a6d092e1f0453c88f8e9ed805e5",
+    "src/systems/visibility-system.ts": "0c749cde4c41e892dc8b0fcc4051fe1fadf1f668e2be1542d158c949a09af637",
+    "src/scenes/rift-scene.ts": "f79c0daa607ac0022cd8199017b39f36db08ab3a1c21e3e7ab8c22ce565ac785",
+    "src/dev/rift-light-eater-study.ts": "97cd3ffb782d66e5ea74657394dd7e83a89c9c3b59fcd90530354c0665dd4fa7",
+    "src/dev/rift-light-eater-study.css": "7fdea33986d86ef902f78ca4fd7d002730f0bea3cb371711b5fee7b4b16a293b"
+  },
+  "revision": "9afd33f95f012bd3250890b5cdbc530d6ea5144e",
+  "errors": [],
+  "checks": [
+    {
+      "name": "actual movement input updates player",
+      "pass": true,
+      "detail": {
+        "start": {
+          "x": 1132,
+          "y": 1324
+        },
+        "end": {
+          "x": 1166.0763273586913,
+          "y": 1324
+        }
+      }
+    },
+    {
+      "name": "paused art frame remains frozen",
+      "pass": true
+    },
+    {
+      "name": "paused controls cannot misrepresent frozen preview",
+      "pass": true
+    },
+    {
+      "name": "dynamic video recorded from actual engine",
+      "pass": true,
+      "detail": {
+        "bytes": 1166581
+      }
+    },
+    {
+      "name": "cinder-ridge sample still running",
+      "pass": true
+    },
+    {
+      "name": "ruptured-film sample still running",
+      "pass": true
+    },
+    {
+      "name": "no formal localStorage access",
+      "pass": false,
+      "detail": [
+        {
+          "name": "getItem",
+          "key": "coh_locale"
+        },
+        {
+          "name": "getItem",
+          "key": "coh.atmosphere.v1"
+        },
+        {
+          "name": "setItem",
+          "key": "coh.atmosphere.v1"
+        },
+        {
+          "name": "setItem",
+          "key": "coh.atmosphere.v1"
+        },
+        {
+          "name": "setItem",
+          "key": "coh.atmosphere.v1"
+        }
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "name": "crystal-low",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 15.07106782715732,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-mid",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 54.91963277392294,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-high",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 99.91990590634472,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-adapted",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 100,
+        "assimilation": 79.92067669942578,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-moved",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 55,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1169.6688693537901,
+        "y": 1324
+      }
+    },
+    {
+      "name": "cinder-ridge-mid",
+      "world": "cinder-ridge",
+      "preview": {
+        "pollution": 55.04278415264643,
+        "assimilation": 0.07606071581588625,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 300,
+        "y": 988
+      }
+    },
+    {
+      "name": "cinder-ridge-adapted",
+      "world": "cinder-ridge",
+      "preview": {
+        "pollution": 99.9554230656795,
+        "assimilation": 79.92075211676358,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 300,
+        "y": 988
+      }
+    },
+    {
+      "name": "ruptured-film-mid",
+      "world": "ruptured-film",
+      "preview": {
+        "pollution": 55.044619356573,
+        "assimilation": 0.0793233005742193,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 292,
+        "y": 1028
+      }
+    },
+    {
+      "name": "ruptured-film-adapted",
+      "world": "ruptured-film",
+      "preview": {
+        "pollution": 99.95543602774575,
+        "assimilation": 79.92077516043688,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 292,
+        "y": 1028
+      }
+    }
+  ],
+  "scope": "DEV-only actual Rift map/material/player. No production integration, performance target or human art acceptance.",
+  "failure": "AssertionError [ERR_ASSERTION]: no formal localStorage access",
+  "failureState": {
+    "world": "ruptured-film",
+    "preview": {
+      "pollution": 99.9572582696061,
+      "assimilation": 79.92401470152194,
+      "presentation": "light-eater"
+    },
+    "target": {
+      "pollution": 100,
+      "assimilation": 80
+    },
+    "automatic": false,
+    "state": {
+      "ready": true,
+      "running": true,
+      "starting": false,
+      "performance": {
+        "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+        "state": "sampling",
+        "warmupMs": 2000,
+        "requestedMs": 12000,
+        "sampledMs": 5516.1,
+        "sampleCapacity": 12001,
+        "frames": {
+          "count": 331,
+          "p50Ms": 16.7,
+          "p95Ms": 17.4,
+          "p99Ms": 17.6,
+          "maxMs": 17.7,
+          "over33ms": 0,
+          "over50ms": 0
+        },
+        "cpuSubmission": {
+          "count": 332,
+          "p50Ms": 5.7,
+          "p95Ms": 6,
+          "p99Ms": 6.4,
+          "maxMs": 6.5,
+          "over33ms": 0,
+          "over50ms": 0
+        },
+        "heapStartBytes": 471192982,
+        "heapEndBytes": 460931705,
+        "pauseSegmentsExcluded": 0,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+        "viewport": [
+          1100,
+          1060
+        ],
+        "dpr": 1,
+        "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+      },
+      "resources": {
+        "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+        "textureKeys": 283,
+        "registeredTextureCanvases": 270,
+        "domCanvases": 6,
+        "sharedCanvasPoolUsed": 270,
+        "sharedCanvasPoolFree": 0,
+        "displayListEntries": 174,
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false,
+            "displayListEntries": 0
+          },
+          {
+            "key": "RiftScene",
+            "active": true,
+            "paused": false,
+            "displayListEntries": 174
+          }
+        ],
+        "soundsRegistered": 2,
+        "soundsPlaying": 2,
+        "soundsPaused": 0,
+        "soundsPendingRemoval": 0,
+        "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+      },
+      "paused": false,
+      "probe": {
+        "elapsedMs": 7799.680000000031,
+        "ended": false,
+        "player": {
+          "x": 292,
+          "y": 1028
+        },
+        "hp": 100,
+        "chaos": 17.587933823999908,
+        "chaosRate": 0.3318,
+        "pollutionGrade": "medium",
+        "volumeSightMultiplier": 1,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 8
+        },
+        "enemies": [
+          {
+            "id": "ENM_INF_01",
+            "state": "patrol",
+            "position": {
+              "x": 1897.377962341613,
+              "y": 974.9197108507271
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "ENM_INF_02",
+            "state": "patrol",
+            "position": {
+              "x": 1937.5729140490837,
+              "y": 670.0217368613165
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "ENM_RWR_01",
+            "state": "patrol",
+            "position": {
+              "x": 880.3564400842371,
+              "y": 653.4561903244115
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_BING_01",
+            "substrate": "fungal_mat",
+            "position": {
+              "x": 496,
+              "y": 1360
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_02",
+            "substrate": "fungal_mat",
+            "position": {
+              "x": 1072,
+              "y": 1232
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_03",
+            "substrate": "fungal_mat",
+            "position": {
+              "x": 1392,
+              "y": 560
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_04",
+            "substrate": "fungal_mat",
+            "position": {
+              "x": 1968,
+              "y": 400
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 776.9599987943993,
+              "y": 592
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "release",
+              "elapsedMs": 7799.680000000031,
+              "hazardActive": true
+            }
+          },
+          {
+            "id": "ENM_DING_02",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 1992.9599987943993,
+              "y": 1008
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "release",
+              "elapsedMs": 7799.680000000031,
+              "hazardActive": true
+            }
+          }
+        ]
+      }
+    }
+  }
+}

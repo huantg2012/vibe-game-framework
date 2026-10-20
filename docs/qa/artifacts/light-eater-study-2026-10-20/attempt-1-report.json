@@ -1,0 +1,142 @@
+{
+  "revision": "94079f88a7b06ea61bfe812f85ba49b272270d77",
+  "errors": [],
+  "checks": [
+    {
+      "name": "actual movement input updates player",
+      "pass": true,
+      "detail": {
+        "start": {
+          "x": 1132,
+          "y": 1324
+        },
+        "end": {
+          "x": 1167.164972658205,
+          "y": 1324
+        }
+      }
+    },
+    {
+      "name": "paused art frame remains frozen",
+      "pass": true
+    },
+    {
+      "name": "paused controls cannot misrepresent frozen preview",
+      "pass": true
+    },
+    {
+      "name": "dynamic video recorded from actual engine",
+      "pass": true,
+      "detail": {
+        "bytes": 1158274
+      }
+    },
+    {
+      "name": "cinder-ridge sample still running",
+      "pass": true
+    }
+  ],
+  "samples": [
+    {
+      "name": "crystal-low",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 15.071067827157318,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-mid",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 54.92289975507974,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-high",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 99.91991171077603,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-adapted",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 100,
+        "assimilation": 79.9206965277723,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-moved",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 55,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1170.801235096196,
+        "y": 1324
+      }
+    },
+    {
+      "name": "cinder-ridge-mid",
+      "world": "cinder-ridge",
+      "preview": {
+        "pollution": 55.044608203128085,
+        "assimilation": 0.079303472227721,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 300,
+        "y": 988
+      }
+    },
+    {
+      "name": "cinder-ridge-adapted",
+      "world": "cinder-ridge",
+      "preview": {
+        "pollution": 99.95542487430083,
+        "assimilation": 79.92075533209031,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 300,
+        "y": 988
+      }
+    },
+    {
+      "name": "ruptured-film-mid",
+      "world": "ruptured-film",
+      "preview": {
+        "pollution": 55,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      }
+    }
+  ],
+  "scope": "DEV-only actual Rift map/material/player. No production integration, performance target or human art acceptance."
+}

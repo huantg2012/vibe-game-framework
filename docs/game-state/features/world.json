@@ -1867,14 +1867,15 @@
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "四认可构型保留完整medium母体及原世界材料，三污染档保持各自气氛；r13地表与冻结几何同源。两world真实human/fungal与材料桥已接线，VOID受光修复和受控挂载有证据；最终正式动态场景仍待收口。",
+    "summary": "四认可构型保留完整medium母体及原世界材料，三污染档保持各自气氛；r13地表与冻结几何同源。两world真实human/fungal与材料桥已接线，VOID受光修复和受控挂载有证据；最终正式动态场景仍待收口。 2026-10-20吞光美术DEV样片复用真实三世界：同化冷信号和照明仅作视觉可行性验证，正式流程与成长数据未切换。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "正式新世界 Rift 地表；研究页可定向查看",
       "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。",
       "DEC-212：DEV native-construction.html?sample=split-rib-causeway（另有gel-rafts/ash-strata），三图固定medium/20261012；真实材质与同构型剪影切换，仅几何打磨入口，无内容/撤离/存档。",
-      "DEC-213：native-construction.html保持同3样本/medium/20261012；宏观骨架已重排，新增外环诊断，前后图册 docs/qa/artifacts/native-three-macro-2026-10-15/browser/index.html。"
+      "DEC-213：native-construction.html保持同3样本/medium/20261012；宏观骨架已重排，新增外环诊断，前后图册 docs/qa/artifacts/native-three-macro-2026-10-15/browser/index.html。",
+      "仅DEV美术：docs/art/previews/rift-light-eater-study/；三世界内存会话，四态渐变/轮播/暂停/移动，无伤、不消费正式自语记录。"
     ],
     "sources": [
       {
@@ -2682,6 +2683,10 @@
       {
         "path": "tools/enemy-world-pilot/check-deployment.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/qa/light-eater-study-2026-10-20.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -2749,7 +2754,8 @@
       "COH-E248",
       "COH-E250",
       "COH-E251",
-      "COH-E255"
+      "COH-E255",
+      "COH-E271"
     ],
     "unknowns": [
       "旧v1/v2及v3修订1/2/3按各自封存身份恢复；历史修订4/7及当前修订8仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
@@ -2768,7 +2774,8 @@
       "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。",
       "E247仅覆盖固定三图共享扩展与最终浏览器复看：新增宽臂1/2/1，孔对重复；凝胶441.58px/折板463.56px长直岸失败，凝胶新增宽域面积失败、折板新增面积失败，双脊G2仍失败。最终G2仅保留结果/原因，coverage标量未留存，不沿用round2数字。没有完整部署、自然探索、动态潜行或人审通过。",
       "E248只验证新四张固定medium/20261012 DEV样本及图册。四材质视觉差异已实际复看，机器检查不代签审美；各图G1/G3及余烬/破膜G2仍拒绝，未证明自然探索、动态潜行、随机种子或全库准入。18次浏览器样本构造包含失败/修正轮次，不以最终每图1次当作总数。",
-      "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。"
+      "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。",
+      "E271只验证独立美术打版，正式默认未变；用户画面终审、自然搜索/战斗/长期性能、异质辐射材质通道与第三阶段角色混合同化尚未完成。"
     ]
   },
   {

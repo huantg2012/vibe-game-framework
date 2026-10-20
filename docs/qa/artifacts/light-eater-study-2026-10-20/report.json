@@ -1,0 +1,196 @@
+{
+  "sourcesBefore": {
+    "src/systems/vision-light-eater.ts": "2df1e29d2afdc04b4ef1f1a58d68bac4428c1a6d092e1f0453c88f8e9ed805e5",
+    "src/systems/visibility-system.ts": "0c749cde4c41e892dc8b0fcc4051fe1fadf1f668e2be1542d158c949a09af637",
+    "src/scenes/rift-scene.ts": "81894ea6f4d7c04e27578ef0254c38272fa73df948c7821fc4fc31b42f9eb437",
+    "src/dev/rift-light-eater-study.ts": "97cd3ffb782d66e5ea74657394dd7e83a89c9c3b59fcd90530354c0665dd4fa7",
+    "src/dev/rift-light-eater-study.css": "7fdea33986d86ef902f78ca4fd7d002730f0bea3cb371711b5fee7b4b16a293b"
+  },
+  "revision": "bb39ef09acbd9e52a38742410b49e47635a0285f",
+  "errors": [],
+  "checks": [
+    {
+      "name": "actual movement input updates player",
+      "pass": true,
+      "detail": {
+        "start": {
+          "x": 1132,
+          "y": 1324
+        },
+        "end": {
+          "x": 1167.3821348353042,
+          "y": 1324
+        }
+      }
+    },
+    {
+      "name": "paused art frame remains frozen",
+      "pass": true
+    },
+    {
+      "name": "paused controls cannot misrepresent frozen preview",
+      "pass": true
+    },
+    {
+      "name": "dynamic video recorded from actual engine",
+      "pass": true,
+      "detail": {
+        "bytes": 1202149
+      }
+    },
+    {
+      "name": "cinder-ridge sample still running",
+      "pass": true
+    },
+    {
+      "name": "ruptured-film sample still running",
+      "pass": true
+    },
+    {
+      "name": "no save or narration storage access; no preference writes",
+      "pass": true,
+      "detail": [
+        {
+          "name": "getItem",
+          "key": "coh_locale"
+        }
+      ]
+    },
+    {
+      "name": "capture source remains frozen",
+      "pass": true
+    },
+    {
+      "name": "no page errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "samples": [
+    {
+      "name": "crystal-low",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 15.071067827157322,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-mid",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 54.92291902773178,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-high",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 99.91991174501764,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-adapted",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 100,
+        "assimilation": 79.9206766994258,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1132,
+        "y": 1324
+      }
+    },
+    {
+      "name": "crystal-moved",
+      "world": "crystal-fibre",
+      "preview": {
+        "pollution": 55,
+        "assimilation": 0,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 1170.5175363053547,
+        "y": 1324
+      }
+    },
+    {
+      "name": "cinder-ridge-mid",
+      "world": "cinder-ridge",
+      "preview": {
+        "pollution": 55.04459705247119,
+        "assimilation": 0.07928364883769141,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 300,
+        "y": 988
+      }
+    },
+    {
+      "name": "cinder-ridge-adapted",
+      "world": "cinder-ridge",
+      "preview": {
+        "pollution": 99.95542486324446,
+        "assimilation": 79.92075531243462,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 300,
+        "y": 988
+      }
+    },
+    {
+      "name": "ruptured-film-mid",
+      "world": "ruptured-film",
+      "preview": {
+        "pollution": 55.04651001979077,
+        "assimilation": 0.0826844796280433,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 292,
+        "y": 1028
+      }
+    },
+    {
+      "name": "ruptured-film-adapted",
+      "world": "ruptured-film",
+      "preview": {
+        "pollution": 99.9554267600305,
+        "assimilation": 79.92075868449868,
+        "presentation": "light-eater"
+      },
+      "player": {
+        "x": 292,
+        "y": 1028
+      }
+    }
+  ],
+  "scope": "DEV-only actual Rift map/material/player. No production integration, performance target or human art acceptance.",
+  "sourcesAfter": {
+    "src/systems/vision-light-eater.ts": "2df1e29d2afdc04b4ef1f1a58d68bac4428c1a6d092e1f0453c88f8e9ed805e5",
+    "src/systems/visibility-system.ts": "0c749cde4c41e892dc8b0fcc4051fe1fadf1f668e2be1542d158c949a09af637",
+    "src/scenes/rift-scene.ts": "81894ea6f4d7c04e27578ef0254c38272fa73df948c7821fc4fc31b42f9eb437",
+    "src/dev/rift-light-eater-study.ts": "97cd3ffb782d66e5ea74657394dd7e83a89c9c3b59fcd90530354c0665dd4fa7",
+    "src/dev/rift-light-eater-study.css": "7fdea33986d86ef902f78ca4fd7d002730f0bea3cb371711b5fee7b4b16a293b"
+  }
+}

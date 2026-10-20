@@ -1,5 +1,5 @@
 ---
-status: ACTIVE / STAGE-1-CLOSED-BY-USER / STAGE-2-LIGHT-EATER-STUDY / IN-PROGRESS
+status: ACTIVE / STAGE-1-CLOSED-BY-USER / STAGE-2-LIGHT-EATER-STUDY / HUMAN-REVIEW-PENDING
 created: 2026-10-19
 last-modified: 2026-10-20
 decision: DEC-222 / DEC-223
@@ -52,6 +52,8 @@ features: COH-F032 / COH-F035 / COH-F054 / COH-F007 / COH-F039 / COH-F042
 5. 以正常960×640游戏镜头验画面，像素尺度匹配场景。支持低/中/高污染和高同化、连续切换、暂停与实景移动；正式存档零读写。
 
 先提交此范围，随后提交实现，再拍真实动态与三世界端点。验收区分程序合同、作者/独立美术判断、人审与正式接入；此次不承诺战斗或平衡通过。最终灯距和搜索难度待正式接入阶段标定。第一轮样片入口仍留作历史对照，新入口使用`docs/art/previews/rift-light-eater-study/`。
+
+打版已交：[动态观察台](http://127.0.0.1:3027/docs/art/previews/rift-light-eater-study/)；实现与修正`8d5dbce1`／`94079f88`／`9afd33f9`／`bb39ef09`。三世界9项浏览器检查、9截图与10秒实录已归档，13项光学与14项旧对照检查通过。作者及art两轮复看后交用户判断；高同化长弧读法、真实辐射材质通道及正式搜索/战斗仍有边界，见[QA](../qa/light-eater-study-2026-10-20.md)。此次不接实际流程。
 
 ## 3. 同化形象：角色逐渐偏向当地人形污染体（后续）
 
