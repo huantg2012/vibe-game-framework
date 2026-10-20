@@ -1,0 +1,617 @@
+{
+  "version": 3,
+  "requestedSeed": 156,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "crystal-fibre",
+    "label": "晶化林床",
+    "description": "纤维床沿统一方向晶化",
+    "material": "crystal",
+    "surface": {
+      "substrate": "strata",
+      "coating": "crystal",
+      "organization": "clusters",
+      "coverage": 0.66,
+      "wear": 0.43,
+      "deposits": 0.42,
+      "scale": 0.95,
+      "relief": 0.58,
+      "contrast": 0.85,
+      "regionScale": 1.1,
+      "quietness": 0.5,
+      "formScale": 1.5,
+      "fragmentation": 0.32,
+      "accentCoverage": 0.18
+    },
+    "palette": {
+      "void": 856090,
+      "shadow": 1449000,
+      "floorDeep": 1383746,
+      "floor": 2571894,
+      "floorLight": 5270441,
+      "materialDark": 2370912,
+      "materialMid": 5268135,
+      "materialLight": 9149391,
+      "faceLight": 13752809,
+      "accentDim": 5326174,
+      "accent": 7956100,
+      "accentLight": 11444401,
+      "peak": 14476773,
+      "actorDark": 2433318,
+      "actorMid": 11702376,
+      "actorLight": 15584925,
+      "ground": 2571894,
+      "groundLight": 5270441,
+      "groundDark": 1383746,
+      "wall": 5268135,
+      "wallLight": 9149391,
+      "wallDark": 2370912
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "crystal-fibre",
+    "ground": {
+      "dark": 1383746,
+      "mid": 2571894,
+      "light": 5270441
+    },
+    "solid": {
+      "dark": 2370912,
+      "mid": 5268135,
+      "light": 9149391
+    },
+    "cleaved": {
+      "dark": 4805753,
+      "mid": 10332371,
+      "light": 13752809
+    },
+    "secondary": {
+      "dark": 4797222,
+      "mid": 12421444,
+      "light": 14927246
+    },
+    "groundPattern": "veins",
+    "patternScale": 176,
+    "patternStrength": 0.76,
+    "secondaryCoverage": 0.23,
+    "textureContrast": 1.14,
+    "quietCoverage": 0.38
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "fibre-knot-low",
+    "family": "fibre-knot",
+    "grade": "low",
+    "label": "纤维·未结",
+    "profile": "crystal-fibre",
+    "cols": 28,
+    "rows": 20,
+    "seed": 20261002,
+    "spawn_x": 260,
+    "spawn_y": 380,
+    "exit_x": 196,
+    "exit_y": 460,
+    "search_x": 538,
+    "search_y": 420,
+    "enemy_x": 712,
+    "enemy_y": 180,
+    "axis": -0.28,
+    "light_radius": 112,
+    "emission": 0.35,
+    "motion_period": 22,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "role": "solid",
+        "x": 471,
+        "y": 270,
+        "rotation": -0.28,
+        "length": 370,
+        "width": 136,
+        "height": 116,
+        "thickness": 9,
+        "fold": 0.59,
+        "branches": 4,
+        "opening": 0.25,
+        "distortion": 0.35
+      },
+      {
+        "id": 2,
+        "role": "relief",
+        "x": 636,
+        "y": 287,
+        "rotation": 0.77,
+        "length": 263,
+        "width": 92,
+        "height": 6,
+        "thickness": 2,
+        "fold": 0.52,
+        "branches": 3,
+        "opening": 0.24,
+        "distortion": 0.25
+      },
+      {
+        "id": 3,
+        "role": "relief",
+        "x": 430,
+        "y": 155,
+        "rotation": 2.88,
+        "length": 228,
+        "width": 78,
+        "height": 6,
+        "thickness": 2,
+        "fold": 0.46,
+        "branches": 3,
+        "opening": 0.25,
+        "distortion": 0.24
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 620,
+          "y": 352
+        },
+        {
+          "x": 656,
+          "y": 344
+        },
+        {
+          "x": 704,
+          "y": 368
+        },
+        {
+          "x": 696,
+          "y": 392
+        },
+        {
+          "x": 644,
+          "y": 382
+        }
+      ]
+    ]
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 2,
+    "kindling_contested_count": 3,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0,
+    "kindling_safe_allow_weapon": false
+  },
+  "nativeSpatial": {
+    "policy": {
+      "algorithm": "native-joint-layout-v1",
+      "version": 2,
+      "enabled": true,
+      "planningCellFactor": 0.7156119791666666,
+      "holeToSolidRatio": 2,
+      "holeCountAbsTolerance": 1,
+      "holeCountRelTolerance": 0.2,
+      "minSolidCount": 1,
+      "requireMoreHoles": true,
+      "regionHoleShareMin": 0.64,
+      "regionHoleShareMax": 0.7,
+      "comparisonSpacingsPx": [
+        288,
+        352
+      ],
+      "spacingPx": 320,
+      "countToleranceRatio": 0.2,
+      "areaToleranceRatio": 0.1,
+      "maxEmptyRadiusPx": 160,
+      "deepEmptyThresholdPx": 112,
+      "maxDeepEmptySpanPx": 448,
+      "minHoleCoreRadiusPx": 32,
+      "minSolidAreaPx2": 1600,
+      "minSolidSpanPx": 80,
+      "probeStepPx": 32,
+      "referenceSightPx": 224,
+      "revealRouteMinPx": 80,
+      "revealRouteMaxPx": 240,
+      "maxCoverRoutePx": 320,
+      "wideRadiusPx": 48,
+      "minWideRatio": 0.53,
+      "minLargestWideRatio": 0.8,
+      "narrowWidthPx": 160,
+      "maxNarrowRatio": 0.2,
+      "maxNarrowRunPx": 224,
+      "encounterRadiusPx": 112,
+      "minRouteLengthPx": 224,
+      "minRouteEncounters": 6,
+      "minRouteHoleShare": 0.6,
+      "maxRouteHoleShare": 0.75,
+      "windowSize": 6,
+      "minWindowHoles": 3,
+      "maxGeometryEvaluations": 72,
+      "maxFullCandidates": 2,
+      "sourceHash": "0ad4c7149ef3a9befb047e5b78733bef94b766b23a88e9a7e6824c7b6124876a"
+    },
+    "world": {
+      "worldId": "crystal-fibre",
+      "enabled": true,
+      "annotationStatus": "reviewed",
+      "targetWalkAreaPx2": 1319016,
+      "frameWidthPx": 2976,
+      "frameHeightPx": 1792,
+      "materialAxisRad": 0.1,
+      "landGrammar": "offset-overlap-v1",
+      "landRectMinCount": 4,
+      "landRectMaxCount": 7,
+      "landRectMinSpanPx": 752,
+      "landRectMaxSpanPx": 1360,
+      "landRectMinThicknessPx": 512,
+      "landRectMaxThicknessPx": 928,
+      "landRectMinOverlapPx": 320,
+      "bayGrammar": "shore-rect-cut-v1",
+      "bayProfileIds": [
+        "shore-bay-default"
+      ],
+      "bayCountOptions": [
+        0,
+        1,
+        2
+      ],
+      "landCoreMinCount": 3,
+      "landCoreMaxCount": 5,
+      "landShoulderMinCount": 1,
+      "landShoulderMaxCount": 2,
+      "landShoulderMinSpanPx": 576,
+      "landShoulderMaxSpanPx": 768,
+      "landShoulderMinThicknessPx": 384,
+      "landShoulderMaxThicknessPx": 448,
+      "landShoulderMinExtensionPx": 192,
+      "landShoulderMaxExtensionPx": 320,
+      "landShoulderAttachment": "core-outward-normal-v1"
+    },
+    "holeProfiles": [
+      {
+        "id": "offset-cut-small",
+        "sizeClass": "small",
+        "weight": 35,
+        "minSpanPx": 112,
+        "maxSpanPx": 144,
+        "minThicknessPx": 80,
+        "maxThicknessPx": 104,
+        "minRectCount": 2,
+        "maxRectCount": 3,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 14000
+      },
+      {
+        "id": "offset-cut-medium",
+        "sizeClass": "medium",
+        "weight": 50,
+        "minSpanPx": 152,
+        "maxSpanPx": 192,
+        "minThicknessPx": 88,
+        "maxThicknessPx": 120,
+        "minRectCount": 2,
+        "maxRectCount": 3,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 22000
+      },
+      {
+        "id": "offset-cut-large",
+        "sizeClass": "large",
+        "weight": 15,
+        "minSpanPx": 200,
+        "maxSpanPx": 240,
+        "minThicknessPx": 96,
+        "maxThicknessPx": 136,
+        "minRectCount": 3,
+        "maxRectCount": 4,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 30000
+      }
+    ],
+    "bayProfiles": [
+      {
+        "id": "shore-bay-default",
+        "minRectCount": 1,
+        "maxRectCount": 3,
+        "minDepthPx": 128,
+        "maxDepthPx": 480,
+        "minMouthPx": 96,
+        "maxMouthPx": 192,
+        "minOffsetRatio": 0.15,
+        "maxOffsetRatio": 0.45,
+        "minOverlapRatio": 0.35,
+        "maxOverlapRatio": 0.8,
+        "maxUnionSpanPx": 576,
+        "minRemovedLandAreaPx2": 8192,
+        "maxRemovedLandAreaPx2": 61440,
+        "minFinalThroatPx": 64,
+        "minBacklandPx": 320
+      }
+    ],
+    "assemblies": [
+      {
+        "worldId": "crystal-fibre",
+        "grade": "all",
+        "id": "crystal-fibre-medium-whole",
+        "sourceInstanceIds": [
+          1
+        ],
+        "attachedReliefIds": [
+          2,
+          3
+        ],
+        "sourceScale": 1,
+        "minScale": 0.95,
+        "maxScale": 1.05,
+        "rotationOffsetsRad": [
+          -0.18,
+          0,
+          0.18,
+          3.14159265359
+        ],
+        "maxSpanPx": 1120,
+        "mode": "unique-once"
+      }
+    ],
+    "subordinateProfiles": [
+      {
+        "id": "native-fibre-fallen-end",
+        "family": "fibre-knot",
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle",
+        "minLengthPx": 136,
+        "maxLengthPx": 208,
+        "minWidthPx": 52,
+        "maxWidthPx": 84,
+        "minHeightPx": 22,
+        "maxHeightPx": 36,
+        "thicknessPx": 7,
+        "fold": 0.42,
+        "branches": 3,
+        "opening": 0.74,
+        "distortion": 0.62,
+        "rotationOffsetRad": 0.14
+      },
+      {
+        "id": "native-fibre-pressed-knot",
+        "family": "fibre-knot",
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge",
+        "minLengthPx": 104,
+        "maxLengthPx": 160,
+        "minWidthPx": 72,
+        "maxWidthPx": 108,
+        "minHeightPx": 28,
+        "maxHeightPx": 44,
+        "thicknessPx": 9,
+        "fold": 0.58,
+        "branches": 2,
+        "opening": 0.62,
+        "distortion": 0.52,
+        "rotationOffsetRad": -0.32
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "crystal-fibre",
+    "sourceHash": "f50b0385cbdd3521ccce1dfb1f43d66ef321a82fe41a1a5b4072cbb033b11d85",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.45,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "nativeConstruction": {
+    "worldId": "crystal-fibre",
+    "reference": {
+      "csv": "reference_id,world_id,grade,seed,seed_salt,kind,id,profile_id,x_px,y_px,width_px,height_px,length_px,rotation_rad,scale,parent_id,rects\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-0,core,1216,512,768,768,,,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-1,core,480,800,1120,640,,,,land-0,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-2,core,1408,128,576,768,,,,land-0,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-3,core,1664,608,864,640,,,,land-0,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,assembly,fold,crystal-fibre-medium-whole,1632,808,,,,0,1,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-0,native-fibre-fallen-end,1648,272,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-1,native-fibre-fallen-end,720,1136,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-2,native-fibre-fallen-end,1288,1104,56,32,160,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-3,native-fibre-fallen-end,2320,784,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-4,native-fibre-fallen-end,1928,1024,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-0,offset-cut-small,1528,496,,,,,,,1464:448:112:80|1528:464:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-1,offset-cut-small,1880,512,,,,,,,1816:472:80:72|1888:496:48:40|1832:528:40:24\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-2,offset-cut-small,1872,208,,,,,,,1816:168:112:80|1808:160:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-3,offset-cut-small,600,1000,,,,,,,568:944:72:80|576:1016:40:48|560:960:24:40\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-4,offset-cut-small,968,968,,,,,,,928:904:80:112|920:968:72:56\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-5,offset-cut-small,1008,1296,,,,,,,944:1248:112:80|1008:1264:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-6,offset-cut-small,1432,1312,,,,,,,1368:1264:112:80|1432:1280:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-7,offset-cut-small,1632,1064,,,,,,,1568:1016:112:80|1632:1032:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-8,offset-cut-small,2104,784,,,,,,,2056:728:80:112|2072:720:72:56\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-9,offset-cut-small,2336,1064,,,,,,,2272:1016:112:80|2336:1032:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-10,offset-cut-small,1928,1136,,,,,,,1872:1096:112:80|1864:1088:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-11,offset-cut-small,1312,712,,,,,,,1280:656:72:80|1288:728:40:48|1272:672:24:40\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,spawn,spawn,,1136,1328,,,,,,,\n",
+      "sourceHash": "a4e041c5f40b2e0948a5e9fce6e9ae54c248d793f9a31a813b1ed2d82570c3e6"
+    },
+    "shore": {
+      "csv": "reference_id,algorithm,segment_min_px,segment_max_px,depth_min_px,depth_max_px,protected_gap_px,max_clean_run_px\ncrystal-fibre-fixed-reference,macro-shore-step-v1,80,160,16,32,48,384\n",
+      "sourceHash": "883116e84c31b011eca1b59bc21c6135437d8d6611f1f2ffc16bfdc9ff4b0cf4"
+    },
+    "intent": {
+      "frameWidthPx": 2976,
+      "frameHeightPx": 1792,
+      "targetWalkAreaPx2": 1319016,
+      "planningCellFactor": 0.7156119791666666
+    },
+    "contentSeeds": {
+      "low": [
+        156,
+        42
+      ],
+      "medium": [
+        42,
+        1729759881
+      ],
+      "severe": [
+        42,
+        2437493859
+      ]
+    },
+    "contentSeedIdentities": {
+      "low": "23c0966d",
+      "medium": "85162594",
+      "severe": "98286e4e"
+    },
+    "sourceHash": "5ee018bb29aa6edb149e36e5518042b8686747362a5cf21e49f64e27e9d639d6",
+    "algorithm": "native-direct-construction-v1",
+    "version": 1,
+    "seedMode": "reviewed-geometry-v1",
+    "geometrySeed": 20261012,
+    "sourceGrade": "medium"
+  },
+  "surfacePixelBudget": 8388608,
+  "enemyMaterialVersion": 1,
+  "enemyMaterial": {
+    "key": "world-body-v1:crystal-fibre:4179c0b66f09bb61ec765f50d7a58ca0c7cb6d8f1102cc4f59eaf14f3499baca:8fc9ea2cac80fda4bba849f01e7b5096dd7fb3212acfaef6bf983f89ea0a9cca",
+    "worldId": "crystal-fibre",
+    "kind": "fibre",
+    "dark": [
+      36,
+      45,
+      96
+    ],
+    "mid": [
+      80,
+      98,
+      167
+    ],
+    "light": [
+      139,
+      155,
+      207
+    ],
+    "secondary": [
+      189,
+      137,
+      68
+    ],
+    "fibreCount": 4,
+    "membraneSpread": 0.7,
+    "motionLag": 0.12,
+    "paintBranching": 0.84
+  },
+  "enemyDeployment": {
+    "version": 1,
+    "worldId": "crystal-fibre",
+    "grade": "low",
+    "sourceHash": "06f23c81ba05bbdb48f0a40a0c670a1fcc2c4161b7c8d54f970cc8cff64f2efe",
+    "infiltrator": {
+      "substrate": "human_remnant",
+      "coverage": "infiltrate",
+      "continuity": "monolith",
+      "occupancy": "floor",
+      "portfolio": "jia",
+      "lexemes": {
+        "motion": "motion_patrol",
+        "sense": "sense_cone",
+        "rhythm": "rhythm_open",
+        "contact": "contact_melee_three"
+      }
+    },
+    "rewriter": {
+      "substrate": "human_remnant",
+      "coverage": "rewrite",
+      "continuity": "monolith",
+      "occupancy": "floor",
+      "portfolio": "jia",
+      "lexemes": {
+        "motion": "motion_patrol",
+        "sense": "sense_hear",
+        "rhythm": "rhythm_open",
+        "contact": "contact_melee_three"
+      }
+    },
+    "paint": {
+      "substrate": "fungal_mat",
+      "coverage": "infiltrate",
+      "continuity": "colony",
+      "occupancy": "paint",
+      "portfolio": "bing",
+      "lexemes": {
+        "motion": "motion_cluster",
+        "sense": "sense_touch",
+        "rhythm": "rhythm_cluster",
+        "contact": "contact_step_chaos"
+      }
+    }
+  },
+  "package": {
+    "id": "r100-crystal-fibre",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 13,
+    "materials": {
+      "fibre-knot": {
+        "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+        "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+        "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+      }
+    },
+    "dependencyHash": "718d6b0a",
+    "grade": "low"
+  }
+}

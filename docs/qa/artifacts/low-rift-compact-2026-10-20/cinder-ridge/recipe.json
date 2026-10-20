@@ -1,0 +1,530 @@
+{
+  "version": 3,
+  "requestedSeed": 156,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "cinder-ridge",
+    "label": "余烬脊",
+    "description": "余烬脊的原生材料与完整搜撤地段",
+    "material": "granular",
+    "surface": {
+      "substrate": "granular",
+      "coating": "granular",
+      "organization": "bands",
+      "coverage": 0.46,
+      "wear": 0.52,
+      "deposits": 0.52,
+      "scale": 1.1,
+      "relief": 0.52,
+      "contrast": 0.75,
+      "regionScale": 1.15,
+      "quietness": 0.48,
+      "formScale": 1.3,
+      "fragmentation": 0.65,
+      "accentCoverage": 0.02
+    },
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 3284260,
+      "floor": 7090991,
+      "floorLight": 11102027,
+      "materialDark": 4400936,
+      "materialMid": 9584953,
+      "materialLight": 13334867,
+      "faceLight": 14920823,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 7090991,
+      "groundLight": 11102027,
+      "groundDark": 3284260,
+      "wall": 9584953,
+      "wallLight": 13334867,
+      "wallDark": 4400936
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "cinder-ridge",
+    "ground": {
+      "dark": 3284260,
+      "mid": 7090991,
+      "light": 11102027
+    },
+    "solid": {
+      "dark": 4400936,
+      "mid": 9584953,
+      "light": 13334867
+    },
+    "cleaved": {
+      "dark": 6764594,
+      "mid": 13006163,
+      "light": 14920823
+    },
+    "secondary": {
+      "dark": 3159616,
+      "mid": 5856364,
+      "light": 9606048
+    },
+    "groundPattern": "grains",
+    "patternScale": 104,
+    "patternStrength": 0.73,
+    "secondaryCoverage": 0.22,
+    "textureContrast": 1.18,
+    "quietCoverage": 0.27
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "cinder-ridge-low",
+    "family": "granular-ridge",
+    "grade": "low",
+    "label": "余烬脊",
+    "profile": "cinder-ridge",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": -0.28,
+    "light_radius": 112,
+    "emission": 0.35,
+    "motion_period": 19,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "granular-ridge",
+        "role": "relief",
+        "x": 492,
+        "y": 430,
+        "rotation": -0.2,
+        "length": 540,
+        "width": 268,
+        "height": 6,
+        "thickness": 2,
+        "fold": 0.32,
+        "branches": 3,
+        "opening": 0.55,
+        "distortion": 0.62,
+        "constructionVersion": 2
+      },
+      {
+        "id": 2,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 410,
+        "y": 325,
+        "rotation": -0.18,
+        "length": 354,
+        "width": 244,
+        "height": 64,
+        "thickness": 13,
+        "fold": 0.72,
+        "branches": 3,
+        "opening": 0.72,
+        "distortion": 0.85,
+        "constructionVersion": 2
+      },
+      {
+        "id": 3,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 750,
+        "y": 480,
+        "rotation": 0.55,
+        "length": 252,
+        "width": 138,
+        "height": 22,
+        "thickness": 8,
+        "fold": 0.25,
+        "branches": 6,
+        "opening": 0.25,
+        "distortion": 0.58,
+        "constructionVersion": 2
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 668,
+          "y": 424
+        },
+        {
+          "x": 704,
+          "y": 416
+        },
+        {
+          "x": 752,
+          "y": 440
+        },
+        {
+          "x": 744,
+          "y": 464
+        },
+        {
+          "x": 692,
+          "y": 454
+        }
+      ]
+    ]
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 2,
+    "kindling_contested_count": 3,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0,
+    "kindling_safe_allow_weapon": false
+  },
+  "nativeSpatial": {
+    "policy": {
+      "algorithm": "native-joint-layout-v1",
+      "version": 2,
+      "enabled": true,
+      "planningCellFactor": 0.8470616319444444,
+      "holeToSolidRatio": 2,
+      "holeCountAbsTolerance": 1,
+      "holeCountRelTolerance": 0.2,
+      "minSolidCount": 1,
+      "requireMoreHoles": true,
+      "regionHoleShareMin": 0.64,
+      "regionHoleShareMax": 0.7,
+      "comparisonSpacingsPx": [
+        288,
+        352
+      ],
+      "spacingPx": 320,
+      "countToleranceRatio": 0.2,
+      "areaToleranceRatio": 0.1,
+      "maxEmptyRadiusPx": 160,
+      "deepEmptyThresholdPx": 112,
+      "maxDeepEmptySpanPx": 448,
+      "minHoleCoreRadiusPx": 32,
+      "minSolidAreaPx2": 1600,
+      "minSolidSpanPx": 80,
+      "probeStepPx": 32,
+      "referenceSightPx": 224,
+      "revealRouteMinPx": 80,
+      "revealRouteMaxPx": 240,
+      "maxCoverRoutePx": 320,
+      "wideRadiusPx": 48,
+      "minWideRatio": 0.55,
+      "minLargestWideRatio": 0.8,
+      "narrowWidthPx": 160,
+      "maxNarrowRatio": 0.2,
+      "maxNarrowRunPx": 224,
+      "encounterRadiusPx": 112,
+      "minRouteLengthPx": 224,
+      "minRouteEncounters": 6,
+      "minRouteHoleShare": 0.6,
+      "maxRouteHoleShare": 0.75,
+      "windowSize": 6,
+      "minWindowHoles": 3,
+      "maxGeometryEvaluations": 72,
+      "maxFullCandidates": 2,
+      "sourceHash": "0ad4c7149ef3a9befb047e5b78733bef94b766b23a88e9a7e6824c7b6124876a"
+    },
+    "world": {
+      "worldId": "cinder-ridge",
+      "enabled": true,
+      "annotationStatus": "reviewed",
+      "targetWalkAreaPx2": 1561304,
+      "frameWidthPx": 2688,
+      "frameHeightPx": 1792,
+      "materialAxisRad": 0.1,
+      "landGrammar": "offset-overlap-v1",
+      "landRectMinCount": 4,
+      "landRectMaxCount": 7,
+      "landRectMinSpanPx": 800,
+      "landRectMaxSpanPx": 1440,
+      "landRectMinThicknessPx": 544,
+      "landRectMaxThicknessPx": 960,
+      "landRectMinOverlapPx": 320,
+      "bayGrammar": "shore-rect-cut-v1",
+      "bayProfileIds": [
+        "shore-bay-default"
+      ],
+      "bayCountOptions": [
+        0,
+        1,
+        2
+      ],
+      "landCoreMinCount": 3,
+      "landCoreMaxCount": 5,
+      "landShoulderMinCount": 1,
+      "landShoulderMaxCount": 2,
+      "landShoulderMinSpanPx": 576,
+      "landShoulderMaxSpanPx": 768,
+      "landShoulderMinThicknessPx": 384,
+      "landShoulderMaxThicknessPx": 448,
+      "landShoulderMinExtensionPx": 192,
+      "landShoulderMaxExtensionPx": 320,
+      "landShoulderAttachment": "core-outward-normal-v1"
+    },
+    "holeProfiles": [
+      {
+        "id": "offset-cut-small",
+        "sizeClass": "small",
+        "weight": 35,
+        "minSpanPx": 112,
+        "maxSpanPx": 144,
+        "minThicknessPx": 80,
+        "maxThicknessPx": 104,
+        "minRectCount": 2,
+        "maxRectCount": 3,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 14000
+      },
+      {
+        "id": "offset-cut-medium",
+        "sizeClass": "medium",
+        "weight": 50,
+        "minSpanPx": 152,
+        "maxSpanPx": 192,
+        "minThicknessPx": 88,
+        "maxThicknessPx": 120,
+        "minRectCount": 2,
+        "maxRectCount": 3,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 22000
+      },
+      {
+        "id": "offset-cut-large",
+        "sizeClass": "large",
+        "weight": 15,
+        "minSpanPx": 200,
+        "maxSpanPx": 240,
+        "minThicknessPx": 96,
+        "maxThicknessPx": 136,
+        "minRectCount": 3,
+        "maxRectCount": 4,
+        "minOverlapRatio": 0.3,
+        "maxOverlapRatio": 0.65,
+        "minOffsetRatio": 0.18,
+        "maxOffsetRatio": 0.5,
+        "maxAreaPx2": 30000
+      }
+    ],
+    "bayProfiles": [
+      {
+        "id": "shore-bay-default",
+        "minRectCount": 1,
+        "maxRectCount": 3,
+        "minDepthPx": 128,
+        "maxDepthPx": 480,
+        "minMouthPx": 96,
+        "maxMouthPx": 192,
+        "minOffsetRatio": 0.15,
+        "maxOffsetRatio": 0.45,
+        "minOverlapRatio": 0.35,
+        "maxOverlapRatio": 0.8,
+        "maxUnionSpanPx": 576,
+        "minRemovedLandAreaPx2": 8192,
+        "maxRemovedLandAreaPx2": 61440,
+        "minFinalThroatPx": 64,
+        "minBacklandPx": 320
+      }
+    ],
+    "assemblies": [
+      {
+        "worldId": "cinder-ridge",
+        "grade": "all",
+        "id": "cinder-ridge-all-whole",
+        "sourceInstanceIds": [
+          2,
+          3
+        ],
+        "attachedReliefIds": [
+          1
+        ],
+        "sourceScale": 0.85,
+        "minScale": 0.95,
+        "maxScale": 1.05,
+        "rotationOffsetsRad": [
+          -0.18,
+          0,
+          0.18,
+          3.14159265359
+        ],
+        "maxSpanPx": 1120,
+        "mode": "unique-once"
+      }
+    ],
+    "subordinateProfiles": [
+      {
+        "id": "native-grain-broken-mound",
+        "family": "granular-ridge",
+        "constructionVersion": 4,
+        "shapeProfile": "porous-break",
+        "minLengthPx": 136,
+        "maxLengthPx": 208,
+        "minWidthPx": 72,
+        "maxWidthPx": 112,
+        "minHeightPx": 24,
+        "maxHeightPx": 40,
+        "thicknessPx": 8,
+        "fold": 0.4,
+        "branches": 3,
+        "opening": 0.68,
+        "distortion": 0.64,
+        "rotationOffsetRad": 0.14
+      }
+    ],
+    "extraction": {
+      "minPathDistancePx": 920,
+      "minEuclideanDistancePx": 560,
+      "minPathFraction": 0.28,
+      "maxPathFraction": 1,
+      "clearanceHalfSize": 28,
+      "regionCols": 4,
+      "regionRows": 3,
+      "distanceBands": 3
+    },
+    "deployment": {
+      "version": 1,
+      "safe_max_extra_travel_px": 180,
+      "safe_max_approach_px": 480,
+      "contested_min_extra_travel_px": 180,
+      "contested_max_extra_travel_px": 840,
+      "deep_min_extra_travel_px": 600,
+      "deep_max_extra_travel_px": 1400,
+      "max_search_approach_px": 2600,
+      "node_spacing_px": 96,
+      "node_spread_weight": 0.25,
+      "host_min_approach_px": 160,
+      "host_max_approach_px": 2600,
+      "host_region_cols": 4,
+      "host_region_rows": 3,
+      "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+    }
+  },
+  "searchSitePolicy": {
+    "version": 1,
+    "algorithm": "grounded-search-v1",
+    "worldId": "cinder-ridge",
+    "sourceHash": "bf613551e72c1c254d84931fd29f3d1b286cd7cc150eae19c3f598f333554270",
+    "sourceReachPx": 72,
+    "environmentScoreCap": 12,
+    "peelPreference": 0.1,
+    "footprintProfile": "grounded-material-v1"
+  },
+  "nativeConstruction": {
+    "worldId": "cinder-ridge",
+    "reference": {
+      "csv": "reference_id,world_id,grade,seed,seed_salt,kind,id,profile_id,x_px,y_px,width_px,height_px,length_px,rotation_rad,scale,parent_id,rects\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,land,land-0,core,64,616,1040,720,,,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,land,land-1,core,704,480,1120,864,,,,land-0,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,land,land-2,core,1472,320,768,832,,,,land-1,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,land,land-3,core,320,960,896,512,,,,land-0,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,assembly,main,cinder-ridge-all-whole,1120,896,,,,0,1,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,solid-0,native-grain-broken-mound,416,984,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,solid-1,native-grain-broken-mound,624,1272,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,solid-2,native-grain-broken-mound,1824,800,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,solid-3,native-grain-broken-mound,2128,592,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,solid-4,native-grain-broken-mound,1552,840,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-0,offset-cut-small,232,808,,,,,,,168:760:112:80|232:776:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-1,offset-cut-small,552,712,,,,,,,512:672:80:72|584:696:48:40|528:728:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-2,offset-cut-small,1656,488,,,,,,,1592:440:112:80|1656:456:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-3,offset-cut-small,240,1192,,,,,,,176:1144:112:80|240:1160:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-4,offset-cut-small,1160,1248,,,,,,,1096:1208:80:72|1168:1232:48:40|1112:1264:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-5,offset-cut-small,1976,496,,,,,,,1912:448:112:80|1976:464:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-6,offset-cut-small,2120,840,,,,,,,2080:800:80:72|2152:824:48:40|2096:856:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-7,offset-cut-small,1536,1152,,,,,,,1496:1112:80:72|1568:1136:48:40|1512:1168:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-8,offset-cut-small,1880,1016,,,,,,,1816:968:112:80|1880:984:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-9,offset-cut-small,1288,584,,,,,,,1224:544:80:80|1288:576:64:48\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-10,offset-cut-small,744,1160,,,,,,,704:1120:80:72|776:1144:48:40|720:1176:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-11,offset-cut-small,632,960,,,,,,,568:912:112:80|632:928:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,spawn,spawn,,304,992,,,,,,,\n",
+      "sourceHash": "f2ca9db74d5ac2122b6c8854508c6be87c8241014bb892f194031adc123cbae2"
+    },
+    "shore": {
+      "csv": "reference_id,algorithm,segment_min_px,segment_max_px,depth_min_px,depth_max_px,protected_gap_px,max_clean_run_px\ncinder-ridge-fixed-reference,macro-shore-step-v1,80,160,32,48,48,384\n",
+      "sourceHash": "25cb45400b52df2a90327b0284ca9eb1767cfd9d8070b64ff344aebec6f88536"
+    },
+    "intent": {
+      "frameWidthPx": 2688,
+      "frameHeightPx": 1792,
+      "targetWalkAreaPx2": 1561304,
+      "planningCellFactor": 0.8470616319444444
+    },
+    "contentSeeds": {
+      "low": [
+        2530803610,
+        2936677010
+      ],
+      "medium": [
+        42,
+        3908480648
+      ],
+      "severe": [
+        42,
+        1729759881
+      ]
+    },
+    "contentSeedIdentities": {
+      "low": "98de1993",
+      "medium": "26f4e3c6",
+      "severe": "6622ddc7"
+    },
+    "sourceHash": "17c02f7ae3bc45b70024a0fc48152982b9d75987290a3ec5ef024f34ad846bf6",
+    "algorithm": "native-direct-construction-v1",
+    "version": 1,
+    "seedMode": "reviewed-geometry-v1",
+    "geometrySeed": 20261012,
+    "sourceGrade": "medium"
+  },
+  "surfacePixelBudget": 8388608,
+  "package": {
+    "id": "r100-cinder-ridge",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 13,
+    "materials": {
+      "granular-ridge": {
+        "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+        "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+        "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+      }
+    },
+    "dependencyHash": "638d6bf9",
+    "grade": "low"
+  }
+}

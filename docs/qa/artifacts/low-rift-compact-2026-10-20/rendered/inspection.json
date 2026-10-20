@@ -1,0 +1,84 @@
+{
+  "status": "passed",
+  "scope": "File integrity and direct visual inspection of six frozen-map renders; no gameplay or aesthetic approval.",
+  "inspectedAt": "2026-10-20T15:47:51.404Z",
+  "receiptFile": "docs/qa/artifacts/low-rift-compact-2026-10-20/render-receipt.json",
+  "receiptHash": "52cd05dadf06a5bf4d1ba36bdeb5f20f65baf2b62540d338bea7a0c880172e78",
+  "sourcesStable": true,
+  "verificationInputsUnchanged": true,
+  "files": [
+    {
+      "file": "docs/qa/artifacts/low-rift-compact-2026-10-20/rendered/cinder-ridge-low-156-structure.png",
+      "kind": "structure",
+      "width": 1344,
+      "height": 896,
+      "bytes": 18201,
+      "sha256": "478cc68413a7479266334340ec8f615e4e6408dd28049a630fe18b1823fa38e0",
+      "nonUniform": true,
+      "visuallyInspected": true
+    },
+    {
+      "file": "docs/qa/artifacts/low-rift-compact-2026-10-20/rendered/cinder-ridge-low-156-material.png",
+      "kind": "material",
+      "width": 1400,
+      "height": 933,
+      "bytes": 1079549,
+      "sha256": "4e156e1eb6903672fb629bc8d882ba7debb5c2cbd0fa2743150d2adcbcdb6fc8",
+      "nonUniform": true,
+      "visuallyInspected": true
+    },
+    {
+      "file": "docs/qa/artifacts/low-rift-compact-2026-10-20/rendered/crystal-fibre-low-156-structure.png",
+      "kind": "structure",
+      "width": 1488,
+      "height": 896,
+      "bytes": 19037,
+      "sha256": "93300d0ce12f44b19391dc2f48b8324df4fdd2d962b2d796bbd9a97f9ba3de6c",
+      "nonUniform": true,
+      "visuallyInspected": true
+    },
+    {
+      "file": "docs/qa/artifacts/low-rift-compact-2026-10-20/rendered/crystal-fibre-low-156-material.png",
+      "kind": "material",
+      "width": 1400,
+      "height": 843,
+      "bytes": 802107,
+      "sha256": "043d2a1f0f3964c5116b3ccd2262685c9e532e9a34fb98288fdd84faae28eeb1",
+      "nonUniform": true,
+      "visuallyInspected": true
+    },
+    {
+      "file": "docs/qa/artifacts/low-rift-compact-2026-10-20/rendered/ruptured-film-low-156-structure.png",
+      "kind": "structure",
+      "width": 1152,
+      "height": 896,
+      "bytes": 17071,
+      "sha256": "f6c19a8de9d95c83bff631468aeb5d50a2e74a9e8097b73154f3f25d03346d9f",
+      "nonUniform": true,
+      "visuallyInspected": true
+    },
+    {
+      "file": "docs/qa/artifacts/low-rift-compact-2026-10-20/rendered/ruptured-film-low-156-material.png",
+      "kind": "material",
+      "width": 1400,
+      "height": 1089,
+      "bytes": 1356245,
+      "sha256": "a6f830128fc11dac12ac618e5d7b7a98aadc0267c569644bf735033641eea291",
+      "nonUniform": true,
+      "visuallyInspected": true
+    }
+  ],
+  "visualObservations": [
+    "Cinder ridge: rust granular material and oval raised masses match the stepped horizontal support outline.",
+    "Crystal fibre: blue/gold material and tapered fibre masses match the upper projecting support outline.",
+    "Ruptured film: rose/blue material and central folded mass match the compact support outline.",
+    "All three pairs show nonempty support, actual internal VOID and solids; no wrong-world or blank output observed."
+  ],
+  "timingPresentation": "The static HTML replaces renderer default null-derived 0.0 seconds with 生成耗时未单独采集. Manifest retains generationMs:null, verificationElapsedMs, timingUnavailable:true.",
+  "limits": [
+    "Static albedo without gameplay lighting/fog and without normal gameplay camera.",
+    "No image edits, geometry edits, map regeneration, rerolls, gameplay testing or user experience claim.",
+    "Checks apply only to the listed frozen seed 156 low maps; cinder effective seed is 1743883399."
+  ],
+  "galleryDiagnosticsPresentation": "The gallery links to manifest.json instead of embedding duplicate diagnostics; complete diagnostics remain in the unchanged manifest."
+}
