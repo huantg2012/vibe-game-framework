@@ -1068,6 +1068,10 @@ export class RiftScene extends Phaser.Scene {
 
   private onPostUpdate(_time: number, delta: number): void {
     if (this.stagedEntry?.isActive() || this.frameCommit?.isBlocked()) return;
+    // Player.getPosition() is a committed cache. Advance it from the resolved
+    // Arcade body before both the optical anchor and material pose read it.
+    if (!this.nativeEntryFence?.isActive() && !this.entryView.active && !this.entryFrameFrozen
+      && !(this.devFixture?.freezeAfterEnd && this.runController.isRunEnded())) this.player.postUpdate();
     this.syncVisionState();
     if (this.nativeEntryFence?.isActive()) {
       if (!this.nativeEntryFence.needsPresentation()) return;
@@ -1112,7 +1116,6 @@ export class RiftScene extends Phaser.Scene {
       this.frameCommit?.begin();
       return;
     }
-    this.player.postUpdate();
     this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), delta);
     // Enemies are drawn last of the three: their visibility is looked up against the mask
     // this frame produced, so an enemy is never drawn into darkness (rule R4).
