@@ -62,17 +62,40 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
   })));
   const distanceCaches=objects.map(()=>new Map<number,Float32Array>());
   const bodyCaches=objects.map(()=>new Map<number,Uint8Array>());
+  // Sites are snap8 translations. A projected point at the same object-local
+  // coordinate has identical distance and body occupancy, at every site.
+  // Preserve the old Float32 rounding before deriving the occupancy mask.
+  const localPhase=spacing===8?4:0;
+  let minFieldX=Infinity,minFieldY=Infinity,maxFieldX=-Infinity,maxFieldY=-Infinity;
+  for(const point of field){minFieldX=Math.min(minFieldX,point.x);minFieldY=Math.min(minFieldY,point.y);maxFieldX=Math.max(maxFieldX,point.x);maxFieldY=Math.max(maxFieldY,point.y);}
+  if(!field.length)throw new Error('Automatic coverage field contains no supported body centers');
+  const minLocalX=Math.floor((minFieldX-Math.max(...sites.map(p=>p.x))-localPhase)/8);
+  const minLocalY=Math.floor((minFieldY-Math.max(...sites.map(p=>p.y))-localPhase)/8);
+  const maxLocalX=Math.ceil((maxFieldX-Math.min(...sites.map(p=>p.x))-localPhase)/8);
+  const maxLocalY=Math.ceil((maxFieldY-Math.min(...sites.map(p=>p.y))-localPhase)/8);
+  const localCols=maxLocalX-minLocalX+1,localSize=localCols*(maxLocalY-minLocalY+1);
+  const fieldOffsets=Int32Array.from(field.map(p=>(Math.round((p.y-localPhase)/8)-minLocalY)*localCols+Math.round((p.x-localPhase)/8)-minLocalX));
+  const localDistances=objects.map(()=>new Float32Array(localSize));
+  // 0 = not measured, 1 = clear, 2 = blocked.
+  const localBodies=objects.map(()=>new Uint8Array(localSize));
   const distances=(objectIndex:number,siteIndex:number):Float32Array=>{
     const cache=distanceCaches[objectIndex]!,old=cache.get(siteIndex);if(old)return old;
     checkpoint();
-    const values=Float32Array.from(field.map(point=>nativeAutoObjectDistance(objects[objectIndex]!,sites[siteIndex]!,point)));
-    const object=objects[objectIndex]!,site=sites[siteIndex]!;
-    const blocked=Uint8Array.from(field.map((point,index)=>{
-      const distance=values[index]!;
-      if(distance>=Math.SQRT2*10)return 0;if(distance<10)return 1;
-      const x=point.x-site.x,y=point.y-site.y;
-      return Number(object.kind==='solid'?bodyOverlaps(object.tree!,x,y):(object.coverageRects??object.rects).some(rect=>overlaps([x-10,y-10,20,20],rect,0)));
-    }));
+    const values=new Float32Array(field.length),blocked=new Uint8Array(field.length);
+    const object=objects[objectIndex]!,site=sites[siteIndex]!,offset=site.y/8*localCols+site.x/8;
+    const localValues=localDistances[objectIndex]!,localBody=localBodies[objectIndex]!;
+    for(let index=0;index<field.length;index++){
+      const key=fieldOffsets[index]!-offset;
+      if(!localBody[key]){
+        const point=field[index]!,x=point.x-site.x,y=point.y-site.y;
+        localValues[key]=nativeAutoObjectDistance(object,site,point);
+        const distance=localValues[key]!;
+        const occupied=distance>=Math.SQRT2*10?false:distance<10?true:
+          object.kind==='solid'?bodyOverlaps(object.tree!,x,y):(object.coverageRects??object.rects).some(rect=>overlaps([x-10,y-10,20,20],rect,0));
+        localBody[key]=occupied?2:1;
+      }
+      values[index]=localValues[key]!;blocked[index]=localBody[key]!-1;
+    }
     cache.set(siteIndex,values);bodyCaches[objectIndex]!.set(siteIndex,blocked);return values;
   };
   const deep=new Uint8Array(field.length),deepBody=new Uint8Array(field.length),wide=new Uint8Array(field.length),seen=new Uint8Array(field.length),queue=new Int32Array(field.length);
@@ -114,7 +137,9 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
     const cellError=Math.SQRT2*4;
     for(let index=0;index<field.length;index++){
       const point=field[index]!;
-      if(fixed.blocked[index]||blocked.some(mask=>mask[index]))continue;
+      let occupied=fixed.blocked[index]!==0;
+      for(let object=0;object<blocked.length&&!occupied;object++)occupied=blocked[object]![index]!==0;
+      if(occupied)continue;
       // G2 needs attributed internal H. Exterior VOID cannot supply a witness.
       let structure=fixed.structure[index]!,voidDistance=fixed.holes[index]!;
       for(let object=0;object<moving.length;object++){
@@ -133,8 +158,11 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
     }
     // The final 8px field uses the same one-cell erosion as G1. Coarse
     // phases keep thin deep links so that they cannot hide a real ridge.
-    for(let index=0;index<field.length;index++)if(deep[index])
-      deepBody[index]=Number(spacing!==8||neighbors[index]!.length===8&&neighbors[index]!.every(next=>deep[next]));
+    for(let index=0;index<field.length;index++)if(deep[index]){
+      const adjacent=neighbors[index]!;let interior=spacing!==8||adjacent.length===8;
+      if(spacing===8)for(let next=0;next<adjacent.length&&interior;next++)interior=deep[adjacent[next]!]!==0;
+      deepBody[index]=Number(interior);
+    }
     const deepGroups=components(deepBody),wideGroups=components(wide);
     const wideRatio=wideGroups.count/Math.max(1,bodyCount),largestWideRatio=wideGroups.largest/Math.max(1,wideGroups.count);
     // Normalize field integrals so map size cannot drown a single failed
