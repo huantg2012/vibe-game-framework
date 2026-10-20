@@ -1456,6 +1456,14 @@ export class RiftScene extends Phaser.Scene {
     const panelBusy = inventoryPanel.isOpen() || riftResultPanel.isOpen() || pauseMenu.isOpen()
       || !!document.getElementById('inventory-settlement-retry') || this.entryView.active;
     if (panelBusy) this.clearNarration();
+    // The priority window belongs to the threshold event, not its optional DOM
+    // flash. Light-eater communicates contamination through its continuous field.
+    if (this.narrationMs >= this.thresholdUntilMs) {
+      this.thresholdLevel = 0; this.thresholdUntilMs = 0;
+      this.thresholdOverlay?.remove(); this.thresholdOverlay = null;
+    }
+    const legacyFlash = this.visibility.getPresentation() !== 'light-eater';
+    if (!legacyFlash) { this.thresholdOverlay?.remove(); this.thresholdOverlay = null; }
     if (this.pendingNarrationThreshold && !panelBusy) {
       const level = this.pendingNarrationThreshold; this.pendingNarrationThreshold = 0;
       // A lower event cannot replace a higher warning still on screen.
@@ -1464,18 +1472,19 @@ export class RiftScene extends Phaser.Scene {
         this.atmosphereSchedule.interrupt();
         this.encounter.showThreshold(pickAtmosphere(`chaos.${level}` as AtmospherePool));
         audioManager.playSFX('sfx-shared-chaos-threshold');
-        this.thresholdOverlay?.remove();
-        const overlay = document.createElement('div'); overlay.className = 'chaos-threshold-overlay';
-        overlay.style.cssText = 'position:absolute;inset:0;z-index:38;pointer-events:none';
-        overlay.style.background = level === 3 ? 'rgba(220,40,40,.15)' : `rgba(0,180,160,${level === 2 ? .12 : .08})`;
-        getDomUiRoot().appendChild(overlay); this.thresholdOverlay = overlay;
+        this.thresholdOverlay?.remove(); this.thresholdOverlay = null;
+        if (legacyFlash) {
+          const overlay = document.createElement('div'); overlay.className = 'chaos-threshold-overlay';
+          overlay.style.cssText = 'position:absolute;inset:0;z-index:38;pointer-events:none';
+          overlay.style.background = level === 3 ? 'rgba(220,40,40,.15)' : `rgba(0,180,160,${level === 2 ? .12 : .08})`;
+          getDomUiRoot().appendChild(overlay); this.thresholdOverlay = overlay;
+        }
       }
     }
     const thresholdActive = this.narrationMs < this.thresholdUntilMs;
     if (this.thresholdOverlay) {
       const remaining = this.thresholdUntilMs - this.narrationMs;
-      if (remaining <= 0) { this.thresholdOverlay.remove(); this.thresholdOverlay = null; this.thresholdLevel = 0; }
-      else this.thresholdOverlay.style.opacity = String(Math.max(0, Math.min(1, (3_000 - remaining) / 500, remaining / 500)));
+      this.thresholdOverlay.style.opacity = String(Math.max(0, Math.min(1, (3_000 - remaining) / 500, remaining / 500)));
     }
     const player = this.player.getPosition(), tileSize = this.hostFloorGrid!.tileSize;
     const col = Math.floor(player.x / tileSize), row = Math.floor(player.y / tileSize);
