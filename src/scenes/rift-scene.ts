@@ -1399,6 +1399,8 @@ export class RiftScene extends Phaser.Scene {
   };
 
   private updateNarration(deltaMs: number): void {
+    // An art plate must not consume the real narration history in localStorage.
+    if (import.meta.env.DEV && this.devFixture?.visionArtStudy) return;
     if (this.runController.isRunEnded()) { this.clearNarration(); return; }
     const step = Number.isFinite(deltaMs) ? Math.max(0, deltaMs) : 0;
     this.narrationMs += step; this.encounter.advance(step);
