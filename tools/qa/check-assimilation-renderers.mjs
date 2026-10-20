@@ -33,7 +33,7 @@ const [{ LastLightPlayerPresentation }, { LastLightRenderer }] = await Promise.a
 const textures = new Map();
 const image = () => ({
   x: 0, y: 0, visible: true, tintFill: false, mask: { stable: true }, scaleX: 1,
-  setOrigin() { return this; }, setScale() { return this; },
+  setOrigin() { return this; }, setScale(value) { this.scaleX = this.scaleY = value; return this; },
   setVisible(value) { this.visible = value; return this; },
   setPosition(x, y) { this.x = x; this.y = y; return this; },
   setRotation(value) { this.rotation = value; return this; }, setDepth(value) { this.depth = value; return this; },
@@ -42,7 +42,7 @@ const image = () => ({
 const scene = {
   textures: {
     createCanvas(key) {
-      const texture = { key, refresh() {}, context: { putImageData(value) { texture.last = value.data.slice(); } } };
+      const texture = { key, refresh() {}, setFilter() {}, context: { putImageData(value) { texture.last = value.data.slice(); } } };
       textures.set(key, texture); return texture;
     },
     exists() { return true; }, remove(key) { textures.delete(key); },
@@ -88,6 +88,12 @@ function lazyFrame(frame) {
   return { view, reads };
 }
 const rift = new LastLightPlayerPresentation(scene, player, assets, { lights: [] });
+assert.equal(rift.image.scaleX, .8);
+assert.equal(rift.contact.scaleX, .8); assert.equal(rift.glove.scaleX, .8);
+assert.equal(rift.weapon.scaleX, .68 * .8, 'Held tool must shrink with the body');
+assert.equal(rift.getLampPosition().z, 24, 'Shoulder light must follow the smaller world-space body');
+assert.equal(rift.grip.x, .8); assert.equal(rift.grip.y, -23 * .8, 'Grip scales around the unchanged foot');
+assert.equal(player.x, 0); assert.equal(player.y, 0, 'Visual scaling does not move the gameplay body');
 const originalImages = [...rift.getHitFlashImages()], originalMasks = originalImages.map(value => value.mask);
 const look = { amount: .85, fibre: .5, membrane: .5, seconds: 0, motion: false, subjective: false };
 rift.setAssimilationLook(look);

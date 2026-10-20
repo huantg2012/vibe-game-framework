@@ -5,6 +5,9 @@ export const LAST_LIGHT_PLAYER_CAMERA: LastLightCamera = {
   width: 64, height: 80, origin: [32, 66], scale: 26.5,
   target: [0, 0, 0], direction: [19, 24, 30],
 };
+/** Rift presentation only. Keep the authoring atlas and Haven at their native
+ * scale; every world/socket offset must use the same foot-anchored transform. */
+export const RIFT_PLAYER_PRESENTATION_SCALE = .8;
 export const LAST_LIGHT_PLAYER_BASIS = lastLightBasis(LAST_LIGHT_PLAYER_CAMERA);
 const horizontalBackLength = Math.hypot(LAST_LIGHT_PLAYER_BASIS.back[0], LAST_LIGHT_PLAYER_BASIS.back[2]);
 /** Rotate Y-up source coordinates to the native world's Z-up ground axes. */

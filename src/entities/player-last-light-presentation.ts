@@ -14,6 +14,7 @@ import {
 } from '@/art/assimilation-appearance';
 import { sampleWorldMaterialLight, type WorldMaterialLighting } from './form-renderers/d/world-material-light';
 import { LAST_LIGHT_PLAYER_CAMERA as CAMERA, LAST_LIGHT_PLAYER_BASIS as BASIS,
+  RIFT_PLAYER_PRESENTATION_SCALE as DISPLAY_SCALE,
   lastLightToNative, lastLightScreenHeading, nearestLastLightYaw } from './player-last-light-math';
 import type { AssimilationModelFrame, AssimilationModelFrameSource, AssimilationModelFrameQuery } from '@/art/assimilation-model/protocol';
 type MutableModelQuery = { -readonly [K in keyof AssimilationModelFrameQuery]: AssimilationModelFrameQuery[K] };
@@ -189,10 +190,11 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     if (!gloveTexture) { scene.textures.remove(texture.key); scene.textures.remove(contactTexture.key); throw new Error('Cannot allocate Player A glove'); }
     this.gloveTexture = gloveTexture;
     this.texture = texture; this.contactTexture = contactTexture;
-    this.contact = scene.add.image(0, 0, contactTexture.key).setOrigin(.5, 66 / 80);
-    this.image = scene.add.image(0, 0, texture.key).setOrigin(.5, 66 / 80);
-    this.weapon = scene.add.image(0, 0, texture.key).setOrigin(.5, .75).setScale(.68).setVisible(false);
-    this.glove = scene.add.image(0, 0, gloveTexture.key).setOrigin(.5, 66 / 80).setVisible(false);
+    for (const item of [texture, contactTexture, gloveTexture]) item.setFilter(Phaser.Textures.FilterMode.NEAREST);
+    this.contact = scene.add.image(0, 0, contactTexture.key).setOrigin(.5, 66 / 80).setScale(DISPLAY_SCALE);
+    this.image = scene.add.image(0, 0, texture.key).setOrigin(.5, 66 / 80).setScale(DISPLAY_SCALE);
+    this.weapon = scene.add.image(0, 0, texture.key).setOrigin(.5, .75).setScale(.68 * DISPLAY_SCALE).setVisible(false);
+    this.glove = scene.add.image(0, 0, gloveTexture.key).setOrigin(.5, 66 / 80).setScale(DISPLAY_SCALE).setVisible(false);
     this.bodyImages = [this.image, this.glove];
     this.syncPose();
   }
@@ -203,7 +205,7 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     if (Number.isFinite(delta) && delta < 32 && this.player.isMoving()) this.distance += delta;
     this.previousX = position.x; this.previousY = position.y;
     const row = nearestLastLightYaw(this.player.getFacingAngle(), this.assets.headings);
-    const column = this.player.isMoving() ? 1 + Math.floor(this.distance / (LAST_LIGHT_STRIDE_METRES * CAMERA.scale) * 12) % 12 : 0;
+    const column = this.player.isMoving() ? 1 + Math.floor(this.distance / (LAST_LIGHT_STRIDE_METRES * CAMERA.scale * DISPLAY_SCALE) * 12) % 12 : 0;
     this.frameIndex = row * 13 + column;
     const sample = this.quality ? lastLightAttackSampleIndex(this.attackPose) : -1;
     this.attackIndex = sample < 0 ? -1 : row * 15 + sample;
@@ -221,15 +223,16 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
       wrist = arm.source.wrist;
     }
     const nativeWrist = (arm ?? frame).wrist;
-    this.grip.x = position.x + wrist[0] - 32 + this.armOffsetX;
-    this.grip.y = groundY + wrist[1] - 66 + this.armOffsetY;
-    this.grip.z = nativeWrist[2] * CAMERA.scale + this.armNativeDelta[2];
+    this.grip.x = position.x + (wrist[0] - 32 + this.armOffsetX) * DISPLAY_SCALE;
+    this.grip.y = groundY + (wrist[1] - 66 + this.armOffsetY) * DISPLAY_SCALE;
+    this.grip.z = (nativeWrist[2] * CAMERA.scale + this.armNativeDelta[2]) * DISPLAY_SCALE;
     const gx = Math.max(0,Math.min(63,Math.floor(wrist[0]+this.armOffsetX))), gy = Math.max(0,Math.min(79,Math.floor(wrist[1]+this.armOffsetY)));
     const body = arm ? this.assimilationBodyWithoutArm ?? this.assets.bodyWithoutArm[this.frameIndex]! : frame;
     this.weaponBehind = wrist[2] + this.armDepthDelta < body.depths[gy * 64 + gx]! - .03;
     this.weapon.setPosition(this.grip.x, this.grip.y).setRotation(lastLightScreenHeading(frame.source.yaw) + (arm?.source.sweep ?? .55) + Math.PI / 2);
     this.weapon.setDepth(this.groundDepth + (this.weaponBehind ? .08 : .14));
-    this.lamp.x = position.x + frame.lamp[0]; this.lamp.y = groundY + frame.lamp[1]; this.lamp.z = frame.lamp[2];
+    this.lamp.x = position.x + frame.lamp[0] * DISPLAY_SCALE;
+    this.lamp.y = groundY + frame.lamp[1] * DISPLAY_SCALE; this.lamp.z = frame.lamp[2] * DISPLAY_SCALE;
   }
   getLampPosition = (): Readonly<{ x: number; y: number; z: number }> => this.lamp;
   getAssimilationModelPose(): { yaw: number; phase: number | null; breath: number } {
@@ -415,7 +418,7 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
           const length=Math.hypot(nx,ny,nz);nx/=length;ny/=length;nz/=length;
         }
       }
-      sampleWorldMaterialLight(this.lighting,this.image.x+pixels[p]!+wx,this.image.y+pixels[p+1]!+wy,pixels[p+2]!+wz,
+      sampleWorldMaterialLight(this.lighting,this.image.x+(pixels[p]!+wx)*DISPLAY_SCALE,this.image.y+(pixels[p+1]!+wy)*DISPLAY_SCALE,(pixels[p+2]!+wz)*DISPLAY_SCALE,
         nx,ny,nz,true,this.light);
       const received=this.light[0]*.2126+this.light[1]*.7152+this.light[2]*.0722;
       const shadeGain=pixels[p+10]!>0?1:1+.28*Math.max(0,1-received/.8);
