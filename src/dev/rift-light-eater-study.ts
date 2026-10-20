@@ -17,24 +17,37 @@ function initialize(): void {
   const params = new URLSearchParams(location.search);
   const seeds: Record<string, number> = { 'crystal-fibre': 156, 'cinder-ridge': 92, 'ruptured-film': 82 };
   if (Object.prototype.hasOwnProperty.call(seeds, params.get('world') ?? '')) world.value = params.get('world')!;
-  const preview = { pollution: 55, assimilation: 0, presentation: 'light-eater' as Mode };
-  const target = { pollution: 55, assimilation: 0 };
-  const states = [{ p: 15, a: 0 }, { p: 55, a: 0 }, { p: 100, a: 0 }, { p: 100, a: 80 }];
+  const preview = { pollution: 0, assimilation: 0, presentation: 'light-eater' as Mode };
+  const target = { pollution: 0, assimilation: 0 };
+  // A continuous round trip, with still endpoints for comparison. No visual
+  // modes are selected by these marks: every intermediate value is rendered.
+  const path = [
+    { ms: 0, p: 0, a: 0 }, { ms: 2000, p: 0, a: 0 },
+    { ms: 18000, p: 100, a: 0 }, { ms: 21000, p: 100, a: 0 },
+    { ms: 31000, p: 100, a: 80 }, { ms: 34000, p: 100, a: 80 },
+    { ms: 44000, p: 100, a: 0 }, { ms: 60000, p: 0, a: 0 },
+    { ms: 62000, p: 0, a: 0 },
+  ];
   const client = new RiftGenerationClient();
   let request: AbortController | null = null, revision = 0, ready = false, disposed = false;
-  let running = false, paused = false, automatic = false, cycleMs = 0, cycleIndex = 1;
-  let previousTime = 0, frame = 0;
+  let running = false, paused = false, automatic = false, cycleMs = 0;
+  let previousTime = 0, frame = 0, readoutMs = 0;
   function values(): void {
     target.pollution = Number(pollution.value); target.assimilation = Number(assimilation.value);
-    el('p-value').textContent = `${target.pollution}`;
-    el('a-value').textContent = `${target.assimilation}%`;
+    readouts();
+  }
+  function readouts(): void {
+    el('p-value').textContent = `${Math.round(preview.pollution)}`;
+    el('a-value').textContent = `${Math.round(preview.assimilation)}%`;
     document.querySelectorAll<HTMLButtonElement>('[data-p]').forEach(button => {
       button.setAttribute('aria-pressed', String(Number(button.dataset.p) === target.pollution && Number(button.dataset.a) === target.assimilation));
     });
-    el('description').textContent = target.assimilation > 30 ? '光仍被吞噬。远处的材质开始留下另一种信号。'
-      : target.pollution >= 80 ? '灯还亮着，黑暗却已逼近。' : target.pollution >= 35 ? '断续的侵蚀正在截断远处的光。' : '灯光尚能伸远，边缘已经开始变化。';
+    el('description').textContent = automatic
+      ? '连续演示：污染渐满 → 同化扩距 → 原路回退。任意拖动滑杆可接管。'
+      : '手动观察：读数为当前画面值；选定值平滑抵达，暂停可检查任意中间态。';
   }
   function set(p: number, a: number, mode: Mode = 'light-eater'): void {
+    auto(false);
     pollution.value = String(p); assimilation.value = String(a); values(); setMode(mode);
   }
   function setMode(mode: Mode): void {
@@ -45,21 +58,34 @@ function initialize(): void {
   function auto(value: boolean): void {
     automatic = value; cycleMs = 0;
     el('auto').setAttribute('aria-pressed', String(value));
-    el('auto').textContent = value ? '停止轮播' : '四态轮播';
+    el('auto').textContent = value ? '停止演示' : '连续演示';
+    if (value) setMode('light-eater');
+    readouts();
   }
   function tick(time: number): void {
     if (disposed) return;
     const dt = Math.min(80, Math.max(0, time - (previousTime || time))); previousTime = time;
     if (running && !paused && !document.hidden) {
       if (automatic) {
-        cycleMs += dt;
-        if (cycleMs >= 6500) { cycleMs = 0; cycleIndex = (cycleIndex + 1) % states.length; const state = states[cycleIndex]!; set(state.p, state.a); }
+        cycleMs = (cycleMs + dt) % path[path.length - 1]!.ms;
+        const index = path.findIndex(mark => mark.ms > cycleMs);
+        const from = path[index - 1]!, to = path[index]!;
+        const progress = (cycleMs - from.ms) / (to.ms - from.ms);
+        const blend = progress * progress * (3 - 2 * progress);
+        target.pollution = from.p + (to.p - from.p) * blend;
+        target.assimilation = from.a + (to.a - from.a) * blend;
       }
       const blend = 1 - Math.exp(-dt / 400);
       preview.pollution += (target.pollution - preview.pollution) * blend;
       preview.assimilation += (target.assimilation - preview.assimilation) * blend;
       if (Math.abs(target.pollution - preview.pollution) < 0.03) preview.pollution = target.pollution;
       if (Math.abs(target.assimilation - preview.assimilation) < 0.03) preview.assimilation = target.assimilation;
+      readoutMs += dt;
+      if (readoutMs >= 100) {
+        readoutMs = 0;
+        if (automatic) { pollution.value = String(target.pollution); assimilation.value = String(target.assimilation); }
+        readouts();
+      }
     }
     frame = requestAnimationFrame(tick);
   }
@@ -93,14 +119,15 @@ function initialize(): void {
       el('waiting').hidden = true;
     } catch (reason) { if (!signal.aborted && current === revision) error(reason); }
   }
-  el('new').onclick = () => setMode('light-eater'); el('old').onclick = () => setMode('legacy');
+  el('new').onclick = () => { auto(false); setMode('light-eater'); };
+  el('old').onclick = () => { auto(false); setMode('legacy'); };
   el('auto').onclick = () => auto(!automatic);
   el('pause').onclick = () => runtime.togglePause();
   el('restart').onclick = () => void build(); world.onchange = () => void build();
   pollution.oninput = assimilation.oninput = () => { auto(false); values(); };
   for (const button of document.querySelectorAll<HTMLButtonElement>('[data-p]')) button.onclick = () => { auto(false); set(Number(button.dataset.p), Number(button.dataset.a)); };
-  values(); frame = requestAnimationFrame(tick);
-  const api = { snapshot: () => ({ world: world.value, preview: { ...preview }, target: { ...target }, automatic, state: runtime.getState() }),
+  values(); auto(true); frame = requestAnimationFrame(tick);
+  const api = { snapshot: () => ({ world: world.value, preview: { ...preview }, target: { ...target }, automatic, cycleMs, state: runtime.getState() }),
     set, pause: () => runtime.pause(), resume: () => { if (runtime.getState().paused) runtime.togglePause(); }, auto };
   Object.assign(window, { __lightEaterStudy: api });
   window.addEventListener('pagehide', () => { disposed = true; cancelAnimationFrame(frame); request?.abort(); runtime.destroy(); delete (window as unknown as Record<string, unknown>).__lightEaterStudy; }, { once: true });

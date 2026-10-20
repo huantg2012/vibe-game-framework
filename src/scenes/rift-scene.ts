@@ -63,7 +63,7 @@ import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import type { WorldProductionMap } from '@/generation/world-study/production-map';
 import type { WorldProductionRecipeV3 } from '@/generation/world-study/production-recipe';
-import { lightEaterLampRadius } from '@/systems/vision-light-eater';
+import { lightEaterLampRadius, lightEaterReceivedLight } from '@/systems/vision-light-eater';
 
 /** Development encounters still use the complete production scene lifecycle. */
 export interface RiftDevFixture {
@@ -245,6 +245,7 @@ export class RiftScene extends Phaser.Scene {
   private lastLightPlayerPresentation: LastLightPlayerPresentation | null = null;
   private visionPreviewLamp: WorldMaterialLighting['lights'][number] | null = null;
   private visionPreviewLampRadius = 0;
+  private visionPreviewLampIntensity = 0;
   private readonly visibility = new VisibilitySystem();
   private readonly trail = new TrailSystem();
   private readonly ai = new AISystem();
@@ -1067,12 +1068,20 @@ export class RiftScene extends Phaser.Scene {
         shoulder && Math.hypot(shoulder.x - position.x, shoulder.y - position.y) < 48 ? shoulder : position);
       const lamp = this.devRuntime?.worldMaterialLighting?.lights[0];
       if (lamp && lamp !== this.visionPreviewLamp) {
-        if (this.visionPreviewLamp) this.visionPreviewLamp.radius = this.visionPreviewLampRadius;
+        if (this.visionPreviewLamp) {
+          this.visionPreviewLamp.radius = this.visionPreviewLampRadius;
+          this.visionPreviewLamp.intensity = this.visionPreviewLampIntensity;
+        }
         this.visionPreviewLamp = lamp; this.visionPreviewLampRadius = lamp.radius;
+        this.visionPreviewLampIntensity = lamp.intensity;
       }
       if (this.visionPreviewLamp) {
         this.visionPreviewLamp.radius = visionPreview.presentation === 'light-eater'
           ? lightEaterLampRadius(visionPreview.pollution) : this.visionPreviewLampRadius;
+        // DEV receiving-surface response: the lamp sprite stays lit while less
+        // foreign light reaches terrain and actor materials as pollution grows.
+        this.visionPreviewLamp.intensity = this.visionPreviewLampIntensity * (visionPreview.presentation === 'light-eater'
+          ? lightEaterReceivedLight(visionPreview.pollution) : 1);
       }
       this.visibility.setEdgeCorruption(projected.edgeCorruption);
       this.visibility.setScreenFlicker(projected.screenFlicker);
@@ -2592,8 +2601,11 @@ export class RiftScene extends Phaser.Scene {
     this.minimap.destroy();
     this.riftSurface.destroy();
     this.visibility.destroy();
-    if (this.visionPreviewLamp) this.visionPreviewLamp.radius = this.visionPreviewLampRadius;
-    this.visionPreviewLamp = null; this.visionPreviewLampRadius = 0;
+    if (this.visionPreviewLamp) {
+      this.visionPreviewLamp.radius = this.visionPreviewLampRadius;
+      this.visionPreviewLamp.intensity = this.visionPreviewLampIntensity;
+    }
+    this.visionPreviewLamp = null; this.visionPreviewLampRadius = 0; this.visionPreviewLampIntensity = 0;
     this.player.destroy();
     this.tilemapRenderer.destroy();
     this.landmarkGraphics?.destroy();
