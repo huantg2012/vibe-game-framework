@@ -4,6 +4,7 @@ import {createNativeSpatialPlanningGround} from './native-spatial-bay-layout';
 import type {NativeSpatialPolicy} from './native-spatial-types';
 import type {NativeAutoConstructionPolicy,NativeAutoRect as Rect} from './native-auto-types';
 import type {NativeAutoGroundField} from './native-auto-shape';
+import {createNativeAutoRouteField} from './native-auto-route-field';
 
 export interface NativeAutoCoverageObject {
   readonly kind:'hole'|'solid';readonly bounds:Rect;readonly rects:readonly Rect[];
@@ -14,6 +15,7 @@ interface Point {readonly x:number;readonly y:number}
 export interface NativeAutoCoverageScore {
   readonly penalty:number;readonly qualityPenalty:number;readonly maxEmptyPx:number;readonly maxDeepSpanPx:number;
   readonly maxVoidDistancePx:number;readonly wideRatio:number;readonly largestWideRatio:number;
+  readonly maxApproachRoutePx:number;
 }
 export interface NativeAutoRefinementTrace {
   readonly evaluations:number;readonly acceptedMoves:number;readonly acceptedSwaps:number;readonly acceptedJointMoves:number;readonly completedPasses:number;
@@ -106,6 +108,7 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
     cache.set(siteIndex,values);bodyCaches[objectIndex]!.set(siteIndex,blocked);return values;
   };
   const deep=new Uint8Array(field.length),deepBody=new Uint8Array(field.length),wide=new Uint8Array(field.length),seen=new Uint8Array(field.length),queue=new Int32Array(field.length);
+  const routeField=createNativeAutoRouteField(field,spacing),available=new Uint8Array(field.length),holeDistance=new Float32Array(field.length);
   function components(mask:Uint8Array):{span:number;largest:number;count:number;spanPenalty:number} {
     seen.fill(0);let span=0,largest=0,count=0,spanPenalty=0;
     for(let start=0;start<field.length;start++)if(mask[start]&&!seen[start]){
@@ -139,8 +142,9 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
   const score=(moving:readonly number[]=[],fixed:FixedField=fixedField(moving)):NativeAutoCoverageScore=>{
     const arrays=moving.map(index=>distances(index,chosen.get(index)!));
     const blocked=moving.map(index=>bodyCaches[index]!.get(chosen.get(index)!)!);
-    let penalty=0,maxEmptyPx=0,maxVoidDistancePx=0,bodyCount=0,soft=0;
+    let penalty=0,maxEmptyPx=0,maxVoidDistancePx=0,maxApproachRoutePx=0,bodyCount=0,soft=0;
     deep.fill(0);wide.fill(0);deepBody.fill(0);
+    available.fill(0);holeDistance.fill(Infinity);
     const cellError=Math.SQRT2*4;
     for(let index=0;index<field.length;index++){
       const point=field[index]!;
@@ -154,14 +158,22 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
         structure=Math.min(structure,distance);if(objects[moving[object]!]!.kind==='hole')voidDistance=Math.min(voidDistance,distance);
       }
       const open=Math.min(structure,point.margin);if(open<10)continue;
+      available[index]=1;holeDistance[index]=voidDistance;
       bodyCount++;maxEmptyPx=Math.max(maxEmptyPx,open+cellError);maxVoidDistancePx=Math.max(maxVoidDistancePx,voidDistance);
       // Whole-map edge treatment can move a local template by one raster cell.
       deep[index]=Number(structure+cellError+(compiledGround?8:0)>policy.deepEmptyThresholdPx);
       wide[index]=Number(open>=policy.wideRadiusPx);
       penalty+=Math.max(0,(open+cellError)/policy.maxEmptyRadiusPx-1)**2;
-      // Conservative H-distance objective, not a claim to measure G2 routes.
-      penalty+=Math.max(0,voidDistance/policy.maxCoverRoutePx-1)**2;
       soft+=Math.max(0,structure/policy.deepEmptyThresholdPx-1)**2;
+    }
+    // Forecast approach to an internal hole through the actual body field.
+    // Half the reference sight range is a planning neighbourhood, not an LOS
+    // witness. Final G2 still measures attributed q/v/t and exact body routes.
+    const approach=routeField(available,holeDistance,policy.referenceSightPx/2);
+    for(let index=0;index<field.length;index++)if(available[index]){
+      const length=Number.isFinite(approach[index])?approach[index]!:Math.hypot(maximumX,maximumY)*2;
+      maxApproachRoutePx=Math.max(maxApproachRoutePx,length);
+      penalty+=Math.max(0,length/policy.maxCoverRoutePx-1)**2;
     }
     // The final 8px field uses the same one-cell erosion as G1. Coarse
     // phases keep thin deep links so that they cannot hide a real ridge.
@@ -176,10 +188,10 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
     // gate (especially a long connected deep strip) in wide-area samples.
     penalty/=Math.max(1,bodyCount);
     penalty+=Math.max(0,maxEmptyPx/policy.maxEmptyRadiusPx-1)**2+deepGroups.spanPenalty;
-    penalty+=Math.max(0,maxVoidDistancePx/policy.maxCoverRoutePx-1)**2;
+    penalty+=Math.max(0,maxApproachRoutePx/policy.maxCoverRoutePx-1)**2;
     penalty+=Math.max(0,1-wideRatio/policy.minWideRatio)**2+Math.max(0,1-largestWideRatio/policy.minLargestWideRatio)**2;
     const qualityPenalty=Math.max(0,1-wideRatio/(planning.targetWidePercent/100))**2+soft/Math.max(1,bodyCount)*.001;
-    return{penalty,qualityPenalty,maxEmptyPx,maxDeepSpanPx:deepGroups.span,maxVoidDistancePx,wideRatio,largestWideRatio};
+    return{penalty,qualityPenalty,maxEmptyPx,maxDeepSpanPx:deepGroups.span,maxVoidDistancePx,maxApproachRoutePx,wideRatio,largestWideRatio};
   };
   const domainSets=domains.map(domain=>new Set(domain));
   const fits=(object:number,site:number,excluding:readonly number[]):boolean=>{
