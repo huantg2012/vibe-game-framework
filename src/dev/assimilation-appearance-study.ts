@@ -227,8 +227,11 @@ function initialize(): void {
   // This sample validates standing/walking deformation; combat and device
   // interactions require separate morphed action chains, so do not trigger them.
   window.addEventListener('keydown',event=>{
-    if (['Space','KeyE','KeyQ','KeyF','Tab'].includes(event.code) && event.target === el('game-container')) {
-      event.preventDefault(); event.stopImmediatePropagation();
+    if (['Space','KeyE','KeyQ','KeyF','Tab'].includes(event.code)) {
+      // Keep native controls/Tab navigation, but do not send the same keystroke
+      // to Phaser after a user focused a study button or slider.
+      if (event.target === el('game-container')) event.preventDefault();
+      event.stopImmediatePropagation();
     }
   },true);
   window.addEventListener('pagehide',()=>{disposed=true;cancelAnimationFrame(frame);controller.abort();model.destroy();renderer?.setAssimilationLook(null);if(gym)gym.destroy();else game?.destroy(true);delete(window as unknown as Record<string,unknown>).__assimilationStudy;},{once:true});

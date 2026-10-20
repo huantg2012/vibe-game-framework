@@ -94,4 +94,6 @@ await fs.writeFile(path.join(out, 'index.html'), `<!doctype html><html lang="zh-
 <style>body{background:#0d1314;color:#bec8bd;font:15px/1.6 system-ui;margin:30px auto;max-width:1280px}h1,h2{color:#dde2d4}a{color:#b6c8a9}.row{display:flex;gap:10px}figure{margin:0;background:#111a1b;padding:5px}figcaption{text-align:center}img{image-rendering:pixelated}.scene{width:960px;max-width:100%}section{border-top:1px solid #35403c;margin-top:35px}p{max-width:1000px}</style>
 <h1>同化形体 · 实景对照</h1><p>第一版人审50/100后的返工。原角色／只有真实形体／单源／混合以同场、同角度对照。3×来自实际游戏画面，不加检视灯；上方大图为960×640实际尺度。</p>
 <p>胸背前屈、头前探、肩差、实体脊与厚膜；满同化覆盖以整个角色可见面计算。肩灯位置随身体变化，场景依真实灯位重新受光。尚为独立美术打版，攻击、坐姿及正式来源存档不在此次范围。</p>
-<p><a href="/docs/art/previews/assimilation-appearance-study/?amount=1&fibre=.5">打开动态打版</a> · <a href="report.json">限定运行与性能记录</a></p>${groups}</html>`);
+<p><a href="/docs/art/previews/assimilation-appearance-study/?amount=1&fibre=.5">打开动态打版</a> · <a href="report.json">限定运行与性能记录</a></p>
+<h2>连续实录</h2><video src="body-transition.webm" controls loop muted style="width:960px;image-rendering:pixelated"></video>
+<p>实景录制：同化加深 → 晶纤 → 破膜 → 混合 → 疗愈。由 check-assimilation-body-motion.mjs 生成。</p>${groups}</html>`);

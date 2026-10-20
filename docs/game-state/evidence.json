@@ -11095,5 +11095,55 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E276",
+    "kind": "human",
+    "result": "fail",
+    "date": "2026-10-20",
+    "revision": "dcd38e6c",
+    "scope": "用户首件打分50/100：同化纹理获局部认可，但100%只有局部区域变异、没有模型结构与姿态变化，整体要求返工。",
+    "limitations": "只认可纹理方向，不代表全身表现、人审通过、正式接入或性能通过。",
+    "sources": [
+      {
+        "path": "docs/art/assimilation-appearance-study.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/tasks/rift-experience-polish-2026-10-19.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E277",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-20",
+    "revision": "5b9e7394",
+    "scope": "DEV真实形体返工：作者几何前屈/头前探/肩差/实体脊膜，三场45近景与3全景、115次连续动态采样和56实际几何帧、移动/停步/暂停/疗愈与零持久写入；208原帧和18变形帧覆盖检查，新增几何可见面覆盖81.80–89.65%；类型及构建通过。单Worker10Hz、16帧1.25MiB缓存、净化点80KiB纹理，主场短采样中位16.7ms。独立审查修正时序/上传，art复看可交人审。",
+    "limitations": "用户复评待定；限定站立/行走/停步，攻击/坐姿/完整语义UV及正式来源存档未实现。CPU与帧间隔不代GPU执行时间，CPU+GPU预算、低端设备/长期性能未验；未接正式流程，50ms/I14/P49不提升。",
+    "sources": [
+      {
+        "path": "docs/qa/assimilation-body-study-2026-10-20.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/assimilation-body-2026-10-20/report.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/assimilation-body-2026-10-20/geometry-check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/assimilation-body-2026-10-20/motion-check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/assimilation-body-2026-10-20/build.log",
+        "role": "test"
+      }
+    ]
   }
 ]
