@@ -58,7 +58,9 @@ export function sampleLightEater(out: LightEaterSample, x: number, y: number, st
   const broad = noise((x + seconds * 7.4) / 89, (y - seconds * 4.3) / 73);
   const detail = noise((x - seconds * 4.2) / 29, (y + seconds * 5.1) / 37);
   const density = smooth((broad * 0.76 + detail * 0.24 - 0.27) / 0.47);
-  const front = 1 - smooth(Math.abs(detail - 0.52) / 0.21);
+  // Broken areas, not a noise isoline. Isolines made closed bright loops and a
+  // repeating cellular wallpaper when stretched over the unknown screen.
+  const fragment = smooth((detail - 0.36) / 0.39) * (1 - smooth((broad - 0.8) / 0.18));
   const pressure = 0.08 + p * 0.92;
   const lampRadius = lightEaterLampRadius(state.pollution);
   // Native material lighting already attenuates the lamp. Preserve its readable
@@ -71,18 +73,20 @@ export function sampleLightEater(out: LightEaterSample, x: number, y: number, st
   out.warm = bitten * (1 - consumption * 0.64);
   if (bodyDistance < 22) out.warm = Math.max(out.warm, 1 - smooth(bodyDistance / 32) * 0.09);
   const coldRadius = lightEaterExtent(state.pollution, state.assimilation);
-  const coldFalloff = 1 - smooth((distance - 44) / Math.max(1, coldRadius - 44));
+  const coldFalloff = 1 - smooth((distance - coldRadius * 0.62) / (coldRadius * 0.38));
   const beyondLamp = smooth((distance - lampRadius * 0.56) / 42);
-  out.cold = a * 0.38 * coldFalloff * beyondLamp * (0.48 + density * 0.52);
+  // Restore actual material detail, rather than drawing a bright fog in its
+  // place. The native surface is already dim outside the shrunken warm lamp.
+  out.cold = a * 0.58 * coldFalloff * beyondLamp * (0.72 + density * 0.28);
   // The cold signal can recover detail only within its own finite envelope.
   if (distance >= coldRadius) out.cold = 0;
   if (distance >= lampRadius) out.warm = 0;
   out.transmission = Math.max(out.warm, out.cold);
   if (out.transmission < 1 / 255) out.transmission = 0;
   // Reaction belongs to missing light, not the circular support boundary.
-  out.reaction = Math.max(0, clean - out.warm) * (0.4 + front * 0.6) * pressure * protectedBody;
+  out.reaction = Math.max(0, clean - out.warm) * (0.18 + fragment * 0.82) * pressure * protectedBody * smooth(out.warm / 0.24);
   // A very dark full-frame afterimage contains no terrain or object information.
-  out.residue = pressure * density * front * protectedBody;
+  out.residue = pressure * smooth((broad - 0.6) / 0.28) * smooth((detail - 0.38) / 0.4) * protectedBody;
   return out;
 }
 
@@ -108,13 +112,13 @@ export function paintLightEater(
     const visible = admission[i]! > 0 && inEnvelope ? scratch.transmission : 0;
     transmission[i] = visible;
     const opaque = 1 - visible;
-    const coldMix = visible > 0 ? scratch.cold / Math.max(0.001, scratch.cold + scratch.warm) * Math.sqrt(scratch.cold / 0.38) : 0;
+    const coldMix = visible > 0 ? scratch.cold / Math.max(0.001, scratch.cold + scratch.warm) * Math.sqrt(scratch.cold / 0.58) : 0;
     const reaction = visible > 0 ? scratch.reaction : 0;
     // Pixel-colour response remains below the real material. No broad green wash:
     // green is strongest in interrupted light, cold only where A admits detail.
-    pixels[offset] = 1 + scratch.residue * 2 + coldMix * 10 + reaction * 35;
-    pixels[offset + 1] = 2 + scratch.residue * 4 + coldMix * 25 + reaction * 110;
-    pixels[offset + 2] = 2 + scratch.residue * 3 + coldMix * 25 + reaction * 77;
+    pixels[offset] = 1 + scratch.residue * 2 + coldMix * 8 + reaction * 28;
+    pixels[offset + 1] = 2 + scratch.residue * 4 + coldMix * 16 + reaction * 86;
+    pixels[offset + 2] = 2 + scratch.residue * 3 + coldMix * 18 + reaction * 59;
     pixels[offset + 3] = Math.round(opaque * 255);
   }
 }

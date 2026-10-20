@@ -452,7 +452,8 @@ export class VisibilitySystem {
 
   // ------------------------------------------------------------ chaos modulators
 
-  /** Display-only comparison switch: deliberately does not invalidate tactical queries. */
+  /** Legacy/perceptual share tactical queries. The isolated light-eater study
+   * owns its optical query as well as its mask, so entering/leaving invalidates it. */
   setPresentation(presentation: VisionPresentation): void {
     if (this.presentation === presentation) return;
     if (presentation === 'light-eater' || this.presentation === 'light-eater') {
@@ -567,7 +568,8 @@ export class VisibilitySystem {
   }
 
   /**
-   * Returns 0 | 0.2 | 0.6 | 1.0 - the render alpha an entity at `point` should use, and
+   * Production returns 0 | 0.2 | 0.6 | 1.0 (light-eater DEV uses its continuous
+   * mask transmission) - the render alpha an entity at `point` should use, and
    * also the authoritative answer to "can the player see this". Modulation is included,
    * so what the player sees and what the game considers visible never disagree.
    */

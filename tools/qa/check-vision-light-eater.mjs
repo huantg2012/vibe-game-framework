@@ -27,7 +27,8 @@ const ordinaryOuter = api.sampleLightEater(sample, 330, 160, state).transmission
 state.assimilation = 100;
 check('A does not recover warm light', api.sampleLightEater(sample, 250, 160, state).warm === warmAtHighP);
 const adaptedOuter = api.sampleLightEater(sample, 330, 160, state);
-check('A recovers a separate dim cold signal', ordinaryOuter === 0 && adaptedOuter.warm === 0 && adaptedOuter.cold > 0 && adaptedOuter.cold < 0.38);
+check('A recovers a separate dim cold signal', ordinaryOuter === 0 && adaptedOuter.warm === 0 && adaptedOuter.cold > 0.25 && adaptedOuter.cold < 0.58);
+check('reaction vanishes when no warm light remains', adaptedOuter.reaction === 0);
 for (const p of [0, 25, 55, 100]) for (const a of [0, 50, 100]) {
   state.pollution = p; state.assimilation = a;
   const radius = api.lightEaterExtent(p, a);
