@@ -4,6 +4,11 @@ import { NarrationMemory, type NarrationRow, type NarrationStorage } from './nar
 export type { AtmospherePool } from '../generated/atmosphere-copy-data';
 export { NarrationMemory, NARRATION_STORAGE_KEY } from './narration-memory';
 let shared: NarrationMemory | null = null;
+/** Art-only sessions must not consume the player's persistent narration history. */
+export function setArtStudyNarrationStorage(storage: NarrationStorage | null): void {
+  if (!import.meta.env.DEV) return;
+  shared = new NarrationMemory(storage);
+}
 function memory(): NarrationMemory {
   if (!shared) {
     let storage: NarrationStorage | null = null;

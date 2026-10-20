@@ -15,10 +15,11 @@ import { createRiftGymRuntime, type RiftGymRuntime } from './rift-gym-runtime';
 import type { AssimilationLookState } from '@/art/assimilation-appearance';
 import type { Player } from '@/entities/player';
 import { lastLightScreenHeading } from '@/entities/player-last-light-math';
+import { setArtStudyNarrationStorage } from '@/narrative/atmosphere';
 
 interface LookRenderer {
   setAssimilationLook(state: AssimilationLookState | null): void;
-  getAssimilationLookMetrics(): unknown;
+  getAssimilationLookMetrics(): { count:number;totalMs:number;lastMs:number;maxMs:number;maskBytes:number;preparedFrames:number;changedPixels:number };
 }
 interface ArtScene extends Phaser.Scene {
   player: Player;
@@ -30,6 +31,9 @@ if (import.meta.env.DEV) initialize();
 else document.body.textContent = '此美术打版仅在开发服务器开放。';
 
 function initialize(): void {
+  const memory=new Map<string,string>();
+  const storage={getItem:(key:string)=>memory.get(key)??null,setItem:(key:string,value:string)=>{memory.set(key,value);},removeItem:(key:string)=>{memory.delete(key);}};
+  setArtStudyNarrationStorage(storage);
   const el = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
   const params = new URLSearchParams(location.search);
   const worlds = ['crystal-fibre', 'ruptured-film', 'haven'];
@@ -44,12 +48,15 @@ function initialize(): void {
   const target = { amount: state.amount, fibre: state.fibre };
   const world = el<HTMLSelectElement>('world'), amount = el<HTMLInputElement>('amount'), mix = el<HTMLInputElement>('mix');
   world.value = selected;
+  el('subjective').hidden = selected !== 'haven';
   let game: Phaser.Game | null = null, gym: RiftGymRuntime | null = null;
   let active: ArtScene | null = null, renderer: LookRenderer | null = null;
   let automatic = !params.has('amount'), baseline = false, paused = false, disposed = false, bootstrapped = false;
   let frame = 0, last = 0, cycle = 0, refreshMs = 0, detailMs = 0;
   let inspector = true, detailRequested = false, hookedGame = false, failed = false, lastRender = 0;
-  const intervals: number[] = [], controller = new AbortController();
+  let preparationMs = 0;
+  const intervals: number[] = [], cpuSamples:number[]=[], controller = new AbortController();
+  let lastMeasuredCount=0;
   const canvas = el<HTMLCanvasElement>('detail'), context = canvas.getContext('2d')!;
   context.imageSmoothingEnabled = false;
   const percent = (values: number[], quantile: number): number => {
@@ -72,8 +79,8 @@ function initialize(): void {
     el('status').textContent = `${world.selectedOptions[0]?.text} · ${paused ? '已冻结' : active ? '动态运行中' : '准备中'}`;
     el('description').textContent = automatic ? '连续演示：同化加深 → 混合残留 → 疗愈退去。拖动滑杆接管。' : '手动观察：参数平滑抵达；原角色对照保留相同光照与姿态。';
     el('metrics').textContent = JSON.stringify({ samples: intervals.length, frameIntervalMedianMs: +percent(intervals,.5).toFixed(2),
-      frameIntervalP95Ms: +percent(intervals,.95).toFixed(2), renderer: renderer?.getAssimilationLookMetrics() ?? null,
-      note: 'CPU提交与全场帧间隔；未测GPU执行时间。' }, null, 2);
+      frameIntervalP95Ms: +percent(intervals,.95).toFixed(2),cpuP95Ms:+percent(cpuSamples,.95).toFixed(3), renderer: renderer?.getAssimilationLookMetrics() ?? null,
+      preparationMs,note: 'CPU提交与全场帧间隔；未测GPU执行时间。' }, null, 2);
   }
   function set(a: number, f: number, immediate = false): void {
     automatic = false; target.amount = Math.max(0,Math.min(1,a)); target.fibre = Math.max(0,Math.min(1,f));
@@ -111,6 +118,8 @@ function initialize(): void {
   function postrender(): void {
     const now=performance.now();
     if(active&&!paused&&!document.hidden&&lastRender){intervals.push(now-lastRender);if(intervals.length>600)intervals.shift();}
+    const metrics=renderer?.getAssimilationLookMetrics();
+    if(metrics&&metrics.count!==lastMeasuredCount){lastMeasuredCount=metrics.count;cpuSamples.push(metrics.lastMs);if(cpuSamples.length>600)cpuSamples.shift();}
     lastRender=now;
     if(detailRequested&&inspector){detailRequested=false;detail();}
   }
@@ -130,7 +139,7 @@ function initialize(): void {
         if (candidate) {
           if (typeof candidate.setAssimilationLook !== 'function') { error('此场景未提供材质打版接口；不能用退化渲染冒充。'); return; }
           active=found; renderer=candidate; el('waiting').hidden=true;
-          apply();
+          const prepareStart=performance.now();apply();preparationMs=performance.now()-prepareStart;
           face(0);
           if(paused){if(gym)gym.pause();else active.scene.pause();}
           el('game-container').focus();
@@ -156,8 +165,7 @@ function initialize(): void {
     frame=requestAnimationFrame(tick);
   }
   if (selected==='haven') {
-    const memory=new Map<string,string>();
-    saveManager.setStorage({ getItem:key=>memory.get(key)??null, setItem:(key,value)=>{memory.set(key,value);}, removeItem:key=>{memory.delete(key);} });
+    saveManager.setStorage(storage);
     game=new Phaser.Game(gameConfig); bindDomUiRootToGame(game);
   } else {
     gym=createRiftGymRuntime({ onReady:()=>void build(), onState:value=>{if(active&&value.running)paused=value.paused;}, onReturn:()=>error('已离开打版场景，请重载本页'), onError:error });
@@ -192,8 +200,8 @@ function initialize(): void {
   el('inspector').onclick=()=>setInspector(!inspector);
   const api={set,pause,face,auto:(value:boolean)=>{automatic=value;cycle=0;readouts();},baseline:(value:boolean)=>{baseline=value;apply();readouts();},
     snapshot:()=>({world:selected,state:{...state},target:{...target},automatic,baseline,paused,ready:!!renderer,
-      frameP50:percent(intervals,.5),frameP95:percent(intervals,.95),metrics:renderer?.getAssimilationLookMetrics(),player:active?.player.getPosition()}),
-    clearSamples:()=>{intervals.length=0;},inspector:setInspector,captureDetail:()=>{detailRequested=true;}};
+      frameP50:percent(intervals,.5),frameP95:percent(intervals,.95),cpuP95:percent(cpuSamples,.95),preparationMs,metrics:renderer?.getAssimilationLookMetrics(),player:active?.player.getPosition()}),
+    clearSamples:()=>{intervals.length=0;cpuSamples.length=0;},inspector:setInspector,captureDetail:()=>{detailRequested=true;}};
   Object.assign(window,{__assimilationStudy:api});
   readouts();frame=requestAnimationFrame(tick);
   window.addEventListener('pagehide',()=>{disposed=true;cancelAnimationFrame(frame);controller.abort();renderer?.setAssimilationLook(null);if(gym)gym.destroy();else game?.destroy(true);delete(window as unknown as Record<string,unknown>).__assimilationStudy;},{once:true});

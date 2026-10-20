@@ -36,6 +36,17 @@ try{
     await page.locator('.view').screenshot({path:path.join(output,filename)});
     row.images.push(filename);
    }
+   await page.evaluate(()=>window.__assimilationStudy.face(Math.PI/2));
+   await page.waitForTimeout(150);
+   await page.locator('.view').screenshot({path:path.join(output,`${world}-mixed-side.png`)});
+   row.images.push(`${world}-mixed-side.png`);
+   await page.locator('#game-container').click({position:{x:450,y:320}});
+   const moveBefore=await page.evaluate(()=>window.__assimilationStudy.snapshot().player);
+   await page.keyboard.down('s');await page.waitForTimeout(300);await page.keyboard.up('s');
+   const moveAfter=await page.evaluate(()=>window.__assimilationStudy.snapshot().player);
+   assert(Math.hypot(moveAfter.x-moveBefore.x,moveAfter.y-moveBefore.y)>1,'real movement');
+   row.checks.push('actual movement with material active');
+   if(world!=='haven'){await page.keyboard.press('Space');await page.waitForTimeout(100);row.checks.push('actual held-tool attack smoke');}
    const before=await page.evaluate(()=>window.__assimilationStudy.snapshot());
    await page.waitForTimeout(2300);
    const after=await page.evaluate(()=>window.__assimilationStudy.snapshot());
@@ -56,13 +67,14 @@ try{
     const end=await page.evaluate(()=>window.__assimilationStudy.snapshot());
     const count=end.metrics.count-start.metrics.count;
     row.performance.push({amount:a,count,meanCpuMs:count?(end.metrics.totalMs-start.metrics.totalMs)/count:null,
-     frameMedianMs:end.frameP50,frameP95Ms:end.frameP95,maskBytes:end.metrics.maskBytes,preparedFrames:end.metrics.preparedFrames});
+     cpuP95Ms:end.cpuP95,frameMedianMs:end.frameP50,frameP95Ms:end.frameP95,maskBytes:end.metrics.maskBytes,preparedFrames:end.metrics.preparedFrames});
    }
    await page.evaluate(()=>{window.__assimilationStudy.inspector(true);window.__assimilationStudy.set(.9,.5,true);});
    await page.waitForTimeout(100);
    await page.screenshot({path:path.join(output,`${world}-page.png`),fullPage:true});
    row.snapshot=await page.evaluate(()=>window.__assimilationStudy.snapshot());
-   assert.equal((await page.evaluate(()=>window.__saveWrites)).length,0,'no browser storage writes');
+   row.browserWrites=await page.evaluate(()=>window.__saveWrites);
+   assert.equal(row.browserWrites.length,0,`no browser storage writes: ${row.browserWrites.join(',')}`);
    row.checks.push('zero browser storage writes');
    console.log('PASS',world,JSON.stringify(row.performance));
   }catch(error){row.failure=String(error);console.error('FAIL',world,error);await page.screenshot({path:path.join(output,`${world}-failure.png`)});}
