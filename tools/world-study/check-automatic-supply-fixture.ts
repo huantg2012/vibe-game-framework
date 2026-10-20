@@ -10,6 +10,10 @@ import { createAutomaticSupplyPolicy } from '../../src/generation/world-study/au
 import { R100_EXPEDITION_GRADES } from '../../src/generated/rift-expedition-grade-data';
 import type { WorldProductionRecipeV3 } from '../../src/generation/world-study/production-recipe';
 import type { WorldProductionMap } from '../../src/generation/world-study/production-map';
+import {buildNativeSpatialGeometry} from '../../src/generation/world-study/native-spatial-geometry';
+import {identifyNativeSpatialStructures} from '../../src/generation/world-study/native-spatial-measure';
+import {evaluateNativeSpatialRoutes} from '../../src/generation/world-study/native-spatial-routes';
+import type {NativeSpatialAssemblyPlacement} from '../../src/generation/world-study/native-spatial-structures';
 
 const fixture = process.argv[2], output = process.argv[3];
 if (!fixture || !output) throw new Error('Usage: check-automatic-supply-fixture.ts FROZEN_FIXTURE_DIRECTORY NEW_REPORT_JSON');
@@ -30,7 +34,14 @@ try {
   const definition = R100_EXPEDITION_GRADES.find(row=>row.grade_id===recipe.gradeDefinition.id)!;
   const deployed=deployR100Expedition(world,definition,recipe.searchSitePolicy,createAutomaticSupplyPolicy(recipe.gradeDefinition.id));
   if (performance.now()-started>=60000) throw new Error('Cached fixture check exceeded 60 second deadline');
-  report.status='pass'; report.supply=deployed.diagnostics;
+  report.supply=deployed.diagnostics;
+  const originalSpatial=map.native.diagnostics.nativeSpatial as {assemblies:NativeSpatialAssemblyPlacement[]};
+  const geometry=buildNativeSpatialGeometry(world.definition,recipe.nativeConstruction!.geometrySeed);
+  const groups=identifyNativeSpatialStructures(geometry,originalSpatial.assemblies,recipe.nativeSpatial!.policy);
+  const routes=evaluateNativeSpatialRoutes(geometry,groups.structures,recipe.nativeSpatial!.policy,deployed.layout);
+  report.routes=routes;
+  if(!routes.accepted)throw new Error(`Automatic supply route rejection: ${routes.reasons.join('; ')}`);
+  report.status='pass';
 } catch(error) {
   report.status='failed'; report.error=error instanceof Error?error.message:String(error);
   if(error&&typeof error==='object'&&'diagnostics' in error)report.diagnostics=error.diagnostics;

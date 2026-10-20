@@ -3,7 +3,7 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "DEC-220：正式只开放余烬脊、晶化林床、破膜盆地，三污染档共用名单；其余105世界保留定义但不开放。非开放世界的有效旧active局按用户授权自动abandon返回净化点，丢弃随身物及本趟收获，基地进度保留；已结算记录正常返程。 当前三图中重档保留r13认可medium地床，新低档使用同源模型的独立紧凑地床；实际出发seed决定内容/撤离；108定义与324配方身份保持。开放名单不等于完整体验验收。 2026-10-20三开放世界新low覆盖紧凑构型与补给，身体可行面积相对旧低档减少18.86%/20.44%/24.24%，固定frame保持；完整投放、不同撤离、JSON冷回放及旧局兼容限定通过。 推广入口：docs/content/rift-open-worlds.md 的RIFT-OPT-01～11；低档缩图为逐世界作者配置，补给为三图固定配额，不是面向所有地图的自适应密度算法。",
+    "summary": "DEC-220：正式只开放余烬脊、晶化林床、破膜盆地，三污染档共用名单；其余105世界保留定义但不开放。非开放世界的有效旧active局按用户授权自动abandon返回净化点，丢弃随身物及本趟收获，基地进度保留；已结算记录正常返程。 当前三图中重档保留r13认可medium地床，新低档使用同源模型的独立紧凑地床；实际出发seed决定内容/撤离；108定义与324配方身份保持。开放名单不等于完整体验验收。 2026-10-20三开放世界新low覆盖紧凑构型与补给，身体可行面积相对旧低档减少18.86%/20.44%/24.24%，固定frame保持；完整投放、不同撤离、JSON冷回放及旧局兼容限定通过。 推广入口：docs/content/rift-open-worlds.md 的RIFT-OPT-01～11；低档缩图为逐世界作者配置，补给为三图固定配额，不是面向所有地图的自适应密度算法。 DEC-224整改进行中：用户否决逐世界缩图、固定资源配额和人工成功种子。新增r14共享自动构造/测地供给作为显式离线链，尚未翻正式默认；324配方输入通过并非324完整图通过。供给三旧缓存合格站位覆盖通过，完整G4仅余烬通过，另两图长窄段拒绝；新构造仍需全门准入。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1818,6 +1818,30 @@
       {
         "path": "docs/qa/rift-playtest-fixes-2026-10-20.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/tasks/automatic-world-generation-2026-10-21.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/automatic-world-generation-2026-10-21.md",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-auto-construction-policy.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-auto-supply-policy.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/automatic-supply.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -1906,7 +1930,8 @@
       "COH-E263",
       "COH-E280",
       "COH-E283",
-      "COH-E284"
+      "COH-E284",
+      "COH-E285"
     ],
     "unknowns": [
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
@@ -2876,7 +2901,7 @@
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "四图r13通过真实几何门后部署完整出撤、资源、AI和Host；前7内容尝试保持请求seed分支，第8槽由冻结认证bank选择。两world真实human/fungal在部署前生效，数量/支撑/核与完整路线照常准入；机器生成/冷回放和四图中档正式入场/冷续功能均已有最终回执；50ms性能预算未过。 2026-10-20新低档为6处薪柴与2处污染物；两近程薪柴禁止武器替换，原节点可达/巡逻/风险门保持。旧冻结局及中重档不变。 紧凑低档作者数据与6条完整内容证书已冻结；破膜入口改至北侧两孔宽地，出口仍由内容策略选择。实际路线总体孔遭遇率满足原60%–75%，局部窄比例等质量提示保留。",
+    "summary": "四图r13通过真实几何门后部署完整出撤、资源、AI和Host；前7内容尝试保持请求seed分支，第8槽由冻结认证bank选择。两world真实human/fungal在部署前生效，数量/支撑/核与完整路线照常准入；机器生成/冷回放和四图中档正式入场/冷续功能均已有最终回执；50ms性能预算未过。 2026-10-20新低档为6处薪柴与2处污染物；两近程薪柴禁止武器替换，原节点可达/巡逻/风险门保持。旧冻结局及中重档不变。 紧凑低档作者数据与6条完整内容证书已冻结；破膜入口改至北侧两孔宽地，出口仍由内容策略选择。实际路线总体孔遭遇率满足原60%–75%，局部窄比例等质量提示保留。 DEC-224整改进行中：用户否决逐世界缩图、固定资源配额和人工成功种子。新增r14共享自动构造/测地供给作为显式离线链，尚未翻正式默认；324配方输入通过并非324完整图通过。供给三旧缓存合格站位覆盖通过，完整G4仅余烬通过，另两图长窄段拒绝；新构造仍需全门准入。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -3483,6 +3508,30 @@
         "path": "docs/content/rift-open-worlds.md",
         "role": "doc",
         "note": "三图优化唯一推广登记册：RIFT-OPT-01～11，覆盖条件、专用配置、接入依赖和验证边界；不是新规则正文。"
+      },
+      {
+        "path": "docs/tasks/automatic-world-generation-2026-10-21.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/automatic-world-generation-2026-10-21.md",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-auto-construction-policy.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-auto-supply-policy.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/automatic-supply.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -3551,7 +3600,8 @@
       "COH-E255",
       "COH-E280",
       "COH-E283",
-      "COH-E284"
+      "COH-E284",
+      "COH-E285"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
