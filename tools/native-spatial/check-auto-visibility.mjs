@@ -92,7 +92,7 @@ check('An added true witness certifies every body centre under the original limi
   assert.equal(result.metrics.coverage.maxRoutePx,maximum);
 });
 
-check('Every recorded q/v/t independently satisfies attribution and exact route bounds',()=>{
+function verifyWitnesses(result){
   const removed=new Set(hole.cells);
   const ablated={...geometry.sight,isOpaque:(col,row)=>
     col<0||row<0||col>=cols||row>=rows||
@@ -120,7 +120,8 @@ check('Every recorded q/v/t independently satisfies attribution and exact route 
     assert(witness.routePx>=policy.revealRouteMinPx);
     assert(witness.routePx<=policy.revealRouteMaxPx);
   }
-});
+}
+check('Every recorded q/v/t independently satisfies attribution and exact route bounds',()=>verifyWitnesses(result));
 
 check('Qualification does not rewrite geometry or the coarse evidence',()=>{
   assert.deepEqual(geometry.reachable,savedGeometry.reachable);
@@ -150,13 +151,18 @@ for(const [name,key,reason,workKey] of [
   });
 }
 
-check('Even a fine-solvable fixture remains rejected when the default local budget is spent',()=>{
-  const limited=refine(strictCoarse,strictPolicy);
+check('Rescheduling reaches remaining failed regions within the unchanged local budget',()=>{
+  const refined=refine(strictCoarse,strictPolicy);
   assert(fullFine.accepted);
-  assert(!limited.accepted);
-  assert.equal(certificate(limited).reason,'coverage-budget');
-  assert.equal(certificate(limited).work.coverageRecomputes,budget.maxCoverageRecomputes);
-  assert(limited.metrics.coverage.overLimit>0);
+  assert(refined.accepted);
+  assert.equal(certificate(refined).reason,'all-body-centers-covered');
+  assert(certificate(refined).work.coverageRecomputes<=budget.maxCoverageRecomputes);
+  const qs=certificate(refined).witnesses.map(witness=>witness.q);
+  assert.equal(new Set(qs).size,qs.length,'A proved q is never retried across refinement rounds');
+  verifyWitnesses(refined);
+  const paths=nativeSpatialShortestPaths(geometry,refined.metrics.qCells);
+  for(let cell=0;cell<geometry.reachable.length;cell++)if(geometry.reachable[cell])
+    assert(paths.distance[cell]/1000<=strictPolicy.maxCoverRoutePx);
 });
 
 check('Body blocking without optical blocking cannot produce a new witness',()=>{

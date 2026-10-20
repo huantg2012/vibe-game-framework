@@ -74,7 +74,8 @@ export function certifyNativeAutoVisibility(geometry:NativeSpatialGeometry,struc
   let coveragePaths=nativeSpatialShortestPaths(geometry,[...qUnion]);
   const coarseCoverage=measureCoverage(geometry,coveragePaths,policy.maxCoverRoutePx);
   let coverage=coarseCoverage;
-  const queries=localQueries(geometry,coveragePaths,qUnion,policy.maxCoverRoutePx,budget.maxQ);
+  const attemptedQ=new Set(qUnion);
+  let queries=localQueries(geometry,coveragePaths,attemptedQ,policy.maxCoverRoutePx,budget.maxQ),nextQuery=0;
   const {cols,rows}=geometry.terrain;
   const holes=structures.filter(item=>item.kind==='hole').sort((a,b)=>a.id.localeCompare(b.id)).map(hole=>{
     const removed=new Set(hole.cells);
@@ -119,16 +120,23 @@ export function certifyNativeAutoVisibility(geometry:NativeSpatialGeometry,struc
   };
   let reason:StopReason='local-domain-exhausted';
   try{
-    for(const q of queries){
-      if(!coverage.overLimit)break;
+    while(nextQuery<queries.length&&coverage.overLimit){
       if(work.qAttempts>=budget.maxQ)throw new CertificateBudgetStop('q-budget');
       if(work.coverageRecomputes>=budget.maxCoverageRecomputes)throw new CertificateBudgetStop('coverage-budget');
-      checkpoint();work.qAttempts++;
+      const q=queries[nextQuery++]!;
+      checkpoint();work.qAttempts++;attemptedQ.add(q);
       const witness=prove(q);if(!witness)continue;
       witnesses.push(witness);qUnion.add(q);
       checkpoint();work.coverageRecomputes++;
       coveragePaths=nativeSpatialShortestPaths(geometry,[...qUnion]);
       coverage=measureCoverage(geometry,coveragePaths,policy.maxCoverRoutePx);
+      if(coverage.overLimit){
+        if(work.qAttempts>=budget.maxQ)throw new CertificateBudgetStop('q-budget');
+        // Spend the remaining fixed work on the current uncovered domain.
+        // Earlier failed q are also excluded: the geometry has not changed.
+        queries=localQueries(geometry,coveragePaths,attemptedQ,policy.maxCoverRoutePx,budget.maxQ-work.qAttempts);
+        nextQuery=0;
+      }
     }
     if(!coverage.overLimit)reason='all-body-centers-covered';
     else if(work.qAttempts>=budget.maxQ)reason='q-budget';
