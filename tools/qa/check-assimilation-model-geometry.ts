@@ -6,11 +6,44 @@ import {
   ASSIMILATION_MODEL_CAMERA, buildAssimilationModel, morphAssimilationPoint,
 } from '../../src/dev/assimilation-model-geometry';
 import { bakeAssimilationModel } from '../../src/dev/assimilation-model-worker';
-import type { AssimilationModelRequest } from '../../src/dev/assimilation-model-protocol';
+import type { AssimilationModelFrame, AssimilationModelRequest } from '../../src/dev/assimilation-model-protocol';
+import { lastLightBasis, unprojectLastLight } from '../../src/art/last-light-spatial';
+import {
+  ASSIMILATION_GRIP_CONTACT_RADIUS, ASSIMILATION_SURFACE_STRIDE, AssimilationLookParameters,
+  sampleAssimilationSurface, writeAssimilationSurface,
+} from '../../src/art/assimilation-appearance';
 
 const base: AssimilationModelRequest = { id: 1, amount: 0, fibre: .5, phase: null, yaw: 0, breath: 0 };
 const distance = (a: V3, b: V3): number => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
-const results: { yaw: number; fibre: number; phase: number | null; changedSilhouettePixels: number; triangles: number; ms: number }[] = [];
+const coverageContract = { minimum: .75, maximum: .90, materialWeight: .5 };
+const basis = lastLightBasis(ASSIMILATION_MODEL_CAMERA);
+function materialCoverage(frame: AssimilationModelFrame) {
+  const look = new AssimilationLookParameters();
+  look.set({ amount: 1, fibre: frame.meta.fibre, membrane: 1 - frame.meta.fibre, seconds: 0, motion: false, subjective: false });
+  const surface = new Uint8Array(ASSIMILATION_SURFACE_STRIDE), sample = new Float32Array(5);
+  const c = Math.cos(frame.meta.yaw), s = Math.sin(frame.meta.yaw);
+  let visiblePixels = 0, coveredPixels = 0, gripContactPixels = 0;
+  for (let y = 0; y < frame.height; y++) for (let x = 0; x < frame.width; x++) {
+    const i = (y * frame.width + x) * 4;
+    if (!frame.albedo[i + 3]) continue;
+    visiblePixels++;
+    const depth = (frame.depth[i]! * 256 + frame.depth[i + 1]!) / 256 - 80;
+    const point = unprojectLastLight(x + .5, y + .5, depth, ASSIMILATION_MODEL_CAMERA, basis);
+    const gripContact = distance(point, frame.meta.wrist.world) < ASSIMILATION_GRIP_CONTACT_RADIUS;
+    if (gripContact) gripContactPixels++;
+    writeAssimilationSurface(point[0] * c - point[2] * s, point[1], point[0] * s + point[2] * c,
+      Math.max(frame.albedo[i]!, frame.albedo[i + 1]!, frame.albedo[i + 2]!),
+      frame.material[i + 3]! / 255 * 2, surface, 0, gripContact);
+    sampleAssimilationSurface(surface, 0, look, frame.albedo[i]!, frame.albedo[i + 1]!, frame.albedo[i + 2]!, sample);
+    if (sample[4]! >= coverageContract.materialWeight) coveredPixels++;
+  }
+  assert(visiblePixels > 0, 'Coverage denominator includes every visible alpha pixel');
+  const ratio = coveredPixels / visiblePixels;
+  return { visiblePixels, coveredPixels, gripContactPixels, ratio,
+    withinContract: ratio >= coverageContract.minimum && ratio <= coverageContract.maximum };
+}
+const results: { yaw: number; fibre: number; phase: number | null; changedSilhouettePixels: number; triangles: number; ms: number;
+  coverage: ReturnType<typeof materialCoverage> }[] = [];
 for (const phase of [null, Math.PI / 2]) {
   for (const yaw of [Math.atan2(19, 30), Math.atan2(19, 30) + Math.PI / 2, Math.atan2(19, 30) + Math.PI]) {
     const request = { ...base, phase, yaw };
@@ -46,7 +79,8 @@ for (const phase of [null, Math.PI / 2]) {
         assert.equal(high.albedo[(y * 64) * 4 + 3], 0, 'No left clipping');
         assert.equal(high.albedo[(y * 64 + 63) * 4 + 3], 0, 'No right clipping');
       }
-      results.push({ yaw, fibre, phase, changedSilhouettePixels: changed, triangles: high.triangles, ms: high.buildMs + high.bakeMs });
+      results.push({ yaw, fibre, phase, changedSilhouettePixels: changed, triangles: high.triangles, ms: high.buildMs + high.bakeMs,
+        coverage: materialCoverage(high) });
     }
   }
 }
@@ -84,5 +118,18 @@ for (const settle of [.25, .5, .75, 1]) {
   }
 }
 assert.throws(() => buildAssimilationModel({ ...base, settle: 2 }), /Invalid/);
-console.log(JSON.stringify({ pass: true, frames: results.length, results,
-  limits: 'Finite author-geometry/raster checks; no scene integration, combat, seated morph, browser Worker throughput or human visual acceptance.' }, null, 2));
+const coverageRange = (frames: typeof results) => ({
+  minimum: Math.min(...frames.map(frame => frame.coverage.ratio)),
+  maximum: Math.max(...frames.map(frame => frame.coverage.ratio)),
+  aggregate: frames.reduce((n, frame) => n + frame.coverage.coveredPixels, 0)
+    / frames.reduce((n, frame) => n + frame.coverage.visiblePixels, 0),
+});
+const outsideContract = results.filter(frame => !frame.coverage.withinContract);
+console.log(JSON.stringify({ pass: outsideContract.length === 0, frames: results.length,
+  coverageContract, coverageRange: coverageRange(results),
+  coverageBySource: [0, .5, 1].map(fibre => ({ fibre, ...coverageRange(results.filter(frame => frame.fibre === fibre)) })),
+  coverageByPose: [null, Math.PI / 2].map(phase => ({ phase, ...coverageRange(results.filter(frame => frame.phase === phase)) })),
+  outsideCoverageContract: outsideContract.map(({ yaw, fibre, phase, coverage }) => ({ yaw, fibre, phase, ...coverage })),
+  results,
+  limits: 'Finite author-geometry/raster and shared CPU material checks; no scene integration, GPU parity, combat, seated morph, browser Worker throughput or human visual acceptance.' }, null, 2));
+assert.equal(outsideContract.length, 0, 'Every A100 sample must cover 75–90% of all visible alpha pixels at material weight >= .5; inspect the printed ranges without changing the mask to pass.');
