@@ -68,6 +68,12 @@ try {
     await page.evaluate(() => window.__lightEaterStudy.resume());
     await page.waitForTimeout(100);
     await set(0, 0);
+    // Start at the actual endpoint, not within the still-image tolerance: the
+    // final <0.2-point settling tail would otherwise look non-monotonic.
+    await page.waitForFunction(() => {
+      const s = window.__lightEaterStudy.snapshot().preview;
+      return s.pollution === 0 && s.assimilation === 0;
+    });
     const recording = await page.evaluate(async () => {
       const source = document.querySelector('#game-container canvas');
       // The scene is copied unchanged; a separate footer records the actual
