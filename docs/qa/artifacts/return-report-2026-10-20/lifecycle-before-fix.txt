@@ -1,0 +1,38 @@
+Pre-fix observations (isolated Chrome; 2026-10-20)
+
+Original probe /tmp/coh-return-probe-3038.log lines 35-39. Console text was truncated by the original probe at 500 characters; the remainder of the stack is unavailable. This probe did display the first-return report.
+
+CONSOLE Inventory subscriber failed after commit TypeError: Cannot read properties of undefined (reading 'sys')
+    at Image3.setTexture (http://127.0.0.1:3038/node_modules/.vite/deps/phaser.js?v=b3d9790a:24760:47)
+    at LastLightPlayerPresentation.setWeaponVisual (http://127.0.0.1:3038/src/entities/player-last-light-presentation.ts:514:17)
+    at Player.setWeaponVisual (http://127.0.0.1:3038/src/entities/player.ts:268:27)
+    at CombatSystem.syncEquippedVisual (http://127.0.0.1:3038/src/systems/combat
+
+Focused pre-fix replay: only the early inventory unsubscribe and shutdown guard were removed from the browser-served RiftScene module. The working tree was never reverted. The production-case regression opened a pending inventory frame immediately before destruction; the direct retired-weapon-consumer assertion failed.
+
+PRE_FIX_SOURCE onShutdown() {
+    if (this.shutdownComplete) return;
+    this.shutdownComplete = true;
+    this.stagedEntry?.destroy();
+    this.stagedEntry = null;
+    if (this.constructionClockPaused !== null) {
+      this.time.paused = this.constructionClockPaus
+node:internal/modules/run_main:122
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: shutdown rollback must not update retired weapon visuals
+
+1 !== 0
+
+    at check.formalEntry (file:///private/tmp/coh-return-before-fix.mjs:321:14)
+    at async check (file:///private/tmp/coh-return-before-fix.mjs:139:9)
+    at async file:///private/tmp/coh-return-before-fix.mjs:269:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual'
+}
+
+Node.js v22.14.0
