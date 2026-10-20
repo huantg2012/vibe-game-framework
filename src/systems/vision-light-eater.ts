@@ -84,12 +84,14 @@ export function sampleLightEater(out: LightEaterSample, x: number, y: number, st
   out.warm = bitten * (1 - consumption * 0.64) * surfaceTransmission;
   const coldRadius = lightEaterExtent(state.pollution, state.assimilation);
   const coldFalloff = 1 - smooth((distance - coldRadius * 0.62) / (coldRadius * 0.38));
-  const beyondLamp = smooth((distance - lampRadius * 0.56) / 42);
   // Restore actual material detail, rather than drawing a bright fog in its
   // place. The native surface is already dim outside the shrunken warm lamp.
   // A restores recognition, not a clean-light exemption. Preserve enough actual
   // material to read the outer region, but it shares the moving absorption.
-  out.cold = a * 0.58 * coldFalloff * beyondLamp * (0.72 + density * 0.28) * Math.sqrt(surfaceTransmission);
+  // This dim signal exists throughout the medium. Delaying its onset until the
+  // lamp's edge creates a dark annulus between disappearing warm and cold light.
+  // The stronger warm signal naturally conceals it nearby; no additive lift.
+  out.cold = a * 0.58 * coldFalloff * (0.72 + density * 0.28) * Math.sqrt(surfaceTransmission);
   // The cold signal can recover detail only within its own finite envelope.
   if (distance >= coldRadius) out.cold = 0;
   if (distance >= lampRadius) out.warm = 0;
@@ -125,7 +127,9 @@ export function paintLightEater(
     const visible = admission[i]! > 0 && inEnvelope ? scratch.transmission : 0;
     transmission[i] = visible;
     const opaque = 1 - visible;
-    const coldMix = visible > 0 ? scratch.cold / Math.max(0.001, scratch.cold + scratch.warm) * Math.sqrt(scratch.cold / 0.58) : 0;
+    // Colour only the recovered share. A latent cold signal beneath stronger
+    // shoulder light must not recolour the protected action centre.
+    const coldMix = visible > 0 ? Math.max(0, scratch.cold - scratch.warm) / Math.max(0.001, scratch.cold) * Math.sqrt(scratch.cold / 0.58) : 0;
     const reaction = visible > 0 ? scratch.reaction : 0;
     // Pixel-colour response remains below the real material. No broad green wash:
     // green is strongest in interrupted light, cold only where A admits detail.

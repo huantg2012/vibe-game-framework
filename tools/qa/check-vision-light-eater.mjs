@@ -90,6 +90,29 @@ for (const p of [0, 25, 55, 100]) for (const time of [50, 3000, 11250]) {
   }
 }
 check('time and pollution fields are continuous across former frame/tier boundaries', maximumTimeStep < 0.00001);
+
+// Sample annular means, not individual rays: local drifting pockets are intended,
+// but a coherent darker band must not separate the warm core from A's outer
+// material signal. This catches a late cold-signal onset even with continuous P.
+let maximumAnnularRebound = 0;
+for (const [x, y] of [[1132, 1324], [160, 160], [730, 415]]) {
+  for (const elapsedMs of [0, 10000, 22500]) for (const pollution of [70, 80, 90, 100]) for (const assimilation of [60, 80, 100]) {
+    const annularState = { pollution, assimilation, lampX: x, lampY: y, bodyX: x, bodyY: y, elapsedMs };
+    const radius = api.lightEaterLampRadius(pollution);
+    let lowestInnerMean = Infinity;
+    for (let step = 0; step <= 13; step++) {
+      const distance = radius * (0.5 + step * 0.05);
+      let mean = 0;
+      for (let angle = 0; angle < 72; angle++) {
+        mean += api.sampleLightEater(sweepSample, x + distance * Math.cos(angle * Math.PI / 36),
+          y + distance * Math.sin(angle * Math.PI / 36), annularState).transmission / 72;
+      }
+      lowestInnerMean = Math.min(lowestInnerMean, mean);
+      maximumAnnularRebound = Math.max(maximumAnnularRebound, mean - lowestInnerMean);
+    }
+  }
+}
+check('warm-to-cold recognition has no coherent dark annulus', maximumAnnularRebound < 0.03);
 for (const p of [0, 25, 55, 100]) for (const a of [0, 50, 100]) {
   state.pollution = p; state.assimilation = a;
   const radius = api.lightEaterExtent(p, a);
@@ -138,6 +161,6 @@ api.paintLightEater(pixels, admission, transmission, { ...paint, elapsedMs: pain
 let changed = 0;
 for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 1] !== paused[i + 1] || pixels[i + 3] !== paused[i + 3]) changed++;
 check('three seconds visibly alter local light consumption', changed > 500);
-console.log(JSON.stringify({ status: 'pass', checks, changedPixels: changed, maximumPollutionStep, maximumTimeStep,
+console.log(JSON.stringify({ status: 'pass', checks, changedPixels: changed, maximumPollutionStep, maximumTimeStep, maximumAnnularRebound,
   saturatedNearTransmission: [minimumSaturatedNear, maximumSaturatedNear],
   scope: 'DEV optical math/query/VOID contracts only; colour, motion quality and performance need real-scene review.' }, null, 2));
