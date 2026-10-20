@@ -182,6 +182,7 @@ function initialize(): void {
   if (selected==='haven') {
     saveManager.setStorage(storage);
     game=new Phaser.Game(gameConfig); bindDomUiRootToGame(game);
+    game.registry.set('assimilationArtStudy', true);
   } else {
     gym=createRiftGymRuntime({ onReady:()=>void build(), onState:value=>{if(active&&value.running)paused=value.paused;}, onReturn:()=>error('已离开打版场景，请重载本页'), onError:error });
   }

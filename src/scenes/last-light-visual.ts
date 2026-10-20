@@ -3,6 +3,7 @@ import { LastLightRenderer, type LastLightFrame, type LastLightImage, type LastL
   type LastLightRenderImages, type LastLightRenderState } from '../art/last-light-renderer';
 import { LastLightFallback } from '../art/last-light-fallback';
 import { LastLightGait } from '../art/last-light-gait';
+import { AssimilationPresentation } from '../art/assimilation-presentation';
 import type { LastLightCamera, LightVector } from '../art/last-light-spatial';
 
 /** Public present-tense operating state. Never accepts hidden forecasts. */
@@ -108,6 +109,7 @@ export class LastLightVisual {
   private elapsed = 0;
   private readonly exteriorClock: { seconds: number };
   private disposed = false;
+  private assimilation: AssimilationPresentation | null = null;
 
   static preload(scene: Phaser.Scene): void {
     const { root, cachePrefix } = assetProfile(scene);
@@ -166,6 +168,13 @@ export class LastLightVisual {
     if (!texture) { this.renderer.destroy(); throw new Error('Unable to create Last Light scene texture.'); }
     this.texture = texture; this.texture.setFilter(Phaser.Textures.FilterMode.NEAREST);
     this.image = scene.add.image(0, 0, this.textureKey).setOrigin(0).setDepth(10);
+    // The art study owns its own slider/worker; it must not fight production A.
+    if (this.renderer instanceof LastLightRenderer
+        && !(import.meta.env.DEV && scene.registry.get('assimilationArtStudy'))) {
+      this.assimilation = new AssimilationPresentation(this.renderer, {
+        profile: 'haven', yaws: [...new Set(frames.map(frame => frame.yaw))],
+      });
+    }
   }
   update(_time: number, delta: number, state: LastLightState): void {
     if (this.disposed) return;
@@ -181,9 +190,11 @@ export class LastLightVisual {
     s.health = [clamp(state.moduleHealth.core), clamp(state.moduleHealth.storage), clamp(state.moduleHealth.purifier)];
     s.charge = clamp(state.offeringCharge); s.growth = Object.values(state.growthLevels).reduce((sum, level) => sum + Math.max(0, level), 0);
     s.thicken = Math.max(0, state.thickenLevel); s.reducedMotion = this.reducedMotion.matches;
+    this.assimilation?.update(delta);
     try { this.renderer.draw(s); }
     catch (error) {
       if (!(this.renderer instanceof LastLightRenderer)) throw error;
+      this.assimilation?.destroy(); this.assimilation = null;
       this.image.destroy(); this.scene.textures.remove(this.textureKey); this.renderer.destroy();
       this.renderer = new LastLightFallback(this.pack, this.fallbackBase, this.fallbackActor);
       this.renderer.draw(s);
@@ -213,6 +224,7 @@ export class LastLightVisual {
   getPortrait(): string { return this.renderer.portrait(); }
   destroy(): void {
     if (this.disposed) return; this.disposed = true;
+    this.assimilation?.destroy(); this.assimilation = null;
     this.image.destroy(); this.scene.textures.remove(this.textureKey); this.renderer.destroy();
   }
 }

@@ -1,4 +1,5 @@
 import { LastLightPlayerPresentation, getPreparedLastLightPlayerAssets, type LastLightPlayerAssets } from '@/entities/player-last-light-presentation';
+import { AssimilationPresentation } from '@/art/assimilation-presentation';
 import { RIFT_PLAYER_PRESENTATIONS } from '@/generated/rift-player-presentations';
 import { nativeRiftPlayerForRestore, NATIVE_BODY_GEOMETRY_VERSION } from '@/systems/native-rift-body-recovery';
 import { nativeBodyCollision, type NativeBodyCollision, type NativeBodyMotion } from '@/generation/world-study/native-body-collision';
@@ -243,6 +244,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
   private lastLightPlayerPresentation: LastLightPlayerPresentation | null = null;
+  private assimilationPresentation: AssimilationPresentation | null = null;
   private visionPreviewLamp: WorldMaterialLighting['lights'][number] | null = null;
   private visionPreviewLampRadius = 0;
   private visionPreviewLampIntensity = 0;
@@ -601,6 +603,16 @@ export class RiftScene extends Phaser.Scene {
     // The three admitted native worlds share the approved player/material
     // presentation. Historical runs without the physiology protocol stay legacy.
     this.productionLightEater = formalPlayerA && assimilationMode === 'persistent-v1';
+    if (this.productionLightEater && this.lastLightPlayerPresentation && playerAssets
+        && !this.devFixture?.visionArtStudy) {
+      const haven = this.cache.json.get('last-light:manifest') as
+        { actor?: { frames?: { yaw: number }[] } } | undefined;
+      this.assimilationPresentation = new AssimilationPresentation(this.lastLightPlayerPresentation, {
+        profile: 'rift',
+        yaws: playerAssets.frames.filter(frame => frame.source.pose === 'idle').map(frame => frame.source.yaw),
+        havenYaws: [...new Set(haven?.actor?.frames?.map(frame => frame.yaw) ?? [])],
+      });
+    }
     this.defenseVisionScale = this.productionLightEater ? restoring?.state.conditions.visionMultiplier ?? 1 : 1;
     if (this.productionLightEater) this.visibility.setPresentation('light-eater');
     // growthMods.kindlingAffinity (+N per pickup) applied through LootSearchSystem config below
@@ -616,7 +628,7 @@ export class RiftScene extends Phaser.Scene {
     this.chaos = new ChaosSystem({
       assimilationMode,
       getAssimilation: () => gameState.getAssimilation(),
-      setAssimilation: value => gameState.setAssimilation(value),
+      setAssimilation: value => gameState.setAssimilation(value, nativeRecipe?.appearance?.worldId),
       growthResistance: restoredChaos?.growthResistance ?? growthMods.chaosResist,
       isEnemyTargetingLure: id => this.ai.getEnemyById(id)?.isTargetingLure?.() ?? false,
       onModulate: this.applyChaosModulators,
@@ -977,6 +989,7 @@ export class RiftScene extends Phaser.Scene {
 
     // T9 systems
     this.chaos.update(delta);
+    this.assimilationPresentation?.update(delta);
     const toolJustDown: boolean[] = [];
     for (let i = 0; i < this.toolKeys.length; i++) {
       toolJustDown[i] = Phaser.Input.Keyboard.JustDown(this.toolKeys[i]!);
@@ -2588,6 +2601,7 @@ export class RiftScene extends Phaser.Scene {
     this.worldSurface?.destroy();
     this.worldSurface = null;
     this.devRuntime?.destroy(); this.devRuntime = null; this.devEnemyVisuals.length = 0;
+    this.assimilationPresentation?.destroy(); this.assimilationPresentation = null;
     this.lastLightPlayerPresentation?.destroy(); this.lastLightPlayerPresentation = null;
     this.nativeWorldPresentation?.disposeUnconsumed();
     for (const unregister of this.devTargetDisposers) unregister();
