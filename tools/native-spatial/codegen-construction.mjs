@@ -6,6 +6,7 @@ import {parseNativeSpatialConstructionReference} from '../../src/generation/worl
 import {parseNativeConstructionShore} from '../../src/generation/world-study/native-spatial-construction-shore.ts';
 import {createR100DirectConstructionRecipe} from '../../src/generation/world-study/r100-package.ts';
 import {applyNativeConstructionIntent,nativeConstructionContentIdentity} from '../../src/generation/world-study/native-construction-recipe.ts';
+import {R100_EXPEDITION_GRADES} from '../../src/generated/rift-expedition-grade-data.ts';
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const source=file=>{const csv=fs.readFileSync(file,'utf8');return{csv,sourceHash:sha(csv)};};
 const bankLines=fs.readFileSync('data/rift-native-construction-content-seeds.csv','utf8').trim().split(/\r?\n/);
@@ -35,6 +36,9 @@ const rows=registry.map(row=>row.split(',')).filter(row=>row[4]==='diverse').map
     assert.equal(new Set(entries.map(e=>e.seed)).size,entries.length);assert(new Set(entries.map(e=>`${e.x}:${e.y}`)).size>=2,'Certified seeds must have different extraction endpoints');
     assert(entries.every(e=>Number.isSafeInteger(e.seed)&&e.seed>=0&&e.seed<=0xffffffff&&Number.isFinite(e.x)&&Number.isFinite(e.y)&&e.x>=0&&e.y>=0&&e.x<intent.frameWidthPx&&e.y<intent.frameHeightPx));
     const recipe=createR100DirectConstructionRecipe(worldId,20261012,grade);
+    // This is the shared reviewed mother catalog. Low-risk departures carry
+    // their own independently certified content override/bank.
+    recipe.contentDefinition=R100_EXPEDITION_GRADES.find(row=>row.grade_id===grade);
     recipe.nativeConstruction={...recipe.nativeConstruction,reference,shore,intent};recipe.nativeSpatial=applyNativeConstructionIntent(recipe.nativeSpatial,recipe.nativeConstruction);
     const identity=nativeConstructionContentIdentity(recipe);assert(entries.every(e=>e.identity===identity),`Content certification is stale: ${worldId}/${grade}`);
     contentSeeds[grade]=entries.map(e=>e.seed);contentSeedIdentities[grade]=identity;

@@ -1,0 +1,1979 @@
+[
+  {
+    "id": "crystal-fibre",
+    "grade": "low",
+    "seed": 156,
+    "signature": "9a3f57bb",
+    "width": 2976,
+    "height": 1792,
+    "kindling": [
+      {
+        "id": "r100-kindling-safe-1",
+        "tier": "safe",
+        "position": {
+          "x": 1220,
+          "y": 1332
+        },
+        "value": 1
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "tier": "contested",
+        "position": {
+          "x": 2692,
+          "y": 964
+        },
+        "value": 2
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "tier": "contested",
+        "position": {
+          "x": 2116,
+          "y": 676
+        },
+        "value": 2
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "tier": "deep",
+        "position": {
+          "x": 580,
+          "y": 1252
+        },
+        "value": 4
+      }
+    ],
+    "contaminants": [
+      {
+        "id": "r100-contaminant-safe-1",
+        "tier": "safe",
+        "position": {
+          "x": 1620,
+          "y": 1268
+        }
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "tier": "contested",
+        "position": {
+          "x": 1380,
+          "y": 740
+        }
+      }
+    ],
+    "spawn": {
+      "x": 1132,
+      "y": 1324
+    },
+    "exit": {
+      "id": "master-exit",
+      "position": {
+        "x": 2492,
+        "y": 1196
+      },
+      "triggerRadius": 48
+    },
+    "recipe": {
+      "version": 3,
+      "requestedSeed": 156,
+      "paintGeometryVersion": 2,
+      "profile": {
+        "id": "crystal-fibre",
+        "label": "晶化林床",
+        "description": "纤维床沿统一方向晶化",
+        "material": "crystal",
+        "surface": {
+          "substrate": "strata",
+          "coating": "crystal",
+          "organization": "clusters",
+          "coverage": 0.66,
+          "wear": 0.43,
+          "deposits": 0.42,
+          "scale": 0.95,
+          "relief": 0.58,
+          "contrast": 0.85,
+          "regionScale": 1.1,
+          "quietness": 0.5,
+          "formScale": 1.5,
+          "fragmentation": 0.32,
+          "accentCoverage": 0.18
+        },
+        "palette": {
+          "void": 856090,
+          "shadow": 1449000,
+          "floorDeep": 1383746,
+          "floor": 2571894,
+          "floorLight": 5270441,
+          "materialDark": 2370912,
+          "materialMid": 5268135,
+          "materialLight": 9149391,
+          "faceLight": 13752809,
+          "accentDim": 5326174,
+          "accent": 7956100,
+          "accentLight": 11444401,
+          "peak": 14476773,
+          "actorDark": 2433318,
+          "actorMid": 11702376,
+          "actorLight": 15584925,
+          "ground": 2571894,
+          "groundLight": 5270441,
+          "groundDark": 1383746,
+          "wall": 5268135,
+          "wallLight": 9149391,
+          "wallDark": 2370912
+        }
+      },
+      "appearance": {
+        "version": 1,
+        "worldId": "crystal-fibre",
+        "ground": {
+          "dark": 1383746,
+          "mid": 2571894,
+          "light": 5270441
+        },
+        "solid": {
+          "dark": 2370912,
+          "mid": 5268135,
+          "light": 9149391
+        },
+        "cleaved": {
+          "dark": 4805753,
+          "mid": 10332371,
+          "light": 13752809
+        },
+        "secondary": {
+          "dark": 4797222,
+          "mid": 12421444,
+          "light": 14927246
+        },
+        "groundPattern": "veins",
+        "patternScale": 176,
+        "patternStrength": 0.76,
+        "secondaryCoverage": 0.23,
+        "textureContrast": 1.14,
+        "quietCoverage": 0.38
+      },
+      "space": {
+        "id": "open-scars",
+        "label": "疏落蚀坑",
+        "voidFraction": 0.09,
+        "crackFraction": 0.2,
+        "holeScale": 1,
+        "directionality": 0.2,
+        "clustering": 0.25
+      },
+      "contentFragmentTypeId": "frag-outdoor",
+      "nativeDefinition": {
+        "id": "fibre-knot-low",
+        "family": "fibre-knot",
+        "grade": "low",
+        "label": "纤维·未结",
+        "profile": "crystal-fibre",
+        "cols": 28,
+        "rows": 20,
+        "seed": 20261002,
+        "spawn_x": 260,
+        "spawn_y": 380,
+        "exit_x": 196,
+        "exit_y": 460,
+        "search_x": 538,
+        "search_y": 420,
+        "enemy_x": 712,
+        "enemy_y": 180,
+        "axis": -0.28,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "role": "solid",
+            "x": 471,
+            "y": 270,
+            "rotation": -0.28,
+            "length": 370,
+            "width": 136,
+            "height": 116,
+            "thickness": 9,
+            "fold": 0.59,
+            "branches": 4,
+            "opening": 0.25,
+            "distortion": 0.35
+          },
+          {
+            "id": 2,
+            "role": "relief",
+            "x": 636,
+            "y": 287,
+            "rotation": 0.77,
+            "length": 263,
+            "width": 92,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.52,
+            "branches": 3,
+            "opening": 0.24,
+            "distortion": 0.25
+          },
+          {
+            "id": 3,
+            "role": "relief",
+            "x": 430,
+            "y": 155,
+            "rotation": 2.88,
+            "length": 228,
+            "width": 78,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.46,
+            "branches": 3,
+            "opening": 0.25,
+            "distortion": 0.24
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 620,
+              "y": 352
+            },
+            {
+              "x": 656,
+              "y": 344
+            },
+            {
+              "x": 704,
+              "y": 368
+            },
+            {
+              "x": 696,
+              "y": 392
+            },
+            {
+              "x": 644,
+              "y": 382
+            }
+          ]
+        ]
+      },
+      "gradeDefinition": {
+        "id": "low",
+        "version": 1,
+        "label": "低污染",
+        "status": "dev-masters",
+        "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+        "paintCount": 2,
+        "paintSubstrate": "oil_film",
+        "paintContinuity": "monolith",
+        "paintCoverage": "infiltrate",
+        "volumeCount": 1,
+        "volumeSubstrate": "gas_mass",
+        "volumeCoverage": "infiltrate",
+        "volumeCols": 3,
+        "volumeRows": 3,
+        "chaosStartRate": 0.24,
+        "chaosEndRate": 0.34,
+        "chaosRampStartSeconds": 90,
+        "chaosRampEndSeconds": 210
+      },
+      "contentDefinition": {
+        "grade_id": "low",
+        "version": 2,
+        "status": "production-candidate",
+        "label": "低污染",
+        "public_risk": "污染较少，混乱增长较慢",
+        "public_preparation": "观察路线，补充行装",
+        "public_reward": "深入仍需承担路程",
+        "enemy_count": 2,
+        "kindling_safe_count": 1,
+        "kindling_contested_count": 2,
+        "kindling_deep_count": 1,
+        "kindling_safe_value": 1,
+        "kindling_contested_value": 2,
+        "kindling_deep_value": 4,
+        "contaminant_safe_count": 1,
+        "contaminant_contested_count": 1,
+        "contaminant_deep_count": 0
+      },
+      "nativeSpatial": {
+        "policy": {
+          "algorithm": "native-joint-layout-v1",
+          "version": 2,
+          "enabled": true,
+          "planningCellFactor": 0.7108756510416666,
+          "holeToSolidRatio": 2,
+          "holeCountAbsTolerance": 1,
+          "holeCountRelTolerance": 0.2,
+          "minSolidCount": 1,
+          "requireMoreHoles": true,
+          "regionHoleShareMin": 0.64,
+          "regionHoleShareMax": 0.7,
+          "comparisonSpacingsPx": [
+            288,
+            352
+          ],
+          "spacingPx": 320,
+          "countToleranceRatio": 0.2,
+          "areaToleranceRatio": 0.1,
+          "maxEmptyRadiusPx": 160,
+          "deepEmptyThresholdPx": 112,
+          "maxDeepEmptySpanPx": 448,
+          "minHoleCoreRadiusPx": 32,
+          "minSolidAreaPx2": 1600,
+          "minSolidSpanPx": 80,
+          "probeStepPx": 32,
+          "referenceSightPx": 224,
+          "revealRouteMinPx": 80,
+          "revealRouteMaxPx": 240,
+          "maxCoverRoutePx": 320,
+          "wideRadiusPx": 48,
+          "minWideRatio": 0.55,
+          "minLargestWideRatio": 0.8,
+          "narrowWidthPx": 160,
+          "maxNarrowRatio": 0.2,
+          "maxNarrowRunPx": 224,
+          "encounterRadiusPx": 112,
+          "minRouteLengthPx": 224,
+          "minRouteEncounters": 6,
+          "minRouteHoleShare": 0.6,
+          "maxRouteHoleShare": 0.75,
+          "windowSize": 6,
+          "minWindowHoles": 3,
+          "maxGeometryEvaluations": 72,
+          "maxFullCandidates": 2,
+          "sourceHash": "0ad4c7149ef3a9befb047e5b78733bef94b766b23a88e9a7e6824c7b6124876a"
+        },
+        "world": {
+          "worldId": "crystal-fibre",
+          "enabled": true,
+          "annotationStatus": "reviewed",
+          "targetWalkAreaPx2": 1747048,
+          "frameWidthPx": 2976,
+          "frameHeightPx": 1792,
+          "materialAxisRad": 0.1,
+          "landGrammar": "offset-overlap-v1",
+          "landRectMinCount": 4,
+          "landRectMaxCount": 7,
+          "landRectMinSpanPx": 752,
+          "landRectMaxSpanPx": 1360,
+          "landRectMinThicknessPx": 512,
+          "landRectMaxThicknessPx": 928,
+          "landRectMinOverlapPx": 320,
+          "bayGrammar": "shore-rect-cut-v1",
+          "bayProfileIds": [
+            "shore-bay-default"
+          ],
+          "bayCountOptions": [
+            0,
+            1,
+            2
+          ],
+          "landCoreMinCount": 3,
+          "landCoreMaxCount": 5,
+          "landShoulderMinCount": 1,
+          "landShoulderMaxCount": 2,
+          "landShoulderMinSpanPx": 576,
+          "landShoulderMaxSpanPx": 768,
+          "landShoulderMinThicknessPx": 384,
+          "landShoulderMaxThicknessPx": 448,
+          "landShoulderMinExtensionPx": 192,
+          "landShoulderMaxExtensionPx": 320,
+          "landShoulderAttachment": "core-outward-normal-v1"
+        },
+        "holeProfiles": [
+          {
+            "id": "offset-cut-small",
+            "sizeClass": "small",
+            "weight": 35,
+            "minSpanPx": 112,
+            "maxSpanPx": 144,
+            "minThicknessPx": 80,
+            "maxThicknessPx": 104,
+            "minRectCount": 2,
+            "maxRectCount": 3,
+            "minOverlapRatio": 0.3,
+            "maxOverlapRatio": 0.65,
+            "minOffsetRatio": 0.18,
+            "maxOffsetRatio": 0.5,
+            "maxAreaPx2": 14000
+          },
+          {
+            "id": "offset-cut-medium",
+            "sizeClass": "medium",
+            "weight": 50,
+            "minSpanPx": 152,
+            "maxSpanPx": 192,
+            "minThicknessPx": 88,
+            "maxThicknessPx": 120,
+            "minRectCount": 2,
+            "maxRectCount": 3,
+            "minOverlapRatio": 0.3,
+            "maxOverlapRatio": 0.65,
+            "minOffsetRatio": 0.18,
+            "maxOffsetRatio": 0.5,
+            "maxAreaPx2": 22000
+          },
+          {
+            "id": "offset-cut-large",
+            "sizeClass": "large",
+            "weight": 15,
+            "minSpanPx": 200,
+            "maxSpanPx": 240,
+            "minThicknessPx": 96,
+            "maxThicknessPx": 136,
+            "minRectCount": 3,
+            "maxRectCount": 4,
+            "minOverlapRatio": 0.3,
+            "maxOverlapRatio": 0.65,
+            "minOffsetRatio": 0.18,
+            "maxOffsetRatio": 0.5,
+            "maxAreaPx2": 30000
+          }
+        ],
+        "bayProfiles": [
+          {
+            "id": "shore-bay-default",
+            "minRectCount": 1,
+            "maxRectCount": 3,
+            "minDepthPx": 128,
+            "maxDepthPx": 480,
+            "minMouthPx": 96,
+            "maxMouthPx": 192,
+            "minOffsetRatio": 0.15,
+            "maxOffsetRatio": 0.45,
+            "minOverlapRatio": 0.35,
+            "maxOverlapRatio": 0.8,
+            "maxUnionSpanPx": 576,
+            "minRemovedLandAreaPx2": 8192,
+            "maxRemovedLandAreaPx2": 61440,
+            "minFinalThroatPx": 64,
+            "minBacklandPx": 320
+          }
+        ],
+        "assemblies": [
+          {
+            "worldId": "crystal-fibre",
+            "grade": "all",
+            "id": "crystal-fibre-medium-whole",
+            "sourceInstanceIds": [
+              1
+            ],
+            "attachedReliefIds": [
+              2,
+              3
+            ],
+            "sourceScale": 1,
+            "minScale": 0.95,
+            "maxScale": 1.05,
+            "rotationOffsetsRad": [
+              -0.18,
+              0,
+              0.18,
+              3.14159265359
+            ],
+            "maxSpanPx": 1120,
+            "mode": "unique-once"
+          }
+        ],
+        "subordinateProfiles": [
+          {
+            "id": "native-fibre-fallen-end",
+            "family": "fibre-knot",
+            "constructionVersion": 4,
+            "shapeProfile": "fallen-bundle",
+            "minLengthPx": 136,
+            "maxLengthPx": 208,
+            "minWidthPx": 52,
+            "maxWidthPx": 84,
+            "minHeightPx": 22,
+            "maxHeightPx": 36,
+            "thicknessPx": 7,
+            "fold": 0.42,
+            "branches": 3,
+            "opening": 0.74,
+            "distortion": 0.62,
+            "rotationOffsetRad": 0.14
+          },
+          {
+            "id": "native-fibre-pressed-knot",
+            "family": "fibre-knot",
+            "constructionVersion": 4,
+            "shapeProfile": "compressed-wedge",
+            "minLengthPx": 104,
+            "maxLengthPx": 160,
+            "minWidthPx": 72,
+            "maxWidthPx": 108,
+            "minHeightPx": 28,
+            "maxHeightPx": 44,
+            "thicknessPx": 9,
+            "fold": 0.58,
+            "branches": 2,
+            "opening": 0.62,
+            "distortion": 0.52,
+            "rotationOffsetRad": -0.32
+          }
+        ],
+        "extraction": {
+          "minPathDistancePx": 920,
+          "minEuclideanDistancePx": 560,
+          "minPathFraction": 0.28,
+          "maxPathFraction": 1,
+          "clearanceHalfSize": 28,
+          "regionCols": 4,
+          "regionRows": 3,
+          "distanceBands": 3
+        },
+        "deployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        }
+      },
+      "searchSitePolicy": {
+        "version": 1,
+        "algorithm": "grounded-search-v1",
+        "worldId": "crystal-fibre",
+        "sourceHash": "f50b0385cbdd3521ccce1dfb1f43d66ef321a82fe41a1a5b4072cbb033b11d85",
+        "sourceReachPx": 72,
+        "environmentScoreCap": 12,
+        "peelPreference": 0.45,
+        "footprintProfile": "grounded-material-v1"
+      },
+      "nativeConstruction": {
+        "worldId": "crystal-fibre",
+        "reference": {
+          "csv": "reference_id,world_id,grade,seed,seed_salt,kind,id,profile_id,x_px,y_px,width_px,height_px,length_px,rotation_rad,scale,parent_id,rects\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-0,core,1216,512,768,768,,,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-1,core,480,800,1120,640,,,,land-0,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-2,core,1408,128,576,768,,,,land-0,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-3,core,1664,608,864,640,,,,land-0,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,expanded-land-4,shoulder,56,800,744,568,,,,land-1,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,expanded-land-5,shoulder,2208,608,728,584,,,,land-3,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,assembly,fold,crystal-fibre-medium-whole,1632,808,,,,0,1,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-0,native-fibre-fallen-end,1680,192,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-1,native-fibre-fallen-end,720,1136,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-2,native-fibre-fallen-end,1288,1104,56,32,160,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-3,native-fibre-fallen-end,2320,784,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-4,native-fibre-fallen-end,1928,1024,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,extension-1-solid,native-fibre-fallen-end,376,1088,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,extension-2-solid,native-fibre-fallen-end,2632,904,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-0,offset-cut-medium,1528,496,,,,,,,1448:440:144:96|1528:456:72:96\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-1,offset-cut-small,1880,512,,,,,,,1816:472:80:72|1888:496:48:40|1832:528:40:24\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-2,offset-cut-small,1872,208,,,,,,,1816:168:112:80|1808:160:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-3,offset-cut-small,600,968,,,,,,,568:912:72:80|576:984:40:48|560:928:24:40\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-4,offset-cut-small,968,968,,,,,,,928:904:80:112|920:968:72:56\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-5,offset-cut-small,928,1296,,,,,,,864:1248:112:80|928:1264:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-6,offset-cut-medium,1352,1344,,,,,,,1280:1304:144:96|1272:1288:72:96\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-7,offset-cut-medium,1504,1064,,,,,,,1432:1024:144:96|1424:1008:72:96\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-8,offset-cut-small,2088,752,,,,,,,2040:696:80:112|2056:688:72:56\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-9,offset-cut-medium,2336,1096,,,,,,,2256:1040:144:96|2336:1056:72:96\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-10,offset-cut-small,1928,1136,,,,,,,1872:1096:112:80|1864:1088:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-11,offset-cut-small,1312,712,,,,,,,1280:656:72:80|1288:728:40:48|1272:672:24:40\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,extension-1-hole-0,offset-cut-small,152,880,,,,,,,96:840:112:80|88:832:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,extension-1-hole-1,offset-cut-medium,168,1280,,,,,,,88:1224:144:96|168:1240:72:96\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,extension-2-hole-0,offset-cut-small,2848,688,,,,,,,2792:648:112:80|2784:640:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,extension-2-hole-1,offset-cut-medium,2832,1104,,,,,,,2760:1064:144:96|2752:1048:72:96\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,spawn,spawn,,1136,1328,,,,,,,\n",
+          "sourceHash": "0ddf8d33eccdc88c55cb14463f927c92e124dd1bcb35dc2e227c94c510db52ee"
+        },
+        "shore": {
+          "csv": "reference_id,algorithm,segment_min_px,segment_max_px,depth_min_px,depth_max_px,protected_gap_px,max_clean_run_px\ncrystal-fibre-fixed-reference,macro-shore-step-v1,80,160,32,72,48,384\n",
+          "sourceHash": "7e653228d5ebfcc604cef62b66175307c7fba547b1699ff2a9e7b58a49fa553d"
+        },
+        "intent": {
+          "frameWidthPx": 2976,
+          "frameHeightPx": 1792,
+          "targetWalkAreaPx2": 1747048,
+          "planningCellFactor": 0.7108756510416666
+        },
+        "contentSeeds": {
+          "low": [
+            42,
+            1729759881
+          ],
+          "medium": [
+            42,
+            1729759881
+          ],
+          "severe": [
+            42,
+            2437493859
+          ]
+        },
+        "contentSeedIdentities": {
+          "low": "fdd515c9",
+          "medium": "85162594",
+          "severe": "98286e4e"
+        },
+        "sourceHash": "949d072652f0a0efb2107eb3c05923dbde89508a538e60f0ed3f21264199e66f",
+        "algorithm": "native-direct-construction-v1",
+        "version": 1,
+        "seedMode": "reviewed-geometry-v1",
+        "geometrySeed": 20261012,
+        "sourceGrade": "medium"
+      },
+      "surfacePixelBudget": 8388608,
+      "enemyMaterialVersion": 1,
+      "enemyMaterial": {
+        "key": "world-body-v1:crystal-fibre:4179c0b66f09bb61ec765f50d7a58ca0c7cb6d8f1102cc4f59eaf14f3499baca:8fc9ea2cac80fda4bba849f01e7b5096dd7fb3212acfaef6bf983f89ea0a9cca",
+        "worldId": "crystal-fibre",
+        "kind": "fibre",
+        "dark": [
+          36,
+          45,
+          96
+        ],
+        "mid": [
+          80,
+          98,
+          167
+        ],
+        "light": [
+          139,
+          155,
+          207
+        ],
+        "secondary": [
+          189,
+          137,
+          68
+        ],
+        "fibreCount": 4,
+        "membraneSpread": 0.7,
+        "motionLag": 0.12,
+        "paintBranching": 0.84
+      },
+      "enemyDeployment": {
+        "version": 1,
+        "worldId": "crystal-fibre",
+        "grade": "low",
+        "sourceHash": "06f23c81ba05bbdb48f0a40a0c670a1fcc2c4161b7c8d54f970cc8cff64f2efe",
+        "infiltrator": {
+          "substrate": "human_remnant",
+          "coverage": "infiltrate",
+          "continuity": "monolith",
+          "occupancy": "floor",
+          "portfolio": "jia",
+          "lexemes": {
+            "motion": "motion_patrol",
+            "sense": "sense_cone",
+            "rhythm": "rhythm_open",
+            "contact": "contact_melee_three"
+          }
+        },
+        "rewriter": {
+          "substrate": "human_remnant",
+          "coverage": "rewrite",
+          "continuity": "monolith",
+          "occupancy": "floor",
+          "portfolio": "jia",
+          "lexemes": {
+            "motion": "motion_patrol",
+            "sense": "sense_hear",
+            "rhythm": "rhythm_open",
+            "contact": "contact_melee_three"
+          }
+        },
+        "paint": {
+          "substrate": "fungal_mat",
+          "coverage": "infiltrate",
+          "continuity": "colony",
+          "occupancy": "paint",
+          "portfolio": "bing",
+          "lexemes": {
+            "motion": "motion_cluster",
+            "sense": "sense_touch",
+            "rhythm": "rhythm_cluster",
+            "contact": "contact_step_chaos"
+          }
+        }
+      },
+      "package": {
+        "id": "r100-crystal-fibre",
+        "algorithm": "r100-native",
+        "version": 3,
+        "algorithmRevision": 13,
+        "materials": {
+          "fibre-knot": {
+            "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+            "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+            "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+          }
+        },
+        "dependencyHash": "cfbd1ae8",
+        "grade": "low"
+      }
+    }
+  },
+  {
+    "id": "cinder-ridge",
+    "grade": "low",
+    "seed": 156,
+    "signature": "ca98803b",
+    "width": 2688,
+    "height": 1792,
+    "kindling": [
+      {
+        "id": "r100-kindling-safe-1",
+        "tier": "safe",
+        "position": {
+          "x": 372,
+          "y": 1044
+        },
+        "value": 1
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "tier": "contested",
+        "position": {
+          "x": 740,
+          "y": 564
+        },
+        "value": 2
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "tier": "contested",
+        "position": {
+          "x": 1604,
+          "y": 996
+        },
+        "value": 2
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "tier": "deep",
+        "position": {
+          "x": 1684,
+          "y": 740
+        },
+        "value": 4
+      }
+    ],
+    "contaminants": [
+      {
+        "id": "r100-contaminant-safe-1",
+        "tier": "safe",
+        "position": {
+          "x": 772,
+          "y": 1044
+        }
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "tier": "contested",
+        "position": {
+          "x": 1188,
+          "y": 692
+        }
+      }
+    ],
+    "spawn": {
+      "x": 300,
+      "y": 988
+    },
+    "exit": {
+      "id": "master-exit",
+      "position": {
+        "x": 1340,
+        "y": 1292
+      },
+      "triggerRadius": 48
+    },
+    "recipe": {
+      "version": 3,
+      "requestedSeed": 156,
+      "paintGeometryVersion": 2,
+      "profile": {
+        "id": "cinder-ridge",
+        "label": "余烬脊",
+        "description": "余烬脊的原生材料与完整搜撤地段",
+        "material": "granular",
+        "surface": {
+          "substrate": "granular",
+          "coating": "granular",
+          "organization": "bands",
+          "coverage": 0.46,
+          "wear": 0.52,
+          "deposits": 0.52,
+          "scale": 1.1,
+          "relief": 0.52,
+          "contrast": 0.75,
+          "regionScale": 1.15,
+          "quietness": 0.48,
+          "formScale": 1.3,
+          "fragmentation": 0.65,
+          "accentCoverage": 0.02
+        },
+        "palette": {
+          "void": 592137,
+          "shadow": 1381653,
+          "floorDeep": 3284260,
+          "floor": 7090991,
+          "floorLight": 11102027,
+          "materialDark": 4400936,
+          "materialMid": 9584953,
+          "materialLight": 13334867,
+          "faceLight": 14920823,
+          "accentDim": 5395026,
+          "accent": 11184810,
+          "accentLight": 13421772,
+          "peak": 15658734,
+          "actorDark": 1842204,
+          "actorMid": 12237498,
+          "actorLight": 16777215,
+          "ground": 7090991,
+          "groundLight": 11102027,
+          "groundDark": 3284260,
+          "wall": 9584953,
+          "wallLight": 13334867,
+          "wallDark": 4400936
+        }
+      },
+      "appearance": {
+        "version": 1,
+        "worldId": "cinder-ridge",
+        "ground": {
+          "dark": 3284260,
+          "mid": 7090991,
+          "light": 11102027
+        },
+        "solid": {
+          "dark": 4400936,
+          "mid": 9584953,
+          "light": 13334867
+        },
+        "cleaved": {
+          "dark": 6764594,
+          "mid": 13006163,
+          "light": 14920823
+        },
+        "secondary": {
+          "dark": 3159616,
+          "mid": 5856364,
+          "light": 9606048
+        },
+        "groundPattern": "grains",
+        "patternScale": 104,
+        "patternStrength": 0.73,
+        "secondaryCoverage": 0.22,
+        "textureContrast": 1.18,
+        "quietCoverage": 0.27
+      },
+      "space": {
+        "id": "open-scars",
+        "label": "疏落蚀坑",
+        "voidFraction": 0.09,
+        "crackFraction": 0.2,
+        "holeScale": 1,
+        "directionality": 0.2,
+        "clustering": 0.25
+      },
+      "contentFragmentTypeId": "frag-outdoor",
+      "nativeDefinition": {
+        "id": "cinder-ridge-low",
+        "family": "granular-ridge",
+        "grade": "low",
+        "label": "余烬脊",
+        "profile": "cinder-ridge",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 19,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "relief",
+            "x": 492,
+            "y": 430,
+            "rotation": -0.2,
+            "length": 540,
+            "width": 268,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.32,
+            "branches": 3,
+            "opening": 0.55,
+            "distortion": 0.62,
+            "constructionVersion": 2
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 410,
+            "y": 325,
+            "rotation": -0.18,
+            "length": 354,
+            "width": 244,
+            "height": 64,
+            "thickness": 13,
+            "fold": 0.72,
+            "branches": 3,
+            "opening": 0.72,
+            "distortion": 0.85,
+            "constructionVersion": 2
+          },
+          {
+            "id": 3,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 750,
+            "y": 480,
+            "rotation": 0.55,
+            "length": 252,
+            "width": 138,
+            "height": 22,
+            "thickness": 8,
+            "fold": 0.25,
+            "branches": 6,
+            "opening": 0.25,
+            "distortion": 0.58,
+            "constructionVersion": 2
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      "gradeDefinition": {
+        "id": "low",
+        "version": 1,
+        "label": "低污染",
+        "status": "dev-masters",
+        "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+        "paintCount": 2,
+        "paintSubstrate": "oil_film",
+        "paintContinuity": "monolith",
+        "paintCoverage": "infiltrate",
+        "volumeCount": 1,
+        "volumeSubstrate": "gas_mass",
+        "volumeCoverage": "infiltrate",
+        "volumeCols": 3,
+        "volumeRows": 3,
+        "chaosStartRate": 0.24,
+        "chaosEndRate": 0.34,
+        "chaosRampStartSeconds": 90,
+        "chaosRampEndSeconds": 210
+      },
+      "contentDefinition": {
+        "grade_id": "low",
+        "version": 2,
+        "status": "production-candidate",
+        "label": "低污染",
+        "public_risk": "污染较少，混乱增长较慢",
+        "public_preparation": "观察路线，补充行装",
+        "public_reward": "深入仍需承担路程",
+        "enemy_count": 2,
+        "kindling_safe_count": 1,
+        "kindling_contested_count": 2,
+        "kindling_deep_count": 1,
+        "kindling_safe_value": 1,
+        "kindling_contested_value": 2,
+        "kindling_deep_value": 4,
+        "contaminant_safe_count": 1,
+        "contaminant_contested_count": 1,
+        "contaminant_deep_count": 0
+      },
+      "nativeSpatial": {
+        "policy": {
+          "algorithm": "native-joint-layout-v1",
+          "version": 2,
+          "enabled": true,
+          "planningCellFactor": 0.8306868489583333,
+          "holeToSolidRatio": 2,
+          "holeCountAbsTolerance": 1,
+          "holeCountRelTolerance": 0.2,
+          "minSolidCount": 1,
+          "requireMoreHoles": true,
+          "regionHoleShareMin": 0.64,
+          "regionHoleShareMax": 0.7,
+          "comparisonSpacingsPx": [
+            288,
+            352
+          ],
+          "spacingPx": 320,
+          "countToleranceRatio": 0.2,
+          "areaToleranceRatio": 0.1,
+          "maxEmptyRadiusPx": 160,
+          "deepEmptyThresholdPx": 112,
+          "maxDeepEmptySpanPx": 448,
+          "minHoleCoreRadiusPx": 32,
+          "minSolidAreaPx2": 1600,
+          "minSolidSpanPx": 80,
+          "probeStepPx": 32,
+          "referenceSightPx": 224,
+          "revealRouteMinPx": 80,
+          "revealRouteMaxPx": 240,
+          "maxCoverRoutePx": 320,
+          "wideRadiusPx": 48,
+          "minWideRatio": 0.55,
+          "minLargestWideRatio": 0.8,
+          "narrowWidthPx": 160,
+          "maxNarrowRatio": 0.2,
+          "maxNarrowRunPx": 224,
+          "encounterRadiusPx": 112,
+          "minRouteLengthPx": 224,
+          "minRouteEncounters": 6,
+          "minRouteHoleShare": 0.6,
+          "maxRouteHoleShare": 0.75,
+          "windowSize": 6,
+          "minWindowHoles": 3,
+          "maxGeometryEvaluations": 72,
+          "maxFullCandidates": 2,
+          "sourceHash": "0ad4c7149ef3a9befb047e5b78733bef94b766b23a88e9a7e6824c7b6124876a"
+        },
+        "world": {
+          "worldId": "cinder-ridge",
+          "enabled": true,
+          "annotationStatus": "reviewed",
+          "targetWalkAreaPx2": 2041496,
+          "frameWidthPx": 2688,
+          "frameHeightPx": 1792,
+          "materialAxisRad": 0.1,
+          "landGrammar": "offset-overlap-v1",
+          "landRectMinCount": 4,
+          "landRectMaxCount": 7,
+          "landRectMinSpanPx": 800,
+          "landRectMaxSpanPx": 1440,
+          "landRectMinThicknessPx": 544,
+          "landRectMaxThicknessPx": 960,
+          "landRectMinOverlapPx": 320,
+          "bayGrammar": "shore-rect-cut-v1",
+          "bayProfileIds": [
+            "shore-bay-default"
+          ],
+          "bayCountOptions": [
+            0,
+            1,
+            2
+          ],
+          "landCoreMinCount": 3,
+          "landCoreMaxCount": 5,
+          "landShoulderMinCount": 1,
+          "landShoulderMaxCount": 2,
+          "landShoulderMinSpanPx": 576,
+          "landShoulderMaxSpanPx": 768,
+          "landShoulderMinThicknessPx": 384,
+          "landShoulderMaxThicknessPx": 448,
+          "landShoulderMinExtensionPx": 192,
+          "landShoulderMaxExtensionPx": 320,
+          "landShoulderAttachment": "core-outward-normal-v1"
+        },
+        "holeProfiles": [
+          {
+            "id": "offset-cut-small",
+            "sizeClass": "small",
+            "weight": 35,
+            "minSpanPx": 112,
+            "maxSpanPx": 144,
+            "minThicknessPx": 80,
+            "maxThicknessPx": 104,
+            "minRectCount": 2,
+            "maxRectCount": 3,
+            "minOverlapRatio": 0.3,
+            "maxOverlapRatio": 0.65,
+            "minOffsetRatio": 0.18,
+            "maxOffsetRatio": 0.5,
+            "maxAreaPx2": 14000
+          },
+          {
+            "id": "offset-cut-medium",
+            "sizeClass": "medium",
+            "weight": 50,
+            "minSpanPx": 152,
+            "maxSpanPx": 192,
+            "minThicknessPx": 88,
+            "maxThicknessPx": 120,
+            "minRectCount": 2,
+            "maxRectCount": 3,
+            "minOverlapRatio": 0.3,
+            "maxOverlapRatio": 0.65,
+            "minOffsetRatio": 0.18,
+            "maxOffsetRatio": 0.5,
+            "maxAreaPx2": 22000
+          },
+          {
+            "id": "offset-cut-large",
+            "sizeClass": "large",
+            "weight": 15,
+            "minSpanPx": 200,
+            "maxSpanPx": 240,
+            "minThicknessPx": 96,
+            "maxThicknessPx": 136,
+            "minRectCount": 3,
+            "maxRectCount": 4,
+            "minOverlapRatio": 0.3,
+            "maxOverlapRatio": 0.65,
+            "minOffsetRatio": 0.18,
+            "maxOffsetRatio": 0.5,
+            "maxAreaPx2": 30000
+          }
+        ],
+        "bayProfiles": [
+          {
+            "id": "shore-bay-default",
+            "minRectCount": 1,
+            "maxRectCount": 3,
+            "minDepthPx": 128,
+            "maxDepthPx": 480,
+            "minMouthPx": 96,
+            "maxMouthPx": 192,
+            "minOffsetRatio": 0.15,
+            "maxOffsetRatio": 0.45,
+            "minOverlapRatio": 0.35,
+            "maxOverlapRatio": 0.8,
+            "maxUnionSpanPx": 576,
+            "minRemovedLandAreaPx2": 8192,
+            "maxRemovedLandAreaPx2": 61440,
+            "minFinalThroatPx": 64,
+            "minBacklandPx": 320
+          }
+        ],
+        "assemblies": [
+          {
+            "worldId": "cinder-ridge",
+            "grade": "all",
+            "id": "cinder-ridge-all-whole",
+            "sourceInstanceIds": [
+              2,
+              3
+            ],
+            "attachedReliefIds": [
+              1
+            ],
+            "sourceScale": 1,
+            "minScale": 0.95,
+            "maxScale": 1.05,
+            "rotationOffsetsRad": [
+              -0.18,
+              0,
+              0.18,
+              3.14159265359
+            ],
+            "maxSpanPx": 1120,
+            "mode": "unique-once"
+          }
+        ],
+        "subordinateProfiles": [
+          {
+            "id": "native-grain-broken-mound",
+            "family": "granular-ridge",
+            "constructionVersion": 4,
+            "shapeProfile": "porous-break",
+            "minLengthPx": 136,
+            "maxLengthPx": 208,
+            "minWidthPx": 72,
+            "maxWidthPx": 112,
+            "minHeightPx": 24,
+            "maxHeightPx": 40,
+            "thicknessPx": 8,
+            "fold": 0.4,
+            "branches": 3,
+            "opening": 0.68,
+            "distortion": 0.64,
+            "rotationOffsetRad": 0.14
+          }
+        ],
+        "extraction": {
+          "minPathDistancePx": 920,
+          "minEuclideanDistancePx": 560,
+          "minPathFraction": 0.28,
+          "maxPathFraction": 1,
+          "clearanceHalfSize": 28,
+          "regionCols": 4,
+          "regionRows": 3,
+          "distanceBands": 3
+        },
+        "deployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        }
+      },
+      "searchSitePolicy": {
+        "version": 1,
+        "algorithm": "grounded-search-v1",
+        "worldId": "cinder-ridge",
+        "sourceHash": "bf613551e72c1c254d84931fd29f3d1b286cd7cc150eae19c3f598f333554270",
+        "sourceReachPx": 72,
+        "environmentScoreCap": 12,
+        "peelPreference": 0.1,
+        "footprintProfile": "grounded-material-v1"
+      },
+      "nativeConstruction": {
+        "worldId": "cinder-ridge",
+        "reference": {
+          "csv": "reference_id,world_id,grade,seed,seed_salt,kind,id,profile_id,x_px,y_px,width_px,height_px,length_px,rotation_rad,scale,parent_id,rects\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,land,land-0,core,64,616,1040,720,,,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,land,land-1,core,704,480,1120,864,,,,land-0,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,land,land-2,core,1472,320,768,832,,,,land-1,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,land,land-3,core,320,960,896,512,,,,land-0,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,land,expanded-land-4,shoulder,704,32,624,768,,,,land-1,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,land,expanded-land-5,shoulder,1920,472,720,584,,,,land-2,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,assembly,main,cinder-ridge-all-whole,1120,896,,,,0,1,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,solid-0,native-grain-broken-mound,416,984,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,solid-1,native-grain-broken-mound,624,1272,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,solid-2,native-grain-broken-mound,1824,800,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,solid-3,native-grain-broken-mound,2128,592,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,solid-4,native-grain-broken-mound,1552,776,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,extension-1-solid,native-grain-broken-mound,1016,400,80,32,176,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,solid,extension-2-solid,native-grain-broken-mound,2376,768,72,32,168,0.24,,,\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-0,offset-cut-small,232,808,,,,,,,168:760:112:80|232:776:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-1,offset-cut-small,552,712,,,,,,,512:672:80:72|584:696:48:40|528:728:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-2,offset-cut-small,1656,488,,,,,,,1592:440:112:80|1656:456:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-3,offset-cut-small,240,1192,,,,,,,176:1144:112:80|240:1160:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-4,offset-cut-small,1160,1248,,,,,,,1096:1208:80:72|1168:1232:48:40|1112:1264:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-5,offset-cut-small,1976,496,,,,,,,1912:448:112:80|1976:464:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-6,offset-cut-small,2120,840,,,,,,,2080:800:80:72|2152:824:48:40|2096:856:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-7,offset-cut-small,1672,1144,,,,,,,1632:1104:80:72|1704:1128:48:40|1648:1160:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-8,offset-cut-small,2024,1032,,,,,,,1960:984:112:80|2024:1000:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-9,offset-cut-small,1288,584,,,,,,,1224:544:80:80|1288:576:64:48\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-10,offset-cut-small,744,1160,,,,,,,704:1120:80:72|776:1144:48:40|720:1176:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,hole-11,offset-cut-small,632,960,,,,,,,568:912:112:80|632:928:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,extension-1-hole-0,offset-cut-small,808,128,,,,,,,776:64:72:80|784:136:40:48|768:80:24:40\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,extension-1-hole-1,offset-cut-small,1256,128,,,,,,,1224:64:72:80|1232:136:40:48|1216:80:24:40\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,extension-2-hole-0,offset-cut-small,2552,552,,,,,,,2488:504:112:80|2552:520:56:72\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,hole,extension-2-hole-1,offset-cut-small,2536,968,,,,,,,2496:928:80:72|2568:952:48:40|2512:984:40:24\ncinder-ridge-fixed-reference,cinder-ridge,medium,20261012,0,spawn,spawn,,304,992,,,,,,,\n",
+          "sourceHash": "fb2b4617d078503526b162b6d0f0c4f3779d4a2de780148e92eb8eb846421f85"
+        },
+        "shore": {
+          "csv": "reference_id,algorithm,segment_min_px,segment_max_px,depth_min_px,depth_max_px,protected_gap_px,max_clean_run_px\ncinder-ridge-fixed-reference,macro-shore-step-v1,80,160,32,96,48,384\n",
+          "sourceHash": "0d354d76daa1db2ee2e110174045f087e956c584900e53bc58eb259e6819a145"
+        },
+        "intent": {
+          "frameWidthPx": 2688,
+          "frameHeightPx": 1792,
+          "targetWalkAreaPx2": 2041496,
+          "planningCellFactor": 0.8306868489583333
+        },
+        "contentSeeds": {
+          "low": [
+            2530803610,
+            2936677010
+          ],
+          "medium": [
+            42,
+            3908480648
+          ],
+          "severe": [
+            42,
+            1729759881
+          ]
+        },
+        "contentSeedIdentities": {
+          "low": "0107ac06",
+          "medium": "26f4e3c6",
+          "severe": "6622ddc7"
+        },
+        "sourceHash": "0827283b1b8169b1239ac1898b722fef0e9e7eadcefa8f7aed0ec019416e0789",
+        "algorithm": "native-direct-construction-v1",
+        "version": 1,
+        "seedMode": "reviewed-geometry-v1",
+        "geometrySeed": 20261012,
+        "sourceGrade": "medium"
+      },
+      "surfacePixelBudget": 8388608,
+      "package": {
+        "id": "r100-cinder-ridge",
+        "algorithm": "r100-native",
+        "version": 3,
+        "algorithmRevision": 13,
+        "materials": {
+          "granular-ridge": {
+            "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+            "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+            "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+          }
+        },
+        "dependencyHash": "139d3e2b",
+        "grade": "low"
+      }
+    }
+  },
+  {
+    "id": "ruptured-film",
+    "grade": "low",
+    "seed": 156,
+    "signature": "671cfdd2",
+    "width": 2304,
+    "height": 1792,
+    "kindling": [
+      {
+        "id": "r100-kindling-safe-1",
+        "tier": "safe",
+        "position": {
+          "x": 340,
+          "y": 1076
+        },
+        "value": 1
+      },
+      {
+        "id": "r100-kindling-contested-1",
+        "tier": "contested",
+        "position": {
+          "x": 1476,
+          "y": 820
+        },
+        "value": 2
+      },
+      {
+        "id": "r100-kindling-contested-2",
+        "tier": "contested",
+        "position": {
+          "x": 868,
+          "y": 644
+        },
+        "value": 2
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "tier": "deep",
+        "position": {
+          "x": 1748,
+          "y": 724
+        },
+        "value": 4
+      }
+    ],
+    "contaminants": [
+      {
+        "id": "r100-contaminant-safe-1",
+        "tier": "safe",
+        "position": {
+          "x": 676,
+          "y": 1044
+        }
+      },
+      {
+        "id": "r100-contaminant-contested-1",
+        "tier": "contested",
+        "position": {
+          "x": 1828,
+          "y": 1188
+        }
+      }
+    ],
+    "spawn": {
+      "x": 292,
+      "y": 1028
+    },
+    "exit": {
+      "id": "master-exit",
+      "position": {
+        "x": 1524,
+        "y": 1348
+      },
+      "triggerRadius": 48
+    },
+    "recipe": {
+      "version": 3,
+      "requestedSeed": 156,
+      "paintGeometryVersion": 2,
+      "profile": {
+        "id": "ruptured-film",
+        "label": "破膜盆地",
+        "description": "破膜盆地的原生材料与完整搜撤地段",
+        "material": "membrane",
+        "surface": {
+          "substrate": "membrane",
+          "coating": "membrane",
+          "organization": "patches",
+          "coverage": 0.54,
+          "wear": 0.57,
+          "deposits": 0.55,
+          "scale": 1.2,
+          "relief": 0.5,
+          "contrast": 0.72,
+          "regionScale": 1.4,
+          "quietness": 0.55,
+          "formScale": 1.6,
+          "fragmentation": 0.42,
+          "accentCoverage": 0.11
+        },
+        "palette": {
+          "void": 1448997,
+          "shadow": 2699322,
+          "floorDeep": 3742769,
+          "floor": 8663375,
+          "floorLight": 12412029,
+          "materialDark": 7022142,
+          "materialMid": 12472422,
+          "materialLight": 14979733,
+          "faceLight": 15781296,
+          "accentDim": 6443617,
+          "accent": 8809848,
+          "accentLight": 11639443,
+          "peak": 15590084,
+          "actorDark": 2369326,
+          "actorMid": 4936539,
+          "actorLight": 12750939,
+          "ground": 8663375,
+          "groundLight": 12412029,
+          "groundDark": 3742769,
+          "wall": 12472422,
+          "wallLight": 14979733,
+          "wallDark": 7022142
+        }
+      },
+      "appearance": {
+        "version": 1,
+        "worldId": "ruptured-film",
+        "ground": {
+          "dark": 3742769,
+          "mid": 8663375,
+          "light": 12412029
+        },
+        "solid": {
+          "dark": 7022142,
+          "mid": 12472422,
+          "light": 14979733
+        },
+        "cleaved": {
+          "dark": 10046288,
+          "mid": 14326659,
+          "light": 15781296
+        },
+        "secondary": {
+          "dark": 2306114,
+          "mid": 3887210,
+          "light": 7900574
+        },
+        "groundPattern": "tension",
+        "patternScale": 96,
+        "patternStrength": 0.84,
+        "secondaryCoverage": 0.35,
+        "textureContrast": 1.15,
+        "quietCoverage": 0.28
+      },
+      "space": {
+        "id": "open-scars",
+        "label": "疏落蚀坑",
+        "voidFraction": 0.09,
+        "crackFraction": 0.2,
+        "holeScale": 1,
+        "directionality": 0.2,
+        "clustering": 0.25
+      },
+      "contentFragmentTypeId": "frag-outdoor",
+      "nativeDefinition": {
+        "id": "ruptured-film-low",
+        "family": "membrane-rim",
+        "grade": "low",
+        "label": "破膜盆地",
+        "profile": "ruptured-film",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 502,
+            "y": 426,
+            "rotation": 0.05,
+            "length": 541,
+            "width": 330,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.35,
+            "branches": 5,
+            "opening": 0.96,
+            "distortion": 0.76,
+            "constructionVersion": 2
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 531,
+            "y": 287,
+            "rotation": 0.02,
+            "length": 592,
+            "width": 356,
+            "height": 20,
+            "thickness": 7,
+            "fold": 0.24,
+            "branches": 5,
+            "opening": 0.98,
+            "distortion": 0.88,
+            "constructionVersion": 2
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 599,
+            "y": 574,
+            "rotation": -0.3,
+            "length": 320,
+            "width": 150,
+            "height": 42,
+            "thickness": 10,
+            "fold": 0.75,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.67,
+            "constructionVersion": 2
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      "gradeDefinition": {
+        "id": "low",
+        "version": 1,
+        "label": "低污染",
+        "status": "dev-masters",
+        "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+        "paintCount": 2,
+        "paintSubstrate": "oil_film",
+        "paintContinuity": "monolith",
+        "paintCoverage": "infiltrate",
+        "volumeCount": 1,
+        "volumeSubstrate": "gas_mass",
+        "volumeCoverage": "infiltrate",
+        "volumeCols": 3,
+        "volumeRows": 3,
+        "chaosStartRate": 0.24,
+        "chaosEndRate": 0.34,
+        "chaosRampStartSeconds": 90,
+        "chaosRampEndSeconds": 210
+      },
+      "contentDefinition": {
+        "grade_id": "low",
+        "version": 2,
+        "status": "production-candidate",
+        "label": "低污染",
+        "public_risk": "污染较少，混乱增长较慢",
+        "public_preparation": "观察路线，补充行装",
+        "public_reward": "深入仍需承担路程",
+        "enemy_count": 2,
+        "kindling_safe_count": 1,
+        "kindling_contested_count": 2,
+        "kindling_deep_count": 1,
+        "kindling_safe_value": 1,
+        "kindling_contested_value": 2,
+        "kindling_deep_value": 4,
+        "contaminant_safe_count": 1,
+        "contaminant_contested_count": 1,
+        "contaminant_deep_count": 0
+      },
+      "nativeSpatial": {
+        "policy": {
+          "algorithm": "native-joint-layout-v1",
+          "version": 2,
+          "enabled": true,
+          "planningCellFactor": 0.797055431547619,
+          "holeToSolidRatio": 2,
+          "holeCountAbsTolerance": 1,
+          "holeCountRelTolerance": 0.2,
+          "minSolidCount": 1,
+          "requireMoreHoles": true,
+          "regionHoleShareMin": 0.64,
+          "regionHoleShareMax": 0.7,
+          "comparisonSpacingsPx": [
+            288,
+            352
+          ],
+          "spacingPx": 320,
+          "countToleranceRatio": 0.2,
+          "areaToleranceRatio": 0.1,
+          "maxEmptyRadiusPx": 160,
+          "deepEmptyThresholdPx": 112,
+          "maxDeepEmptySpanPx": 448,
+          "minHoleCoreRadiusPx": 32,
+          "minSolidAreaPx2": 1600,
+          "minSolidSpanPx": 80,
+          "probeStepPx": 32,
+          "referenceSightPx": 224,
+          "revealRouteMinPx": 80,
+          "revealRouteMaxPx": 240,
+          "maxCoverRoutePx": 320,
+          "wideRadiusPx": 48,
+          "minWideRatio": 0.55,
+          "minLargestWideRatio": 0.8,
+          "narrowWidthPx": 160,
+          "maxNarrowRatio": 0.2,
+          "maxNarrowRunPx": 224,
+          "encounterRadiusPx": 112,
+          "minRouteLengthPx": 224,
+          "minRouteEncounters": 6,
+          "minRouteHoleShare": 0.6,
+          "maxRouteHoleShare": 0.75,
+          "windowSize": 6,
+          "minWindowHoles": 3,
+          "maxGeometryEvaluations": 72,
+          "maxFullCandidates": 2,
+          "sourceHash": "0ad4c7149ef3a9befb047e5b78733bef94b766b23a88e9a7e6824c7b6124876a"
+        },
+        "world": {
+          "worldId": "ruptured-film",
+          "enabled": true,
+          "annotationStatus": "reviewed",
+          "targetWalkAreaPx2": 1713988,
+          "frameWidthPx": 2304,
+          "frameHeightPx": 1792,
+          "materialAxisRad": 0.1,
+          "landGrammar": "offset-overlap-v1",
+          "landRectMinCount": 4,
+          "landRectMaxCount": 7,
+          "landRectMinSpanPx": 800,
+          "landRectMaxSpanPx": 1440,
+          "landRectMinThicknessPx": 544,
+          "landRectMaxThicknessPx": 960,
+          "landRectMinOverlapPx": 320,
+          "bayGrammar": "shore-rect-cut-v1",
+          "bayProfileIds": [
+            "shore-bay-default"
+          ],
+          "bayCountOptions": [
+            0,
+            1,
+            2
+          ],
+          "landCoreMinCount": 3,
+          "landCoreMaxCount": 5,
+          "landShoulderMinCount": 1,
+          "landShoulderMaxCount": 2,
+          "landShoulderMinSpanPx": 576,
+          "landShoulderMaxSpanPx": 768,
+          "landShoulderMinThicknessPx": 384,
+          "landShoulderMaxThicknessPx": 448,
+          "landShoulderMinExtensionPx": 192,
+          "landShoulderMaxExtensionPx": 320,
+          "landShoulderAttachment": "core-outward-normal-v1"
+        },
+        "holeProfiles": [
+          {
+            "id": "offset-cut-small",
+            "sizeClass": "small",
+            "weight": 35,
+            "minSpanPx": 112,
+            "maxSpanPx": 144,
+            "minThicknessPx": 80,
+            "maxThicknessPx": 104,
+            "minRectCount": 2,
+            "maxRectCount": 3,
+            "minOverlapRatio": 0.3,
+            "maxOverlapRatio": 0.65,
+            "minOffsetRatio": 0.18,
+            "maxOffsetRatio": 0.5,
+            "maxAreaPx2": 14000
+          },
+          {
+            "id": "offset-cut-medium",
+            "sizeClass": "medium",
+            "weight": 50,
+            "minSpanPx": 152,
+            "maxSpanPx": 192,
+            "minThicknessPx": 88,
+            "maxThicknessPx": 120,
+            "minRectCount": 2,
+            "maxRectCount": 3,
+            "minOverlapRatio": 0.3,
+            "maxOverlapRatio": 0.65,
+            "minOffsetRatio": 0.18,
+            "maxOffsetRatio": 0.5,
+            "maxAreaPx2": 22000
+          },
+          {
+            "id": "offset-cut-large",
+            "sizeClass": "large",
+            "weight": 15,
+            "minSpanPx": 200,
+            "maxSpanPx": 240,
+            "minThicknessPx": 96,
+            "maxThicknessPx": 136,
+            "minRectCount": 3,
+            "maxRectCount": 4,
+            "minOverlapRatio": 0.3,
+            "maxOverlapRatio": 0.65,
+            "minOffsetRatio": 0.18,
+            "maxOffsetRatio": 0.5,
+            "maxAreaPx2": 30000
+          }
+        ],
+        "bayProfiles": [
+          {
+            "id": "shore-bay-default",
+            "minRectCount": 1,
+            "maxRectCount": 3,
+            "minDepthPx": 128,
+            "maxDepthPx": 480,
+            "minMouthPx": 96,
+            "maxMouthPx": 192,
+            "minOffsetRatio": 0.15,
+            "maxOffsetRatio": 0.45,
+            "minOverlapRatio": 0.35,
+            "maxOverlapRatio": 0.8,
+            "maxUnionSpanPx": 576,
+            "minRemovedLandAreaPx2": 8192,
+            "maxRemovedLandAreaPx2": 61440,
+            "minFinalThroatPx": 64,
+            "minBacklandPx": 320
+          }
+        ],
+        "assemblies": [
+          {
+            "worldId": "ruptured-film",
+            "grade": "all",
+            "id": "ruptured-film-all-whole",
+            "sourceInstanceIds": [
+              2,
+              3
+            ],
+            "attachedReliefIds": [
+              1
+            ],
+            "sourceScale": 1,
+            "minScale": 0.8,
+            "maxScale": 1.05,
+            "rotationOffsetsRad": [
+              -0.18,
+              0,
+              0.18,
+              3.14159265359
+            ],
+            "maxSpanPx": 1120,
+            "mode": "unique-once"
+          }
+        ],
+        "subordinateProfiles": [
+          {
+            "id": "native-membrane-curled-remnant",
+            "family": "membrane-rim",
+            "constructionVersion": 4,
+            "shapeProfile": "clamp-bank",
+            "minLengthPx": 160,
+            "maxLengthPx": 220,
+            "minWidthPx": 56,
+            "maxWidthPx": 88,
+            "minHeightPx": 24,
+            "maxHeightPx": 38,
+            "thicknessPx": 5,
+            "fold": 0.52,
+            "branches": 2,
+            "opening": 0.76,
+            "distortion": 0.58,
+            "rotationOffsetRad": 0.18
+          }
+        ],
+        "extraction": {
+          "minPathDistancePx": 920,
+          "minEuclideanDistancePx": 560,
+          "minPathFraction": 0.28,
+          "maxPathFraction": 1,
+          "clearanceHalfSize": 28,
+          "regionCols": 4,
+          "regionRows": 3,
+          "distanceBands": 3
+        },
+        "deployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        }
+      },
+      "searchSitePolicy": {
+        "version": 1,
+        "algorithm": "grounded-search-v1",
+        "worldId": "ruptured-film",
+        "sourceHash": "0adf3e18a69ce51ac60ba34c48de207e9c5b0bf8b1210d6497e18d3a1097538d",
+        "sourceReachPx": 72,
+        "environmentScoreCap": 12,
+        "peelPreference": 0.7,
+        "footprintProfile": "grounded-material-v1"
+      },
+      "nativeConstruction": {
+        "worldId": "ruptured-film",
+        "reference": {
+          "csv": "reference_id,world_id,grade,seed,seed_salt,kind,id,profile_id,x_px,y_px,width_px,height_px,length_px,rotation_rad,scale,parent_id,rects\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,land,land-0,core,64,600,1040,816,,,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,land,land-1,core,704,480,1120,1024,,,,land-0,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,land,land-2,core,1440,320,832,896,,,,land-1,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,land,land-3,core,320,992,896,576,,,,land-0,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,land,expanded-land-4,shoulder,1632,48,520,624,,,,land-2,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,assembly,main,ruptured-film-all-whole,1112,928,,,,0,0.8,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,solid,solid-0,native-membrane-curled-remnant,384,1000,88,38,176,0.28,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,solid,solid-1,native-membrane-curled-remnant,952,1344,88,38,176,0.28,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,solid,solid-2,native-membrane-curled-remnant,1856,768,88,38,176,0.28,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,solid,solid-3,native-membrane-curled-remnant,2064,680,88,38,176,0.28,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,solid,solid-4,native-membrane-curled-remnant,1552,904,88,38,176,0.28,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,solid,extension-2-solid,native-membrane-curled-remnant,1896,248,88,38,176,0.28,,,\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-0,offset-cut-small,232,840,,,,,,,168:792:112:80|232:808:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-1,offset-cut-small,544,736,,,,,,,504:696:80:72|576:720:48:40|520:752:40:24\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-2,offset-cut-small,1624,528,,,,,,,1560:480:112:80|1624:496:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-3,offset-cut-small,304,1352,,,,,,,240:1304:112:80|304:1320:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-4,offset-cut-small,1256,1280,,,,,,,1192:1240:80:72|1264:1264:48:40|1208:1296:40:24\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-5,offset-cut-small,1976,528,,,,,,,1912:480:112:80|1976:496:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-6,offset-cut-small,2120,872,,,,,,,2080:832:80:72|2152:856:48:40|2096:888:40:24\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-7,offset-cut-small,1576,1208,,,,,,,1536:1168:80:72|1608:1192:48:40|1552:1224:40:24\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-8,offset-cut-small,1944,1128,,,,,,,1880:1080:112:80|1944:1096:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-9,offset-cut-small,1192,568,,,,,,,1128:528:80:80|1192:560:64:48\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-10,offset-cut-small,600,1216,,,,,,,560:1176:80:72|632:1200:48:40|576:1232:40:24\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,hole-11,offset-cut-small,776,1024,,,,,,,712:976:112:80|776:992:56:72\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,extension-2-hole-0,offset-cut-small,1704,144,,,,,,,1664:80:80:80|1664:144:48:64\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,hole,extension-2-hole-1,offset-cut-small,2080,144,,,,,,,2040:80:80:80|2040:144:48:64\nruptured-film-fixed-reference,ruptured-film,medium,20261012,0,spawn,spawn,,304,1024,,,,,,,\n",
+          "sourceHash": "f5fd55dae023a2690eeed18e84cbd96eb8566a4583286185508e6dea6162ab41"
+        },
+        "shore": {
+          "csv": "reference_id,algorithm,segment_min_px,segment_max_px,depth_min_px,depth_max_px,protected_gap_px,max_clean_run_px\nruptured-film-fixed-reference,macro-shore-step-v1,80,160,32,80,48,384\n",
+          "sourceHash": "ef544b6e47d0204bf04c1443d16edc0bbb2253aff2ef1629a0581bc6f75f4abc"
+        },
+        "intent": {
+          "frameWidthPx": 2304,
+          "frameHeightPx": 1792,
+          "targetWalkAreaPx2": 1713988,
+          "planningCellFactor": 0.797055431547619
+        },
+        "contentSeeds": {
+          "low": [
+            2761755553,
+            2936677010
+          ],
+          "medium": [
+            2761755553,
+            2957726398
+          ],
+          "severe": [
+            2761755553,
+            35529204
+          ]
+        },
+        "contentSeedIdentities": {
+          "low": "c676fa18",
+          "medium": "4931950b",
+          "severe": "a7e4a511"
+        },
+        "sourceHash": "8fb4c1e3569fe6a4cb54ba5f5872fa109c35241b8b15539e28212c143e1bea9e",
+        "algorithm": "native-direct-construction-v1",
+        "version": 1,
+        "seedMode": "reviewed-geometry-v1",
+        "geometrySeed": 20261012,
+        "sourceGrade": "medium"
+      },
+      "surfacePixelBudget": 8388608,
+      "enemyMaterialVersion": 1,
+      "enemyMaterial": {
+        "key": "world-body-v1:ruptured-film:4179c0b66f09bb61ec765f50d7a58ca0c7cb6d8f1102cc4f59eaf14f3499baca:8fc9ea2cac80fda4bba849f01e7b5096dd7fb3212acfaef6bf983f89ea0a9cca",
+        "worldId": "ruptured-film",
+        "kind": "membrane",
+        "dark": [
+          107,
+          38,
+          62
+        ],
+        "mid": [
+          190,
+          80,
+          102
+        ],
+        "light": [
+          228,
+          146,
+          149
+        ],
+        "secondary": [
+          59,
+          80,
+          106
+        ],
+        "fibreCount": 3,
+        "membraneSpread": 1.35,
+        "motionLag": 0.27,
+        "paintBranching": 0.28
+      },
+      "enemyDeployment": {
+        "version": 1,
+        "worldId": "ruptured-film",
+        "grade": "low",
+        "sourceHash": "06f23c81ba05bbdb48f0a40a0c670a1fcc2c4161b7c8d54f970cc8cff64f2efe",
+        "infiltrator": {
+          "substrate": "human_remnant",
+          "coverage": "infiltrate",
+          "continuity": "monolith",
+          "occupancy": "floor",
+          "portfolio": "jia",
+          "lexemes": {
+            "motion": "motion_patrol",
+            "sense": "sense_cone",
+            "rhythm": "rhythm_open",
+            "contact": "contact_melee_three"
+          }
+        },
+        "rewriter": {
+          "substrate": "human_remnant",
+          "coverage": "rewrite",
+          "continuity": "monolith",
+          "occupancy": "floor",
+          "portfolio": "jia",
+          "lexemes": {
+            "motion": "motion_patrol",
+            "sense": "sense_hear",
+            "rhythm": "rhythm_open",
+            "contact": "contact_melee_three"
+          }
+        },
+        "paint": {
+          "substrate": "fungal_mat",
+          "coverage": "infiltrate",
+          "continuity": "colony",
+          "occupancy": "paint",
+          "portfolio": "bing",
+          "lexemes": {
+            "motion": "motion_cluster",
+            "sense": "sense_touch",
+            "rhythm": "rhythm_cluster",
+            "contact": "contact_step_chaos"
+          }
+        }
+      },
+      "package": {
+        "id": "r100-ruptured-film",
+        "algorithm": "r100-native",
+        "version": 3,
+        "algorithmRevision": 13,
+        "materials": {
+          "membrane-rim": {
+            "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+            "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+            "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+          }
+        },
+        "dependencyHash": "f87637f8",
+        "grade": "low"
+      }
+    }
+  }
+]

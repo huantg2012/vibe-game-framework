@@ -29,6 +29,8 @@ export interface R100ExpeditionDefinition {
   readonly kindling_safe_value: number;
   readonly kindling_contested_value: number;
   readonly kindling_deep_value: number;
+  /** Explicit frozen low-risk supply guarantee; absent preserves old weapon rolls. */
+  readonly kindling_safe_allow_weapon?: boolean;
   readonly contaminant_safe_count: number;
   readonly contaminant_contested_count: number;
   readonly contaminant_deep_count: number;
@@ -186,7 +188,8 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
       nodeDecisions.push({kind,tier,slot,rankedCells:allowed.map(item=>item.cell),selectedCell:seat.cell});
       chosen.push({ seat, tier, kind });
       const id = `r100-${kind}-${tier}-${slot + 1}`;
-      if (kind === 'kindling') kindlingNodes.push({ id, tier, position: seat.position, value: definition[`kindling_${tier}_value`] });
+      if (kind === 'kindling') kindlingNodes.push({ id, tier, position: seat.position, value: definition[`kindling_${tier}_value`],
+        ...(tier === 'safe' && definition.kindling_safe_allow_weapon !== undefined ? { allowWeapon: definition.kindling_safe_allow_weapon } : {}) });
       else contaminantNodes.push({ id, tier, position: seat.position });
     }
   }

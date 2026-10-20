@@ -24,6 +24,7 @@ import { profileWithWorldAppearance, validR100WorldAppearance, type R100WorldApp
 import { R100_MATERIAL_DEPENDENCIES } from '@/generated/r100-package-manifest';
 import { R100_NATIVE_WORLDS } from '@/generated/r100-native-worlds';
 import { R100_EXPEDITION_GRADES } from '@/generated/rift-expedition-grade-data';
+import { RIFT_LOW_EXPEDITION_OVERRIDES } from '@/generated/rift-low-expedition-data';
 import { POLLUTION_GRADE_DEFINITIONS } from '@/generated/rift-pollution-grade-data';
 import type { RiftWorldHistory } from '@/types/rift-world-history';
 import { selectR100WorldId } from './r100-world-selection';
@@ -93,8 +94,15 @@ function createR100Recipe(worldId: string, seed: number, grade: PollutionGrade, 
   if (!appearance) throw new Error(`Missing native world appearance ${worldId}`);
   const gradeNativeDefinition = world.definitions.find(definition => definition.grade === grade)!;
   const gradeDefinition = POLLUTION_GRADE_DEFINITIONS.find(row => row.id === grade)!;
-  const contentDefinition = R100_EXPEDITION_GRADES.find(row => row.grade_id === grade)!;
-  const nativeConstruction=nativeDevelopment?undefined:createNativeConstructionRuntimeInput(worldId,directDevelopment);
+  const baseContentDefinition = R100_EXPEDITION_GRADES.find(row => row.grade_id === grade)!;
+  const lowContent = grade === 'low' ? RIFT_LOW_EXPEDITION_OVERRIDES.find(row => row.worldId === worldId) : undefined;
+  const contentDefinition = lowContent ? { ...baseContentDefinition, kindling_safe_count: lowContent.kindling_safe_count,
+    kindling_contested_count: lowContent.kindling_contested_count, kindling_deep_count: lowContent.kindling_deep_count,
+    kindling_safe_allow_weapon: lowContent.kindling_safe_allow_weapon } : baseContentDefinition;
+  const constructionSource=nativeDevelopment?undefined:createNativeConstructionRuntimeInput(worldId,directDevelopment);
+  const nativeConstruction=constructionSource&&lowContent?{...constructionSource,
+    sourceHash:lowContent.sourceHash,contentSeeds:{...constructionSource.contentSeeds,low:[...lowContent.contentSeeds]},
+    contentSeedIdentities:{...constructionSource.contentSeedIdentities,low:lowContent.contentIdentity}}:constructionSource;
   if(directDevelopment&&!nativeConstruction)throw new Error(`Direct construction is unavailable for ${worldId}`);
   // Revision 13 admits the reviewed physical mother once. Freeze all its source
   // instances; retain the requested grade's atmosphere and gameplay parameters.
