@@ -576,6 +576,23 @@
         "COH-F039",
         "COH-F042"
       ]
+    },
+    {
+      "id": "COH-C-RUNTIME-PLAYTEST-AUTHORIZATION",
+      "statement": "2026-10-20用户要求：以后未经明确授权，不得进行实机玩游戏的测试，包含浏览器自动操作实际游戏。一般开发、修复或继续指令不等于试玩授权；静态/类型/构建/纯数据离线验证仍按任务需要执行。",
+      "status": "active",
+      "source": {
+        "path": "docs/progress/decisions-log.md",
+        "note": "实机试玩须单独授权（2026-10-20）；优先于旧agent通用冒烟要求。"
+      },
+      "featureIds": [
+        "COH-F001",
+        "COH-F004",
+        "COH-F005",
+        "COH-F011",
+        "COH-F039",
+        "COH-F044"
+      ]
     }
   ],
   "inventory": [

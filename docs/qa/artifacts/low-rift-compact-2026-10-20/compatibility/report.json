@@ -1,0 +1,1782 @@
+{
+  "status": "passed",
+  "old": [
+    {
+      "worldId": "crystal-fibre",
+      "signature": "9a3f57bb",
+      "status": "passed"
+    },
+    {
+      "worldId": "cinder-ridge",
+      "signature": "ca98803b",
+      "status": "passed"
+    },
+    {
+      "worldId": "ruptured-film",
+      "signature": "671cfdd2",
+      "status": "passed"
+    }
+  ],
+  "current": [
+    {
+      "worldId": "crystal-fibre",
+      "seed": 156,
+      "effectiveSeed": 156,
+      "generationMs": 1721.7393330000004,
+      "signature": "64794c4d",
+      "dimensions": [
+        2976,
+        1792
+      ],
+      "spawn": {
+        "x": 1132,
+        "y": 1324
+      },
+      "exit": {
+        "x": 2236,
+        "y": 1180
+      },
+      "kindling": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1252,
+            "y": 1348
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-safe-2",
+          "tier": "safe",
+          "position": {
+            "x": 1620,
+            "y": 1268
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 1588,
+            "y": 660
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 2340,
+            "y": 852
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-3",
+          "tier": "contested",
+          "position": {
+            "x": 1060,
+            "y": 884
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 2500,
+            "y": 660
+          },
+          "value": 4
+        }
+      ],
+      "contaminants": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1348,
+            "y": 1236
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 836,
+            "y": 1348
+          }
+        }
+      ],
+      "expedition": {
+        "reachableBodySeats": 21285,
+        "extractionRoutePx": 1163.6467529817255,
+        "maximumExtraTravelPx": 1546.8998538741116,
+        "directReturnRoutePx": 1113.705627484771,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 80,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 525.1812087098392
+          },
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 2.2737367544323206e-13,
+            "approachRoutePx": 476.4507934888323,
+            "interactionSeats": 68,
+            "pollutionDistancePx": 181.60155641434235
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 2.2737367544323206e-13,
+            "approachRoutePx": 202.5096679918781,
+            "interactionSeats": 107,
+            "pollutionDistancePx": 393.4206511422261
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 538.2337649086271,
+            "approachRoutePx": 812.3128419472064,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 28.284271247461902
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 520.4305909532984,
+            "approachRoutePx": 1353.5676759431458,
+            "interactionSeats": 99,
+            "pollutionDistancePx": 103.62444906835054
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 514.274169979695,
+            "approachRoutePx": 419.88225099390843,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 478.8319120526534
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 515.8822509939087,
+            "approachRoutePx": 257.94112549695427,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 916.2127418834527
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 1018.2337649086276,
+            "approachRoutePx": 1593.09667991878,
+            "interactionSeats": 52,
+            "pollutionDistancePx": 35.0592922409336
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 1588,
+              "y": 612
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 2324,
+              "y": 860
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-3",
+            "seat": {
+              "x": 1060,
+              "y": 836
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 836,
+              "y": 1300
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 2516,
+              "y": 660
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "searchSites": [
+          {
+            "nodeId": "r100-kindling-safe-1",
+            "sourceKind": "surface-peel",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-safe-2",
+            "sourceKind": "surface-peel",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-1",
+            "sourceKind": "detached",
+            "family": "fibre-knot",
+            "sourceDomain": "formation",
+            "sourceObjectId": 3
+          },
+          {
+            "nodeId": "r100-kindling-contested-2",
+            "sourceKind": "detached",
+            "family": "fibre-knot",
+            "sourceDomain": "formation",
+            "sourceObjectId": 7
+          },
+          {
+            "nodeId": "r100-kindling-contested-3",
+            "sourceKind": "surface-peel",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-deep-1",
+            "sourceKind": "surface-peel",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-contaminant-safe-1",
+            "sourceKind": "surface-peel",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-contaminant-contested-1",
+            "sourceKind": "ground-accumulation",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          }
+        ],
+        "environmentScoreCap": 12,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 2,
+        "kindlingCount": 6,
+        "contaminantCount": 2
+      }
+    },
+    {
+      "worldId": "crystal-fibre",
+      "seed": 20261020,
+      "effectiveSeed": 1552383321,
+      "generationMs": 2490.604875000001,
+      "signature": "04125e15",
+      "dimensions": [
+        2976,
+        1792
+      ],
+      "spawn": {
+        "x": 1132,
+        "y": 1324
+      },
+      "exit": {
+        "x": 1916,
+        "y": 140
+      },
+      "kindling": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1348,
+            "y": 1300
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-safe-2",
+          "tier": "safe",
+          "position": {
+            "x": 1428,
+            "y": 1012
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 2244,
+            "y": 644
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 772,
+            "y": 932
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-3",
+          "tier": "contested",
+          "position": {
+            "x": 2004,
+            "y": 1204
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 2468,
+            "y": 804
+          },
+          "value": 4
+        }
+      ],
+      "contaminants": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 1444,
+            "y": 1220
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 772,
+            "y": 1380
+          }
+        }
+      ],
+      "expedition": {
+        "reachableBodySeats": 21285,
+        "extractionRoutePx": 1533.3119753954318,
+        "maximumExtraTravelPx": 1138.412121521319,
+        "directReturnRoutePx": 1478.684558397461,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 74.98066401624351,
+            "approachRoutePx": 176,
+            "interactionSeats": 78,
+            "pollutionDistancePx": 350.42222156277
+          },
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 56.235498012181324,
+            "approachRoutePx": 440.90158697766464,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 183.46083967823907
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 84.35324701827267,
+            "approachRoutePx": 305.13708498984755,
+            "interactionSeats": 105,
+            "pollutionDistancePx": 324.02298774649927
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 521.3725830020296,
+            "approachRoutePx": 1343.7240969167497,
+            "interactionSeats": 63,
+            "pollutionDistancePx": 63.8179936004006
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 508.783837971572,
+            "approachRoutePx": 495.8620484583748,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 375.3995493237317
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 505.98153056802016,
+            "approachRoutePx": 871.764501987817,
+            "interactionSeats": 104,
+            "pollutionDistancePx": 566.5116425609235
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 507.1757569573633,
+            "approachRoutePx": 333.254833995939,
+            "interactionSeats": 109,
+            "pollutionDistancePx": 609.7949195126133
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 994.7451660040592,
+            "approachRoutePx": 1501.4499269370544,
+            "interactionSeats": 107,
+            "pollutionDistancePx": 74.79271228182775
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 2196,
+              "y": 644
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-3",
+            "seat": {
+              "x": 2004,
+              "y": 1156
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 772,
+              "y": 1332
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 2492,
+              "y": 764
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 740,
+              "y": 900
+            },
+            "startMs": 1900,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "searchSites": [
+          {
+            "nodeId": "r100-kindling-safe-1",
+            "sourceKind": "ground-accumulation",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-safe-2",
+            "sourceKind": "ground-accumulation",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-1",
+            "sourceKind": "ground-accumulation",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-2",
+            "sourceKind": "surface-peel",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-3",
+            "sourceKind": "surface-peel",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-deep-1",
+            "sourceKind": "detached",
+            "family": "fibre-knot",
+            "sourceDomain": "formation",
+            "sourceObjectId": 7
+          },
+          {
+            "nodeId": "r100-contaminant-safe-1",
+            "sourceKind": "surface-peel",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-contaminant-contested-1",
+            "sourceKind": "ground-accumulation",
+            "family": "fibre-knot",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          }
+        ],
+        "environmentScoreCap": 12,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 2,
+        "kindlingCount": 6,
+        "contaminantCount": 2
+      }
+    },
+    {
+      "worldId": "cinder-ridge",
+      "seed": 156,
+      "effectiveSeed": 1743883399,
+      "generationMs": 2878.517417000001,
+      "signature": "67b7111c",
+      "dimensions": [
+        2688,
+        1792
+      ],
+      "spawn": {
+        "x": 300,
+        "y": 988
+      },
+      "exit": {
+        "x": 1276,
+        "y": 1316
+      },
+      "kindling": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 372,
+            "y": 1044
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-safe-2",
+          "tier": "safe",
+          "position": {
+            "x": 692,
+            "y": 1044
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 740,
+            "y": 564
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1364,
+            "y": 900
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-3",
+          "tier": "contested",
+          "position": {
+            "x": 1572,
+            "y": 1300
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 1668,
+            "y": 772
+          },
+          "value": 4
+        }
+      ],
+      "contaminants": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 548,
+            "y": 1028
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 196,
+            "y": 660
+          }
+        }
+      ],
+      "expedition": {
+        "reachableBodySeats": 23268,
+        "extractionRoutePx": 1111.8620484583744,
+        "maximumExtraTravelPx": 2485.076477383248,
+        "directReturnRoutePx": 1063.8620484583746,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 45.254833995939045,
+            "interactionSeats": 84,
+            "pollutionDistancePx": 473.83531413510633
+          },
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 367.19595949289334,
+            "interactionSeats": 110,
+            "pollutionDistancePx": 305.50872522590356
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 231.19595949289334,
+            "interactionSeats": 105,
+            "pollutionDistancePx": 345.43199644860215
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 511.05800795126765,
+            "approachRoutePx": 635.979797464466,
+            "interactionSeats": 102,
+            "pollutionDistancePx": 68.77930803794561
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 509.72583002030547,
+            "approachRoutePx": 1116.7838379715727,
+            "interactionSeats": 96,
+            "pollutionDistancePx": 411.13676011111727
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 507.31370849898576,
+            "approachRoutePx": 1351.2935059634515,
+            "interactionSeats": 78,
+            "pollutionDistancePx": 516.1395160225577
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 520.4305909532984,
+            "approachRoutePx": 330.50966799187796,
+            "interactionSeats": 90,
+            "pollutionDistancePx": 500.01526695316807
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 1039.058007951268,
+            "approachRoutePx": 1455.8620484583746,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 89.27841806805036
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 716,
+              "y": 524
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 1364,
+              "y": 852
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-3",
+            "seat": {
+              "x": 1572,
+              "y": 1252
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 164,
+              "y": 628
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 1636,
+              "y": 740
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "searchSites": [
+          {
+            "nodeId": "r100-kindling-safe-1",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-safe-2",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-1",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-2",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-3",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-deep-1",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-contaminant-safe-1",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-contaminant-contested-1",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          }
+        ],
+        "environmentScoreCap": 12,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 2,
+        "kindlingCount": 6,
+        "contaminantCount": 2
+      }
+    },
+    {
+      "worldId": "cinder-ridge",
+      "seed": 20261020,
+      "effectiveSeed": 20261020,
+      "generationMs": 2141.7940000000017,
+      "signature": "6edc2fd8",
+      "dimensions": [
+        2688,
+        1792
+      ],
+      "spawn": {
+        "x": 300,
+        "y": 988
+      },
+      "exit": {
+        "x": 1820,
+        "y": 524
+      },
+      "kindling": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 308,
+            "y": 916
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-safe-2",
+          "tier": "safe",
+          "position": {
+            "x": 724,
+            "y": 916
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 2036,
+            "y": 964
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1572,
+            "y": 1316
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-3",
+          "tier": "contested",
+          "position": {
+            "x": 2068,
+            "y": 372
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 2164,
+            "y": 1140
+          },
+          "value": 4
+        }
+      ],
+      "contaminants": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 452,
+            "y": 932
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 388,
+            "y": 1444
+          }
+        }
+      ],
+      "expedition": {
+        "reachableBodySeats": 23268,
+        "extractionRoutePx": 1735.6265504461926,
+        "maximumExtraTravelPx": 931.0782104868001,
+        "directReturnRoutePx": 1685.6854249492392,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 27.31370849898476,
+            "interactionSeats": 101,
+            "pollutionDistancePx": 661.9737604311116
+          },
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 443.8822509939085,
+            "interactionSeats": 103,
+            "pollutionDistancePx": 272.37813684548325
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 161.94112549695427,
+            "interactionSeats": 70,
+            "pollutionDistancePx": 518.379940632026
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 515.5492065111673,
+            "approachRoutePx": 1750.9604614807115,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 28.153619241621193
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 496.3330444827395,
+            "approachRoutePx": 1357.9209229614212,
+            "interactionSeats": 57,
+            "pollutionDistancePx": 540.1276451300715
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 522.0386719675114,
+            "approachRoutePx": 1996.6458864299489,
+            "interactionSeats": 74,
+            "pollutionDistancePx": 612.0125784919666
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 499.2733034279188,
+            "approachRoutePx": 444.4507934888321,
+            "interactionSeats": 25,
+            "pollutionDistancePx": 625.5536929307692
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 870.6274169979677,
+            "approachRoutePx": 1894.3919189857866,
+            "interactionSeats": 30,
+            "pollutionDistancePx": 72.16652224137047
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 1988,
+              "y": 964
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 1572,
+              "y": 1268
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-3",
+            "seat": {
+              "x": 2028,
+              "y": 364
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 388,
+              "y": 1396
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 2164,
+              "y": 1092
+            },
+            "startMs": 200,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "searchSites": [
+          {
+            "nodeId": "r100-kindling-safe-1",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-safe-2",
+            "sourceKind": "surface-peel",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-1",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-2",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-3",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-deep-1",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-contaminant-safe-1",
+            "sourceKind": "detached",
+            "family": "granular-ridge",
+            "sourceDomain": "formation",
+            "sourceObjectId": 4
+          },
+          {
+            "nodeId": "r100-contaminant-contested-1",
+            "sourceKind": "ground-accumulation",
+            "family": "granular-ridge",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          }
+        ],
+        "environmentScoreCap": 12,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 2,
+        "kindlingCount": 6,
+        "contaminantCount": 2
+      }
+    },
+    {
+      "worldId": "ruptured-film",
+      "seed": 156,
+      "effectiveSeed": 156,
+      "generationMs": 2523.774541999999,
+      "signature": "c5f183c5",
+      "dimensions": [
+        2304,
+        1792
+      ],
+      "spawn": {
+        "x": 396,
+        "y": 796
+      },
+      "exit": {
+        "x": 1332,
+        "y": 1244
+      },
+      "kindling": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 468,
+            "y": 804
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-safe-2",
+          "tier": "safe",
+          "position": {
+            "x": 820,
+            "y": 772
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 1460,
+            "y": 724
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 1028,
+            "y": 500
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-3",
+          "tier": "contested",
+          "position": {
+            "x": 1620,
+            "y": 1300
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 1828,
+            "y": 932
+          },
+          "value": 4
+        }
+      ],
+      "contaminants": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 564,
+            "y": 804
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 356,
+            "y": 1364
+          }
+        }
+      ],
+      "expedition": {
+        "reachableBodySeats": 20367,
+        "extractionRoutePx": 1121.5676759431456,
+        "maximumExtraTravelPx": 1831.9595949289337,
+        "directReturnRoutePx": 1071.6265504461912,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 27.31370849898476,
+            "interactionSeats": 112,
+            "pollutionDistancePx": 568.5672957563554
+          },
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 51.549206511167995,
+            "approachRoutePx": 384,
+            "interactionSeats": 111,
+            "pollutionDistancePx": 259.3513719747974
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 123.31370849898477,
+            "interactionSeats": 91,
+            "pollutionDistancePx": 482.62806870523866
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 514.4121215213204,
+            "approachRoutePx": 1083.6467529817253,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 367.9591815482832
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 502.62741699796925,
+            "approachRoutePx": 704.6660889654811,
+            "interactionSeats": 74,
+            "pollutionDistancePx": 28.153619241621193
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 522.5096679918786,
+            "approachRoutePx": 1382.822509939085,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 406.25573790479547
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 487.6669555172598,
+            "approachRoutePx": 607.5290039756339,
+            "interactionSeats": 56,
+            "pollutionDistancePx": 733.8446702129817
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 995.4112549695451,
+            "approachRoutePx": 1537.8031739553307,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 21.607017003965517
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 1436,
+              "y": 684
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 988,
+              "y": 492
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-3",
+            "seat": {
+              "x": 1620,
+              "y": 1252
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 356,
+              "y": 1316
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 1852,
+              "y": 892
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "searchSites": [
+          {
+            "nodeId": "r100-kindling-safe-1",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-safe-2",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-1",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-2",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-3",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-deep-1",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-contaminant-safe-1",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-contaminant-contested-1",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          }
+        ],
+        "environmentScoreCap": 12,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 2,
+        "kindlingCount": 6,
+        "contaminantCount": 2
+      }
+    },
+    {
+      "worldId": "ruptured-film",
+      "seed": 20261020,
+      "effectiveSeed": 20261020,
+      "generationMs": 2382.077874999999,
+      "signature": "b95ff713",
+      "dimensions": [
+        2304,
+        1792
+      ],
+      "spawn": {
+        "x": 396,
+        "y": 796
+      },
+      "exit": {
+        "x": 1636,
+        "y": 460
+      },
+      "kindling": [
+        {
+          "id": "r100-kindling-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 500,
+            "y": 788
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-safe-2",
+          "tier": "safe",
+          "position": {
+            "x": 852,
+            "y": 804
+          },
+          "value": 1,
+          "allowWeapon": false
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 1716,
+            "y": 932
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "position": {
+            "x": 820,
+            "y": 1284
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-contested-3",
+          "tier": "contested",
+          "position": {
+            "x": 1908,
+            "y": 356
+          },
+          "value": 2
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "position": {
+            "x": 1988,
+            "y": 1012
+          },
+          "value": 4
+        }
+      ],
+      "contaminants": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "position": {
+            "x": 660,
+            "y": 772
+          }
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "position": {
+            "x": 1316,
+            "y": 1204
+          }
+        }
+      ],
+      "expedition": {
+        "reachableBodySeats": 20367,
+        "extractionRoutePx": 1379.1757569573595,
+        "maximumExtraTravelPx": 1271.6265504461926,
+        "directReturnRoutePx": 1329.2346314604047,
+        "nodes": [
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 59.31370849898476,
+            "interactionSeats": 87,
+            "pollutionDistancePx": 425.1770252361534
+          },
+          {
+            "id": "kindling/safe",
+            "minimumExtraTravelPx": 9.372583002030751,
+            "approachRoutePx": 411.31370849898474,
+            "interactionSeats": 67,
+            "pollutionDistancePx": 314.89231327960215
+          },
+          {
+            "id": "contaminant/safe",
+            "minimumExtraTravelPx": 0,
+            "approachRoutePx": 224,
+            "interactionSeats": 106,
+            "pollutionDistancePx": 360.5412851697461
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 511.1959594928953,
+            "approachRoutePx": 1425.8031739553307,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 50.404300950953086
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 521.0966799187806,
+            "approachRoutePx": 613.6854249492374,
+            "interactionSeats": 108,
+            "pollutionDistancePx": 17.182520563948003
+          },
+          {
+            "id": "kindling/contested",
+            "minimumExtraTravelPx": 530.2741699796966,
+            "approachRoutePx": 1644.312841947208,
+            "interactionSeats": 96,
+            "pollutionDistancePx": 453.290194025858
+          },
+          {
+            "id": "contaminant/contested",
+            "minimumExtraTravelPx": 517.6854249492371,
+            "approachRoutePx": 1039.0580079512674,
+            "interactionSeats": 113,
+            "pollutionDistancePx": 476.01599974400824
+          },
+          {
+            "id": "kindling/deep",
+            "minimumExtraTravelPx": 1008.9991334482256,
+            "approachRoutePx": 1717.6854249492371,
+            "interactionSeats": 97,
+            "pollutionDistancePx": 97.45781160551181
+          }
+        ],
+        "patrolWindows": [
+          {
+            "id": "r100-kindling-contested-1",
+            "seat": {
+              "x": 1716,
+              "y": 884
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-2",
+            "seat": {
+              "x": 804,
+              "y": 1292
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-contested-3",
+            "seat": {
+              "x": 1868,
+              "y": 332
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-contaminant-contested-1",
+            "seat": {
+              "x": 1316,
+              "y": 1156
+            },
+            "startMs": 0,
+            "durationMs": 2400
+          },
+          {
+            "id": "r100-kindling-deep-1",
+            "seat": {
+              "x": 2020,
+              "y": 1028
+            },
+            "startMs": 100,
+            "durationMs": 2400
+          }
+        ],
+        "patrolWindowContract": "2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately",
+        "spatialDeployment": {
+          "version": 1,
+          "safe_max_extra_travel_px": 180,
+          "safe_max_approach_px": 480,
+          "contested_min_extra_travel_px": 180,
+          "contested_max_extra_travel_px": 840,
+          "deep_min_extra_travel_px": 600,
+          "deep_max_extra_travel_px": 1400,
+          "max_search_approach_px": 2600,
+          "node_spacing_px": 96,
+          "node_spread_weight": 0.25,
+          "host_min_approach_px": 160,
+          "host_max_approach_px": 2600,
+          "host_region_cols": 4,
+          "host_region_rows": 3,
+          "sourceHash": "c33f6ff96da39e5b5778c379f695867ae0d54253d5557d5e4dbf03b02b79a1c3"
+        },
+        "searchExtraTravelCapPx": 1400,
+        "searchSites": [
+          {
+            "nodeId": "r100-kindling-safe-1",
+            "sourceKind": "ground-accumulation",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-safe-2",
+            "sourceKind": "detached",
+            "family": "membrane-rim",
+            "sourceDomain": "formation",
+            "sourceObjectId": 2
+          },
+          {
+            "nodeId": "r100-kindling-contested-1",
+            "sourceKind": "ground-accumulation",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-2",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-contested-3",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-kindling-deep-1",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-contaminant-safe-1",
+            "sourceKind": "surface-peel",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          },
+          {
+            "nodeId": "r100-contaminant-contested-1",
+            "sourceKind": "ground-accumulation",
+            "family": "membrane-rim",
+            "sourceDomain": "ground",
+            "sourceObjectId": null
+          }
+        ],
+        "environmentScoreCap": 12,
+        "costBasis": "all-body-safe-48px-interaction-seats",
+        "guaranteedSafeReturn": true,
+        "enemyCount": 2,
+        "kindlingCount": 6,
+        "contaminantCount": 2
+      }
+    }
+  ],
+  "unchangedGrades": [
+    {
+      "worldId": "crystal-fibre",
+      "grade": "medium"
+    },
+    {
+      "worldId": "crystal-fibre",
+      "grade": "severe"
+    },
+    {
+      "worldId": "cinder-ridge",
+      "grade": "medium"
+    },
+    {
+      "worldId": "cinder-ridge",
+      "grade": "severe"
+    },
+    {
+      "worldId": "ruptured-film",
+      "grade": "medium"
+    },
+    {
+      "worldId": "ruptured-film",
+      "grade": "severe"
+    }
+  ]
+}

@@ -73,6 +73,8 @@ DEV `enemy-world-pilot.html` 保留为受控视觉回归入口，调用共享 ba
 
 2026-10-20低档补给：`rift-low-expedition.csv`及独立`rift-low-expedition-content-seeds.csv`经`tools/world-study/codegen-low-expedition.mjs`生成低档覆盖。仅三开放世界的新low工厂冻结6薪柴/2污染物与safe节点`allowWeapon:false`；两近程点不可被首次或随机武器替换。旧冻结配方缺字段时沿原规则；通用构型认证工具按基底内容输入验证，不能用现行低档覆盖改写中重证书。
 
+低档紧凑构型由`data/rift-native-construction-low.csv`注册独立作者CSV、岸线、规划面积、主体倍率和宽区占比，经`tools/native-spatial/codegen-low-construction.mjs`生成。新low工厂冻结实际作者文本及最终`nativeSpatial`；内容认证身份包含这些输入。源`sourceGrade:medium`仍表示母体模型来源，不表示低档必须保留中档地床。旧局恢复直接消费已保存配方，不重新应用当前注册表。保持逻辑画布尺寸，收小实际可探索地面；不缩放20px身体和48px宽区半径，不在运行时补图或搜索轮廓。小图仍通过同一完整内容、遮蔽和撤离规则；宽区占比的低档校准、实际路线质量及验证范围见专项QA。
+
 ## R100 工程前置：正式出击与冷续局的异步准备
 
 `PurificationScene.prepareRiftDeparture` → `managers/rift-recovery.ts` → `generation/rift-generation-client.ts` → 专用 `rift-generation-worker.ts`。主线程先固定一次配方，Worker 的 `rift-generation-execute.ts` 使用原冻结执行器生成并计算身份；`rift-generation-identity.ts` 是两端共用的纯签名算法。执行器/协议不依赖 Phaser、SaveManager 或其他有副作用的会话单例。每次请求独占 Worker，request id 拒绝旧响应，60秒硬截止；成功、取消、错误和消息反序列化失败均清计时器/监听并 terminate。

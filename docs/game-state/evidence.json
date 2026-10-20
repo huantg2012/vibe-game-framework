@@ -11195,5 +11195,105 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E280",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-20",
+    "revision": "9f91d69c",
+    "scope": "三开放世界新低污染薪柴4→6、safe两堆禁止武器替换。6新低档完整生成/JSON恢复、3旧低档完整签名回放、中重档6份配方逐值不变；原通路/巡逻/可见操作/退出门保持。",
+    "limitations": "仅补给接入。初次缩尺未过门，地图规模仍待整改。未验证自然发现性、完整搜撤、长期经济或全部种子；理论12薪不等于必然携回12。",
+    "sources": [
+      {
+        "path": "docs/qa/low-rift-supply-2026-10-20.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/low-rift-supply-2026-10-20/replay/report.json",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E281",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-20",
+    "revision": "a5211aae",
+    "scope": "「临行」真实准备阶段及保持净化点动态；模拟/输入/库存冻结、Esc取消零消费及监听恢复，正式入晶化林床，0.8人物/真实Space挥击。一隔离Chrome六项通过、0pageerror；actor组件/异步准备回归及构建通过。",
+    "limitations": "浏览器报告保留HEAD和未提交时接线文件SHA；接线之后独立提交a5211aae。A0一图停步/挥击，不代表全朝向/高同化/自然流程/性能预算/人审。最终短黑幕文案仅源码核对。",
+    "sources": [
+      {
+        "path": "docs/qa/rift-loading-2026-10-20.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-loading-2026-10-20-art.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/rift-loading-2026-10-20/report.json",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E282",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-20",
+    "revision": "3745147c",
+    "scope": "Rift关闭先退订库存，再销毁帧事务，阻断旧序列对已销毁武器图片的通知；旧顺序反例1次关闭后更新、修复0次。七项归返回归与一例真实E翻找/真实E撤离/点击返回通过，首归免伤但自动报告，保存失败重试不重复结算；新单例真实取得并携回1薪柴，0控制台/页面错误。",
+    "limitations": "用户原始首趟漏报未复现，不能以修复相邻生命周期风险宣称已确认其根因；真实E单例仅移动位置受控，不代表自然完整探索；旧七项与新增单例分别保留版本及范围。",
+    "sources": [
+      {
+        "path": "docs/qa/return-report-2026-10-20.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/return-report-2026-10-20/results.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/return-report-2026-10-20/extraction-key/results.json",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E283",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-20",
+    "revision": "357aaebf",
+    "scope": "三开放世界新低档独立作者构型。相同身体可行域口径减少18.86%/20.44%/24.24%；全G1/G2/G3、完整内容及两不同撤离认证通过，三factory地图JSON冷回放逐值一致。旧3低档签名/节点保持，新6请求生成通过，中重6完整配方逐值不变。独立冻结/认证代码审查无阻断，最终生产构建通过。",
+    "limitations": "晶纤/破膜minWideRatio经限定设计审查校准.53，余烬.55；绝对身体/宽域/巨空白/连续窄段门保持，逐路线质量提示仍存在。不代表自然搜撤、全seed、长期经济、50ms预算或用户体验终审；图册为冻结通过地图的无雾材质/结构视图。",
+    "sources": [
+      {
+        "path": "docs/qa/low-rift-compact-2026-10-20.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/low-rift-compact-2026-10-20/supply/report.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/low-rift-compact-2026-10-20/compatibility/report.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/low-rift-compact-2026-10-20/unchanged-grades.txt",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/low-rift-compact-2026-10-20/rendered/index.html",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/rift-playtest-fixes-2026-10-20.md",
+        "role": "doc"
+      }
+    ]
   }
 ]
