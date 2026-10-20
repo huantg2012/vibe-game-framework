@@ -111,10 +111,26 @@ assert.equal(unequal.narrowRatio,264/656);
 assert.notEqual(unequal.narrowRatio,unequal.legs.reduce((sum,l)=>sum+l.narrowRatio,0)/2,'Do not average leg percentages');
 const stationary=routeOf(results[3].current,'direct-exit').transverse;
 assert.equal(stationary.lengthPx,0);assert.equal(stationary.narrowRatio,0);assert.equal(stationary.maxNarrowOrUncertainRunPx,0);
+const cornerGeometry=geometryFor([[0,0,384,80],[304,0,384,384]]);
+const cornerLayout=layout({x:20,y:44},{x:340,y:348});
+const cornerLegacy=evaluateNativeSpatialRoutes(cornerGeometry,[],policy,cornerLayout);
+const corner=evaluateNativeSpatialRoutes(cornerGeometry,[],policy,cornerLayout,{transverseMode:'per-leg'});
+const sharp=routeOf(corner,'direct-exit').transverse;
+assert.equal(sharp.legs.length,1);assert(sharp.uncertainPx>0,'Fixture must exercise a real within-leg sharp turn');
+assert.equal(sharp.maxNarrowOrUncertainRunPx,sharp.lengthPx,'An uncertain turn within a narrow leg cannot reset its run');
+assert.equal(sharp.maxNarrowOrUncertainRunPx,routeOf(cornerLegacy,'direct-exit').transverse.maxNarrowOrUncertainRunPx);
+assert(corner.reasons.includes('direct-exit:leg:0:max-narrow-run'));
+const zeroFirst=evaluateNativeSpatialRoutes(measured[1].geometry,[],policy,
+  layout({x:20,y:44},{x:340,y:44},[{id:'spawn',position:{x:20,y:44}}]),{transverseMode:'per-leg'});
+const zeroFirstRoute=routeOf(zeroFirst,'node:spawn').transverse;
+assert.deepEqual(zeroFirstRoute.legs.map(l=>l.lengthPx),[0,320]);assert.equal(zeroFirstRoute.narrowRatio,1);
+assert.equal(zeroFirstRoute.maxNarrowOrUncertainRunPx,320);assert(zeroFirst.reasons.includes('node:spawn:leg:1:max-narrow-run'));
 console.log(JSON.stringify({
   status:'passed',scope:'Synthetic route measurements only; no full map admission, generation, deployment or browser',
   legacyExactFixtures:results.length,
   shortRecess:{travelledPx:short.lengthPx,legLengthsPx:short.legs.map(l=>l.lengthPx),maxRunPx:short.maxNarrowOrUncertainRunPx,narrowRatio:short.narrowRatio},
   longOneWay:{maxRunPx:320,rejected:true},strictThreshold:{at224:'accepted',at232:'rejected'},
   unequalLegs:{lengthPx:unequal.lengthPx,narrowPx:unequal.narrowPx,narrowRatio:unequal.narrowRatio},
+  withinLegSharpTurn:{maxRunPx:sharp.maxNarrowOrUncertainRunPx,uncertainPx:sharp.uncertainPx,rejected:true},
+  zeroFirstLeg:{lengthsPx:[0,320],rejectedLeg:1},
 },null,2));
