@@ -63,7 +63,7 @@ export class AssimilationModelClient {
     // 40 geometry nodes across A; 20 across mixture. Material remains continuous
     // at display rate. A node is a real re-rasterization, never sprite blending.
     this.desired = { amount: Math.round(amount * 40) / 40, fibre: Math.round(fibre * 20) / 20, ...pose,
-      breath: motion ? Math.round(Math.sin(seconds * Math.PI * 2 / 3.2) * 4) / 4 : 0 };
+      breath: motion && pose.phase === null ? (Math.floor(seconds / 3.2 * 8) % 8) / 8 * Math.PI * 2 : 0 };
     const key = this.key(this.desired);
     if (key === this.displayed) return;
     const cached = this.cache.get(key);
