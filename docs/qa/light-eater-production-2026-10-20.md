@@ -23,6 +23,8 @@
 
 最终代码`b63a3cd0`：三世界16项正式浏览器检查通过，零page error，运行前后四个核心源文件哈希一致；9张正式实景见[图册](artifacts/light-eater-production-2026-10-20/index.html)，实际状态与源码身份见[回执](artifacts/light-eater-production-2026-10-20/report.json)。最终`npm run build`通过，保留既有大chunk警告，见[构建记录](artifacts/light-eater-production-2026-10-20/build.log)。
 
+游戏状态索引已刷新，54项功能／274条证据通过结构校验；既有未核对领域、来源漂移和历史证据适用性警告仍保留，没有借本轮视野接入重刷全库基线。
+
 已执行的针对性检查：
 
 - `node tools/qa/check-vision-light-eater.mjs`：29项，覆盖连续参数/时间、冷暖交接、外部倍率、查询与遮罩、VOID及恢复旧模式。
