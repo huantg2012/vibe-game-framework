@@ -29,6 +29,11 @@ import type { OccluderGrid, TileMapData } from '@/types/map-types';
 import { castRay, createRayHit, hasLineOfSight, type RayHit } from '@/utils/grid-raycast';
 import { clamp, degToRad } from '@/utils/math';
 import {
+  createLightEaterSample, LIGHT_EATER_CLEAR_RADIUS, LIGHT_EATER_FRAME_MS,
+  lightEaterExtent, paintLightEater, sampleLightEater,
+  type LightEaterState,
+} from '@/systems/vision-light-eater';
+import {
   advancePerceptionTime,
   paintPerceptionField,
   PERCEPTION_PIXEL_SIZE,
@@ -258,6 +263,20 @@ export class VisibilitySystem {
     width: 0, worldX: 0, worldY: 0, originX: 0, originY: 0,
     clearRadius: 24, corruption: 0, elapsedMs: 0, voidColor: 0, contaminationColor: 0,
   };
+  private readonly lightEaterState: LightEaterState = {
+    pollution: 0, assimilation: 0, lampX: 0, lampY: 0, bodyX: 0, bodyY: 0, elapsedMs: 0,
+  };
+  private lightEaterStateRevision = 0;
+  private readonly lightEaterGeometry = { x: NaN, y: NaN, worldX: NaN, worldY: NaN, gridVersion: -1 };
+  private lightEaterPaintRevision = -1;
+  private lightEaterPaintFrame = -1;
+  private lightEaterTransmission: Float32Array | null = null;
+  private readonly lightEaterSample = createLightEaterSample();
+  private readonly lightEaterPaint = {
+    width: 0, worldX: 0, worldY: 0, pollution: 0, assimilation: 0,
+    lampX: 0, lampY: 0, bodyX: 0, bodyY: 0, elapsedMs: 0,
+  };
+  private readonly lightEaterAdmissionRange = (): number => LIGHT_EATER_CLEAR_RADIUS + 40;
 
   private subdiv2Radii: Float32Array[] | null = null;
   private subdiv2Alphas: Float32Array | null = null;
@@ -301,13 +320,16 @@ export class VisibilitySystem {
   private readonly querySnapshot: {
     x: number; y: number; facing: number; radiusScale: number; abilityScale: number;
     gridVersion: number; grid?: OccluderGrid; config?: VisionConfig;
-  } = { x: NaN, y: NaN, facing: NaN, radiusScale: NaN, abilityScale: NaN, gridVersion: -1 };
+    lightEater: boolean; lightEaterState: number; lightEaterFrame: number;
+  } = { x: NaN, y: NaN, facing: NaN, radiusScale: NaN, abilityScale: NaN, gridVersion: -1,
+    lightEater: false, lightEaterState: -1, lightEaterFrame: -1 };
 
   create(scene: Phaser.Scene, config: VisionConfig, occluders: OccluderGrid): void {
     this.scene = scene;
     this.config = config;
     this.occluders = occluders;
     this.presentation = config.presentation ?? 'legacy';
+    this.lightEaterGeometry.x = NaN; this.lightEaterPaintRevision = -1;
 
     // Reset mutable state for scene re-entry
     this.degradeLevel = 0;
@@ -392,6 +414,8 @@ export class VisibilitySystem {
     this.elapsedMs = advancePerceptionTime(this.elapsedMs, deltaMs);
     this.origin.x = origin.x;
     this.origin.y = origin.y;
+    this.lightEaterState.bodyX = origin.x; this.lightEaterState.bodyY = origin.y;
+    this.lightEaterState.elapsedMs = this.elapsedMs;
 
     const v = GAME_CONSTANTS.VISIBILITY;
     const posEpsilon = v.CACHE_POS_EPSILON;
@@ -431,6 +455,10 @@ export class VisibilitySystem {
   /** Display-only comparison switch: deliberately does not invalidate tactical queries. */
   setPresentation(presentation: VisionPresentation): void {
     if (this.presentation === presentation) return;
+    if (presentation === 'light-eater' || this.presentation === 'light-eater') {
+      this.cacheValid = false; this.subdiv2RadiiDirty = true;
+      this.lightEaterGeometry.x = NaN; this.lightEaterPaintRevision = -1;
+    }
     this.presentation = presentation;
     this.perceptionRevision = -1;
     this.perceptionPaintTick = -1;
@@ -438,6 +466,18 @@ export class VisibilitySystem {
 
   getPresentation(): VisionPresentation {
     return this.presentation;
+  }
+
+  /** Independent P/A inputs for the isolated optical study, never save-state writes. */
+  setLightEaterState(pollution: number, assimilation: number, shoulder: Readonly<Vector2>): void {
+    const state = this.lightEaterState;
+    const p = clamp(Number.isFinite(pollution) ? pollution : 0, 0, 100);
+    const a = clamp(Number.isFinite(assimilation) ? assimilation : 0, 0, 100);
+    if (state.pollution === p && state.assimilation === a && state.lampX === shoulder.x && state.lampY === shoulder.y) return;
+    state.pollution = p; state.assimilation = a;
+    state.lampX = shoulder.x; state.lampY = shoulder.y;
+    this.lightEaterStateRevision++;
+    if (this.presentation === 'light-eater') this.cacheValid = false;
   }
 
   getRadiusScale(): number {
@@ -495,14 +535,18 @@ export class VisibilitySystem {
    * Use the committed facingCache (including degradation), not input facing. */
   getQueryRevision(): number {
     const previous = this.querySnapshot;
+    const lightEater = this.presentation === 'light-eater';
+    const opticalFrame = lightEater ? Math.floor(this.elapsedMs / LIGHT_EATER_FRAME_MS) : -1;
     if (previous.x !== this.origin.x || previous.y !== this.origin.y ||
         previous.facing !== this.facingCache || previous.radiusScale !== this.radiusScale ||
         previous.abilityScale !== this.abilityRadiusMultiplier ||
         previous.grid !== this.occluders || previous.gridVersion !== this.occluders.version ||
-        previous.config !== this.config) {
+        previous.config !== this.config || previous.lightEater !== lightEater ||
+        (lightEater && (previous.lightEaterState !== this.lightEaterStateRevision || previous.lightEaterFrame !== opticalFrame))) {
       previous.x = this.origin.x; previous.y = this.origin.y; previous.facing = this.facingCache;
       previous.radiusScale = this.radiusScale; previous.abilityScale = this.abilityRadiusMultiplier;
       previous.grid = this.occluders; previous.gridVersion = this.occluders.version; previous.config = this.config;
+      previous.lightEater = lightEater; previous.lightEaterState = this.lightEaterStateRevision; previous.lightEaterFrame = opticalFrame;
       this.queryRevision++;
     }
     return this.queryRevision;
@@ -528,6 +572,16 @@ export class VisibilitySystem {
    * so what the player sees and what the game considers visible never disagree.
    */
   getVisibilityAt(point: Vector2): number {
+    if (this.presentation === 'light-eater' && this.lightEaterTransmission &&
+        this.lightEaterPaintRevision === this.lightEaterStateRevision &&
+        this.lightEaterPaintFrame === Math.floor(this.elapsedMs / LIGHT_EATER_FRAME_MS) &&
+        this.lightEaterGeometry.x === this.origin.x && this.lightEaterGeometry.y === this.origin.y &&
+        this.lightEaterGeometry.gridVersion === this.occluders.version) {
+      const x = Math.floor((point.x - this.lightEaterGeometry.worldX) / PERCEPTION_PIXEL_SIZE);
+      const y = Math.floor((point.y - this.lightEaterGeometry.worldY) / PERCEPTION_PIXEL_SIZE);
+      const texture = this.perceptionTexture!;
+      if (x >= 0 && y >= 0 && x < texture.width && y < texture.height) return this.lightEaterTransmission[y * texture.width + x]!;
+    }
     const visibility = this.getUnoccludedVisibilityAt(point);
     return visibility > 0 && hasLineOfSight(this.occluders, this.origin, point) ? visibility : 0;
   }
@@ -536,6 +590,9 @@ export class VisibilitySystem {
    * resolve the same world geometry (including opaque VOID) before revealing a
    * receiver face. Never use this partial query for actors, pickups or gameplay. */
   getUnoccludedVisibilityAt(point: Vector2): number {
+    if (this.presentation === 'light-eater') {
+      return sampleLightEater(this.lightEaterSample, point.x, point.y, this.lightEaterState).transmission;
+    }
     const deltaX = point.x - this.origin.x;
     const deltaY = point.y - this.origin.y;
     const dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -561,6 +618,10 @@ export class VisibilitySystem {
    * after modulation. `minSolidRadius` never scales - the player can always see their feet.
    */
   getEffectiveRadius(angleFromFacing: number): number {
+    if (this.presentation === 'light-eater') {
+      return lightEaterExtent(this.lightEaterState.pollution, this.lightEaterState.assimilation) +
+        Math.hypot(this.lightEaterState.lampX - this.origin.x, this.lightEaterState.lampY - this.origin.y);
+    }
     const config = this.config;
     let radius: number;
 
@@ -692,6 +753,8 @@ export class VisibilitySystem {
     this.perceptionPixels = null;
     this.perceptionField = null;
     this.perceptionGeometryScratch = null;
+    this.lightEaterTransmission = null;
+    this.lightEaterGeometry.x = NaN; this.lightEaterPaintRevision = -1;
     this.perceptionRevision = -1;
     this.glowSources.clear();
     this.subdiv2Radii = null;
@@ -856,7 +919,11 @@ export class VisibilitySystem {
     this.mask.setPosition(this.maskOriginX, this.maskOriginY);
     this.flicker.setPosition(this.maskOriginX, this.maskOriginY);
 
-    if (this.presentation === 'perceptual') {
+    if (this.presentation === 'light-eater') {
+      this.drawLightEaterMask();
+      this.corruptionGraphics.clear();
+      this.flicker.setAlpha(0);
+    } else if (this.presentation === 'perceptual') {
       this.drawPerceptionMask();
       this.corruptionGraphics.clear();
       this.flicker.setAlpha(0);
@@ -866,8 +933,12 @@ export class VisibilitySystem {
       this.drawCorruption(facingAngle);
       this.drawFlicker();
     }
-    this.drawLamp();
-    this.drawFlashlight(facingAngle);
+    this.lamp?.setVisible(this.presentation !== 'light-eater');
+    this.flashlight?.setVisible(this.presentation !== 'light-eater');
+    if (this.presentation !== 'light-eater') {
+      this.drawLamp();
+      this.drawFlashlight(facingAngle);
+    }
     this.drawGlowSources();
   }
 
@@ -876,18 +947,8 @@ export class VisibilitySystem {
     const pixel = PERCEPTION_PIXEL_SIZE;
     const worldX = Math.floor(this.maskOriginX / pixel) * pixel;
     const worldY = Math.floor(this.maskOriginY / pixel) * pixel;
-    if (!this.perceptionTexture) {
-      const width = Math.ceil(this.maskWidth / pixel) + 1;
-      const height = Math.ceil(this.maskHeight / pixel) + 1;
-      const key = `vision-perception-${perceptionTextureSerial++}`;
-      this.perceptionTexture = this.scene.textures.createCanvas(key, width, height);
-      if (!this.perceptionTexture) return;
-      this.perceptionTexture.setFilter(Phaser.Textures.FilterMode.NEAREST);
-      this.perceptionPixels = this.perceptionTexture.getContext().createImageData(width, height);
-      this.perceptionField = new Float32Array(width * height);
-      this.perceptionGeometryScratch = { cornerVisibility: new Uint8Array((width + 1) * (height + 1)) };
-      this.perceptionImage = this.scene.make.image({ key, x: 0, y: 0 }, false).setOrigin(0, 0).setScale(pixel);
-    }
+    this.ensurePerceptionTexture();
+    if (!this.perceptionTexture) return;
     const texture = this.perceptionTexture;
     const pixels = this.perceptionPixels!;
     const field = this.perceptionField!;
@@ -900,6 +961,7 @@ export class VisibilitySystem {
       raster.originX = this.origin.x; raster.originY = this.origin.y;
       raster.clearRadius = Math.min(24, this.config.minSolidRadius);
       raster.maximumRange = Math.max(this.getEffectiveRadius(0), this.getEffectiveRadius(Math.PI));
+      raster.rangeAt = this.perceptionRangeAt;
       rebuildPerceptionField(field, raster, this.perceptionGeometryScratch!);
       this.perceptionRevision = revision;
       this.perceptionWorldX = worldX; this.perceptionWorldY = worldY;
@@ -919,6 +981,58 @@ export class VisibilitySystem {
       texture.refresh();
       this.perceptionPaintTick = tick;
       this.perceptionCorruption = this.edgeCorruption;
+    }
+    this.mask.clear();
+    this.mask.draw(this.perceptionImage!, worldX - this.maskOriginX, worldY - this.maskOriginY);
+  }
+
+  private ensurePerceptionTexture(): void {
+    if (!this.perceptionTexture) {
+      const pixel = PERCEPTION_PIXEL_SIZE;
+      const width = Math.ceil(this.maskWidth / pixel) + 1;
+      const height = Math.ceil(this.maskHeight / pixel) + 1;
+      const key = `vision-perception-${perceptionTextureSerial++}`;
+      this.perceptionTexture = this.scene.textures.createCanvas(key, width, height);
+      if (!this.perceptionTexture) return;
+      this.perceptionTexture.setFilter(Phaser.Textures.FilterMode.NEAREST);
+      this.perceptionPixels = this.perceptionTexture.getContext().createImageData(width, height);
+      this.perceptionField = new Float32Array(width * height);
+      this.lightEaterTransmission = new Float32Array(width * height);
+      this.perceptionGeometryScratch = { cornerVisibility: new Uint8Array((width + 1) * (height + 1)) };
+      this.perceptionImage = this.scene.make.image({ key, x: 0, y: 0 }, false).setOrigin(0, 0).setScale(pixel);
+    }
+  }
+
+  private drawLightEaterMask(): void {
+    this.ensurePerceptionTexture();
+    const texture = this.perceptionTexture;
+    if (!texture) return;
+    const worldX = Math.floor(this.maskOriginX / PERCEPTION_PIXEL_SIZE) * PERCEPTION_PIXEL_SIZE;
+    const worldY = Math.floor(this.maskOriginY / PERCEPTION_PIXEL_SIZE) * PERCEPTION_PIXEL_SIZE;
+    // P/A interpolation and moving deposits do not rebuild thousands of LOS rays.
+    const geometry = this.lightEaterGeometry;
+    if (geometry.x !== this.origin.x || geometry.y !== this.origin.y || geometry.worldX !== worldX ||
+        geometry.worldY !== worldY || geometry.gridVersion !== this.occluders.version) {
+      const raster = this.perceptionRaster;
+      raster.width = texture.width; raster.height = texture.height;
+      raster.worldX = worldX; raster.worldY = worldY;
+      raster.originX = this.origin.x; raster.originY = this.origin.y;
+      raster.clearRadius = 24; raster.maximumRange = LIGHT_EATER_CLEAR_RADIUS + 40;
+      raster.rangeAt = this.lightEaterAdmissionRange;
+      rebuildPerceptionField(this.perceptionField!, raster, this.perceptionGeometryScratch!);
+      geometry.x = this.origin.x; geometry.y = this.origin.y;
+      geometry.worldX = worldX; geometry.worldY = worldY; geometry.gridVersion = this.occluders.version;
+      this.lightEaterPaintRevision = -1;
+    }
+    const frame = Math.floor(this.elapsedMs / LIGHT_EATER_FRAME_MS);
+    if (this.lightEaterStateRevision !== this.lightEaterPaintRevision || frame !== this.lightEaterPaintFrame) {
+      const paint = this.lightEaterPaint;
+      paint.width = texture.width; paint.worldX = worldX; paint.worldY = worldY;
+      Object.assign(paint, this.lightEaterState);
+      paintLightEater(this.perceptionPixels!.data, this.perceptionField!, this.lightEaterTransmission!, paint, this.lightEaterSample);
+      texture.getContext().putImageData(this.perceptionPixels!, 0, 0);
+      texture.refresh();
+      this.lightEaterPaintRevision = this.lightEaterStateRevision; this.lightEaterPaintFrame = frame;
     }
     this.mask.clear();
     this.mask.draw(this.perceptionImage!, worldX - this.maskOriginX, worldY - this.maskOriginY);

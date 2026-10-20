@@ -1,5 +1,5 @@
 /** Display-only perception field. It never decides tactical visibility. */
-export type VisionPresentation = 'legacy' | 'perceptual';
+export type VisionPresentation = 'legacy' | 'perceptual' | 'light-eater';
 
 export const PERCEPTION_PIXEL_SIZE = 2;
 

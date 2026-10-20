@@ -63,11 +63,14 @@ import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import type { WorldProductionMap } from '@/generation/world-study/production-map';
 import type { WorldProductionRecipeV3 } from '@/generation/world-study/production-recipe';
+import { lightEaterLampRadius } from '@/systems/vision-light-eater';
 
 /** Development encounters still use the complete production scene lifecycle. */
 export interface RiftDevFixture {
   /** Isolated optical study: projected P/A, not save, economy or combat values. */
-  readVisionPreview?: () => Readonly<{ pollution: number; assimilation: number; presentation: 'legacy' | 'perceptual' }>;
+  readVisionPreview?: () => Readonly<{ pollution: number; assimilation: number; presentation: 'legacy' | 'perceptual' | 'light-eater' }>;
+  /** Explicit optical art sample: retain motion/AI poses, suppress player damage only. */
+  visionArtStudy?: true;
   /** Explicit isolated physiology QA; historical fixtures retain their rules. */
   assimilationMode?: AssimilationMode;
   /** Explicit isolated model review; normal entry never loads candidate assets. */
@@ -240,6 +243,8 @@ export class RiftScene extends Phaser.Scene {
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
   private lastLightPlayerPresentation: LastLightPlayerPresentation | null = null;
+  private visionPreviewLamp: WorldMaterialLighting['lights'][number] | null = null;
+  private visionPreviewLampRadius = 0;
   private readonly visibility = new VisibilitySystem();
   private readonly trail = new TrailSystem();
   private readonly ai = new AISystem();
@@ -568,6 +573,7 @@ export class RiftScene extends Phaser.Scene {
         return result.ok;
       },
     }, GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus);
+    if (import.meta.env.DEV && this.devFixture?.visionArtStudy) this.combat.setGodMode(true);
     const weaponId = inventoryStore.getEquipment().weaponId;
     const equippedWeapon = weaponId ? inventoryStore.getItem(weaponId) : undefined;
     this.combat.configureWeapon(equippedWeapon?.kind === 'weapon'
@@ -1055,6 +1061,19 @@ export class RiftScene extends Phaser.Scene {
     if (visionPreview) {
       const projected = getAssimilationModulators(visionPreview.pollution, visionPreview.assimilation);
       this.visibility.setPresentation(visionPreview.presentation);
+      const position = this.player.getPosition();
+      const shoulder = this.lastLightPlayerPresentation?.getLampPosition();
+      this.visibility.setLightEaterState(visionPreview.pollution, visionPreview.assimilation,
+        shoulder && Math.hypot(shoulder.x - position.x, shoulder.y - position.y) < 48 ? shoulder : position);
+      const lamp = this.devRuntime?.worldMaterialLighting?.lights[0];
+      if (lamp && lamp !== this.visionPreviewLamp) {
+        if (this.visionPreviewLamp) this.visionPreviewLamp.radius = this.visionPreviewLampRadius;
+        this.visionPreviewLamp = lamp; this.visionPreviewLampRadius = lamp.radius;
+      }
+      if (this.visionPreviewLamp) {
+        this.visionPreviewLamp.radius = visionPreview.presentation === 'light-eater'
+          ? lightEaterLampRadius(visionPreview.pollution) : this.visionPreviewLampRadius;
+      }
       this.visibility.setEdgeCorruption(projected.edgeCorruption);
       this.visibility.setScreenFlicker(projected.screenFlicker);
       this.chaosVisionScale = projected.radiusScale;
@@ -2571,6 +2590,8 @@ export class RiftScene extends Phaser.Scene {
     this.minimap.destroy();
     this.riftSurface.destroy();
     this.visibility.destroy();
+    if (this.visionPreviewLamp) this.visionPreviewLamp.radius = this.visionPreviewLampRadius;
+    this.visionPreviewLamp = null; this.visionPreviewLampRadius = 0;
     this.player.destroy();
     this.tilemapRenderer.destroy();
     this.landmarkGraphics?.destroy();
