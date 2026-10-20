@@ -1,6 +1,12 @@
 import { resolveEnemyWorldAdaptation, type EnemyWorldAdaptation } from '@/entities/form-renderers/d/world-adaptation';
 
-/** Isolated art-study inputs. No gameplay state or persistence is read here. */
+export interface AssimilationPalette {
+  readonly dark: readonly [number, number, number];
+  readonly mid: readonly [number, number, number];
+  readonly light: readonly [number, number, number];
+}
+
+/** Material input only; no gameplay state or persistence is read here. */
 export interface AssimilationLookState {
   readonly amount: number;
   readonly fibre: number;
@@ -8,7 +14,17 @@ export interface AssimilationLookState {
   readonly seconds: number;
   readonly motion: boolean;
   readonly subjective: boolean;
+  readonly palettes?: readonly [AssimilationPalette, AssimilationPalette];
+  readonly neutralFraction?: number;
+  readonly neutralPalette?: AssimilationPalette;
+  /** Stable palette objects may update in place; renderers track this revision. */
+  readonly paletteRevision?: number;
 }
+
+/** Existing palette.json industrial greys, never a fabricated historical world. */
+export const ASSIMILATION_NEUTRAL_PALETTE: AssimilationPalette = Object.freeze({
+  dark: [44, 46, 51] as const, mid: [58, 61, 66] as const, light: [74, 78, 85] as const,
+});
 
 export interface AssimilationLookMetrics {
   count: number;
@@ -45,11 +61,22 @@ export class AssimilationLookParameters {
   fibrePhase = 0;
   membranePhase = 0;
   subjective = false;
+  neutralFraction = 0;
+  fibrePalette: AssimilationPalette = getAssimilationLookPalettes()[0];
+  membranePalette: AssimilationPalette = getAssimilationLookPalettes()[1];
+  neutralPalette: AssimilationPalette = ASSIMILATION_NEUTRAL_PALETTE;
+  paletteRevision = 0;
   set(state: AssimilationLookState | null): void {
     this.enabled = state !== null;
     const fibre = unit(state?.fibre ?? 0), membrane = unit(state?.membrane ?? 0), sum = fibre + membrane;
-    this.amount = sum > 0 ? smooth(state?.amount ?? 0) : 0;
+    this.neutralFraction = unit(state?.neutralFraction ?? 0);
+    this.amount = sum > 0 || this.neutralFraction > 0 ? smooth(state?.amount ?? 0) : 0;
     this.fibre = sum > 0 ? fibre / sum : 0;
+    const sources = state?.palettes ?? getAssimilationLookPalettes();
+    this.fibrePalette = sources[0];
+    this.membranePalette = sources[1];
+    this.neutralPalette = state?.neutralPalette ?? ASSIMILATION_NEUTRAL_PALETTE;
+    this.paletteRevision = state?.paletteRevision ?? 0;
     this.seconds = Number.isFinite(state?.seconds) ? state!.seconds : 0;
     // Interpolate two one-native-pixel material positions without a threshold
     // flip, geometry displacement, or alteration of the original gait.
@@ -70,9 +97,10 @@ export function getAssimilationLookPalettes(): readonly [EnemyWorldAdaptation, E
   return palettes;
 }
 
-/** rank, fibre tone 0/1, membrane tone 0/1, source boundary, moving material.
+/** rank, fibre tone 0/1, membrane tone 0/1, source boundary, moving material,
+ * neutral boundary and quiet neutral tone.
  * Sparse storage for the original two body groups is under 1 MiB. */
-export const ASSIMILATION_SURFACE_STRIDE = 7;
+export const ASSIMILATION_SURFACE_STRIDE = 9;
 /** Actual palm/tool contact radius around the posed right wrist; not a glove mask. */
 export const ASSIMILATION_GRIP_CONTACT_RADIUS = .065;
 
@@ -118,6 +146,10 @@ export function writeAssimilationSurface(
   const wrap = (x * Math.sin(turn) + z * Math.cos(turn)) / Math.max(.1, Math.hypot(x, z));
   target[offset + 5] = Math.round(46 + unit(.5 + .8 * wrap) * 163);
   target[offset + 6] = (x < -.21 || y < .81) ? 1 : 0;
+  target[offset + 7] = Math.round(24 + unit(.5 + .5 * Math.sin(x * 4 + y * 5.3 - z * 3)) * 207);
+  // Broad old-material lamina with sparse dark seams, not a third invented organism.
+  const seam = fract(x * 2.9 + y * 2.1 + z * .7);
+  target[offset + 8] = Math.round((seam > .94 ? .13 : seam > .88 ? .92 : .57) * 255);
 }
 
 /** Scratch layout RGB / signed local-X normal relief / coverage. */
@@ -138,7 +170,11 @@ export function sampleAssimilationSurface(
   const m0 = surface[offset + 3]! / 255, m1 = surface[offset + 4]! / 255;
   const fphase = moving * look.fibrePhase, mphase = moving * look.membranePhase;
   const ft = f0 + (f1 - f0) * fphase, mt = m0 + (m1 - m0) * mphase;
-  const [fp, mp] = getAssimilationLookPalettes();
+  const fp = look.fibrePalette, mp = look.membranePalette;
+  const neutral = smooth((look.neutralFraction - surface[offset + 7]! / 255 + .055) / .11);
+  const neutralTone = surface[offset + 8]! / 255;
+  const neutralColor = neutralTone < .3 ? look.neutralPalette.dark
+    : neutralTone > .8 ? look.neutralPalette.light : look.neutralPalette.mid;
   const fc0 = f0 < .3 ? fp.dark : f0 > .8 ? fp.light : fp.mid;
   const fc1 = f1 < .3 ? fp.dark : f1 > .8 ? fp.light : fp.mid;
   const mc0 = m0 < .3 ? mp.dark : m0 > .8 ? mp.light : mp.mid;
@@ -152,9 +188,11 @@ export function sampleAssimilationSurface(
     const ml1 = m1 > .8 ? (mc1[channel]! + mp.mid[channel]!) * .5 : mc1[channel]!;
     const mc = ml0 + (ml1 - ml0) * mphase;
     const original = channel === 0 ? originalR : channel === 1 ? originalG : originalB;
-    out[channel] = original + (mc + (fc - mc) * fibre - original) * coverage;
+    const typedColor = mc + (fc - mc) * fibre;
+    out[channel] = original + (typedColor + (neutralColor[channel]! - typedColor) * neutral - original) * coverage;
   }
-  out[3] = ((mt - .57) * .27 * (1 - fibre) + (ft - .57) * .34 * fibre) * coverage;
+  out[3] = (((mt - .57) * .27 * (1 - fibre) + (ft - .57) * .34 * fibre) * (1 - neutral)
+    + (neutralTone - .57) * .08 * neutral) * coverage;
 }
 
 /** Same author-space fields as writeAssimilationSurface. No extra sampler/pass. */
@@ -162,6 +200,8 @@ export const ASSIMILATION_APPEARANCE_GLSL = `
 uniform vec4 uAssimilation; // coverage, source ratio, fibre phase, membrane phase
 uniform vec2 uAssimilationYaw;
 uniform vec3 uAssimilationFibre[3],uAssimilationMembrane[3];
+uniform float uAssimilationNeutralFraction;
+uniform vec3 uAssimilationNeutral[3];
 float assimilationSmooth(float x){x=clamp(x,0.,1.);return x*x*(3.-2.*x);}
 vec3 assimilationPalette(float tone,vec3 dark,vec3 mid,vec3 light){return tone<.3?dark:tone>.8?light:mid;}
 float assimilationFibreTone(vec3 q,float phase){
@@ -198,13 +238,18 @@ void assimilationMaterial(vec3 relative,inout vec3 albedo,inout vec3 normal,vec4
  float wrap=(x*sin(turn)+z*cos(turn))/max(.1,length(q.xz));
  float boundary=floor(46.+clamp(.5+.8*wrap,0.,1.)*163.+.5)/255.;
  float fibre=assimilationSmooth((uAssimilation.y-boundary+.055)/.11);
+ float neutralBoundary=floor(24.+clamp(.5+.5*sin(x*4.+y*5.3-z*3.),0.,1.)*207.+.5)/255.;
+ float neutral=assimilationSmooth((uAssimilationNeutralFraction-neutralBoundary+.055)/.11);
+ float seam=fract(x*2.9+y*2.1+z*.7);
+ float neutralTone=floor((seam>.94?.13:seam>.88?.92:.57)*255.+.5)/255.;
  vec3 fc=mix(assimilationPalette(f0,uAssimilationFibre[0],uAssimilationFibre[1],uAssimilationFibre[2]),
    assimilationPalette(f1,uAssimilationFibre[0],uAssimilationFibre[1],uAssimilationFibre[2]),fphase);
  vec3 membraneLight=mix(uAssimilationMembrane[1],uAssimilationMembrane[2],.5);
  vec3 mc=mix(assimilationPalette(m0,uAssimilationMembrane[0],uAssimilationMembrane[1],membraneLight),
    assimilationPalette(m1,uAssimilationMembrane[0],uAssimilationMembrane[1],membraneLight),mphase);
- albedo=mix(albedo,mix(mc,fc,fibre),coverage);
- float relief=((mt-.57)*.27*(1.-fibre)+(ft-.57)*.34*fibre)*coverage;
+ vec3 nc=assimilationPalette(neutralTone,uAssimilationNeutral[0],uAssimilationNeutral[1],uAssimilationNeutral[2]);
+ albedo=mix(albedo,mix(mix(mc,fc,fibre),nc,neutral),coverage);
+ float relief=(((mt-.57)*.27*(1.-fibre)+(ft-.57)*.34*fibre)*(1.-neutral)+(neutralTone-.57)*.08*neutral)*coverage;
  normal=normalize(normal+vec3(c,0.,-s)*relief);
 }
 `;
