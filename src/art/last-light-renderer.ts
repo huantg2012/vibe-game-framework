@@ -376,9 +376,10 @@ export class LastLightRenderer {
       lamp: value.meta.lamp, shadowCapsules: value.meta.shadowCapsules } : null;
     if (value) {
       const gl = this.gl;
+      const { albedo, normal, depth, material } = value;
       const upload = this.assimilationUpload ??= new Uint8Array(64 * 80 * 4);
       let left = 64, top = 80, right = 0, bottom = 0;
-      for (let i = 0; i < 64 * 80; i++) if (value.albedo[i * 4 + 3]) {
+      for (let i = 0; i < 64 * 80; i++) if (albedo[i * 4 + 3]) {
         const x = i % 64, y = Math.floor(i / 64);
         left = Math.min(left, x); top = Math.min(top, y); right = Math.max(right, x + 1); bottom = Math.max(bottom, y + 1);
       }
@@ -386,8 +387,8 @@ export class LastLightRenderer {
       // Typed arrays are not flipped by UNPACK_FLIP_Y_WEBGL. Match the existing
       // image-backed atlas orientation explicitly for all four data channels.
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
-      for (const [key, data] of [['actorColor', value.albedo], ['actorNormal', value.normal],
-        ['actorDepth', value.depth], ['actorRough', value.material]] as const) {
+      for (const [key, data] of [['actorColor', albedo], ['actorNormal', normal],
+        ['actorDepth', depth], ['actorRough', material]] as const) {
         let texture = this.assimilationTextures.get(key);
         if (!texture) { texture = this.texture(null, 64, 80); this.assimilationTextures.set(key, texture); }
         for (let y = 0; y < 80; y++) upload.set(data.subarray(y * 256, (y + 1) * 256), (79 - y) * 256);

@@ -283,18 +283,19 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
       this.assimilationFrames.delete(value.id); this.assimilationFrames.set(value.id, cached);
       return cached;
     }
+    const { albedo, normal, material, depth } = value;
     const offsets: number[] = [], pixels: number[] = [], glovePixels: number[] = [];
     const depths = new Float32Array(64 * 80).fill(-Infinity);
     for (let y = 0; y < 80; y++) for (let x = 0; x < 64; x++) {
       const j = (y * 64 + x) * 4;
-      if (!value.albedo[j + 3]) continue;
-      const d = (value.depth[j]! * 256 + value.depth[j + 1]!) / 256 - 80;
+      if (!albedo[j + 3]) continue;
+      const d = (depth[j]! * 256 + depth[j + 1]!) / 256 - 80;
       depths[j / 4] = d;
       const point = unprojectLastLight(x + .5, y + .5, d, CAMERA, BASIS), p = lastLightToNative(point);
-      const n = lastLightToNative([value.normal[j]! / 127.5 - 1, value.normal[j + 1]! / 127.5 - 1, value.normal[j + 2]! / 127.5 - 1]);
+      const n = lastLightToNative([normal[j]! / 127.5 - 1, normal[j + 1]! / 127.5 - 1, normal[j + 2]! / 127.5 - 1]);
       offsets.push(j);
       pixels.push(p[0] * CAMERA.scale, p[1] * CAMERA.scale, p[2] * CAMERA.scale, ...n,
-        value.albedo[j]!, value.albedo[j + 1]!, value.albedo[j + 2]!, value.material[j + 2]! / 255, value.material[j + 3]! / 255 * 2);
+        albedo[j]!, albedo[j + 1]!, albedo[j + 2]!, material[j + 2]! / 255, material[j + 3]! / 255 * 2);
       if (Math.hypot(...point.map((v, i) => v - value.meta.wrist.world[i]!)) < .1) glovePixels.push(j / 4);
     }
     const screen = (socket: AssimilationModelFrame['meta']['wrist']): LightVector =>

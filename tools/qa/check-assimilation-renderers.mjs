@@ -81,6 +81,12 @@ function modelFrame(id, part = 'body', depth = 0) {
   frame.depth.set([encoded >> 8, encoded & 255, 4, 255], offset);
   return frame;
 }
+function lazyFrame(frame) {
+  const reads = { albedo: 0, normal: 0, material: 0, depth: 0 }, view = { ...frame };
+  for (const channel of Object.keys(reads))
+    Object.defineProperty(view, channel, { get() { reads[channel]++; return frame[channel]; } });
+  return { view, reads };
+}
 const rift = new LastLightPlayerPresentation(scene, player, assets, { lights: [] });
 const originalImages = [...rift.getHitFlashImages()], originalMasks = originalImages.map(value => value.mask);
 const look = { amount: .85, fibre: .5, membrane: .5, seconds: 0, motion: false, subjective: false };
@@ -143,6 +149,9 @@ assert.deepEqual(rift.output.data, zeroPixels, 'A0 is identical with and without
 const firstPrepared = rift.prepareModelFrame(body);
 assert.equal(rift.prepareModelFrame({ ...body, albedo: body.albedo.slice() }), firstPrepared,
   'Re-expanded channels reuse the stable frame-id preparation');
+const lazyBody = lazyFrame(modelFrame(9));
+rift.prepareModelFrame(lazyBody.view);
+assert.deepEqual(Object.values(lazyBody.reads), [1, 1, 1, 1], 'Preparing pixels reads each lazy channel once');
 for (let id = 10; id < 85; id++) rift.prepareModelFrame(modelFrame(id));
 assert.equal(rift.assimilationFrames.size, 64, 'Prepared frame retention is bounded');
 rift.destroy();
@@ -174,12 +183,14 @@ Object.assign(haven, {
   uniform(_program, name) { return name; }, begin() {}, texture() { return {}; },
 });
 const sitModel = modelFrame(100); sitModel.meta.pose = 'sit'; sitModel.meta.seatHeight = .48;
+const lazySit = lazyFrame(sitModel);
 const havenQueries = [];
-haven.setAssimilationModelSource({ getFrame(pose) { havenQueries.push({ ...pose }); return pose.pose === 'sit' ? sitModel : null; } });
+haven.setAssimilationModelSource({ getFrame(pose) { havenQueries.push({ ...pose }); return pose.pose === 'sit' ? lazySit.view : null; } });
 const renderState = { seconds: 0, world: [0, 0, 0], yaw: 0, walking: false, resting: true,
   health: [1, 1, 1], charge: 0, growth: 0, thicken: 0, pulses: new Float32Array(4), reducedMotion: false,
   gaitPose: 'sit', gaitFrame: 0 };
 haven.draw(renderState);
+assert.deepEqual(Object.values(lazySit.reads), [1, 1, 1, 1], 'Uploading pixels reads each lazy channel once');
 assert.equal(havenQueries.at(-1).pose, 'sit'); assert.equal(haven.currentFrame.pose, 'sit');
 assert.equal(uniforms.get('uAssimilation')[0], .85, 'Seating cannot clear assimilation materials');
 assert.equal(uniforms.get('uAssimilationSeatHeight')[0], .48);
