@@ -118,6 +118,7 @@ function createR100Recipe(worldId: string, seed: number, grade: PollutionGrade, 
   let nativeSpatial = nativeDevelopment||nativeConstruction ? createNativeSpatialRuntimeInput(worldId, geometrySource) : undefined;
   if ((nativeDevelopment||nativeConstruction) && !nativeSpatial) throw new Error(`Native spatial development is unavailable for ${worldId}`);
   if(nativeConstruction&&nativeSpatial)nativeSpatial=applyNativeConstructionIntent({...nativeSpatial,
+    ...(lowConstruction?{policy:{...nativeSpatial.policy,minWideRatio:lowConstruction.minWideRatio}}:{}),
     assemblies:nativeSpatial.assemblies.map(assembly=>({...assembly,grade:'all' as const,
       sourceScale:assembly.sourceScale*(lowConstruction?.assemblyScaleMultiplier??1)}))},nativeConstruction);
   const spatialPolicy = nativeSpatial ? undefined : createR100SpatialPolicy(worldId, seed);

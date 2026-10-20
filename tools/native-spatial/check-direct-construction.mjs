@@ -35,6 +35,8 @@ try {
     assert.deepEqual(recipe.nativeConstruction.shore,source.shore);
     assert.deepEqual(recipe.nativeConstruction.intent,source.intent);
     const mother=createR100DirectConstructionRecipe(world,20261012,'medium');
+    assert.equal(recipe.nativeSpatial.policy.minWideRatio,compact?.minWideRatio??mother.nativeSpatial.policy.minWideRatio);
+    assert.equal(recipe.nativeSpatial.policy.wideRadiusPx,mother.nativeSpatial.policy.wideRadiusPx);
     assert.deepEqual(recipe.nativeSpatial.assemblies,mother.nativeSpatial.assemblies.map(assembly=>({...assembly,
       sourceScale:assembly.sourceScale*(compact?.assemblyScaleMultiplier??1)})));
     const ordinary=createR100ProductionRecipe(world,20261012,grade);assert.equal(ordinary.package.algorithmRevision,registration.enabled?13:11);if(!registration.enabled)assert(validFrozenRevision11(ordinary));

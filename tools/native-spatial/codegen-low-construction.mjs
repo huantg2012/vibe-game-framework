@@ -13,9 +13,9 @@ const source = file => {
 };
 const file = 'data/rift-native-construction-low.csv';
 const [header, ...lines] = fs.readFileSync(file, 'utf8').trim().split(/\r?\n/);
-assert.equal(header, 'world_id,enabled,reference_csv,shore_csv,frame_width_px,frame_height_px,target_walk_area_px2,planning_cell_factor,assembly_scale_multiplier');
+assert.equal(header, 'world_id,enabled,reference_csv,shore_csv,frame_width_px,frame_height_px,target_walk_area_px2,planning_cell_factor,assembly_scale_multiplier,min_wide_ratio');
 const rows = lines.map(line => {
-  const [worldId, enabled, referencePath, shorePath, width, height, area, factor, multiplier] = line.split(',');
+  const [worldId, enabled, referencePath, shorePath, width, height, area, factor, multiplier, wideRatio] = line.split(',');
   assert(['cinder-ridge', 'crystal-fibre', 'ruptured-film'].includes(worldId));
   assert(['true', 'false'].includes(enabled));
   const reference = source(referencePath), shore = source(shorePath);
@@ -36,7 +36,10 @@ const rows = lines.map(line => {
   assert(Number.isFinite(intent.planningCellFactor) && intent.planningCellFactor > 0 && intent.planningCellFactor <= 2);
   const assemblyScaleMultiplier = Number(multiplier);
   assert(Number.isFinite(assemblyScaleMultiplier) && assemblyScaleMultiplier >= .5 && assemblyScaleMultiplier <= 1);
-  const row = { worldId, enabled: enabled === 'true', reference, shore, intent, assemblyScaleMultiplier };
+  const minWideRatio = Number(wideRatio);
+  assert(Number.isFinite(minWideRatio) && minWideRatio >= .53 && minWideRatio <= .55,
+    'Low-grade authoring preserves the accepted 53–55% wide-domain contract');
+  const row = { worldId, enabled: enabled === 'true', reference, shore, intent, assemblyScaleMultiplier, minWideRatio };
   return { ...row, sourceHash: sha(JSON.stringify(row)) };
 });
 assert(rows.length >= 1 && rows.length <= 3);

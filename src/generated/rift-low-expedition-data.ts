@@ -23,8 +23,8 @@ export const RIFT_LOW_EXPEDITION_OVERRIDES = [
       156,
       42
     ],
-    "contentIdentity": "0e9a2c35",
-    "sourceHash": "1f39efd99cc128ee017e0eed6d483fee486b0c3a29e1c44714e78ae950495806"
+    "contentIdentity": "23c0966d",
+    "sourceHash": "dbbb69506ce88841076b9da5ceae0f2b31b0eaef451329d4ac3ee9240ba89bb4"
   },
   {
     "worldId": "ruptured-film",

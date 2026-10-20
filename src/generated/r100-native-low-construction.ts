@@ -18,6 +18,28 @@ export const NATIVE_LOW_CONSTRUCTION_SOURCES = [
       "planningCellFactor": 0.8470616319444444
     },
     "assemblyScaleMultiplier": 0.85,
-    "sourceHash": "7d666e443ba8415938631b25b2023320dc255907b93ba108d3394300f4908349"
+    "minWideRatio": 0.55,
+    "sourceHash": "17c02f7ae3bc45b70024a0fc48152982b9d75987290a3ec5ef024f34ad846bf6"
+  },
+  {
+    "worldId": "crystal-fibre",
+    "enabled": true,
+    "reference": {
+      "csv": "reference_id,world_id,grade,seed,seed_salt,kind,id,profile_id,x_px,y_px,width_px,height_px,length_px,rotation_rad,scale,parent_id,rects\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-0,core,1216,512,768,768,,,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-1,core,480,800,1120,640,,,,land-0,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-2,core,1408,128,576,768,,,,land-0,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,land,land-3,core,1664,608,864,640,,,,land-0,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,assembly,fold,crystal-fibre-medium-whole,1632,808,,,,0,1,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-0,native-fibre-fallen-end,1648,272,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-1,native-fibre-fallen-end,720,1136,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-2,native-fibre-fallen-end,1288,1104,56,32,160,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-3,native-fibre-fallen-end,2320,784,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,solid,solid-4,native-fibre-fallen-end,1928,1024,56,32,152,0.24,,,\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-0,offset-cut-small,1528,496,,,,,,,1464:448:112:80|1528:464:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-1,offset-cut-small,1880,512,,,,,,,1816:472:80:72|1888:496:48:40|1832:528:40:24\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-2,offset-cut-small,1872,208,,,,,,,1816:168:112:80|1808:160:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-3,offset-cut-small,600,1000,,,,,,,568:944:72:80|576:1016:40:48|560:960:24:40\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-4,offset-cut-small,968,968,,,,,,,928:904:80:112|920:968:72:56\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-5,offset-cut-small,1008,1296,,,,,,,944:1248:112:80|1008:1264:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-6,offset-cut-small,1432,1312,,,,,,,1368:1264:112:80|1432:1280:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-7,offset-cut-small,1632,1064,,,,,,,1568:1016:112:80|1632:1032:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-8,offset-cut-small,2104,784,,,,,,,2056:728:80:112|2072:720:72:56\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-9,offset-cut-small,2336,1064,,,,,,,2272:1016:112:80|2336:1032:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-10,offset-cut-small,1928,1136,,,,,,,1872:1096:112:80|1864:1088:56:72\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,hole,hole-11,offset-cut-small,1312,712,,,,,,,1280:656:72:80|1288:728:40:48|1272:672:24:40\ncrystal-fibre-fixed-reference,crystal-fibre,medium,20261012,0,spawn,spawn,,1136,1328,,,,,,,\n",
+      "sourceHash": "a4e041c5f40b2e0948a5e9fce6e9ae54c248d793f9a31a813b1ed2d82570c3e6"
+    },
+    "shore": {
+      "csv": "reference_id,algorithm,segment_min_px,segment_max_px,depth_min_px,depth_max_px,protected_gap_px,max_clean_run_px\ncrystal-fibre-fixed-reference,macro-shore-step-v1,80,160,16,32,48,384\n",
+      "sourceHash": "883116e84c31b011eca1b59bc21c6135437d8d6611f1f2ffc16bfdc9ff4b0cf4"
+    },
+    "intent": {
+      "frameWidthPx": 2976,
+      "frameHeightPx": 1792,
+      "targetWalkAreaPx2": 1319016,
+      "planningCellFactor": 0.7156119791666666
+    },
+    "assemblyScaleMultiplier": 1,
+    "minWideRatio": 0.53,
+    "sourceHash": "5ee018bb29aa6edb149e36e5518042b8686747362a5cf21e49f64e27e9d639d6"
   }
 ] as const;

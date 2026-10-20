@@ -28,7 +28,12 @@ try {
     const candidate = createNativeConstructionCandidate(recipe, trace, checkpoint);
     assert(candidate.trace.accepted, `${worldId} geometry: ${candidate.trace.reasons}`);
     const row = { worldId, identity, dimensions: [candidate.layout.definition.cols * 32, candidate.layout.definition.rows * 32],
-      geometry: candidate.trace.gates.geometry.metrics, attempts: [], accepted: [] };
+      geometry: candidate.trace.gates.geometry.metrics,
+      visibility: { accepted: candidate.trace.gates.visibility.accepted,
+        coverage: candidate.trace.gates.visibility.metrics.coverage },
+      widthContract: { wideRadiusPx: recipe.nativeSpatial.policy.wideRadiusPx, minWideRatio: recipe.nativeSpatial.policy.minWideRatio,
+        maxNarrowRunPx: recipe.nativeSpatial.policy.maxNarrowRunPx, narrowRatioAdmission: 'quality diagnostic only' },
+      attempts: [], accepted: [] };
     report.cases.push(row); save();
     const oldSeeds = oldLines.filter(line => line.startsWith(`${worldId},low,`)).map(line => Number(line.split(',')[2]));
     const seeds = [...new Set([156, ...oldSeeds, 42, 20261012, ...Array.from({ length: 12 }, (_, i) => mix32(156, `low-supply-${i}`))])].slice(0, 16);
@@ -53,8 +58,15 @@ try {
         assert.equal(native.searchSites.length, 8);
         const exit = layout.extractionPoint.position;
         if (!row.accepted.some(other => other.exit.x === exit.x && other.exit.y === exit.y)) {
+          const gate = native.diagnostics.nativeSpatial.gates.routes;
           row.accepted.push({ seed, exit, spawn: layout.spawnPoint, signature: metadata.signature,
-            kindling: layout.kindlingNodes, contaminants: layout.contaminantNodes, expedition: native.diagnostics.expedition });
+            kindling: layout.kindlingNodes, contaminants: layout.contaminantNodes, expedition: native.diagnostics.expedition,
+            routes: { accepted: gate.accepted, reasons: gate.reasons, qualityDiagnostics: gate.qualityDiagnostics,
+              values: gate.metrics.routes.map(route => ({ id: route.id, lengthPx: route.lengthPx,
+                minSampledWidthLowerPx: Math.min(...route.transverse.sections
+                  .filter(section => typeof section.widthLowerPx === 'number').map(section => section.widthLowerPx)),
+                narrowRatio: route.transverse.narrowRatio,
+                maxNarrowOrUncertainRunPx: route.transverse.maxNarrowOrUncertainRunPx })) } });
           replacements.push([worldId, 'low', seed, exit.x, exit.y, identity].join(','));
         }
       }
