@@ -79,8 +79,8 @@ export const ASSIMILATION_GRIP_CONTACT_RADIUS = .065;
 function fibreTone(x: number, y: number, z: number, phase: number): number {
   // Long, joined diagonals with a single fork near the shoulder.
   const fork = Math.max(0, y - 1.05) * (x < -.18 ? .3 : -.2);
-  const band = fract((x + z * .65 + (y - .72) * .045 + fork + phase / 26.5) / .108);
-  return band < .21 ? .13 : band < .67 ? .57 : .92;
+  const band = fract((x + z * .65 + (y - .72) * .045 + fork + phase / 26.5) / .17);
+  return band < .14 ? .13 : band < .9 ? .57 : .92;
 }
 
 function membraneTone(x: number, y: number, z: number, phase: number): number {
@@ -112,9 +112,11 @@ export function writeAssimilationSurface(
   target[offset + 2] = Math.round(fibreTone(x, y, z, 1) * 255);
   target[offset + 3] = Math.round(membraneTone(x, y, z, 0) * 255);
   target[offset + 4] = Math.round(membraneTone(x, y, z, 1) * 255);
-  // Both sources remain visible in a side view: shoulder bundles above, broad
-  // waist/hem membrane below. Pure sources still occupy the full authored field.
-  target[offset + 5] = Math.round(46 + unit((.94 - y) / .1) * 163);
+  // A diagonal wrap joins the left shoulder to the right shin, while membrane
+  // reaches the opposing shoulder. Neither source stops at a horizontal seam.
+  const turn = (y - .75) * 2.4;
+  const wrap = (x * Math.sin(turn) + z * Math.cos(turn)) / Math.max(.1, Math.hypot(x, z));
+  target[offset + 5] = Math.round(46 + unit(.5 + .8 * wrap) * 163);
   target[offset + 6] = (x < -.21 || y < .81) ? 1 : 0;
 }
 
@@ -144,7 +146,11 @@ export function sampleAssimilationSurface(
   // Blending occurs only at the bounded source boundary, not across the body.
   for (let channel = 0; channel < 3; channel++) {
     const fc = fc0[channel]! + (fc1[channel]! - fc0[channel]!) * fphase;
-    const mc = mc0[channel]! + (mc1[channel]! - mc0[channel]!) * mphase;
+    // The turned membrane edge retains its palette hue without reading as an
+    // emissive stripe on dark limbs. Broad mid and dark surfaces are unchanged.
+    const ml0 = m0 > .8 ? (mc0[channel]! + mp.mid[channel]!) * .5 : mc0[channel]!;
+    const ml1 = m1 > .8 ? (mc1[channel]! + mp.mid[channel]!) * .5 : mc1[channel]!;
+    const mc = ml0 + (ml1 - ml0) * mphase;
     const original = channel === 0 ? originalR : channel === 1 ? originalG : originalB;
     out[channel] = original + (mc + (fc - mc) * fibre - original) * coverage;
   }
@@ -160,8 +166,8 @@ float assimilationSmooth(float x){x=clamp(x,0.,1.);return x*x*(3.-2.*x);}
 vec3 assimilationPalette(float tone,vec3 dark,vec3 mid,vec3 light){return tone<.3?dark:tone>.8?light:mid;}
 float assimilationFibreTone(vec3 q,float phase){
  float fork=max(0.,q.y-1.05)*(q.x<-.18?.3:-.2);
- float band=fract((q.x+q.z*.65+(q.y-.72)*.045+fork+phase/26.5)/.108);
- return band<.21?.13:band<.67?.57:.92;
+ float band=fract((q.x+q.z*.65+(q.y-.72)*.045+fork+phase/26.5)/.17);
+ return band<.14?.13:band<.9?.57:.92;
 }
 float assimilationMembraneTone(vec3 q,float phase){
  float fold=abs(q.x)-.12+(q.y-.78)*.25+q.z*.18+phase/26.5;
@@ -188,12 +194,15 @@ void assimilationMaterial(vec3 relative,inout vec3 albedo,inout vec3 normal,vec4
  float f0=assimilationFibreTone(q,0.),f1=assimilationFibreTone(q,1.);
  float m0=assimilationMembraneTone(q,0.),m1=assimilationMembraneTone(q,1.);
  float ft=mix(f0,f1,fphase),mt=mix(m0,m1,mphase);
- float boundary=floor(46.+clamp((.94-y)/.1,0.,1.)*163.+.5)/255.;
+ float turn=(y-.75)*2.4;
+ float wrap=(x*sin(turn)+z*cos(turn))/max(.1,length(q.xz));
+ float boundary=floor(46.+clamp(.5+.8*wrap,0.,1.)*163.+.5)/255.;
  float fibre=assimilationSmooth((uAssimilation.y-boundary+.055)/.11);
  vec3 fc=mix(assimilationPalette(f0,uAssimilationFibre[0],uAssimilationFibre[1],uAssimilationFibre[2]),
    assimilationPalette(f1,uAssimilationFibre[0],uAssimilationFibre[1],uAssimilationFibre[2]),fphase);
- vec3 mc=mix(assimilationPalette(m0,uAssimilationMembrane[0],uAssimilationMembrane[1],uAssimilationMembrane[2]),
-   assimilationPalette(m1,uAssimilationMembrane[0],uAssimilationMembrane[1],uAssimilationMembrane[2]),mphase);
+ vec3 membraneLight=mix(uAssimilationMembrane[1],uAssimilationMembrane[2],.5);
+ vec3 mc=mix(assimilationPalette(m0,uAssimilationMembrane[0],uAssimilationMembrane[1],membraneLight),
+   assimilationPalette(m1,uAssimilationMembrane[0],uAssimilationMembrane[1],membraneLight),mphase);
  albedo=mix(albedo,mix(mc,fc,fibre),coverage);
  float relief=((mt-.57)*.27*(1.-fibre)+(ft-.57)*.34*fibre)*coverage;
  normal=normalize(normal+vec3(c,0.,-s)*relief);

@@ -16,6 +16,11 @@ const look = new AssimilationLookParameters(), scratch = new Float32Array(5);
 const state = { amount: 0, fibre: 1, membrane: 0, seconds: 0, motion: true, subjective: false };
 const checks = { frames: 0, opaque: 0, maskBytes: 0, affected: 0, identityProtected: 0, originalTraces: 0, motion: 0, sourceDifference: 0 };
 const protectedParts = { sole: 0, lens: 0, visor: 0, grip: 0 };
+const fibreTones = { dark: 0, mid: 0, light: 0 };
+const sourceWrap = {
+  left: { fibre: 0, membrane: 0 }, right: { fibre: 0, membrane: 0 },
+  rightShin: { fibre: 0, membrane: 0 }, rightShoulder: { fibre: 0, membrane: 0 },
+};
 type Coverage = { opaque: number; affected: number };
 const regions: Record<string, Coverage> = Object.fromEntries(
   ['helmet', 'pack', 'arms', 'legs', 'leftHand', 'rightHandBack', 'darkMaterial'].map(name => [name, { opaque: 0, affected: 0 }]));
@@ -84,8 +89,22 @@ for (const [group, atlas] of [['original', base.atlas], ['bodyWithoutArm', manif
       countRegion('rightHandBack', group === 'original' && frame.glovePixels.includes(y * 64 + x) && !contact);
       countRegion('darkMaterial', maximum < 38 && !identityProtected);
       if (mask[offset]) {
-        if (mask[offset + 5]! < 100) fibreRegion++;
-        if (mask[offset + 5]! > 160) membraneRegion++;
+        const prefersFibre = mask[offset + 5]! < 100, prefersMembrane = mask[offset + 5]! > 160;
+        if (prefersFibre) fibreRegion++;
+        if (prefersMembrane) membraneRegion++;
+        for (const toneOffset of [1, 2]) {
+          const tone = mask[offset + toneOffset]! / 255;
+          fibreTones[tone < .3 ? 'dark' : tone > .8 ? 'light' : 'mid']++;
+        }
+        const countSources = (region: keyof typeof sourceWrap, belongs: boolean): void => {
+          if (!belongs) return;
+          if (prefersFibre) sourceWrap[region].fibre++;
+          if (prefersMembrane) sourceWrap[region].membrane++;
+        };
+        countSources('left', lx < -.1);
+        countSources('right', lx > .1);
+        countSources('rightShin', lx > .07 && ly > .15 && ly < .55);
+        countSources('rightShoulder', lx > .15 && ly > 1 && ly < 1.2);
         if (mask[offset + 6] && (mask[offset + 1] !== mask[offset + 2] || mask[offset + 3] !== mask[offset + 4])) checks.motion++;
         if (mask[offset + 1] !== mask[offset + 3]) checks.sourceDifference++;
       }
@@ -102,6 +121,16 @@ for (const [name, region] of Object.entries(regions)) {
   assert(region.affected / region.opaque >= .65, `${name} cannot remain a large protected block`);
 }
 assert(checks.motion > 500 && checks.sourceDifference > 1000, 'Actual exported frames exercise structured material and motion');
+const toneTotal = fibreTones.dark + fibreTones.mid + fibreTones.light;
+assert(fibreTones.light / toneTotal >= .08 && fibreTones.light / toneTotal <= .12,
+  'Real exported surfaces retain only 8–12% bright fibre facets');
+assert(fibreTones.mid / toneTotal > .7 && fibreTones.dark / toneTotal < .2,
+  'Broad fibre mid surfaces must dominate the narrow light and dark cuts');
+for (const side of [sourceWrap.left, sourceWrap.right]) {
+  assert(side.fibre > 500 && side.membrane > 500, 'Each body side must carry both sources across the diagonal wrap');
+}
+assert(sourceWrap.rightShin.fibre > sourceWrap.rightShin.membrane, 'A fibre branch must reach the right shin');
+assert(sourceWrap.rightShoulder.membrane > sourceWrap.rightShoulder.fibre, 'Membrane must reach the opposing shoulder');
 const movingSurface = new Uint8Array(ASSIMILATION_SURFACE_STRIDE), next = new Float32Array(5);
 writeAssimilationSurface(-.29, 1.05, .08, 110, 0, movingSurface, 0);
 for (let seconds = 0; seconds < 5; seconds += .01) {
@@ -111,6 +140,20 @@ for (let seconds = 0; seconds < 5; seconds += .01) {
   sampleAssimilationSurface(movingSurface, 0, look, 100, 92, 85, next);
   for (let channel = 0; channel < 4; channel++)
     assert(Math.abs(scratch[channel]! - next[channel]!) < .001, 'Material phase cannot jump at a clock threshold');
+}
+const lightSurface = new Uint8Array([32, 235, 235, 235, 235, 46, 0]);
+for (const source of ['fibre', 'membrane'] as const) {
+  look.set({ ...state, amount: 1, fibre: source === 'fibre' ? 1 : 0, membrane: source === 'membrane' ? 1 : 0 });
+  sampleAssimilationSurface(lightSurface, 0, look, 100, 92, 85, scratch);
+  lightSurface[5] = 209;
+  sampleAssimilationSurface(lightSurface, 0, look, 100, 92, 85, next);
+  assert.deepEqual([...scratch], [...next], 'Pure sources must ignore the source boundary');
+  for (let channel = 0; channel < 3; channel++) {
+    const expected = source === 'fibre' ? fibrePalette.light[channel]! :
+      (membranePalette.light[channel]! + membranePalette.mid[channel]!) * .5;
+    assert.equal(scratch[channel], expected, 'Only the membrane light edge is brought halfway toward its world mid');
+  }
+  lightSurface[5] = 46;
 }
 look.set({ ...state, fibre: 0, membrane: 0, amount: 1 });
 assert.equal(look.amount, 0, 'No source means unchanged body');
@@ -123,5 +166,6 @@ assert(ratios.every(ratio => ratio >= .75 && ratio <= .90), 'Every original fram
 assert(checks.identityProtected / checks.opaque <= .15, 'Identity protection cannot become a large body exemption');
 assert(Object.values(protectedParts).every(count => count > 0), 'All four small protection categories must exist in the real frame set');
 console.log(JSON.stringify({ pass: true, checks, protectedParts, coverage: { aggregate, minimum: Math.min(...ratios), maximum: Math.max(...ratios) },
+  fibreTones: { ...fibreTones, lightRatio: fibreTones.light / toneTotal }, sourceWrap,
   regions, idleCoverage: frameCoverage.filter(frame => frame.group === 'original' && frame.key.includes('idle')),
   limits: 'Coverage uses material mix weight >=0.5 divided by every opaque body pixel. Original 208 exported frames only; deformed geometry and browser appearance remain separate checks.' }, null, 2));
