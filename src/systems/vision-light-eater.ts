@@ -25,7 +25,13 @@ export interface LightEaterState {
   bodyX: number;
   bodyY: number;
   elapsedMs: number;
+  /** Explicit gameplay radii before external Host/tool multipliers. Omission
+   * preserves the approved art-study radii, independent of physiology balance. */
+  warmRadius?: number;
+  perceptionRadius?: number;
+  rangeScale?: number;
 }
+export interface LightEaterRadii { readonly warm: number; readonly perception: number }
 export interface LightEaterSample {
   warm: number;
   cold: number;
@@ -50,6 +56,12 @@ export function lightEaterExtent(pollution: number, assimilation: number): numbe
   const warm = lightEaterLampRadius(pollution);
   return warm + (LIGHT_EATER_CLEAR_RADIUS - warm) * smooth(assimilation / 100);
 }
+export function resolveLightEaterLampRadius(state: Readonly<LightEaterState>): number {
+  return (state.warmRadius ?? lightEaterLampRadius(state.pollution)) * (state.rangeScale ?? 1);
+}
+export function resolveLightEaterExtent(state: Readonly<LightEaterState>): number {
+  return (state.perceptionRadius ?? lightEaterExtent(state.pollution, state.assimilation)) * (state.rangeScale ?? 1);
+}
 
 /** One continuous field for DEV queries and the 2px mask. LOS remains external. */
 export function sampleLightEater(out: LightEaterSample, x: number, y: number, state: Readonly<LightEaterState>): LightEaterSample {
@@ -69,7 +81,7 @@ export function sampleLightEater(out: LightEaterSample, x: number, y: number, st
   // repeating cellular wallpaper when stretched over the unknown screen.
   const fragment = smooth((detail - 0.36) / 0.39) * (1 - smooth((broad - 0.8) / 0.18));
   const pressure = 0.08 + p * 0.92;
-  const lampRadius = lightEaterLampRadius(state.pollution);
+  const lampRadius = resolveLightEaterLampRadius(state);
   // Native material lighting owns distance falloff. Pollution adds optical
   // thickness everywhere, including underfoot; it never protects a bright disc.
   // The same spatial field remains present from P=0 to P=100. Only its absorption
@@ -82,7 +94,7 @@ export function sampleLightEater(out: LightEaterSample, x: number, y: number, st
   const inward = smooth((distance - 32) / Math.max(30, lampRadius * 0.55));
   const consumption = pressure * density * inward;
   out.warm = bitten * (1 - consumption * 0.64) * surfaceTransmission;
-  const coldRadius = lightEaterExtent(state.pollution, state.assimilation);
+  const coldRadius = resolveLightEaterExtent(state);
   const coldFalloff = 1 - smooth((distance - coldRadius * 0.62) / (coldRadius * 0.38));
   // Restore actual material detail, rather than drawing a bright fog in its
   // place. The native surface is already dim outside the shrunken warm lamp.
@@ -117,7 +129,7 @@ export function paintLightEater(
   pixels: Uint8ClampedArray, admission: Float32Array, transmission: Float32Array,
   paint: Readonly<LightEaterPaint>, scratch: LightEaterSample,
 ): void {
-  const extent = lightEaterExtent(paint.pollution, paint.assimilation);
+  const extent = resolveLightEaterExtent(paint);
   for (let i = 0; i < admission.length; i++) {
     const x = paint.worldX + (i % paint.width + 0.5) * LIGHT_EATER_PIXEL;
     const y = paint.worldY + (Math.floor(i / paint.width) + 0.5) * LIGHT_EATER_PIXEL;
@@ -125,8 +137,11 @@ export function paintLightEater(
     const offset = i * 4;
     const inEnvelope = Math.hypot(x - paint.lampX, y - paint.lampY) + Math.SQRT2 < extent;
     const visible = admission[i]! > 0 && inEnvelope ? scratch.transmission : 0;
-    transmission[i] = visible;
     const opaque = 1 - visible;
+    const opaqueByte = Math.round(opaque * 255);
+    // Gameplay queries use the actual 8-bit mask, including fully opaque edge
+    // pixels. Infinitesimal mathematical transmission must not discover a tile.
+    transmission[i] = (255 - opaqueByte) / 255;
     // Colour only the recovered share. A latent cold signal beneath stronger
     // shoulder light must not recolour the protected action centre.
     const coldMix = visible > 0 ? Math.max(0, scratch.cold - scratch.warm) / Math.max(0.001, scratch.cold) * Math.sqrt(scratch.cold / 0.58) : 0;
@@ -136,6 +151,6 @@ export function paintLightEater(
     pixels[offset] = 1 + scratch.residue * 2 + coldMix * 8 + reaction * 28;
     pixels[offset + 1] = 2 + scratch.residue * 4 + coldMix * 16 + reaction * 86;
     pixels[offset + 2] = 2 + scratch.residue * 3 + coldMix * 18 + reaction * 59;
-    pixels[offset + 3] = Math.round(opaque * 255);
+    pixels[offset + 3] = opaqueByte;
   }
 }

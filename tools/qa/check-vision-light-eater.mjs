@@ -4,6 +4,7 @@ import { build } from 'esbuild';
 const bundled = await build({
   stdin: { contents: `export * from './src/systems/vision-light-eater.ts';
     export * from './src/systems/vision-perception.ts';
+    export * from './src/systems/assimilation-system.ts';
     export * from './src/systems/visibility-system.ts';
     export * from './src/utils/grid-raycast.ts';`, resolveDir: process.cwd(), loader: 'ts' },
   bundle: true, write: false, platform: 'node', format: 'esm', target: 'node22',
@@ -142,6 +143,43 @@ vision.setPresentation('legacy'); vision.update({ x: 160, y: 160 }, 0, 0);
 assert.deepEqual([{ x: 200, y: 160 }, { x: 60, y: 160 }, { x: 160, y: 40 }].map(p => vision.getVisibilityAt(p)), baseline);
 checks.push('switching back restores legacy queries');
 
+// Production consumes the existing physiology projection once; the study's
+// radii remain available only when the caller deliberately omits those inputs.
+vision.setPresentation('light-eater');
+const productionOrigin = { x: 160, y: 160 };
+for (const pollution of [0, 25, 55, 100]) for (const assimilation of [0, 50, 100]) {
+  const radii = {
+    warm: 232 * api.getAssimilationModulators(pollution, 0).radiusScale,
+    perception: 232 * api.getAssimilationModulators(pollution, assimilation).radiusScale,
+  };
+  vision.setRadiusScale(1); vision.setAbilityRadiusMultiplier(1);
+  vision.setLightEaterState(pollution, assimilation, productionOrigin, radii);
+  vision.update(productionOrigin, 0, 0);
+  assert(Math.abs(vision.getLightEaterLampRadius() - radii.warm) < 1e-10);
+  assert(Math.abs(vision.getEffectiveRadius(0) - radii.perception) < 1e-10);
+  const unscaled = vision.getQueryRevision();
+  vision.setRadiusScale(0.8); vision.setAbilityRadiusMultiplier(1.5);
+  assert(vision.getQueryRevision() > unscaled);
+  assert(Math.abs(vision.getLightEaterLampRadius() - radii.warm * 1.2) < 1e-10);
+  assert(Math.abs(vision.getEffectiveRadius(0) - radii.perception * 1.2) < 1e-10);
+  const beyond = { x: 160 - radii.perception * 1.2 - 2, y: 160 };
+  assert.equal(vision.getVisibilityAt(beyond), 0);
+  assert.equal(vision.getVisibilityAt({ x: 270, y: 160 }), 0, 'boosted/assimilated vision must still obey VOID');
+}
+checks.push('production radii match shared physiology without applying P/A twice');
+checks.push('Host reduction and tool expansion multiply warm and cold ranges once');
+checks.push('external multipliers invalidate query caches and never bypass VOID');
+vision.setLightEaterState(0, 0, productionOrigin, { warm: 232, perception: 232 });
+vision.setRadiusScale(1); vision.setAbilityRadiusMultiplier(1.5);
+check('tool-expanded LOS admission exceeds the old 272px study cap', vision.lightEaterAdmissionRange() >= 348);
+check('tool can reveal newly admitted ground beyond the old study cap', vision.getVisibilityAt({ x: 160, y: 460 }) > 0);
+vision.setAbilityRadiusMultiplier(1);
+check('tool expiry removes the extra range immediately', vision.getVisibilityAt({ x: 160, y: 460 }) === 0);
+const revisionBeforePause = vision.getQueryRevision();
+const clockBeforePause = vision.lightEaterState.elapsedMs;
+vision.update(productionOrigin, 0, 0);
+check('zero-delta first/paused frames do not advance optical time', vision.lightEaterState.elapsedMs === clockBeforePause && vision.getQueryRevision() === revisionBeforePause);
+
 const width = 256, height = 192, admission = new Float32Array(width * height);
 const origin = { x: 160, y: 160 }, target = { x: 0, y: 0 };
 api.rebuildPerceptionField(admission, { width, height, worldX: 0, worldY: 0, originX: 160, originY: 160,
@@ -151,6 +189,10 @@ api.rebuildPerceptionField(admission, { width, height, worldX: 0, worldY: 0, ori
 const pixels = new Uint8ClampedArray(admission.length * 4), transmission = new Float32Array(admission.length);
 const paint = { ...state, pollution: 100, assimilation: 100, width, worldX: 0, worldY: 0 };
 api.paintLightEater(pixels, admission, transmission, paint, sample);
+for (let i = 0; i < admission.length; i++) {
+  assert(Math.abs(transmission[i] - (1 - pixels[i * 4 + 3] / 255)) < 1e-7);
+}
+checks.push('cached gameplay visibility matches the actual 8-bit mask including opaque edge pixels');
 for (let i = 0; i < admission.length; i++) if (admission[i] === 0) {
   assert.equal(pixels[i * 4 + 3], 255); assert.equal(transmission[i], 0);
 }
@@ -163,4 +205,4 @@ for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 1] !== paused[i + 1] |
 check('three seconds visibly alter local light consumption', changed > 500);
 console.log(JSON.stringify({ status: 'pass', checks, changedPixels: changed, maximumPollutionStep, maximumTimeStep, maximumAnnularRebound,
   saturatedNearTransmission: [minimumSaturatedNear, maximumSaturatedNear],
-  scope: 'DEV optical math/query/VOID contracts only; colour, motion quality and performance need real-scene review.' }, null, 2));
+  scope: 'Optical math, production physiology/multiplier, query/VOID and legacy contracts; real entry, recovery and visual quality need browser review.' }, null, 2));

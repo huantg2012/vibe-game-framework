@@ -30,8 +30,8 @@ import { castRay, createRayHit, hasLineOfSight, type RayHit } from '@/utils/grid
 import { clamp, degToRad } from '@/utils/math';
 import {
   createLightEaterSample, LIGHT_EATER_CLEAR_RADIUS, LIGHT_EATER_FRAME_MS,
-  lightEaterExtent, paintLightEater, sampleLightEater,
-  type LightEaterState,
+  resolveLightEaterExtent, resolveLightEaterLampRadius, paintLightEater, sampleLightEater,
+  type LightEaterRadii, type LightEaterState,
 } from '@/systems/vision-light-eater';
 import {
   advancePerceptionTime,
@@ -116,7 +116,7 @@ function mixRgb(a: number, b: number, t: number): number {
 }
 
 export interface VisionConfig {
-  /** DEV look-development opt-in. Omitted configurations retain the original rendering. */
+  /** Explicit scene opt-in. Omitted configurations retain the original rendering. */
   readonly presentation?: VisionPresentation;
   readonly mode: VisionMode;
   readonly radiusForward: number;
@@ -267,7 +267,7 @@ export class VisibilitySystem {
     pollution: 0, assimilation: 0, lampX: 0, lampY: 0, bodyX: 0, bodyY: 0, elapsedMs: 0,
   };
   private lightEaterStateRevision = 0;
-  private readonly lightEaterGeometry = { x: NaN, y: NaN, worldX: NaN, worldY: NaN, gridVersion: -1 };
+  private readonly lightEaterGeometry = { x: NaN, y: NaN, worldX: NaN, worldY: NaN, gridVersion: -1, admissionRange: 0 };
   private lightEaterPaintRevision = -1;
   private lightEaterPaintFrame = -1;
   private lightEaterTransmission: Float32Array | null = null;
@@ -276,7 +276,7 @@ export class VisibilitySystem {
     width: 0, worldX: 0, worldY: 0, pollution: 0, assimilation: 0,
     lampX: 0, lampY: 0, bodyX: 0, bodyY: 0, elapsedMs: 0,
   };
-  private readonly lightEaterAdmissionRange = (): number => LIGHT_EATER_CLEAR_RADIUS + 40;
+  private readonly lightEaterAdmissionRange = (): number => LIGHT_EATER_CLEAR_RADIUS * this.abilityRadiusMultiplier + 40;
 
   private subdiv2Radii: Float32Array[] | null = null;
   private subdiv2Alphas: Float32Array | null = null;
@@ -341,6 +341,9 @@ export class VisibilitySystem {
     this.elapsedMs = 0;
     this.radiusScale = 1;
     this.abilityRadiusMultiplier = 1;
+    this.lightEaterState.rangeScale = 1;
+    this.lightEaterState.warmRadius = undefined;
+    this.lightEaterState.perceptionRadius = undefined;
     this.edgeCorruption = 0;
     this.screenFlicker = 0;
     this.cacheValid = false;
@@ -469,14 +472,20 @@ export class VisibilitySystem {
     return this.presentation;
   }
 
-  /** Independent P/A inputs for the isolated optical study, never save-state writes. */
-  setLightEaterState(pollution: number, assimilation: number, shoulder: Readonly<Vector2>): void {
+  /** Independent P/A inputs. Production supplies the shared physiology radii;
+   * an explicit art study may omit those without changing save-state values. */
+  setLightEaterState(pollution: number, assimilation: number, shoulder: Readonly<Vector2>, radii?: LightEaterRadii): void {
     const state = this.lightEaterState;
     const p = clamp(Number.isFinite(pollution) ? pollution : 0, 0, 100);
     const a = clamp(Number.isFinite(assimilation) ? assimilation : 0, 0, 100);
-    if (state.pollution === p && state.assimilation === a && state.lampX === shoulder.x && state.lampY === shoulder.y) return;
+    if (radii && (!Number.isFinite(radii.warm) || radii.warm <= 0 || !Number.isFinite(radii.perception)
+      || radii.perception < radii.warm || radii.perception > LIGHT_EATER_CLEAR_RADIUS))
+      throw new Error('Invalid light-eater physiology radii');
+    if (state.pollution === p && state.assimilation === a && state.lampX === shoulder.x && state.lampY === shoulder.y
+      && state.warmRadius === radii?.warm && state.perceptionRadius === radii?.perception) return;
     state.pollution = p; state.assimilation = a;
     state.lampX = shoulder.x; state.lampY = shoulder.y;
+    state.warmRadius = radii?.warm; state.perceptionRadius = radii?.perception;
     this.lightEaterStateRevision++;
     if (this.presentation === 'light-eater') this.cacheValid = false;
   }
@@ -484,6 +493,8 @@ export class VisibilitySystem {
   getRadiusScale(): number {
     return this.radiusScale;
   }
+  /** Real shoulder-light envelope uses exactly the same external multipliers. */
+  getLightEaterLampRadius(): number { return resolveLightEaterLampRadius(this.lightEaterState); }
 
   /**
    * Shrinks the whole field of view. Invalidates the cache: the ranges the cached rays
@@ -495,6 +506,8 @@ export class VisibilitySystem {
     const next = clamp(scale, GAME_CONSTANTS.VISIBILITY.MIN_RADIUS_SCALE, 1);
     if (next === this.radiusScale) return;
     this.radiusScale = next;
+    this.lightEaterState.rangeScale = next * this.abilityRadiusMultiplier;
+    this.lightEaterStateRevision++;
     this.cacheValid = false;
     this.subdiv2RadiiDirty = true;
   }
@@ -504,6 +517,8 @@ export class VisibilitySystem {
     if (!Number.isFinite(multiplier) || multiplier < 1) throw new Error('Invalid ability vision multiplier');
     if (this.abilityRadiusMultiplier === multiplier) return;
     this.abilityRadiusMultiplier = multiplier;
+    this.lightEaterState.rangeScale = this.radiusScale * multiplier;
+    this.lightEaterStateRevision++;
     this.cacheValid = false;
     this.subdiv2RadiiDirty = true;
   }
@@ -568,7 +583,7 @@ export class VisibilitySystem {
   }
 
   /**
-   * Production returns 0 | 0.2 | 0.6 | 1.0 (light-eater DEV uses its continuous
+   * Legacy returns 0 | 0.2 | 0.6 | 1.0 (light-eater uses its continuous
    * mask transmission) - the render alpha an entity at `point` should use, and
    * also the authoritative answer to "can the player see this". Modulation is included,
    * so what the player sees and what the game considers visible never disagree.
@@ -621,7 +636,7 @@ export class VisibilitySystem {
    */
   getEffectiveRadius(angleFromFacing: number): number {
     if (this.presentation === 'light-eater') {
-      return lightEaterExtent(this.lightEaterState.pollution, this.lightEaterState.assimilation) +
+      return resolveLightEaterExtent(this.lightEaterState) +
         Math.hypot(this.lightEaterState.lampX - this.origin.x, this.lightEaterState.lampY - this.origin.y);
     }
     const config = this.config;
@@ -1013,17 +1028,19 @@ export class VisibilitySystem {
     const worldY = Math.floor(this.maskOriginY / PERCEPTION_PIXEL_SIZE) * PERCEPTION_PIXEL_SIZE;
     // P/A interpolation and moving deposits do not rebuild thousands of LOS rays.
     const geometry = this.lightEaterGeometry;
+    const admissionRange = this.lightEaterAdmissionRange();
     if (geometry.x !== this.origin.x || geometry.y !== this.origin.y || geometry.worldX !== worldX ||
-        geometry.worldY !== worldY || geometry.gridVersion !== this.occluders.version) {
+        geometry.worldY !== worldY || geometry.gridVersion !== this.occluders.version || geometry.admissionRange !== admissionRange) {
       const raster = this.perceptionRaster;
       raster.width = texture.width; raster.height = texture.height;
       raster.worldX = worldX; raster.worldY = worldY;
       raster.originX = this.origin.x; raster.originY = this.origin.y;
-      raster.clearRadius = 24; raster.maximumRange = LIGHT_EATER_CLEAR_RADIUS + 40;
+      raster.clearRadius = 24; raster.maximumRange = admissionRange;
       raster.rangeAt = this.lightEaterAdmissionRange;
       rebuildPerceptionField(this.perceptionField!, raster, this.perceptionGeometryScratch!);
       geometry.x = this.origin.x; geometry.y = this.origin.y;
       geometry.worldX = worldX; geometry.worldY = worldY; geometry.gridVersion = this.occluders.version;
+      geometry.admissionRange = admissionRange;
       this.lightEaterPaintRevision = -1;
     }
     const frame = Math.floor(this.elapsedMs / LIGHT_EATER_FRAME_MS);
