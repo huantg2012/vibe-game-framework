@@ -1,0 +1,178 @@
+{
+  "startedAt": "2026-10-20T13:50:16.026Z",
+  "revision": "c2a74bfb7b60f0d67b527e01c322cfeeb3c1128d",
+  "method": "New isolated record, real production preparation/Workers. Read-only state and animation observation; keyboard/click interaction. Preparation page is opened via its real scene method.",
+  "sources": {
+    "src/ui/dom/pause-menu.ts": "d40d0c15da36240fada7a8978adab264234c3a91495861cd119b5e1c7d64830d",
+    "src/ui/dom/panel-styles.ts": "093aa3dc600990463fa59ea376b8eb826e38fc2289a4b21a69ea434ac98e118a",
+    "src/scenes/purification-scene.ts": "8472b4ab895920f000e477d0f540173a22398963042ee45440a32c0f6e77b9fc"
+  },
+  "checks": [
+    {
+      "name": "loading has its own title, real initial phase and one unambiguous cancel action",
+      "status": "pass",
+      "detail": {
+        "title": "临行",
+        "text": "临行我还看不清那边。···取消准备Enter / Esc 取消准备"
+      }
+    },
+    {
+      "name": "real background animates while movement, timers, state and save remain frozen",
+      "status": "pass",
+      "detail": {
+        "startVisual": {
+          "seconds": 4.5832299999999995,
+          "exterior": 4.5832299999999995
+        },
+        "afterVisual": {
+          "seconds": 8.799740000000009,
+          "exterior": 8.799740000000009
+        },
+        "changedLeftPixels": 2799
+      }
+    },
+    {
+      "name": "current stage has an animated activity mark without fabricated progress",
+      "status": "pass",
+      "detail": [
+        "16.1875px",
+        "16.1875px",
+        "0px",
+        "5.39062px",
+        "5.39062px"
+      ]
+    },
+    {
+      "name": "Escape cancels without consuming inventory, changing record or leaking visual listeners",
+      "status": "pass"
+    },
+    {
+      "name": "actual Worker stages proceed from layout to surface and enter the real Rift",
+      "status": "pass",
+      "detail": [
+        {
+          "stage": "layout",
+          "text": "我还看不清那边。···",
+          "at": 31340.299999952316
+        },
+        {
+          "stage": "surface",
+          "text": "脚下有了些轮廓。···",
+          "at": 70912.09999996424
+        }
+      ]
+    },
+    {
+      "name": "Rift player applies one .8 transform and actual Space attack still renders",
+      "status": "pass",
+      "detail": {
+        "world": "r100-crystal-fibre",
+        "scale": 0.8,
+        "contactScale": 0.8,
+        "gloveScale": 0.8,
+        "weaponScale": 0.544,
+        "body": {
+          "width": 20,
+          "height": 20
+        },
+        "probe": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1132,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1136.3459957189505,
+            "y": 1327.1524032622463,
+            "z": 27.4752
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 0.8,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": true
+          },
+          "attackPhase": "idle",
+          "attackFrame": -1,
+          "gripAnchor": {
+            "x": 1133.3992,
+            "y": 1316.4936825872662,
+            "z": 16.430000000000003
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0,
+            "frame": null,
+            "body": null,
+            "arm": null,
+            "preparedFrames": 0
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        },
+        "activeAttack": {
+          "ready": true,
+          "model": "a",
+          "frame": "2-idle-0",
+          "frameIndex": 26,
+          "yaw": 2.135366,
+          "pose": "idle",
+          "foot": {
+            "x": 1132,
+            "y": 1334,
+            "anchor": [
+              32,
+              66
+            ]
+          },
+          "lamp": {
+            "x": 1136.3459957189505,
+            "y": 1327.1524032622463,
+            "z": 27.4752
+          },
+          "oldBodyVisible": false,
+          "nativeScale": 0.8,
+          "weapon": {
+            "quality": "ordinary",
+            "variant": "standard",
+            "visible": true,
+            "behind": false
+          },
+          "attackPhase": "active",
+          "attackFrame": 35,
+          "gripAnchor": {
+            "x": 1136.7168398143542,
+            "y": 1310.2319593106638,
+            "z": 22.154
+          },
+          "hitFlash": false,
+          "assimilation": {
+            "amount": 0,
+            "frame": null,
+            "body": null,
+            "arm": null,
+            "preparedFrames": 0
+          },
+          "nativeLights": 8,
+          "masked": true,
+          "contactMasked": true
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "status": "passed",
+  "browser": "155.0.8059.85"
+}

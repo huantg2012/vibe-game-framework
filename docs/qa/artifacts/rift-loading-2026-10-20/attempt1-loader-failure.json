@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-10-20T13:47:45.258Z",
+  "revision": "c2a74bfb7b60f0d67b527e01c322cfeeb3c1128d",
+  "method": "New isolated record, real production preparation/Workers. Read-only state and animation observation; keyboard/click interaction. Preparation page is opened via its real scene method.",
+  "sources": {
+    "src/ui/dom/pause-menu.ts": "d40d0c15da36240fada7a8978adab264234c3a91495861cd119b5e1c7d64830d",
+    "src/ui/dom/panel-styles.ts": "093aa3dc600990463fa59ea376b8eb826e38fc2289a4b21a69ea434ac98e118a",
+    "src/scenes/purification-scene.ts": "8472b4ab895920f000e477d0f540173a22398963042ee45440a32c0f6e77b9fc"
+  },
+  "checks": [],
+  "errors": [
+    "SyntaxError: The requested module '/@vite/client' does not provide an export named 'createHotContext'"
+  ],
+  "status": "failed",
+  "browser": "155.0.8059.85",
+  "failure": "page.waitForFunction: Timeout 30000ms exceeded.\n    at /Users/yilungao/coh/tools/qa/check-rift-preparation-menu.mjs:67:14"
+}
