@@ -19,11 +19,19 @@ import { saveManager } from '@/managers/save-manager';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 type MenuMode = 'root' | 'confirmOverwrite' | 'confirmAbandon' | 'preparing';
+export type RiftPreparationStage = 'layout' | 'surface' | 'entering';
 export interface PauseMenuOptions {
   onAbandon?: () => void;
   /** Focus protection must work even immediately after a manual close. */
   focusLoss?: boolean;
-  preparation?: { message: string; cancel: () => void };
+  preparation?: {
+    title?: string;
+    message: string;
+    stage?: RiftPreparationStage;
+    cancel: () => void;
+    /** Render-only projection. Simulation, scene timers and input stay paused. */
+    onVisualFrame?: (time: number, delta: number) => void;
+  };
 }
 let recoveryOptions: PauseMenuOptions | undefined;
 let loadAbort: AbortController | null = null;
@@ -41,6 +49,31 @@ let items: MenuItem[] = [];
 let selectedIndex = 0;
 let ignoreEscUntil = 0;
 let closedAt = 0;
+let preparationFrames: { scene: Phaser.Scene; frame: (renderer: unknown, time: number, delta: number) => void; release: () => void } | null = null;
+const preparationLog: { stage: RiftPreparationStage; message: string }[] = [];
+
+function releasePreparationFrames(): void {
+  preparationFrames?.release();
+  preparationFrames = null;
+}
+
+function startPreparationFrames(scene: Phaser.Scene): void {
+  if (!recoveryOptions?.preparation?.onVisualFrame) return;
+  const frame = (_renderer: unknown, time: number, delta: number): void => {
+    if (host !== scene || !panel || mode !== 'preparing' || document.hidden || !scene.scene.isPaused()) return;
+    recoveryOptions?.preparation?.onVisualFrame?.(time, Math.max(0, Math.min(100, delta)));
+  };
+  const stopped = (): void => pauseMenu.discard();
+  const release = (): void => {
+    scene.game.events.off(Phaser.Core.Events.PRE_RENDER, frame);
+    scene.events.off(Phaser.Scenes.Events.SHUTDOWN, stopped);
+    scene.events.off(Phaser.Scenes.Events.DESTROY, stopped);
+  };
+  preparationFrames = { scene, frame, release };
+  scene.game.events.on(Phaser.Core.Events.PRE_RENDER, frame);
+  scene.events.once(Phaser.Scenes.Events.SHUTDOWN, stopped);
+  scene.events.once(Phaser.Scenes.Events.DESTROY, stopped);
+}
 
 function pauseHost(): void {
   if (!host) return;
@@ -56,6 +89,8 @@ function resumeHost(): void {
 }
 
 function destroyDom(): void {
+  releasePreparationFrames();
+  preparationLog.length = 0;
   backdrop?.remove();
   panel?.remove();
   backdrop = null;
@@ -176,13 +211,19 @@ function paint(): void {
     return `<div class="pause-menu-row${selected ? ' is-selected' : ''}" data-index="${i}" role="button" tabindex="-1">${item.label}</div>`;
   }).join('');
 
+  const isDeparturePreparation = mode === 'preparing' && !!recoveryOptions?.preparation;
+  panel.classList.toggle('scene-menu-preparing', isDeparturePreparation);
   panel.innerHTML =
-    `<div class="panel-title">${t('menu.pauseTitle')}</div>` +
-    `<div class="readout-note">${mode === 'preparing' ? (recoveryOptions?.preparation?.message ?? '正在辨认归途。原记录仍保留。') : mode === 'confirmAbandon' ? '只有明确放弃才结损。' : mode === 'root' ? (recoveryOptions?.onAbandon ? '当前行动已暂停。关闭或刷新后，继续这一趟。' : '当前行动已暂停。') : '此操作将替换已保存的纪录。'}</div>` +
+    `<div class="panel-title"></div>` +
+    (isDeparturePreparation ? '<div class="rift-preparation-log" role="status" aria-live="polite" aria-atomic="true"></div>'
+      : `<div class="readout-note">${mode === 'preparing' ? '正在辨认归途。原记录仍保留。' : mode === 'confirmAbandon' ? '只有明确放弃才结损。' : mode === 'root' ? (recoveryOptions?.onAbandon ? '当前行动已暂停。关闭或刷新后，继续这一趟。' : '当前行动已暂停。') : '此操作将替换已保存的纪录。'}</div>`) +
     warning +
     `<div class="pause-menu-list">${rows}</div>` +
     buildKeyHintBar() +
     (mode === 'root' ? `<div class="readout-note">合上后 <span class="key">Tab</span> ${host?.scene.key === 'PurificationScene' ? '存续报告 · 物件' : '随身 · 世界继续'}</div>` : '');
+  panel.querySelector('.panel-title')!.textContent = isDeparturePreparation
+    ? recoveryOptions?.preparation?.title ?? t('menu.pauseTitle') : t('menu.pauseTitle');
+  if (isDeparturePreparation) paintPreparationLog();
 
   panel.querySelectorAll<HTMLElement>('.pause-menu-row').forEach((row) => {
     row.addEventListener('pointermove', () => {
@@ -204,6 +245,9 @@ function paint(): void {
 function buildKeyHintBar(): string {
   const selectedLabel = items[selectedIndex]?.label ?? '';
   const resumeLabel = t('menu.resume');
+  if (mode === 'preparing') {
+    return `<div class="key-hint-bar"><span><span class="key">Enter</span> / <span class="key">Esc</span> ${selectedLabel}</span></div>`;
+  }
 
   if (mode === 'confirmOverwrite' || mode === 'confirmAbandon') {
     return `<div class="key-hint-bar">
@@ -229,6 +273,11 @@ function buildKeyHintBar(): string {
 
 function onKey(e: KeyboardEvent): void {
   if (!panel) return;
+  if (mode === 'preparing') {
+    // No scene action may queue behind an async preparation menu.
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  }
   if (e.repeat) return;
   if (e.key === 'Escape') {
     e.preventDefault();
@@ -247,7 +296,7 @@ function onKey(e: KeyboardEvent): void {
   if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
     e.preventDefault();
     e.stopImmediatePropagation();
-    if (items.length === 0) return;
+    if (items.length < 2) return;
     selectedIndex = (selectedIndex - 1 + items.length) % items.length;
     audioManager.playSFX('sfx-ui-hover');
     paint();
@@ -256,7 +305,7 @@ function onKey(e: KeyboardEvent): void {
   if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
     e.preventDefault();
     e.stopImmediatePropagation();
-    if (items.length === 0) return;
+    if (items.length < 2) return;
     selectedIndex = (selectedIndex + 1) % items.length;
     audioManager.playSFX('sfx-ui-hover');
     paint();
@@ -267,6 +316,30 @@ function onKey(e: KeyboardEvent): void {
     e.stopImmediatePropagation();
     audioManager.playSFX('sfx-ui-click');
     items[selectedIndex]?.action();
+  }
+}
+
+function paintPreparationLog(): void {
+  const log = panel?.querySelector('.rift-preparation-log');
+  if (!log) return;
+  log.replaceChildren();
+  for (let i = 0; i < preparationLog.length; i++) {
+    const entry = preparationLog[i]!;
+    const current = i === preparationLog.length - 1;
+    const line = document.createElement('div');
+    line.className = `rift-preparation-line${current ? ' is-current' : ''}`;
+    line.dataset.stage = entry.stage;
+    const copy = document.createElement('span');
+    copy.textContent = entry.message;
+    line.append(copy);
+    if (current) {
+      const activity = document.createElement('span');
+      activity.className = 'rift-preparation-activity';
+      activity.setAttribute('aria-hidden', 'true');
+      activity.textContent = '···';
+      line.append(activity);
+    }
+    log.append(line);
   }
 }
 
@@ -291,7 +364,7 @@ export const pauseMenu = {
     backdrop.className = 'game-panel-backdrop pause-menu-backdrop scene-menu-backdrop scene-menu-compact-backdrop';
     backdrop.style.cssText = 'position:absolute;inset:0;pointer-events:auto;z-index:1000;';
     backdrop.addEventListener('pointerdown', (e) => {
-      if (e.target === backdrop) pauseMenu.close();
+      if (e.target === backdrop && mode !== 'preparing') pauseMenu.close();
     });
 
     panel = document.createElement('div');
@@ -308,9 +381,23 @@ export const pauseMenu = {
     if (options?.preparation) {
       mode = 'preparing'; selectedIndex = 0;
       items = [{ label: '取消准备', action: () => pauseMenu.close() }];
+      preparationLog.push({ stage: options.preparation.stage ?? 'layout', message: options.preparation.message });
     } else buildRootItems();
     paint();
+    startPreparationFrames(scene);
     document.addEventListener('keydown', onKey, true);
+  },
+
+  /** Only the owning operation reports real phase boundaries. No timer advances
+   * this log or implies that an unfinished world is ready. */
+  setPreparationStage(stage: RiftPreparationStage, message: string): void {
+    const preparation = recoveryOptions?.preparation;
+    if (!panel || mode !== 'preparing' || !preparation) return;
+    if (preparationLog.some(entry => entry.stage === stage)) return;
+    preparation.stage = stage;
+    preparation.message = message;
+    preparationLog.push({ stage, message });
+    paintPreparationLog();
   },
 
   close(): void {

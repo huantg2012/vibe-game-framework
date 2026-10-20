@@ -351,6 +351,15 @@ const CSS = `
 .scene-menu-pause .pause-menu-row::before { content:''; position:absolute; left:0; top:14px; width:5px; height:1px; background:transparent; }
 .scene-menu-pause .pause-menu-row.is-selected { color:#b9bca9; background:none; }
 .scene-menu-pause .pause-menu-row.is-selected::before { background:#a69e7d; }
+.scene-menu-preparing .rift-preparation-log { display:flex; flex-direction:column; gap:5px; height:70px; flex:none; margin:5px 0; }
+.scene-menu-preparing .rift-preparation-line { display:flex; align-items:baseline; gap:6px; font:11px/18px var(--ui-font); color:#7e8a7e; }
+.scene-menu-preparing .rift-preparation-line.is-current { font-size:12px; line-height:20px; color:var(--ui-text); animation:world-decision-in 180ms ease-out both; }
+.scene-menu-preparing .rift-preparation-activity { display:inline-block; overflow:hidden; width:0; flex:none; white-space:nowrap; font:12px/20px var(--ui-mono); animation:rift-preparation-wait 1.2s steps(4,end) infinite; }
+@keyframes rift-preparation-wait { to { width:3ch; } }
+@media (prefers-reduced-motion:reduce) {
+  .scene-menu-preparing .rift-preparation-line.is-current { animation:none; }
+  .scene-menu-preparing .rift-preparation-activity { animation:none; width:3ch; }
+}
 #rift-result-panel.game-panel.scene-menu-result { left:504px; top:138px; width:392px; height:auto; max-height:464px; transform:none; }
 .scene-menu-result .readout-hero { margin:10px 0; border-bottom-color:rgba(147,160,146,.12); }
 .scene-menu-result .pill { border-bottom-color:rgba(147,160,146,.12); }
