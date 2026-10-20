@@ -5,7 +5,7 @@ import type { WeaponAttackPose } from '@/systems/weapon-swing';
 import type { PlayerExternalVisuals } from './player-external-visuals';
 import { lastLightAttackSampleIndex } from './player-last-light-combat';
 import { unprojectLastLight, type LightVector } from '@/art/last-light-spatial';
-import { LAST_LIGHT_STRIDE_METRES } from '@/art/last-light-gait';
+import { LAST_LIGHT_STRIDE_METRES, lastLightWalkArm } from '@/art/last-light-gait';
 import {
   ASSIMILATION_SURFACE_STRIDE, AssimilationLookParameters, createAssimilationLookMetrics,
   getAssimilationLookPalettes, recordAssimilationLookTime, sampleAssimilationSurface, writeAssimilationSurface,
@@ -232,13 +232,17 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     for (const frames of [this.assets.frames, this.assets.bodyWithoutArm]) for (const frame of frames) {
       const surface = new Uint8Array(frame.offsets.length * ASSIMILATION_SURFACE_STRIDE);
       const c = Math.cos(frame.source.yaw), s = Math.sin(frame.source.yaw), pixels = frame.pixels;
+      const leftWrist = frame.source.pose === 'walk'
+        ? lastLightWalkArm(false, Number(frame.source.phase) / (Math.PI * 2)).wrist
+        : [-.312, .758, .083] as const;
       for (let i = 0; i < frame.offsets.length; i++) {
         const p = i * 11, nx = pixels[p]! / CAMERA.scale, ny = pixels[p + 1]! / CAMERA.scale;
         const worldX = nx * BASIS.right[0] + ny * backX, worldZ = nx * BASIS.right[2] + ny * backZ;
-        writeAssimilationSurface(worldX * c - worldZ * s, pixels[p + 2]! / CAMERA.scale,
-          worldX * s + worldZ * c, Math.max(pixels[p + 6]!, pixels[p + 7]!, pixels[p + 8]!),
+        const localX = worldX * c - worldZ * s, localY = pixels[p + 2]! / CAMERA.scale, localZ = worldX * s + worldZ * c;
+        const leftHand = (localX - leftWrist[0]) ** 2 + (localY - leftWrist[1]) ** 2 + (localZ - leftWrist[2]) ** 2 < .13 ** 2;
+        writeAssimilationSurface(localX, localY, localZ, Math.max(pixels[p + 6]!, pixels[p + 7]!, pixels[p + 8]!),
           pixels[p + 10]!, surface, i * ASSIMILATION_SURFACE_STRIDE,
-          frame.source.glovePixels.includes(frame.offsets[i]! / 4));
+          leftHand || frame.source.glovePixels.includes(frame.offsets[i]! / 4));
       }
       this.assimilationSurfaces.set(frame, {
         pixels: surface,
