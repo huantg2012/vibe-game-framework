@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-10-19
+last-modified: 2026-10-20
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -10,7 +10,15 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## Rift视野美术样片（2026-10-19，F007，DEV）
+## 连续吞光的正式视野（2026-10-20，F007/F012/F054）
+
+用户已认可连续侵蚀样片并授权接入。`RiftScene.syncVisionState()`在首次可见帧及正常更新中统一绑定真实污染、持久同化和A人物肩灯；仅三开放原生世界的`persistent-v1`使用`light-eater`，旧150协议仍用legacy。显式DEV投影可覆盖，自动时间线和无伤仍只属于样片。
+
+`vision-light-eater.ts`共用已认可的吸收、吞光反应、冷信号与接收光函数。正式暖灯半径由`getAssimilationModulators(P,0)`计算，可辨范围由`getAssimilationModulators(P,A)`计算；P/A不再重复乘入半径。Host、工具及防御副作用独立合成，光学查询、遮罩和真实地表灯共同消费倍率；LOS仍以VOID为遮挡源。共享灯的原始半径/强度由场景持有，切换模式或退出时恢复。普通实体不因此成为战术黑墙。
+
+恢复条件增加可选`visionMultiplier`，缺省为1，保存本趟防御能力造成的视距变化，避免新路径冷续丢失；不从HUD文字重建机制。原污染/同化/疗愈/敌意参数及保存事务保持。实际验证范围归[正式接入QA](qa/light-eater-production-2026-10-20.md)；下节为开发对照的形成记录。
+
+## Rift视野美术样片（2026-10-19至20，历史开发对照）
 
 `dev/rift-vision-study.ts`通过既有内存gym载入三开放世界；`RiftDevFixture.readVisionPreview`只在DEV投影受控P/A。`VisibilitySystem`默认legacy，显式perceptual使用`vision-perception.ts`的2世界像素透射／缓慢污染场；范围及LOS几何缓存与动画绘制分开，原mask仍供角色revealBody使用。新canvas纹理按需分配、随VisibilitySystem销毁，静止污染以20Hz刷新、移动即时重建。不另建地表渲染器、不修改肩灯或生产默认；正式规则与验证范围见[视野spec](specs/system-movement-vision.md)及[三阶段任务](tasks/rift-experience-polish-2026-10-19.md)。
 

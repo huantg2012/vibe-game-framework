@@ -1,0 +1,939 @@
+{
+  "revision": "1aa9eda171ae96b9330c33dd6c8daefb080b62e9",
+  "startedAt": "2026-10-20T07:57:45.262Z",
+  "sourcesBefore": {
+    "src/scenes/rift-scene.ts": "29eda1d77bd1251ce43d5adaf0c4d2e9025f3734802570f7a98553646b8a9bae",
+    "src/systems/visibility-system.ts": "1d1656af7be68aa5f8504a5f60aef401ecda6b22f595570761bb72e64fca3709",
+    "src/systems/vision-light-eater.ts": "fce7984c3b06c1868e644bb9b3498bd0daca2ccdda9ef8c83fa14ce35ac47bc3",
+    "src/systems/rift-recovery-state.ts": "ccc38229246204cdb38772f1062c1cd3832e2986b93cc60dce9cb0e15d582c63"
+  },
+  "scope": "Normal title → haven → preparation → native Rift → Esc checkpoint → cold Continue. Separate Chrome contexts; seed selection and P/A setters are controlled QA fixtures. No visionArtStudy or godmode. Does not certify long expeditions, balance, performance budget, other browsers or human visual acceptance.",
+  "worlds": [
+    {
+      "world": "crystal-fibre",
+      "checks": [
+        "normal departure and first visible frames use production optics",
+        "actual keyboard movement and natural pollution growth update shoulder field",
+        "P100 absorbs near light; A80 extends perception without brightening lamp"
+      ],
+      "images": {
+        "entry": "crystal-fibre-entry.png",
+        "high": "crystal-fibre-saturated.png",
+        "adapted": "crystal-fibre-adapted.png",
+        "failure": "crystal-fibre-failure.png"
+      },
+      "seed": 20261021,
+      "entry": {
+        "world": "r100-crystal-fibre",
+        "production": true,
+        "presentation": "light-eater",
+        "artFixture": false,
+        "previewOverride": false,
+        "godMode": false,
+        "chaos": {
+          "version": 1,
+          "value": 15.143762303999997,
+          "peak": 15.143762303999997,
+          "paused": false,
+          "clockMs": 433.2799999999999,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 15,
+          "lastModulated": 15.143762303999997,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 0,
+          "growthResistance": 0
+        },
+        "assimilation": 0,
+        "optics": {
+          "pollution": 15.143762303999997,
+          "assimilation": 0,
+          "lampX": 1137.432494648688,
+          "lampY": 1325.4405040778076,
+          "bodyX": 1132,
+          "bodyY": 1324,
+          "elapsedMs": 433.2799999999999,
+          "rangeScale": 1,
+          "warmRadius": 216.18991215462398,
+          "perceptionRadius": 216.18991215462398
+        },
+        "lampRadius": 216.18991215462398,
+        "lamp": {
+          "x": 1137.432494648688,
+          "y": 1325.4405040778076,
+          "radius": 216.18991215462398,
+          "intensity": 3.0386407170478664
+        },
+        "shoulder": {
+          "x": 1137.432494648688,
+          "y": 1325.4405040778076,
+          "z": 34.344
+        },
+        "position": {
+          "x": 1132,
+          "y": 1324
+        },
+        "visionMultiplier": 1,
+        "toolMultiplier": 1,
+        "hostMultiplier": 1,
+        "paused": false,
+        "firstFrames": [
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.006081894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 18.329999999999927,
+              "rangeScale": 1,
+              "warmRadius": 216.333650502664,
+              "perceptionRadius": 216.333650502664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.012717894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 38.32999999999993,
+              "rangeScale": 1,
+              "warmRadius": 216.326722518664,
+              "perceptionRadius": 216.326722518664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.019350575999999,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 58.319999999999894,
+              "rangeScale": 1,
+              "warmRadius": 216.319797998656,
+              "perceptionRadius": 216.319797998656
+            }
+          }
+        ]
+      },
+      "moved": {
+        "world": "r100-crystal-fibre",
+        "production": true,
+        "presentation": "light-eater",
+        "artFixture": false,
+        "previewOverride": false,
+        "godMode": false,
+        "chaos": {
+          "version": 1,
+          "value": 15.261551303999994,
+          "peak": 15.261551303999994,
+          "paused": false,
+          "clockMs": 788.2800000000001,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 15,
+          "lastModulated": 15.261551303999994,
+          "thresholdsFired": [
+            false,
+            false,
+            false
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 0,
+          "growthResistance": 0
+        },
+        "assimilation": 0,
+        "optics": {
+          "pollution": 15.261551303999994,
+          "assimilation": 0,
+          "lampX": 1150.2352105312204,
+          "lampY": 1325.4405040778076,
+          "bodyX": 1144.8027158825325,
+          "bodyY": 1324,
+          "elapsedMs": 788.2800000000001,
+          "rangeScale": 1,
+          "warmRadius": 216.066940438624,
+          "perceptionRadius": 216.066940438624
+        },
+        "lampRadius": 216.066940438624,
+        "lamp": {
+          "x": 1150.2352105312204,
+          "y": 1325.4405040778076,
+          "radius": 216.066940438624,
+          "intensity": 3.037736923982387
+        },
+        "shoulder": {
+          "x": 1150.2352105312204,
+          "y": 1325.4405040778076,
+          "z": 34.344
+        },
+        "position": {
+          "x": 1144.8027158825325,
+          "y": 1324
+        },
+        "visionMultiplier": 1,
+        "toolMultiplier": 1,
+        "hostMultiplier": 1,
+        "paused": false,
+        "firstFrames": [
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.006081894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 18.329999999999927,
+              "rangeScale": 1,
+              "warmRadius": 216.333650502664,
+              "perceptionRadius": 216.333650502664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.012717894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 38.32999999999993,
+              "rangeScale": 1,
+              "warmRadius": 216.326722518664,
+              "perceptionRadius": 216.326722518664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.019350575999999,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 58.319999999999894,
+              "rangeScale": 1,
+              "warmRadius": 216.319797998656,
+              "perceptionRadius": 216.319797998656
+            }
+          }
+        ]
+      },
+      "high": {
+        "world": "r100-crystal-fibre",
+        "production": true,
+        "presentation": "light-eater",
+        "artFixture": false,
+        "previewOverride": false,
+        "godMode": false,
+        "chaos": {
+          "version": 1,
+          "value": 100,
+          "peak": 100,
+          "paused": false,
+          "clockMs": 1116.5700000000004,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 100,
+          "lastModulated": 100,
+          "thresholdsFired": [
+            true,
+            true,
+            true
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 0.004088400000000006,
+          "growthResistance": 0
+        },
+        "assimilation": 0.004088400000000006,
+        "optics": {
+          "pollution": 100,
+          "assimilation": 0.004088400000000006,
+          "lampX": 1151.623066799037,
+          "lampY": 1325.4405040778076,
+          "bodyX": 1146.190572150349,
+          "bodyY": 1324,
+          "elapsedMs": 1116.5700000000004,
+          "rangeScale": 1,
+          "warmRadius": 127.60000000000001,
+          "perceptionRadius": 127.60331978080002
+        },
+        "lampRadius": 127.60000000000001,
+        "lamp": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "radius": 127.60000000000001,
+          "intensity": 2.1079999999999997
+        },
+        "shoulder": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "z": 34.344
+        },
+        "position": {
+          "x": 1146.190572150349,
+          "y": 1324
+        },
+        "visionMultiplier": 1,
+        "toolMultiplier": 1,
+        "hostMultiplier": 1,
+        "paused": false,
+        "firstFrames": [
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.006081894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 18.329999999999927,
+              "rangeScale": 1,
+              "warmRadius": 216.333650502664,
+              "perceptionRadius": 216.333650502664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.012717894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 38.32999999999993,
+              "rangeScale": 1,
+              "warmRadius": 216.326722518664,
+              "perceptionRadius": 216.326722518664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.019350575999999,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 58.319999999999894,
+              "rangeScale": 1,
+              "warmRadius": 216.319797998656,
+              "perceptionRadius": 216.319797998656
+            }
+          }
+        ]
+      },
+      "adapted": {
+        "world": "r100-crystal-fibre",
+        "production": true,
+        "presentation": "light-eater",
+        "artFixture": false,
+        "previewOverride": false,
+        "godMode": false,
+        "chaos": {
+          "version": 1,
+          "value": 100,
+          "peak": 100,
+          "paused": false,
+          "clockMs": 1533.2400000000005,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 100,
+          "lastModulated": 100,
+          "thresholdsFired": [
+            true,
+            true,
+            true
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 80.00422226666673,
+          "growthResistance": 0
+        },
+        "assimilation": 80.00422226666673,
+        "optics": {
+          "pollution": 100,
+          "assimilation": 80.00422226666673,
+          "lampX": 1151.623066799037,
+          "lampY": 1325.4405040778076,
+          "bodyX": 1146.190572150349,
+          "bodyY": 1324,
+          "elapsedMs": 1533.2400000000005,
+          "rangeScale": 1,
+          "warmRadius": 127.60000000000001,
+          "perceptionRadius": 192.5634284805334
+        },
+        "lampRadius": 127.60000000000001,
+        "lamp": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "radius": 127.60000000000001,
+          "intensity": 2.1079999999999997
+        },
+        "shoulder": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "z": 34.344
+        },
+        "position": {
+          "x": 1146.190572150349,
+          "y": 1324
+        },
+        "visionMultiplier": 1,
+        "toolMultiplier": 1,
+        "hostMultiplier": 1,
+        "paused": false,
+        "firstFrames": [
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.006081894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 18.329999999999927,
+              "rangeScale": 1,
+              "warmRadius": 216.333650502664,
+              "perceptionRadius": 216.333650502664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.012717894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 38.32999999999993,
+              "rangeScale": 1,
+              "warmRadius": 216.326722518664,
+              "perceptionRadius": 216.326722518664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.019350575999999,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 58.319999999999894,
+              "rangeScale": 1,
+              "warmRadius": 216.319797998656,
+              "perceptionRadius": 216.319797998656
+            }
+          }
+        ]
+      },
+      "grown": {
+        "world": "r100-crystal-fibre",
+        "production": true,
+        "presentation": "light-eater",
+        "artFixture": false,
+        "previewOverride": false,
+        "godMode": false,
+        "chaos": {
+          "version": 1,
+          "value": 100,
+          "peak": 100,
+          "paused": false,
+          "clockMs": 2383.2300000000005,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 100,
+          "lastModulated": 100,
+          "thresholdsFired": [
+            true,
+            true,
+            true
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 80.01555546666684,
+          "growthResistance": 0
+        },
+        "assimilation": 80.01555546666684,
+        "optics": {
+          "pollution": 100,
+          "assimilation": 80.01555546666684,
+          "lampX": 1151.623066799037,
+          "lampY": 1325.4405040778076,
+          "bodyX": 1146.190572150349,
+          "bodyY": 1324,
+          "elapsedMs": 2383.2300000000005,
+          "rangeScale": 1,
+          "warmRadius": 127.60000000000001,
+          "perceptionRadius": 192.57263103893348
+        },
+        "lampRadius": 127.60000000000001,
+        "lamp": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "radius": 127.60000000000001,
+          "intensity": 2.1079999999999997
+        },
+        "shoulder": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "z": 34.344
+        },
+        "position": {
+          "x": 1146.190572150349,
+          "y": 1324
+        },
+        "visionMultiplier": 1,
+        "toolMultiplier": 1,
+        "hostMultiplier": 1,
+        "paused": false,
+        "firstFrames": [
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.006081894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 18.329999999999927,
+              "rangeScale": 1,
+              "warmRadius": 216.333650502664,
+              "perceptionRadius": 216.333650502664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.012717894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 38.32999999999993,
+              "rangeScale": 1,
+              "warmRadius": 216.326722518664,
+              "perceptionRadius": 216.326722518664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.019350575999999,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 58.319999999999894,
+              "rangeScale": 1,
+              "warmRadius": 216.319797998656,
+              "perceptionRadius": 216.319797998656
+            }
+          }
+        ]
+      },
+      "paused": {
+        "world": "r100-crystal-fibre",
+        "production": true,
+        "presentation": "light-eater",
+        "artFixture": false,
+        "previewOverride": false,
+        "godMode": false,
+        "chaos": {
+          "version": 1,
+          "value": 100,
+          "peak": 100,
+          "paused": false,
+          "clockMs": 2383.2300000000005,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 100,
+          "lastModulated": 100,
+          "thresholdsFired": [
+            true,
+            true,
+            true
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 80.01555546666684,
+          "growthResistance": 0
+        },
+        "assimilation": 80.01555546666684,
+        "optics": {
+          "pollution": 100,
+          "assimilation": 80.01555546666684,
+          "lampX": 1151.623066799037,
+          "lampY": 1325.4405040778076,
+          "bodyX": 1146.190572150349,
+          "bodyY": 1324,
+          "elapsedMs": 2383.2300000000005,
+          "rangeScale": 1,
+          "warmRadius": 127.60000000000001,
+          "perceptionRadius": 192.57263103893348
+        },
+        "lampRadius": 127.60000000000001,
+        "lamp": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "radius": 127.60000000000001,
+          "intensity": 2.1079999999999997
+        },
+        "shoulder": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "z": 34.344
+        },
+        "position": {
+          "x": 1146.190572150349,
+          "y": 1324
+        },
+        "visionMultiplier": 1,
+        "toolMultiplier": 1,
+        "hostMultiplier": 1,
+        "paused": true,
+        "firstFrames": [
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.006081894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 18.329999999999927,
+              "rangeScale": 1,
+              "warmRadius": 216.333650502664,
+              "perceptionRadius": 216.333650502664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.012717894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 38.32999999999993,
+              "rangeScale": 1,
+              "warmRadius": 216.326722518664,
+              "perceptionRadius": 216.326722518664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.019350575999999,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 58.319999999999894,
+              "rangeScale": 1,
+              "warmRadius": 216.319797998656,
+              "perceptionRadius": 216.319797998656
+            }
+          }
+        ]
+      },
+      "pausedLater": {
+        "world": "r100-crystal-fibre",
+        "production": true,
+        "presentation": "light-eater",
+        "artFixture": false,
+        "previewOverride": false,
+        "godMode": false,
+        "chaos": {
+          "version": 1,
+          "value": 100,
+          "peak": 100,
+          "paused": false,
+          "clockMs": 2383.2300000000005,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 100,
+          "lastModulated": 100,
+          "thresholdsFired": [
+            true,
+            true,
+            true
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 80.01555546666684,
+          "growthResistance": 0
+        },
+        "assimilation": 80.01555546666684,
+        "optics": {
+          "pollution": 100,
+          "assimilation": 80.01555546666684,
+          "lampX": 1151.623066799037,
+          "lampY": 1325.4405040778076,
+          "bodyX": 1146.190572150349,
+          "bodyY": 1324,
+          "elapsedMs": 2383.2300000000005,
+          "rangeScale": 1,
+          "warmRadius": 127.60000000000001,
+          "perceptionRadius": 192.57263103893348
+        },
+        "lampRadius": 127.60000000000001,
+        "lamp": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "radius": 127.60000000000001,
+          "intensity": 2.1079999999999997
+        },
+        "shoulder": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "z": 34.344
+        },
+        "position": {
+          "x": 1146.190572150349,
+          "y": 1324
+        },
+        "visionMultiplier": 1,
+        "toolMultiplier": 1,
+        "hostMultiplier": 1,
+        "paused": true,
+        "firstFrames": [
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.006081894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 18.329999999999927,
+              "rangeScale": 1,
+              "warmRadius": 216.333650502664,
+              "perceptionRadius": 216.333650502664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.012717894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 38.32999999999993,
+              "rangeScale": 1,
+              "warmRadius": 216.326722518664,
+              "perceptionRadius": 216.326722518664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.019350575999999,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 58.319999999999894,
+              "rangeScale": 1,
+              "warmRadius": 216.319797998656,
+              "perceptionRadius": 216.319797998656
+            }
+          }
+        ]
+      },
+      "pass": false,
+      "error": "TypeError: Cannot read properties of undefined (reading 'conditions')\n    at file:///Users/yilungao/coh/tools/qa/check-light-eater-production-browser.mjs:164:135",
+      "failure": {
+        "world": "r100-crystal-fibre",
+        "production": true,
+        "presentation": "light-eater",
+        "artFixture": false,
+        "previewOverride": false,
+        "godMode": false,
+        "chaos": {
+          "version": 1,
+          "value": 100,
+          "peak": 100,
+          "paused": false,
+          "clockMs": 2383.2300000000005,
+          "pollutionGrade": "medium",
+          "chaosRateModifier": 0.79,
+          "lastEmitted": 100,
+          "lastModulated": 100,
+          "thresholdsFired": [
+            true,
+            true,
+            true
+          ],
+          "chasingEnemyIds": [],
+          "detectionCooldowns": [],
+          "tempRateDeadlineMs": 0,
+          "tempRateMult": 1,
+          "reductionDeadlineMs": 0,
+          "reductionMult": 1,
+          "assimilationMode": "persistent-v1",
+          "assimilationValue": 80.01555546666684,
+          "growthResistance": 0
+        },
+        "assimilation": 80.01555546666684,
+        "optics": {
+          "pollution": 100,
+          "assimilation": 80.01555546666684,
+          "lampX": 1151.623066799037,
+          "lampY": 1325.4405040778076,
+          "bodyX": 1146.190572150349,
+          "bodyY": 1324,
+          "elapsedMs": 2383.2300000000005,
+          "rangeScale": 1,
+          "warmRadius": 127.60000000000001,
+          "perceptionRadius": 192.57263103893348
+        },
+        "lampRadius": 127.60000000000001,
+        "lamp": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "radius": 127.60000000000001,
+          "intensity": 2.1079999999999997
+        },
+        "shoulder": {
+          "x": 1151.623066799037,
+          "y": 1325.4405040778076,
+          "z": 34.344
+        },
+        "position": {
+          "x": 1146.190572150349,
+          "y": 1324
+        },
+        "visionMultiplier": 1,
+        "toolMultiplier": 1,
+        "hostMultiplier": 1,
+        "paused": true,
+        "firstFrames": [
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.006081894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 18.329999999999927,
+              "rangeScale": 1,
+              "warmRadius": 216.333650502664,
+              "perceptionRadius": 216.333650502664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.012717894,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 38.32999999999993,
+              "rangeScale": 1,
+              "warmRadius": 216.326722518664,
+              "perceptionRadius": 216.326722518664
+            }
+          },
+          {
+            "presentation": "light-eater",
+            "state": {
+              "pollution": 15.019350575999999,
+              "assimilation": 0,
+              "lampX": 1137.432494648688,
+              "lampY": 1325.4405040778076,
+              "bodyX": 1132,
+              "bodyY": 1324,
+              "elapsedMs": 58.319999999999894,
+              "rangeScale": 1,
+              "warmRadius": 216.319797998656,
+              "perceptionRadius": 216.319797998656
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "browser": "155.0.8059.85",
+  "pass": false,
+  "failure": "TypeError: Cannot read properties of undefined (reading 'conditions')\n    at file:///Users/yilungao/coh/tools/qa/check-light-eater-production-browser.mjs:164:135",
+  "finishedAt": "2026-10-20T07:58:02.236Z"
+}
