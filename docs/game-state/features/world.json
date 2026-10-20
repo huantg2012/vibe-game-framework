@@ -3,11 +3,11 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "DEC-220：正式只开放余烬脊、晶化林床、破膜盆地，三污染档共用名单；其余105世界保留定义但不开放。非开放世界的有效旧active局按用户授权自动abandon返回净化点，丢弃随身物及本趟收获，基地进度保留；已结算记录正常返程。 当前三图中重档保留r13认可medium地床，新低档使用同源模型的独立紧凑地床；实际出发seed决定内容/撤离；108定义与324配方身份保持。开放名单不等于完整体验验收。 2026-10-20三开放世界新low覆盖紧凑构型与补给，身体可行面积相对旧低档减少18.86%/20.44%/24.24%，固定frame保持；完整投放、不同撤离、JSON冷回放及旧局兼容限定通过。 推广入口：docs/content/rift-open-worlds.md 的RIFT-OPT-01～11；低档缩图为逐世界作者配置，补给为三图固定配额，不是面向所有地图的自适应密度算法。 DEC-224整改进行中：用户否决逐世界缩图、固定资源配额和人工成功种子。新增r14共享自动构造/测地供给作为显式离线链，尚未翻正式默认；324配方输入通过并非324完整图通过。供给三旧缓存合格站位覆盖通过，完整G4仅余烬通过，另两图长窄段拒绝；新构造仍需全门准入。",
+    "summary": "DEC-220：正式只开放余烬脊、晶化林床、破膜盆地，三污染档共用名单；其余105世界保留定义但不开放。非开放世界有效旧active局按已授权abandon返净化点，基地进度保留；已结算记录正常返程。正常createR100ProductionRecipe仍使用三图r13：中重档认可medium地床，低档独立紧凑作者构型，出发seed决定内容／撤离。DEC-224的r14共享联合构造、档位规模、源模型预算及测地供给已实现，createR100AutomaticRecipe为显式离线入口，未翻正式默认。最新源模型预算版324份配方输入冻结复查通过，不等于324完整地图。三开放世界low12345均已有完整投放、G4、hydrate与JSON精确重放证据；破膜在同一几何增加5个真实LOS见证后，从349.256px降到313.942px，全部16768身体格通过原320px门，再完成完整链。源码bfbc557e另有余烬中档24680单次完整准入通过（未重放）；晶化林床重档24680两几何均因身体断连／G1／G2拒绝，首另deep456px。整改未完成，停止扩大样本，B2／B4／B5未结案；宏观构型多样性、全种子和长期平衡未验。推广与分项边界归docs/content/rift-open-worlds.md的RIFT-OPT-01～11，本轮无实机游戏授权。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 两阶段裂隙备行 → 普通随机池；四张认可图已启用r13，其余104图保留r11",
+      "净化点 → 两阶段裂隙备行 → 普通随机池：仅三开放世界，正常createR100ProductionRecipe仍为r13；另一个注册r13世界吸光釉原锁定，其余104世界保留r11",
       "标题继续 → 原存档的v1/v2/v3执行器和冻结数据",
       "DEV rift-spatial-prototype.html → 余烬脊去雾地形、路线地点与实体占地",
       "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。",
@@ -16,7 +16,8 @@
       "DEC-213：native-construction.html保持同3样本/medium/20261012；宏观骨架已重排，新增外环诊断，前后图册 docs/qa/artifacts/native-three-macro-2026-10-15/browser/index.html。",
       "DEC-214：同一native-construction三样本入口应用共享中尺度扩展；当前前后同尺度图册 docs/qa/artifacts/native-three-extensions-2026-10-15/browser/index.html，三图未完整准入。",
       "DEC-215：native-construction.html?sample=cinder-ridge进入当前四材质打磨组；另有crystal-fibre/ruptured-film/ivory-basin。图册 docs/qa/artifacts/native-diverse-samples-2026-10-15/browser/index.html。",
-      "DEC-216：data/rift-native-construction-production.csv显式登记四图r13资格；完整作者CSV/岸线/意图冻结进新出发recipe，正常Rift与恢复共用直接构造链。"
+      "DEC-216：data/rift-native-construction-production.csv显式登记四图r13资格；完整作者CSV/岸线/意图冻结进新出发recipe，正常Rift与恢复共用直接构造链。",
+      "DEC-224显式离线入口：r100-package.ts:createR100AutomaticRecipe(worldId, seed, grade) → r14 createR100ProductionMap；tools/native-spatial/check-automatic-package.ts无参数只核324配方输入，指定world/grade/seed/report才执行一份完整生成与JSON重放。不是普通玩家入口。"
     ],
     "sources": [
       {
@@ -1842,6 +1843,86 @@
       {
         "path": "src/generation/world-study/automatic-supply.ts",
         "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-shape.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-counts.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-source.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-refinement.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-route-field.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-empty-radius.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-solid-area.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/r100-native-auto-construction.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/codegen-auto-construction.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-automatic-package.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-auto-empty-radius.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-auto-solid-area.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-auto-route-field.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-route-transverse-legs.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-visibility.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-auto-visibility.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-auto-visibility-report.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -1938,7 +2019,7 @@
       "修订3的2400+480生成、60正式新出发/冷续与I03—I06有限完整搜撤是历史证据（E156）；修订4重做几何后，须独立验证完整自然搜取与撤离，不能继承旧资格或把有限准入当作全种子通过。",
       "历史修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10和用户终验仍待；弱设备补测已获豁免且未测。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：4459d7c3余烬脊代表已获“pass，推广”；认可仅覆盖当时代表方向并授权实施，不代表108世界、所有种子或生产搜撤资格。旧代表1孤立支持格和单一几何1024选点抽样的限制保留；推广使用各世界自己的真实支持图另验。",
-      "本轮108×3限定种子完整生产准入324/324通过：每图至少2组真实双侧绕行，最小身体可达99.284%、有效撤离交互路线923.176px，候选至少8区域/3距离层。有限种子不外推总体重试尾部、空间记忆或所有连续参数；旧图性能/收益资格不自动覆盖新图。",
+      "历史完整地图证据（不属于DEC-224/r14）：本轮108×3限定种子完整生产准入324/324通过：每图至少2组真实双侧绕行，最小身体可达99.284%、有效撤离交互路线923.176px，候选至少8区域/3距离层。有限种子不外推总体重试尾部、空间记忆或所有连续参数；旧图性能/收益资格不自动覆盖新图。",
       "原推广性能超门已在E212限定参考机修复；原规则外岸关闭结论被2026-10-11用户反馈重开。新岸线增加资源成本需单独实测，不继承旧图性能；108世界人审仍未完成。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：DEC-206 B01已扩至六个独立注册构型；其余102世界、全seed/全孔、自然未知搜索与深区取舍、正式用户审美及I14/P49仍开放。三张初稿图审退回及输入harness失败均保留，限定技术/AI图审不转成人审；B02临时草案未接生产。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E235为六图中档七个独立节点及两次换站位的知情静帧观察，含源码/48点布局诊断；不覆盖全seed、全档、容量不足留地物或动态/声音。调查之后的整改与验证见E236；其余102世界按用户要求暂停，不能自动恢复。",
@@ -1953,7 +2034,8 @@
       "E246只覆盖三张固定构型的整体形状、限定几何检查和浏览器展示；双脊G2由原通过退回body-route-to-cover-exceeds-limit（563.42px）并新增G3宽域连通失败，面积/G1等残余均保留。不能将此图直接提升为可玩模板或把宏观flags当总通过；自然探索、动态潜行、随机变化及人审未完成。",
       "E247仅覆盖固定三图共享扩展与最终浏览器复看：新增宽臂1/2/1，孔对重复；凝胶441.58px/折板463.56px长直岸失败，凝胶新增宽域面积失败、折板新增面积失败，双脊G2仍失败。最终G2仅保留结果/原因，coverage标量未留存，不沿用round2数字。没有完整部署、自然探索、动态潜行或人审通过。",
       "E248只验证新四张固定medium/20261012 DEV样本及图册。四材质视觉差异已实际复看，机器检查不代签审美；各图G1/G3及余烬/破膜G2仍拒绝，未证明自然探索、动态潜行、随机种子或全库准入。18次浏览器样本构造包含失败/修正轮次，不以最终每图1次当作总数。",
-      "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。"
+      "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。",
+      "E285（源码bfbc557e）：r14已实现显式离线链，正式默认仍r13，整改未完成、B2／B4／B5未结案。324输入冻结复查通过不等于324地图；三开放世界low12345完整链及JSON重放通过，余烬medium24680仅单次完整准入通过（35.39秒，无重放）；晶纤severe24680在46.70秒后拒绝，2份几何均身体域断连、G1空白及G2超限，第一份另deep456px。停止扩大样本，保留失败与旧版本范围。宏观构型多样性、全库／全seed成功率、自然搜撤、节点发现成本、长期经济、动态战斗及实机性能未验。"
     ]
   },
   {
@@ -2901,13 +2983,14 @@
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "四图r13通过真实几何门后部署完整出撤、资源、AI和Host；前7内容尝试保持请求seed分支，第8槽由冻结认证bank选择。两world真实human/fungal在部署前生效，数量/支撑/核与完整路线照常准入；机器生成/冷回放和四图中档正式入场/冷续功能均已有最终回执；50ms性能预算未过。 2026-10-20新低档为6处薪柴与2处污染物；两近程薪柴禁止武器替换，原节点可达/巡逻/风险门保持。旧冻结局及中重档不变。 紧凑低档作者数据与6条完整内容证书已冻结；破膜入口改至北侧两孔宽地，出口仍由内容策略选择。实际路线总体孔遭遇率满足原60%–75%，局部窄比例等质量提示保留。 DEC-224整改进行中：用户否决逐世界缩图、固定资源配额和人工成功种子。新增r14共享自动构造/测地供给作为显式离线链，尚未翻正式默认；324配方输入通过并非324完整图通过。供给三旧缓存合格站位覆盖通过，完整G4仅余烬通过，另两图长窄段拒绝；新构造仍需全门准入。",
+    "summary": "正式三图r13仍在几何准入后部署完整出撤、资源、AI与Host，保留前7请求派生内容候选和末槽冻结认证bank；低档仍为6薪柴／2污染物，两近程薪柴禁止武器替换。DEC-224的r14已实现按实际身体可行面积、通行跨度和探索分布生成供给预算，最终测地覆盖只消费干燥／巡逻窗口合格的实际48px LOS站位；低档两处必燃料不被武器替换，不隐式增怪或增加单堆价值。显式r14不读逐图配额、作者坐标或成功seed银行，正式默认尚未切换。三旧缓存合格站位供给覆盖通过是独立回归；新自动构造的三开放世界low12345均已完成完整投放、G4及JSON重放；破膜是在同一几何补足真实LOS见证、保持原320px门后通过，早期G2拒绝仍保留。bfbc557e的余烬中档24680单次完整准入通过（未重放），晶纤重档24680两几何因身体断连／G1／G2拒绝，未因供给实现而获得完整准入。整改未完成，正式r13不变；旧无policy结果与r12/r13路线默认测量保留，无宏观多样性、全种子、实机或长期经济结论。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "每次正式出击生成时自动部署",
+      "每次正式出击在r13几何门后部署完整内容；当前三开放世界，低档仍使用原固定配额",
       "DEV：rift-r100-masters.html → 九组作者地段原生Host投放",
-      "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。"
+      "DEC-206当前代表：DEV r100-gym.html?world=cinder-ridge&grade=medium&seed=20261011 使用正式worker/RiftScene与隔离内存存档；新出发池也消费相同作者数据。旧独立rift-spatial-prototype不读取本批CSV。",
+      "DEC-224显式离线入口：r100-package.ts:createR100AutomaticRecipe(worldId, seed, grade) → r14 createR100ProductionMap；tools/native-spatial/check-automatic-package.ts无参数只核324配方输入，指定world/grade/seed/report才执行一份完整生成与JSON重放。不是普通玩家入口。"
     ],
     "sources": [
       {
@@ -3532,6 +3615,38 @@
       {
         "path": "src/generation/world-study/automatic-supply.ts",
         "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/automatic-supply-navigation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/automatic-supply-policy.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/rift-auto-supply-policy.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/codegen-automatic-supply.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-automatic-supply.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-automatic-supply-fixture.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-automatic-package.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/native-spatial/check-route-transverse-legs.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -3612,7 +3727,7 @@
       "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。",
       "修订3集中2×6深薪、旧90趟经营及三母版针对性准备的有限证据保留；修订4未改收益和巡逻合同，但几何影响实际搜索/撤离路径，完整自然流程及长期相对效率不能继承。",
       "历史修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10和用户终验仍待；弱设备补测已获豁免且未测。",
-      "最终324完整地图已过配额、部署与至少两组真实双侧绕行；三代表低/中/重普通输入safe翻找、雾内发现及撤离终局均通过。导航预读静态全图，只证明流程接通；巡逻窗口孤岛反例与可达席位不证明动态追击安全、深区实际取舍或长期等级收益排序。",
+      "历史完整地图证据（不属于DEC-224/r14）：最终324完整地图已过配额、部署与至少两组真实双侧绕行；三代表低/中/重普通输入safe翻找、雾内发现及撤离终局均通过。导航预读静态全图，只证明流程接通；巡逻窗口孤岛反例与可达席位不证明动态追击安全、深区实际取舍或长期等级收益排序。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：DEC-206 B01已扩至六个独立注册构型；其余102世界、全seed/全孔、自然未知搜索与深区取舍、正式用户审美及I14/P49仍开放。三张初稿图审退回及输入harness失败均保留，限定技术/AI图审不转成人审；B02临时草案未接生产。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E235为六图中档七个独立节点及两次换站位的知情静帧观察，含源码/48点布局诊断；不覆盖全seed、全档、容量不足留地物或动态/声音。调查之后的整改与验证见E236；其余102世界按用户要求暂停，不能自动恢复。",
       "历史范围（暂停已由用户最新全库授权解除，当前见E237）：E236为本轮有限程序和正常镜头验证：六图中档safe节点、四组留出seed关系/近远、三例远距FOV与一例正式低档冷续。非全seed、全部节点可读性、长期自然探索或用户审美；容量不足实景仅有事务证据。其余102推广仍暂停。",
@@ -3623,7 +3738,7 @@
       "E242为r12实施中的有限反例与r11隔离恢复证据；尚无新全图准入，五世界仅四材料族，需校准、留出种子、实际渲染和真实AI行动验证后再扩大范围。",
       "E244最终参考在内容部署前即因G1/G3拒绝，出口、全部资源/Host/敌人巡逻和G4均未执行，身体全可达不等于完整地图准入。普通r11单图基线也不代表全库重新生成或动态搜撤通过。",
       "本轮四认可图已接线启用，最终bank与真实enemyDeployment源上四图中档功能browser通过，不代表108图推广。仅预选seed的受控备行/入场/移动/冷续；破膜怪物为边缘/部分可见。50ms预算实测未过（长任务50–404ms），自然未知搜撤、完整战斗、长期经营、任意seed/设备性能和用户终验仍未据此通过。",
-      "2026-10-21静态确认：低档补给仅由三world固定配额覆盖，共用选点与结算不等于任意地图资源密度已自适应；未实现通用面积／探索路程供给策略。后续推广按三图登记册OPT-03～07逐项继承。"
+      "E285（源码bfbc557e）：r14已实现显式离线链，正式默认仍r13，整改未完成、B2／B4／B5未结案。324输入冻结复查通过不等于324地图；三开放世界low12345完整链及JSON重放通过，余烬medium24680仅单次完整准入通过（35.39秒，无重放）；晶纤severe24680在46.70秒后拒绝，2份几何均身体域断连、G1空白及G2超限，第一份另deep456px。停止扩大样本，保留失败与旧版本范围。宏观构型多样性、全库／全seed成功率、自然搜撤、节点发现成本、长期经济、动态战斗及实机性能未验。"
     ]
   },
   {
