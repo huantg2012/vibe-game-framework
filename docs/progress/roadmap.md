@@ -2,12 +2,16 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-10-20
+last-modified: 2026-10-21
 last-closed-slice: 9
 note: DEC-221同化/疗愈已接入，限定QA通过、长期平衡待验；Godot搁置。DEC-220仍仅开放三世界。先验证核心后果再做三项遭遇/探索/构筑候选；终极目标待独立设计，旧挂起保持。
 ---
 
 # Roadmap
+
+## 后续推广入口（2026-10-21）
+
+[三开放世界优化与推广登记册](../content/rift-open-worlds.md#optimization-register)是扩大世界池前的逐项核对入口，含11项稳定编号、实际覆盖、实现和证据；按[推广核对流程](../content/rift-open-worlds.md#rollout-checklist)记录每批世界／档位的继承结果。**当前只登记，不启动全量推广。** 低档缩图与补给仍是三图专用配置，通用资源密度策略未实现；怪物仅两图，A注册、新视野和同化形象有独立接入条件。实机试玩须另获用户授权。
 
 ## 当前优先任务（2026-10-19）
 
