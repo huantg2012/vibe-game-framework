@@ -14,7 +14,7 @@ const base = manifest.variants.find((variant: { id: string }) => variant.id === 
 const look = new AssimilationLookParameters(), scratch = new Float32Array(5);
 const state = { amount: 0, fibre: 1, membrane: 0, seconds: 0, motion: true, subjective: false };
 const checks = { frames: 0, pixels: 0, maskBytes: 0, changed: 0, protected: 0, motion: 0, sourceDifference: 0 };
-const idleCoverage: { key: string; mutable: number; covered: number; ratio: number }[] = [];
+const idleCoverage: { key: string; mutable: number; covered: number; ratio: number; fibreRegion: number; membraneRegion: number }[] = [];
 const [fibrePalette, membranePalette] = getAssimilationLookPalettes();
 assert.equal(fibrePalette.worldId, 'crystal-fibre');
 assert.equal(membranePalette.worldId, 'ruptured-film');
@@ -24,7 +24,7 @@ for (const atlas of [base.atlas, manifest.bodyWithoutArm.atlas]) {
     sharp(root + atlas[key]).ensureAlpha().raw().toBuffer({ resolveWithObject: true })));
   for (const frame of base.frames) {
     const count = frame.rect[2] * frame.rect[3], mask = new Uint8Array(count * ASSIMILATION_SURFACE_STRIDE);
-    let visible = 0, mutable = 0, covered = 0;
+    let visible = 0, mutable = 0, covered = 0, fibreRegion = 0, membraneRegion = 0;
     const c = Math.cos(frame.yaw), s = Math.sin(frame.yaw);
     for (let y = 0; y < 80; y++) for (let x = 0; x < 64; x++) {
       const i = ((frame.rect[1] + y) * albedo!.info.width + frame.rect[0] + x) * 4;
@@ -59,18 +59,33 @@ for (const atlas of [base.atlas, manifest.bodyWithoutArm.atlas]) {
         previousCoverage = scratch[4]!;
       }
       if (mask[offset]) {
+        if (mask[offset + 5]! < 100) fibreRegion++;
+        if (mask[offset + 5]! > 160) membraneRegion++;
         if (mask[offset + 6] && (mask[offset + 1] !== mask[offset + 2] || mask[offset + 3] !== mask[offset + 4])) checks.motion++;
         if (mask[offset + 1] !== mask[offset + 3]) checks.sourceDifference++;
       }
     }
     checks.frames++; checks.maskBytes += visible * ASSIMILATION_SURFACE_STRIDE;
-    if (atlas === base.atlas && frame.pose === 'idle')
-      idleCoverage.push({ key: frame.key, mutable, covered, ratio: covered / mutable });
+    if (atlas === base.atlas && frame.pose === 'idle') {
+      idleCoverage.push({ key: frame.key, mutable, covered, ratio: covered / mutable, fibreRegion, membraneRegion });
+      if ([0, 2, 6].includes(frame.yawIndex))
+        assert(fibreRegion >= 6 && membraneRegion >= 6, 'Front and both sides must retain independent source regions');
+    }
   }
 }
 assert.equal(checks.frames, 208);
 assert(checks.maskBytes < 1024 * 1024, 'Bounded sparse masks must remain under 1 MiB');
 assert(checks.changed > 4000 && checks.motion > 500 && checks.sourceDifference > 1000, 'Actual exported frames exercise structured material and motion');
+const movingSurface = new Uint8Array(ASSIMILATION_SURFACE_STRIDE), next = new Float32Array(5);
+writeAssimilationSurface(-.29, 1.05, .08, 110, 0, movingSurface, 0);
+for (let seconds = 0; seconds < 5; seconds += .01) {
+  look.set({ ...state, seconds });
+  sampleAssimilationSurface(movingSurface, 0, look, 100, 92, 85, scratch);
+  look.set({ ...state, seconds: seconds + .000001 });
+  sampleAssimilationSurface(movingSurface, 0, look, 100, 92, 85, next);
+  for (let channel = 0; channel < 4; channel++)
+    assert(Math.abs(scratch[channel]! - next[channel]!) < .001, 'Material phase cannot jump at a clock threshold');
+}
 look.set({ ...state, fibre: 0, membrane: 0, amount: 1 });
 assert.equal(look.amount, 0, 'No source means unchanged body');
 look.set({ ...state, fibre: Number.NaN, membrane: Infinity, amount: Number.NaN });
