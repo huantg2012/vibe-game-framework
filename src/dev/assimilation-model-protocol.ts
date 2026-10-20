@@ -8,6 +8,8 @@ export interface AssimilationModelRequest {
   readonly fibre: number;
   /** Original gait phase in radians; null selects standing/breathing. */
   readonly phase: number | null;
+  /** Stop recovery of the original gait: 0=walking, 1=fully settled. */
+  readonly settle?: number;
   readonly yaw: number;
   readonly breath: number;
 }
@@ -18,6 +20,7 @@ export interface AssimilationModelSocket {
 export interface AssimilationModelMeta {
   readonly yaw: number;
   readonly phase: number | null;
+  readonly settle?: number;
   readonly breath: number;
   readonly amount: number;
   readonly fibre: number;

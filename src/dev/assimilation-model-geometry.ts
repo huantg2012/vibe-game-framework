@@ -28,6 +28,7 @@ const yawPoint = (p: V3, yaw: number): V3 =>
 export function validateAssimilationModelRequest(request: AssimilationModelRequest): void {
   if (!Number.isSafeInteger(request.id) || !Number.isFinite(request.amount) || request.amount < 0 || request.amount > 1
     || !Number.isFinite(request.fibre) || request.fibre < 0 || request.fibre > 1
+    || (request.settle !== undefined && (!Number.isFinite(request.settle) || request.settle < 0 || request.settle > 1))
     || !Number.isFinite(request.yaw) || !Number.isFinite(request.breath)
     || !(request.phase === null || Number.isFinite(request.phase)))
     throw new Error('Invalid assimilation model request');
@@ -107,14 +108,14 @@ function restArm(right: boolean, breath: number): ActorRightArmPose {
 
 function growStructure(model: Model, request: AssimilationModelRequest): void {
   const s = smooth(request.amount), fibre = s * request.fibre, film = s * (1 - request.fibre);
-  const cycle = (request.phase ?? 0) / (Math.PI * 2);
+  const cycle = (request.phase ?? 0) / (Math.PI * 2), settle = request.settle ?? 0;
   const upper = (p: V3, part: 'pack' | 'chest'): V3 => request.phase === null
-    ? add(p, [0, lastLightIdleLift(request.breath), 0]) : lastLightWalkUpperPoint(p, cycle, 0, part);
+    ? add(p, [0, lastLightIdleLift(request.breath), 0]) : lastLightWalkUpperPoint(p, cycle, settle, part);
   // The pack/shoulder carries long load-bearing ribs, not separate antennae.
   for (const x of [-.18, .035, .19])
     ridge(model, ([[x, 1.21, -.265], [x * 1.03, 1.10, -.415], [x * .88, .79, -.385]] satisfies V3[]).map(p => upper(p, 'pack')),
       [x < 0 ? -.35 : .35, .12, -1], .085 * fibre, .085 * fibre);
-  const left = request.phase === null ? restArm(false, request.breath) : lastLightWalkArm(false, cycle);
+  const left = request.phase === null ? restArm(false, request.breath) : lastLightWalkArm(false, cycle, settle);
   ridge(model, [blend(left.shoulder, left.elbow, .18), left.elbow, blend(left.elbow, left.wrist, .64)]
     .map(p => add(p, [-.083, 0, -.01])), [-1, .1, 0], .080 * fibre, .070 * fibre);
   // Both shin ridges follow the original walking joints; they never replant feet.
@@ -122,7 +123,7 @@ function growStructure(model: Model, request: AssimilationModelRequest): void {
     const sign = right ? 1 : -1;
     const leg = request.phase === null
       ? { knee: [sign * .145, .38, right ? .063 : -.092] as V3, ankle: [sign * .145, .13, right ? .105 : -.05] as V3 }
-      : lastLightWalkLeg(cycle, right);
+      : lastLightWalkLeg(cycle, right, settle);
     ridge(model, [leg.knee, blend(leg.knee, leg.ankle, .60)].map(p => add(p, [sign * .077, 0, .035])),
       [sign, .06, .25], .065 * fibre, .065 * fibre);
   }
@@ -139,9 +140,13 @@ function growStructure(model: Model, request: AssimilationModelRequest): void {
 export interface BuiltAssimilationModel { readonly model: Model; readonly meta: AssimilationModelMeta }
 export function buildAssimilationModel(request: AssimilationModelRequest): BuiltAssimilationModel {
   validateAssimilationModelRequest(request);
+  // buildActor and its capsule rig treat the final recovery sample as exact
+  // neutral idle. Growth and sockets must make the same choice.
+  const settle = request.settle ?? 0;
+  const pose = settle >= 1 ? { ...request, phase: null, breath: 0, settle: 0 } : request;
   const source = new Model();
-  buildActor(source, [0, 0, 0], 0, request.breath, request.phase ?? undefined);
-  if (request.amount > 0) growStructure(source, request);
+  buildActor(source, [0, 0, 0], 0, pose.breath, pose.phase ?? undefined, pose.settle ?? 0);
+  if (request.amount > 0) growStructure(source, pose);
   const point = (p: V3): V3 => morphAssimilationPoint(p, request.amount, request.fibre);
   const model = new Model();
   model.at([0, 0, 0], request.yaw, 7, () => {
@@ -151,18 +156,18 @@ export function buildAssimilationModel(request: AssimilationModelRequest): Built
       model.light(point(light.position), light.color, 1, 2.6, { kind: light.kind, id: light.id });
   });
   const worldPoint = (p: V3): V3 => yawPoint(point(p), request.yaw);
-  const arm = request.phase === null ? restArm(true, request.breath)
-    : lastLightWalkArm(true, request.phase / (Math.PI * 2));
+  const arm = pose.phase === null ? restArm(true, pose.breath)
+    : lastLightWalkArm(true, pose.phase / (Math.PI * 2), pose.settle ?? 0);
   const socket = (p: V3): AssimilationModelSocket => {
     const world = worldPoint(p), screen = project(world, ASSIMILATION_MODEL_CAMERA);
     return { world, screen: [screen[0], screen[1]] };
   };
-  const capsules = actorShadowCapsules(request.phase === null ? 'idle' : 'walk', 0, request.phase ?? request.breath)
+  const capsules = actorShadowCapsules(pose.phase === null ? 'idle' : 'walk', 0, pose.phase ?? pose.breath, pose.settle ?? 0)
     .map(c => [...worldPoint([c[0]!, c[1]!, c[2]!]), ...worldPoint([c[3]!, c[4]!, c[5]!]), c[6]!]);
   const lamp = model.lights.find(light => light.id === 'actor-shoulder');
   if (!lamp) throw new Error('The mother model shoulder light is missing');
   return { model, meta: {
-    yaw: request.yaw, phase: request.phase, breath: request.breath, amount: request.amount, fibre: request.fibre,
+    yaw: request.yaw, phase: request.phase, settle, breath: request.breath, amount: request.amount, fibre: request.fibre,
     anchor: [32, 66], lamp: lamp.position, wrist: socket(arm.wrist), shoulder: socket(arm.shoulder),
     shadowCapsules: capsules,
   } };

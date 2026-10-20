@@ -67,5 +67,22 @@ for (let i = 0; i < 100; i++) {
   assert(distance(f, g) < .002, 'Source mixture uses one continuous pose');
 }
 assert.throws(() => buildAssimilationModel({ ...base, amount: Infinity }), /Invalid/);
+// A recovery stage is a separate pose coordinate, not a thirteenth walk frame.
+for (const settle of [.25, .5, .75, 1]) {
+  const request = { ...base, phase: Math.PI * 7 / 6, settle, yaw: .7 };
+  const original = new Model(); buildActor(original, [0, 0, 0], request.yaw, 0, request.phase, settle);
+  assert.deepEqual(buildAssimilationModel(request).model.triangles, original.triangles, 'A0 matches each original recovery stage');
+  const recovery = buildAssimilationModel({ ...request, amount: 1 });
+  assert.equal(recovery.meta.settle, settle);
+  assert(recovery.model.triangles.every(t => [...t.a, ...t.b, ...t.c, ...t.normal].every(Number.isFinite)));
+  if (settle === 1) {
+    const idle = buildAssimilationModel({ ...base, amount: 1, yaw: request.yaw });
+    assert.deepEqual(recovery.model.triangles, idle.model.triangles, 'Final recovery settles body and growth into the identical idle model');
+    assert.deepEqual(recovery.meta.lamp, idle.meta.lamp, 'Final recovery lamp is idle');
+    assert.deepEqual(recovery.meta.wrist, idle.meta.wrist, 'Final recovery grip is idle');
+    assert.deepEqual(recovery.meta.shadowCapsules, idle.meta.shadowCapsules, 'Final recovery shadows are idle');
+  }
+}
+assert.throws(() => buildAssimilationModel({ ...base, settle: 2 }), /Invalid/);
 console.log(JSON.stringify({ pass: true, frames: results.length, results,
   limits: 'Finite author-geometry/raster checks; no scene integration, combat, seated morph, browser Worker throughput or human visual acceptance.' }, null, 2));
