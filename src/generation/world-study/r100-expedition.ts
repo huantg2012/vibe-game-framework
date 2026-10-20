@@ -1,3 +1,5 @@
+import { planAutomaticSupply, type AutomaticSupplyPlan } from './automatic-supply';
+import type { R100AutomaticSupplyPolicy } from './automatic-supply-policy';
 import { findR100PatrolWindows } from './r100-patrol-windows';
 import { hasLineOfSight } from '@/utils/grid-raycast';
 /** Complete v3 route/content deployment on the approved native geometry. */
@@ -39,7 +41,7 @@ const DIRECTIONS = [[1, 0], [0, 1], [-1, 0], [0, -1], [1, 1], [1, -1], [-1, 1], 
 const HALF = GAME_CONSTANTS.PLAYER.BODY_SIZE / 2;
 const TIERS = ['safe', 'contested', 'deep'] as const;
 interface RouteField { readonly distance: Float64Array; readonly parent: Int32Array; readonly seats: Uint8Array }
-interface Seat { readonly cell: number; readonly position: Vector2; readonly distance: number; readonly approachDistance: number; readonly interactionSeats: number; readonly pollutionDistance: number }
+interface Seat { readonly cell: number; readonly position: Vector2; readonly distance: number; readonly approachDistance: number; readonly interactionSeats: number; readonly pollutionDistance: number; readonly interactionCells?: readonly number[] }
 /** A trip via an interaction seat cannot be shorter than the direct shortest
  * return. Clamp floating-point cancellation at zero; unreachable stays absent. */
 export function r100ExtraTravelPx(outbound:number,homebound:number,directReturn:number):number {
@@ -99,7 +101,7 @@ function pathTo(grid: TileGrid, parent: Int32Array, cell: number): TileCoord[] {
     .map(value => ({ col: value % grid.cols, row: Math.floor(value / grid.cols) }));
 }
 
-export function deployR100Expedition(world: MasterWorld, definition: R100ExpeditionDefinition, searchSitePolicy?: R100SearchSitePolicy): {
+export function deployR100Expedition(world: MasterWorld, definition: R100ExpeditionDefinition, searchSitePolicy?: R100SearchSitePolicy, frozenSupplyPolicy?: R100AutomaticSupplyPolicy): {
   readonly layout: GeneratedRiftLayout; readonly diagnostics: Readonly<Record<string, unknown>>;
   readonly searchSites?: readonly R100SearchSitePlacement[];
 } {
@@ -132,6 +134,7 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
     if (Math.hypot(position.x - base.spawnPoint.x, position.y - base.spawnPoint.y) < 64
       || Math.hypot(position.x - base.extractionPoint.position.x, position.y - base.extractionPoint.position.y) < 48) continue;
     let interactionDistance = Infinity, approachDistance = Infinity, interactionSeats = 0;
+    const interactionCells: number[] | undefined = frozenSupplyPolicy ? [] : undefined;
     const radius = GAME_CONSTANTS.LOOT.SEARCH_RADIUS, steps = Math.ceil(radius / grid.tileSize);
     const col = cell % grid.cols, row = Math.floor(cell / grid.cols);
     for (let dy = -steps; dy <= steps; dy++) for (let dx = -steps; dx <= steps; dx++) {
@@ -140,16 +143,41 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
       if (!Number.isFinite(field.distance[seat]) || !Number.isFinite(toExit.distance[seat])
         || !hasLineOfSight(world.sight, seatPoint, position, radius + .001)) continue;
       interactionSeats++;
+      interactionCells?.push(seat);
       interactionDistance = Math.min(interactionDistance, r100ExtraTravelPx(field.distance[seat]!,toExit.distance[seat]!,directReturn));
       approachDistance = Math.min(approachDistance, field.distance[seat]!);
     }
-    candidates.push({ cell, position, distance: interactionDistance, approachDistance, interactionSeats, pollutionDistance: pollutionDistance(position) });
+    candidates.push({ cell, position, distance: interactionDistance, approachDistance, interactionSeats, pollutionDistance: pollutionDistance(position), ...(interactionCells ? { interactionCells } : {}) });
   }
   const maxDistance = Math.max(...candidates.map(seat => seat.distance));
   const spatial = world.spatialDeployment;
   const chosen: { seat: Seat; tier: KindlingTier; kind: 'kindling' | 'contaminant' }[] = [];
   const nodeDecisions: {kind:'kindling'|'contaminant';tier:KindlingTier;slot:number;rankedCells:readonly number[];selectedCell:number}[]=[];
   const kindlingNodes: KindlingNodeDef[] = [], contaminantNodes: ContaminantNodeDef[] = [];
+  let automaticSupply: AutomaticSupplyPlan | undefined;
+  if (frozenSupplyPolicy) {
+    const automaticCandidates = candidates.map(seat => ({ ...seat, interactionCells: seat.interactionCells!,
+      environmentScore: searchSites?.score(seat.position) ?? 0,
+      tiers: TIERS.filter(tier => {
+        const minimum = spatial ? tier === 'safe' ? 0 : spatial[`${tier}_min_extra_travel_px`] : maxDistance * (tier === 'safe' ? 0 : tier === 'contested' ? .32 : .65);
+        const maximum = spatial ? spatial[`${tier}_max_extra_travel_px`] : maxDistance * (tier === 'safe' ? .4 : tier === 'contested' ? .8 : 1);
+        return seat.distance >= minimum && seat.distance <= maximum
+          && (!spatial || seat.approachDistance <= (tier === 'safe' ? spatial.safe_max_approach_px : spatial.max_search_approach_px))
+          && seat.pollutionDistance >= (tier === 'safe' ? 34 : 16)
+          && (tier !== 'safe' || safePoints.some(point => Math.hypot(point.x - seat.position.x, point.y - seat.position.y) < 30))
+          && (!spatial || tier !== 'deep' || seat.pollutionDistance <= 100);
+      }) }));
+    automaticSupply = planAutomaticSupply(grid, field.distance, automaticCandidates, definition, frozenSupplyPolicy, base.seed, spatial?.node_spacing_px ?? 52);
+    const slots = new Map<string, number>();
+    for (const item of automaticSupply.selected) {
+      const { seat, tier, kind } = item, key = `${kind}-${tier}`, slot = (slots.get(key) ?? 0) + 1;
+      slots.set(key, slot); chosen.push({ seat, tier, kind });
+      const id = `r100-${key}-${slot}`;
+      if (kind === 'kindling') kindlingNodes.push({ id, tier, position: seat.position, value: definition[`kindling_${tier}_value`],
+        ...(item.necessaryFuel ? { allowWeapon: false } : {}) });
+      else contaminantNodes.push({ id, tier, position: seat.position });
+    }
+  } else {
   for (const tier of TIERS) for (const kind of ['kindling', 'contaminant'] as const) {
     const count = definition[`${kind}_${tier}_count`];
     for (let slot = 0; slot < count; slot++) {
@@ -192,6 +220,7 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
         ...(tier === 'safe' && definition.kindling_safe_allow_weapon !== undefined ? { allowWeapon: definition.kindling_safe_allow_weapon } : {}) });
       else contaminantNodes.push({ id, tier, position: seat.position });
     }
+  }
   }
   const threats = chosen.filter(item => item.tier !== 'safe').sort((a, b) => b.seat.distance - a.seat.distance);
   const enemies: EnemySpawnData[] = [];
@@ -248,5 +277,6 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
     patrolWindows, patrolWindowContract: '2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately',
     ...(spatial ? { spatialDeployment: spatial, searchExtraTravelCapPx: spatial.deep_max_extra_travel_px } : {}),
     ...(placements ? { searchSites: placements.map(site => ({ nodeId: site.nodeId, sourceKind: site.sourceKind, family: site.family, sourceDomain: site.sourceDomain, sourceObjectId: site.sourceObjectId })), environmentScoreCap: searchSitePolicy!.environmentScoreCap } : {}),
+    ...(automaticSupply ? { automaticSupply: automaticSupply.verify(kindlingNodes, contaminantNodes) } : {}),
     costBasis: 'all-body-safe-48px-interaction-seats', guaranteedSafeReturn: true, enemyCount: enemies.length, kindlingCount: kindlingNodes.length, contaminantCount: contaminantNodes.length } };
 }
