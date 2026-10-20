@@ -63,7 +63,7 @@ import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import type { WorldProductionMap } from '@/generation/world-study/production-map';
 import type { WorldProductionRecipeV3 } from '@/generation/world-study/production-recipe';
-import { lightEaterLampRadius, lightEaterReceivedLight } from '@/systems/vision-light-eater';
+import { LIGHT_EATER_CLEAR_RADIUS, lightEaterReceivedLight } from '@/systems/vision-light-eater';
 
 /** Development encounters still use the complete production scene lifecycle. */
 export interface RiftDevFixture {
@@ -246,6 +246,9 @@ export class RiftScene extends Phaser.Scene {
   private visionPreviewLamp: WorldMaterialLighting['lights'][number] | null = null;
   private visionPreviewLampRadius = 0;
   private visionPreviewLampIntensity = 0;
+  private productionLightEater = false;
+  private defenseVisionScale = 1;
+  private readonly physiologyVisionRadii = { warm: LIGHT_EATER_CLEAR_RADIUS, perception: LIGHT_EATER_CLEAR_RADIUS };
   private readonly visibility = new VisibilitySystem();
   private readonly trail = new TrailSystem();
   private readonly ai = new AISystem();
@@ -378,6 +381,8 @@ export class RiftScene extends Phaser.Scene {
     this.devFixture = import.meta.env.DEV ? data?.devFixture ?? null : null;
     this.frameCommit = null;
     this.nativeWorldPresentation = null;
+    this.productionLightEater = false;
+    this.defenseVisionScale = 1;
     this.nativeEntryFence?.destroy(); this.nativeEntryFence = null;
     this.nativeEntryPauseRequested = false;
     this.focusPauseRequested = false;
@@ -593,6 +598,11 @@ export class RiftScene extends Phaser.Scene {
     const assimilationMode = restoring ? restoredChaos?.assimilationMode
       : this.devFixture?.assimilationMode ?? (departure?.runId === inventoryStore.getRun()?.id
         ? departure?.conditions.assimilationMode : undefined);
+    // The three admitted native worlds share the approved player/material
+    // presentation. Historical runs without the physiology protocol stay legacy.
+    this.productionLightEater = formalPlayerA && assimilationMode === 'persistent-v1';
+    this.defenseVisionScale = this.productionLightEater ? restoring?.state.conditions.visionMultiplier ?? 1 : 1;
+    if (this.productionLightEater) this.visibility.setPresentation('light-eater');
     // growthMods.kindlingAffinity (+N per pickup) applied through LootSearchSystem config below
     // growthMods.vitalityBonus (+HP) applied through combat system max health
 
@@ -1058,40 +1068,11 @@ export class RiftScene extends Phaser.Scene {
 
   private onPostUpdate(_time: number, delta: number): void {
     if (this.stagedEntry?.isActive() || this.frameCommit?.isBlocked()) return;
-    const visionPreview = import.meta.env.DEV ? this.devFixture?.readVisionPreview?.() : undefined;
-    if (visionPreview) {
-      const projected = getAssimilationModulators(visionPreview.pollution, visionPreview.assimilation);
-      this.visibility.setPresentation(visionPreview.presentation);
-      const position = this.player.getPosition();
-      const shoulder = this.lastLightPlayerPresentation?.getLampPosition();
-      this.visibility.setLightEaterState(visionPreview.pollution, visionPreview.assimilation,
-        shoulder && Math.hypot(shoulder.x - position.x, shoulder.y - position.y) < 48 ? shoulder : position);
-      const lamp = this.devRuntime?.worldMaterialLighting?.lights[0];
-      if (lamp && lamp !== this.visionPreviewLamp) {
-        if (this.visionPreviewLamp) {
-          this.visionPreviewLamp.radius = this.visionPreviewLampRadius;
-          this.visionPreviewLamp.intensity = this.visionPreviewLampIntensity;
-        }
-        this.visionPreviewLamp = lamp; this.visionPreviewLampRadius = lamp.radius;
-        this.visionPreviewLampIntensity = lamp.intensity;
-      }
-      if (this.visionPreviewLamp) {
-        this.visionPreviewLamp.radius = visionPreview.presentation === 'light-eater'
-          ? lightEaterLampRadius(visionPreview.pollution) : this.visionPreviewLampRadius;
-        // DEV receiving-surface response: the lamp sprite stays lit while less
-        // foreign light reaches terrain and actor materials as pollution grows.
-        this.visionPreviewLamp.intensity = this.visionPreviewLampIntensity * (visionPreview.presentation === 'light-eater'
-          ? lightEaterReceivedLight(visionPreview.pollution) : 1);
-      }
-      this.visibility.setEdgeCorruption(projected.edgeCorruption);
-      this.visibility.setScreenFlicker(projected.screenFlicker);
-      this.chaosVisionScale = projected.radiusScale;
-    }
+    this.syncVisionState();
     if (this.nativeEntryFence?.isActive()) {
       if (!this.nativeEntryFence.needsPresentation()) return;
       // This frame paints the restored/fresh instant without an AI, physics,
       // combat, tool, pollution or animation clock tick.
-      this.visibility.setRadiusScale(this.chaosVisionScale * this.hosts.getVolumeSightMult());
       this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
       this.syncSchemeDPoses(0);
       this.groundDepthSorter?.update();
@@ -1132,9 +1113,6 @@ export class RiftScene extends Phaser.Scene {
       return;
     }
     this.player.postUpdate();
-    // Entering/leaving a volume must affect this frame's lamp. Chaos publishes
-    // only when its number changes enough; that cadence cannot own local fog.
-    this.visibility.setRadiusScale(this.chaosVisionScale * this.hosts.getVolumeSightMult());
     this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), delta);
     // Enemies are drawn last of the three: their visibility is looked up against the mask
     // this frame produced, so an enemy is never drawn into darkness (rule R4).
@@ -1142,7 +1120,7 @@ export class RiftScene extends Phaser.Scene {
     this.syncSchemeDPoses(delta);
     this.groundDepthSorter?.update();
     this.toolSystem.syncBodyVisuals();
-    // Minimap after visibility so explored tiles match this frame's cone + occlusion.
+    // Minimap after visibility so explored tiles match this frame's field + occlusion.
     this.syncMinimapExploration();
     this.minimap.update(this.player.getPosition(), this.player.getFacing4(), delta);
     this.syncDetectionPulse(delta);
@@ -1154,6 +1132,65 @@ export class RiftScene extends Phaser.Scene {
     this.worldSurface?.afterUpdate(this.devElapsedMs);
     this.frameCommit?.begin();
     if (this.debugPanel) this.updateDebugOverlay(delta);
+  }
+
+  /** Same optical input path for first presentation, cold recovery and live
+   * frames. DEV projection is explicit; normal play reads real physiology. */
+  private syncVisionState(): void {
+    const visionPreview = import.meta.env.DEV ? this.devFixture?.readVisionPreview?.() : undefined;
+    const presentation = visionPreview?.presentation ?? (this.productionLightEater ? 'light-eater' : 'legacy');
+    this.visibility.setPresentation(presentation);
+    if (visionPreview) {
+      const projected = getAssimilationModulators(visionPreview.pollution, visionPreview.assimilation);
+      this.visibility.setEdgeCorruption(projected.edgeCorruption);
+      this.visibility.setScreenFlicker(projected.screenFlicker);
+      this.chaosVisionScale = projected.radiusScale;
+    }
+    // P/A already own the two light-eater envelopes. Only external effects enter
+    // this multiplier; applying chaosVisionScale again would double the penalty.
+    const externalScale = this.hosts.getVolumeSightMult() * (this.productionLightEater ? this.defenseVisionScale : 1);
+    this.visibility.setRadiusScale((presentation === 'light-eater' ? 1 : this.chaosVisionScale) * externalScale);
+    this.visibility.setAbilityRadiusMultiplier(this.toolSystem.getVisionRadiusMultiplier());
+    if (presentation === 'light-eater') {
+      const pollution = visionPreview?.pollution ?? this.chaos.getValue();
+      const assimilation = visionPreview?.assimilation ?? gameState.getAssimilation();
+      const radii = this.physiologyVisionRadii;
+      if (!visionPreview) {
+        radii.warm = LIGHT_EATER_CLEAR_RADIUS * getAssimilationModulators(pollution, 0).radiusScale;
+        radii.perception = LIGHT_EATER_CLEAR_RADIUS * getAssimilationModulators(pollution, assimilation).radiusScale;
+      }
+      // Refresh the anchor from the resolved body before sharing it with the
+      // material lamp and observation mask (also fixes a stale first-frame lamp).
+      this.lastLightPlayerPresentation?.syncPose();
+      const position = this.player.getPosition();
+      const shoulder = this.lastLightPlayerPresentation?.getLampPosition();
+      this.visibility.setLightEaterState(pollution, assimilation,
+        shoulder && Math.hypot(shoulder.x - position.x, shoulder.y - position.y) < 48 ? shoulder : position,
+        visionPreview ? undefined : radii);
+      const lamp = this.devRuntime?.worldMaterialLighting?.lights[0];
+      if (lamp && lamp !== this.visionPreviewLamp) {
+        if (this.visionPreviewLamp) {
+          this.visionPreviewLamp.radius = this.visionPreviewLampRadius;
+          this.visionPreviewLamp.intensity = this.visionPreviewLampIntensity;
+        }
+        this.visionPreviewLamp = lamp; this.visionPreviewLampRadius = lamp.radius;
+        this.visionPreviewLampIntensity = lamp.intensity;
+      }
+      if (this.visionPreviewLamp) {
+        this.visionPreviewLamp.radius = this.visibility.getLightEaterLampRadius();
+        // Receiving-surface response: the lamp sprite stays lit while less
+        // foreign light reaches terrain and actor materials as pollution grows.
+        this.visionPreviewLamp.intensity = this.visionPreviewLampIntensity * lightEaterReceivedLight(pollution);
+      }
+    } else this.restoreVisionLamp();
+  }
+
+  private restoreVisionLamp(): void {
+    if (this.visionPreviewLamp) {
+      this.visionPreviewLamp.radius = this.visionPreviewLampRadius;
+      this.visionPreviewLamp.intensity = this.visionPreviewLampIntensity;
+    }
+    this.visionPreviewLamp = null; this.visionPreviewLampRadius = 0; this.visionPreviewLampIntensity = 0;
   }
 
   /**
@@ -1671,7 +1708,7 @@ export class RiftScene extends Phaser.Scene {
     this.ai.setPlayerRecognitionRangeMultiplier(this.chaos.isAssimilationEnabled()
       ? assimilationHostilityMultiplier(gameState.getAssimilation()) : 1);
     this.chaosVisionScale = mods.radiusScale;
-    this.visibility.setRadiusScale(mods.radiusScale * this.hosts.getVolumeSightMult());
+    this.visibility.setRadiusScale((this.productionLightEater ? this.defenseVisionScale : mods.radiusScale) * this.hosts.getVolumeSightMult());
     this.visibility.setAbilityRadiusMultiplier(this.toolSystem.getVisionRadiusMultiplier());
     this.visibility.setEdgeCorruption(mods.edgeCorruption);
     this.visibility.setScreenFlicker(mods.screenFlicker);
@@ -1804,8 +1841,14 @@ export class RiftScene extends Phaser.Scene {
         this.player.setSpeedModifier('defense_side_effect', 1.0 - effect.value);
         break;
       case 'vision_reduction':
-        // Reduce visibility radius slightly
-        this.visibility.setRadiusScale(1.0 - effect.value);
+        if (this.productionLightEater) {
+          this.defenseVisionScale = clamp(this.defenseVisionScale * (1 - effect.value), GAME_CONSTANTS.VISIBILITY.MIN_RADIUS_SCALE, 1);
+          this.recoveryConditions = { ...this.recoveryConditions, visionMultiplier: this.defenseVisionScale };
+          this.visibility.setRadiusScale(this.defenseVisionScale * this.hosts.getVolumeSightMult());
+        } else {
+          // Historical protocol retains its original one-shot modulation.
+          this.visibility.setRadiusScale(1.0 - effect.value);
+        }
         break;
       case 'proximity_sense_boost':
         // muffle's *defense*-slot side effect (next sortie's enemies hear better) -
@@ -2381,6 +2424,7 @@ export class RiftScene extends Phaser.Scene {
         this.entryView.elapsedMs = this.entryView.durationMs; this.entryView.progress = 1;
         this.input.keyboard?.resetKeys();
         this.syncPlayerInput();
+        this.syncVisionState();
         this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
         // AI.postUpdate(0) is not a visual refresh: it resets the stuck watchdog.
         this.syncSchemeDPoses(0);
@@ -2528,6 +2572,7 @@ export class RiftScene extends Phaser.Scene {
     document.removeEventListener('visibilitychange', this.onFocusVisibility);
     this.focusPauseRequested = false;
     this.frameCommit?.destroy(); this.frameCommit = null;
+    this.restoreVisionLamp();
     this.worldSurface?.destroy();
     this.worldSurface = null;
     this.devRuntime?.destroy(); this.devRuntime = null; this.devEnemyVisuals.length = 0;
@@ -2601,11 +2646,6 @@ export class RiftScene extends Phaser.Scene {
     this.minimap.destroy();
     this.riftSurface.destroy();
     this.visibility.destroy();
-    if (this.visionPreviewLamp) {
-      this.visionPreviewLamp.radius = this.visionPreviewLampRadius;
-      this.visionPreviewLamp.intensity = this.visionPreviewLampIntensity;
-    }
-    this.visionPreviewLamp = null; this.visionPreviewLampRadius = 0; this.visionPreviewLampIntensity = 0;
     this.player.destroy();
     this.tilemapRenderer.destroy();
     this.landmarkGraphics?.destroy();

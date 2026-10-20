@@ -15,10 +15,19 @@ const modern = { ...original, chaos: modernChaos.exportRuntimeState(), player: {
   speedModifiers: [...original.player.speedModifiers.filter(([source]) => source !== 'chaos'), ['chaos', .95] as [string, number]] } };
 const inventory = inventoryStore.getState();
 assert(validateRiftRecoveryState(modern, inventory, 0), 'New-mode slowdown participates in whole-frame validation');
+const reducedVision = { ...modern, conditions: { ...modern.conditions, visionMultiplier: .85 } };
+assert(validateRiftRecoveryState(reducedVision, inventory, 0), 'Real defense vision multiplier survives a modern checkpoint');
+assert(validateRiftRecoveryState(JSON.parse(JSON.stringify(reducedVision)), inventory, 0), 'Cold JSON recovery preserves vision reduction');
+assert.equal(JSON.parse(JSON.stringify(reducedVision)).conditions.visionMultiplier, .85);
+assert.equal(modern.conditions.visionMultiplier ?? 1, 1, 'Earlier records default to neutral vision');
+for (const multiplier of [0, .39, 1.01, NaN, Infinity, '0.85', null]) {
+  assert(!validateRiftRecoveryState({ ...modern, conditions: { ...modern.conditions, visionMultiplier: multiplier } }, inventory, 0),
+    `Invalid defense vision multiplier rejected: ${multiplier}`);
+}
 assert(!validateRiftRecoveryState({ ...modern, player: { ...modern.player,
   speedModifiers: [['chaos', 1]] } }, inventory, 0), 'Legacy slowdown cannot be substituted into a modern frame');
 const { assimilationMode: _mode, assimilationValue: _value, growthResistance: _growth, ...legacyChaos } = modern.chaos;
 assert(!validateRiftRecoveryState({ ...modern, chaos: legacyChaos }, inventory, 0), 'Dropping the mode cannot silently reinterpret movement');
 assert(validateRiftRecoveryState(original, inventory, 0), 'Original frame remains valid without migration');
 modernChaos.destroy(); native.destroy();
-console.log('PASS assimilation checkpoint: new/legacy whole-frame speed contract and mode isolation');
+console.log('PASS assimilation checkpoint: new/legacy whole-frame speed, optional vision multiplier cold recovery, and mode isolation');

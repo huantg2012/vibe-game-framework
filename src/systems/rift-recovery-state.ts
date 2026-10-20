@@ -26,6 +26,8 @@ export interface RiftRecoveryConditions {
   readonly cycle: number;
   readonly maxHealth?: number;
   readonly kindlingAffinity?: number;
+  /** Run-bound defense residue; absent on earlier records means no reduction. */
+  readonly visionMultiplier?: number;
 }
 export interface RiftRecoveryResult {
   readonly killCount: number;
@@ -66,7 +68,8 @@ function validConditions(value: unknown): value is RiftRecoveryConditions {
     && runtimeNumber(value.modifiers.chaosRateModifier, 0) && runtimeNumber(value.modifiers.kindlingValueModifier, 0)
     && runtimeNumber(value.modifiers.startingChaos, 0, GAME_CONSTANTS.CHAOS.HARD_CAP)
     && (value.maxHealth === undefined || runtimeNumber(value.maxHealth, 100, 160))
-    && (value.kindlingAffinity === undefined || runtimeInteger(value.kindlingAffinity, 0, 3));
+    && (value.kindlingAffinity === undefined || runtimeInteger(value.kindlingAffinity, 0, 3))
+    && (value.visionMultiplier === undefined || runtimeNumber(value.visionMultiplier, GAME_CONSTANTS.VISIBILITY.MIN_RADIUS_SCALE, 1));
 }
 function validResult(value: unknown): value is RiftRecoveryResult {
   if (!runtimeRecord(value) || !runtimeInteger(value.killCount, 0, 4096) || !Array.isArray(value.acquired)
