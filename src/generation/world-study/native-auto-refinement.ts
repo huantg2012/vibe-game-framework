@@ -12,12 +12,19 @@ export interface NativeAutoCoverageObject {
 }
 interface Point {readonly x:number;readonly y:number}
 export interface NativeAutoCoverageScore {
-  readonly penalty:number;readonly maxEmptyPx:number;readonly maxDeepSpanPx:number;
+  readonly penalty:number;readonly qualityPenalty:number;readonly maxEmptyPx:number;readonly maxDeepSpanPx:number;
   readonly maxVoidDistancePx:number;readonly wideRatio:number;readonly largestWideRatio:number;
 }
 export interface NativeAutoRefinementTrace {
   readonly evaluations:number;readonly acceptedMoves:number;readonly acceptedSwaps:number;readonly acceptedJointMoves:number;readonly completedPasses:number;
   readonly before:NativeAutoCoverageScore;readonly after:NativeAutoCoverageScore;
+}
+/** Quality may break an exact hard-cost tie, never buy a worse hard result.
+ * Keep the existing 1e-9 improvement precision at either level. */
+export function nativeAutoScoreImproves(candidate:Pick<NativeAutoCoverageScore,'penalty'|'qualityPenalty'>,
+  current:Pick<NativeAutoCoverageScore,'penalty'|'qualityPenalty'>):boolean {
+  return candidate.penalty<current.penalty-1e-9
+    ||candidate.penalty===current.penalty&&candidate.qualityPenalty<current.qualityPenalty-1e-9;
 }
 const shifted=(r:Rect,p:Point):Rect=>[r[0]+p.x,r[1]+p.y,r[2],r[3]];
 const overlaps=(a:Rect,b:Rect,gap:number)=>a[0]<b[0]+b[2]+gap&&a[0]+a[2]>b[0]-gap&&a[1]<b[1]+b[3]+gap&&a[1]+a[3]>b[1]-gap;
@@ -171,8 +178,8 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
     penalty+=Math.max(0,maxEmptyPx/policy.maxEmptyRadiusPx-1)**2+deepGroups.spanPenalty;
     penalty+=Math.max(0,maxVoidDistancePx/policy.maxCoverRoutePx-1)**2;
     penalty+=Math.max(0,1-wideRatio/policy.minWideRatio)**2+Math.max(0,1-largestWideRatio/policy.minLargestWideRatio)**2;
-    penalty+=soft/Math.max(1,bodyCount)*.001;
-    return{penalty,maxEmptyPx,maxDeepSpanPx:deepGroups.span,maxVoidDistancePx,wideRatio,largestWideRatio};
+    const qualityPenalty=Math.max(0,1-wideRatio/(planning.targetWidePercent/100))**2+soft/Math.max(1,bodyCount)*.001;
+    return{penalty,qualityPenalty,maxEmptyPx,maxDeepSpanPx:deepGroups.span,maxVoidDistancePx,wideRatio,largestWideRatio};
   };
   const domainSets=domains.map(domain=>new Set(domain));
   const fits=(object:number,site:number,excluding:readonly number[]):boolean=>{
@@ -191,7 +198,7 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
         if(evaluations>=planning.maxRefinementEvaluations)break;
         if(site===original||!fits(object,site,[]))continue;
         checkpoint();chosen.set(object,site);evaluations++;
-        const candidate=score([object],fixed);if(candidate.penalty<bestScore.penalty-1e-9){best=site;bestScore=candidate;}
+        const candidate=score([object],fixed);if(nativeAutoScoreImproves(candidate,bestScore)){best=site;bestScore=candidate;}
       }
       chosen.set(object,best);if(best!==original){current=bestScore;acceptedMoves++;}
     }
@@ -202,7 +209,7 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
       const fixed=fixedField([first,second]);
       checkpoint();chosen.set(first,b);chosen.set(second,a);evaluations++;
       const candidate=score([first,second],fixed);
-      if(candidate.penalty<current.penalty-1e-9){current=candidate;acceptedSwaps++;}else{chosen.set(first,a);chosen.set(second,b);}
+      if(nativeAutoScoreImproves(candidate,current)){current=candidate;acceptedSwaps++;}else{chosen.set(first,a);chosen.set(second,b);}
     }
     // Coordinated neighboring moves can split a deep ridge without requiring
     // either object to improve the complete objective by itself.
@@ -221,7 +228,7 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
           if(toA===a&&toB===b||!fits(first,toA,[second])||!fits(second,toB,[first])
             ||overlaps(shifted(objects[first]!.bounds,sites[toA]!),shifted(objects[second]!.bounds,sites[toB]!),planning.objectClearancePx))continue;
           checkpoint();chosen.set(first,toA);chosen.set(second,toB);evaluations++;
-          const candidate=score([first,second],fixed);if(candidate.penalty<bestScore.penalty-1e-9){bestA=toA;bestB=toB;bestScore=candidate;}
+          const candidate=score([first,second],fixed);if(nativeAutoScoreImproves(candidate,bestScore)){bestA=toA;bestB=toB;bestScore=candidate;}
         }
         chosen.set(first,bestA);chosen.set(second,bestB);
         if(bestA!==a||bestB!==b){current=bestScore;acceptedJointMoves++;}
