@@ -11145,5 +11145,55 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E278",
+    "kind": "human",
+    "result": "pass",
+    "date": "2026-10-20",
+    "revision": "aa13e4b1",
+    "scope": "用户对全身材质/真实形体返工明确“pass，放入游戏关卡内吧”，认可该视觉方向并授权接入三开放世界与净化点。",
+    "limitations": "这是获批DEV样片的美术方向与接入授权，不代表后续正式动作、来源持久化、首次预热或性能已经验证。",
+    "sources": [
+      {
+        "path": "docs/art/assimilation-appearance-study.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/tasks/rift-experience-polish-2026-10-19.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E279",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-20",
+    "revision": "6d49b140",
+    "scope": "正式三世界以真实A/谱接入获批形体，按当前实际动作查完整Worker动作库，Haven承接与同比疗愈。来源/保存/回滚、7128材质等价样本、18烘焙等价帧、缓存/实际renderer方法检查、类型/构建完成；真实三图A85来源与完整形体、混合攻击、暂停/冷续及归返已取得限定证据，独立Haven补验已通过真实坐/起和疗愈A85→70，两源42.5各同比变为35，前后均使用ready1035完整库；首次预热及限定采样见同日QA。",
+    "limitations": "E278为获批样片的人审，E279为正式限定检查，不能代替自然全趟、所有朝向攻击或玩家最终体验。首次/疗愈换库存在后台形体准备延迟，材质即时；当前同页缓存不持久到磁盘。无WebGL2降级无同等形体，CPU/帧间隔不代GPU时间，低端设备及长期性能未验。未实现完整语义UV、未来新装备自动变形或第三种本土组织模板；余烬脊只有通用形变与当地材料。 QA首轮工具返程按钮与零时长E输入问题保留，不当作产品验证通过；其修正后的补验范围单独记录。",
+    "sources": [
+      {
+        "path": "docs/qa/assimilation-production-2026-10-20.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/assimilation-production-2026-10-20/report.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/assimilation-production-2026-10-20/report-first-attempt.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/assimilation-production-2026-10-20/build.log",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/assimilation-production-2026-10-20/haven-supplement/report.json",
+        "role": "test"
+      }
+    ]
   }
 ]

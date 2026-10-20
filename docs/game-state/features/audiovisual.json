@@ -3,7 +3,7 @@
     "id": "COH-F039",
     "title": "玩家身份、净化点人物与裂隙像素呈现",
     "domain": "presentation",
-    "summary": "净化点保持15朝向1035帧Last Light人物与既有距离步态。DEC-219将用户选择的A正式接入余烬脊、晶化林床、破膜盆地，按冻结package.id覆盖三档及有效v3续玩；其余105世界保持原玩家。A原104帧字节不变，追加同源右臂与真实武器握持、挥击/触击停顿和受击闪白，保留20×20身体、实际装备、原战斗数值与已认可的侧身低光补偿。三场中档正式出发/冷续、真实按键三阶段挥击和受控伤害/死亡/资源清理通过；姿态美术仅有限关键帧短核，整体动态体验及50ms预算未据此结案。 2026-10-20首件人审50/100，仅纹理获认可；E276记录整体返工。新DEV形体样片E277已实现真实前屈、头前探、肩差、实体晶脊/厚膜、全身覆盖及混合；三场45近景/3全景与连续实录完成有限验证。新几何A100覆盖81.80–89.65%，后台10Hz/16帧缓存。用户复评待定，未接正式流程；攻击/坐姿/正式来源谱、GPU与长期性能待后续。",
+    "summary": "净化点保持15朝向1035帧Last Light人物与既有距离步态。DEC-219将用户选择的A正式接入余烬脊、晶化林床、破膜盆地，按冻结package.id覆盖三档及有效v3续玩；其余105世界保持原玩家。A原104帧字节不变，追加同源右臂与真实武器握持、挥击/触击停顿和受击闪白，保留20×20身体、实际装备、原战斗数值与已认可的侧身低光补偿。三场中档正式出发/冷续、真实按键三阶段挥击和受控伤害/死亡/资源清理通过；姿态美术仅有限关键帧短核，整体动态体验及50ms预算未据此结案。  2026-10-20用户已通过强同化返工（E278），并正式接入三开放世界与净化点（E279）。真实A与持久世界来源谱驱动全身材料及形体，晶纤/破膜可混合，疗愈同比消退；旧未知谱及无模板世界使用中性/当地材料和通用姿态，不伪造组织。完整站走/攻击分体/呼吸/收步/坐姿由实际动作时钟同步查询，单Worker后台建库、整库原子换形。首次准备先显示准确原姿态与同化材料，更新时沿用上一完整形体；A0即时恢复。真实三图、攻击、暂停/冷续、归返及Haven限定检查细项见正式QA。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -11,7 +11,7 @@
       "DEV：rift-r100-masters.html 使用原生Rift演员同场检查实体遮挡；不替换正式Rift角色资源。",
       "DEV：docs/art/previews/rift-player-models/index.html；三套实际模型的三视、原尺寸、行走和材质背景对照。",
       "DEV：r100-gym.html?playerModel=a；余烬脊92、晶化林床156、破膜盆地82，中污染实景试装。静态图册 docs/qa/artifacts/player-a-three-scenes-2026-10-16/index.html。",
-      "仅DEV：docs/art/previews/assimilation-appearance-study/；真实晶化/破膜/净化点，单源与混合材料连续动态、疗愈消退、原角色对照；内存会话，无正式接线。"
+      "正式三世界persistent-v1出击及Last Light净化点：实际同化材料/身体形态；跨源、冷续、归返与疗愈。独立DEV观察台仍作艺术对照。"
     ],
     "sources": [
       {
@@ -491,6 +491,54 @@
       {
         "path": "tools/qa/check-assimilation-body-motion.mjs",
         "role": "test"
+      },
+      {
+        "path": "src/art/assimilation-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/assimilation-state-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/assimilation-model/client.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/assimilation-model/protocol.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/assimilation-model/geometry.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/assimilation-model/worker.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-assimilation-sources.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-assimilation-renderers.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-assimilation-production-browser.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/assimilation-production-2026-10-20.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-assimilation-model-client.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-assimilation-state-presentation.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -523,15 +571,16 @@
       "COH-E262",
       "COH-E275",
       "COH-E276",
-      "COH-E277"
+      "COH-E277",
+      "COH-E278",
+      "COH-E279"
     ],
     "unknowns": [
       "本轮全身动作已有新图集、全身/接地/模型同源及实景连续片段证据；正式根页仅新开继续、A短键真实移动与松手站稳；D短按无位移不计验证，完整左右周期只归正式Renderer复现页。不能以数学通过代签自然度，3cd4372好多了的改善评价不升级成整体验收；六站/坐下UI/重入/Rift全链未扩验。",
       "人物阴影由每姿态11个胶囊近似，不等于完整人体三角网格光追；无WebGL2 fallback、Rift全量动作和长期体验仍未覆盖。",
       "R100-I02演员遮罩仅经限定接入/生命周期代码复核；未据此签九格遮挡、动作辨识或视觉通过，旧净化点人物证据不覆盖该DEV场景。",
       "A三图正式接入已完成。正式入场/冷续实际浏览器覆盖中污染三例；其余六档只核共同包身份门控。原Rift停步/死亡冻结语义保持，不增加净化点48帧收步或倒地动作。受控危害调用不等于自然怪物战斗；两张关键帧美术短核不代签全向动态体验。50ms预算及其他105世界角色升级未完成。",
-      "DEC-222后续需实现跨世界混合同化的皮肤/纹理/动作与归返后的主观画面，角色仍保留身份。当前只登记方向，来源累积/混合/疗愈淡化及装备兼容尚未设计或实现。",
-      "E275首件已被E276人审50/100要求返工。E277仅新DEV几何及覆盖/动态有限验证；用户复评、攻击/坐姿/语义UV/正式来源谱、CPU+GPU预算及长期性能尚待，不能视作正式第三阶段完成。"
+      "E278为获批样片的人审，E279为正式限定检查，不能代替自然全趟、所有朝向攻击或玩家最终体验。首次/疗愈换库存在后台形体准备延迟，材质即时；当前同页缓存不持久到磁盘。无WebGL2降级无同等形体，CPU/帧间隔不代GPU时间，低端设备及长期性能未验。未实现完整语义UV、未来新装备自动变形或第三种本土组织模板；余烬脊只有通用形变与当地材料。"
     ]
   },
   {
@@ -720,7 +769,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "Last Light A保留断裂回廊、单西坡、ground-throat-v2狭裂口、七处操作边及1035帧人物。2026-10-02正式外景在获批48b700c基线上深化：中景回折承重、远景两级断拱/壁墩，仅重烘far/middle及对应深度/光场，近景与平台像素、核心、灯源、人物、相机、站位和导航保持。巨影改用逐段世界体积与真实深度遮挡，外景活动时钟跨净化点重入续接。首页F及原近景认可保留；新外景IMPLEMENTED/production integrated、限定本地验证，审美待用户复看。 2026-10-20首件人审50/100，仅纹理获认可；E276记录整体返工。新DEV形体样片E277已实现真实前屈、头前探、肩差、实体晶脊/厚膜、全身覆盖及混合；三场45近景/3全景与连续实录完成有限验证。新几何A100覆盖81.80–89.65%，后台10Hz/16帧缓存。用户复评待定，未接正式流程；攻击/坐姿/正式来源谱、GPU与长期性能待后续。",
+    "summary": "Last Light A保留断裂回廊、单西坡、ground-throat-v2狭裂口、七处操作边及1035帧人物。2026-10-02正式外景在获批48b700c基线上深化：中景回折承重、远景两级断拱/壁墩，仅重烘far/middle及对应深度/光场，近景与平台像素、核心、灯源、人物、相机、站位和导航保持。巨影改用逐段世界体积与真实深度遮挡，外景活动时钟跨净化点重入续接。首页F及原近景认可保留；新外景IMPLEMENTED/production integrated、限定本地验证，审美待用户复看。  2026-10-20用户已通过强同化返工（E278），并正式接入三开放世界与净化点（E279）。真实A与持久世界来源谱驱动全身材料及形体，晶纤/破膜可混合，疗愈同比消退；旧未知谱及无模板世界使用中性/当地材料和通用姿态，不伪造组织。完整站走/攻击分体/呼吸/收步/坐姿由实际动作时钟同步查询，单Worker后台建库、整库原子换形。首次准备先显示准确原姿态与同化材料，更新时沿用上一完整形体；A0即时恢复。真实三图、攻击、暂停/冷续、归返及Haven限定检查细项见正式QA。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -733,7 +782,7 @@
       "DEV：docs/art/demos/opening-joint/index.html；保留原联合包与隔离记录作比较，获选包已推广到正式资源。",
       "DEV画法对照：docs/art/demos/opening-pixel-candidates/index.html；默认已选F静帧，保留原版及A–E历史图、统一局部与实景截帧。",
       "DEV对照：docs/art/demos/opening-joint/index.html复用正式F菜单与共用动效；?title=0及A–E历史静图，页内记录隔离。",
-      "仅DEV：docs/art/previews/assimilation-appearance-study/；真实晶化/破膜/净化点，单源与混合材料连续动态、疗愈消退、原角色对照；内存会话，无正式接线。"
+      "正式三世界persistent-v1出击及Last Light净化点：实际同化材料/身体形态；跨源、冷续、归返与疗愈。独立DEV观察台仍作艺术对照。"
     ],
     "sources": [
       {
@@ -1735,6 +1784,54 @@
       {
         "path": "tools/qa/check-assimilation-body-motion.mjs",
         "role": "test"
+      },
+      {
+        "path": "src/art/assimilation-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/assimilation-state-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/assimilation-model/client.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/assimilation-model/protocol.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/assimilation-model/geometry.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/assimilation-model/worker.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-assimilation-sources.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-assimilation-renderers.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-assimilation-production-browser.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/assimilation-production-2026-10-20.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-assimilation-model-client.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-assimilation-state-presentation.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -1827,7 +1924,9 @@
       "COH-E199",
       "COH-E275",
       "COH-E276",
-      "COH-E277"
+      "COH-E277",
+      "COH-E278",
+      "COH-E279"
     ],
     "unknowns": [
       "2026-10-02外景深化已正式接入并有限本地验证；48b700c的人类认可仅覆盖保留的首页F与原基线，不授予新远/中景、世界巨影和新节奏审美通过。原始联合样片只读，生产revision单列来源；受控相位、自动导航和派发blur分别按本轮QA判读，不扩成OS失焦、全业务、低端/跨设备或长时体验验收。",
@@ -1842,8 +1941,7 @@
       "此前联合样片资源已获48b700c用户认可并原样推广到正式目录；旧DEV证据本身仍不等于正式入口执行或全部业务验收。",
       "2026-10-01用户认可48b700c联合画面与动效并授权正式推广，巨影不再记人审待定。正式资源原样推广，运行与存档/生命周期证据按统一QA实际范围判断，不由旧DEV结果推定。首页图像域遮罩与实景真实深度管线保持；跨设备/Canvas动态、长期性能及完整搜撤交易未自动扩验。",
       "2026-10-10备行威胁背景方案已分审，优先复用现有远/中/近层及深度；具体三档构图/动势未制作，当前production仅指既有净化点，不指新方案已接入。",
-      "DEC-222后续需实现跨世界混合同化的皮肤/纹理/动作与归返后的主观画面，角色仍保留身份。当前只登记方向，来源累积/混合/疗愈淡化及装备兼容尚未设计或实现。",
-      "E275首件已被E276人审50/100要求返工。E277仅新DEV几何及覆盖/动态有限验证；用户复评、攻击/坐姿/语义UV/正式来源谱、CPU+GPU预算及长期性能尚待，不能视作正式第三阶段完成。"
+      "E278为获批样片的人审，E279为正式限定检查，不能代替自然全趟、所有朝向攻击或玩家最终体验。首次/疗愈换库存在后台形体准备延迟，材质即时；当前同页缓存不持久到磁盘。无WebGL2降级无同等形体，CPU/帧间隔不代GPU时间，低端设备及长期性能未验。未实现完整语义UV、未来新装备自动变形或第三种本土组织模板；余烬脊只有通用形变与当地材料。"
     ]
   }
 ]
