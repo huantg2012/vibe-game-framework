@@ -1,0 +1,297 @@
+{
+  "browser": "155.0.8059.85",
+  "scope": "Isolated art scenes; CPU submission and actual-render intervals, not GPU execution or overall release performance.",
+  "worlds": [
+    {
+      "world": "crystal-fibre",
+      "checks": [
+        "actual scene + renderer ready",
+        "actual movement with material active",
+        "actual held-tool attack smoke",
+        "live continuous material clock",
+        "pause freezes material time",
+        "zero browser storage writes"
+      ],
+      "images": [
+        "crystal-fibre-baseline.png",
+        "crystal-fibre-fibre.png",
+        "crystal-fibre-membrane.png",
+        "crystal-fibre-mixed.png",
+        "crystal-fibre-mixed-side.png"
+      ],
+      "performance": [
+        {
+          "amount": 0,
+          "count": 120,
+          "meanCpuMs": 0.18083333124717077,
+          "cpuP95Ms": 0.30000001192092896,
+          "frameMedianMs": 16.69999998807907,
+          "frameP95Ms": 22.30000001192093,
+          "maskBytes": 740271,
+          "preparedFrames": 208
+        },
+        {
+          "amount": 0.9,
+          "count": 121,
+          "meanCpuMs": 0.19834710645281578,
+          "cpuP95Ms": 0.30000001192092896,
+          "frameMedianMs": 16.69999998807907,
+          "frameP95Ms": 22.100000023841858,
+          "maskBytes": 740271,
+          "preparedFrames": 208
+        },
+        {
+          "amount": 0,
+          "count": 120,
+          "meanCpuMs": 0.18833333253860474,
+          "cpuP95Ms": 0.30000001192092896,
+          "frameMedianMs": 16.69999998807907,
+          "frameP95Ms": 22.30000001192093,
+          "maskBytes": 740271,
+          "preparedFrames": 208
+        },
+        {
+          "amount": 0.9,
+          "count": 120,
+          "meanCpuMs": 0.2133333330353101,
+          "cpuP95Ms": 0.30000001192092896,
+          "frameMedianMs": 16.69999998807907,
+          "frameP95Ms": 24.30000001192093,
+          "maskBytes": 740271,
+          "preparedFrames": 208
+        }
+      ],
+      "snapshot": {
+        "world": "crystal-fibre",
+        "state": {
+          "amount": 0.9,
+          "fibre": 0.5,
+          "membrane": 0.5,
+          "seconds": 15.549399999999922,
+          "motion": true,
+          "subjective": true
+        },
+        "target": {
+          "amount": 0.9,
+          "fibre": 0.5
+        },
+        "automatic": false,
+        "baseline": false,
+        "paused": false,
+        "ready": true,
+        "frameP50": 16.69999998807907,
+        "frameP95": 24.30000001192093,
+        "cpuP95": 0.30000001192092896,
+        "preparationMs": 5.700000047683716,
+        "metrics": {
+          "count": 916,
+          "totalMs": 183.89999866485596,
+          "lastMs": 0.09999996423721313,
+          "maxMs": 1,
+          "maskBytes": 740271,
+          "preparedFrames": 208,
+          "changedPixels": 133
+        },
+        "player": {
+          "x": 1132,
+          "y": 1347.4195740513708
+        }
+      },
+      "browserWrites": []
+    },
+    {
+      "world": "ruptured-film",
+      "checks": [
+        "actual scene + renderer ready",
+        "actual movement with material active",
+        "actual held-tool attack smoke",
+        "live continuous material clock",
+        "pause freezes material time",
+        "zero browser storage writes"
+      ],
+      "images": [
+        "ruptured-film-baseline.png",
+        "ruptured-film-fibre.png",
+        "ruptured-film-membrane.png",
+        "ruptured-film-mixed.png",
+        "ruptured-film-mixed-side.png"
+      ],
+      "performance": [
+        {
+          "amount": 0,
+          "count": 120,
+          "meanCpuMs": 0.2800000031789144,
+          "cpuP95Ms": 0.30000001192092896,
+          "frameMedianMs": 16.69999998807907,
+          "frameP95Ms": 22.30000001192093,
+          "maskBytes": 740271,
+          "preparedFrames": 208
+        },
+        {
+          "amount": 0.9,
+          "count": 121,
+          "meanCpuMs": 0.30165288960638126,
+          "cpuP95Ms": 0.3999999761581421,
+          "frameMedianMs": 16.69999998807907,
+          "frameP95Ms": 22.30000001192093,
+          "maskBytes": 740271,
+          "preparedFrames": 208
+        },
+        {
+          "amount": 0,
+          "count": 120,
+          "meanCpuMs": 0.26750000069538754,
+          "cpuP95Ms": 0.3999999761581421,
+          "frameMedianMs": 16.600000023841858,
+          "frameP95Ms": 22.30000001192093,
+          "maskBytes": 740271,
+          "preparedFrames": 208
+        },
+        {
+          "amount": 0.9,
+          "count": 120,
+          "meanCpuMs": 0.2966666688521703,
+          "cpuP95Ms": 0.40000003576278687,
+          "frameMedianMs": 16.69999998807907,
+          "frameP95Ms": 22.19999998807907,
+          "maskBytes": 740271,
+          "preparedFrames": 208
+        }
+      ],
+      "snapshot": {
+        "world": "ruptured-film",
+        "state": {
+          "amount": 0.9,
+          "fibre": 0.5,
+          "membrane": 0.5,
+          "seconds": 15.616099999999918,
+          "motion": true,
+          "subjective": true
+        },
+        "target": {
+          "amount": 0.9,
+          "fibre": 0.5
+        },
+        "automatic": false,
+        "baseline": false,
+        "paused": false,
+        "ready": true,
+        "frameP50": 16.69999998807907,
+        "frameP95": 22.19999998807907,
+        "cpuP95": 0.40000003576278687,
+        "preparationMs": 5.699999988079071,
+        "metrics": {
+          "count": 919,
+          "totalMs": 268.0000014305115,
+          "lastMs": 0.19999998807907104,
+          "maxMs": 1.4000000357627869,
+          "maskBytes": 740271,
+          "preparedFrames": 208,
+          "changedPixels": 133
+        },
+        "player": {
+          "x": 292,
+          "y": 1050.3133587577809
+        }
+      },
+      "browserWrites": []
+    },
+    {
+      "world": "haven",
+      "checks": [
+        "actual scene + renderer ready",
+        "actual movement with material active",
+        "live continuous material clock",
+        "pause freezes material time",
+        "zero browser storage writes"
+      ],
+      "images": [
+        "haven-baseline.png",
+        "haven-fibre.png",
+        "haven-membrane.png",
+        "haven-mixed.png",
+        "haven-mixed-side.png"
+      ],
+      "performance": [
+        {
+          "amount": 0,
+          "count": 120,
+          "meanCpuMs": 0.11416666656732559,
+          "cpuP95Ms": 0.20000004768371582,
+          "frameMedianMs": 16.600000023841858,
+          "frameP95Ms": 17.899999976158142,
+          "maskBytes": 0,
+          "preparedFrames": 0
+        },
+        {
+          "amount": 0.9,
+          "count": 120,
+          "meanCpuMs": 0.12583333601554234,
+          "cpuP95Ms": 0.20000004768371582,
+          "frameMedianMs": 16.600000023841858,
+          "frameP95Ms": 18.100000023841858,
+          "maskBytes": 0,
+          "preparedFrames": 0
+        },
+        {
+          "amount": 0,
+          "count": 121,
+          "meanCpuMs": 0.17768594893542203,
+          "cpuP95Ms": 0.40000003576278687,
+          "frameMedianMs": 16.69999998807907,
+          "frameP95Ms": 17.899999976158142,
+          "maskBytes": 0,
+          "preparedFrames": 0
+        },
+        {
+          "amount": 0.9,
+          "count": 120,
+          "meanCpuMs": 0.4291666686534882,
+          "cpuP95Ms": 0.5,
+          "frameMedianMs": 16.600000023841858,
+          "frameP95Ms": 18.399999976158142,
+          "maskBytes": 0,
+          "preparedFrames": 0
+        }
+      ],
+      "snapshot": {
+        "world": "haven",
+        "state": {
+          "amount": 0.9,
+          "fibre": 0.5,
+          "membrane": 0.5,
+          "seconds": 16.5593999999999,
+          "motion": true,
+          "subjective": true
+        },
+        "target": {
+          "amount": 0.9,
+          "fibre": 0.5
+        },
+        "automatic": false,
+        "baseline": false,
+        "paused": false,
+        "ready": true,
+        "frameP50": 16.599999964237213,
+        "frameP95": 18.600000023841858,
+        "cpuP95": 0.6000000238418579,
+        "preparationMs": 0.09999996423721313,
+        "metrics": {
+          "count": 984,
+          "totalMs": 304.19999998807907,
+          "lastMs": 0,
+          "maxMs": 107.80000001192093,
+          "maskBytes": 0,
+          "preparedFrames": 0,
+          "changedPixels": 0
+        },
+        "player": {
+          "x": 509.19353633304723,
+          "y": 364.03034783540875
+        }
+      },
+      "browserWrites": []
+    }
+  ],
+  "errors": []
+}
