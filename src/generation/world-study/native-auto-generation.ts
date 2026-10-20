@@ -10,6 +10,7 @@ import type {WorldProductionRecipeV3} from './production-recipe';
 import type {NativeAutoRuntimeInput} from './native-auto-types';
 import {certifyNativeAutoEmptyRadius} from './native-auto-empty-radius';
 import {qualifyNativeAutoSolidAreas} from './native-auto-solid-area';
+import {certifyNativeAutoVisibility} from './native-auto-visibility';
 
 export function createNativeAutoCandidate(recipe:WorldProductionRecipeV3,input:NativeAutoRuntimeInput,
   attempt:NativeSpatialAttemptTrace,checkpoint:()=>void):NativeSpatialGeometryCandidate {
@@ -40,7 +41,10 @@ export function createNativeAutoCandidate(recipe:WorldProductionRecipeV3,input:N
   checkpoint();
   // Evaluate G2 even when G1/G3 rejects, so one candidate reports the complete
   // contradiction. A rejected map is never sent to deployment.
-  const visibility=evaluateNativeSpatialVisibility(geometry,groups.structures,spatial.policy);
+  const coarseVisibility=evaluateNativeSpatialVisibility(geometry,groups.structures,spatial.policy);
+  const visibility=ground.accepted
+    ?certifyNativeAutoVisibility(geometry,groups.structures,spatial.policy,coarseVisibility,checkpoint)
+    :coarseVisibility;
   checkpoint();
   const boundary=measureNativeConstructionBoundary(layout.definition.terrainOutline!,p.maxCleanRunPx);
   const reasons=[...ground.reasons,...visibility.reasons,...(boundary.accepted?[]:['shore-long-clean-run'])];

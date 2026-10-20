@@ -20,19 +20,35 @@ export function nativeAutoSourceProjection(native:MasterDefinition,seed:number,s
   if(!Number.isFinite(width*height)||width<=0||height<=0)throw new Error('Automatic source has no projected support');
   return{instances,footprint,width,height,areaPx2:width*height};
 }
-/** Two fixed arithmetic corrections on the original complete model. This does
- * not inspect finished terrain or search layout/seed outcomes. The second
- * projection handles procedural dimensions that are not perfectly homothetic.
- * A residual excess rejects instead of silently violating the frozen budget. */
+/** Size the original complete model, never a completed map. Two arithmetic
+ * projections handle homothetic sources quickly. Fixed-height relief can make
+ * that estimate insufficient: a bounded interval solve retains only measured
+ * feasible scales, rather than assuming all source materials scale alike. */
 export function nativeAutoBudgetSource(native:MasterDefinition,seed:number,maxAreaPx2:number){
   if(!Number.isFinite(maxAreaPx2)||maxAreaPx2<=0)throw new Error('Invalid automatic source area budget');
+  // Bounds of the unchanged native volume compiler. Relief keeps its height
+  // and thickness, so blindly approaching zero is not a legal search domain.
+  const minimum=Math.min(1,Math.max(...native.instances.map(instance=>Math.max(
+    16/instance.length,12/instance.width,
+    instance.role==='solid'?2/instance.height:0,
+    instance.role==='solid'?1/instance.thickness:instance.thickness/(.45*Math.min(instance.length,instance.width)),
+  )))*(1+1e-8));
   let scale=1,projection=nativeAutoSourceProjection(native,seed,scale);
   for(let pass=0;pass<2&&projection.areaPx2>maxAreaPx2;pass++){
     // A 0.001% inward area reserve accommodates Float32 coordinates and the
     // compiler's fixed relief height without another correction/search pass.
-    scale*=Math.sqrt(maxAreaPx2*(1-1e-5)/projection.areaPx2);
+    scale=Math.max(minimum,scale*Math.sqrt(maxAreaPx2*(1-1e-5)/projection.areaPx2));
     projection=nativeAutoSourceProjection(native,seed,scale);
   }
-  if(projection.areaPx2>maxAreaPx2)throw new Error('Complete automatic source exceeds bounded area estimate');
+  if(projection.areaPx2>maxAreaPx2){
+    let upper=scale,lower=minimum;
+    let feasible=nativeAutoSourceProjection(native,seed,lower);
+    if(feasible.areaPx2>maxAreaPx2)throw new Error('Complete automatic source cannot fit its area budget');
+    for(let step=0;step<16;step++){
+      const middle=(lower+upper)/2,candidate=nativeAutoSourceProjection(native,seed,middle);
+      if(candidate.areaPx2<=maxAreaPx2){lower=middle;feasible=candidate;}else upper=middle;
+    }
+    scale=lower;projection=feasible;
+  }
   return{scale,...projection};
 }

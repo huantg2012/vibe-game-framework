@@ -10,9 +10,12 @@ import { hydrateR100MasterWorld } from '../../src/generation/world-study/r100-na
 import type { PollutionGrade } from '../../src/generation/world-study/pollution-grade';
 
 const [worldId, gradeArg, seedArg, output] = process.argv.slice(2);
+const single = process.argv[6] === '--single';
 if (!worldId) {
   let count = 0;
+  const failures: { worldId: string; grade: string; error: string }[] = [];
   for (const world of R100_NATIVE_WORLDS) for (const grade of ['low', 'medium', 'severe'] as const) {
+    try {
     const recipe = createR100AutomaticRecipe(world.id, 12345, grade);
     assert.equal(recipe.package.algorithmRevision, 14);
     assert(!recipe.nativeConstruction, 'Automatic recipe must not contain authored coordinates or seed banks');
@@ -21,22 +24,29 @@ if (!worldId) {
     (changed.nativeAuto!.policy as { targetWalkAreaPx2: number }).targetWalkAreaPx2 += 8;
     assert(!validR100ProductionRecipe(changed), 'Policy mutation must invalidate the frozen receipt');
     count++;
+    } catch (error) {
+      failures.push({worldId:world.id,grade,error:error instanceof Error?error.message:String(error)});
+    }
   }
-  console.log(JSON.stringify({ status: 'pass', count, scope: 'all catalog grade inputs and frozen package validation; not map admission' }));
+  if (failures.length) process.exitCode = 1;
+  console.log(JSON.stringify({ status: failures.length?'failed':'pass', count, failures, scope: 'all catalog grade inputs and frozen package validation; not map admission' }));
 } else {
   assert(['low', 'medium', 'severe'].includes(gradeArg!), 'Need a pollution grade');
   assert(output && !existsSync(output) && !existsSync(`${output}.gz`), 'Need a new report path; never overwrite evidence');
   const seed = Number(seedArg), started = performance.now();
-  const report: Record<string, unknown> = { worldId, grade: gradeArg, seed, scope: 'offline complete map and JSON recipe replay; no gameplay' };
+  const report: Record<string, unknown> = { worldId, grade: gradeArg, seed,
+    scope: single?'offline complete map admission; no replay or gameplay':'offline complete map and JSON recipe replay; no gameplay' };
   try {
     const recipe = createR100AutomaticRecipe(worldId, seed, gradeArg as PollutionGrade);
     assert(validR100ProductionRecipe(recipe));
     const map = createR100ProductionMap(recipe);
     assert(map.native);
     hydrateR100MasterWorld(map.native, map.layout);
-    const replay = createR100ProductionMap(JSON.parse(JSON.stringify(recipe)));
-    assert.equal(replay.metadata.signature, map.metadata.signature);
-    assert.deepEqual(replay.layout, map.layout);
+    if (!single) {
+      const replay = createR100ProductionMap(JSON.parse(JSON.stringify(recipe)));
+      assert.equal(replay.metadata.signature, map.metadata.signature);
+      assert.deepEqual(replay.layout, map.layout);
+    }
     report.status = 'pass';
     report.recipe = recipe;
     report.metadata = map.metadata;
