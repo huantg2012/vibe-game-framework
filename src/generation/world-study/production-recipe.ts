@@ -39,6 +39,9 @@ export interface WorldProductionRecipeV3 extends Omit<WorldProductionRecipeV1, '
   readonly nativeSpatial?: import('./native-spatial-types').NativeSpatialRuntimeInput;
   /** Revision 13 freezes the reviewed direct L/H/S authoring and seed rules. */
   readonly nativeConstruction?: import('./native-construction-recipe').NativeConstructionRuntimeInput;
+  /** Revision 14: shared, seed-driven construction; no authored world layout. */
+  readonly nativeAuto?: import('./native-auto-types').NativeAutoRuntimeInput;
+  readonly automaticSupplyPolicy?: import('./automatic-supply-policy').R100AutomaticSupplyPolicy;
   readonly surfacePixelBudget?: 8388608;
   readonly enemyMaterialVersion?: 1;
   readonly enemyMaterial?: import('@/entities/form-renderers/d/world-adaptation').EnemyWorldAdaptation;

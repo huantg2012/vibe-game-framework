@@ -40,7 +40,7 @@ export interface MasterDefinition {
 }
 export interface MasterWorld {
   /** New packages opt into current presentation; absence preserves frozen r4. */
-  readonly algorithmRevision?: 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
+  readonly algorithmRevision?: 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14;
   /** Explicit budget frozen with the larger directly constructed r13 worlds. */
   readonly surfacePixelBudget?: 8388608;
   readonly geometrySeed?: number;

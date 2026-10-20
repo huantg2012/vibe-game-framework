@@ -23,6 +23,7 @@ import { validR100ProductionRecipe } from './r100-package';
 import type { WorldProductionRecipeV3 } from './production-recipe';
 import type { WorldProductionMap } from './production-map';
 import {createNativeConstructionCandidate} from './native-construction-generation';
+import {createNativeAutoCandidate} from './native-auto-generation';
 
 export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldProductionMap {
   if (recipe.package?.algorithmRevision === 1 || recipe.package?.algorithmRevision === 2) return createFrozenR100ProductionMap(recipe);
@@ -36,6 +37,7 @@ export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldP
   if (recipe.package?.algorithmRevision === 10) return createRevision10Map(recipe);
   if (recipe.package?.algorithmRevision === 11) return createRevision11Map(recipe);
   if (!validR100ProductionRecipe(recipe)) throw new Error('Invalid or unavailable native world package');
+  if(recipe.package.algorithmRevision===14)return createAutomaticConstructionMap(recipe);
   if(recipe.package.algorithmRevision===13)return createDirectConstructionMap(recipe);
   const input=recipe.nativeSpatial!,rejected:{seed:number;reason:string}[]=[],attempts:NativeSpatialAttemptTrace[]=[];
   // Deadline only terminates a request. It never ranks/selects a different layout.
@@ -61,6 +63,39 @@ export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldP
     }finally{candidates.return(undefined);}
   }
   throw failure(`Native v3 world could not admit its complete ${recipe.nativeDefinition.grade} contents after 8 deterministic attempts`);
+}
+
+/** Small deterministic search over whole proposals; no reviewed seed bank,
+ * per-world rescue layout or repair of a finished raster. */
+function createAutomaticConstructionMap(recipe:WorldProductionRecipeV3):WorldProductionMap {
+  const started=performance.now(),attempts:NativeSpatialAttemptTrace[]=[],rejected:{seed:number;reason:string}[]=[];
+  const failure=(message:string)=>Object.assign(new Error(message),{diagnostics:{algorithm:'native-auto-construction-v1',attempts,rejected}});
+  for(let geometryAttempt=0;geometryAttempt<2;geometryAttempt++){
+    const geometrySeed=geometryAttempt===0?recipe.requestedSeed:mix32(recipe.requestedSeed,`native-auto-geometry-v1:${geometryAttempt}`);
+    const trace:NativeSpatialAttemptTrace={geometrySeed,proposalBudget:1,layoutProposals:0,geometryEvaluations:0,
+      fullCandidates:0,feedbackBases:[],candidates:[],deploymentRejections:[],stopReason:'searching'};
+    attempts.push(trace);
+    const checkpoint=()=>{if(performance.now()-started>=60000){trace.stopReason='deadline';throw failure('Automatic construction exceeded its 60 second deadline');}};
+    let candidate:NativeSpatialGeometryCandidate;
+    try{candidate=createNativeAutoCandidate(recipe,{...recipe.nativeAuto!,geometrySeed},trace,checkpoint);}
+    catch(error){
+      if(trace.stopReason==='deadline')throw error;
+      rejected.push({seed:geometrySeed,reason:error instanceof Error?error.message:String(error)});continue;
+    }
+    if(!candidate.trace.accepted){trace.stopReason='geometry-work-budget';rejected.push({seed:geometrySeed,reason:candidate.trace.reasons.join('; ')});continue;}
+    for(let contentAttempt=0;contentAttempt<4;contentAttempt++){
+      const current=contentAttempt===0?trace:{...trace,layoutProposals:0,geometryEvaluations:0,finalGeometryEvaluations:0,
+        fullCandidates:0,feedbackBases:[],candidates:[candidate.trace],deploymentRejections:[],stopReason:'searching' as const};
+      if(contentAttempt>0)attempts.push(current);
+      const attempt=attempts.length-1;
+      const attemptCheckpoint=()=>{if(performance.now()-started>=60000){current.stopReason='deadline';throw failure('Automatic construction exceeded its 60 second deadline');}};
+      const result=completeNativeSpatialCandidate(recipe,candidate,{attempt,trace:current,attempts,rejected,checkpoint:attemptCheckpoint,
+        contentSeed:contentAttempt===0?recipe.requestedSeed:mix32(recipe.requestedSeed,`native-auto-content-v1:${geometryAttempt}:${contentAttempt}`)});
+      if(result.accepted)return result.map;
+      current.stopReason='full-candidate-budget';
+    }
+  }
+  throw failure('Automatic construction rejected its bounded geometry/content proposals');
 }
 
 function createDirectConstructionMap(recipe:WorldProductionRecipeV3):WorldProductionMap {
@@ -103,7 +138,7 @@ export interface NativeSpatialCompleteCandidateContext {
   readonly attempts:NativeSpatialAttemptTrace[];
   readonly rejected:{seed:number;reason:string}[];
   readonly checkpoint:()=>void;
-  /** Explicit content seed is revision-13 only; geometry remains unchanged. */
+  /** Explicit content seed for r13/r14; geometry remains unchanged. */
   readonly contentSeed?:number;
   readonly contentSeedSource?:'certified'|'certification';
 }
@@ -140,11 +175,11 @@ export function nativeSpatialReplayAttempts(attempts:readonly NativeSpatialAttem
 export function completeNativeSpatialCandidate(recipe:WorldProductionRecipeV3,candidate:NativeSpatialGeometryCandidate,
   context:NativeSpatialCompleteCandidateContext):NativeSpatialCompleteCandidateResult {
   const input=recipe.nativeSpatial,{attempt,trace,attempts,rejected,checkpoint}=context;
-  if((recipe.package.algorithmRevision!==12&&recipe.package.algorithmRevision!==13)||!input)throw new Error('Complete native candidate requires a revision-12 or revision-13 recipe');
+  if((recipe.package.algorithmRevision!==12&&recipe.package.algorithmRevision!==13&&recipe.package.algorithmRevision!==14)||!input)throw new Error('Complete native candidate requires a revision-12, revision-13 or revision-14 recipe');
   if(!candidate.trace.accepted||!candidate.trace.gates.geometry?.accepted||!candidate.trace.gates.visibility?.accepted)
     throw new Error('Complete native candidate requires measured G1/G2/G3 admission');
-  if(context.contentSeed!==undefined&&(recipe.package.algorithmRevision!==13||!Number.isSafeInteger(context.contentSeed)||context.contentSeed<0||context.contentSeed>0xffffffff))throw new Error('Invalid explicit construction content seed');
-  const geometrySeed=trace.geometrySeed,seed=recipe.package.algorithmRevision===13
+  if(context.contentSeed!==undefined&&(![13,14].includes(recipe.package.algorithmRevision)||!Number.isSafeInteger(context.contentSeed)||context.contentSeed<0||context.contentSeed>0xffffffff))throw new Error('Invalid explicit construction content seed');
+  const geometrySeed=trace.geometrySeed,seed=recipe.package.algorithmRevision>=13
     ?context.contentSeed??(attempt===0?recipe.requestedSeed:mix32(recipe.requestedSeed,`r100-direct-content-v1-${attempt}`))
     :geometrySeed,selected=candidate.layout.candidate;
   if(candidate.trace.geometrySeed!==geometrySeed||candidate.trace.candidate!==selected||attempts[attempt]!==trace)
@@ -160,7 +195,7 @@ export function completeNativeSpatialCandidate(recipe:WorldProductionRecipeV3,ca
     const point=candidate.geometry.terrain.spawnPoint;
     const definition={...candidate.layout.definition,spawn_x:point.x,spawn_y:point.y,exit_x:extraction.point.x,exit_y:extraction.point.y};
     const master=createMasterWorld(definition,seed,{grade:recipe.gradeDefinition,profile:recipe.profile,spatialDeployment:input.deployment,
-      ...(recipe.package.algorithmRevision===13?{surfacePixelBudget:recipe.surfacePixelBudget!,geometrySeed}:{}),
+      ...(recipe.package.algorithmRevision>=13?{surfacePixelBudget:recipe.surfacePixelBudget!,geometrySeed}:{}),
       ...(recipe.enemyDeployment?{enemyDeployment:recipe.enemyDeployment}:{})});
     if(master.layout.spawnPoint.x!==point.x||master.layout.spawnPoint.y!==point.y||master.layout.extractionPoint.position.x!==extraction.point.x||master.layout.extractionPoint.position.y!==extraction.point.y)
       throw new Error('Native final deployment moved a measured spawn/extraction endpoint');
@@ -169,7 +204,7 @@ export function completeNativeSpatialCandidate(recipe:WorldProductionRecipeV3,ca
       throw new Error('Native full raster changed its admitted physical geometry');
     checkpoint();
     stageDiagnostics.master=master.diagnostics;stage='deployment';
-    const deployed=deployR100Expedition(master,recipe.contentDefinition,recipe.searchSitePolicy),layout=deployed.layout;
+    const deployed=deployR100Expedition(master,recipe.contentDefinition,recipe.searchSitePolicy,recipe.automaticSupplyPolicy),layout=deployed.layout;
     checkpoint();
     stageDiagnostics.deployment=deployed.diagnostics;stage='routes';
     const routes=evaluateNativeSpatialRoutes(candidate.geometry,candidate.groups.structures,input.policy,layout);
@@ -183,6 +218,7 @@ export function completeNativeSpatialCandidate(recipe:WorldProductionRecipeV3,ca
     const diagnostics={...master.diagnostics,qualification:'v3-production-candidate',expedition:deployed.diagnostics,
       nativeSpatial:{algorithm:input.policy.algorithm,version:input.policy.version,sourceHash:input.policy.sourceHash,selectedCandidate:selected,
         ...(recipe.nativeConstruction?{construction:{algorithm:recipe.nativeConstruction.algorithm,version:recipe.nativeConstruction.version,sourceHash:recipe.nativeConstruction.sourceHash,geometrySeed,seedMode:recipe.nativeConstruction.seedMode,contentAttempt:attempt,contentSeed:seed,contentSeedSource:context.contentSeedSource??'requested'}}:{}),
+        ...(recipe.nativeAuto?{automaticConstruction:{algorithm:recipe.nativeAuto.algorithm,version:recipe.nativeAuto.version,sourceHash:recipe.nativeAuto.policy.sourceHash,geometrySeed,contentSeed:seed}}:{}),
         attempts:nativeSpatialReplayAttempts(attempts),fragmentShape:candidate.layout.fragmentShape,assemblies:candidate.layout.assemblies,holes:candidate.layout.holes,bays:candidate.layout.bays,positiveLandRects:candidate.layout.plan.land,landJoins:candidate.layout.landJoins,gates:{...candidate.trace.gates,routes},extraction,extractionCandidateField:summary}};
     const native=serializeR100MasterWorld({...master,algorithmRevision:recipe.package.algorithmRevision,searchSites:deployed.searchSites,appearance:recipe.appearance,layout,diagnostics},recipe.gradeDefinition,recipe.package.dependencyHash);
     return{accepted:true,map:{sample:master.sample,layout,hostTileMap:master.hostTileMap,native,

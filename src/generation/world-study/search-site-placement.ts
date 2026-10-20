@@ -100,7 +100,7 @@ export function validateSearchSites(world: MasterWorld): void {
   if(world.algorithmRevision===9){validateRevision9SearchSites(world);return;}
   if(world.algorithmRevision===10){validateRevision10SearchSites(world);return;}
   if(world.algorithmRevision===11){validateRevision11SearchSites(world);return;}
-  if(world.algorithmRevision!==12&&world.algorithmRevision!==13){if(world.searchSites!==undefined)throw new Error('Historical world cannot acquire grounded search sites');return;}
+  if(world.algorithmRevision!==12&&world.algorithmRevision!==13&&world.algorithmRevision!==14){if(world.searchSites!==undefined)throw new Error('Historical world cannot acquire grounded search sites');return;}
   const nodes=[...world.layout.kindlingNodes,...world.layout.contaminantNodes],sites=world.searchSites;
   if(!sites||sites.length!==nodes.length)throw new Error('Grounded search sites must cover every admitted node');
   const ids=new Set<string>(),instances=new Map(world.meshes.map(mesh=>[mesh.spec.id,mesh]));
