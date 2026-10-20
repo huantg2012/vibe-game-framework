@@ -8,6 +8,7 @@ import {measureNativeConstructionBoundary} from './native-spatial-construction-s
 import {nativeSpatialGeometryFingerprint,type NativeSpatialAttemptTrace,type NativeSpatialGeometryCandidate} from './native-spatial-generation';
 import type {WorldProductionRecipeV3} from './production-recipe';
 import type {NativeAutoRuntimeInput} from './native-auto-types';
+import {certifyNativeAutoEmptyRadius} from './native-auto-empty-radius';
 
 export function createNativeAutoCandidate(recipe:WorldProductionRecipeV3,input:NativeAutoRuntimeInput,
   attempt:NativeSpatialAttemptTrace,checkpoint:()=>void):NativeSpatialGeometryCandidate {
@@ -23,9 +24,15 @@ export function createNativeAutoCandidate(recipe:WorldProductionRecipeV3,input:N
   const geometry=buildNativeSpatialGeometry(layout.definition,input.geometrySeed);
   checkpoint();
   const groups=identifyNativeSpatialStructures(geometry,layout.assemblies,spatial.policy);
-  const ground=evaluateNativeSpatialGeometry(geometry,groups,spatial.policy,spatial.world,
+  const measuredGround=evaluateNativeSpatialGeometry(geometry,groups,spatial.policy,spatial.world,
     {placements:layout.holes,profiles:spatial.holeProfiles},
     {landRects:layout.plan.land,placements:layout.bays,landJoins:layout.landJoins,profiles:spatial.bayProfiles,allowedCounts:spatial.world.bayCountOptions,minWideJoinPx:spatial.world.landRectMinOverlapPx});
+  const emptyRadius=measuredGround.reasons.includes('G1-largest-empty-radius')?
+    certifyNativeAutoEmptyRadius(geometry,spatial.policy.maxEmptyRadiusPx,checkpoint):undefined;
+  const groundReasons=emptyRadius?.accepted?measuredGround.reasons.filter(reason=>reason!=='G1-largest-empty-radius'):measuredGround.reasons;
+  const ground={...measuredGround,accepted:groundReasons.length===0,reasons:groundReasons,
+    metrics:{...measuredGround.metrics,...(emptyRadius?{emptyRadiusCertificate:emptyRadius}:{}),
+      wideQualityTargetRatio:p.targetWidePercent/100,wideQualityTargetMet:Number(measuredGround.metrics.wideRatio)>=p.targetWidePercent/100}};
   checkpoint();
   // Evaluate G2 even when G1/G3 rejects, so one candidate reports the complete
   // contradiction. A rejected map is never sent to deployment.

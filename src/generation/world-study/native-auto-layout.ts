@@ -185,7 +185,8 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   const measuredObjects=objects.map((object,index)=>object.kind==='hole'&&compiled?
     {...object,coverageRects:compiled.holeRects[holeObjects.findIndex(hole=>hole.index===index)]}:object);
   phases.push(refineNativeAutoPlan(measuredObjects,sites,domains.map(domain=>domain.map(candidate=>candidate.index)),chosen,
-    [...land,...shore.additions],sourceTree,spatial.policy,{...p,refinementPasses:1,maxRefinementEvaluations:Math.floor(p.maxRefinementEvaluations/p.refinementPasses)},checkpoint,shore.cuts,finalPhase?8:16,compiled?.ground));
+    [...land,...shore.additions],sourceTree,{...spatial.policy,minWideRatio:p.targetWidePercent/100},
+    {...p,refinementPasses:1,maxRefinementEvaluations:Math.floor(p.maxRefinementEvaluations/p.refinementPasses)},checkpoint,shore.cuts,finalPhase?8:16,compiled?.ground));
   }
   const refinement:NativeAutoRefinementTrace={
     evaluations:phases.reduce((sum,phase)=>sum+phase.evaluations,0),acceptedMoves:phases.reduce((sum,phase)=>sum+phase.acceptedMoves,0),

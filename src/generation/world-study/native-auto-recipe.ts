@@ -80,7 +80,7 @@ export function createNativeAutoRuntimeInput(native:MasterDefinition,grade:Pollu
   const input:NativeAutoRuntimeInput={algorithm:'native-auto-construction-v1',version:1,worldId:native.profile,grade,geometrySeed:seed,
     sourceFingerprint:nativeAutoSourceFingerprint(native),policy,intent:{coreWidthPx:coreWidth,coreHeightPx:coreHeight,estimatedBlockedAreaPx2,estimatedBoundaryLossPx2,estimatedGrossAreaPx2},
     nativeSpatial:{
-      policy:{...NATIVE_SPATIAL_POLICY,maxGeometryEvaluations:1,maxFullCandidates:1},
+      policy:{...NATIVE_SPATIAL_POLICY,minWideRatio:policy.minWidePercent/100,maxGeometryEvaluations:1,maxFullCandidates:1},
       world:{worldId:native.profile,enabled:true,annotationStatus:'reviewed',targetWalkAreaPx2:policy.targetWalkAreaPx2,
         frameWidthPx,frameHeightPx,materialAxisRad:native.axis,landGrammar:'offset-overlap-v1',
         landRectMinCount:3,landRectMaxCount:3,landRectMinSpanPx:64,landRectMaxSpanPx:3072,
@@ -114,18 +114,20 @@ export function validNativeAutoRuntimeInput(value:unknown,native:MasterDefinitio
     ||input.grade!==native.grade||!Number.isSafeInteger(input.geometrySeed)||input.geometrySeed<0||input.geometrySeed>0xffffffff
     ||input.sourceFingerprint!==nativeAutoSourceFingerprint(native)||!p||p.grade!==input.grade||!/^[0-9a-f]{64}$/.test(p.sourceHash))return false;
   const numbers=['targetWalkAreaPx2','coreWidthPx','coreHeightPx','armWidthPx','armHeightPx','armOverlapPx','armOffsetPx','siteSpacingPx',
-    'siteJitterPx','edgeClearancePx','objectClearancePx','sourcePaddingPx','maxSiteEvaluations','maxPlacementStates','placementBranchLimit','refinementPasses','maxRefinementEvaluations','shoreSegmentMinPx','shoreSegmentMaxPx',
+    'siteJitterPx','edgeClearancePx','objectClearancePx','sourcePaddingPx','maxSiteEvaluations','maxPlacementStates','placementBranchLimit','refinementPasses','maxRefinementEvaluations','minWidePercent','targetWidePercent','shoreSegmentMinPx','shoreSegmentMaxPx',
     'shoreDepthMinPx','shoreDepthMaxPx','shoreProtectedGapPx','maxCleanRunPx'] as const;
   if(Object.keys(p).length!==numbers.length+2||numbers.some(key=>!Number.isSafeInteger(p[key])||p[key]<=0||p[key]>8388608)
     ||p.maxSiteEvaluations>2048||p.maxPlacementStates>2048||p.placementBranchLimit>8||p.refinementPasses>3||p.maxRefinementEvaluations>8192||p.armOverlapPx>=p.armWidthPx||p.siteJitterPx>=p.siteSpacingPx/4
     ||p.coreWidthPx>3072||p.coreHeightPx>2304||p.armWidthPx>3072||p.armHeightPx>2304
     ||p.shoreSegmentMinPx>p.shoreSegmentMaxPx||p.shoreDepthMinPx>p.shoreDepthMaxPx
+    ||p.minWidePercent<50||p.minWidePercent>p.targetWidePercent||p.targetWidePercent>100
     ||numbers.some(key=>key.endsWith('Px')&&p[key]%8!==0))return false;
   const intent=input.intent;
   if(!intent||Object.keys(intent).sort().join(',')!==['coreWidthPx','coreHeightPx','estimatedBlockedAreaPx2','estimatedBoundaryLossPx2','estimatedGrossAreaPx2'].sort().join(',')
     ||Object.values(intent).some(n=>!Number.isFinite(n)||n<=0||n>8388608)||intent.coreWidthPx%16||intent.coreHeightPx%16
     ||intent.coreWidthPx<p.coreWidthPx||intent.coreHeightPx<p.coreHeightPx)return false;
   if(!validNativeSpatialRuntimeInput(input.nativeSpatial,native,worldId,8388608))return false;
+  if(input.nativeSpatial.policy.minWideRatio!==p.minWidePercent/100)return false;
   const assemblies=input.nativeSpatial.assemblies;
   if(assemblies.length!==1||assemblies[0]!.id!=='source-whole')return false;
   const assembly=assemblies[0]!;

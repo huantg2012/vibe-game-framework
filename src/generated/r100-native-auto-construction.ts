@@ -20,13 +20,15 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "placementBranchLimit": 8,
     "refinementPasses": 3,
     "maxRefinementEvaluations": 8192,
+    "minWidePercent": 50,
+    "targetWidePercent": 55,
     "shoreSegmentMinPx": 80,
     "shoreSegmentMaxPx": 160,
     "shoreDepthMinPx": 32,
     "shoreDepthMaxPx": 64,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "ba6b6dabba027f94a6c97b4c229b403b63386123e3ff48db28d8253ed07ae7fc"
+    "sourceHash": "ad470214f335b8152dbe8acab36ca85dc0cd0e7ccd02d18593527f2afe6d42c2"
   },
   {
     "grade": "medium",
@@ -47,13 +49,15 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "placementBranchLimit": 8,
     "refinementPasses": 3,
     "maxRefinementEvaluations": 8192,
+    "minWidePercent": 50,
+    "targetWidePercent": 55,
     "shoreSegmentMinPx": 80,
     "shoreSegmentMaxPx": 160,
     "shoreDepthMinPx": 32,
     "shoreDepthMaxPx": 80,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "ba6b6dabba027f94a6c97b4c229b403b63386123e3ff48db28d8253ed07ae7fc"
+    "sourceHash": "ad470214f335b8152dbe8acab36ca85dc0cd0e7ccd02d18593527f2afe6d42c2"
   },
   {
     "grade": "severe",
@@ -74,12 +78,14 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "placementBranchLimit": 8,
     "refinementPasses": 3,
     "maxRefinementEvaluations": 8192,
+    "minWidePercent": 50,
+    "targetWidePercent": 55,
     "shoreSegmentMinPx": 80,
     "shoreSegmentMaxPx": 160,
     "shoreDepthMinPx": 32,
     "shoreDepthMaxPx": 96,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "ba6b6dabba027f94a6c97b4c229b403b63386123e3ff48db28d8253ed07ae7fc"
+    "sourceHash": "ad470214f335b8152dbe8acab36ca85dc0cd0e7ccd02d18593527f2afe6d42c2"
   }
 ];
