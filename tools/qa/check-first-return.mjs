@@ -6,6 +6,7 @@
  *
  * GAME_URL=http://127.0.0.1:3021 PLAYWRIGHT_MODULE=/path/to/playwright/index.mjs
  * CHROME_PATH=/path/to/chrome node tools/qa/check-first-return.mjs
+ * QA_CASE=extraction-key runs only the real search/E-extraction entry case.
  */
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -128,6 +129,7 @@ async function settleFixture(page, { outcome = 'extract', loot = 0, offering = f
 }
 
 async function check(name, run, options) {
+  if (process.env.QA_CASE && options?.id !== process.env.QA_CASE) return;
   const f = await fixture(options);
   try { await run(f.page); results.push(name); console.log(`PASS ${name}`); }
   finally { await f.context.close(); }
@@ -336,9 +338,93 @@ try {
       assert.equal((await read(page)).input, true);
     }
   }, { formalEntry: true });
+
+  await check('real E extraction: searched loot, first-return report and settlement publish once', async page => {
+    const before = await read(page);
+    await page.evaluate(() => window.__game.scene.getScene('PurificationScene').enterRift());
+    await page.locator('[data-departure-grade="low"]').click();
+    await page.locator('[data-prepare-action="next"]').click();
+    await page.locator('[data-prepare-action="depart"]').click();
+    await page.waitForFunction(() => {
+      const scene = window.__game?.scene.getScene('RiftScene');
+      return scene?.scene.isActive() && scene.nativeWorldPresentation
+        && !scene.stagedEntry?.isActive() && !scene.nativeEntryFence?.isActive() && !scene.entryView?.active;
+    }, null, { timeout: 90000 });
+    const searchTarget = await page.evaluate(async () => {
+      const load = pathname => import(performance.getEntriesByType('resource').reverse()
+        .find(entry => new URL(entry.name).pathname === pathname)?.name ?? pathname);
+      const [{ eventBus }, { GameEvent }] = await Promise.all([load('/src/core/event-bus.ts'), load('/src/types/events.ts')]);
+      const q = window.__firstReturnCheck;
+      q.exitReached = 0; q.exited = [];
+      eventBus.on(GameEvent.RIFT_EXIT_REACHED, () => q.exitReached++);
+      eventBus.on(GameEvent.RIFT_EXITED, payload => q.exited.push(structuredClone(payload)));
+      const scene = window.__game.scene.getScene('RiftScene');
+      const node = scene.search.getNodesProbe().find(node => node.kind === 'kindling'
+        && node.id.includes('safe') && !node.collected);
+      if (!node) throw new Error('No uncollected safe kindling pile in the generated world');
+      q.searchNodeId = node.id;
+      // Positioning is controlled test preparation. Search, collection, extraction
+      // admission, ending and the return transition all retain production logic.
+      scene.probePlacePlayer(node.x, node.y);
+      return node;
+    });
+    await page.waitForFunction(() => window.__game.scene.getScene('RiftScene').search.getPrompt() === 'search');
+    await page.keyboard.down('e');
+    await page.waitForFunction(() => {
+      const q = window.__firstReturnCheck, scene = window.__game.scene.getScene('RiftScene');
+      return scene.search.getNodesProbe().find(node => node.id === q.searchNodeId)?.collected;
+    }, null, { timeout: 15000 });
+    await page.keyboard.up('e');
+    const extraction = await page.evaluate(() => {
+      const scene = window.__game.scene.getScene('RiftScene');
+      const q = window.__firstReturnCheck;
+      const position = structuredClone(scene.extraction.extractionPoint.position);
+      const kindling = scene.search.getCarriedKindling();
+      scene.probePlacePlayer(position.x, position.y);
+      return { position, kindling, runId: q.inventoryStore.getRun().id };
+    });
+    assert(extraction.kindling > 0, 'real E search must produce carried kindling');
+    await page.waitForFunction(() => {
+      const scene = window.__game.scene.getScene('RiftScene');
+      return scene.search.getPrompt() === 'extract' && scene.extraction.canExtract();
+    });
+    await page.keyboard.press('e');
+    await page.locator('#rift-result-continue').waitFor();
+    assert.equal(await page.evaluate(() => window.__firstReturnCheck.exitReached), 1);
+    await page.locator('#rift-result-continue').click();
+    await page.locator('#impact-result-panel').waitFor();
+    const after = await read(page);
+    assert(after.panel); assert(!after.input); assert.equal(after.cycle, 1);
+    assert.equal(after.shows, 1); assert.equal(after.impacts, 1);
+    assert.deepEqual(after.modules, before.modules);
+    assert.equal(after.reserve, before.reserve + extraction.kindling);
+    assert.equal(after.inventory.run.id, extraction.runId);
+    assert.equal(after.inventory.run.outcome, 'extract');
+    assert.equal(after.inventory.run.baseSettled, true);
+    assert.match(after.text, /首次归来，本次免受冲击/);
+    const exitEvents = await page.evaluate(() => window.__firstReturnCheck.exited);
+    assert.deepEqual(exitEvents, [{ kindlingGained: extraction.kindling, survived: true }]);
+    formalReturns.push({ method: 'Real E search and E extraction; controlled placement at generated pile/exit only.',
+      searchTarget, extraction, exitEvents, modulesBefore: before.modules, modulesAfter: after.modules,
+      reserveBefore: before.reserve, reserveAfter: after.reserve,
+      reportShows: after.shows, settlements: after.impacts, baseSettled: after.inventory.run.baseSettled });
+    await page.locator('#impact-result-panel').evaluate(element =>
+      Promise.all(element.getAnimations().map(animation => animation.finished)));
+    await page.screenshot({ path: path.join(out, 'real-extraction-return.png'), timeout: 60000 });
+    await page.locator('#impact-close-btn').click();
+    await page.waitForTimeout(350);
+    const closed = await read(page);
+    assert(!closed.panel); assert(closed.input);
+    assert.equal(closed.shows, 1); assert.equal(closed.impacts, 1);
+    assert.equal(closed.reserve, after.reserve);
+    assert.deepEqual(closed.inventory, after.inventory);
+  }, { formalEntry: true, id: 'extraction-key' });
   assert.deepEqual(errors, []);
 } finally {
-  await writeFile(path.join(out, 'results.json'), JSON.stringify({ method: 'Fresh isolated browser contexts. Base settlement fixtures plus two formal low-grade departures with controlled extraction/abandon endings; real R/held-Enter result return, pending-frame shutdown, settlement and save retry. No natural traversal or visual acceptance claimed.', results, formalReturns, errors }, null, 2));
+  await writeFile(path.join(out, 'results.json'), JSON.stringify({ method: process.env.QA_CASE === 'extraction-key'
+    ? 'Fresh isolated new game and low-grade departure. Controlled player placement at a generated kindling pile and exit; real E search, E extraction, result-button return and first settlement. No direct endRun, inventory grant or traversal claim.'
+    : 'Fresh isolated browser contexts. Base settlement fixtures plus formal low-grade departures with controlled endings/placement; real result-return inputs, pending-frame shutdown, settlement and save retry. No natural traversal or visual acceptance claimed.',
+    results, formalReturns, errors }, null, 2));
   await browser.close();
 }
 console.log(`First-return regression: ${results.length} passed; evidence ${out}`);
