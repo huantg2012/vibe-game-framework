@@ -41,6 +41,11 @@ export function createLightEaterSample(): LightEaterSample {
 export function lightEaterLampRadius(pollution: number): number {
   return LIGHT_EATER_CLEAR_RADIUS - 100 * smooth(pollution / 100);
 }
+/** DEV surface-light response. The lamp itself can remain visibly lit while
+ * polluted surfaces receive less light. Kept separate from its finite extent. */
+export function lightEaterReceivedLight(pollution: number): number {
+  return 1 - 0.32 * smooth(pollution / 100);
+}
 export function lightEaterExtent(pollution: number, assimilation: number): number {
   const warm = lightEaterLampRadius(pollution);
   return warm + (LIGHT_EATER_CLEAR_RADIUS - warm) * smooth(assimilation / 100);
@@ -49,7 +54,9 @@ export function lightEaterExtent(pollution: number, assimilation: number): numbe
 /** One continuous field for DEV queries and the 2px mask. LOS remains external. */
 export function sampleLightEater(out: LightEaterSample, x: number, y: number, state: Readonly<LightEaterState>): LightEaterSample {
   const p = clamp01(state.pollution / 100), a = smooth(state.assimilation / 100);
-  const seconds = Math.floor(state.elapsedMs / LIGHT_EATER_FRAME_MS) * LIGHT_EATER_FRAME_MS / 1000;
+  // Rendering may sample this field at 20 Hz; the optical function itself has
+  // no time steps, including when a continuously changing P/A value is sampled.
+  const seconds = state.elapsedMs / 1000;
   const distance = Math.hypot(x - state.lampX, y - state.lampY);
   const bodyDistance = Math.hypot(x - state.bodyX, y - state.bodyY);
   const protectedBody = smooth((bodyDistance - 22) / 36);
@@ -63,28 +70,34 @@ export function sampleLightEater(out: LightEaterSample, x: number, y: number, st
   const fragment = smooth((detail - 0.36) / 0.39) * (1 - smooth((broad - 0.8) / 0.18));
   const pressure = 0.08 + p * 0.92;
   const lampRadius = lightEaterLampRadius(state.pollution);
-  // Native material lighting already attenuates the lamp. Preserve its readable
-  // middle field; the visibility mask mainly owns the consuming front.
+  // Native material lighting owns distance falloff. Pollution adds optical
+  // thickness everywhere, including underfoot; it never protects a bright disc.
+  // The same spatial field remains present from P=0 to P=100. Only its absorption
+  // strength increases, so local details darken/reappear as broad layers drift.
+  const opticalDepth = (0.012 + p * 0.7) * (0.5 + density * 0.42 + detail * 0.08);
+  const surfaceTransmission = Math.exp(-opticalDepth);
   const clean = 1 - smooth((distance - lampRadius * 0.66) / (lampRadius * 0.34));
   const eatenRadius = lampRadius - (8 + p * 38) * density;
   const bitten = 1 - smooth((distance - eatenRadius * 0.64) / (eatenRadius * 0.36));
   const inward = smooth((distance - 32) / Math.max(30, lampRadius * 0.55));
-  const consumption = pressure * density * inward * protectedBody;
-  out.warm = bitten * (1 - consumption * 0.64);
-  if (bodyDistance < 22) out.warm = Math.max(out.warm, 1 - smooth(bodyDistance / 32) * 0.09);
+  const consumption = pressure * density * inward;
+  out.warm = bitten * (1 - consumption * 0.64) * surfaceTransmission;
   const coldRadius = lightEaterExtent(state.pollution, state.assimilation);
   const coldFalloff = 1 - smooth((distance - coldRadius * 0.62) / (coldRadius * 0.38));
   const beyondLamp = smooth((distance - lampRadius * 0.56) / 42);
   // Restore actual material detail, rather than drawing a bright fog in its
   // place. The native surface is already dim outside the shrunken warm lamp.
-  out.cold = a * 0.58 * coldFalloff * beyondLamp * (0.72 + density * 0.28);
+  // A restores recognition, not a clean-light exemption. Preserve enough actual
+  // material to read the outer region, but it shares the moving absorption.
+  out.cold = a * 0.58 * coldFalloff * beyondLamp * (0.72 + density * 0.28) * Math.sqrt(surfaceTransmission);
   // The cold signal can recover detail only within its own finite envelope.
   if (distance >= coldRadius) out.cold = 0;
   if (distance >= lampRadius) out.warm = 0;
   out.transmission = Math.max(out.warm, out.cold);
-  if (out.transmission < 1 / 255) out.transmission = 0;
   // Reaction belongs to missing light, not the circular support boundary.
-  out.reaction = Math.max(0, clean - out.warm) * (0.18 + fragment * 0.82) * pressure * protectedBody * smooth(out.warm / 0.24);
+  // A rational fade keeps its response gradual as progressively dimmer light
+  // disappears; a short smoothstep here made the green response fall too fast.
+  out.reaction = Math.max(0, clean - out.warm) * (0.18 + fragment * 0.82) * pressure * protectedBody * out.warm / (out.warm + 0.24);
   // A very dark full-frame afterimage contains no terrain or object information.
   out.residue = pressure * smooth((broad - 0.6) / 0.28) * smooth((detail - 0.38) / 0.4) * protectedBody;
   return out;

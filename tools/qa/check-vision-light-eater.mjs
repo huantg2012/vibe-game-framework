@@ -29,6 +29,67 @@ check('A does not recover warm light', api.sampleLightEater(sample, 250, 160, st
 const adaptedOuter = api.sampleLightEater(sample, 330, 160, state);
 check('A recovers a separate dim cold signal', ordinaryOuter === 0 && adaptedOuter.warm === 0 && adaptedOuter.cold > 0.25 && adaptedOuter.cold < 0.58);
 check('reaction vanishes when no warm light remains', adaptedOuter.reaction === 0);
+
+// Sweep every integer P and multiple world-space phases. A preset-only check
+// would miss discontinuities between the screenshots used for art review.
+const sweepSample = api.createLightEaterSample(), previousSample = api.createLightEaterSample();
+const fields = ['warm', 'cold', 'transmission', 'reaction', 'residue'];
+let maximumPollutionStep = 0, maximumTimeStep = 0, minimumSaturatedNear = 1, maximumSaturatedNear = 0;
+for (const anchor of [[160, 160], [730, 415], [-250, 330]]) {
+  const sweepState = { ...state, lampX: anchor[0], lampY: anchor[1], bodyX: anchor[0], bodyY: anchor[1] };
+  for (const elapsedMs of [0, 3000, 11250]) for (const assimilation of [0, 80, 100]) {
+    Object.assign(sweepState, { pollution: 0, assimilation, elapsedMs });
+    for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 6) for (const radius of [0, 10, 21, 32, 60, 90, 130, 170, 210, 231]) {
+      const x = anchor[0] + Math.cos(angle) * radius, y = anchor[1] + Math.sin(angle) * radius;
+      sweepState.pollution = 0;
+      api.sampleLightEater(previousSample, x, y, sweepState);
+      for (let p = 1; p <= 100; p++) {
+        sweepState.pollution = p;
+        api.sampleLightEater(sweepSample, x, y, sweepState);
+        for (const field of fields) {
+          assert(Number.isFinite(sweepSample[field]) && sweepSample[field] >= 0 && sweepSample[field] <= 1);
+          maximumPollutionStep = Math.max(maximumPollutionStep, Math.abs(sweepSample[field] - previousSample[field]));
+        }
+        if (radius <= 60) assert(sweepSample.warm <= previousSample.warm + 1e-12, `near-field brightened at P=${p}`);
+        Object.assign(previousSample, sweepSample);
+      }
+      if (radius <= 21) {
+        minimumSaturatedNear = Math.min(minimumSaturatedNear, sweepSample.warm);
+        maximumSaturatedNear = Math.max(maximumSaturatedNear, sweepSample.warm);
+        assert.equal(sweepSample.transmission, sweepSample.warm, 'A cannot restore the near-field comfort brightness');
+      }
+    }
+  }
+}
+check('every adjacent 1% pollution transition remains bounded without tier jumps', maximumPollutionStep < 0.04);
+checks.push('near-field absorption is monotonic over all 101 pollution values');
+check('saturation absorbs underfoot without a protected bright disc', minimumSaturatedNear > 0.48 && maximumSaturatedNear < 0.71);
+checks.push('A does not exempt the near field from absorption');
+let previousReceived = api.lightEaterReceivedLight(0);
+check('received-light endpoints reduce real surface highlights', previousReceived === 1 && Math.abs(api.lightEaterReceivedLight(100) - 0.68) < 1e-12);
+for (let p = 1; p <= 100; p++) {
+  const received = api.lightEaterReceivedLight(p);
+  assert(received <= previousReceived && previousReceived - received < 0.005);
+  previousReceived = received;
+}
+checks.push('received-light response is monotonic with bounded 1% changes');
+
+// Probe former 50 ms boundaries with sub-millisecond steps: quantized animation
+// time or a P-threshold branch would produce a finite jump at one of these cuts.
+for (const p of [0, 25, 55, 100]) for (const time of [50, 3000, 11250]) {
+  const continuousState = { ...state, pollution: p, assimilation: 80 };
+  for (let x = 20; x <= 360; x += 17) for (let y = 20; y <= 360; y += 17) {
+    api.sampleLightEater(previousSample, x, y, { ...continuousState, elapsedMs: time - 0.001 });
+    api.sampleLightEater(sweepSample, x, y, { ...continuousState, elapsedMs: time + 0.001 });
+    for (const field of fields) maximumTimeStep = Math.max(maximumTimeStep, Math.abs(sweepSample[field] - previousSample[field]));
+    for (const threshold of [25, 50, 75, 100]) {
+      api.sampleLightEater(previousSample, x, y, { ...continuousState, elapsedMs: time, pollution: threshold - 0.00001 });
+      api.sampleLightEater(sweepSample, x, y, { ...continuousState, elapsedMs: time, pollution: threshold + 0.00001 });
+      for (const field of fields) assert(Math.abs(sweepSample[field] - previousSample[field]) < 1e-6, `discontinuous P=${threshold} ${field}`);
+    }
+  }
+}
+check('time and pollution fields are continuous across former frame/tier boundaries', maximumTimeStep < 0.00001);
 for (const p of [0, 25, 55, 100]) for (const a of [0, 50, 100]) {
   state.pollution = p; state.assimilation = a;
   const radius = api.lightEaterExtent(p, a);
@@ -77,5 +138,6 @@ api.paintLightEater(pixels, admission, transmission, { ...paint, elapsedMs: pain
 let changed = 0;
 for (let i = 0; i < pixels.length; i += 4) if (pixels[i + 1] !== paused[i + 1] || pixels[i + 3] !== paused[i + 3]) changed++;
 check('three seconds visibly alter local light consumption', changed > 500);
-console.log(JSON.stringify({ status: 'pass', checks, changedPixels: changed,
+console.log(JSON.stringify({ status: 'pass', checks, changedPixels: changed, maximumPollutionStep, maximumTimeStep,
+  saturatedNearTransmission: [minimumSaturatedNear, maximumSaturatedNear],
   scope: 'DEV optical math/query/VOID contracts only; colour, motion quality and performance need real-scene review.' }, null, 2));
