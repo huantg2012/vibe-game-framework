@@ -1,4 +1,4 @@
-import { planAutomaticSupply, type AutomaticSupplyPlan } from './automatic-supply';
+import { planAutomaticSupply, type AutomaticSupplyPlan, type AutomaticSupplyAdmittedSeats } from './automatic-supply';
 import type { R100AutomaticSupplyPolicy } from './automatic-supply-policy';
 import { findR100PatrolWindows } from './r100-patrol-windows';
 import { hasLineOfSight } from '@/utils/grid-raycast';
@@ -271,6 +271,28 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
   const patrolWindows = findR100PatrolWindows(world, enemies, searchable,
     spatial ? point => Number.isFinite(field.distance[cellOf(grid, point)]) : undefined);
   if (patrolWindows.length !== searchable.length) throw new Error(`No complete search window: ${searchable.filter(node => !patrolWindows.some(window => window.id === node.id)).map(node => node.id).join(',')}`);
+  let automaticSupplyReceipt: Readonly<Record<string, unknown>> | undefined;
+  if (automaticSupply) {
+    const paint = new Set(world.pollution.paintCells.map(point => `${Math.floor(point.x / 32)},${Math.floor(point.y / 32)}`));
+    const admittedSeats: AutomaticSupplyAdmittedSeats[] = [...kindlingNodes, ...contaminantNodes].map(node => {
+      const selected = automaticSupply!.selected.find(item => item.seat.position.x === node.position.x && item.seat.position.y === node.position.y)!;
+      // Existing patrol admission already proves one complete 2.4s window per
+      // non-safe node. Using that real station is deliberately conservative;
+      // other visible positions must not impersonate completable searches.
+      const points = node.tier === 'safe' ? selected.seat.interactionCells.map(cell => center(grid, cell))
+        : patrolWindows.filter(window => window.id === node.id).map(window => window.seat);
+      const cells = points.filter(point => {
+        const cell = cellOf(grid, point), col = Math.floor(point.x / 32), row = Math.floor(point.y / 32);
+        return Number.isFinite(field.distance[cell]) && bodyHasSupport(grid, point, HALF, HALF)
+          && Math.hypot(point.x - node.position.x, point.y - node.position.y) <= GAME_CONSTANTS.LOOT.SEARCH_RADIUS
+          && hasLineOfSight(world.sight, point, node.position, GAME_CONSTANTS.LOOT.SEARCH_RADIUS + .001)
+          && !paint.has(`${col},${row}`)
+          && !world.pollution.volumes.some(box => col >= box.minCol && col <= box.maxCol && row >= box.minRow && row <= box.maxRow);
+      }).map(point => cellOf(grid, point));
+      return { nodeId: node.id, position: node.position, cells };
+    });
+    automaticSupplyReceipt = automaticSupply.verify(kindlingNodes, contaminantNodes, admittedSeats);
+  }
   const layout: GeneratedRiftLayout = { ...base, recipeId: `r100-native-v3:${world.definition.id}`,
     kindlingNodes, contaminantNodes, enemySpawns: enemies,
     contaminationDraw: { forms: [...enemies.map(enemy => enemy.form!), ...world.pollution.forms], warnings: [] } };
@@ -281,6 +303,6 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
     patrolWindows, patrolWindowContract: '2400ms unalerted-route model, dry full-body station; live approach/pursuit verified separately',
     ...(spatial ? { spatialDeployment: spatial, searchExtraTravelCapPx: spatial.deep_max_extra_travel_px } : {}),
     ...(placements ? { searchSites: placements.map(site => ({ nodeId: site.nodeId, sourceKind: site.sourceKind, family: site.family, sourceDomain: site.sourceDomain, sourceObjectId: site.sourceObjectId })), environmentScoreCap: searchSitePolicy!.environmentScoreCap } : {}),
-    ...(automaticSupply ? { automaticSupply: automaticSupply.verify(kindlingNodes, contaminantNodes) } : {}),
+    ...(automaticSupplyReceipt ? { automaticSupply: automaticSupplyReceipt } : {}),
     costBasis: 'all-body-safe-48px-interaction-seats', guaranteedSafeReturn: true, enemyCount: enemies.length, kindlingCount: kindlingNodes.length, contaminantCount: contaminantNodes.length } };
 }

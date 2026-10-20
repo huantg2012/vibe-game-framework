@@ -6,6 +6,8 @@ import { createAutomaticSupplyPolicy, validAutomaticSupplyPolicy } from '../../s
 import { AutomaticSupplyNavigation, automaticSupplyBudget } from '../../src/generation/world-study/automatic-supply-navigation';
 import { planAutomaticSupply, type AutomaticSupplyCandidate } from '../../src/generation/world-study/automatic-supply';
 import type { R100ExpeditionDefinition } from '../../src/generation/world-study/r100-expedition';
+import { findR100PatrolWindows } from '../../src/generation/world-study/r100-patrol-windows';
+import type { MasterWorld } from '../../src/generation/world-study/r100-master-world';
 import { hasLineOfSight } from '../../src/utils/grid-raycast';
 
 const policy = createAutomaticSupplyPolicy('low');
@@ -81,9 +83,10 @@ const repeat = planAutomaticSupply(open,origin,candidates,definition,JSON.parse(
 assert.deepEqual(plan.selected,repeat.selected,'Frozen JSON and seed reproduce all placements');
 assert.equal(plan.selected.filter(item=>item.necessaryFuel).length,2);
 assert.ok(plan.selected.filter(item=>item.necessaryFuel).every(item=>item.kind==='kindling'&&item.tier==='safe'));
-const fuel = plan.selected.filter(item=>item.kind==='kindling').map(item=>({position:item.seat.position,tier:item.tier,...(item.necessaryFuel?{allowWeapon:false}:{})}));
-const contaminants = plan.selected.filter(item=>item.kind==='contaminant').map(item=>({position:item.seat.position}));
-const receipt = plan.verify(fuel,contaminants);
+const fuel = plan.selected.filter(item=>item.kind==='kindling').map((item,index)=>({id:`fuel-${index}`,position:item.seat.position,tier:item.tier,...(item.necessaryFuel?{allowWeapon:false}:{})}));
+const contaminants = plan.selected.filter(item=>item.kind==='contaminant').map((item,index)=>({id:`contaminant-${index}`,position:item.seat.position}));
+const admittedSeats = [...fuel,...contaminants].map(node=>({nodeId:node.id,position:node.position,cells:plan.selected.find(item=>item.seat.position===node.position)!.seat.interactionCells}));
+const receipt = plan.verify(fuel,contaminants,admittedSeats);
 for (const grade of ['medium','severe'] as const) {
   const noEarlyPolicy = {...createAutomaticSupplyPolicy(grade), earlyFuelNodes:0};
   assert.ok(validAutomaticSupplyPolicy(noEarlyPolicy));
@@ -93,9 +96,36 @@ for (const grade of ['medium','severe'] as const) {
 }
 assert.ok(!validAutomaticSupplyPolicy({...policy,earlyFuelNodes:1}), 'Low grade frozen policy cannot remove its two fuel guarantees');
 
-assert.throws(()=>plan.verify(fuel.map(item=>({...item,allowWeapon:true})),contaminants),/early-fuel/);
-assert.throws(()=>plan.verify(fuel.slice(1),contaminants),/count-mismatch/);
+assert.throws(()=>plan.verify(fuel.map(item=>({...item,allowWeapon:true})),contaminants,admittedSeats),/early-fuel/);
+assert.throws(()=>plan.verify(fuel.slice(1),contaminants,admittedSeats),/count-mismatch/);
 assert.throws(()=>planAutomaticSupply(open,origin,candidates.map(candidate=>({...candidate,tiers:[] })),definition,policy,77,52),/early-fuel-infeasible/);
 assert.throws(()=>new AutomaticSupplyNavigation(open,origin,{...policy,maxWorkEdges:1}),/work-budget/);
 assert.throws(()=>planAutomaticSupply(open,origin,candidates.filter(candidate=>candidate.position.x<200),definition,{...policy,maxCoveragePx:80,p95CoveragePx:50},77,52),/legal-tier-coverage-infeasible/,'Theoretical legal-tier holes must reject before wasting the node budget');
+// Near-side cells can be body/LOS reachable yet permanently painted. The
+// actual first dry patrol window is on the far side, so final coverage must
+// measure travel to that station rather than borrow the attractive near side.
+const operationGrid = gridOf(30,16), operationStart = 5*30+5;
+const {origin:operationOrigin} = navigation(operationGrid,operationStart);
+const operationPoint = {x:124,y:68}, operationCell=8*30+15;
+const possibleOperationCells = Array.from({length:operationOrigin.length},(_,cell)=>cell).filter(cell=>Number.isFinite(operationOrigin[cell])
+  && Math.hypot(point(operationGrid,cell).x-operationPoint.x,point(operationGrid,cell).y-operationPoint.y)<=48);
+const operationCandidate: AutomaticSupplyCandidate = {cell:operationCell,position:operationPoint,distance:200,approachDistance:100,
+  interactionSeats:possibleOperationCells.length,pollutionDistance:16,interactionCells:possibleOperationCells,tiers:['contested'],environmentScore:0};
+const operationPolicy={...createAutomaticSupplyPolicy('medium'),earlyFuelNodes:0,maxCoveragePx:100,p95CoveragePx:100};
+const operationDefinition={...definition,grade_id:'medium' as const,kindling_safe_count:0,kindling_contested_count:1,kindling_deep_count:0,contaminant_safe_count:0,contaminant_contested_count:0};
+const operationPlan=planAutomaticSupply(operationGrid,operationOrigin,[operationCandidate],operationDefinition,operationPolicy,77,52);
+const operationNode={id:'far-window',position:operationPoint,tier:'contested' as const};
+const paintCells=Array.from({length:4*4},(_,index)=>({x:(index%4)*32+16,y:Math.floor(index/4)*32+16}));
+const operationWorld={layout:{tileMap:{cols:30,rows:16,tileSize:8,tiles:Array.from({length:16},(_,y)=>Array.from({length:30},(_,x)=>operationGrid.getTile(x,y)))}},
+  sight:operationGrid,pollution:{paintCells,volumes:[]}} as unknown as MasterWorld;
+const windows=findR100PatrolWindows(operationWorld,[],[operationNode],position=>Number.isFinite(operationOrigin[Math.floor(position.y/8)*30+Math.floor(position.x/8)]));
+assert.equal(windows.length,1);
+assert.ok(windows[0]!.seat.x>=128,'Qualified window must be beyond the painted near side');
+const windowCell=Math.floor(windows[0]!.seat.y/8)*30+Math.floor(windows[0]!.seat.x/8);
+assert.ok(possibleOperationCells.includes(windowCell));
+assert.doesNotThrow(()=>operationPlan.verify([operationNode],[],[{nodeId:operationNode.id,position:operationPoint,cells:possibleOperationCells}]),'Old optimistic station set would pass this counterexample');
+assert.throws(()=>operationPlan.verify([operationNode],[],[{nodeId:operationNode.id,position:operationPoint,cells:[windowCell]}]),/final-coverage-mismatch/,
+  'Final verification must reject when only the far-side operation station can complete a search');
+assert.throws(()=>operationPlan.verify([operationNode],[],[{nodeId:'wrong-id',position:operationPoint,cells:[windowCell]}]),/missing-operation-seat/);
+assert.throws(()=>operationPlan.verify([operationNode],[],[{nodeId:operationNode.id,position:operationPoint,cells:[operationStart]}]),/operation-seat-invalid/);
 console.log(JSON.stringify({status:'pass',scope:'offline small physical grids only; no game/browser execution or balance approval',budget:{small:automaticSupplyBudget(nav.space,0,policy),large:automaticSupplyBudget(largeNav.space,0,policy)},voidDetourPx:toLeft[right],receipt},null,2));

@@ -23,12 +23,19 @@ export interface AutomaticSupplySelection {
   readonly kind: 'kindling' | 'contaminant';
   readonly necessaryFuel: boolean;
 }
+/** Admission is performed after enemy patrol placement. Cells are dry legal
+ * operation stations, and non-safe nodes require a complete patrol window. */
+export interface AutomaticSupplyAdmittedSeats {
+  readonly nodeId: string;
+  readonly position: Vector2;
+  readonly cells: readonly number[];
+}
 interface Quota { readonly kind: 'kindling' | 'contaminant'; readonly tier: KindlingTier; remaining: number }
 export interface AutomaticSupplyPlan {
   readonly selected: readonly AutomaticSupplySelection[];
   /** Must run after full placement/patrol admission; it rebuilds the distance
    * field from the actual final positions, never trusts incremental receipts. */
-  readonly verify: (nodes: readonly { readonly position: Vector2; readonly allowWeapon?: boolean; readonly tier: KindlingTier }[], contaminants: readonly { readonly position: Vector2 }[]) => Readonly<Record<string, unknown>>;
+  readonly verify: (nodes: readonly { readonly id: string; readonly position: Vector2; readonly allowWeapon?: boolean; readonly tier: KindlingTier }[], contaminants: readonly { readonly id: string; readonly position: Vector2 }[], admittedSeats: readonly AutomaticSupplyAdmittedSeats[]) => Readonly<Record<string, unknown>>;
 }
 export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array, candidates: readonly AutomaticSupplyCandidate[],
   definition: R100ExpeditionDefinition, policy: R100AutomaticSupplyPolicy, seed: number, nodeSpacingPx: number): AutomaticSupplyPlan {
@@ -84,15 +91,19 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
   }
   const plannedCoverage = navigation.coverage(coverageDistance);
   if (selected.length < budget || quotas.some(quota => quota.remaining) || !passes(plannedCoverage)) fail('coverage-node-limit', plannedCoverage);
-  return { selected, verify: (nodes, contaminants) => {
+  return { selected, verify: (nodes, contaminants, admittedSeats) => {
     const actual = [...nodes, ...contaminants];
     if (actual.length !== selected.length) fail('final-node-count-mismatch');
+    if (admittedSeats.length !== actual.length || new Set(admittedSeats.map(row => row.nodeId)).size !== actual.length) fail('final-admitted-seat-count-mismatch');
     const finalCells: number[] = [];
     const remaining = new Set(selected);
     for (const node of actual) {
       const item = [...remaining].find(candidate => candidate.seat.position.x === node.position.x && candidate.seat.position.y === node.position.y);
       if (!item) return fail('final-node-position-mismatch');
-      remaining.delete(item); finalCells.push(...item.seat.interactionCells);
+      const admitted = admittedSeats.find(row => row.nodeId === node.id && row.position.x === node.position.x && row.position.y === node.position.y);
+      if (!admitted || !admitted.cells.length) return fail('final-node-missing-operation-seat');
+      if (admitted.cells.some(cell => !item.seat.interactionCells.includes(cell) || !Number.isFinite(originDistance[cell]))) fail('final-operation-seat-invalid');
+      remaining.delete(item); finalCells.push(...admitted.cells);
     }
     const safeFuelCount = nodes.filter(node => node.tier === 'safe' && node.allowWeapon === false).length;
     if (safeFuelCount < policy.earlyFuelNodes) fail('final-early-fuel-mismatch');
@@ -100,6 +111,7 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
     if (!passes(finalCoverage)) fail('final-coverage-mismatch', finalCoverage);
     return { algorithm: policy.algorithm, sourceHash: policy.sourceHash, ...navigation.space, budget, minimumNodes,
       actualCount: actual.length, legalCoverage, safeFuelCount, requiredSafeFuel: policy.earlyFuelNodes, coverage: finalCoverage,
-      coverageBasis: 'shortest-20px-body-route-to-visible-48px-interaction-seats', work: { ...navigation.work } };
+      planningCoverage: plannedCoverage, admittedSeatCounts: admittedSeats.map(row => ({ nodeId: row.nodeId, count: row.cells.length })),
+      coverageBasis: 'shortest-20px-body-route-to-dry-48px-operation-seats-with-nonsafe-patrol-window', work: { ...navigation.work } };
   } };
 }
