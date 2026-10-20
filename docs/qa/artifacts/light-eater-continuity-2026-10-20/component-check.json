@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "checks": [
+    "P alone shrinks physical shoulder light",
+    "A recovery stays inside clean-lamp extent",
+    "normal mid-field stays readable before light consumption",
+    "A does not recover warm light",
+    "A recovers a separate dim cold signal",
+    "reaction vanishes when no warm light remains",
+    "every adjacent 1% pollution transition remains bounded without tier jumps",
+    "near-field absorption is monotonic over all 101 pollution values",
+    "saturation absorbs underfoot without a protected bright disc",
+    "A does not exempt the near field from absorption",
+    "received-light endpoints reduce real surface highlights",
+    "received-light response is monotonic with bounded 1% changes",
+    "time and pollution fields are continuous across former frame/tier boundaries",
+    "warm-to-cold recognition has no coherent dark annulus",
+    "all 12 P/A endpoint combinations keep finite range",
+    "new field does not inherit old facing cone",
+    "VOID remains opaque to new queries",
+    "switching back restores legacy queries",
+    "new mask never reveals unavailable or VOID cells",
+    "paused optical sample is exactly stable",
+    "three seconds visibly alter local light consumption"
+  ],
+  "changedPixels": 20543,
+  "maximumPollutionStep": 0.024621675796956677,
+  "maximumTimeStep": 0.0000011635713508817425,
+  "maximumAnnularRebound": 0.015035788348951584,
+  "saturatedNearTransmission": [
+    0.4921949567600985,
+    0.6956896932961563
+  ],
+  "scope": "DEV optical math/query/VOID contracts only; colour, motion quality and performance need real-scene review."
+}

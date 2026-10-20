@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: design/code（F007隔离视野美术样片）
-last-modified-date: 2026-10-19
+last-modified-date: 2026-10-20
 interface-changed: true
 slice: 1
 interfaces-with:
@@ -25,7 +25,7 @@ exposes:
   - VisibilitySystem.setEdgeCorruption(level)     # 混乱值钩子：teal 噪点渗入 + 边缘抖动
   - VisibilitySystem.setScreenFlicker(intensity)  # 混乱值钩子：全屏微闪
   - VisibilitySystem.isPointVisible(p) / getVisibilityAt(p) / getEffectiveRadius(angle)
-  - VisibilitySystem.setPresentation('legacy' | 'perceptual') # 显式DEV对照，默认legacy
+  - VisibilitySystem.setPresentation('legacy' | 'perceptual' | 'light-eater') # 显式DEV对照，默认legacy
   - VisibilitySystem.registerGlowSource(id, pos, radius) / unregisterGlowSource(id)
   - utils/grid-raycast：castRay(grid, origin, angle, maxDist) / hasLineOfSight(grid, a, b)
   - OccluderGrid 接口契约（由地图侧实现）
@@ -37,6 +37,8 @@ exposes:
 用户否决下节首轮视觉方向后，授权独立打版。新入口`docs/art/previews/rift-light-eater-study/`仍复用真实三世界、角色、材料与内存gym。目标是单一肩灯连贯光场、污染拒绝异维度光线、吞光处断续污绿反应及全屏感知残留、高同化辨认外围冷色异质信号。新模式必须真的摆脱旧圆＋扇形，不以旧战术范围等价作为本轮验收要求；DEV新场内查询与表现保持同源，VOID继续硬遮。正式出击、存档、原同化/污染公式不切换。
 
 用户后续授权的打磨约束：高污染的中近场受光也必须逐渐被吞噬，不能仅缩半径而保留明亮、稳定的内部。所有P值共用同一光学公式与吸收介质，强度/范围连续，不以分档切换效果；高A恢复范围不清除高P的暗沉。最低动作和脚步可读不等于保护整个近身光盘。完整往返扫描及静态中间帧共同验收连续性，最终亮度与搜索平衡仍是DEV打版参数。
+
+当前DEV以同一世界坐标噪声控制连续光学厚度，移除近身高透射强制保护；实际材质接收的灯光强度也随P平滑降低，灯源像素不随之熄灭。冷辨认场连续覆盖近远处，仅在暖光较弱处显现，不延迟到外圈才开启，避免内暗外亮的双圈。观察台默认62秒往返：P0→100、保持P100时A0→80、再依次回退；手动接管、暂停及显示读数均与实际演示值同步。数学及三世界限定运行见[连续侵蚀QA](../qa/light-eater-continuity-2026-10-20.md)，不据此提升正式平衡或用户审美状态。
 
 此打版不等于玩法定版：最大可读面积、实际搜索时长和战斗信号需另行校准，数值暂是光学制作常量。低/中/高污染及高同化四态有连续过渡，样片暂停则冻结。`visionArtStudy`明确使用DEV无伤观察，不作战斗/平衡证据。角色混合同化蒙皮和净化点视觉仍属后续第三阶段。
 

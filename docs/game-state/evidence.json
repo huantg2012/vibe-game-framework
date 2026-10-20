@@ -11003,5 +11003,28 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E272",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-20",
+    "revision": "9e5eaa6ecef05e650fa5904a7120bd51cb98b085",
+    "scope": "F007/F012/F054连续侵蚀DEV样片：21项光学/连续性/暗环检查与14项旧回归；三真实世界12项浏览器检查、13截图、34.5秒连续实录；类型与最终构建。实际图经一次暗环修正和独立art复看。",
+    "limitations": "仅美术打版，正式未接入，人审、自然搜撤/完整战斗和长期性能未验。视频仅正向段，62秒完整往返反向静态核查。冷辨认不是新材质辐射通道。起点采集容差导致首轮检查失败已保留并修正重跑。",
+    "sources": [
+      {
+        "path": "docs/qa/light-eater-continuity-2026-10-20.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/light-eater-continuity-2026-10-20/report.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/light-eater-continuity-2026-10-20/component-check.json",
+        "role": "test"
+      }
+    ]
   }
 ]
