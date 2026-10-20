@@ -24,6 +24,7 @@ import { InventoryStore, inventoryStore } from '@/systems/inventory-store';
 import { impactSystem, validImpactForecastState } from '@/systems/impact-system';
 import { checkpointChecksum, validRiftCheckpoint, validRiftDeparture, type RiftDepartureIntent, type RiftCheckpoint } from '@/types/rift-checkpoint';
 import { runtimeInteger, runtimeNumber, runtimeRecord } from '@/systems/ai/runtime-validation';
+import { validAssimilationSources } from '@/systems/assimilation-system';
 
 const SAVE = GAME_CONSTANTS.SAVE;
 
@@ -98,10 +99,11 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   if (data.moduleSwapActive !== undefined && typeof data.moduleSwapActive !== 'boolean') return false;
   const probe = new InventoryStore();
   if (data.version === 2) {
-    const hasPhysiology = ['physiologyVersion', 'assimilation', 'healingCycles']
+    const hasPhysiology = ['physiologyVersion', 'assimilation', 'healingCycles', 'assimilationSources']
       .some(field => Object.prototype.hasOwnProperty.call(data, field));
     if (hasPhysiology && (data.physiologyVersion !== 1 || !runtimeNumber(data.assimilation, 0, 100)
       || !runtimeInteger(data.healingCycles, 0))) return false;
+    if (data.assimilationSources !== undefined && !validAssimilationSources(data.assimilationSources, data.assimilation ?? 0)) return false;
     if (!probe.loadState(data.inventory)) return false;
     if (data.riftCheckpoint !== undefined || data.riftDeparture !== undefined) {
       if (data.riftCheckpoint !== undefined && data.riftDeparture !== undefined) return false;
@@ -174,6 +176,7 @@ function collectSave(inventory: InventoryState, forecast = true): SaveDataV2 {
     cycle: gs.cycle,
     physiologyVersion: 1,
     assimilation: gs.assimilation,
+    assimilationSources: gs.assimilationSources,
     healingCycles: gs.healingCycles,
     tide: tideSystem.getState(),
     inventory,
@@ -440,6 +443,7 @@ export const saveManager = {
       moduleSwapActive: data.moduleSwapActive,
       cycle: data.cycle,
       assimilation: data.version === 2 ? data.assimilation : 0,
+      assimilationSources: data.version === 2 ? data.assimilationSources : undefined,
       healingCycles: data.version === 2 ? data.healingCycles : 0,
       modules: data.modules,
       moduleMaxHpTier: data.moduleMaxHpTier,
@@ -487,7 +491,8 @@ export const saveManager = {
     // Preserve existing forecasts/checkpoints. Older records without any forecast
     // still initialize their first one, as the original V1 migration did.
     if ((!loadedRun || loadedRun.baseSettled) && (data.version === 1 || data.inventory.version < 4
-      || data.growth.schemaVersion === undefined || data.physiologyVersion === undefined || repairedSlots)) {
+      || data.growth.schemaVersion === undefined || data.physiologyVersion === undefined
+      || data.assimilationSources === undefined || repairedSlots)) {
       try { writeRecord(JSON.stringify(attachCheckpoint(collectSave(inventoryStore.getState(), data.impactForecast === undefined)))); }
       catch { /* trySave exposes retry; do not erase the readable old record */ }
     }

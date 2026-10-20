@@ -49,7 +49,7 @@ for (const outcome of ['death', 'abandon'] as const) {
 }
 
 const old = structuredClone(bodyRecord);
-delete old.physiologyVersion; delete old.assimilation; delete old.healingCycles;
+delete old.physiologyVersion; delete old.assimilation; delete old.healingCycles; delete old.assimilationSources;
 records.set(GAME_CONSTANTS.SAVE.KEY, JSON.stringify(old));
 assert(saveManager.load());
 assert.equal(gameState.getAssimilation(), 0);

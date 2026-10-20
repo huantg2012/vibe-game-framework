@@ -12,6 +12,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { GROWTH_ROUTE_DATA } from '@/generated/growth-route-data';
 import type { PendingSideEffect } from '@/systems/defense-engine';
 import { calculateKindlingYieldExamples, type KindlingYieldExamples } from '@/systems/kindling-yield';
+import { normalizeAssimilationSources, validAssimilationWorldId, type AssimilationSources } from '@/systems/assimilation-system';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -45,6 +46,7 @@ export interface GameStateSnapshot {
   kindlingReserve: number;
   cycle: number;
   assimilation: number;
+  assimilationSources: AssimilationSources;
   healingCycles: number;
   modules: { id: string; type: string; hp: number; maxHp: number }[];
   moduleMaxHpTier: ModuleMaxHpTier;
@@ -58,6 +60,7 @@ export interface GameStateLoadInput {
   kindlingReserve: number;
   cycle: number;
   assimilation?: number;
+  assimilationSources?: AssimilationSources;
   healingCycles?: number;
   modules: { id: string; type: string; hp: number; maxHp: number }[];
   moduleMaxHpTier?: number;
@@ -76,6 +79,7 @@ const P = GAME_CONSTANTS.PURIFICATION;
 let kindlingReserve = 0;
 let cycle = 0;
 let assimilation = 0;
+let assimilationSources = { version: 1 as const, worlds: {} as Record<string, number>, unattributed: 0 };
 let healingCycles = 0;
 let impactIntensity = 1.0;
 let pendingSideEffects: PendingSideEffect[] = [];
@@ -371,9 +375,27 @@ export const gameState = {
 
   /** Persistent body burden, independent of the current Rift's pollution. */
   getAssimilation(): number { return assimilation; },
-  setAssimilation(value: number): void {
+  /** Borrowed read-only view: rendering can sample it without per-frame copies. */
+  getAssimilationSources(): AssimilationSources { return assimilationSources; },
+  /** Only genuine growth is attributed. Healing scales all historical sources together. */
+  setAssimilation(value: number, sourceWorldId?: string): void {
     if (!Number.isFinite(value)) throw new Error('Assimilation must be finite');
-    assimilation = Math.max(0, Math.min(100, value));
+    if (sourceWorldId !== undefined && !validAssimilationWorldId(sourceWorldId)) throw new Error('Invalid assimilation world');
+    const next = Math.max(0, Math.min(100, value));
+    if (next === assimilation) return;
+    if (next === 0) assimilationSources = { version: 1, worlds: {}, unattributed: 0 };
+    else if (next < assimilation) {
+      const factor = next / assimilation;
+      for (const worldId of Object.keys(assimilationSources.worlds)) {
+        assimilationSources.worlds[worldId] = assimilationSources.worlds[worldId]! * factor;
+      }
+      assimilationSources.unattributed *= factor;
+    } else if (sourceWorldId !== undefined) {
+      const previous = Object.prototype.hasOwnProperty.call(assimilationSources.worlds, sourceWorldId)
+        ? assimilationSources.worlds[sourceWorldId]! : 0;
+      assimilationSources.worlds[sourceWorldId] = previous + (next - assimilation);
+    } else assimilationSources.unattributed += next - assimilation;
+    assimilation = next;
   },
   getHealingCycles(): number { return healingCycles; },
   incrementHealingCycles(): number {
@@ -394,6 +416,7 @@ export const gameState = {
       kindlingReserve,
       cycle,
       assimilation,
+      assimilationSources: { ...assimilationSources, worlds: { ...assimilationSources.worlds } },
       healingCycles,
       modules: modules.map((m) => ({ id: m.id, type: m.type, hp: m.hp, maxHp: m.maxHp })),
       moduleMaxHpTier,
@@ -405,9 +428,12 @@ export const gameState = {
   },
 
   loadState(state: GameStateLoadInput): void {
+    const nextAssimilation = state.assimilation ?? 0;
+    const nextSources = normalizeAssimilationSources(nextAssimilation, state.assimilationSources);
     kindlingReserve = state.kindlingReserve;
     cycle = state.cycle;
-    gameState.setAssimilation(state.assimilation ?? 0);
+    assimilation = Math.max(0, Math.min(100, nextAssimilation));
+    assimilationSources = { ...nextSources, worlds: { ...nextSources.worlds } };
     healingCycles = state.healingCycles ?? 0;
     moduleMaxHpTier = clampTier(state.moduleMaxHpTier);
     ensurePurifier(P.MODULE_INITIAL_HP);
@@ -487,6 +513,7 @@ export const gameState = {
     kindlingReserve = 0;
     cycle = 0;
     assimilation = 0;
+    assimilationSources = { version: 1, worlds: {}, unattributed: 0 };
     healingCycles = 0;
     impactIntensity = 1.0;
     pendingSideEffects = [];

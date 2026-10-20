@@ -88,7 +88,8 @@ export function performHealingCycle(): HealingCycleOutcome {
     });
     const stabilityBefore = stabilityTracker.getProgress();
     stabilityTracker.addProgress('healing-damage', (impact.newlyZeroModules ?? 0) * GAME_CONSTANTS.STABILITY.LOSS_MODULE_ZERO, false);
-    // A healing cycle costs one normal tide impact; body state never changes its strength.
+    // One normal tide impact; the scalar setter also proportionally reduces every
+    // source in this same frozen save candidate. Retry must not apply either twice.
     gameState.setAssimilation(preview.assimilationAfter);
     impactSystem.generateForecast(tideSystem.getCurrentIntensity(), growthSystem.getModifiers().forecastClarity,
       tideSystem.peekNextIntensity(), () => forecastRandom.next());

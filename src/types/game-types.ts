@@ -274,6 +274,8 @@ export interface SaveDataV2 extends Omit<SaveDataV1, 'version' | 'contaminants' 
   /** All three fields absent is legacy. Versioned physiology requires both values. */
   physiologyVersion?: 1;
   assimilation?: number;
+  /** Optional for earlier physiology records; missing history remains unattributed. */
+  assimilationSources?: import('../systems/assimilation-system').AssimilationSources;
   healingCycles?: number;
   inventory: import('./inventory-types').InventoryState;
   /** Present only when this run's world implements complete recovery. */

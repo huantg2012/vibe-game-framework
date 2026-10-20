@@ -3,7 +3,7 @@ status: IMPLEMENTED / LIMITED-QA-PASS / PLAYTEST-PENDING
 created-by: design
 created-date: 2026-10-19
 last-modified-by: design
-last-modified-date: 2026-10-19
+last-modified-date: 2026-10-20
 interface-changed: true
 interfaces-with:
   - system-chaos-scavenge-extract
@@ -46,6 +46,18 @@ note: DEC-223纠正同化不影响冲击、HUD保留次级常驻值；DEC-221授
 - `healingCycleId`：一次疗愈事务的唯一身份，与真实run ID区分；同一身份只冲击、降低同化、成熟供奉、推进潮汐一次。
 - 同化值必须进入长期世界快照及完整在途提交；运行中的Chaos可以投影/持有同一候选值，但不能形成相互覆盖的两套权威。出击结束快照即使不再保存Chaos运行态，也须保存当时A。
 - 疗愈提交候选包含：A前后值、周期/预告及随机流、模块前后状态、供奉实例快照与生命周期、潮汐、成长经历、稳定度负向事实和幂等回执。实际TypeScript结构由Code映射，不能遗漏以上语义。
+
+### 同化外观的持久来源谱（2026-10-20）
+
+`A`仍是唯一玩法权威；来源谱只说明身体异化来自何处，不改变污染、同化速率、抗性、视野、敌意或疗愈费用。完整世界快照新增可选`assimilationSources: { version: 1, worlds: { [worldId]: points }, unattributed: points }`。贡献使用与A一致的0–100百分点单位；世界键记录真实冻结世界身份，不记录配色、当前地图或最后访问世界的替代猜测。
+
+- `gameState.setAssimilation(targetA, frozenWorldId)`只把本次真实正向差量记到该世界；重复提交同值、在满A时继续停留、单纯进入另一世界均不改谱。无来源的旧开发调用增长记为`unattributed`。
+- 下降时所有已知来源与无来源残留统一乘`A_after / A_before`。培养藏仍每周期减少15个百分点；不同来源不会被选择性优先清除，不存在额外治疗次数。A归零时空谱。
+- 旧同化档无来源字段时，已存在A全部记为中性的`unattributed`；旧无同化档仍A=0。无法追溯的历史不能凭当前/最后世界补造。后续新增同化仅增加真实来源贡献；旧中性残留随疗愈同比降低。
+- 贡献必须为有限非负数，已知世界条目为正数，版本固定1，总和不得超过A（仅容许浮点误差）；合法不足部分补入无来源残留。未知但合法格式的历史worldId保留，画面端可中性降级，不能删掉历史贡献或改变A。非法谱拒绝整档且不修改当前世界。
+- 撤离、死亡、放弃、冷续和完整checkpoint保存均沿同一世界快照携带来源谱。疗愈的A及谱进入同一冻结保存候选；拒写后只重试同一候选，不能再削减一次，未提交的存档字节保持原样。普通需要回滚的世界事务通过完整`GameStateSnapshot`一并恢复谱。
+
+美术端读取只读来源谱，按真实贡献混合世界材料/结构；画面权重不写回A。具体形体、材质与性能合同仍归`docs/art/assimilation-appearance-study.md`。
 
 策划参数唯一来源为`data/assimilation.csv`，经codegen提供低/中/重同化速率、阈值、疗愈量和视距/速度/敌意系数。地图等级沿本趟冻结身份选择对应速率；当前同化协议只保存规则版本标记，未把同化CSV整包冻结进快照，因此不承诺未来调整CSV后仍复现旧参数。旧150协议与新同化协议的分派必须保持；若未来要求同化调参前后完全复现，应另做版本化数据兼容。不得在HUD或面板复制公式。
 
