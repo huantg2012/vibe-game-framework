@@ -10,8 +10,8 @@ export const RIFT_LOW_EXPEDITION_OVERRIDES = [
       2530803610,
       2936677010
     ],
-    "contentIdentity": "e032f52c",
-    "sourceHash": "64764410b51360949cd5d4b94428a278c6a5a683eafd78717ee39d2ffe695d56"
+    "contentIdentity": "98de1993",
+    "sourceHash": "996b1ab3aaa1d6c2f1465a3f1ab67fb34af12b1168014e5208af1ce1a44e12bd"
   },
   {
     "worldId": "crystal-fibre",

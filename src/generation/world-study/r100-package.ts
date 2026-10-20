@@ -25,6 +25,7 @@ import { R100_MATERIAL_DEPENDENCIES } from '@/generated/r100-package-manifest';
 import { R100_NATIVE_WORLDS } from '@/generated/r100-native-worlds';
 import { R100_EXPEDITION_GRADES } from '@/generated/rift-expedition-grade-data';
 import { RIFT_LOW_EXPEDITION_OVERRIDES } from '@/generated/rift-low-expedition-data';
+import { NATIVE_LOW_CONSTRUCTION_SOURCES } from '@/generated/r100-native-low-construction';
 import { POLLUTION_GRADE_DEFINITIONS } from '@/generated/rift-pollution-grade-data';
 import type { RiftWorldHistory } from '@/types/rift-world-history';
 import { selectR100WorldId } from './r100-world-selection';
@@ -100,9 +101,15 @@ function createR100Recipe(worldId: string, seed: number, grade: PollutionGrade, 
     kindling_contested_count: lowContent.kindling_contested_count, kindling_deep_count: lowContent.kindling_deep_count,
     kindling_safe_allow_weapon: lowContent.kindling_safe_allow_weapon } : baseContentDefinition;
   const constructionSource=nativeDevelopment?undefined:createNativeConstructionRuntimeInput(worldId,directDevelopment);
-  const nativeConstruction=constructionSource&&lowContent?{...constructionSource,
-    sourceHash:lowContent.sourceHash,contentSeeds:{...constructionSource.contentSeeds,low:[...lowContent.contentSeeds]},
-    contentSeedIdentities:{...constructionSource.contentSeedIdentities,low:lowContent.contentIdentity}}:constructionSource;
+  const lowConstruction=constructionSource&&grade==='low'
+    ?NATIVE_LOW_CONSTRUCTION_SOURCES.find(row=>row.worldId===worldId&&row.enabled):undefined;
+  const authoredConstruction=constructionSource&&lowConstruction?{...constructionSource,
+    reference:lowConstruction.reference,shore:lowConstruction.shore,intent:lowConstruction.intent,
+    sourceHash:lowConstruction.sourceHash}:constructionSource;
+  const nativeConstruction=authoredConstruction&&lowContent?{...authoredConstruction,
+    sourceHash:lowConstruction?.sourceHash??lowContent.sourceHash,
+    contentSeeds:{...authoredConstruction.contentSeeds,low:[...lowContent.contentSeeds]},
+    contentSeedIdentities:{...authoredConstruction.contentSeedIdentities,low:lowContent.contentIdentity}}:authoredConstruction;
   if(directDevelopment&&!nativeConstruction)throw new Error(`Direct construction is unavailable for ${worldId}`);
   // Revision 13 admits the reviewed physical mother once. Freeze all its source
   // instances; retain the requested grade's atmosphere and gameplay parameters.
@@ -110,7 +117,9 @@ function createR100Recipe(worldId: string, seed: number, grade: PollutionGrade, 
   const nativeDefinition=nativeConstruction?{...gradeNativeDefinition,instances:geometrySource.instances}:gradeNativeDefinition;
   let nativeSpatial = nativeDevelopment||nativeConstruction ? createNativeSpatialRuntimeInput(worldId, geometrySource) : undefined;
   if ((nativeDevelopment||nativeConstruction) && !nativeSpatial) throw new Error(`Native spatial development is unavailable for ${worldId}`);
-  if(nativeConstruction&&nativeSpatial)nativeSpatial=applyNativeConstructionIntent({...nativeSpatial,assemblies:nativeSpatial.assemblies.map(assembly=>({...assembly,grade:'all' as const}))},nativeConstruction);
+  if(nativeConstruction&&nativeSpatial)nativeSpatial=applyNativeConstructionIntent({...nativeSpatial,
+    assemblies:nativeSpatial.assemblies.map(assembly=>({...assembly,grade:'all' as const,
+      sourceScale:assembly.sourceScale*(lowConstruction?.assemblyScaleMultiplier??1)}))},nativeConstruction);
   const spatialPolicy = nativeSpatial ? undefined : createR100SpatialPolicy(worldId, seed);
   const searchSitePolicy = R100_SEARCH_SITE_POLICIES.find(row => row.worldId === worldId);
   if (nativeSpatial && !searchSitePolicy) throw new Error(`Native spatial world has no complete search-site policy: ${worldId}`);

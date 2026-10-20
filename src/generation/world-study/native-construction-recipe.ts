@@ -28,7 +28,7 @@ export interface NativeConstructionRuntimeInput extends NativeConstructionSource
   /** The reviewed physical construction stays stable; contents use run seed. */
   readonly seedMode:'reviewed-geometry-v1';
   readonly geometrySeed:number;
-  /** Only this source geometry was reviewed; pollution grades change contents. */
+  /** Complete source model; each frozen author CSV places it independently. */
   readonly sourceGrade:'medium';
   readonly contentSeeds:Readonly<Record<PollutionGrade,readonly number[]>>;
   readonly contentSeedIdentities:Readonly<Record<PollutionGrade,string>>;
@@ -83,8 +83,8 @@ export function applyNativeConstructionIntent(input:NativeSpatialRuntimeInput,co
   const {planningCellFactor,...world}=construction.intent;
   return{...input,policy:{...input.policy,planningCellFactor},world:{...input.world,...world}};
 }
-/** Pure bounded adapter. The reviewed CSV supplies L/H/S at its fixed physical
- * seed and medium source. Requested pollution grade does not reshape it. */
+/** Pure bounded adapter. The frozen CSV supplies L/H/S at its fixed physical
+ * seed and medium model source. Recovery never reshapes it from today's grade. */
 export function constructNativeProductionLayout(recipe:WorldProductionRecipeV3):NativeSpatialConstructedReference {
   const input=recipe.nativeConstruction;
   if(recipe.package.algorithmRevision!==13||!input||!recipe.nativeSpatial)throw new Error('Direct construction requires a frozen revision-13 recipe');

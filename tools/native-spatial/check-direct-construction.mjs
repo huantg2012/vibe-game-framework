@@ -10,7 +10,8 @@ import {createR100ProductionMap} from '../../src/generation/world-study/r100-pro
 import {constructNativeProductionLayout} from '../../src/generation/world-study/native-construction-recipe.ts';
 import {createNativeConstructionCandidate} from '../../src/generation/world-study/native-construction-generation.ts';
 import {validNativeSpatialRuntimeInput} from '../../src/generation/world-study/native-spatial-recipe.ts';
-import {NATIVE_CONSTRUCTION_REGISTRATIONS} from '../../src/generated/r100-native-construction.ts';
+import {NATIVE_CONSTRUCTION_REGISTRATIONS,NATIVE_CONSTRUCTION_SOURCES} from '../../src/generated/r100-native-construction.ts';
+import {NATIVE_LOW_CONSTRUCTION_SOURCES} from '../../src/generated/r100-native-low-construction.ts';
 import {validR100ProductionRecipe as validFrozenRevision11} from '../../src/generation/legacy-r100-v11/executor-recovery.js';
 import {createR100ProductionRecipe as createFrozenRevision11} from '../../src/generation/legacy-r100-v11/executor-revision11.js';
 import {R100_NATIVE_WORLDS} from '../../src/generated/r100-native-worlds.ts';
@@ -18,7 +19,7 @@ const output=process.argv[2];assert(output,'Usage: check-direct-construction.mjs
 const report={status:'running',checks:[],cases:[],errors:[]},start=performance.now();
 const save=()=>fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2)+'\n');
 const sha=value=>createHash('sha256').update(value).digest('hex');
-const sourceFiles=['src/generation/world-study/native-construction-recipe.ts','src/generation/world-study/native-construction-generation.ts','src/generation/world-study/r100-package.ts','src/generation/world-study/r100-production-map.ts','src/generated/r100-native-construction.ts'];
+const sourceFiles=['src/generation/world-study/native-construction-recipe.ts','src/generation/world-study/native-construction-generation.ts','src/generation/world-study/r100-package.ts','src/generation/world-study/r100-production-map.ts','src/generated/r100-native-construction.ts','src/generated/r100-native-low-construction.ts','src/generated/rift-low-expedition-data.ts'];
 const hashes=()=>Object.fromEntries(sourceFiles.map(file=>[file,sha(fs.readFileSync(file))]));report.sourcesBefore=hashes();save();
 try {
   for(const registration of NATIVE_CONSTRUCTION_REGISTRATIONS)for(const grade of ['low','medium','severe']){
@@ -28,6 +29,14 @@ try {
     const reviewed=R100_NATIVE_WORLDS.find(row=>row.id===world).definitions.find(row=>row.grade==='medium');
     assert.equal(recipe.nativeConstruction.sourceGrade,'medium');assert.deepEqual(recipe.nativeDefinition.instances,reviewed.instances);
     assert(recipe.nativeSpatial.assemblies.every(assembly=>assembly.grade==='all'),'Reviewed physical assemblies apply to every pollution grade');
+    const compact=grade==='low'?NATIVE_LOW_CONSTRUCTION_SOURCES.find(row=>row.worldId===world&&row.enabled):undefined;
+    const source=compact??NATIVE_CONSTRUCTION_SOURCES.find(row=>row.worldId===world);
+    assert.deepEqual(recipe.nativeConstruction.reference,source.reference,'Only explicitly authored low departures may replace geometry');
+    assert.deepEqual(recipe.nativeConstruction.shore,source.shore);
+    assert.deepEqual(recipe.nativeConstruction.intent,source.intent);
+    const mother=createR100DirectConstructionRecipe(world,20261012,'medium');
+    assert.deepEqual(recipe.nativeSpatial.assemblies,mother.nativeSpatial.assemblies.map(assembly=>({...assembly,
+      sourceScale:assembly.sourceScale*(compact?.assemblyScaleMultiplier??1)})));
     const ordinary=createR100ProductionRecipe(world,20261012,grade);assert.equal(ordinary.package.algorithmRevision,registration.enabled?13:11);if(!registration.enabled)assert(validFrozenRevision11(ordinary));
     const prior=createR100NativeSpatialDevelopmentRecipe(world,20261012,grade);assert.equal(prior.package.algorithmRevision,12);assert(validR100ProductionRecipe(prior));assert.equal(prior.nativeConstruction,undefined);
     const reject=change=>{const bad=structuredClone(recipe);change(bad);assert.equal(validR100ProductionRecipe(bad),false);};
@@ -47,7 +56,7 @@ try {
     for(const seed of [0,1,42,0xffffffff])assert.deepEqual(createR100DirectConstructionRecipe(world,seed,grade).nativeConstruction,recipe.nativeConstruction);
     assert.deepEqual(recipe,copy);report.cases.push({world,grade,recipeBytes:JSON.stringify(recipe).length,ordinaryRevision:ordinary.package.algorithmRevision,geometrySeed:recipe.nativeConstruction.geometrySeed,status:'passed'});
   }
-  report.checks=['12 valid deterministic complete snapshots','legacy r11 public-factory/archive validation','r12 explicit development isolation','missing field and changed data rejection','frozen enemy grammar and source text receipts','reviewed physical seed independent of request content seed'];
+  report.checks=['12 valid deterministic complete snapshots','low authoring isolated from medium/severe and unopened worlds','legacy r11 public-factory/archive validation','r12 explicit development isolation','missing field and changed data rejection','frozen enemy grammar and source text receipts','reviewed physical seed independent of request content seed'];
   let retainedRecipes=0;
   for(const world of R100_NATIVE_WORLDS)for(const grade of ['low','medium','severe']){
     if(NATIVE_CONSTRUCTION_REGISTRATIONS.some(row=>row.worldId===world.id&&row.enabled))continue;

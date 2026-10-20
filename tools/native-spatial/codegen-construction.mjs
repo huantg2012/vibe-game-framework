@@ -39,6 +39,9 @@ const rows=registry.map(row=>row.split(',')).filter(row=>row[4]==='diverse').map
     // This is the shared reviewed mother catalog. Low-risk departures carry
     // their own independently certified content override/bank.
     recipe.contentDefinition=R100_EXPEDITION_GRADES.find(row=>row.grade_id===grade);
+    // The base bank certifies the complete reviewed medium body. Compact low
+    // geometry is authored and certified separately and must not leak here.
+    recipe.nativeSpatial=createR100DirectConstructionRecipe(worldId,20261012,'medium').nativeSpatial;
     recipe.nativeConstruction={...recipe.nativeConstruction,reference,shore,intent};recipe.nativeSpatial=applyNativeConstructionIntent(recipe.nativeSpatial,recipe.nativeConstruction);
     const identity=nativeConstructionContentIdentity(recipe);assert(entries.every(e=>e.identity===identity),`Content certification is stale: ${worldId}/${grade}`);
     contentSeeds[grade]=entries.map(e=>e.seed);contentSeedIdentities[grade]=identity;
