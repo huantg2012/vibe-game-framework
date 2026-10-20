@@ -8,6 +8,7 @@ import {nativeConstructionFootprints} from './native-spatial-construction-shore'
 import {nativePrimitiveDistance,nativePrimitiveTree} from './native-spatial-geometry';
 import {nativeRectUnionArea,describeNativeSpatialLand} from './native-spatial-land';
 import {nativeAutoHole} from './native-auto-layout';
+import {nativeAutoCounts} from './native-auto-counts';
 import {validNativeSpatialRuntimeInput} from './native-spatial-recipe';
 import type {MasterDefinition} from './r100-master-world';
 import type {PollutionGrade} from './pollution-grade';
@@ -33,8 +34,7 @@ export function createNativeAutoRuntimeInput(native:MasterDefinition,grade:Pollu
   const sourceHeight=Math.max(...footprints.map(r=>r[1]+r[3]))-Math.min(...footprints.map(r=>r[1]));
   let coreWidth=Math.max(policy.coreWidthPx,ceil16(sourceWidth+policy.sourcePaddingPx*2));
   let coreHeight=Math.max(policy.coreHeightPx,ceil16(sourceHeight+policy.sourcePaddingPx*2));
-  const count=Math.round(policy.targetWalkAreaPx2/(NATIVE_SPATIAL_POLICY.planningCellFactor*NATIVE_SPATIAL_POLICY.spacingPx**2));
-  const solidCount=Math.round(count/3),holeCount=count-solidCount;
+  const {solids:solidCount,holes:holeCount}=nativeAutoCounts(policy.targetWalkAreaPx2,NATIVE_SPATIAL_POLICY);
   const projectedBodyArea=(primitives:typeof source.solidPrimitives):number=>{
     const tree=nativePrimitiveTree(primitives);
     const left=Math.floor(Math.min(...primitives.map(p=>p.minX))-10),right=Math.ceil(Math.max(...primitives.map(p=>p.maxX))+10);
@@ -114,10 +114,10 @@ export function validNativeAutoRuntimeInput(value:unknown,native:MasterDefinitio
     ||input.grade!==native.grade||!Number.isSafeInteger(input.geometrySeed)||input.geometrySeed<0||input.geometrySeed>0xffffffff
     ||input.sourceFingerprint!==nativeAutoSourceFingerprint(native)||!p||p.grade!==input.grade||!/^[0-9a-f]{64}$/.test(p.sourceHash))return false;
   const numbers=['targetWalkAreaPx2','coreWidthPx','coreHeightPx','armWidthPx','armHeightPx','armOverlapPx','armOffsetPx','siteSpacingPx',
-    'siteJitterPx','edgeClearancePx','objectClearancePx','sourcePaddingPx','maxSiteEvaluations','maxPlacementStates','placementBranchLimit','shoreSegmentMinPx','shoreSegmentMaxPx',
+    'siteJitterPx','edgeClearancePx','objectClearancePx','sourcePaddingPx','maxSiteEvaluations','maxPlacementStates','placementBranchLimit','refinementPasses','maxRefinementEvaluations','shoreSegmentMinPx','shoreSegmentMaxPx',
     'shoreDepthMinPx','shoreDepthMaxPx','shoreProtectedGapPx','maxCleanRunPx'] as const;
   if(Object.keys(p).length!==numbers.length+2||numbers.some(key=>!Number.isSafeInteger(p[key])||p[key]<=0||p[key]>8388608)
-    ||p.maxSiteEvaluations>2048||p.maxPlacementStates>2048||p.placementBranchLimit>8||p.armOverlapPx>=p.armWidthPx||p.siteJitterPx>=p.siteSpacingPx/4
+    ||p.maxSiteEvaluations>2048||p.maxPlacementStates>2048||p.placementBranchLimit>8||p.refinementPasses>3||p.maxRefinementEvaluations>8192||p.armOverlapPx>=p.armWidthPx||p.siteJitterPx>=p.siteSpacingPx/4
     ||p.coreWidthPx>3072||p.coreHeightPx>2304||p.armWidthPx>3072||p.armHeightPx>2304
     ||p.shoreSegmentMinPx>p.shoreSegmentMaxPx||p.shoreDepthMinPx>p.shoreDepthMaxPx
     ||numbers.some(key=>key.endsWith('Px')&&p[key]%8!==0))return false;

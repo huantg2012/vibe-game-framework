@@ -18,13 +18,15 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "maxSiteEvaluations": 2048,
     "maxPlacementStates": 2048,
     "placementBranchLimit": 8,
+    "refinementPasses": 3,
+    "maxRefinementEvaluations": 8192,
     "shoreSegmentMinPx": 80,
     "shoreSegmentMaxPx": 160,
     "shoreDepthMinPx": 32,
     "shoreDepthMaxPx": 64,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "6d0594f97f3b518d297e0e89a52e6a3c19000a698e7fe84ee635da26814fbd69"
+    "sourceHash": "ba6b6dabba027f94a6c97b4c229b403b63386123e3ff48db28d8253ed07ae7fc"
   },
   {
     "grade": "medium",
@@ -43,13 +45,15 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "maxSiteEvaluations": 2048,
     "maxPlacementStates": 2048,
     "placementBranchLimit": 8,
+    "refinementPasses": 3,
+    "maxRefinementEvaluations": 8192,
     "shoreSegmentMinPx": 80,
     "shoreSegmentMaxPx": 160,
     "shoreDepthMinPx": 32,
     "shoreDepthMaxPx": 80,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "6d0594f97f3b518d297e0e89a52e6a3c19000a698e7fe84ee635da26814fbd69"
+    "sourceHash": "ba6b6dabba027f94a6c97b4c229b403b63386123e3ff48db28d8253ed07ae7fc"
   },
   {
     "grade": "severe",
@@ -68,12 +72,14 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "maxSiteEvaluations": 2048,
     "maxPlacementStates": 2048,
     "placementBranchLimit": 8,
+    "refinementPasses": 3,
+    "maxRefinementEvaluations": 8192,
     "shoreSegmentMinPx": 80,
     "shoreSegmentMaxPx": 160,
     "shoreDepthMinPx": 32,
     "shoreDepthMaxPx": 96,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "6d0594f97f3b518d297e0e89a52e6a3c19000a698e7fe84ee635da26814fbd69"
+    "sourceHash": "ba6b6dabba027f94a6c97b4c229b403b63386123e3ff48db28d8253ed07ae7fc"
   }
 ];

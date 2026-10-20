@@ -1,17 +1,19 @@
 /** Bounded joint packing from source material and shared policy. Every object
  * exists before packing begins; a failed fit never silently removes content. */
 import {mix32} from '@/generation/seed-fork';
-import {nativeConstructionFootprints} from './native-spatial-construction-shore';
-import {nativeSpatialCountPairs} from './native-spatial-layout';
-import {nativePrimitiveTree,nativePrimitiveDistance} from './native-spatial-geometry';
-import {createNativeSpatialPlanningGround} from './native-spatial-bay-layout';
+import {nativeConstructionFootprints,constructNativeMacroShore} from './native-spatial-construction-shore';
+import {nativeAutoCounts} from './native-auto-counts';
+import {nativePrimitive,nativePrimitiveTree,nativePrimitiveDistance,type NativeSpatialPrimitive,type NativeSpatialBvh} from './native-spatial-geometry';
+import {createNativeSpatialPlanningGround,nativeSpatialLandJoins} from './native-spatial-bay-layout';
 import type {NativeSpatialHoleProfile} from './native-spatial-types';
 import {NATIVE_CONSTRUCTION_REFERENCE_COLUMNS,type NativeSpatialConstructionReference} from './native-spatial-construction-reference';
 import type {MasterDefinition} from './r100-master-world';
 import type {NativeAutoRuntimeInput,NativeAutoRect as Rect} from './native-auto-types';
+import {refineNativeAutoPlan,nativeAutoObjectDistance,type NativeAutoCoverageObject,type NativeAutoRefinementTrace} from './native-auto-refinement';
+import {nativeAutoCompiledField} from './native-auto-shape';
 type Row=NativeSpatialConstructionReference['rows'][number];
 interface Site {readonly x:number;readonly y:number;readonly rank:number;readonly sourceDistance:number}
-interface PlannedObject {readonly id:string;readonly kind:'hole'|'solid';readonly row:Partial<Row>;readonly rects:readonly Rect[];readonly bounds:Rect}
+interface PlannedObject extends NativeAutoCoverageObject {readonly id:string;readonly row:Partial<Row>}
 const snap=(value:number)=>Math.round(value/8)*8;
 const overlaps=(a:Rect,b:Rect,gap=0)=>a[0]<b[0]+b[2]+gap&&a[0]+a[2]>b[0]-gap&&a[1]<b[1]+b[3]+gap&&a[1]+a[3]>b[1]-gap;
 const shifted=(rect:Rect,site:Pick<Site,'x'|'y'>):Rect=>[rect[0]+site.x,rect[1]+site.y,rect[2],rect[3]];
@@ -31,6 +33,7 @@ export interface NativeAutoPlan {
   readonly reference:NativeSpatialConstructionReference;
   readonly siteEvaluations:number;readonly feasibleSites:number;
   readonly placementStates:number;readonly backtracks:number;
+  readonly refinement:NativeAutoRefinementTrace;
   readonly requestedCounts:Readonly<{holes:number;solids:number}>;
 }
 
@@ -75,9 +78,7 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   const left=land[1]!,spawn={x:left[0]+p.edgeClearancePx,y:snap(left[1]+left[3]/2)};
   const reserved:Rect[]=[[spawn.x-40,spawn.y-40,80,80]];
   rows.push(row({kind:'spawn',id:'arrival',x_px:String(spawn.x),y_px:String(spawn.y)}));
-  const target=Math.round(world.targetWalkAreaPx2/(spatial.policy.planningCellFactor*spatial.policy.spacingPx**2));
-  const requestedCounts=[...nativeSpatialCountPairs(spatial)].sort((a,b)=>Math.abs(a.holes+a.solids-target)-Math.abs(b.holes+b.solids-target)||Math.abs(a.holes/a.solids-2)-Math.abs(b.holes/b.solids-2))[0];
-  if(!requestedCounts)throw new Error('Automatic policy has no legal H/S count pair');
+  const requestedCounts=nativeAutoCounts(world.targetWalkAreaPx2,spatial.policy);
   const objects:PlannedObject[]=[],nextId=Math.max(...native.instances.map(i=>i.id))+1;
   for(let index=0;index<requestedCounts.solids-1;index++){
     const profile=spatial.subordinateProfiles[index%spatial.subordinateProfiles.length];
@@ -87,8 +88,8 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
       length:snap((profile.minLengthPx+profile.maxLengthPx)/2),width:snap((profile.minWidthPx+profile.maxWidthPx)/2),
       height:(profile.minHeightPx+profile.maxHeightPx)/2,rotation:world.materialAxisRad+profile.rotationOffsetRad,
       thickness:profile.thicknessPx,fold:profile.fold,branches:profile.branches,opening:profile.opening,distortion:profile.distortion};
-    const support=nativeConstructionFootprints([instance],native.family,seed).supportBounds;
-    objects.push({id:`subordinate-${index}`,kind:'solid',rects:[],bounds:bounds(support),row:{kind:'solid',id:`subordinate-${index}`,profile_id:profile.id,
+    const footprint=nativeConstructionFootprints([instance],native.family,seed);
+    objects.push({id:`subordinate-${index}`,kind:'solid',rects:[],bounds:bounds(footprint.supportBounds),tree:nativePrimitiveTree(footprint.solidPrimitives),row:{kind:'solid',id:`subordinate-${index}`,profile_id:profile.id,
       length_px:String(instance.length),width_px:String(instance.width),height_px:String(instance.height),rotation_rad:String(instance.rotation)}});
   }
   for(let index=0;index<requestedCounts.holes;index++)objects.push(nativeAutoHole(index,seed,spatial.holeProfiles));
@@ -109,9 +110,7 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
     .filter(({box})=>insideLand(box,land,p.edgeClearancePx)&&!source.supportBounds.some(r=>overlaps(box,r,p.objectClearancePx))&&!reserved.some(r=>overlaps(box,r,p.objectClearancePx))));
   const ground=createNativeSpatialPlanningGround(land,[]);
   const field=sites.map(site=>({...site,margin:ground.margin(site)})).filter(site=>site.margin>=20&&site.sourceDistance>=20);
-  const rectDistance=(rect:Rect,site:Pick<Site,'x'|'y'>)=>Math.hypot(Math.max(rect[0]-site.x,0,site.x-rect[0]-rect[2]),Math.max(rect[1]-site.y,0,site.y-rect[1]-rect[3]));
-  const covered=(object:PlannedObject,site:Site,point:Site)=>object.kind==='hole'
-    ?Math.min(...object.rects.map(rect=>rectDistance(shifted(rect,site),point))):rectDistance(shifted(object.bounds,site),point);
+  const covered=nativeAutoObjectDistance;
   const chosen=new Map<number,number>(),occupied:Rect[]=[];
   let placementStates=0,backtracks=0,deepest=0;
   const place=(depth:number):boolean=>{
@@ -144,6 +143,54 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
     return false;
   };
   if(!place(0))throw new Error(`Automatic packing rejected: ${deepest}/${objects.length} placed; ${placementStates}/${p.maxPlacementStates} states, ${siteEvaluations} sites`);
+  // Each fixed phase receives local alternatives at its current positions.
+  // All phases share one site budget; moving never loses local resolution.
+  const siteKeys=new Set(sites.map(site=>`${site.x}:${site.y}`));
+  const addLocalSites=(step:number)=>{
+  const centers=[...chosen.values()].map(index=>sites[index]!);
+  for(const center of centers)for(const dx of [-2*step,-step,0,step,2*step])for(const dy of [-2*step,-step,0,step,2*step]){
+    if(!dx&&!dy)continue;
+    const x=center.x+dx,y=center.y+dy,key=`${x}:${y}`;if(siteKeys.has(key))continue;
+    if(siteEvaluations>=p.maxSiteEvaluations)break;
+    siteEvaluations++;siteKeys.add(key);
+    const site={x,y,rank:mix32(seed,`auto-local:${x}:${y}`),sourceDistance:nativePrimitiveDistance(sourceTree,x,y)},index=sites.length;
+    sites.push(site);
+    objects.forEach((object,objectIndex)=>{
+      const box=shifted(object.bounds,site);
+      if(insideLand(box,land,p.edgeClearancePx)&&!source.supportBounds.some(r=>overlaps(box,r,p.objectClearancePx))&&!reserved.some(r=>overlaps(box,r,p.objectClearancePx)))
+        domains[objectIndex]!.push({site,index,box});
+    });
+  }
+  };
+  const flatten=(tree:NativeSpatialBvh):readonly NativeSpatialPrimitive[]=>tree.items??[...(tree.left?flatten(tree.left):[]),...(tree.right?flatten(tree.right):[])];
+  const phases:NativeAutoRefinementTrace[]=[];
+  for(let phase=0;phase<p.refinementPasses;phase++){
+  addLocalSites(phase===p.refinementPasses-1?8:16);
+  const holeRects=objects.flatMap((object,index)=>object.kind==='hole'?object.rects.map(rect=>shifted(rect,sites[chosen.get(index)!]!)):[]);
+  const extraSolidPrimitives=objects.flatMap((object,index)=>{
+    if(object.kind!=='solid')return[];
+    const site=sites[chosen.get(index)!]!;
+    return flatten(object.tree!).map(primitive=>nativePrimitive(primitive.points.map((v,at)=>v+(at%2?site.y:site.x)),primitive.objectId));
+  });
+  const shore=constructNativeMacroShore({land,protectedRects:[...holeRects,...nativeSpatialLandJoins(land,world.landRectMinOverlapPx,[null,0,0]).map(join=>join.rect),[spawn.x-10,spawn.y-10,20,20]],
+    supportBounds:[...source.supportBounds,...extraSolidPrimitives.map((primitive):Rect=>[primitive.minX,primitive.minY,primitive.maxX-primitive.minX,primitive.maxY-primitive.minY])],
+    coverPrimitives:[...source.solidPrimitives,...extraSolidPrimitives,...holeRects.flatMap(([x,y,w,h])=>[nativePrimitive([x,y,x+w,y,x+w,y+h],-1),nativePrimitive([x,y,x+w,y+h,x,y+h],-1)])],
+    maxAddedCoverDistancePx:spatial.policy.maxEmptyRadiusPx,frame:[world.frameWidthPx,world.frameHeightPx],seed},
+  {referenceId,algorithm:'macro-shore-step-v1',sourceHash:p.sourceHash,segmentMinPx:p.shoreSegmentMinPx,segmentMaxPx:p.shoreSegmentMaxPx,
+    depthMinPx:p.shoreDepthMinPx,depthMaxPx:p.shoreDepthMaxPx,protectedGapPx:p.shoreProtectedGapPx,maxCleanRunPx:p.maxCleanRunPx});
+  const finalPhase=phase===p.refinementPasses-1,holeObjects=objects.map((object,index)=>({object,index})).filter(({object})=>object.kind==='hole');
+  const compiled=finalPhase?nativeAutoCompiledField([...land,...shore.additions],
+    holeObjects.map(({object,index})=>object.rects.map(rect=>shifted(rect,sites[chosen.get(index)!]!))),shore.cuts,
+    holeObjects.map(({index})=>sites[chosen.get(index)!]!),[world.frameWidthPx,world.frameHeightPx],seed,p.sourceHash):undefined;
+  const measuredObjects=objects.map((object,index)=>object.kind==='hole'&&compiled?
+    {...object,coverageRects:compiled.holeRects[holeObjects.findIndex(hole=>hole.index===index)]}:object);
+  phases.push(refineNativeAutoPlan(measuredObjects,sites,domains.map(domain=>domain.map(candidate=>candidate.index)),chosen,
+    [...land,...shore.additions],sourceTree,spatial.policy,{...p,refinementPasses:1,maxRefinementEvaluations:Math.floor(p.maxRefinementEvaluations/p.refinementPasses)},checkpoint,shore.cuts,finalPhase?8:16,compiled?.ground));
+  }
+  const refinement:NativeAutoRefinementTrace={
+    evaluations:phases.reduce((sum,phase)=>sum+phase.evaluations,0),acceptedMoves:phases.reduce((sum,phase)=>sum+phase.acceptedMoves,0),
+    acceptedSwaps:phases.reduce((sum,phase)=>sum+phase.acceptedSwaps,0),acceptedJointMoves:phases.reduce((sum,phase)=>sum+phase.acceptedJointMoves,0),
+    completedPasses:phases.length,before:phases[0]!.before,after:phases[phases.length-1]!.after};
   // Compiler assigns IDs in row order, so preserve the same order used for
   // each generated solid's seeded projected footprint.
   objects.forEach((object,index)=>{
@@ -152,5 +199,5 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
       ...(object.kind==='hole'?{rects:object.rects.map(rect=>shifted(rect,site).join(':')).join('|')}:{})}));
   });
   return{reference:{id:referenceId,worldId:input.worldId,grade:input.grade,seed,seedSalt:0,sourceHash:p.sourceHash,rows},
-    siteEvaluations,feasibleSites:sites.length,placementStates,backtracks,requestedCounts};
+    siteEvaluations,feasibleSites:sites.length,placementStates,backtracks,refinement,requestedCounts};
 }

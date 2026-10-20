@@ -36,7 +36,7 @@ export function createNativeAutoCandidate(recipe:WorldProductionRecipeV3,input:N
   const trace={candidate:0,geometrySeed:input.geometrySeed,layoutSeed:layout.layoutSeed,
     geometryHash:nativeSpatialGeometryFingerprint(geometry,layout).hash,requestedCounts:layout.requestedCounts,
     accepted:reasons.length===0,reasons,gates:{geometry:{...ground,metrics:{...ground.metrics,boundary,
-      automaticPlanning:{siteEvaluations:plan.siteEvaluations,feasibleSites:plan.feasibleSites,placementStates:plan.placementStates,backtracks:plan.backtracks,policySourceHash:p.sourceHash}}},visibility}};
+      automaticPlanning:{siteEvaluations:plan.siteEvaluations,feasibleSites:plan.feasibleSites,placementStates:plan.placementStates,backtracks:plan.backtracks,refinement:plan.refinement,policySourceHash:p.sourceHash}}},visibility}};
   attempt.candidates.push(trace);
   return{layout,geometry,groups,trace};
 }
