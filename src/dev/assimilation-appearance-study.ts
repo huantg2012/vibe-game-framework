@@ -17,15 +17,18 @@ import type { Player } from '@/entities/player';
 import { lastLightScreenHeading } from '@/entities/player-last-light-math';
 import { setArtStudyNarrationStorage } from '@/narrative/atmosphere';
 import { AssimilationModelClient, type AssimilationModelConsumer } from './assimilation-model-client';
+import type { LastLightRenderState } from '@/art/last-light-renderer';
 
 interface LookRenderer extends AssimilationModelConsumer {
   setAssimilationLook(state: AssimilationLookState | null): void;
   getAssimilationLookMetrics(): { count:number;totalMs:number;lastMs:number;maxMs:number;maskBytes:number;preparedFrames:number;changedPixels:number };
+  render?(): void;
+  draw?(state: LastLightRenderState): void;
 }
 interface ArtScene extends Phaser.Scene {
   player: Player;
   lastLightPlayerPresentation?: LookRenderer | null;
-  chamber?: { renderer: LookRenderer; image: Phaser.GameObjects.Image } | null;
+  chamber?: { renderer: LookRenderer; image: Phaser.GameObjects.Image; renderState: LastLightRenderState } | null;
   locomotion?: { state: { facing: number } } | null;
 }
 if (import.meta.env.DEV) initialize();
@@ -57,7 +60,8 @@ function initialize(): void {
   let inspector = true, detailRequested = false, hookedGame = false, failed = false, lastRender = 0;
   let preparationMs = 0;
   let geometry = true;
-  const model = new AssimilationModelClient(error);
+  let material = true;
+  const model = new AssimilationModelClient(error, () => active?.chamber?.image.texture.source[0]?.update());
   const intervals: number[] = [], cpuSamples:number[]=[], controller = new AbortController();
   let lastMeasuredCount=0;
   const canvas = el<HTMLCanvasElement>('detail'), context = canvas.getContext('2d')!;
@@ -91,9 +95,14 @@ function initialize(): void {
     readouts();
   }
   function apply(): void {
-    if (baseline) { zeroLook.seconds=state.seconds; renderer?.setAssimilationLook(zeroLook); }
+    if (baseline || !material) { zeroLook.seconds=state.seconds; renderer?.setAssimilationLook(zeroLook); }
     else renderer?.setAssimilationLook(state);
     if (renderer) model.update(renderer, baseline || !geometry ? 0 : state.amount, state.fibre, state.seconds, state.motion);
+    if (paused) {
+      if (active?.chamber) { renderer?.draw?.(active.chamber.renderState); active.chamber.image.texture.source[0]?.update(); }
+      else renderer?.render?.();
+      detailRequested = true;
+    }
   }
   function pause(value: boolean): void {
     if (paused === value) return;
@@ -203,12 +212,14 @@ function initialize(): void {
   el('motion').onclick=()=>{state.motion=!state.motion;el('motion').setAttribute('aria-pressed',String(state.motion));apply();};
   el('subjective').onclick=()=>{state.subjective=!state.subjective;el('subjective').setAttribute('aria-pressed',String(state.subjective));apply();};
   el('geometry').onclick=()=>{geometry=!geometry;el('geometry').setAttribute('aria-pressed',String(geometry));apply();};
+  el('material').onclick=()=>{material=!material;el('material').setAttribute('aria-pressed',String(material));apply();};
   function setInspector(value:boolean):void{inspector=value;el('inspector').setAttribute('aria-pressed',String(value));el('inspector').textContent=value?'局部放大开':'局部放大关';}
   el('inspector').onclick=()=>setInspector(!inspector);
   const api={set,pause,face,auto:(value:boolean)=>{automatic=value;cycle=0;readouts();},baseline:(value:boolean)=>{baseline=value;apply();readouts();},
     geometry:(value:boolean)=>{geometry=value;apply();},
+    material:(value:boolean)=>{material=value;apply();},
     snapshot:()=>({world:selected,state:{...state},target:{...target},automatic,baseline,paused,ready:!!renderer,
-      geometry,modelSettled:model.settled,modelMetrics:{...model.metrics},
+      geometry,material,modelSettled:model.settled,modelMetrics:{...model.metrics},
       frameP50:percent(intervals,.5),frameP95:percent(intervals,.95),cpuP95:percent(cpuSamples,.95),preparationMs,metrics:renderer?.getAssimilationLookMetrics(),player:active?.player.getPosition()}),
     clearSamples:()=>{intervals.length=0;cpuSamples.length=0;},inspector:setInspector,captureDetail:()=>{detailRequested=true;}};
   Object.assign(window,{__assimilationStudy:api});

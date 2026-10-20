@@ -5,7 +5,7 @@ import type { WeaponAttackPose } from '@/systems/weapon-swing';
 import type { PlayerExternalVisuals } from './player-external-visuals';
 import { lastLightAttackSampleIndex } from './player-last-light-combat';
 import { unprojectLastLight, type LightVector } from '@/art/last-light-spatial';
-import { LAST_LIGHT_STRIDE_METRES, lastLightWalkArm } from '@/art/last-light-gait';
+import { LAST_LIGHT_STRIDE_METRES } from '@/art/last-light-gait';
 import {
   ASSIMILATION_SURFACE_STRIDE, AssimilationLookParameters, createAssimilationLookMetrics,
   getAssimilationLookPalettes, recordAssimilationLookTime, sampleAssimilationSurface, writeAssimilationSurface,
@@ -218,7 +218,7 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     const gx = Math.max(0,Math.min(63,Math.floor(wrist[0]+this.armOffsetX))), gy = Math.max(0,Math.min(79,Math.floor(wrist[1]+this.armOffsetY)));
     const body = arm ? this.assets.bodyWithoutArm[this.frameIndex]! : frame;
     this.weaponBehind = wrist[2] + this.armDepthDelta < body.depths[gy * 64 + gx]! - .03;
-    this.weapon.setPosition(this.grip.x, this.grip.y).setRotation(this.assets.headings[row]! + (arm?.source.sweep ?? .55) + Math.PI / 2);
+    this.weapon.setPosition(this.grip.x, this.grip.y).setRotation(lastLightScreenHeading(frame.source.yaw) + (arm?.source.sweep ?? .55) + Math.PI / 2);
     this.weapon.setDepth(this.groundDepth + (this.weaponBehind ? .08 : .14));
     this.lamp.x = position.x + frame.lamp[0]; this.lamp.y = groundY + frame.lamp[1]; this.lamp.z = frame.lamp[2];
   }
@@ -283,17 +283,15 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
     const backX = BASIS.back[0] / backLength, backZ = BASIS.back[2] / backLength;
       const surface = new Uint8Array(frame.offsets.length * ASSIMILATION_SURFACE_STRIDE);
       const c = Math.cos(frame.source.yaw), s = Math.sin(frame.source.yaw), pixels = frame.pixels;
-      const leftWrist = frame.source.pose === 'walk'
-        ? lastLightWalkArm(false, Number(frame.source.phase) / (Math.PI * 2)).wrist
-        : [-.312, .758, .083] as const;
       for (let i = 0; i < frame.offsets.length; i++) {
         const p = i * 11, nx = pixels[p]! / CAMERA.scale, ny = pixels[p + 1]! / CAMERA.scale;
         const worldX = nx * BASIS.right[0] + ny * backX, worldZ = nx * BASIS.right[2] + ny * backZ;
         const localX = worldX * c - worldZ * s, localY = pixels[p + 2]! / CAMERA.scale, localZ = worldX * s + worldZ * c;
-        const leftHand = (localX - leftWrist[0]) ** 2 + (localY - leftWrist[1]) ** 2 + (localZ - leftWrist[2]) ** 2 < .13 ** 2;
+        const wrist = frame.source.wristWorld;
+        const gripContact = (worldX - wrist[0]) ** 2 + (localY - wrist[1]) ** 2 + (worldZ - wrist[2]) ** 2 < .065 ** 2;
         writeAssimilationSurface(localX, localY, localZ, Math.max(pixels[p + 6]!, pixels[p + 7]!, pixels[p + 8]!),
           pixels[p + 10]!, surface, i * ASSIMILATION_SURFACE_STRIDE,
-          leftHand || frame.source.glovePixels.includes(frame.offsets[i]! / 4));
+          gripContact);
       }
       this.assimilationSurfaces.set(frame, {
         pixels: surface,
@@ -331,10 +329,12 @@ export class LastLightPlayerPresentation implements PlayerExternalVisuals {
       }
     }
     this.gloveTexture.context.putImageData(this.gloveOutput,0,0); this.gloveTexture.refresh();
-    const contactFrame = this.assets.frames[this.frameIndex]!;
-    if (this.previousContactFrame !== this.frameIndex && contactFrame.contact) {
+    const contactIndex = this.assimilationModel ? nearestLastLightYaw(lastLightScreenHeading(original.source.yaw), this.assets.headings) * 13
+      + (original.source.pose === 'walk' ? 1 + Math.round(Number(original.source.phase) / (Math.PI * 2) * 12) % 12 : 0) : this.frameIndex;
+    const contactFrame = this.assets.frames[contactIndex]!;
+    if (this.previousContactFrame !== contactIndex && contactFrame.contact) {
       this.contactTexture.context.putImageData(contactFrame.contact, 0, 0); this.contactTexture.refresh();
-      this.previousContactFrame = this.frameIndex;
+      this.previousContactFrame = contactIndex;
     }
     this.rendered = true;
     if (measure) recordAssimilationLookTime(this.assimilationMetrics, start);

@@ -1,7 +1,7 @@
 import type { AssimilationModelFrame, AssimilationModelRequest, AssimilationModelResponse } from './assimilation-model-protocol';
 
 export interface AssimilationModelConsumer {
-  getAssimilationModelPose(): Pick<AssimilationModelRequest, 'yaw' | 'phase' | 'breath'> | null;
+  getAssimilationModelPose(): Pick<AssimilationModelRequest, 'yaw' | 'phase' | 'breath' | 'settle'> | null;
   setAssimilationModel(frame: AssimilationModelFrame | null): void;
 }
 
@@ -19,7 +19,7 @@ export class AssimilationModelClient {
   private failed = false;
   readonly metrics = { requests: 0, applied: 0, cacheHits: 0, cacheBytes: 0, lastBakeMs: 0,
     maxBakeMs: 0, lastBuildMs: 0, lastApplyMs: 0, maxApplyMs: 0, lastLatencyMs: 0, triangles: 0, error: '' };
-  constructor(private readonly onError: (reason: unknown) => void) {
+  constructor(private readonly onError: (reason: unknown) => void, private readonly onApplied: () => void) {
     this.worker.onmessage = ({ data }: MessageEvent<AssimilationModelResponse>) => {
       const pending = this.pending;
       if (!pending || data.id !== pending.id) return;
@@ -42,11 +42,11 @@ export class AssimilationModelClient {
     this.failed = true; this.metrics.error = String(reason); this.onError(reason);
   }
   private key(value: Omit<AssimilationModelRequest, 'id'>): string {
-    return [value.amount, value.fibre, value.yaw, value.phase, value.breath].join('/');
+    return [value.amount, value.fibre, value.yaw, value.phase, value.breath, value.settle ?? 0].join('/');
   }
   private apply(key: string, frame: AssimilationModelFrame): void {
     const start = performance.now();
-    this.consumer?.setAssimilationModel(frame); this.displayed = key;
+    this.consumer?.setAssimilationModel(frame); this.onApplied(); this.displayed = key;
     this.metrics.lastApplyMs = performance.now() - start;
     this.metrics.maxApplyMs = Math.max(this.metrics.maxApplyMs, this.metrics.lastApplyMs);
     this.metrics.applied++;
@@ -56,7 +56,7 @@ export class AssimilationModelClient {
     const pose = consumer.getAssimilationModelPose();
     if (this.failed || !pose || amount < .005) {
       this.desired = null;
-      if (this.displayed) consumer.setAssimilationModel(null);
+      if (this.displayed) { consumer.setAssimilationModel(null); this.onApplied(); }
       this.displayed = '';
       return;
     }

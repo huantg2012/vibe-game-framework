@@ -8,6 +8,7 @@ import {
   type AssimilationLookMetrics, type AssimilationLookState,
 } from './assimilation-appearance';
 import type { AssimilationModelFrame } from '@/dev/assimilation-model-protocol';
+import { LAST_LIGHT_WALK_FRAMES, LAST_LIGHT_SETTLE_STAGES } from './last-light-gait';
 
 export interface LastLightFrame {
   x: number; y: number; width: number; height: number;
@@ -224,7 +225,7 @@ export class LastLightRenderer {
   private assimilationPaletteUploaded = false;
   private assimilationModel: LastLightFrame | null = null;
   private readonly assimilationTextures = new Map<keyof LastLightRenderImages, WebGLTexture>();
-  private readonly assimilationUpload = new Uint8Array(64 * 80 * 4);
+  private assimilationUpload: Uint8Array | null = null;
   private assimilationBounds = { x: 0, y: 0, width: 64, height: 80 };
   private assimilationRenderState: LastLightRenderState | null = null;
 
@@ -326,11 +327,14 @@ export class LastLightRenderer {
   }
   /** CPU draw/submission time only: this is deliberately not called GPU time. */
   getAssimilationLookMetrics(): Readonly<AssimilationLookMetrics> { return this.assimilationMetrics; }
-  getAssimilationModelPose(): { yaw: number; phase: number | null; breath: number } | null {
+  getAssimilationModelPose(): { yaw: number; phase: number | null; breath: number; settle: number } | null {
     const state = this.assimilationRenderState;
     if (!state || state.gaitPose === 'sit') return null;
     const frame = this.frame(state);
-    return { yaw: frame.yaw, phase: frame.pose === 'walk' ? frame.phase / 12 * Math.PI * 2 : null, breath: 0 };
+    const isSettle = frame.pose === 'walk' && frame.phase >= LAST_LIGHT_WALK_FRAMES;
+    const walkFrame = isSettle ? Math.floor((frame.phase - LAST_LIGHT_WALK_FRAMES) / LAST_LIGHT_SETTLE_STAGES) : frame.phase;
+    return { yaw: frame.yaw, phase: frame.pose === 'walk' ? walkFrame / LAST_LIGHT_WALK_FRAMES * Math.PI * 2 : null, breath: 0,
+      settle: isSettle ? ((frame.phase - LAST_LIGHT_WALK_FRAMES) % LAST_LIGHT_SETTLE_STAGES + 1) / LAST_LIGHT_SETTLE_STAGES : 0 };
   }
   /** Four small textures replace the same four actor samplers. They never
    * duplicate the original atlas and never add a compositing pass. */
@@ -341,6 +345,7 @@ export class LastLightRenderer {
       lamp: value.meta.lamp, shadowCapsules: value.meta.shadowCapsules } : null;
     if (value) {
       const gl = this.gl;
+      const upload = this.assimilationUpload ??= new Uint8Array(64 * 80 * 4);
       let left = 64, top = 80, right = 0, bottom = 0;
       for (let i = 0; i < 64 * 80; i++) if (value.albedo[i * 4 + 3]) {
         const x = i % 64, y = Math.floor(i / 64);
@@ -354,9 +359,9 @@ export class LastLightRenderer {
         ['actorDepth', value.depth], ['actorRough', value.material]] as const) {
         let texture = this.assimilationTextures.get(key);
         if (!texture) { texture = this.texture(null, 64, 80); this.assimilationTextures.set(key, texture); }
-        for (let y = 0; y < 80; y++) this.assimilationUpload.set(data.subarray(y * 256, (y + 1) * 256), (79 - y) * 256);
+        for (let y = 0; y < 80; y++) upload.set(data.subarray(y * 256, (y + 1) * 256), (79 - y) * 256);
         gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 64, 80, gl.RGBA, gl.UNSIGNED_BYTE, this.assimilationUpload);
+        gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 64, 80, gl.RGBA, gl.UNSIGNED_BYTE, upload);
       }
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     }
