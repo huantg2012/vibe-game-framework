@@ -71,6 +71,8 @@ DEV `enemy-world-pilot.html` 保留为受控视觉回归入口，调用共享 ba
 
 `MasterPresentation.afterUpdate` 在draw前以已有 `frame.piles` 的id/collected同步，续局首帧同样先同步；`RiftScene` 仅对 `native.searchSites` 启用 `createGroundedWorldSearchVisual`，无旧sprite主体或独立计时反光，只复用原翻动与揭晓粒子。`LootSearchSystem` API、存档collected和奖励事务保持。已揭晓掉落物仍沿F023。该接入记录不代表用户视觉终验；全108世界推广已获用户授权，逐批验证范围归专项QA。
 
+2026-10-20低档补给：`rift-low-expedition.csv`及独立`rift-low-expedition-content-seeds.csv`经`tools/world-study/codegen-low-expedition.mjs`生成低档覆盖。仅三开放世界的新low工厂冻结6薪柴/2污染物与safe节点`allowWeapon:false`；两近程点不可被首次或随机武器替换。旧冻结配方缺字段时沿原规则；通用构型认证工具按基底内容输入验证，不能用现行低档覆盖改写中重证书。
+
 ## R100 工程前置：正式出击与冷续局的异步准备
 
 `PurificationScene.prepareRiftDeparture` → `managers/rift-recovery.ts` → `generation/rift-generation-client.ts` → 专用 `rift-generation-worker.ts`。主线程先固定一次配方，Worker 的 `rift-generation-execute.ts` 使用原冻结执行器生成并计算身份；`rift-generation-identity.ts` 是两端共用的纯签名算法。执行器/协议不依赖 Phaser、SaveManager 或其他有副作用的会话单例。每次请求独占 Worker，request id 拒绝旧响应，60秒硬截止；成功、取消、错误和消息反序列化失败均清计时器/监听并 terminate。
@@ -83,7 +85,7 @@ DEV `enemy-world-pilot.html` 保留为受控视觉回归入口，调用共享 ba
 
 prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/外来身份都抛错。`RiftScene.create`在真正建场帧再包住layout/world恢复，避免准备与场景启动之间的逐出重新引发主线程生成。同步create/restore仍用于离线工具；没有正式recovery身份的`import.meta.env.DEV`直入（`#rift`、pollution-review）和显式DEV fixture保留开发路径，有正式身份的恢复不能落入此例外。
 
-等待UI复用首页或暂停菜单，根仍为`#dom-ui-root`。会话载入互斥，等待期间新建拒绝；Scene/DOM各自保存controller所有权。取消、blur、SHUTDOWN及直接DESTROY终止请求；直接销毁可能已经清空ScenePlugin.manager，净化点先置退出标志并discard等待菜单，首页SHUTDOWN/DESTROY共用幂等release，迟到Promise与图片decode不能resume或重绘。非取消准备失败仍保留现有显式弃局救援，但必须是相同存档快照且基地/库存合法。机制唯一正文见[统一库存第7节](specs/system-field-inventory.md#7-死亡撤离与中断恢复)。
+净化点出发等待由暂停菜单的独立preparation模式承载，根为`#dom-ui-root`：真实layout/surface阶段逐行显示「临行」自语，最后一句复用既有出发过场；仅保留取消。场景模拟保持暂停，游戏PRE_RENDER只投影`updateChamberVisuals`的环境时钟；关闭/取消/销毁释放该监听。冷载入仍复用首页或记录菜单。会话载入互斥，等待期间新建拒绝；Scene/DOM各自保存controller所有权。取消、blur、SHUTDOWN及直接DESTROY终止请求；直接销毁可能已经清空ScenePlugin.manager，净化点先置退出标志并discard等待菜单，首页SHUTDOWN/DESTROY共用幂等release，迟到Promise与图片decode不能resume或重绘。非取消准备失败仍保留现有显式弃局救援，但必须是相同存档快照且基地/库存合法。机制唯一正文见[统一库存第7节](specs/system-field-inventory.md#7-死亡撤离与中断恢复)。
 
 该改动不新增存档schema、正式世界或污染分级UI，不把I02母版推广，也不宣称I03完成。Worker迁移不等于总生成时长或建场性能合格；接收/重建/身份复核、完整准入的Host清单与AI配置、表面预烤及首次纹理提交仍按主线程阶段分别审核。新增`check-async-entry`、`check-async-destroy`、`check-generation-worker`进入既有恢复总检查，程序测试、真实浏览器与美术/性能门分别记录。
 
@@ -365,7 +367,7 @@ RiftDevFixture显式注入1200ms入场、世界环境音、soil脚步、运行�
 
 2026-10-16（DEC-219）：`data/rift-player-presentations.csv` → `src/generated/rift-player-presentations.ts` 以冻结 `package.id` 选择 A。余烬脊／晶化林床／破膜盆地的三档新出发和有效 v3 冷恢复共用 `prepareR100Presentation` 预载 `public/assets/player-last-light-a/`；成功准备后 RiftScene 同步消费，取消传递 AbortSignal，其他世界不请求该资源。模型切换不修改冻结地图身份、存档 schema、20×20 身体或战斗数值。显式 DEV `playerModel=a` 仍可作隔离空手检视，不是正式出发路径。
 
-`LastLightPlayerPresentation` 使用同源 104 帧原身体与 104 帧去右臂身体、120 帧右臂，共 328 帧；原站立／行走资产字节保持。右臂按原 Combat 的 windup/active/recovery 与 contact hold 选帧，真实肩／肘／腕和每像素深度合成，实际位移仍驱动原腿部步态；撬棍沿用现有品质／变体像素、钉真实腕点，前后层随腕深度，手套覆盖握柄。`PlayerExternalVisuals` 将既有装备、挥击、受击 tint 与可见包围盒委托给场景表现，不新造战斗时钟。死亡取消挥击并清除闪白，场景关闭释放自有纹理。
+`LastLightPlayerPresentation` 使用同源 104 帧原身体与 104 帧去右臂身体、120 帧右臂，共 328 帧；原站立／行走资产字节保持。右臂按原 Combat 的 windup/active/recovery 与 contact hold 选帧，真实肩／肘／腕和每像素深度合成，实际位移仍驱动原腿部步态；撬棍沿用现有品质／变体像素、钉真实腕点，前后层随腕深度，手套覆盖握柄。Rift展示统一为脚锚0.8倍：身体/接地/手套/持具、肩灯/腕点/受光空间偏移与步幅同步缩放；源图集、净化点、20×20玩法身体及战斗距离不变。`PlayerExternalVisuals` 将既有装备、挥击、受击 tint 与可见包围盒委托给场景表现，不新造战斗时钟。死亡取消挥击并清除闪白，场景关闭释放自有纹理。
 
 图集深度反投影和 Y-up→Z-up 变换使像素法线、受光位置和肩灯锚点进入同一个世界灯场。材料 PNG 的 alpha 为发光数据，使用无预乘解码保留 alpha=0 的 AO。低受光非发光像素连续补偿上限28%，亮面、AO和灯不变。身体／持具在真实实体遮罩更新后，仅豁免自身 opaque 像素的地面 fog 二次遮暗；图像及 GeometryMask 临时转到 fog-local 后恢复，contact 不参与，FOV 查询与半径保持。有限验证见 [三关正式接入QA](qa/player-a-production-2026-10-16.md)。
 
