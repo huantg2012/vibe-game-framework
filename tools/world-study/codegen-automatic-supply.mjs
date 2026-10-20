@@ -12,7 +12,8 @@ export function compileAutomaticSupplyCSV(raw) {
     const values = line.split(',');
     if (values.length !== fields.length) throw new Error('Invalid automatic supply row');
     const row = Object.fromEntries(fields.map((field, i) => [field, i ? Number(values[i]) : values[i]]));
-    if (fields.slice(1).some(field => !Number.isSafeInteger(row[field]) || row[field] <= 0)
+    if (fields.slice(1).some(field => !Number.isSafeInteger(row[field]) || row[field] < (field === 'earlyFuelNodes' ? 0 : 1))
+      || row.grade === 'low' && row.earlyFuelNodes < 2
       || row.p95CoveragePx > row.maxCoveragePx || row.maxNodes > 32 || row.earlyFuelNodes > row.maxNodes
       || row.maxBodyCells > 131072 || row.maxWorkEdges > 64000000) throw new Error('Invalid automatic supply bounds');
     return row;

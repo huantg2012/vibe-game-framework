@@ -80,8 +80,18 @@ assert.ok(plan.selected.filter(item=>item.necessaryFuel).every(item=>item.kind==
 const fuel = plan.selected.filter(item=>item.kind==='kindling').map(item=>({position:item.seat.position,tier:item.tier,...(item.necessaryFuel?{allowWeapon:false}:{})}));
 const contaminants = plan.selected.filter(item=>item.kind==='contaminant').map(item=>({position:item.seat.position}));
 const receipt = plan.verify(fuel,contaminants);
+for (const grade of ['medium','severe'] as const) {
+  const noEarlyPolicy = {...createAutomaticSupplyPolicy(grade), earlyFuelNodes:0};
+  assert.ok(validAutomaticSupplyPolicy(noEarlyPolicy));
+  const noEarlyPlan = planAutomaticSupply(open,origin,candidates,{...definition,grade_id:grade},noEarlyPolicy,77,52);
+  assert.ok(noEarlyPlan.selected.length > 0, 'No early fuel requirement must still choose the first supply node');
+  assert.equal(noEarlyPlan.selected.filter(item=>item.necessaryFuel).length,0);
+}
+assert.ok(!validAutomaticSupplyPolicy({...policy,earlyFuelNodes:1}), 'Low grade frozen policy cannot remove its two fuel guarantees');
+
 assert.throws(()=>plan.verify(fuel.map(item=>({...item,allowWeapon:true})),contaminants),/early-fuel/);
 assert.throws(()=>plan.verify(fuel.slice(1),contaminants),/count-mismatch/);
 assert.throws(()=>planAutomaticSupply(open,origin,candidates.map(candidate=>({...candidate,tiers:[] })),definition,policy,77,52),/early-fuel-infeasible/);
 assert.throws(()=>new AutomaticSupplyNavigation(open,origin,{...policy,maxWorkEdges:1}),/work-budget/);
+assert.throws(()=>planAutomaticSupply(open,origin,candidates.filter(candidate=>candidate.position.x<200),definition,{...policy,maxCoveragePx:80,p95CoveragePx:50},77,52),/legal-tier-coverage-infeasible/,'Theoretical legal-tier holes must reject before wasting the node budget');
 console.log(JSON.stringify({status:'pass',scope:'offline small physical grids only; no game/browser execution or balance approval',budget:{small:automaticSupplyBudget(nav.space,0,policy),large:automaticSupplyBudget(largeNav.space,0,policy)},voidDetourPx:toLeft[right],receipt},null,2));

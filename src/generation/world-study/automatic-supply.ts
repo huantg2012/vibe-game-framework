@@ -42,14 +42,22 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
   const selected: AutomaticSupplySelection[] = [];
   const admissible = candidates.filter(candidate => candidate.tiers.length > 0 && candidate.interactionCells.length > 0);
   const kindlingShare = quotas.filter(quota => quota.kind === 'kindling').reduce((sum, quota) => sum + quota.remaining, 0) / minimumNodes;
+  let legalCoverage: AutomaticSupplyCoverage | undefined;
   const passes = (coverage: AutomaticSupplyCoverage): boolean => coverage.maxPx <= policy.maxCoveragePx && coverage.p95Px <= policy.p95CoveragePx;
   const fail = (reason: string, coverage = navigation.coverage(coverageDistance)): never => {
     throw Object.assign(new Error(`Automatic supply rejected: ${reason}`), { diagnostics: { automaticSupply: {
       stage: 'supply-placement', reason, ...navigation.space, budget, actualCount: selected.length, minimumNodes,
-      legalCandidateCount: admissible.length, quotas: quotas.map(quota => ({ ...quota })), coverage, work: { ...navigation.work },
+      legalCandidateCount: admissible.length, legalCoverage, quotas: quotas.map(quota => ({ ...quota })), coverage, work: { ...navigation.work },
     } } });
   };
   if (budget > policy.maxNodes) fail('node-budget');
+  if (!admissible.length) fail(policy.earlyFuelNodes ? 'early-fuel-infeasible' : 'legal-coverage-infeasible');
+  // Even unlimited nodes cannot improve on all legal interaction seats. Detect
+  // a risk-tier coverage hole once before spending the finite placement budget.
+  const legalSources = new Set<number>();
+  for (const candidate of admissible) for (const cell of candidate.interactionCells) legalSources.add(cell);
+  legalCoverage = navigation.coverage(navigation.distancesFrom([...legalSources]));
+  if (!passes(legalCoverage)) fail('legal-tier-coverage-infeasible', legalCoverage);
   for (let slot = 0; slot < policy.maxNodes; slot++) {
     const coverage = navigation.coverage(coverageDistance), earlyFuel = slot < policy.earlyFuelNodes;
     if (slot >= budget && quotas.every(quota => quota.remaining === 0) && passes(coverage)) break;
@@ -60,7 +68,7 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
       if (selected.some(other => Math.hypot(other.seat.position.x - candidate.position.x, other.seat.position.y - candidate.position.y) < nodeSpacingPx)) continue;
       const quota = required.find(item => candidate.tiers.includes(item.tier) && (!earlyFuel || item.kind === 'kindling' && item.tier === 'safe'));
       if (required.length && !quota) continue;
-      const route = earlyFuel ? candidate.approachDistance : Math.min(...candidate.interactionCells.map(cell => targetDistance![cell]!));
+      const route = earlyFuel || selected.length === 0 ? candidate.approachDistance : Math.min(...candidate.interactionCells.map(cell => targetDistance![cell]!));
       // Geodesic proximity has priority; source-material preference and seeded
       // order only break subpixel ties, and never consume hidden reward fields.
       const score = route - Math.min(100, Math.max(-100, candidate.environmentScore)) * .000001
@@ -91,7 +99,7 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
     const finalCoverage = navigation.coverage(navigation.distancesFrom(finalCells));
     if (!passes(finalCoverage)) fail('final-coverage-mismatch', finalCoverage);
     return { algorithm: policy.algorithm, sourceHash: policy.sourceHash, ...navigation.space, budget, minimumNodes,
-      actualCount: actual.length, safeFuelCount, requiredSafeFuel: policy.earlyFuelNodes, coverage: finalCoverage,
+      actualCount: actual.length, legalCoverage, safeFuelCount, requiredSafeFuel: policy.earlyFuelNodes, coverage: finalCoverage,
       coverageBasis: 'shortest-20px-body-route-to-visible-48px-interaction-seats', work: { ...navigation.work } };
   } };
 }

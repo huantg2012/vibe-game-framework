@@ -23,7 +23,8 @@ export function validAutomaticSupplyPolicy(value: unknown): value is R100Automat
   const p = value as R100AutomaticSupplyPolicy;
   return Object.keys(value).sort().join(',') === keys && p.version === 1 && p.algorithm === 'body-geodesic-cover-v1'
     && isPollutionGrade(p.grade) && typeof p.sourceHash === 'string' && /^[a-f0-9]{64}$/.test(p.sourceHash)
-    && numericKeys.every(key => Number.isSafeInteger(p[key]) && p[key] > 0)
+    && numericKeys.every(key => Number.isSafeInteger(p[key]) && p[key] >= (key === 'earlyFuelNodes' ? 0 : 1))
+    && (p.grade !== 'low' || p.earlyFuelNodes >= 2)
     && p.p95CoveragePx <= p.maxCoveragePx && p.earlyFuelNodes <= p.maxNodes && p.maxNodes <= 32
     && p.maxBodyCells <= 131072 && p.maxWorkEdges <= 64000000;
 }
