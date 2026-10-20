@@ -139,5 +139,15 @@ assert(validAssimilationSources(gameState.getAssimilationSources(), gameState.ge
 assert(saveManager.trySave());
 assert(saveManager.load());
 near(sum(), gameState.getAssimilation());
+gameState.addKindling(10);
+gameState.applyDamage('CORE', 10);
+assert(saveManager.trySave());
+const beforeRejectedRepair = gameState.getState();
+const beforeRejectedRepairBytes = records.get(GAME_CONSTANTS.SAVE.KEY);
+rejectWrites = true;
+assert.equal(saveManager.allocateToModule('CORE', 1), 0);
+rejectWrites = false;
+assert.deepEqual(gameState.getState(), beforeRejectedRepair, 'whole-state rollback restores the same source spectrum');
+assert.equal(records.get(GAME_CONSTANTS.SAVE.KEY), beforeRejectedRepairBytes);
 inventoryStore.setPersistence(null);
-console.log('PASS assimilation sources: real deltas, cap, legacy neutral, proportional healing, frozen retry, cold base load, three outcomes, malformed envelope rejection, snapshots and 100k steps');
+console.log('PASS assimilation sources: real deltas, cap, legacy neutral, proportional healing, frozen retry, cold base load, three outcomes, malformed envelope rejection, failed-repair rollback, snapshots and 100k steps');
