@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import {refineNativeAutoPlan,nativeAutoScoreImproves} from '../../src/generation/world-study/native-auto-refinement.ts';
 import {nativePrimitive,nativePrimitiveTree} from '../../src/generation/world-study/native-spatial-geometry.ts';
+import {createNativeAutoConnectivity} from '../../src/generation/world-study/native-auto-traversal.ts';
 import {NATIVE_SPATIAL_POLICY} from '../../src/generated/r100-native-spatial.ts';
 import {NATIVE_AUTO_CONSTRUCTION_POLICIES} from '../../src/generated/r100-native-auto-construction.ts';
 const score=(penalty,qualityPenalty)=>({penalty,qualityPenalty});
@@ -17,9 +18,11 @@ function fieldScore(wideFraction,targetWidePercent,hardWideRatio=.5){
   // Exactly 100 fixed body sample centres. Only their declared ground margin
   // changes, so the fixture isolates hard-wide and quality-wide contributions.
   const ground={margin:p=>p.x<800*wideFraction?100:30,supportsBody:()=>true};
-  return refineNativeAutoPlan([{kind:'hole',bounds:[-5000,-5000,8,8],rects:[[-5000,-5000,8,8]]}],
+  const points=Array.from({length:100},(_,gx)=>({x:gx*8+4,y:4,gx,gy:0,margin:ground.margin({x:gx*8+4}),source:10000}));
+  const bodyField={points,baseLinks:new Uint8Array(100).fill(255),connected:createNativeAutoConnectivity(points,{x:4,y:4})};
+  return refineNativeAutoPlan([{traversal:{supported:()=>true,links:()=>255},kind:'hole',bounds:[-5000,-5000,8,8],rects:[[-5000,-5000,8,8]]}],
     [{x:0,y:0}],[[0]],new Map([[0,0]]),[[0,0,800,8]],source,
-    {...NATIVE_SPATIAL_POLICY,minWideRatio:hardWideRatio},planning,()=>{},[],8,ground).after;
+    {...NATIVE_SPATIAL_POLICY,minWideRatio:hardWideRatio},planning,()=>{},[],8,ground,bodyField).after;
 }
 const hardBoundary=fieldScore(.5,55),higherQualityTarget=fieldScore(.5,65),oldCombined=fieldScore(.5,55,.55);
 assert.equal(hardBoundary.wideRatio,.5);

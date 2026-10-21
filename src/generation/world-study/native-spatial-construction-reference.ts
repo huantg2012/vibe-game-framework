@@ -35,6 +35,14 @@ export interface NativeSpatialConstructedReference extends NativeSpatialLayout {
    * unchanged. Area and density intent account for the authored extension. */
   readonly assessmentInput?:Pick<NativeSpatialFrozenInput,'policy'|'world'>;
 }
+/** r14 has already compiled and accepted these exact shapes. Legacy callers
+ * omit this option and retain their original construction byte for byte. */
+export interface NativeSpatialPreparedReference {
+  readonly sourceInstances:MasterDefinition['instances'];
+  readonly terrainOutline:readonly Readonly<Vector2>[];
+  readonly erosion:readonly (readonly Readonly<Vector2>[])[];
+  readonly shore:NativeConstructionShoreResult;
+}
 function number(row:Row,key:Column):number {
   if(!row[key].trim()||!Number.isFinite(Number(row[key])))throw new Error(`Reference ${row.id}: invalid ${key}`);
   return Number(row[key]);
@@ -74,7 +82,7 @@ export function parseNativeSpatialConstructionReference(csv:string,sourceHash:st
 
 /** Build the one authored L/H/S arrangement, then break its edges exactly once.
  * All real geometry/body/visibility/content gates are run by the DEV caller. */
-export function constructNativeSpatialReference(recipe:WorldProductionRecipeV3,reference:NativeSpatialConstructionReference,onFragmentCompile?:(shape:R100FrozenFragmentShape)=>void,shore?:Readonly<{policy:NativeConstructionShorePolicy;combinedSourceHash:string}>,extension?:Readonly<{policy:NativeConstructionExtensionPolicy;moduleSourceHash:string;combinedSourceHash:string}>):NativeSpatialConstructedReference {
+export function constructNativeSpatialReference(recipe:WorldProductionRecipeV3,reference:NativeSpatialConstructionReference,onFragmentCompile?:(shape:R100FrozenFragmentShape)=>void,shore?:Readonly<{policy:NativeConstructionShorePolicy;combinedSourceHash:string}>,extension?:Readonly<{policy:NativeConstructionExtensionPolicy;moduleSourceHash:string;combinedSourceHash:string}>,prepared?:NativeSpatialPreparedReference):NativeSpatialConstructedReference {
   const input=recipe.nativeSpatial,native=recipe.nativeDefinition;
   if(recipe.package.algorithmRevision!==12||!input)throw new Error('Reference requires the explicit native development recipe');
   if(reference.worldId!==input.world.worldId||reference.seed!==recipe.requestedSeed||reference.grade!==native.grade)throw new Error('Reference does not match its frozen recipe');
@@ -111,7 +119,7 @@ export function constructNativeSpatialReference(recipe:WorldProductionRecipeV3,r
       const anchors=author.sourceInstanceIds.map(id=>native.instances.find(i=>i.id===id)!);
       if(anchors.some(i=>!i))throw new Error(`Reference ${row.id}: missing source instance`);
       const cx=anchors.reduce((sum,i)=>sum+i.x,0)/anchors.length,cy=anchors.reduce((sum,i)=>sum+i.y,0)/anchors.length;
-      instances=native.instances.filter(i=>sourceIds.has(i.id)).map(i=>({...i,x:((i.x-cx)*c-(i.y-cy)*s)*scale,y:((i.x-cx)*s+(i.y-cy)*c)*scale,rotation:i.rotation+rotation,length:i.length*scale,width:i.width*scale,height:i.role==='solid'?i.height*scale:i.height,thickness:i.role==='solid'?i.thickness*scale:i.thickness}));
+      instances=prepared?[...prepared.sourceInstances]:native.instances.filter(i=>sourceIds.has(i.id)).map(i=>({...i,x:((i.x-cx)*c-(i.y-cy)*s)*scale,y:((i.x-cx)*s+(i.y-cy)*c)*scale,rotation:i.rotation+rotation,length:i.length*scale,width:i.width*scale,height:i.role==='solid'?i.height*scale:i.height,thickness:i.role==='solid'?i.thickness*scale:i.thickness}));
       assembly={assemblyId:row.id,instanceIds:author.sourceInstanceIds,maxSpanPx:author.maxSpanPx};
     }else{
       const profile=input.subordinateProfiles.find(p=>p.id===row.profile_id);if(!profile)throw new Error(`Reference ${row.id}: unknown subordinate profile`);
@@ -152,13 +160,13 @@ export function constructNativeSpatialReference(recipe:WorldProductionRecipeV3,r
   if(shore){
     if(shore.policy.referenceId!==reference.id||!/^[0-9a-f]{64}$/.test(shore.combinedSourceHash))throw new Error('Shore policy requires matching reference and combined CSV SHA256');
     const footprints=nativeConstructionFootprints(instances,native.family,reference.seed),holePrimitives=voidRects.flatMap(([x,y,w,h])=>[nativePrimitive([x,y,x+w,y,x+w,y+h],-1),nativePrimitive([x,y,x+w,y+h,x,y+h],-1)]);
-    constructionShore={...constructNativeMacroShore({land,protectedRects:[...voidRects,...landJoins.map(join=>join.rect),...protect,[spawn.x-10,spawn.y-10,20,20]],supportBounds:footprints.supportBounds,coverPrimitives:[...holePrimitives,...footprints.solidPrimitives],maxAddedCoverDistancePx:input.policy.maxEmptyRadiusPx,frame,seed:(reference.seed+reference.seedSalt)>>>0,...(constructionExtension?{seedLand:land.slice(0,landRows.length),seedTranslation:constructionExtension.translation}:{})},shore.policy),referenceSourceHash:reference.sourceHash,combinedSourceHash:extension?.combinedSourceHash??shore.combinedSourceHash};
+    constructionShore={...(prepared?.shore??constructNativeMacroShore({land,protectedRects:[...voidRects,...landJoins.map(join=>join.rect),...protect,[spawn.x-10,spawn.y-10,20,20]],supportBounds:footprints.supportBounds,coverPrimitives:[...holePrimitives,...footprints.solidPrimitives],maxAddedCoverDistancePx:input.policy.maxEmptyRadiusPx,frame,seed:(reference.seed+reference.seedSalt)>>>0,...(constructionExtension?{seedLand:land.slice(0,landRows.length),seedTranslation:constructionExtension.translation}:{})},shore.policy)),referenceSourceHash:reference.sourceHash,combinedSourceHash:extension?.combinedSourceHash??shore.combinedSourceHash};
   }
   const finalLand=[...land,...(constructionShore?.additions??[])],finalVoids=[...voidRects,...(constructionShore?.cuts??[])];
   if(instances.length>48||finalLand.length+finalVoids.length>128)throw new Error('Reference exceeds native instance/rectangle capacity');
   const fragmentShape:R100FrozenFragmentShape={algorithmVersion:'rectilinear-fragment-v1',layoutId:reference.id,sourceHash:extension?.combinedSourceHash??shore?.combinedSourceHash??reference.sourceHash,seedMode:'run-seed',seedSalt:reference.seedSalt,edgeSeed:(reference.seed+reference.seedSalt)>>>0,
     layout:{worldScale:2,authoringFrame:[frame[0]/2,frame[1]/2],landRects:finalLand.map(r=>r.map(v=>v/2) as unknown as FragmentRect),voidRects:finalVoids.map(r=>r.map(v=>v/2) as unknown as FragmentRect)}};
-  onFragmentCompile?.(fragmentShape);const compiled=compileR100FragmentShape(fragmentShape,reference.seed);
+  onFragmentCompile?.(fragmentShape);const compiled=prepared??compileR100FragmentShape(fragmentShape,reference.seed);
   const definition:MasterDefinition={...native,cols:frame[0]/32,rows:frame[1]/32,instances,erosion:compiled.erosion,terrainOutline:compiled.terrainOutline,fragmentShapeVersion:'rectilinear-fragment-v1',spawn_x:spawn.x,spawn_y:spawn.y,exit_x:spawn.x,exit_y:spawn.y,search_x:spawn.x,search_y:spawn.y,enemy_x:spawn.x,enemy_y:spawn.y};
   return{candidate:0,countPairIndex,bayCountIndex,layoutSeed:reference.seed,definition,fragmentShape,assemblies,requestedCounts,holes,bays:[],landJoins,...(constructionShore?{constructionShore}:{}),...(constructionExtension?{constructionExtension,assessmentInput}:{}),
     plan:{land,landPlates,bays:[],objects,deepSpanProxyPx:Number.NaN,largestWideRatioProxy:null}};

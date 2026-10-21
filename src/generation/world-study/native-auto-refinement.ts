@@ -1,15 +1,16 @@
 /** Finite coordinate descent over the complete, uncompiled L/H/S plan. */
 import {nativePrimitiveDistance,type NativeSpatialBvh} from './native-spatial-geometry';
-import {createNativeSpatialPlanningGround} from './native-spatial-bay-layout';
 import type {NativeSpatialPolicy} from './native-spatial-types';
 import type {NativeAutoConstructionPolicy,NativeAutoRect as Rect} from './native-auto-types';
 import type {NativeAutoGroundField} from './native-auto-shape';
 import {createNativeAutoRouteField} from './native-auto-route-field';
+import type {NativeAutoBodyField,NativeAutoTraversalTemplate} from './native-auto-traversal';
 
 export interface NativeAutoCoverageObject {
   readonly kind:'hole'|'solid';readonly bounds:Rect;readonly rects:readonly Rect[];
   readonly tree?:NativeSpatialBvh;
   readonly coverageRects?:readonly Rect[];
+  readonly traversal?:NativeAutoTraversalTemplate;
 }
 interface Point {readonly x:number;readonly y:number}
 export interface NativeAutoCoverageScore {
@@ -38,39 +39,20 @@ export function nativeAutoObjectDistance(object:NativeAutoCoverageObject,positio
   for(const rect of object.coverageRects??object.rects)distance=Math.min(distance,rectangleDistance(rect,x,y));
   return distance;
 }
-/** Exact triangle vs 20×20 body SAT, matching the physical square convention. */
-function bodyOverlaps(tree:NativeSpatialBvh,x:number,y:number):boolean {
-  if(x+10<=tree.minX||x-10>=tree.maxX||y+10<=tree.minY||y-10>=tree.maxY)return false;
-  if(!tree.items)return!!(tree.left&&bodyOverlaps(tree.left,x,y)||tree.right&&bodyOverlaps(tree.right,x,y));
-  return tree.items.some(triangle=>{
-    if(x+10<=triangle.minX||x-10>=triangle.maxX||y+10<=triangle.minY||y-10>=triangle.maxY)return false;
-    const points=triangle.points;
-    for(let index=0;index<6;index+=2){
-      const next=(index+2)%6,nx=points[next+1]!-points[index+1]!,ny=points[index]!-points[next]!;
-      const projection=[0,2,4].map(i=>points[i]!*nx+points[i+1]!*ny),center=x*nx+y*ny,radius=10*(Math.abs(nx)+Math.abs(ny));
-      if(center+radius<=Math.min(...projection)+1e-7||center-radius>=Math.max(...projection)-1e-7)return false;
-    }return true;
-  });
-}
-
 export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[],sites:readonly Point[],
-  domains:readonly (readonly number[])[],chosen:Map<number,number>,land:readonly Rect[],source:NativeSpatialBvh,
-  policy:NativeSpatialPolicy,planning:NativeAutoConstructionPolicy,checkpoint:()=>void,cuts:readonly Rect[]=[],spacing:8|16=16,
-  compiledGround?:NativeAutoGroundField):NativeAutoRefinementTrace {
-  // Independent fine phases avoid the 64px candidate grid aliasing 128/160px
-  // holes and missing narrow connections between deep regions.
-  const ground=compiledGround??createNativeSpatialPlanningGround(land,cuts),field:(Point&{margin:number;source:number;gx:number;gy:number})[]=[];
+  domains:readonly (readonly number[])[],chosen:Map<number,number>,land:readonly Rect[],_source:NativeSpatialBvh,
+  policy:NativeSpatialPolicy,planning:NativeAutoConstructionPolicy,checkpoint:()=>void,_cuts:readonly Rect[]=[],spacing:8|16=16,
+  compiledGround:NativeAutoGroundField|undefined=undefined,bodyField?:NativeAutoBodyField):NativeAutoRefinementTrace {
+  if(!bodyField||!compiledGround||spacing!==8)throw new Error('Automatic refinement requires the frozen authoritative body field');
+  const field=bodyField.points;
   const maximumX=Math.max(...land.map(r=>r[0]+r[2])),maximumY=Math.max(...land.map(r=>r[1]+r[3]));
-  for(let gy=0;gy*spacing+spacing/2<maximumY;gy++)for(let gx=0;gx*spacing+spacing/2<maximumX;gx++){
-    const point={x:gx*spacing+spacing/2,y:gy*spacing+spacing/2},margin=ground.margin(point),distance=nativePrimitiveDistance(source,point.x,point.y);
-    if(margin>=10&&(!compiledGround||compiledGround.supportsBody(point))&&distance>=10&&!bodyOverlaps(source,point.x,point.y))field.push({...point,margin,source:distance,gx,gy});
-  }
   const lookup=new Map(field.map((p,index)=>[`${p.gx}:${p.gy}`,index]));
   const neighbors=field.map(p=>[-1,0,1].flatMap(dx=>[-1,0,1].flatMap(dy=>{
     const index=lookup.get(`${p.gx+dx}:${p.gy+dy}`);return(dx||dy)&&index!==undefined?[index]:[];
   })));
   const distanceCaches=objects.map(()=>new Map<number,Float32Array>());
   const bodyCaches=objects.map(()=>new Map<number,Uint8Array>());
+  const edgeCaches=objects.map(()=>new Map<number,Uint8Array>());
   // Sites are snap8 translations. A projected point at the same object-local
   // coordinate has identical distance and body occupancy, at every site.
   // Preserve the old Float32 rounding before deriving the occupancy mask.
@@ -87,10 +69,11 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
   const localDistances=objects.map(()=>new Float32Array(localSize));
   // 0 = not measured, 1 = clear, 2 = blocked.
   const localBodies=objects.map(()=>new Uint8Array(localSize));
+  const localEdges=objects.map(()=>new Uint8Array(localSize));
   const distances=(objectIndex:number,siteIndex:number):Float32Array=>{
     const cache=distanceCaches[objectIndex]!,old=cache.get(siteIndex);if(old)return old;
     checkpoint();
-    const values=new Float32Array(field.length),blocked=new Uint8Array(field.length);
+    const values=new Float32Array(field.length),blocked=new Uint8Array(field.length),edges=new Uint8Array(field.length);
     const object=objects[objectIndex]!,site=sites[siteIndex]!,offset=site.y/8*localCols+site.x/8;
     const localValues=localDistances[objectIndex]!,localBody=localBodies[objectIndex]!;
     for(let index=0;index<field.length;index++){
@@ -98,17 +81,15 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
       if(!localBody[key]){
         const point=field[index]!,x=point.x-site.x,y=point.y-site.y;
         localValues[key]=nativeAutoObjectDistance(object,site,point);
-        const distance=localValues[key]!;
-        const occupied=distance>=Math.SQRT2*10?false:distance<10?true:
-          object.kind==='solid'?bodyOverlaps(object.tree!,x,y):(object.coverageRects??object.rects).some(rect=>overlaps([x-10,y-10,20,20],rect,0));
-        localBody[key]=occupied?2:1;
+        localBody[key]=object.traversal!.supported(x,y)?1:2;
+        localEdges[objectIndex]![key]=object.traversal!.links(x,y);
       }
-      values[index]=localValues[key]!;blocked[index]=localBody[key]!-1;
+      values[index]=localValues[key]!;blocked[index]=localBody[key]!-1;edges[index]=localEdges[objectIndex]![key]!;
     }
-    cache.set(siteIndex,values);bodyCaches[objectIndex]!.set(siteIndex,blocked);return values;
+    cache.set(siteIndex,values);bodyCaches[objectIndex]!.set(siteIndex,blocked);edgeCaches[objectIndex]!.set(siteIndex,edges);return values;
   };
   const deep=new Uint8Array(field.length),deepBody=new Uint8Array(field.length),wide=new Uint8Array(field.length),seen=new Uint8Array(field.length),queue=new Int32Array(field.length);
-  const routeField=createNativeAutoRouteField(field,spacing),available=new Uint8Array(field.length),holeDistance=new Float32Array(field.length);
+  const routeField=createNativeAutoRouteField(field,spacing),available=new Uint8Array(field.length),holeDistance=new Float32Array(field.length),activeLinks=new Uint8Array(field.length);
   function components(mask:Uint8Array):{span:number;largest:number;count:number;spanPenalty:number} {
     seen.fill(0);let span=0,largest=0,count=0,spanPenalty=0;
     for(let start=0;start<field.length;start++)if(mask[start]&&!seen[start]){
@@ -125,26 +106,27 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
     }
     return{span,largest,count,spanPenalty};
   }
-  interface FixedField {structure:Float32Array;holes:Float32Array;blocked:Uint8Array}
+  interface FixedField {structure:Float32Array;holes:Float32Array;blocked:Uint8Array;links:Uint8Array}
   // Every trial changes only one or two objects. Cache the other objects'
   // exact nearest distances and body mask once per coordinate operation.
   const fixedField=(moving:readonly number[]):FixedField=>{
-    const structure=Float32Array.from(field.map(point=>point.source)),holes=new Float32Array(field.length).fill(Infinity),blocked=new Uint8Array(field.length);
+    const structure=Float32Array.from(field.map(point=>point.source)),holes=new Float32Array(field.length).fill(Infinity),blocked=new Uint8Array(field.length),links=bodyField.baseLinks.slice();
     for(let object=0;object<objects.length;object++)if(!moving.includes(object)){
       const values=distances(object,chosen.get(object)!),body=bodyCaches[object]!.get(chosen.get(object)!)!;
       for(let cell=0;cell<field.length;cell++){
-        structure[cell]=Math.min(structure[cell]!,values[cell]!);blocked[cell]=blocked[cell]!|body[cell]!;
+        structure[cell]=Math.min(structure[cell]!,values[cell]!);blocked[cell]=blocked[cell]!|body[cell]!;links[cell]=links[cell]!&edgeCaches[object]!.get(chosen.get(object)!)![cell]!;
         if(objects[object]!.kind==='hole')holes[cell]=Math.min(holes[cell]!,values[cell]!);
       }
     }
-    return{structure,holes,blocked};
+    return{structure,holes,blocked,links};
   };
   const score=(moving:readonly number[]=[],fixed:FixedField=fixedField(moving)):NativeAutoCoverageScore=>{
     const arrays=moving.map(index=>distances(index,chosen.get(index)!));
     const blocked=moving.map(index=>bodyCaches[index]!.get(chosen.get(index)!)!);
+    const edges=moving.map(index=>edgeCaches[index]!.get(chosen.get(index)!)!);
     let penalty=0,maxEmptyPx=0,maxVoidDistancePx=0,maxApproachRoutePx=0,bodyCount=0,soft=0;
     deep.fill(0);wide.fill(0);deepBody.fill(0);
-    available.fill(0);holeDistance.fill(Infinity);
+    available.fill(0);holeDistance.fill(Infinity);activeLinks.set(fixed.links);
     const cellError=Math.SQRT2*4;
     for(let index=0;index<field.length;index++){
       const point=field[index]!;
@@ -159,6 +141,7 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
       }
       const open=Math.min(structure,point.margin);if(open<10)continue;
       available[index]=1;holeDistance[index]=voidDistance;
+      for(const edge of edges)activeLinks[index]=activeLinks[index]!&edge[index]!;
       bodyCount++;maxEmptyPx=Math.max(maxEmptyPx,open+cellError);maxVoidDistancePx=Math.max(maxVoidDistancePx,voidDistance);
       // Whole-map edge treatment can move a local template by one raster cell.
       deep[index]=Number(structure+cellError+(compiledGround?8:0)>policy.deepEmptyThresholdPx);
@@ -169,7 +152,7 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
     // Forecast approach to an internal hole through the actual body field.
     // Half the reference sight range is a planning neighbourhood, not an LOS
     // witness. Final G2 still measures attributed q/v/t and exact body routes.
-    const approach=routeField(available,holeDistance,policy.referenceSightPx/2);
+    const approach=routeField(available,holeDistance,policy.referenceSightPx/2,activeLinks);
     for(let index=0;index<field.length;index++)if(available[index]){
       const length=Number.isFinite(approach[index])?approach[index]!:Math.hypot(maximumX,maximumY)*2;
       maxApproachRoutePx=Math.max(maxApproachRoutePx,length);
@@ -201,6 +184,7 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
       ||!overlaps(box,shifted(other.bounds,sites[chosen.get(index)!]!),planning.objectClearancePx));
   };
   let evaluations=0,acceptedMoves=0,acceptedSwaps=0,acceptedJointMoves=0,completedPasses=0,current=score();
+  if(!bodyField.connected(available,activeLinks))throw new Error('Automatic initial packing is disconnected');
   const before=current;
   const order=objects.map((_,index)=>index).sort((a,b)=>Number(objects[b]!.kind==='hole')-Number(objects[a]!.kind==='hole')||a-b);
   for(let pass=0;pass<planning.refinementPasses&&evaluations<planning.maxRefinementEvaluations;pass++){
@@ -210,7 +194,7 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
         if(evaluations>=planning.maxRefinementEvaluations)break;
         if(site===original||!fits(object,site,[]))continue;
         checkpoint();chosen.set(object,site);evaluations++;
-        const candidate=score([object],fixed);if(nativeAutoScoreImproves(candidate,bestScore)){best=site;bestScore=candidate;}
+        const candidate=score([object],fixed);if(nativeAutoScoreImproves(candidate,bestScore)&&bodyField.connected(available,activeLinks)){best=site;bestScore=candidate;}
       }
       chosen.set(object,best);if(best!==original){current=bestScore;acceptedMoves++;}
     }
@@ -221,7 +205,7 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
       const fixed=fixedField([first,second]);
       checkpoint();chosen.set(first,b);chosen.set(second,a);evaluations++;
       const candidate=score([first,second],fixed);
-      if(nativeAutoScoreImproves(candidate,current)){current=candidate;acceptedSwaps++;}else{chosen.set(first,a);chosen.set(second,b);}
+      if(nativeAutoScoreImproves(candidate,current)&&bodyField.connected(available,activeLinks)){current=candidate;acceptedSwaps++;}else{chosen.set(first,a);chosen.set(second,b);}
     }
     // Coordinated neighboring moves can split a deep ridge without requiring
     // either object to improve the complete objective by itself.
@@ -240,7 +224,7 @@ export function refineNativeAutoPlan(objects:readonly NativeAutoCoverageObject[]
           if(toA===a&&toB===b||!fits(first,toA,[second])||!fits(second,toB,[first])
             ||overlaps(shifted(objects[first]!.bounds,sites[toA]!),shifted(objects[second]!.bounds,sites[toB]!),planning.objectClearancePx))continue;
           checkpoint();chosen.set(first,toA);chosen.set(second,toB);evaluations++;
-          const candidate=score([first,second],fixed);if(nativeAutoScoreImproves(candidate,bestScore)){bestA=toA;bestB=toB;bestScore=candidate;}
+          const candidate=score([first,second],fixed);if(nativeAutoScoreImproves(candidate,bestScore)&&bodyField.connected(available,activeLinks)){bestA=toA;bestB=toB;bestScore=candidate;}
         }
         chosen.set(first,bestA);chosen.set(second,bestB);
         if(bestA!==a||bestB!==b){current=bestScore;acceptedJointMoves++;}

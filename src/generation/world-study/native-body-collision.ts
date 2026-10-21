@@ -87,6 +87,23 @@ function sweepPolygon(p: Polygon, center: Point, halfW: number, halfH: number, d
   hit.fraction = Math.max(0, enter); hit.normalX = normalX; hit.normalY = normalY;
 }
 
+/** Geometry planning uses the very same SAT overlap/sweep as live bodies.
+ * Floor-cell rectangles and solid triangles can both be measured in local
+ * coordinates; translating a placed object never substitutes cell adjacency
+ * for the continuous 20px body sweep. */
+export function createNativeBodyPrimitiveProbe(points: readonly (readonly Point[])[]) {
+  const polygons = points.map(polygon).filter((value): value is Polygon => value !== null);
+  const hit: Hit = { fraction: 1, normalX: 0, normalY: 0 };
+  return {
+    supports(center: Point,halfW=10,halfH=10): boolean { return !polygons.some(value => overlap(value, center, halfW, halfH)); },
+    displacementFraction(center: Point, dx: number, dy: number): number {
+      hit.fraction = 1; hit.normalX = 0; hit.normalY = 0;
+      for (const value of polygons) sweepPolygon(value, center, 10, 10, dx, dy, hit);
+      return hit.fraction;
+    },
+  };
+}
+
 /** Prepares only triangle coefficients, never a full image. Runtime sweeps are
  * allocation-free except the rare phase-ability clipping request. */
 export class NativeBodyCollision implements PhysicalBodyQueries {
@@ -100,7 +117,7 @@ export class NativeBodyCollision implements PhysicalBodyQueries {
   private readonly at: Vector2 = { x: 0, y: 0 };
   private readonly cell: Polygon;
   readonly triangleCount: number;
-  constructor(native: Pick<R100NativeWorldData, 'definition' | 'meshes'>, private readonly map: TileMapData) {
+  constructor(native: {readonly definition: Pick<R100NativeWorldData['definition'], 'instances'>; readonly meshes:R100NativeWorldData['meshes']}, private readonly map: TileMapData) {
     if (map.tileSize !== 8) throw new Error('Native body collision requires the original 8px navigation map');
     const roles = new Map(native.definition.instances.map(instance => [instance.id, instance.role]));
     const solids: Polygon[] = [];

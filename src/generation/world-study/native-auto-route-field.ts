@@ -20,7 +20,7 @@ export function createNativeAutoRouteField(
   const next = new Int32Array(count), previous = new Int32Array(count);
   const heads = new Int32Array(4), queued = new Uint8Array(count);
   const result = new Float64Array(count);
-  return (available: Uint8Array, holeDistance: Float32Array, approachRadius: number): Float64Array => {
+  return (available: Uint8Array, holeDistance: Float32Array, approachRadius: number, exactLinks?:Uint8Array): Float64Array => {
     if (available.length !== count || holeDistance.length !== count) throw new Error('Automatic route field size mismatch');
     distance.fill(0x3fffffff); heads.fill(-1); queued.fill(0); result.fill(Infinity);
     let pending = 0, cursor = 0;
@@ -48,7 +48,8 @@ export function createNativeAutoRouteField(
       for (let direction = 0; direction < 8; direction++) {
         const neighbor = links[cell * 8 + direction]!;
         if (neighbor < 0 || !available[neighbor]) continue;
-        if (direction >= 4) {
+        if(exactLinks&&!(exactLinks[cell]!&(1<<direction)))continue;
+        if (!exactLinks&&direction >= 4) {
           const [a, b] = corners[direction - 4]!;
           const first = links[cell * 8 + a]!, second = links[cell * 8 + b]!;
           if (first < 0 || second < 0 || !available[first] || !available[second]) continue;

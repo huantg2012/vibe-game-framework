@@ -21,7 +21,8 @@ export function createNativeAutoCandidate(recipe:WorldProductionRecipeV3,input:N
     package:{...recipe.package,algorithmRevision:12}},plan.reference,undefined,
   {combinedSourceHash:p.sourceHash,policy:{referenceId:plan.reference.id,algorithm:'macro-shore-step-v1',sourceHash:p.sourceHash,
     segmentMinPx:p.shoreSegmentMinPx,segmentMaxPx:p.shoreSegmentMaxPx,depthMinPx:p.shoreDepthMinPx,depthMaxPx:p.shoreDepthMaxPx,
-    protectedGapPx:p.shoreProtectedGapPx,maxCleanRunPx:p.maxCleanRunPx}});
+    protectedGapPx:p.shoreProtectedGapPx,maxCleanRunPx:p.maxCleanRunPx}},undefined,
+    {sourceInstances:input.preparedSource.instances,terrainOutline:plan.terrainOutline,erosion:plan.erosion,shore:plan.shore});
   checkpoint();attempt.geometryEvaluations++;attempt.finalGeometryEvaluations=(attempt.finalGeometryEvaluations??0)+1;
   const geometry=buildNativeSpatialGeometry(layout.definition,input.geometrySeed);
   checkpoint();
