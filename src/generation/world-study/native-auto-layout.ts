@@ -149,6 +149,21 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
     const group=`${cell.column}:${cell.row}`;if(solidCells.size>=units-1)break;if(solidGroups.has(group))continue;
     solidCells.add(index);solidGroups.add(group);
   }
+  // The first exploration foothold provides real sight-breaking cover. A
+  // solid on the shared departure trunk would be encountered on every trip
+  // leg, despite a correct whole-map H:S count. Assign roles before building
+  // any footprint; all coverage and route gates still judge the result.
+  // Both H members of the first complete 2H/1S unit belong near departure;
+  // merely reserving the nearest centroid can leave a larger adjacent S as
+  // the first actual encounter on every outward route.
+  const arrivalCells=new Set(cells.map((cell,index)=>({cell,index})).sort((a,b)=>
+    Math.hypot(a.cell.x-spawn.x,a.cell.y-spawn.y)-Math.hypot(b.cell.x-spawn.x,b.cell.y-spawn.y)).slice(0,2).map(({index})=>index));
+  for(const arrivalCell of arrivalCells)if(solidCells.has(arrivalCell)){
+    const replacement=cells.map((cell,index)=>({cell,index})).filter(({cell,index})=>!arrivalCells.has(index)&&!solidCells.has(index)&&!solidGroups.has(`${cell.column}:${cell.row}`))
+      .sort((a,b)=>Math.hypot(b.cell.x-spawn.x,b.cell.y-spawn.y)-Math.hypot(a.cell.x-spawn.x,a.cell.y-spawn.y))[0];
+    if(replacement){solidCells.delete(arrivalCell);solidCells.add(replacement.index);
+      solidGroups.delete(`${cells[arrivalCell]!.column}:${cells[arrivalCell]!.row}`);solidGroups.add(`${replacement.cell.column}:${replacement.cell.row}`);}
+  }
   const objectByCell:number[]=[];let nextHole=0,nextSolid=0;
   cells.forEach((_,index)=>objectByCell.push(solidCells.has(index)?solids[nextSolid++]!:holes[nextHole++]!));
   const cellByObject=new Map(objectByCell.map((object,index)=>[object,index]));
