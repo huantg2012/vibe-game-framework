@@ -53,4 +53,20 @@ assert.equal(maze.measure.cellAt(-1,4),-1);
 assert.equal(maze.measure.cellAt(72,4),-1);
 assert.equal(maze.measure.cellAt(4,-1),-1);
 assert.equal(maze.measure.cellAt(4,72),-1);
-console.log('Constructive coverage: H-only shelter, longest-band midpoint, exact-edge routing and coordinate bounds passed');
+// A narrow but walkable cut splits two large wide regions. The witness
+// belongs to that cut, so moving a nearby obstacle away can join the regions.
+const divided=fixture(21,9,200),dividedStructure=new Float32Array(21*9).fill(80),dividedH=new Float32Array(21*9).fill(0);
+for(let y=0;y<9;y++)for(let x=9;x<=11;x++)dividedStructure[y*21+x]=30;
+const constricted=divided.measure.measure(divided.available,divided.links,dividedStructure,dividedH);
+assert.equal(constricted.score.largestWideRatio,.5);
+assert([9,10,11].includes(divided.points[constricted.wideTarget].gx));
+for(let x=9;x<=11;x++)dividedStructure[4*21+x]=80;
+const opened=divided.measure.measure(divided.available,divided.links,dividedStructure,dividedH);
+assert.equal(opened.score.largestWideRatio,1);
+assert.equal(opened.accepted,true);
+// Area deficit witnesses must be structure-constrained, never fixed shore.
+const narrow=fixture(9,9,200),narrowStructure=new Float32Array(81).fill(40);
+for(let x=0;x<9;x++)narrowStructure[x]=80;
+const deficient=narrow.measure.measure(narrow.available,narrow.links,narrowStructure,new Float32Array(81));
+assert.equal(narrow.points[deficient.wideTarget].gy,1);
+console.log('Constructive coverage: H-only shelter, longest-band midpoint, exact-edge routing and coordinate bounds, wide-gap opening and wide-area witnesses passed');

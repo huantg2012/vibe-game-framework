@@ -256,7 +256,9 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   while(!measured.accepted&&placementStates<p.maxPlacementStates){
     checkpoint();const score=measured.score;
     const deepExcess=score.maxDeepSpanPx/spatial.policy.maxDeepEmptySpanPx-1,emptyExcess=score.maxEmptyPx/spatial.policy.maxEmptyRadiusPx-1;
-    const targetIndex=deepExcess>Math.max(0,emptyExcess)?measured.deepTarget:emptyExcess>0?measured.emptyTarget:measured.holeTarget;
+    const wideFailure=score.wideRatio<spatial.policy.minWideRatio||score.largestWideRatio<spatial.policy.minLargestWideRatio;
+    const openWide=wideFailure&&measured.wideTarget>=0;
+    const targetIndex=openWide?measured.wideTarget:deepExcess>Math.max(0,emptyExcess)?measured.deepTarget:emptyExcess>0?measured.emptyTarget:measured.holeTarget;
     if(targetIndex<0)break;const target=bodyField.points[targetIndex]!;
     const local=[...chosen.keys()].sort((a,b)=>nativeAutoObjectDistance(objects[a]!,sites[chosen.get(a)!]!,target)-
       nativeAutoObjectDistance(objects[b]!,sites[chosen.get(b)!]!,target)).slice(0,3);
@@ -265,8 +267,9 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
     for(const objectIndex of local){
       const object=objects[objectIndex]!,fixed=fixedState(objectIndex),otherBounds=[...chosen].filter(([index])=>index!==objectIndex).map(([index,site])=>shifted(objects[index]!.bounds,sites[site]!));
       const candidates=projectedDomains.get(objectIndex)!.filter(candidate=>candidate.index!==chosen.get(objectIndex)&&!otherBounds.some(box=>overlaps(candidate.box,box,p.objectClearancePx)))
-        .map(candidate=>({...candidate,distance:nativeAutoObjectDistance(object,candidate.site,target)}))
-        .sort((a,b)=>a.distance-b.distance||a.site.rank-b.site.rank).slice(0,p.placementBranchLimit);
+        .map(candidate=>({...candidate,distance:nativeAutoObjectDistance(object,candidate.site,target),
+          movement:Math.hypot(candidate.site.x-sites[chosen.get(objectIndex)!]!.x,candidate.site.y-sites[chosen.get(objectIndex)!]!.y)}))
+        .sort((a,b)=>(openWide?Math.max(0,spatial.policy.wideRadiusPx-a.distance)-Math.max(0,spatial.policy.wideRadiusPx-b.distance)||a.movement-b.movement:a.distance-b.distance)||a.site.rank-b.site.rank).slice(0,p.placementBranchLimit);
       for(const candidate of candidates){
         checkpoint();if(placementStates>=p.maxPlacementStates)break;placementStates++;
         const values=distances(objectIndex,candidate.index),trial:CoverageState={body:fixed.body.slice(),links:fixed.links.slice(),structure:fixed.structure.slice(),holes:fixed.holes.slice()};
