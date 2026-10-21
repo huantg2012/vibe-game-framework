@@ -24,6 +24,7 @@ import type { WorldProductionRecipeV3 } from './production-recipe';
 import type { WorldProductionMap } from './production-map';
 import {createNativeConstructionCandidate} from './native-construction-generation';
 import {createNativeAutoCandidate} from './native-auto-generation';
+import {nativeAutoInputForGeometrySeed} from './native-auto-recipe';
 
 export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldProductionMap {
   if (recipe.package?.algorithmRevision === 1 || recipe.package?.algorithmRevision === 2) return createFrozenR100ProductionMap(recipe);
@@ -77,7 +78,7 @@ function createAutomaticConstructionMap(recipe:WorldProductionRecipeV3):WorldPro
     attempts.push(trace);
     const checkpoint=()=>{if(performance.now()-started>=60000){trace.stopReason='deadline';throw failure('Automatic construction exceeded its 60 second deadline');}};
     let candidate:NativeSpatialGeometryCandidate;
-    try{candidate=createNativeAutoCandidate(recipe,{...recipe.nativeAuto!,geometrySeed},trace,checkpoint);}
+    try{candidate=createNativeAutoCandidate(recipe,nativeAutoInputForGeometrySeed(recipe.nativeAuto!,recipe.nativeDefinition,geometrySeed),trace,checkpoint);}
     catch(error){
       if(trace.stopReason==='deadline')throw error;
       rejected.push({seed:geometrySeed,reason:error instanceof Error?error.message:String(error)});continue;

@@ -9,13 +9,20 @@ import {nativePrimitiveDistance,nativePrimitiveTree} from './native-spatial-geom
 import {nativeRectUnionArea,describeNativeSpatialLand} from './native-spatial-land';
 import {nativeAutoHole} from './native-auto-layout';
 import {nativeAutoCounts} from './native-auto-counts';
-import {nativeAutoBudgetSource,nativeAutoSourceProjection} from './native-auto-source';
+import {nativeAutoBudgetSource,nativeAutoSourceProjection,nativeAutoPreparedSourceInstances} from './native-auto-source';
 import {validNativeSpatialRuntimeInput} from './native-spatial-recipe';
 import type {MasterDefinition} from './r100-master-world';
 import type {PollutionGrade} from './pollution-grade';
 import type {NativeAutoRuntimeInput} from './native-auto-types';
 
 const ceil16=(value:number)=>Math.ceil(value/16)*16;
+/** A bounded alternative varies the projection seed, never the captured policy
+ * or source model. Rebind its prepared geometry to that same seed. */
+export function nativeAutoInputForGeometrySeed(input:NativeAutoRuntimeInput,native:MasterDefinition,geometrySeed:number):NativeAutoRuntimeInput {
+  if(geometrySeed===input.geometrySeed)return input;
+  return {...input,geometrySeed,preparedSource:{algorithm:input.preparedSource.algorithm,
+    instances:nativeAutoPreparedSourceInstances(native,geometrySeed,input.nativeSpatial.assemblies[0]!.sourceScale,input.policy.objectClearancePx)}};
+}
 /** Diagnostic binding to the entire model; the model itself is frozen by the recipe. */
 export function nativeAutoSourceFingerprint(native:MasterDefinition):string {
   const source=JSON.stringify(native);let hash=2166136261;

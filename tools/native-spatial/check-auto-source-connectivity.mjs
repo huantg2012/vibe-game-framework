@@ -3,7 +3,8 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {gunzipSync} from 'node:zlib';
-import {createNativeAutoRuntimeInput,validNativeAutoRuntimeInput} from '../../src/generation/world-study/native-auto-recipe.ts';
+import {createNativeAutoRuntimeInput,validNativeAutoRuntimeInput,nativeAutoInputForGeometrySeed} from '../../src/generation/world-study/native-auto-recipe.ts';
+import {mix32} from '../../src/generation/seed-fork.ts';
 import {nativeAutoSourceProjection} from '../../src/generation/world-study/native-auto-source.ts';
 import {createNativeBodyPrimitiveProbe} from '../../src/generation/world-study/native-body-collision.ts';
 
@@ -49,6 +50,13 @@ assert.deepEqual(native,original,'Native source model is untouched');
 assert.deepEqual(after.instances.map(i=>[i.id,i.role]),native.instances.map(i=>[i.id,i.role]),'Complete object set survives');
 assert(validNativeAutoRuntimeInput(JSON.parse(JSON.stringify(input)),native,native.profile),'JSON frozen replay validates');
 assert.deepEqual(createNativeAutoRuntimeInput(native,native.grade,seed),input,'Preparation is deterministic');
+const alternateSeed=mix32(seed,'native-auto-geometry-v1:1');
+const alternate=nativeAutoInputForGeometrySeed(input,native,alternateSeed);
+assert.equal(nativeAutoInputForGeometrySeed(input,native,seed),input,'First proposal uses its frozen source directly');
+assert(validNativeAutoRuntimeInput(alternate,native,native.profile),'Alternative proposal binds prepared source to its actual projection seed');
+assert.equal(alternate.policy,input.policy,'Alternative does not reread or replace policy');
+assert.equal(alternate.nativeSpatial,input.nativeSpatial,'Alternative preserves frozen source scale and spatial contract');
+assert.deepEqual(alternate.preparedSource.instances,nativeAutoSourceProjection(native,alternateSeed,input.nativeSpatial.assemblies[0].sourceScale,input.policy.objectClearancePx).instances);
 for(const mutate of [x=>{x.preparedSource.instances[0].x+=8;},x=>{x.preparedSource.instances[0].length+=8;},x=>{x.preparedSource.instances.pop();},
   x=>{x.preparedSource.instances[2].height+=1;},x=>{x.preparedSource.algorithm='unknown';},x=>{x.preparedSource.instances[0].x=Infinity;},x=>{x.preparedSource.instances[0].extra=1;}]){
   const damaged=structuredClone(input);mutate(damaged);assert(!validNativeAutoRuntimeInput(damaged,native,native.profile),'Frozen source cannot be replaced or partially modified');
