@@ -1,5 +1,6 @@
 import type {PollutionGrade} from './pollution-grade';
 import type {NativeSpatialRuntimeInput} from './native-spatial-types';
+import type {MasterDefinition} from './r100-master-world';
 
 /** Shared grade policy. No world identifier or successful seed belongs here. */
 export interface NativeAutoConstructionPolicy {
@@ -29,6 +30,7 @@ export interface NativeAutoRuntimeInput {
   readonly grade:PollutionGrade;
   readonly geometrySeed:number;
   readonly sourceFingerprint:string;
+  readonly preparedSource:Readonly<{algorithm:'native-source-clearance-v1';instances:MasterDefinition['instances']}>;
   readonly policy:NativeAutoConstructionPolicy;
   readonly intent:Readonly<{coreWidthPx:number;coreHeightPx:number;estimatedBlockedAreaPx2:number;estimatedBoundaryLossPx2:number;estimatedGrossAreaPx2:number}>;
   readonly nativeSpatial:NativeSpatialRuntimeInput;

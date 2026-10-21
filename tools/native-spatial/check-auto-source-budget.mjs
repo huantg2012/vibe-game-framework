@@ -10,11 +10,12 @@ const unchangedFastScales={'cinder-ridge':.8922878425281607,'ruptured-film':.761
 for(const worldId of ['cinder-ridge','ruptured-film']){
   const native=R100_NATIVE_WORLDS.find(w=>w.id===worldId).definitions.find(n=>n.grade==='low');
   const input=createNativeAutoRuntimeInput(native,'low',seed),assembly=input.nativeSpatial.assemblies[0],scale=assembly.sourceScale;
-  const source=nativeAutoSourceProjection(native,seed,scale),limit=input.policy.targetWalkAreaPx2*input.policy.maxSourceAreaPercent/100;
+  const source=nativeAutoSourceProjection(native,seed,scale,input.policy.objectClearancePx),limit=input.policy.targetWalkAreaPx2*input.policy.maxSourceAreaPercent/100;
   assert(scale>0&&scale<=1&&source.areaPx2<=limit);
   assert.deepEqual(source.instances.map(i=>[i.id,i.role]),native.instances.map(i=>[i.id,i.role]),'All source and relief instances survive');
   assert(validNativeAutoRuntimeInput(JSON.parse(JSON.stringify(input)),native,worldId),'Frozen scale replays');
-  assert.equal(scale,unchangedFastScales[worldId],'Previously feasible two-projection output stays exact');
+  assert.equal(nativeAutoBudgetSource(native,seed,limit).scale,unchangedFastScales[worldId],'Legacy transform keeps its exact two-projection result');
+  assert.deepEqual(source.instances,input.preparedSource.instances,'Frozen prepared instances include final spacing');
   const unbounded=nativeAutoBudgetSource(native,seed,1e9);
   assert.equal(unbounded.scale,1,'Small mothers are never enlarged to fill the budget');
   results.push({worldId,scale,sourceAreaPx2:source.areaPx2,limit});
@@ -55,7 +56,7 @@ for(const file of process.argv.slice(2)){
   assert.equal(source.length,native.instances.length);
   const actual=nativeConstructionFootprints(source,native.family,seed),box=actual.supportBounds;
   const area=(Math.max(...box.map(r=>r[0]+r[2]))-Math.min(...box.map(r=>r[0])))*(Math.max(...box.map(r=>r[1]+r[3]))-Math.min(...box.map(r=>r[1])));
-  const expected=nativeAutoSourceProjection(native,seed,input.nativeSpatial.assemblies[0].sourceScale);
+  const expected=nativeAutoSourceProjection(native,seed,input.nativeSpatial.assemblies[0].sourceScale,input.preparedSource?input.policy.objectClearancePx:0);
   assert(Math.abs(area-expected.areaPx2)<.2,'Compiled and planned projected footprint agree within Float32 translation roundoff');
   assert(area<=input.policy.targetWalkAreaPx2*input.policy.maxSourceAreaPercent/100+1);
 }

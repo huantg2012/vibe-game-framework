@@ -9,7 +9,7 @@ import {nativePrimitiveDistance,nativePrimitiveTree} from './native-spatial-geom
 import {nativeRectUnionArea,describeNativeSpatialLand} from './native-spatial-land';
 import {nativeAutoHole} from './native-auto-layout';
 import {nativeAutoCounts} from './native-auto-counts';
-import {nativeAutoBudgetSource} from './native-auto-source';
+import {nativeAutoBudgetSource,nativeAutoSourceProjection} from './native-auto-source';
 import {validNativeSpatialRuntimeInput} from './native-spatial-recipe';
 import type {MasterDefinition} from './r100-master-world';
 import type {PollutionGrade} from './pollution-grade';
@@ -29,7 +29,7 @@ export function createNativeAutoRuntimeInput(native:MasterDefinition,grade:Pollu
   if(!policy)throw new Error(`Missing shared automatic policy: ${grade}`);
   const solids=native.instances.filter(instance=>instance.role==='solid');
   if(!solids.length)throw new Error('Automatic construction needs complete solid source material');
-  const budgetedSource=nativeAutoBudgetSource(native,seed,policy.targetWalkAreaPx2*policy.maxSourceAreaPercent/100);
+  const budgetedSource=nativeAutoBudgetSource(native,seed,policy.targetWalkAreaPx2*policy.maxSourceAreaPercent/100,policy.objectClearancePx);
   const source=budgetedSource.footprint,sourceWidth=budgetedSource.width,sourceHeight=budgetedSource.height;
   let coreWidth=Math.max(policy.coreWidthPx,ceil16(sourceWidth+policy.sourcePaddingPx*2));
   let coreHeight=Math.max(policy.coreHeightPx,ceil16(sourceHeight+policy.sourcePaddingPx*2));
@@ -77,7 +77,7 @@ export function createNativeAutoRuntimeInput(native:MasterDefinition,grade:Pollu
   const frameHeightPx=Math.max(1024,Math.ceil((Math.max(coreHeight,policy.armHeightPx+2*policy.armOffsetPx)+128)/32)*32);
   const bayProfiles=NATIVE_SPATIAL_BAY_PROFILES;
   const input:NativeAutoRuntimeInput={algorithm:'native-auto-construction-v1',version:1,worldId:native.profile,grade,geometrySeed:seed,
-    sourceFingerprint:nativeAutoSourceFingerprint(native),policy,intent:{coreWidthPx:coreWidth,coreHeightPx:coreHeight,estimatedBlockedAreaPx2,estimatedBoundaryLossPx2,estimatedGrossAreaPx2},
+    sourceFingerprint:nativeAutoSourceFingerprint(native),preparedSource:{algorithm:'native-source-clearance-v1',instances:budgetedSource.instances},policy,intent:{coreWidthPx:coreWidth,coreHeightPx:coreHeight,estimatedBlockedAreaPx2,estimatedBoundaryLossPx2,estimatedGrossAreaPx2},
     nativeSpatial:{
       policy:{...NATIVE_SPATIAL_POLICY,minWideRatio:policy.minWidePercent/100,maxGeometryEvaluations:1,maxFullCandidates:1},
       world:{worldId:native.profile,enabled:true,annotationStatus:'reviewed',targetWalkAreaPx2:policy.targetWalkAreaPx2,
@@ -108,7 +108,7 @@ export function createNativeAutoRuntimeInput(native:MasterDefinition,grade:Pollu
 export function validNativeAutoRuntimeInput(value:unknown,native:MasterDefinition,worldId:string):value is NativeAutoRuntimeInput {
   if(!value||typeof value!=='object'||Array.isArray(value))return false;
   const input=value as NativeAutoRuntimeInput,p=input.policy;
-  if(Object.keys(input).sort().join(',')!==['algorithm','version','worldId','grade','geometrySeed','sourceFingerprint','policy','intent','nativeSpatial'].sort().join(',')
+  if(Object.keys(input).sort().join(',')!==['algorithm','version','worldId','grade','geometrySeed','sourceFingerprint','preparedSource','policy','intent','nativeSpatial'].sort().join(',')
     ||input.algorithm!=='native-auto-construction-v1'||input.version!==1||input.worldId!==worldId||worldId!==native.profile
     ||input.grade!==native.grade||!Number.isSafeInteger(input.geometrySeed)||input.geometrySeed<0||input.geometrySeed>0xffffffff
     ||input.sourceFingerprint!==nativeAutoSourceFingerprint(native)||!p||p.grade!==input.grade||!/^[0-9a-f]{64}$/.test(p.sourceHash))return false;
@@ -130,7 +130,21 @@ export function validNativeAutoRuntimeInput(value:unknown,native:MasterDefinitio
   const assemblies=input.nativeSpatial.assemblies;
   if(assemblies.length!==1||assemblies[0]!.id!=='source-whole')return false;
   const assembly=assemblies[0]!;
-  return assembly.sourceScale>0&&assembly.sourceScale<=1&&assembly.minScale===1&&assembly.maxScale===1
+  if(!(assembly.sourceScale>0&&assembly.sourceScale<=1&&assembly.minScale===1&&assembly.maxScale===1
     &&assembly.rotationOffsetsRad.length===1&&assembly.rotationOffsetsRad[0]===0
-    &&[...assembly.sourceInstanceIds,...assembly.attachedReliefIds].sort((a,b)=>a-b).join(',')===native.instances.map(i=>i.id).sort((a,b)=>a-b).join(',');
+    &&[...assembly.sourceInstanceIds,...assembly.attachedReliefIds].sort((a,b)=>a-b).join(',')===native.instances.map(i=>i.id).sort((a,b)=>a-b).join(',')))return false;
+  const prepared=input.preparedSource;
+  if(!prepared||Object.keys(prepared).sort().join(',')!=='algorithm,instances'||prepared.algorithm!=='native-source-clearance-v1'
+    ||!Array.isArray(prepared.instances)||prepared.instances.length!==native.instances.length)return false;
+  try{
+    const expected=nativeAutoSourceProjection(native,input.geometrySeed,assembly.sourceScale,p.objectClearancePx);
+    return expected.areaPx2<=p.targetWalkAreaPx2*p.maxSourceAreaPercent/100
+      &&prepared.instances.every((instance,index)=>{
+        const source=expected.instances[index]!;
+        return instance&&typeof instance==='object'&&!Array.isArray(instance)
+          &&Object.keys(instance).sort().join(',')===Object.keys(source).sort().join(',')
+          &&Object.entries(source).every(([key,value])=>instance[key as keyof typeof instance]===value)
+          &&Number.isFinite(instance.x)&&Number.isFinite(instance.y)&&Math.abs(instance.x)<=8192&&Math.abs(instance.y)<=8192;
+      });
+  }catch{return false;}
 }
