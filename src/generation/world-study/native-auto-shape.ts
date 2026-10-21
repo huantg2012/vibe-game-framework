@@ -23,11 +23,11 @@ function contains(polygon:readonly Point[],x:number,y:number):boolean {
 export function nativeAutoPolygonRects(polygon:readonly Point[]):Rect[]{
   const minX=Math.floor(Math.min(...polygon.map(p=>p.x))/8),maxX=Math.ceil(Math.max(...polygon.map(p=>p.x))/8);
   const minY=Math.floor(Math.min(...polygon.map(p=>p.y))/8),maxY=Math.ceil(Math.max(...polygon.map(p=>p.y))/8),rects:Rect[]=[];
-  for(let y=minY;y<maxY;y++){let start=-1;
+  for(let y=minY;y<maxY;y++){let start:number|undefined;
     for(let x=minX;x<=maxX;x++){
       const occupied=x<maxX&&contains(polygon,x*8+4,y*8+4);
-      if(occupied&&start<0)start=x;
-      if(!occupied&&start>=0){rects.push([start*8,y*8,(x-start)*8,8]);start=-1;}
+      if(occupied&&start===undefined)start=x;
+      if(!occupied&&start!==undefined){rects.push([start*8,y*8,(x-start)*8,8]);start=undefined;}
     }
   }return rects;
 }
