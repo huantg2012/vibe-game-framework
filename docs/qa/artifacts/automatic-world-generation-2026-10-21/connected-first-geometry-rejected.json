@@ -1,0 +1,24 @@
+{
+  "status": "failed",
+  "scope": "offline geometry only; no content deployment or gameplay",
+  "worldId": "crystal-fibre",
+  "grade": "severe",
+  "seed": 24680,
+  "revision": "57c7391c",
+  "reasons": [
+    "G1-largest-empty-radius",
+    "G1-long-deep-empty-region",
+    "body-route-to-cover-exceeds-limit"
+  ],
+  "requestedCounts": {
+    "holes": 14,
+    "solids": 7
+  },
+  "supportedBodySeats": 31060,
+  "reachableBodySeats": 31060,
+  "maxEmptyUpperPx": 168.5645006984564,
+  "maxDeepSpanPx": 528,
+  "wideRatio": 0.5563103670315518,
+  "fullTrace": "connected-first-geometry-rejected.json.gz",
+  "diagnosis": "Exact source pocket removed; later independent audit found negative-local-x sentinel dropping part of hole in planning mask. This failed candidate is not final-field-equivalence evidence."
+}
