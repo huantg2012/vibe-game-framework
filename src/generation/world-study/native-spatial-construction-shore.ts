@@ -63,8 +63,8 @@ export function measureNativeConstructionBoundary(outline:readonly Readonly<{x:n
 
 /** Per-triangle projected bounds conservatively protect the complete source
  * footprint, including relief. Do not replace this with one assembly AABB. */
-export function nativeConstructionFootprints(instances:MasterDefinition['instances'],family:MasterDefinition['family'],seed:number):{supportBounds:Rect[];solidPrimitives:NativeSpatialPrimitive[]} {
-  const supportBounds:Rect[]=[],solidPrimitives:NativeSpatialPrimitive[]=[];
+export function nativeConstructionFootprints(instances:MasterDefinition['instances'],family:MasterDefinition['family'],seed:number):{supportBounds:Rect[];solidPrimitives:NativeSpatialPrimitive[];supportPrimitives:NativeSpatialPrimitive[]} {
+  const supportBounds:Rect[]=[],solidPrimitives:NativeSpatialPrimitive[]=[],supportPrimitives:NativeSpatialPrimitive[]=[];
   for(const instance of instances){
     const {role:_role,groundEdgeWidth:_groundEdgeWidth,...source}=instance;
     const mesh=buildNativeVolume({...source,family:instance.family??family,blocking:instance.role==='solid'?1:0,seed:seed^Math.imul(instance.id,104729)});
@@ -73,9 +73,10 @@ export function nativeConstructionFootprints(instances:MasterDefinition['instanc
       if(Math.abs((p[2]!-p[0]!)*(p[5]!-p[1]!)-(p[3]!-p[1]!)*(p[4]!-p[0]!))<=1e-7)continue;
       const x=Math.min(p[0]!,p[2]!,p[4]!),y=Math.min(p[1]!,p[3]!,p[5]!);
       supportBounds.push([x,y,Math.max(p[0]!,p[2]!,p[4]!)-x,Math.max(p[1]!,p[3]!,p[5]!)-y]);
-      if(instance.role==='solid')solidPrimitives.push(nativePrimitive(p,instance.id));
+      const primitive=nativePrimitive(p,instance.id);supportPrimitives.push(primitive);
+      if(instance.role==='solid')solidPrimitives.push(primitive);
     }
-  }return{supportBounds,solidPrimitives};
+  }return{supportBounds,solidPrimitives,supportPrimitives};
 }
 const overlaps=(a:readonly number[],b:readonly number[]):boolean=>a[0]!<b[0]!+b[2]!&&a[0]!+a[2]!>b[0]!&&a[1]!<b[1]!+b[3]!&&a[1]!+a[3]!>b[1]!;
 const normal=(shore:Shore):readonly [number,number]=>shore.direction===0?[-1,0]:shore.direction===1?[1,0]:shore.direction===2?[0,-1]:[0,1];

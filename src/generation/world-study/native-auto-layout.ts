@@ -69,7 +69,7 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   const assemblyX=snap(cx-sourceBox[0]-sourceBox[2]/2),assemblyY=snap(cy-sourceBox[1]-sourceBox[3]/2);
   const source=nativeConstructionFootprints(sourceInstances.map(instance=>({...instance,x:instance.x+assemblyX,y:instance.y+assemblyY})),native.family,seed);
   const sourceTree=nativePrimitiveTree(source.solidPrimitives),referenceId='automatic-native-layout';
-  const sourceProbe=createNativeBodyPrimitiveProbe(source.solidPrimitives.map(p=>[0,2,4].map(i=>({x:p.points[i]!,y:p.points[i+1]!}))));
+  const sourceProbe=createNativeBodyPrimitiveProbe(source.supportPrimitives.map(p=>[0,2,4].map(i=>({x:p.points[i]!,y:p.points[i+1]!}))));
   const rows:Row[]=[],row=(values:Partial<Row>):Row=>({...Object.fromEntries(NATIVE_CONSTRUCTION_REFERENCE_COLUMNS.map(key=>[key,''])),
     reference_id:referenceId,world_id:input.worldId,grade:input.grade,seed:String(seed),seed_salt:'0',...values}) as Row;
   land.forEach(([x,y,w,h],index)=>rows.push(row({kind:'land',id:`land-${index}`,profile_id:index?'shoulder':'core',
