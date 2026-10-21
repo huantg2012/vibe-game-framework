@@ -8,7 +8,7 @@ import type {NativeAutoCoverageScore} from './native-auto-refinement';
 export interface NativeAutoCoverageMeasure {
   readonly score:NativeAutoCoverageScore;
   readonly accepted:boolean;
-  readonly holeTarget:number;readonly solidTarget:number;
+  readonly holeTarget:number;readonly solidTarget:number;readonly emptyTarget:number;readonly deepTarget:number;
 }
 export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeSpatialPolicy){
   const points=body.points,count=points.length,cols=Math.max(...points.map(p=>p.gx))+1,rows=Math.max(...points.map(p=>p.gy))+1;
@@ -58,7 +58,7 @@ export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeS
       const solidTarget=emptyFail?emptyTarget:deepGroups.target>=0?deepGroups.target:structureTarget;
       if(!coverFail)holeTarget=solidTarget;
       return{accepted:!emptyFail&&!deepFail&&!coverFail&&wideRatio>=policy.minWideRatio&&largestWideRatio>=policy.minLargestWideRatio,
-        holeTarget,solidTarget,score:{penalty:Number(emptyFail)+Number(deepFail)+Number(coverFail)+Number(wideRatio<policy.minWideRatio)+Number(largestWideRatio<policy.minLargestWideRatio),
+        holeTarget,solidTarget,emptyTarget,deepTarget:deepGroups.target,score:{penalty:Number(emptyFail)+Number(deepFail)+Number(coverFail)+Number(wideRatio<policy.minWideRatio)+Number(largestWideRatio<policy.minLargestWideRatio),
           qualityPenalty:0,maxEmptyPx,maxDeepSpanPx:deepGroups.maxSpan,maxVoidDistancePx,maxApproachRoutePx,wideRatio,largestWideRatio}};
     },
     distanceFrom(target:number,available:Uint8Array,links:Uint8Array):Float64Array{

@@ -29,6 +29,15 @@ assert.equal(band.score.maxApproachRoutePx,0);
 assert.ok([74,75].includes(strip.points[band.solidTarget].gx));
 assert.equal(strip.points[band.solidTarget].gy,2);
 assert.equal(band.holeTarget,band.solidTarget);
+assert.equal(band.deepTarget,band.solidTarget);
+// A certificate follows the actual long component. One local separator is
+// insufficient; two separators produce three bounded components.
+for(let y=0;y<5;y++)stripStructure[y*150+50]=0;
+const once=strip.measure.measure(strip.available,strip.links,stripStructure,coveredH);
+assert(once.score.maxDeepSpanPx>448);
+for(let y=0;y<5;y++)stripStructure[y*150+100]=0;
+const twice=strip.measure.measure(strip.available,strip.links,stripStructure,coveredH);
+assert(twice.score.maxDeepSpanPx<=448);
 
 // Exact edge masks determine approach routes; supported-cell adjacency
 // cannot cross a swept-body barrier.

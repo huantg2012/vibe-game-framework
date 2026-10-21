@@ -4,7 +4,7 @@
 import type {NativeAutoBodyPoint} from './native-auto-traversal';
 export interface NativeAutoCoverageCell {
   readonly column:number;readonly row:number;readonly x:number;readonly y:number;
-  readonly points:readonly number[];readonly boundary:boolean;readonly sourceOccupied:boolean;
+  readonly points:readonly number[];readonly boundary:boolean;readonly sourceAssisted:boolean;readonly sourceCovered:boolean;
   readonly sourceDistance:number;
 }
 export function nativeAutoCoverageCells(points:readonly NativeAutoBodyPoint[],spacing:number,maxEmpty:number,deepThreshold:number,contains:(x:number,y:number)=>boolean=()=>true):NativeAutoCoverageCell[]{
@@ -33,7 +33,7 @@ export function nativeAutoCoverageCells(points:readonly NativeAutoBodyPoint[],sp
     let x=0,y=0,sourceDistance=0,sourceMax=0,boundary=false;
     for(const index of cell.points){const point=points[index]!;x+=point.x;y+=point.y;sourceDistance+=point.source;sourceMax=Math.max(sourceMax,point.source);boundary ||= point.margin<=16;}
     return {...cell,x:Math.round(x/cell.points.length/8)*8,y:Math.round(y/cell.points.length/8)*8,boundary,
-      sourceDistance:sourceDistance/cell.points.length,sourceOccupied:sourceMax+Math.SQRT2*4<=maxEmpty||sourceDistance/cell.points.length<=deepThreshold};
+      sourceDistance:sourceDistance/cell.points.length,sourceAssisted:sourceDistance/cell.points.length<=deepThreshold,sourceCovered:sourceMax+Math.SQRT2*4<=deepThreshold};
   });
 }
 
@@ -45,7 +45,7 @@ export function nativeAutoSplitCoverageCell(cell:NativeAutoCoverageCell,points:r
   return [ordered.slice(0,middle),ordered.slice(middle)].map(indices=>{
     let x=0,y=0,sourceDistance=0,boundary=false;
     for(const index of indices){const p=points[index]!;x+=p.x;y+=p.y;sourceDistance+=p.source;boundary ||= p.margin<=16;}
-    return {...cell,points:indices,x:Math.round(x/indices.length/8)*8,y:Math.round(y/indices.length/8)*8,sourceDistance:sourceDistance/indices.length,boundary,sourceOccupied:false};
+    return {...cell,points:indices,x:Math.round(x/indices.length/8)*8,y:Math.round(y/indices.length/8)*8,sourceDistance:sourceDistance/indices.length,boundary,sourceAssisted:false,sourceCovered:false};
   });
 }
 export function nativeAutoCoverageCellNeighbors(cells:readonly NativeAutoCoverageCell[],points:readonly NativeAutoBodyPoint[]):readonly (readonly number[])[]{
