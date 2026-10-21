@@ -255,33 +255,40 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   // All source-assisted responsibility points remain in every exact measure.
   while(!measured.accepted&&placementStates<p.maxPlacementStates){
     checkpoint();const score=measured.score;
-    const deepExcess=score.maxDeepSpanPx/spatial.policy.maxDeepEmptySpanPx-1,emptyExcess=score.maxEmptyPx/spatial.policy.maxEmptyRadiusPx-1;
-    const wideFailure=score.wideRatio<spatial.policy.minWideRatio||score.largestWideRatio<spatial.policy.minLargestWideRatio;
-    const openWide=wideFailure&&measured.wideTarget>=0;
-    const targetIndex=openWide?measured.wideTarget:deepExcess>Math.max(0,emptyExcess)?measured.deepTarget:emptyExcess>0?measured.emptyTarget:measured.holeTarget;
-    if(targetIndex<0)break;const target=bodyField.points[targetIndex]!;
-    const local=[...chosen.keys()].sort((a,b)=>nativeAutoObjectDistance(objects[a]!,sites[chosen.get(a)!]!,target)-
-      nativeAutoObjectDistance(objects[b]!,sites[chosen.get(b)!]!,target)).slice(0,3);
+    const witnesses=[
+      {index:measured.wideTarget,openWide:true,failed:score.wideRatio<spatial.policy.minWideRatio||score.largestWideRatio<spatial.policy.minLargestWideRatio},
+      {index:measured.emptyTarget,openWide:false,failed:score.maxEmptyPx>spatial.policy.maxEmptyRadiusPx},
+      {index:measured.deepTarget,openWide:false,failed:score.maxDeepSpanPx>spatial.policy.maxDeepEmptySpanPx},
+      {index:measured.holeTarget,openWide:false,failed:score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx},
+    ].filter(witness=>witness.failed&&witness.index>=0);
+    if(!witnesses.length)break;
     let best:undefined|{object:number;site:number;distances:Float32Array;state:CoverageState;measure:typeof measured;cost:number};
-    const cost=violation(score);
-    for(const objectIndex of local){
-      const object=objects[objectIndex]!,fixed=fixedState(objectIndex),otherBounds=[...chosen].filter(([index])=>index!==objectIndex).map(([index,site])=>shifted(objects[index]!.bounds,sites[site]!));
-      const candidates=projectedDomains.get(objectIndex)!.filter(candidate=>candidate.index!==chosen.get(objectIndex)&&!otherBounds.some(box=>overlaps(candidate.box,box,p.objectClearancePx)))
-        .map(candidate=>({...candidate,distance:nativeAutoObjectDistance(object,candidate.site,target),
-          movement:Math.hypot(candidate.site.x-sites[chosen.get(objectIndex)!]!.x,candidate.site.y-sites[chosen.get(objectIndex)!]!.y)}))
-        .sort((a,b)=>(openWide?Math.max(0,spatial.policy.wideRadiusPx-a.distance)-Math.max(0,spatial.policy.wideRadiusPx-b.distance)||a.movement-b.movement:a.distance-b.distance)||a.site.rank-b.site.rank).slice(0,p.placementBranchLimit);
-      for(const candidate of candidates){
-        checkpoint();if(placementStates>=p.maxPlacementStates)break;placementStates++;
-        const values=distances(objectIndex,candidate.index),trial:CoverageState={body:fixed.body.slice(),links:fixed.links.slice(),structure:fixed.structure.slice(),holes:fixed.holes.slice()};
-        applyObject(trial,objectIndex,candidate.index,values);
-        if(!bodyField.connected(trial.body,trial.links)){backtracks++;continue;}
-        const result=coverage.measure(trial.body,trial.links,trial.structure,trial.holes),nextCost=violation(result.score);
-        // A solved wide-route/optical contract may not be sacrificed to G1.
-        if(score.wideRatio>=spatial.policy.minWideRatio&&result.score.wideRatio<spatial.policy.minWideRatio||
-          score.largestWideRatio>=spatial.policy.minLargestWideRatio&&result.score.largestWideRatio<spatial.policy.minLargestWideRatio||
-          score.maxApproachRoutePx<=spatial.policy.maxCoverRoutePx&&result.score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx)continue;
-        if(result.score.penalty<=score.penalty&&nextCost<cost-1e-9&&(!best||nextCost<best.cost))
-          best={object:objectIndex,site:candidate.index,distances:values,state:trial,measure:result,cost:nextCost};
+    const cost=violation(score),fixedByObject=new Map<number,CoverageState>(),evaluated=new Set<string>();
+    for(const {index:targetIndex,openWide}of witnesses){
+      const target=bodyField.points[targetIndex]!;
+      const local=[...chosen.keys()].sort((a,b)=>nativeAutoObjectDistance(objects[a]!,sites[chosen.get(a)!]!,target)-
+        nativeAutoObjectDistance(objects[b]!,sites[chosen.get(b)!]!,target)).slice(0,3);
+      for(const objectIndex of local){
+        let fixed=fixedByObject.get(objectIndex);if(!fixed){fixed=fixedState(objectIndex);fixedByObject.set(objectIndex,fixed);}
+        const object=objects[objectIndex]!,otherBounds=[...chosen].filter(([index])=>index!==objectIndex).map(([index,site])=>shifted(objects[index]!.bounds,sites[site]!));
+        const candidates=projectedDomains.get(objectIndex)!.filter(candidate=>candidate.index!==chosen.get(objectIndex)&&!otherBounds.some(box=>overlaps(candidate.box,box,p.objectClearancePx)))
+          .map(candidate=>({...candidate,distance:nativeAutoObjectDistance(object,candidate.site,target),
+            movement:Math.hypot(candidate.site.x-sites[chosen.get(objectIndex)!]!.x,candidate.site.y-sites[chosen.get(objectIndex)!]!.y)}))
+          .sort((a,b)=>(openWide?Math.max(0,spatial.policy.wideRadiusPx-a.distance)-Math.max(0,spatial.policy.wideRadiusPx-b.distance)||a.movement-b.movement:a.distance-b.distance)||a.site.rank-b.site.rank).slice(0,p.placementBranchLimit);
+        for(const candidate of candidates){
+          checkpoint();if(placementStates>=p.maxPlacementStates)break;
+          const trialKey=`${objectIndex}:${candidate.index}`;if(evaluated.has(trialKey))continue;evaluated.add(trialKey);placementStates++;
+          const values=distances(objectIndex,candidate.index),trial:CoverageState={body:fixed.body.slice(),links:fixed.links.slice(),structure:fixed.structure.slice(),holes:fixed.holes.slice()};
+          applyObject(trial,objectIndex,candidate.index,values);
+          if(!bodyField.connected(trial.body,trial.links)){backtracks++;continue;}
+          const result=coverage.measure(trial.body,trial.links,trial.structure,trial.holes),nextCost=violation(result.score);
+          // A solved wide-route/optical contract may not be sacrificed to G1.
+          if(score.wideRatio>=spatial.policy.minWideRatio&&result.score.wideRatio<spatial.policy.minWideRatio||
+            score.largestWideRatio>=spatial.policy.minLargestWideRatio&&result.score.largestWideRatio<spatial.policy.minLargestWideRatio||
+            score.maxApproachRoutePx<=spatial.policy.maxCoverRoutePx&&result.score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx)continue;
+          if(result.score.penalty<=score.penalty&&nextCost<cost-1e-9&&(!best||nextCost<best.cost))
+            best={object:objectIndex,site:candidate.index,distances:values,state:trial,measure:result,cost:nextCost};
+        }
       }
     }
     if(!best)break;
