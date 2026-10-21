@@ -2,14 +2,14 @@
  * by two complete source solids. No shore or whole-map generation is needed. */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {R100_NATIVE_WORLDS} from '../../src/generated/r100-native-worlds.ts';
+import {gunzipSync} from 'node:zlib';
 import {createNativeAutoRuntimeInput,validNativeAutoRuntimeInput} from '../../src/generation/world-study/native-auto-recipe.ts';
 import {nativeAutoSourceProjection} from '../../src/generation/world-study/native-auto-source.ts';
 import {createNativeBodyPrimitiveProbe} from '../../src/generation/world-study/native-body-collision.ts';
 
-const saved=process.argv[2]?JSON.parse(fs.readFileSync(process.argv[2],'utf8')):undefined;
-const native=saved?.recipe.nativeDefinition??R100_NATIVE_WORLDS.find(w=>w.id==='crystal-fibre').definitions.find(n=>n.grade==='severe');
-const seed=saved?.recipe.nativeAuto.geometrySeed??24680;
+const fixture=fs.readFileSync(process.argv[2]??new URL('../../docs/qa/artifacts/automatic-world-generation-2026-10-21/connected-source-pocket-before.json.gz',import.meta.url));
+const saved=JSON.parse((fixture[0]===0x1f&&fixture[1]===0x8b?gunzipSync(fixture):fixture).toString('utf8'));
+const native=saved.recipe.nativeDefinition,seed=saved.recipe.nativeAuto.geometrySeed;
 const original=structuredClone(native),input=createNativeAutoRuntimeInput(native,native.grade,seed);
 const before=nativeAutoSourceProjection(native,seed,1),after=nativeAutoSourceProjection(native,seed,input.nativeSpatial.assemblies[0].sourceScale,input.policy.objectClearancePx);
 
