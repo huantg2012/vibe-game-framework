@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "createdAt": "2026-10-21T03:05:51.724Z",
+  "baseline": "1ab523f3",
+  "fixture": "/Users/yilungao/coh/docs/qa/artifacts/automatic-world-generation-2026-10-21/connected-source-pocket-before.json.gz",
+  "fixtureSha256": "50f5033710c0ec4f8b624eb9c9419e0ca2b5bba46100f001def682e93ab7beaa",
+  "sourceHashes": {
+    "src/generation/world-study/native-body-collision.ts": "9f6e5e60c918724b0028ea95628b4c395b9afe7458d85fa1b54a14006bcee3d1",
+    "src/generation/world-study/native-auto-traversal.ts": "32b555daba07f9ae62787475fde796d6b707cbc3c509e55af5f2e9671929bc86",
+    "src/generation/world-study/native-spatial-geometry.ts": "84e51bc71654cc5cf5058bfdbbb75b43a0dc50d29cff64a5aa66173e9f1a8b0e",
+    "src/generation/world-study/native-terrain.ts": "59de172e9a84328fba15cc903c15780feb2e7fc9825ec7407aa48deb7fb20aea"
+  },
+  "sourceHashesAfter": {
+    "src/generation/world-study/native-body-collision.ts": "9f6e5e60c918724b0028ea95628b4c395b9afe7458d85fa1b54a14006bcee3d1",
+    "src/generation/world-study/native-auto-traversal.ts": "32b555daba07f9ae62787475fde796d6b707cbc3c509e55af5f2e9671929bc86",
+    "src/generation/world-study/native-spatial-geometry.ts": "84e51bc71654cc5cf5058bfdbbb75b43a0dc50d29cff64a5aa66173e9f1a8b0e",
+    "src/generation/world-study/native-terrain.ts": "59de172e9a84328fba15cc903c15780feb2e7fc9825ec7407aa48deb7fb20aea"
+  },
+  "sourcesStable": true,
+  "cases": [
+    {
+      "id": "saved-failure-all-supports-and-eight-direction-sweeps",
+      "passed": true,
+      "cells": 57024,
+      "supported": 31071,
+      "sweeps": 248568,
+      "blockedSweeps": 8678,
+      "triangleCount": 7866,
+      "elapsedMs": 450.558833
+    },
+    {
+      "id": "connected-core-rejects-saved-source-pocket-with-old-edges",
+      "passed": true,
+      "supported": 31071,
+      "reachable": 31069,
+      "unreachable": [
+        {
+          "x": 1404,
+          "y": 708
+        },
+        {
+          "x": 1412,
+          "y": 708
+        }
+      ],
+      "elapsedMs": 20.207915999999955
+    },
+    {
+      "id": "saved-failure-representative-motion-exemptions-and-invalid-inputs",
+      "passed": true,
+      "representativePoints": 97,
+      "sweeps": 3104,
+      "motions": 3104,
+      "invalidInputs": 10,
+      "knownIsolatedPoints": [
+        {
+          "x": 1404,
+          "y": 708
+        },
+        {
+          "x": 1412,
+          "y": 708
+        }
+      ],
+      "elapsedMs": 56.95449999999994
+    },
+    {
+      "id": "independent-primitive-template-matches-old-swept-edge-contract",
+      "passed": true,
+      "fixtures": 5,
+      "points": 3645,
+      "edges": 26056,
+      "elapsedMs": 13.729708000000073
+    }
+  ],
+  "limitations": [
+    "One existing failing definition and independent small fixtures; no candidate/map generation.",
+    "No full pipeline, build, browser, actual gameplay, visual, or performance acceptance."
+  ]
+}
