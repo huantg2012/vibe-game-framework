@@ -39,6 +39,9 @@ if (!worldId) {
   try {
     const recipe = createR100AutomaticRecipe(worldId, seed, gradeArg as PollutionGrade);
     assert(validR100ProductionRecipe(recipe));
+    // Preserve the exact frozen input even when map admission rejects it.
+    // A failure must be replayable without consulting newer policy tables.
+    report.recipe = recipe;
     const map = createR100ProductionMap(recipe);
     assert(map.native);
     hydrateR100MasterWorld(map.native, map.layout);
@@ -48,7 +51,6 @@ if (!worldId) {
       assert.deepEqual(replay.layout, map.layout);
     }
     report.status = 'pass';
-    report.recipe = recipe;
     report.metadata = map.metadata;
     report.diagnostics = map.native.diagnostics;
     report.content = {
