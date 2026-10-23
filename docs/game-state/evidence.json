@@ -11424,5 +11424,60 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E287",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-23",
+    "revision": "b1e80ba7",
+    "scope": "DEC-224的r14仅显式离线入口，正常工厂仍r13。用户接受49.45%后共享宽域改为48%底线／50%目标。当前初排已改成覆盖义务、身体通路与完整空间门共同参与的有界赋值，删除摆完后单物件修补。仅余烬low/12345有限复测：朴素回退曾超60秒；定向回退和16MiB缓存后最终2.688秒拒绝，主案剩持续深空白，备用案覆盖／通路冲突；未输出最终几何或进入资源投放。通用赋值／覆盖夹具、CSV一致及最终构建通过，不代表地图准入。未扩大样本、未切换正式入口、未获实机授权，C2/C3/C4及B2/B4/B5仍未完成。分版证据见E287。 实际最终生成执行为8124f6f4，b1e80ba7仅修正Readonly参数类型并补49%/47%共享政策回归。主案580状态、170完整初排检查、395次定向回退，最后空白上界155.002px／深跨度576px／宽域48.6872%／最大宽域99.5378%，仍因deep-span拒绝；备用案688状态、578通路否决。",
+    "limitations": "这些是初排场内部检查，最终G1–G4、完整内容、hydrate/JSON重放均未执行。首版超时及后续两次拒绝全部保存。未继续调参、扩种子或进行游戏操作；前轮重档成功属于旧算法版本，不可覆盖当前初排。",
+    "sources": [
+      {
+        "path": "src/generation/world-study/native-auto-assignment.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-auto-assignment.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/automatic-world-generation-2026-10-21.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/specs/system-map-generation.md",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-auto-construction-policy.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-coverage.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-auto-constructive-coverage.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/automatic-world-generation-2026-10-21/joint-initial-cinder-low-12345.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/automatic-world-generation-2026-10-21/joint-initial-directed-cinder-low-12345.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/automatic-world-generation-2026-10-21/joint-initial-region-cinder-low-12345.json",
+        "role": "doc"
+      }
+    ]
   }
 ]
