@@ -19,7 +19,7 @@ export const WORLD_PACKAGE_MANIFEST_PATH = 'src/generated/rift-world-package-man
 const OUTPUTS = new Set([GRADES_OUTPUT, PACKAGES_OUTPUT, WORLD_PACKAGE_MANIFEST_PATH]);
 const EXISTING_COMPILERS = ['tools/map-preview/codegen-world-profiles.mjs', 'tools/map-preview/codegen-world-spaces.mjs',
   'tools/map-preview/codegen-world-pool.mjs', 'tools/world-study/codegen-world-conditions.mjs'];
-const GRADE_HEADER = 'id,version,label,status,intent,paint_count,paint_substrate,paint_continuity,paint_coverage,volume_count,volume_substrate,volume_coverage,volume_cols,volume_rows,chaos_start_rate,chaos_end_rate,chaos_ramp_start_seconds,chaos_ramp_end_seconds';
+const GRADE_HEADER = 'id,version,label,status,intent,paint_count,paint_substrate,paint_continuity,paint_coverage,volume_count,volume_substrate,volume_coverage,volume_cols,volume_rows,chaos_start_rate,chaos_end_rate,chaos_ramp_start_seconds,chaos_ramp_end_seconds,volume_pool';
 const PACKAGE_HEADER = 'id,world_id,profile_id,origin,scope,algorithm_id,algorithm_version,space_ids,condition_program_ids,content_fragment_id,capabilities,grade_ids';
 export const sha256 = (value: string | Buffer): string => createHash('sha256').update(value).digest('hex');
 
@@ -45,7 +45,7 @@ export function parsePollutionGradeCsv(raw: string): readonly PollutionGradeDefi
   const definitions = readCsv(raw, GRADE_HEADER).map(row => ({ id: row.id, version: Number(row.version),
     label: row.label, status: row.status, intent: row.intent,
     paintCount: Number(row.paint_count), paintSubstrate: row.paint_substrate, paintContinuity: row.paint_continuity, paintCoverage: row.paint_coverage,
-    volumeCount: Number(row.volume_count), volumeSubstrate: row.volume_substrate, volumeCoverage: row.volume_coverage,
+    volumePool: row.volume_pool!.split(';'), volumeCount: Number(row.volume_count), volumeSubstrate: row.volume_substrate, volumeCoverage: row.volume_coverage,
     volumeCols: Number(row.volume_cols), volumeRows: Number(row.volume_rows), chaosStartRate: Number(row.chaos_start_rate),
     chaosEndRate: Number(row.chaos_end_rate), chaosRampStartSeconds: Number(row.chaos_ramp_start_seconds),
     chaosRampEndSeconds: Number(row.chaos_ramp_end_seconds) }));
@@ -192,7 +192,7 @@ export function verifyWorldPackageManifest(value: unknown, root = ROOT): void {
   if (JSON.stringify(current) !== JSON.stringify(value)) throw new Error('Package dependency content or closure changed');
 }
 
-export function generateWorldPackages({ root = ROOT, check = false } = {}): { packages: number; grades: number; dependencyHash: string; dependencies: number; check: boolean } {
+export function generateWorldPackages({ root = ROOT, check = false, gradesOnly = false } = {}): { packages: number; grades: number; dependencyHash: string; dependencies: number; check: boolean } {
   // Do not bind a package against authored data whose existing runtime data is stale.
   for (const script of EXISTING_COMPILERS)
     execFileSync(process.execPath, [script, '--check'], { cwd: root, stdio: 'pipe' });
@@ -206,6 +206,7 @@ export function generateWorldPackages({ root = ROOT, check = false } = {}): { pa
     [WORLD_PACKAGE_MANIFEST_PATH, `${JSON.stringify(manifest, null, 2)}\n`],
   ]);
   for (const [path, content] of generated) {
+    if (gradesOnly && path !== GRADES_OUTPUT) continue;
     if (check) {
       if (!existsSync(resolve(root, path)) || readFileSync(resolve(root, path), 'utf8') !== content)
         throw new Error(`Stale world package output: ${path}`);
@@ -216,4 +217,4 @@ export function generateWorldPackages({ root = ROOT, check = false } = {}): { pa
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url))
-  console.log(JSON.stringify(generateWorldPackages({ check: process.argv.includes('--check') })));
+  console.log(JSON.stringify(generateWorldPackages({ check: process.argv.includes('--check'), gradesOnly: process.argv.includes('--grades-only') })));

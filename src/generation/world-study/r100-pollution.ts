@@ -176,7 +176,10 @@ export function createMasterPollution(grade: PollutionGradeDefinition, seed: num
       maxRow: seat.row + grade.volumeRows - 1, coreCol: seat.col + Math.floor((grade.volumeCols - 1) / 2), coreRow: seat.row + Math.floor((grade.volumeRows - 1) / 2) };
     for (let row = box.minRow; row <= box.maxRow; row++) for (let col = box.minCol; col <= box.maxCol; col++) volumeCells.add(row * cols + col);
     volumes.push(box);
-    forms.push({ substrate: grade.volumeSubstrate, coverage: grade.volumeCoverage, continuity: 'field', occupancy: 'volume', portfolio: 'ding',
+    // Frozen v1 grades retain gas; v2 draws without replacement at the existing Host seats.
+    const pool = grade.version === 2 ? grade.volumePool! : [grade.volumeSubstrate];
+    const ordered = [...pool].sort((a, b) => mix32(seed, `volume-kind-${a}`) - mix32(seed, `volume-kind-${b}`) || a.localeCompare(b));
+    forms.push({ substrate: ordered[slot % ordered.length]!, coverage: grade.volumeCoverage, continuity: 'field', occupancy: 'volume', portfolio: 'ding',
       lexemes: { motion: 'motion_anchor', sense: 'sense_domain', rhythm: 'rhythm_open', contact: 'contact_volume_chaos' } });
   }
   return { hostTileMap, forms, pins: { wallEdges: [], paintFloors, corridorAabbs: volumes },

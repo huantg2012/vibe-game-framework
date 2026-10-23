@@ -6,7 +6,7 @@ export type PollutionGrade = typeof POLLUTION_GRADES[number];
 
 export interface PollutionGradeDefinition {
   readonly id: PollutionGrade;
-  readonly version: 1;
+  readonly version: 1 | 2;
   readonly label: string;
   readonly status: 'dev-masters';
   readonly intent: string;
@@ -16,6 +16,7 @@ export interface PollutionGradeDefinition {
   readonly paintCoverage: 'infiltrate' | 'rewrite' | 'overwrite';
   readonly volumeCount: number;
   readonly volumeSubstrate: 'gas_mass';
+  readonly volumePool?: readonly ('gas_mass' | 'mist_bank' | 'dust_swarm' | 'sound_echo')[];
   readonly volumeCoverage: 'infiltrate' | 'rewrite' | 'overwrite';
   readonly volumeCols: number;
   readonly volumeRows: number;
@@ -35,8 +36,9 @@ export function isPollutionGradeDefinition(value: unknown): value is PollutionGr
   const coverage = ['infiltrate', 'rewrite', 'overwrite'];
   const keys = 'chaosEndRate,chaosRampEndSeconds,chaosRampStartSeconds,chaosStartRate,id,intent,label,paintContinuity,paintCount,paintCoverage,paintSubstrate,status,version,volumeCols,volumeCount,volumeCoverage,volumeRows,volumeSubstrate';
   return !(!row || typeof row !== 'object' || Array.isArray(row)
-      || Object.keys(row).sort().join(',') !== keys
-      || !isPollutionGrade(row.id) || row.version !== 1 || row.status !== 'dev-masters'
+      || Object.keys(row).filter(key => row.version === 2 && key === 'volumePool' ? false : true).sort().join(',') !== keys
+      || (row.version === 2 && (!Array.isArray(row.volumePool) || !row.volumePool.length || new Set(row.volumePool).size !== row.volumePool.length || !row.volumePool.every(item => ['gas_mass', 'mist_bank', 'dust_swarm', 'sound_echo'].includes(item))))
+      || !isPollutionGrade(row.id) || (row.version !== 1 && row.version !== 2) || row.status !== 'dev-masters'
       || typeof row.label !== 'string' || !row.label.trim() || row.label.length > 40
       || typeof row.intent !== 'string' || !row.intent.trim() || row.intent.length > 500
       || row.paintSubstrate !== 'oil_film' || row.paintContinuity !== 'monolith' || row.volumeSubstrate !== 'gas_mass'

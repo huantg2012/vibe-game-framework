@@ -1,10 +1,10 @@
 // Generated from data/rift-pollution-grades.csv; native DEV master grading only, no graded production departures enabled.
 import type { PollutionGradeDefinition } from '../generation/world-study/pollution-grade';
-export const POLLUTION_GRADE_SOURCE_HASH = 'e6c639eacdae120f40007b666ba58d871a25966537f7afea1ddcaf6f061f8066';
+export const POLLUTION_GRADE_SOURCE_HASH = '97ab3d72c2a2c9c4f1499606c2ed1fd6e17665789ad35edfe3a05ce8ecd60c07';
 export const POLLUTION_GRADE_DEFINITIONS: readonly PollutionGradeDefinition[] = [
   {
     "id": "low",
-    "version": 1,
+    "version": 2,
     "label": "低污染",
     "status": "dev-masters",
     "intent": "污染局部侵入；允许停留观察和低损耗搜取",
@@ -12,6 +12,12 @@ export const POLLUTION_GRADE_DEFINITIONS: readonly PollutionGradeDefinition[] = 
     "paintSubstrate": "oil_film",
     "paintContinuity": "monolith",
     "paintCoverage": "infiltrate",
+    "volumePool": [
+      "gas_mass",
+      "mist_bank",
+      "dust_swarm",
+      "sound_echo"
+    ],
     "volumeCount": 1,
     "volumeSubstrate": "gas_mass",
     "volumeCoverage": "infiltrate",
@@ -24,7 +30,7 @@ export const POLLUTION_GRADE_DEFINITIONS: readonly PollutionGradeDefinition[] = 
   },
   {
     "id": "medium",
-    "version": 1,
+    "version": 2,
     "label": "中污染",
     "status": "dev-masters",
     "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
@@ -32,6 +38,12 @@ export const POLLUTION_GRADE_DEFINITIONS: readonly PollutionGradeDefinition[] = 
     "paintSubstrate": "oil_film",
     "paintContinuity": "monolith",
     "paintCoverage": "rewrite",
+    "volumePool": [
+      "gas_mass",
+      "mist_bank",
+      "dust_swarm",
+      "sound_echo"
+    ],
     "volumeCount": 2,
     "volumeSubstrate": "gas_mass",
     "volumeCoverage": "rewrite",
@@ -44,7 +56,7 @@ export const POLLUTION_GRADE_DEFINITIONS: readonly PollutionGradeDefinition[] = 
   },
   {
     "id": "severe",
-    "version": 1,
+    "version": 2,
     "label": "重度污染",
     "status": "dev-masters",
     "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
@@ -52,6 +64,12 @@ export const POLLUTION_GRADE_DEFINITIONS: readonly PollutionGradeDefinition[] = 
     "paintSubstrate": "oil_film",
     "paintContinuity": "monolith",
     "paintCoverage": "overwrite",
+    "volumePool": [
+      "gas_mass",
+      "mist_bank",
+      "dust_swarm",
+      "sound_echo"
+    ],
     "volumeCount": 3,
     "volumeSubstrate": "gas_mass",
     "volumeCoverage": "overwrite",
