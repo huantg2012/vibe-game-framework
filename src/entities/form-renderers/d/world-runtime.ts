@@ -8,8 +8,8 @@ export type RuntimeEnemyWorldAppearance = Pick<FormAttachContext, 'worldAdaptati
 
 const LEGACY_APPEARANCE: RuntimeEnemyWorldAppearance = Object.freeze({});
 
-/** The recipe caller owns the enabled-world scope. The renderer owns the two
- * substrate implementations; other families cannot accidentally inherit them.
+/** Old receipts admit only the two pilot substrates. Version 2 maps existing
+ * humanoid/paint substrates to two presentation archetypes without mutating forms.
  * Lighting is a live scene-owned reference, not a copied or manufactured lamp.
  */
 export function resolveRuntimeEnemyWorldAppearance(

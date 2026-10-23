@@ -1,3 +1,4 @@
+import { ENEMY_WORLD_MATERIAL_RULES, ENEMY_WORLD_MATERIAL_ROUTING } from '../../src/generated/enemy-world-materials';
 /** Real scheme-D attachments with live scene-light references and the actual
  * Rift sight query. Run with tools/contam-preview/tsconfig.json. */
 import assert from 'node:assert/strict';
@@ -139,12 +140,14 @@ assert.notEqual(recovered.worldAdaptation!.key, resolveEnemyWorldAdaptation('cry
 
 const human: ContaminationForm = { ...INFILTRATOR_FORM, substrate: 'human_remnant', coverage: 'rewrite' };
 let humanCases = 0, paintCases = 0;
-for (const worldId of ['crystal-fibre', 'ruptured-film']) {
-  const appearance = resolveRuntimeEnemyWorldAppearance(resolveEnemyWorldAdaptation(worldId), human.substrate, lighting);
+const worlds = ENEMY_WORLD_MATERIAL_RULES.map(rule => ENEMY_WORLD_MATERIAL_ROUTING.find(row => row.family === rule.family)!.worldId);
+for (const [worldId, version] of [...['crystal-fibre', 'ruptured-film'].map(id => [id, 1] as const), ...worlds.map(id => [id, 2] as const)]) {
+  const human = version === 2 ? {...INFILTRATOR_FORM, substrate: 'organic_remnant', coverage: 'rewrite' as const} : {...INFILTRATOR_FORM, substrate: 'human_remnant', coverage: 'rewrite' as const};
+  const appearance = resolveRuntimeEnemyWorldAppearance(resolveEnemyWorldAdaptation(worldId), human.substrate, lighting, version);
   assert(appearance.worldAdaptation);
   assert.equal(appearance.worldLighting, lighting, 'scene light provider is retained, not copied');
   assert.equal(appearance.worldAdaptation,
-    resolveRuntimeEnemyWorldAppearance(resolveEnemyWorldAdaptation(worldId), human.substrate, lighting).worldAdaptation, 'same world recipe has stable identity');
+    resolveRuntimeEnemyWorldAppearance(resolveEnemyWorldAdaptation(worldId), human.substrate, lighting, version).worldAdaptation, 'same world recipe has stable identity');
   const f = fixture();
   const visual = schemeDMixed.attach({ scene: f.scene, form: human, seed: 37, depth: 20, ...appearance });
   const texture = [...f.textures.values()][0]!;
@@ -175,13 +178,13 @@ for (const worldId of ['crystal-fibre', 'ruptured-film']) {
   assert.equal(f.textures.size, 0); assert.equal(f.objects.length, 0);
   humanCases++;
 
-  for (const geometryVersion of [1, 2] as const) {
+  for (const geometryVersion of [1, 2] as const) for (const substrate of (version === 2 ? ['fungal_mat', 'oil_film', 'ash_veil'] : ['fungal_mat'])) {
     const grid = new TileGrid({ cols: 128, rows: 128, tileSize: 8,
       tiles: Array.from({ length: 128 }, () => Array<number>(128).fill(TileType.FLOOR)) });
     const sight = new VisibilitySystem();
     Object.assign(sight, { config: createRiftVisionConfig(), occluders: grid,
       origin: { x: center.x + 96, y: center.y }, facingCache: Math.PI / 2 });
-    const form: ContaminationForm = { substrate: 'fungal_mat', portfolio: 'bing', continuity: 'colony',
+    const form: ContaminationForm = { substrate, portfolio: 'bing', continuity: substrate === 'fungal_mat' ? 'colony' : 'monolith',
       coverage: 'rewrite', occupancy: 'paint', lexemes: { motion: 'motion_anchor', sense: 'sense_touch', rhythm: 'rhythm_open', contact: 'contact_step' } };
     const adapted = fixture(), legacy = fixture();
     const common: Omit<FormAttachContext, 'scene'> = { form, seed: 1000, depth: .8, subjectId: 'paint',
@@ -190,7 +193,7 @@ for (const worldId of ['crystal-fibre', 'ruptured-film']) {
       surfaceVisibilityAt: point => sight.getVisibilityAt(point),
       surfaceVisibilityRevision: () => sight.getQueryRevision(), surfaceIntersectsSight: bounds => sight.maySeeBounds(bounds) };
     const body = schemeDMixed.attach({ ...common, scene: adapted.scene,
-      ...resolveRuntimeEnemyWorldAppearance(resolveEnemyWorldAdaptation(worldId), form.substrate, lighting) });
+      ...resolveRuntimeEnemyWorldAppearance(resolveEnemyWorldAdaptation(worldId), form.substrate, lighting, version) });
     const old = schemeDMixed.attach({ ...common, scene: legacy.scene });
     assert.deepEqual(body.stepFloors, old.stepFloors, 'material identity preserves frozen legacy/current contact cells');
     const cells = JSON.stringify(body.stepFloors);
@@ -246,7 +249,7 @@ assert.equal(bakes, 1, 'moving light never re-bakes a cached anatomy pose');
 assert.equal(cacheFixture.textures.size, 1);
 cached.destroy();
 assert.equal(cacheFixture.textures.size, 0);
-console.log(JSON.stringify({ humanCases, paintCases, supportedSubstrates: 2,
+console.log(JSON.stringify({ humanCases, paintCases, supportedSubstrates: 5,
   liveSceneLight: true, committedAttack: true, frozenContactCells: true, localSightAlpha: true,
   localLightVoidBlocked: true, lightNoCornerCut: true, shoulderSlotException: true,
   legacyBytes: true, inactiveHostParity: true, hiddenWorkSkipped: true, boundedTextureLifecycle: true }));

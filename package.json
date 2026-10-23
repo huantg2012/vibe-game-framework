@@ -124,7 +124,11 @@
     "check:fragment-r8": "node --expose-gc --import tsx tools/fragment-shape/check-r8.mjs",
     "check:fragment-r8-snapshots": "node --expose-gc --import tsx tools/fragment-shape/check-r8-snapshots.mjs",
     "check:pickup-grounding": "node tools/pickup-grounding/codegen.mjs --check && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/pickup-grounding/check-bake.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/pickup-grounding/check-runtime.ts --production",
-    "check:pickup-generation": "node --expose-gc --import tsx tools/pickup-grounding/check-generation.mjs && node --expose-gc --import tsx tools/pickup-grounding/check-native-validation.mjs"
+    "check:pickup-generation": "node --expose-gc --import tsx tools/pickup-grounding/check-generation.mjs && node --expose-gc --import tsx tools/pickup-grounding/check-native-validation.mjs",
+    "prebuild": "node tools/enemy-world-pilot/codegen.mjs --check",
+    "generate:enemy-materials": "node tools/enemy-world-pilot/codegen.mjs",
+    "check:enemy-world": "node tools/enemy-world-pilot/codegen.mjs --check && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/enemy-world-pilot/check-catalog.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/enemy-world-pilot/check-runtime.ts",
+    "atlas:enemy-world": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/enemy-world-pilot/render-catalog.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1",

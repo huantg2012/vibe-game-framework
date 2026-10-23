@@ -91,9 +91,10 @@ export function createR100AutomaticRecipe(worldId:string,seed:number,grade:Pollu
     throw new Error(`Missing native automatic source: ${worldId}/${grade}`);
   const nativeAuto=createNativeAutoRuntimeInput(nativeDefinition,grade,seed);
   const automaticSupplyPolicy=createAutomaticSupplyPolicy(grade);
-  const enemyMaterial=['crystal-fibre','ruptured-film'].includes(worldId)?resolveEnemyWorldAdaptation(worldId):undefined;
-  const enemyDeployment=enemyMaterial?NATIVE_ENEMY_DEPLOYMENTS.find(row=>row.worldId===worldId&&row.grade===grade):undefined;
-  if(['crystal-fibre','ruptured-film'].includes(worldId)&&(!enemyMaterial||!validNativeEnemyDeployment(enemyDeployment,worldId,grade,gradeDefinition.paintCoverage)))
+  // Preserve the existing pilot combat contracts; this is not the visual admission list.
+  const enemyDeployment=NATIVE_ENEMY_DEPLOYMENTS.find(row=>row.worldId===worldId&&row.grade===grade);
+  const enemyMaterial=enemyDeployment?resolveEnemyWorldAdaptation(worldId):undefined;
+  if(enemyDeployment&&(!enemyMaterial||!validNativeEnemyDeployment(enemyDeployment,worldId,grade,gradeDefinition.paintCoverage)))
     throw new Error(`Missing admitted automatic enemy presentation: ${worldId}/${grade}`);
   const frozen:Omit<WorldProductionRecipeV3,'package'>={
     version:3,requestedSeed:seed,paintGeometryVersion:2,profile:profileWithWorldAppearance(world.profile,appearance),
@@ -159,9 +160,9 @@ function createR100Recipe(worldId: string, seed: number, grade: PollutionGrade, 
   const searchSitePolicy = R100_SEARCH_SITE_POLICIES.find(row => row.worldId === worldId);
   if (nativeSpatial && !searchSitePolicy) throw new Error(`Native spatial world has no complete search-site policy: ${worldId}`);
   const algorithmRevision = nativeConstruction ? 13 : nativeSpatial ? 12 : searchSitePolicy ? 11 : 8;
-  const enemyMaterial=nativeConstruction&&['crystal-fibre','ruptured-film'].includes(worldId)?resolveEnemyWorldAdaptation(worldId):undefined;
-  if(nativeConstruction&&['crystal-fibre','ruptured-film'].includes(worldId)&&!enemyMaterial)throw new Error(`Missing admitted enemy material for ${worldId}`);
-  const enemyDeployment=enemyMaterial?NATIVE_ENEMY_DEPLOYMENTS.find(row=>row.worldId===worldId&&row.grade===grade):undefined;
+  const enemyDeployment=nativeConstruction?NATIVE_ENEMY_DEPLOYMENTS.find(row=>row.worldId===worldId&&row.grade===grade):undefined;
+  const enemyMaterial=enemyDeployment?resolveEnemyWorldAdaptation(worldId):undefined;
+  if(enemyDeployment&&!enemyMaterial)throw new Error(`Missing historical enemy material for ${worldId}`);
   if(enemyMaterial&&!validNativeEnemyDeployment(enemyDeployment,worldId,grade,gradeDefinition.paintCoverage))throw new Error(`Missing admitted enemy deployment for ${worldId}/${grade}`);
   const frozen = { version: 3 as const, requestedSeed: seed, paintGeometryVersion: 2 as const,
     profile: profileWithWorldAppearance(world.profile, appearance), appearance, space: SPACE_PROFILES[0]!, contentFragmentTypeId: 'frag-outdoor', nativeDefinition, gradeDefinition, contentDefinition,
