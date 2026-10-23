@@ -151,3 +151,19 @@ export function certifyNativeAutoVisibility(geometry:NativeSpatialGeometry,struc
       additionalProbeStepPx:8,coarseCoverage,coverage,witnesses,work:{...work,...budget},
       scope:'Additional real q/v/t witnesses on unchanged geometry; every reachable 20px body centre is rechecked by exact body-graph distance. Other coarse gate failures are preserved.'}}};
 }
+
+/** A small, bounded tail is quality variance, not a missing shelter route.
+ * Counts cover every reachable body centre and distances lead to proved q.
+ * Preserve missing witnesses, unreachable cells and every unrelated failure. */
+export function admitNativeAutoVisibility(measured:NativeSpatialGateResult,
+  policy:Readonly<{coverTailPercent?:number;maxCoverTailPx?:number}>):NativeSpatialGateResult {
+  if(policy.coverTailPercent===undefined||policy.maxCoverTailPx===undefined)return measured;
+  const c=measured.metrics.coverage as Coverage|undefined;
+  if(!c||!Number.isInteger(c.checkedBodyCenters)||c.checkedBodyCenters<=0||!Number.isInteger(c.overLimit)
+    ||c.overLimit<0||c.overLimit>c.checkedBodyCenters||c.unreachable!==0||c.maxRoutePx===null||!Number.isFinite(c.maxRoutePx))return measured;
+  const withinTail=c.overLimit*100<=c.checkedBodyCenters*policy.coverTailPercent&&c.maxRoutePx<=policy.maxCoverTailPx;
+  const reasons=withinTail?measured.reasons.filter(reason=>reason!=='body-route-to-cover-exceeds-limit'):measured.reasons;
+  return {...measured,accepted:reasons.length===0,reasons,metrics:{...measured.metrics,
+    exposureAdmission:{tailPercent:c.overLimit/c.checkedBodyCenters*100,allowedTailPercent:policy.coverTailPercent,
+      maxTailPx:policy.maxCoverTailPx,withinTail,qualityWarnings:withinTail&&c.overLimit?['small-cover-route-tail']:[]}}};
+}

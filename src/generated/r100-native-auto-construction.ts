@@ -30,7 +30,9 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
     "emptyRegionMetric": "radius-and-cover-route-v1",
-    "sourceHash": "ff1e6634027be6764b6e6def1348b4967955f00ffea3741ca9740021295e69fd"
+    "coverTailPercent": 1,
+    "maxCoverTailPx": 448,
+    "sourceHash": "04f49dc6e1d893929f700c541450f445b2ad02c7476bc249cad44191cbc59420"
   },
   {
     "grade": "medium",
@@ -61,7 +63,9 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
     "emptyRegionMetric": "radius-and-cover-route-v1",
-    "sourceHash": "ff1e6634027be6764b6e6def1348b4967955f00ffea3741ca9740021295e69fd"
+    "coverTailPercent": 1,
+    "maxCoverTailPx": 448,
+    "sourceHash": "04f49dc6e1d893929f700c541450f445b2ad02c7476bc249cad44191cbc59420"
   },
   {
     "grade": "severe",
@@ -92,6 +96,8 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
     "emptyRegionMetric": "radius-and-cover-route-v1",
-    "sourceHash": "ff1e6634027be6764b6e6def1348b4967955f00ffea3741ca9740021295e69fd"
+    "coverTailPercent": 1,
+    "maxCoverTailPx": 448,
+    "sourceHash": "04f49dc6e1d893929f700c541450f445b2ad02c7476bc249cad44191cbc59420"
   }
 ];

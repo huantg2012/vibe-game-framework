@@ -123,7 +123,10 @@ export function validNativeAutoRuntimeInput(value:unknown,native:MasterDefinitio
     'siteJitterPx','edgeClearancePx','objectClearancePx','sourcePaddingPx','maxSiteEvaluations','maxPlacementStates','placementBranchLimit','refinementPasses','maxRefinementEvaluations','minWidePercent','targetWidePercent','maxSourceAreaPercent','shoreSegmentMinPx','shoreSegmentMaxPx',
     'shoreDepthMinPx','shoreDepthMaxPx','shoreProtectedGapPx','maxCleanRunPx'] as const;
   if((p.emptyRegionMetric!==undefined&&p.emptyRegionMetric!=='radius-and-cover-route-v1')
-    ||Object.keys(p).length!==numbers.length+2+Number(p.emptyRegionMetric!==undefined)||numbers.some(key=>!Number.isSafeInteger(p[key])||p[key]<=0||p[key]>8388608)
+    ||((p.coverTailPercent===undefined)!==(p.maxCoverTailPx===undefined))
+    ||(p.coverTailPercent!==undefined&&(!input.nativeSpatial?.policy||!p.emptyRegionMetric||!Number.isSafeInteger(p.coverTailPercent)||p.coverTailPercent<=0||p.coverTailPercent>5
+      ||!Number.isSafeInteger(p.maxCoverTailPx)||p.maxCoverTailPx!<input.nativeSpatial.policy.maxCoverRoutePx||p.maxCoverTailPx!>512||p.maxCoverTailPx!%8!==0))
+    ||Object.keys(p).length!==numbers.length+2+Number(p.emptyRegionMetric!==undefined)+2*Number(p.coverTailPercent!==undefined)||numbers.some(key=>!Number.isSafeInteger(p[key])||p[key]<=0||p[key]>8388608)
     ||p.maxSiteEvaluations>2048||p.maxPlacementStates>2048||p.placementBranchLimit>8||p.refinementPasses>3||p.maxRefinementEvaluations>8192||p.armOverlapPx>=p.armWidthPx||p.siteJitterPx>=p.siteSpacingPx/4
     ||p.coreWidthPx>3072||p.coreHeightPx>2304||p.armWidthPx>3072||p.armHeightPx>2304
     ||p.shoreSegmentMinPx>p.shoreSegmentMaxPx||p.shoreDepthMinPx>p.shoreDepthMaxPx

@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 const source='data/rift-auto-construction-policy.csv',output='src/generated/r100-native-auto-construction.ts';
 const csv=fs.readFileSync(source,'utf8'),sourceHash=createHash('sha256').update(csv).digest('hex');
 const [header,...lines]=csv.trim().split(/\r?\n/),keys=header.split(',');
-assert.equal(keys[0],'grade');assert.equal(keys.length,28);
+assert.equal(keys[0],'grade');assert.equal(keys.length,30);
 assert(keys.every(key=>/^[a-z][a-z_0-9]*$/.test(key)));
 const policies=lines.map(line=>{
   const cells=line.split(',');assert.equal(cells.length,keys.length);
@@ -25,6 +25,7 @@ for(const p of policies){
   assert(p.refinementPasses<=3&&p.maxRefinementEvaluations<=8192);
   assert(p.minWidePercent>0&&p.minWidePercent<=p.targetWidePercent&&p.targetWidePercent<=100);
   assert(p.maxSourceAreaPercent<=100);
+  assert(p.coverTailPercent<=5&&p.maxCoverTailPx<=512);
   assert(p.shoreSegmentMinPx<=p.shoreSegmentMaxPx&&p.shoreDepthMinPx<=p.shoreDepthMaxPx);
 }
 const body=`/** Generated from ${source}; do not edit. */\nimport type {NativeAutoConstructionPolicy} from '@/generation/world-study/native-auto-types';\nexport const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPolicy[]=${JSON.stringify(policies,null,2)};\n`;

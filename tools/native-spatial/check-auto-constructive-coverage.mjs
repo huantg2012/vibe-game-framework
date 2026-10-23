@@ -114,3 +114,15 @@ assert.equal(fringe.measure.measure(fringe.available,fringe.links,fringeStructur
 assert.equal(physical.measure(fringe.available,fringe.links,new Float32Array(750).fill(180),new Float32Array(750)).accepted,false,'A broad empty area is still rejected');
 assert.equal(physical.measure(fringe.available,fringe.links,fringeStructure,new Float32Array(750).fill(Infinity)).accepted,false,'A shore or visible solid cannot replace reachable optical shelter');
 console.log('Physical exposure: long thin fringe accepted, broad voidless field and missing shelter rejected; legacy span preserved');
+
+const {admitNativeAutoVisibility}=await import('../../src/generation/world-study/native-auto-visibility.ts');
+const tailPolicy={coverTailPercent:1,maxCoverTailPx:448};
+const sample=(overLimit,maxRoutePx=448,extra={})=>({accepted:false,reasons:['body-route-to-cover-exceeds-limit'],metrics:{coverage:{overLimit,maxRoutePx,checkedBodyCenters:10000,unreachable:0,...extra}}});
+assert(admitNativeAutoVisibility(sample(100),tailPolicy).accepted);
+assert(!admitNativeAutoVisibility(sample(101),tailPolicy).accepted);
+assert(!admitNativeAutoVisibility(sample(1,448.01),tailPolicy).accepted);
+assert(!admitNativeAutoVisibility(sample(1,400,{unreachable:1}),tailPolicy).accepted);
+assert(!admitNativeAutoVisibility(sample(1,null),tailPolicy).accepted);
+assert(!admitNativeAutoVisibility({...sample(1),reasons:['body-route-to-cover-exceeds-limit','hole-without-witness']},tailPolicy).accepted);
+assert(!admitNativeAutoVisibility(sample(1),{}).accepted);
+console.log('Shelter tail: 99%/448px bounds, missing witness and unreachable rejection, frozen legacy preserved');

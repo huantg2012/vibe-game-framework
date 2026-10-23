@@ -8,6 +8,7 @@ export interface NativeAutoConstructionPolicy {
   readonly sourceHash:string;
   /** Missing on historical offline receipts: preserve their strict span gate. */
   readonly emptyRegionMetric?:'radius-and-cover-route-v1';
+  readonly coverTailPercent?:number;readonly maxCoverTailPx?:number;
   readonly targetWalkAreaPx2:number;
   readonly coreWidthPx:number;readonly coreHeightPx:number;
   readonly armWidthPx:number;readonly armHeightPx:number;
