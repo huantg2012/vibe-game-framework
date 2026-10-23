@@ -3,7 +3,8 @@ import { muteSuppressedMaterial } from '@/systems/tool-ground-vfx';
 import Phaser from 'phaser';
 import { createVolumePresenceFrame,updateVolumePresenceFrame,isVolumeDangerousAt,type VolumePresenceFrame } from '@/systems/volume-presence';
 import { isMaterialVolume,paintVolumePresence } from './volume-paint';
-import { paintNativeVolume, tintNativeEcho } from './native-volume-paint';
+import { paintNativeVolume } from './native-volume-paint';
+import { paintNativeEcho } from './native-echo';
 import { GAME_CONSTANTS } from '@/config/constants';
 import type { CorridorAabb } from '@/generation/types';
 import { dingLiveRect, DING_MORPH_PX, type PixelRect } from '@/systems/contamination-host-live';
@@ -220,9 +221,10 @@ export function attachDingD(ctx: FormAttachContext): FormVisual {
         const opacity = pose.activity?.phase === 'rest' ? .5 : pose.activity?.phase === 'waking' ? .5 + .5 * pose.activity.progress : 1;
         if (presence && native) paintNativeVolume(state.pixels.data, canvasW, canvasH, presence, state.seed, native, recipe.paintStrikeCore ? recipe.strikeCorePx : 0, opacity);
         else if(presence)paintVolumePresence(state.pixels.data,canvasW,canvasH,presence,state.seed,recipe.paintStrikeCore?recipe.strikeCorePx:0,opacity);
-        else {
+        else if (native && recipe.family === 'sound_echo') {
+          paintNativeEcho(state.pixels.data, canvasW, canvasH, recipe, pose, state.elapsedMs, cloud, native);
+        } else {
           paintDingFrame(state.pixels.data, canvasW, canvasH, recipe, pose, state.elapsedMs, cloud);
-          if (native && recipe.family === 'sound_echo') tintNativeEcho(state.pixels.data, canvasW, canvasH, pose.x, pose.y, native);
         }
         if (pose.toolControl === 'suppressed') muteSuppressedMaterial(state.pixels.data);
         canvasCtx.putImageData(state.pixels, 0, 0);

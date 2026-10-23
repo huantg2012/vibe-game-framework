@@ -10,7 +10,7 @@ import { resolveRuntimeEnemyWorldAppearance } from '../../src/entities/form-rend
 import { BODY_INKS } from '../../src/entities/form-renderers/d/body-pixel-material';
 import { lightModelPixels } from '../../src/entities/form-renderers/d/model-visual';
 import { createVolumePresenceFrame, updateVolumePresenceFrame, sampleVolumeDensity, volumeTimeAtPhase } from '../../src/systems/volume-presence';
-import { paintNativeVolume, tintNativeEcho } from '../../src/entities/form-renderers/d/native-volume-paint';
+import { paintNativeVolume } from '../../src/entities/form-renderers/d/native-volume-paint';
 import { R100_NATIVE_WORLDS } from '../../src/generated/r100-native-worlds';
 import { createR100ProductionRecipe, validR100ProductionRecipe } from '../../src/generation/world-study/r100-package';
 import { withEnemyAppearance } from '../../src/generation/world-study/enemy-appearance-contract';
@@ -83,9 +83,9 @@ for (const { worldId } of worlds) {
       assert.deepEqual(repeated.filter((_, i) => i % 4 === 3), out.filter((_, i) => i % 4 === 3), 'lighting never alters air density alpha');
     }
   }
-  const echo = new Uint8ClampedArray(24 * 24 * 4).map((_, i) => (i * 71) % 256), alpha = echo.filter((_, i) => i % 4 === 3);
-  tintNativeEcho(echo, 24, 24, 0, 0, { material });
-  assert.deepEqual(echo.filter((_, i) => i % 4 === 3), alpha, 'echo tint preserves its own field and nuclei');
+  // Echo's dedicated pressure geometry is checked in check-air-readability.ts;
+  // preserving legacy alpha here would preserve the reported rectangular fill.
+
 }
 assert(minMargin >= 3, `native geometry margin ${minMargin}`);
 for (const [key, values] of masks) assert(values.size >= 3, `${key}: materials must change structure as well as pigment`);
