@@ -48,7 +48,7 @@
 
 ## 其他污染体推广：盘点与粗设计（2026-10-23）
 
-用户要求先 review 余下种类并做粗设计。绑定 F015/F016/F017；本节是候选方案，不更改生产 HOW、投放池或既有验收。材料为当前 CSV、调用链及 I18 既有模型图；未试玩、未评价当前实战发现性和动态手感。人形回修仍为显式离线候选。
+用户要求先 review 余下种类并做粗设计。绑定 F015/F016/F017；以下盘点与方案保留开工时背景；后续执行结果见本节末尾。投放池和既有验收不随美术推广扩展。材料为当前 CSV、调用链及 I18 既有模型图；未试玩、未评价当前实战发现性和动态手感。人形回修仍为显式离线候选。
 
 **执行授权：** 用户随后批准开工，并明确允许合理调整／重做全部原始模型。旧形体不是质量基线。按有机残影＋气团、其余地面、其余占空三批小步提交；全程以共享算法为源，不逐世界适配。保留攻击时序、身体碰撞与宿主危险合同，新的生成几何和动态样片用来核对类别身份。未获得实机试玩授权。
 
@@ -106,3 +106,11 @@
 性能路线：地面体按可见个体和有限姿态惰性烘焙，复用几何受光并限制场景总缓存，不预生成“108世界×全种类”的贴图库；占空复用现有权威密度场与低分辨率材质采样，不能另起全屏体积模拟或逐粒物理。具体总预算在首批量测后确定，不预报未经测量的FPS。
 
 核查入口：`data/contamination-substrates.csv`、`data/rift-pollution-grades.csv`、`data/rift-native-enemy-deployment.csv`；`src/entities/form-renderers/d/{production-models,world-runtime,beast-model,worm-model,remnant-model,growth-model,insect-model}.ts`；`src/generation/{contamination-draw.ts,world-study/r100-expedition.ts}`。静态参照为 `docs/art/iteration-18-evidence/{beast-0-front-phases-3x,remnant-1-phases-3x,growth-0-front-phases-3x}.png` 及 `docs/art/iteration-18-r4-volume-evidence/gas_mass-2x.png`。
+
+### 执行收口（2026-10-23）
+
+- 设计授权 `73ad3c78`，首批专用残影／气团 `0de5bf19`，其余解剖与正式v3路由 `fe0ca4ce`，均为小步提交。
+- 新出发已接五类专用地面重做、三类密度占空材料／组织及余响受光；三占漆沿用已适配画法。共12类展示，连同已有正式人形共13类规则覆盖；人形回修仍离线候选，不改遭遇投放池。
+- 版本3冻结完整材料与签名，旧版本2仍按原路由；正式只开放三世界。全108配方适配能力不等于全库可玩或审美通过。
+- 19,440姿态、432占空状态、324配方、54新增模拟挂载及现有回归通过，类型检查与构建通过；全阶段、六家族动态图册已生成。没有实机试玩或GPU通过结论。
+- [新图册](../qa/artifacts/enemy-native-catalog-2026-10-23/index.html)、[持续维护的美术规范](../art/contamination-forms.md)、[QA与性能样本](../qa/enemy-world-automation-2026-10-23.md#其他污染体版本3接入2026-10-23)。人审待用户；不追加全库地图重生成或新遭遇机制。

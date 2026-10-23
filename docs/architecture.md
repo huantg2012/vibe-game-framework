@@ -1679,8 +1679,8 @@ G4类型交换的候选枚举已用c17真实失败校正：全部surplus实际�
 
 人形识别回修的显式候选入口为 `HumanModelRequest.anatomyVersion=2` → `human-retained-model.ts`。共用 `createModelRaster`／逐像素法线与 `lightModelPixels`，不设另一套预览画法；正式调用方不传此字段，默认及冻结局仍沿原结构。`tools/enemy-world-pilot/render-human-stages.ts` 离线烘焙六家族×三覆盖×四向×44帧，使用上一图册已保存的正式地面材质作背景，带旧版同灯对照；不初始化 Phaser、AI 或存档。不改 in-game UI，图册属于独立美术审阅页。
 
-`data/enemy-world-materials.csv` 六家族→codegen全目录路由→`world-adaptation.ts` 小型参数缓存。新正式配方附 `enemyAppearance@2`，其签名绑定原包/seed/污染档/完整材料；独立于地形版本。validator校验后剥离该字段交旧几何executor，完整Rift身份仍含原recipe，因此旧地图结果不改而新外观可冷恢复。
+`data/enemy-world-materials.csv` 六家族→codegen全目录路由→`world-adaptation.ts` 小型参数缓存。新正式配方附 `enemyAppearance@3`，其签名绑定原包/seed/污染档/完整材料；独立于地形版本。validator校验后剥离该字段交旧几何executor，完整Rift身份仍含原recipe，因此旧地图结果不改而新外观可冷恢复。
 
-`RiftScene.attachSchemeD` 优先读新冻结材料，旧局读原enemyMaterial；`world-runtime.ts` 按协议路由两个表现原型，`productionModelFor` 只在新外观时把organic的模型转为类人，不改form或战斗。占漆三基体共用权威密度/接触格，只替换表面材料。AI与世界开放池不由美术规则控制。新家族不扩玩家同化既有两形体；未知形体来源仍使用中性色桥。
+`RiftScene.attachSchemeD` 优先读新冻结材料，旧局读原enemyMaterial；`world-runtime.ts` 按外观版本分派：v2保留人形及organic借人形／三占漆；v3对五类非人形地面选择各自native baker，对三种物理占空读取原Host density并绘制本土组织，对余响保留原场只换颜料／受光。`native-tissue.ts` 共用六家族附着结构，`native-volume-paint.ts` 每4px光学格至多一次灯光查询；密度、VOID、接触和伤害不变。动态光保留场景引用，静止时亦刷新受光，隐藏跳过像素工作。占漆三基体继续共用原权威密度/接触格。人形候选未切正式。AI与世界开放池不由美术规则控制。新家族不扩玩家同化既有两形体；未知形体来源仍使用中性色桥。
 
-美术合同在 `docs/art/contamination-forms.md`；测试 `npm run check:enemy-world`，图册 `npm run atlas:enemy-world`，构建前检查CSV生成一致性。既有每体64帧LRU／单GPU纹理／隐藏跳过／销毁清理保持。性能及验收边界见 `docs/qa/enemy-world-automation-2026-10-23.md`。
+美术合同在 `docs/art/contamination-forms.md`；测试 `npm run check:enemy-world`／`npm run check:enemy-native`，图册 `npm run atlas:enemy-world`／`npm run atlas:enemy-native`，构建前检查CSV生成一致性。既有每体64帧LRU／单GPU纹理／隐藏跳过／销毁清理保持。性能及验收边界见 `docs/qa/enemy-world-automation-2026-10-23.md`。
