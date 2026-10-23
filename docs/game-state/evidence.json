@@ -11385,5 +11385,44 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E286",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-23",
+    "revision": "49964ff2",
+    "scope": "2026-10-23有限续作：49964ff2修复不可移动源地标的宽域见证误选，并保留当前位置8px邻域及最小充分移动排序；不加预算、不改准入门。针对性夹具和类型检查通过。只重跑余烬脊low/12345一项，8.70秒拒绝：全15,996身体格连通，宽域49.4499%低于50%；空白粗上界161.6569px，连续细分达到深度预算仍未能证明≤160px（无真实超限见证）。局部搜索459/2048状态、1006/2048站位后无改善而停止，并非超时。第二既定几何仍无有限分支内的连通赋值。本轮不扩大样本，正常入口仍r13，整改未结案。 前轮a407a618的晶纤severe/24680完整投放、G4与hydrate单次通过，7.524秒；该结果没有JSON重放，本轮未复跑。",
+    "limitations": "本轮限定两处共享实现修复、针对性夹具／类型检查、一个固定完整请求；该请求仍失败，未继续调参、扩大样本或改正式r13入口。旧独立碰撞与r13恢复证据仅保留原版本范围。没有新增实机、最终构建、独立审查、全库资格或总体成功率结论。",
+    "sources": [
+      {
+        "path": "src/generation/world-study/native-auto-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-auto-coverage.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/native-spatial/check-auto-constructive-coverage.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/automatic-world-generation-2026-10-21.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/tasks/automatic-world-generation-2026-10-21.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/automatic-world-generation-2026-10-21/source-local-cinder-low-12345.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/automatic-world-generation-2026-10-21/arrival-unit-crystal-severe-24680.json",
+        "role": "doc"
+      }
+    ]
   }
 ]
