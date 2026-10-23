@@ -11652,5 +11652,64 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E291",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-23",
+    "revision": "020ba2eb",
+    "scope": "v3五类专用地面、三类占空材料组织及余响受光；三占漆复用。19,440姿态、432占空状态、324版本配方、54新增模拟挂载及原回归、类型检查与构建通过。12类×六家族×三阶段图册生成且页面载入可见。",
+    "limitations": "无实机试玩或GPU测试；图册非实景关卡截图，动态/发现性和最终美术人审待验。受光CPU样本使用定值shadow回调。开放池仍三图，投放未扩，人形候选未转正。",
+    "sources": [
+      {
+        "path": "src/entities/form-renderers/d/native-tissue.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/native-remnant-model.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/native-ground-models.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/native-volume-paint.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-native.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/native-specimens.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/render-native.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/native-atlas.html",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-native-catalog-2026-10-23/checks.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-native-catalog-2026-10-23/runtime-checks.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-native-catalog-2026-10-23/atlas.json",
+        "role": "doc"
+      }
+    ]
   }
 ]
