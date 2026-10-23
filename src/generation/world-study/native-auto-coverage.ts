@@ -69,7 +69,7 @@ export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeS
         while(head<tail&&end<0){const index=queue[head++]!;
           for(let d=0;d<8;d++)if(links[index]!&(1<<d)){
             const next=neighbors[index*8+d]!;
-            if(next<0||!available[next]||previous[next]!==-1||points[next]!.margin<policy.wideRadiusPx)continue;
+            if(next<0||!available[next]||previous[next]!==-1||points[next]!.margin<policy.wideRadiusPx||points[next]!.source<policy.wideRadiusPx)continue;
             previous[next]=index;queue[tail++]=next;
             if(wideLabels[next]===destination){end=next;break;}
           }
@@ -81,9 +81,9 @@ export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeS
       }
       if(wideTarget<0&&wideRatio<policy.minWideRatio){
         // Select an actual object-constrained band bordering usable wide
-        // space. Shore-limited seats cannot be repaired by moving an object.
+        // space. Neither fixed shore nor source can be opened by moving an object.
         let best=-1;
-        for(let i=0;i<count;i++)if(available[i]&&!wide[i]&&points[i]!.margin>=policy.wideRadiusPx){
+        for(let i=0;i<count;i++)if(available[i]&&!wide[i]&&points[i]!.margin>=policy.wideRadiusPx&&points[i]!.source>=policy.wideRadiusPx){
           let contacts=0;for(let d=0;d<8;d++){const next=neighbors[i*8+d]!;if(next>=0&&wide[next]&&(links[i]!&(1<<d)))contacts++;}
           const rank=contacts*policy.wideRadiusPx+structure[i]!;
           if(contacts&&rank>best){best=rank;wideTarget=i;}

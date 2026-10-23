@@ -177,6 +177,7 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   };
   const siteIndex=new Map(sites.map((site,index)=>[`${site.x}:${site.y}`,index]));
   const projectedDomains=new Map<number,{site:Site;index:number;box:Rect}[]>();
+  const projectedOrigins=new Map<number,Site>();
   for(const objectIndex of objectByCell){
     const object=objects[objectIndex]!,cell=cells[cellByObject.get(objectIndex)!]!;
     const domain=[...domains[objectIndex]!],nearest=domain.reduce<typeof domain[number]|undefined>((best,candidate)=>!best||
@@ -192,6 +193,7 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
       if(added.has(index))continue;const site=sites[index]!,box=shifted(object.bounds,site);
       if(compiled.ground.containsRect(box,p.objectClearancePx)&&sourceClear(box)&&!reserved.some(r=>overlaps(box,r,p.objectClearancePx))){domain.push({site,index,box});added.add(index);}
     }
+    projectedOrigins.set(objectIndex,nearest.site);
     projectedDomains.set(objectIndex,domain.filter(candidate=>Math.hypot(candidate.site.x-nearest.site.x,candidate.site.y-nearest.site.y)<=spatial.policy.spacingPx/2));
   }
   const bodyStates=Array.from({length:objectCount+1},()=>new Uint8Array(available.length));
@@ -256,25 +258,39 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   while(!measured.accepted&&placementStates<p.maxPlacementStates){
     checkpoint();const score=measured.score;
     const witnesses=[
-      {index:measured.wideTarget,openWide:true,failed:score.wideRatio<spatial.policy.minWideRatio||score.largestWideRatio<spatial.policy.minLargestWideRatio},
-      {index:measured.emptyTarget,openWide:false,failed:score.maxEmptyPx>spatial.policy.maxEmptyRadiusPx},
-      {index:measured.deepTarget,openWide:false,failed:score.maxDeepSpanPx>spatial.policy.maxDeepEmptySpanPx},
-      {index:measured.holeTarget,openWide:false,failed:score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx},
+      {index:measured.wideTarget,openWide:true,distanceLimit:spatial.policy.wideRadiusPx,failed:score.wideRatio<spatial.policy.minWideRatio||score.largestWideRatio<spatial.policy.minLargestWideRatio},
+      {index:measured.emptyTarget,openWide:false,distanceLimit:spatial.policy.maxEmptyRadiusPx-Math.SQRT2*4,failed:score.maxEmptyPx>spatial.policy.maxEmptyRadiusPx},
+      {index:measured.deepTarget,openWide:false,distanceLimit:spatial.policy.deepEmptyThresholdPx-Math.SQRT2*4,failed:score.maxDeepSpanPx>spatial.policy.maxDeepEmptySpanPx},
+      {index:measured.holeTarget,openWide:false,distanceLimit:0,failed:score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx},
     ].filter(witness=>witness.failed&&witness.index>=0);
     if(!witnesses.length)break;
     let best:undefined|{object:number;site:number;distances:Float32Array;state:CoverageState;measure:typeof measured;cost:number};
     const cost=violation(score),fixedByObject=new Map<number,CoverageState>(),evaluated=new Set<string>();
-    for(const {index:targetIndex,openWide}of witnesses){
+    for(const {index:targetIndex,openWide,distanceLimit}of witnesses){
       const target=bodyField.points[targetIndex]!;
       const local=[...chosen.keys()].sort((a,b)=>nativeAutoObjectDistance(objects[a]!,sites[chosen.get(a)!]!,target)-
         nativeAutoObjectDistance(objects[b]!,sites[chosen.get(b)!]!,target)).slice(0,3);
       for(const objectIndex of local){
         let fixed=fixedByObject.get(objectIndex);if(!fixed){fixed=fixedState(objectIndex);fixedByObject.set(objectIndex,fixed);}
         const object=objects[objectIndex]!,otherBounds=[...chosen].filter(([index])=>index!==objectIndex).map(([index,site])=>shifted(objects[index]!.bounds,sites[site]!));
-        const candidates=projectedDomains.get(objectIndex)!.filter(candidate=>candidate.index!==chosen.get(objectIndex)&&!otherBounds.some(box=>overlaps(candidate.box,box,p.objectClearancePx)))
+        const domain=projectedDomains.get(objectIndex)!,origin=projectedOrigins.get(objectIndex)!,current=sites[chosen.get(objectIndex)!]!;
+        // Keep one-cell moves available after a coarse move. They use the same
+        // bounded domain and site budget, with all support checks unchanged.
+        for(let dy=-8;dy<=8;dy+=8)for(let dx=-8;dx<=8;dx+=8){
+          if(!dx&&!dy)continue;const x=current.x+dx,y=current.y+dy;
+          if(Math.hypot(x-origin.x,y-origin.y)>spatial.policy.spacingPx/2)continue;
+          const key=`${x}:${y}`;let index=siteIndex.get(key);
+          if(index===undefined){if(siteEvaluations>=p.maxSiteEvaluations)continue;siteEvaluations++;
+            index=sites.length;sites.push({x,y,rank:mix32(seed,`auto-cell:${x}:${y}`),sourceDistance:nativePrimitiveDistance(sourceTree,x,y)});siteIndex.set(key,index);}
+          if(domain.some(candidate=>candidate.index===index))continue;
+          const site=sites[index]!,box=shifted(object.bounds,site);
+          if(compiled.ground.containsRect(box,p.objectClearancePx)&&sourceClear(box)&&!reserved.some(r=>overlaps(box,r,p.objectClearancePx)))domain.push({site,index,box});
+        }
+        const residual=(distance:number)=>Math.max(0,openWide?distanceLimit-distance:distance-distanceLimit);
+        const candidates=domain.filter(candidate=>candidate.index!==chosen.get(objectIndex)&&!otherBounds.some(box=>overlaps(candidate.box,box,p.objectClearancePx)))
           .map(candidate=>({...candidate,distance:nativeAutoObjectDistance(object,candidate.site,target),
             movement:Math.hypot(candidate.site.x-sites[chosen.get(objectIndex)!]!.x,candidate.site.y-sites[chosen.get(objectIndex)!]!.y)}))
-          .sort((a,b)=>(openWide?Math.max(0,spatial.policy.wideRadiusPx-a.distance)-Math.max(0,spatial.policy.wideRadiusPx-b.distance)||a.movement-b.movement:a.distance-b.distance)||a.site.rank-b.site.rank).slice(0,p.placementBranchLimit);
+          .sort((a,b)=>residual(a.distance)-residual(b.distance)||a.movement-b.movement||a.site.rank-b.site.rank).slice(0,p.placementBranchLimit);
         for(const candidate of candidates){
           checkpoint();if(placementStates>=p.maxPlacementStates)break;
           const trialKey=`${objectIndex}:${candidate.index}`;if(evaluated.has(trialKey))continue;evaluated.add(trialKey);placementStates++;

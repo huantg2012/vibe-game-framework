@@ -69,4 +69,21 @@ const narrow=fixture(9,9,200),narrowStructure=new Float32Array(81).fill(40);
 for(let x=0;x<9;x++)narrowStructure[x]=80;
 const deficient=narrow.measure.measure(narrow.available,narrow.links,narrowStructure,new Float32Array(81));
 assert.equal(narrow.points[deficient.wideTarget].gy,1);
-console.log('Constructive coverage: H-only shelter, longest-band midpoint, exact-edge routing and coordinate bounds, wide-gap opening and wide-area witnesses passed');
+// A fixed source bottleneck cannot be opened by relocating generated H/S.
+for(let y=0;y<9;y++)for(let x=9;x<=11;x++){
+  divided.points[y*21+x].source=30;dividedStructure[y*21+x]=30;
+}
+const fixedCut=divided.measure.measure(divided.available,divided.links,dividedStructure,dividedH);
+assert.equal(fixedCut.score.largestWideRatio,.5);
+assert.equal(fixedCut.wideTarget,-1);
+// The witness must take the longer repairable crossing instead of the fixed cut.
+for(let x=9;x<=11;x++)divided.points[8*21+x].source=120;
+const repairableCut=divided.measure.measure(divided.available,divided.links,dividedStructure,dividedH);
+assert.equal(divided.points[repairableCut.wideTarget].gy,8);
+// The most connected edge seat can also be source-limited. Skip it without
+// changing the measured wide-area deficit or the underlying body graph.
+for(let x=0;x<8;x++)narrow.points[9+x].source=40;
+const repairableArea=narrow.measure.measure(narrow.available,narrow.links,narrowStructure,new Float32Array(81));
+assert.equal(repairableArea.score.wideRatio,deficient.score.wideRatio);
+assert.equal(repairableArea.wideTarget,17);
+console.log('Constructive coverage: H-only shelter, longest-band midpoint, exact-edge routing, wide-gap and immutable-source witnesses passed');
