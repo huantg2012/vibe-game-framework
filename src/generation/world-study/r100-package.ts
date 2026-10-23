@@ -1,3 +1,4 @@
+import { withEnemyAppearance, validEnemyAppearance } from './enemy-appearance-contract';
 import { validR100ProductionRecipe as validRevision11Recipe } from '../legacy-r100-v11/executor-recovery.js';
 import { validR100ProductionRecipe as validRevision10Recipe } from '../legacy-r100-v10/executor-recovery.js';
 import { SPATIAL_AUGMENTATION_POLICY } from '@/generated/r100-spatial-augmentation';
@@ -101,15 +102,15 @@ export function createR100AutomaticRecipe(worldId:string,seed:number,grade:Pollu
     ...(enemyMaterial?{enemyMaterialVersion:1,enemyMaterial,enemyDeployment}:{})
   };
   const materials=materialDependencies(nativeDefinition,appearance);
-  return structuredClone({...frozen,package:{id:`r100-${worldId}`,algorithm:'r100-native',version:3,algorithmRevision:14,
-    materials,dependencyHash:dependencyHash(frozen,materials,14),grade}});
+  return withEnemyAppearance(structuredClone({...frozen,package:{id:`r100-${worldId}`,algorithm:'r100-native',version:3,algorithmRevision:14,
+    materials,dependencyHash:dependencyHash(frozen,materials,14),grade}}));
 }
 /** Normal departures use the validated production revision, including worlds
  * that also have an experimental native-spatial authoring definition. */
 export function createR100ProductionRecipe(worldId: string, seed: number, grade: PollutionGrade): WorldProductionRecipeV3 {
   return R100_NATIVE_WORLDS.some(world=>world.id===worldId&&world.enabled)
     ?createR100AutomaticRecipe(worldId,seed,grade)
-    :createR100Recipe(worldId,seed,grade,false);
+    :withEnemyAppearance(createR100Recipe(worldId,seed,grade,false));
 }
 /** Explicit DEV opt-in. Unavailable native intent rejects instead of silently
  * substituting a production recipe. Frozen r12 validation/replay is unchanged. */
@@ -180,6 +181,11 @@ export function validR100ProductionRecipe(value: unknown): value is WorldProduct
   try {
     if (!value || typeof value !== 'object') return false;
     const recipe = value as WorldProductionRecipeV3, native = recipe.nativeDefinition, pack = recipe.package;
+    if (Object.prototype.hasOwnProperty.call(recipe, 'enemyAppearance')) {
+      if (!validEnemyAppearance(recipe)) return false;
+      const { enemyAppearance: _appearance, ...geometryRecipe } = recipe;
+      return validR100ProductionRecipe(geometryRecipe);
+    }
     // Old saved packages are validated against their immutable catalog, rules and assets.
     if (pack?.algorithmRevision === 1 || pack?.algorithmRevision === 2) return validFrozenR100ProductionRecipe(value);
     if (pack?.algorithmRevision === 3) return validRevision3Recipe(value);

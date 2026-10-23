@@ -24,7 +24,7 @@ function sourceOf(worldId: string): Source {
   if (known) return known;
   const adaptation = resolveEnemyWorldAdaptation(worldId);
   const solid = worldAppearance.get(worldId)?.solid;
-  const source: Source = adaptation ? { kind: adaptation.kind, palette: adaptation }
+  const source: Source = adaptation && (adaptation.kind === 'fibre' || adaptation.kind === 'membrane') ? { kind: adaptation.kind, palette: adaptation }
     : { kind: 'neutral', palette: solid ? { dark: rgb(solid.dark), mid: rgb(solid.mid), light: rgb(solid.light) }
       : ASSIMILATION_NEUTRAL_PALETTE };
   sourceCache.set(worldId, source);

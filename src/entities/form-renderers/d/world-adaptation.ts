@@ -8,7 +8,7 @@ export type EnemyWorldColor = readonly [number, number, number];
 export interface EnemyWorldAdaptation {
   readonly key: string;
   readonly worldId: string;
-  readonly kind: 'fibre' | 'membrane';
+  readonly kind: 'fibre' | 'membrane' | 'slab' | 'shell' | 'granular' | 'gel';
   readonly dark: EnemyWorldColor;
   readonly mid: EnemyWorldColor;
   readonly light: EnemyWorldColor;

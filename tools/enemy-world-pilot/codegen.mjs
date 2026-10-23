@@ -13,7 +13,7 @@ const rules = lines.map(line => {
   const [family, kind, version, count, spread, lag, branching] = cells;
   assert(/^[a-z]+(?:-[a-z]+)*$/.test(family) && !families.has(family));
   families.add(family);
-  assert(['fibre', 'membrane'].includes(kind));
+  assert(['fibre', 'membrane', 'slab', 'shell', 'granular', 'gel'].includes(kind));
   assert.equal(version, '1');
   for (const value of [count, spread, lag, branching]) assert(/^\d+(?:\.\d+)?$/.test(value));
   const fibreCount = Number(count), membraneSpread = Number(spread), motionLag = Number(lag), paintBranching = Number(branching);
@@ -26,9 +26,9 @@ const nativeLines = fs.readFileSync('data/rift-native-worlds.csv', 'utf8').trim(
 const header = nativeLines.shift().split(',');
 const familyIndex = header.indexOf('family');
 assert(familyIndex >= 0);
-const worlds = nativeLines.map(line => line.split(',')).filter(row => families.has(row[familyIndex])).map(row => ({ worldId: row[0], family: row[familyIndex] }));
+const worlds = nativeLines.map(line => line.split(',')).map(row => { assert(families.has(row[familyIndex]), `Missing enemy grammar for ${row[0]}: ${row[familyIndex]}`); return { worldId: row[0], family: row[familyIndex] }; });
 const output = `/** Generated from ${source} and data/rift-native-worlds.csv. Do not edit. */\nexport const ENEMY_WORLD_MATERIAL_SOURCE_HASH = '${createHash('sha256').update(text).update(JSON.stringify(worlds)).digest('hex')}';\nexport const ENEMY_WORLD_MATERIAL_RULES = ${JSON.stringify(rules, null, 2)} as const;\nexport const ENEMY_WORLD_MATERIAL_ROUTING = ${JSON.stringify(worlds, null, 2)} as const;\n`;
 const path = 'src/generated/enemy-world-materials.ts';
 if (process.argv.includes('--check')) assert.equal(fs.readFileSync(path, 'utf8'), output);
 else fs.writeFileSync(path, output);
-console.log(`PASS enemy world material grammar: ${rules.length} families, ${worlds.length} eligible worlds (explicit opt-in only)`);
+console.log(`PASS enemy world material grammar: ${rules.length} families, ${worlds.length} eligible worlds (complete catalog coverage)`);

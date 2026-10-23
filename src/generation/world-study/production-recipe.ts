@@ -43,6 +43,8 @@ export interface WorldProductionRecipeV3 extends Omit<WorldProductionRecipeV1, '
   readonly nativeAuto?: import('./native-auto-types').NativeAutoRuntimeInput;
   readonly automaticSupplyPolicy?: import('./automatic-supply-policy').R100AutomaticSupplyPolicy;
   readonly surfacePixelBudget?: 8388608;
+  /** Independent visual receipt: does not rewrite map layout or combat forms. */
+  readonly enemyAppearance?: import('./enemy-appearance-contract').EnemyAppearanceContract;
   readonly enemyMaterialVersion?: 1;
   readonly enemyMaterial?: import('@/entities/form-renderers/d/world-adaptation').EnemyWorldAdaptation;
   /** Revision 13 freezes actual AI/Host forms before placement and admission. */
