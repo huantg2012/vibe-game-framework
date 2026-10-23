@@ -4,27 +4,27 @@ import { resolveEnemyWorldAdaptation, type EnemyWorldAdaptation } from '@/entiti
 import type { WorldProductionRecipeV3 } from './production-recipe';
 
 export interface EnemyAppearanceContract {
-  readonly version: 2;
+  readonly version: 2 | 3;
   readonly material: EnemyWorldAdaptation;
   readonly signature: string;
 }
 const KINDS = ['fibre', 'membrane', 'slab', 'shell', 'granular', 'gel'];
 const KEYS = ['key', 'worldId', 'kind', 'dark', 'mid', 'light', 'secondary', 'fibreCount', 'membraneSpread', 'motionLag', 'paintBranching'];
-function signature(recipe: WorldProductionRecipeV3, material: EnemyWorldAdaptation): string {
-  const text = JSON.stringify(['enemy-appearance@2', recipe.package.dependencyHash, recipe.requestedSeed, recipe.package.grade, material]);
+function signature(recipe: WorldProductionRecipeV3, material: EnemyWorldAdaptation, version: 2 | 3): string {
+  const text = JSON.stringify([`enemy-appearance@${version}`, recipe.package.dependencyHash, recipe.requestedSeed, recipe.package.grade, material]);
   let hash = 2166136261;
   for (let i = 0; i < text.length; i++) hash = Math.imul(hash ^ text.charCodeAt(i), 16777619);
   return (hash >>> 0).toString(16).padStart(8, '0');
 }
-export function withEnemyAppearance(recipe: WorldProductionRecipeV3): WorldProductionRecipeV3 {
+export function withEnemyAppearance(recipe: WorldProductionRecipeV3, version: 2 | 3 = 3): WorldProductionRecipeV3 {
   const material = resolveEnemyWorldAdaptation(recipe.appearance!.worldId);
   if (!material) throw new Error(`Missing world enemy grammar: ${recipe.package.id}`);
-  return { ...recipe, enemyAppearance: { version: 2, material: structuredClone(material), signature: signature(recipe, material) } };
+  return { ...recipe, enemyAppearance: { version, material: structuredClone(material), signature: signature(recipe, material, version) } };
 }
 /** Strict, bounded validation using saved values, never today's family table. */
 export function validEnemyAppearance(recipe: WorldProductionRecipeV3): boolean {
   const value = recipe.enemyAppearance, material = value?.material;
-  if (!value || value.version !== 2 || Object.keys(value).sort().join(',') !== 'material,signature,version'
+  if (!value || (value.version !== 2 && value.version !== 3) || Object.keys(value).sort().join(',') !== 'material,signature,version'
     || !material || !recipe.appearance || !recipe.package
     || Object.keys(material).length !== KEYS.length || !KEYS.every(key => Object.prototype.hasOwnProperty.call(material, key))
     || material.worldId !== recipe.appearance.worldId || !KINDS.includes(material.kind)
@@ -36,5 +36,5 @@ export function validEnemyAppearance(recipe: WorldProductionRecipeV3): boolean {
     || !Number.isFinite(material.membraneSpread) || material.membraneSpread < .5 || material.membraneSpread > 1.5
     || !Number.isFinite(material.motionLag) || material.motionLag < 0 || material.motionLag > .3
     || !Number.isFinite(material.paintBranching) || material.paintBranching < 0 || material.paintBranching > 1) return false;
-  return value.signature === signature(recipe, material);
+  return value.signature === signature(recipe, material, value.version);
 }

@@ -2226,7 +2226,7 @@ export class RiftScene extends Phaser.Scene {
     const fragmentTypeId = this.layoutDebug.fragmentTypeId;
     const seedRoot = this.layoutDebug.seed;
     const recipe = this.recovery?.identity.generation ?? this.devFixture?.productionRecipe;
-    const appearanceVersion = recipe?.version === 3 && recipe.enemyAppearance ? 2 : 1;
+    const appearanceVersion = recipe?.version === 3 ? recipe.enemyAppearance?.version ?? 1 : 1;
     const material = recipe?.version === 3 ? recipe.enemyAppearance?.material ?? recipe.enemyMaterial : undefined;
     this.hasWorldMaterialActors = !!material;
     // Actors attach before the native runtime. Keep one lazy bridge rather than

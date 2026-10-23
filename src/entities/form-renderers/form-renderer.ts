@@ -87,6 +87,8 @@ export interface FormAttachContext {
   /** Recipe-controlled world material identity. Omitted for legacy runs and
    * unsupported substrates; explicit DEV previews may also supply a profile. */
   worldAdaptation?: EnemyWorldAdaptation;
+  /** Frozen anatomy/material generation. Omitted contexts retain historical art. */
+  enemyAppearanceVersion?: 1 | 2 | 3;
   scene: Phaser.Scene;
   form: ContaminationForm;
   seed: number;

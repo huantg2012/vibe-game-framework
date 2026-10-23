@@ -203,6 +203,6 @@ class JiaGenomeVisual implements FormVisual {
 }
 
 export function attachJiaGenomeD(ctx: FormAttachContext): FormVisual {
-  const model = productionModelFor(ctx.form.substrate, !!ctx.worldAdaptation);
+  const model = productionModelFor(ctx.form.substrate, !!ctx.worldAdaptation, ctx.enemyAppearanceVersion);
   return model ? attachAnimatedModel(ctx, model) : new JiaGenomeVisual(ctx);
 }

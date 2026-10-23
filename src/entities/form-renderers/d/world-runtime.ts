@@ -4,7 +4,7 @@ import type { FormAttachContext } from '../form-renderer';
 import type { EnemyWorldAdaptation } from './world-adaptation';
 import type { WorldMaterialLighting } from './world-material-light';
 
-export type RuntimeEnemyWorldAppearance = Pick<FormAttachContext, 'worldAdaptation' | 'worldLighting'>;
+export type RuntimeEnemyWorldAppearance = Pick<FormAttachContext, 'worldAdaptation' | 'worldLighting' | 'enemyAppearanceVersion'>;
 
 const LEGACY_APPEARANCE: RuntimeEnemyWorldAppearance = Object.freeze({});
 
@@ -16,14 +16,17 @@ export function resolveRuntimeEnemyWorldAppearance(
   material: EnemyWorldAdaptation | undefined,
   substrate: string,
   worldLighting?: WorldMaterialLighting,
-  appearanceVersion: 1 | 2 = 1,
+  appearanceVersion: 1 | 2 | 3 = 1,
 ): RuntimeEnemyWorldAppearance {
-  const supported = appearanceVersion === 2
+  const supported = appearanceVersion === 3
+    ? ['human_remnant', 'organic_remnant', 'insect_remnant', 'mammal_remnant', 'worm_remnant', 'stalk_clump',
+      'fungal_mat', 'oil_film', 'ash_veil', 'gas_mass', 'mist_bank', 'dust_swarm', 'sound_echo'].includes(substrate)
+    : appearanceVersion === 2
     ? ['human_remnant', 'organic_remnant', 'fungal_mat', 'oil_film', 'ash_veil'].includes(substrate)
     : substrate === 'human_remnant' || substrate === 'fungal_mat';
   if (!material || !supported)
     return LEGACY_APPEARANCE;
   // The admitted recipe has already validated and frozen this exact profile.
   // Do not resolve today's CSV here: cold recovery must use its saved values.
-  return { worldAdaptation: material, worldLighting };
+  return { worldAdaptation: material, worldLighting, ...(appearanceVersion === 3 ? { enemyAppearanceVersion: 3 as const } : {}) };
 }

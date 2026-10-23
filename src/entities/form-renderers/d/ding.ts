@@ -3,6 +3,7 @@ import { muteSuppressedMaterial } from '@/systems/tool-ground-vfx';
 import Phaser from 'phaser';
 import { createVolumePresenceFrame,updateVolumePresenceFrame,isVolumeDangerousAt,type VolumePresenceFrame } from '@/systems/volume-presence';
 import { isMaterialVolume,paintVolumePresence } from './volume-paint';
+import { paintNativeVolume, tintNativeEcho } from './native-volume-paint';
 import { GAME_CONSTANTS } from '@/config/constants';
 import type { CorridorAabb } from '@/generation/types';
 import { dingLiveRect, DING_MORPH_PX, type PixelRect } from '@/systems/contamination-host-live';
@@ -170,6 +171,8 @@ export function attachDingD(ctx: FormAttachContext): FormVisual {
   const stains = ctx.scene.add.graphics();
   stains.setDepth(STAIN_DEPTH);
   const home = homeFromPin(ctx.pin);
+  const native = ctx.enemyAppearanceVersion === 3 && ctx.worldAdaptation
+    ? { material: ctx.worldAdaptation, lighting: ctx.worldLighting } : undefined;
   const state: DingState = {
     scene: ctx.scene,
     image,
@@ -212,10 +215,15 @@ export function attachDingD(ctx: FormAttachContext): FormVisual {
         return;
       }
       const paintKey = `${Math.floor((presence?.elapsedMs??state.elapsedMs) / (1000/60))}:${pose.signal}:${pose.toolControl}:${pose.activity?.phase}:${pose.activity?.progress}:${presence?.active}:${presence?.rect.x}:${presence?.rect.y}:${presence?.rect.w}:${presence?.rect.h}:${presence?.phase}:${presence?.progress}:${explicitTime}:${presence?.coreX}:${presence?.coreY}`;
-      if (state.lastPaintKey !== paintKey) {
+      if (state.lastPaintKey !== paintKey || native?.lighting) {
         const cloud = cloudForLive(recipe, live, canvasW, canvasH, state.elapsedMs);
-        if(presence)paintVolumePresence(state.pixels.data,canvasW,canvasH,presence,state.seed,recipe.paintStrikeCore?recipe.strikeCorePx:0,pose.activity?.phase==='rest'?.5:pose.activity?.phase==='waking'?.5+.5*pose.activity.progress:1);
-        else paintDingFrame(state.pixels.data, canvasW, canvasH, recipe, pose, state.elapsedMs, cloud);
+        const opacity = pose.activity?.phase === 'rest' ? .5 : pose.activity?.phase === 'waking' ? .5 + .5 * pose.activity.progress : 1;
+        if (presence && native) paintNativeVolume(state.pixels.data, canvasW, canvasH, presence, state.seed, native, recipe.paintStrikeCore ? recipe.strikeCorePx : 0, opacity);
+        else if(presence)paintVolumePresence(state.pixels.data,canvasW,canvasH,presence,state.seed,recipe.paintStrikeCore?recipe.strikeCorePx:0,opacity);
+        else {
+          paintDingFrame(state.pixels.data, canvasW, canvasH, recipe, pose, state.elapsedMs, cloud);
+          if (native && recipe.family === 'sound_echo') tintNativeEcho(state.pixels.data, canvasW, canvasH, pose.x, pose.y, native);
+        }
         if (pose.toolControl === 'suppressed') muteSuppressedMaterial(state.pixels.data);
         canvasCtx.putImageData(state.pixels, 0, 0);
         texture.refresh();

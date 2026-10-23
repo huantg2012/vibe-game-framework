@@ -32,7 +32,7 @@ for(const world of R100_NATIVE_WORLDS) for(const grade of ['low','medium','sever
     (r:typeof recipe)=>{(r.enemyAppearance!.material.mid as number[])[0]! ^= 1;},
     (r:typeof recipe)=>{(r.enemyAppearance!.material as {kind:string}).kind='unknown';},
     (r:typeof recipe)=>{(r.enemyAppearance!.material as {fibreCount:number}).fibreCount=200;},
-    (r:typeof recipe)=>{(r.enemyAppearance as {version:number}).version=3;},
+    (r:typeof recipe)=>{(r.enemyAppearance as {version:number}).version=99;},
     (r:typeof recipe)=>{(r as {requestedSeed:number}).requestedSeed++;},
   ]) {const bad=structuredClone(recipe);tamper(bad);assert(!validR100ProductionRecipe(bad),`tamper: ${world.id}`);}
   const material=enemyAppearance.material;

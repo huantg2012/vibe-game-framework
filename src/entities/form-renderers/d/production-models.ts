@@ -5,6 +5,8 @@ import { bakeBeastModel, BEAST_WALK_CYCLE_MS } from './beast-model';
 import { bakeWormModel, WORM_WALK_CYCLE_MS } from './worm-model';
 import { bakeRemnantModel, REMNANT_WALK_CYCLE_MS } from './remnant-model';
 import { bakeGrowthModel, GROWTH_WALK_CYCLE_MS } from './growth-model';
+import { bakeNativeRemnant } from './native-remnant-model';
+import { bakeNativeBeast, bakeNativeWorm, bakeNativeGrowth, bakeNativeInsect } from './native-ground-models';
 
 /** Art registration and gait distances, shared by production and preview bakers. */
 const models: Readonly<Record<string, AnimatedModel>> = {
@@ -15,7 +17,18 @@ const models: Readonly<Record<string, AnimatedModel>> = {
   organic_remnant: { id: 'remnant18', walkCycleMs: REMNANT_WALK_CYCLE_MS, stridePixels: 20, bake: bakeRemnantModel },
   stalk_clump: { id: 'growth18', walkCycleMs: GROWTH_WALK_CYCLE_MS, stridePixels: 16, bake: bakeGrowthModel },
 };
-export function productionModelFor(substrate: string, worldAppearance = false): AnimatedModel | undefined {
+const nativeBakers = {
+  organic_remnant: bakeNativeRemnant,
+  mammal_remnant: bakeNativeBeast,
+  worm_remnant: bakeNativeWorm,
+  stalk_clump: bakeNativeGrowth,
+  insect_remnant: bakeNativeInsect,
+};
+const nativeModels: Readonly<Record<string, AnimatedModel>> = Object.fromEntries(Object.entries(nativeBakers).map(([substrate, bake]) => [
+  substrate, { ...models[substrate]!, id: `${substrate}-native3`, bake },
+]));
+export function productionModelFor(substrate: string, worldAppearance = false, appearanceVersion: 1 | 2 | 3 = 2): AnimatedModel | undefined {
+  if (worldAppearance && appearanceVersion === 3 && nativeModels[substrate]) return nativeModels[substrate];
   // Presentation only: the caller retains the original substrate/AI and attack.
   return models[worldAppearance && substrate === 'organic_remnant' ? 'human_remnant' : substrate];
 }

@@ -1,3 +1,4 @@
+import { createVolumePresenceFrame, updateVolumePresenceFrame } from '../../src/systems/volume-presence';
 import { ENEMY_WORLD_MATERIAL_RULES, ENEMY_WORLD_MATERIAL_ROUTING } from '../../src/generated/enemy-world-materials';
 /** Real scheme-D attachments with live scene-light references and the actual
  * Rift sight query. Run with tools/contam-preview/tsconfig.json. */
@@ -249,7 +250,51 @@ assert.equal(bakes, 1, 'moving light never re-bakes a cached anatomy pose');
 assert.equal(cacheFixture.textures.size, 1);
 cached.destroy();
 assert.equal(cacheFixture.textures.size, 0);
-console.log(JSON.stringify({ humanCases, paintCases, supportedSubstrates: 5,
+// Version 3 must reach the real attachment, including a stationary pose whose
+// local lights change. These are mocked render objects, not a running game.
+let nativeBodyCases = 0, nativeVolumeCases = 0;
+for (const worldId of ['crystal-fibre', 'ruptured-film']) for (const coverage of ['infiltrate', 'rewrite', 'overwrite'] as const) {
+  for (const substrate of ['organic_remnant', 'insect_remnant', 'mammal_remnant', 'worm_remnant', 'stalk_clump']) {
+    const f = fixture(), form = { ...INFILTRATOR_FORM, substrate, coverage };
+    const appearance = resolveRuntimeEnemyWorldAppearance(resolveEnemyWorldAdaptation(worldId), substrate, lighting, 3);
+    const visual = schemeDMixed.attach({ scene: f.scene, form, seed: 37, depth: 20, ...appearance });
+    visual.update(basePose);
+    const texture = [...f.textures.values()][0]!;
+    const expected = productionModelFor(substrate, true, 3)!.bake({ seed: 37, coverage, facing4: 'down', phase: 'idle', phase01: 0, worldAdaptation: appearance.worldAdaptation });
+    assert(expected.lightingSurface);
+    lightModelPixels(expected.buf.data, expected.lightingSurface, center.x, center.y, lighting);
+    assert.deepEqual(texture.pixels, expected.buf.data, `${substrate}: v3 routing uses its own anatomy`);
+    const before = texture.pixels.slice(); lights = [];
+    visual.update(basePose);
+    assert.notEqual(digest(texture.pixels), digest(before)); assert.deepEqual(alpha(texture.pixels), alpha(before));
+    lights = [light]; const uploads = texture.uploads;
+    visual.update({ ...basePose, visibility: 0, deltaMs: 16 }); assert.equal(texture.uploads, uploads);
+    visual.destroy(); assert.equal(f.textures.size, 0); assert.equal(f.objects.length, 0); nativeBodyCases++;
+  }
+  for (const substrate of ['gas_mass', 'mist_bank', 'dust_swarm', 'sound_echo']) {
+    const f = fixture(), form: ContaminationForm = { ...INFILTRATOR_FORM, substrate, coverage, occupancy: 'volume', portfolio: 'ding',
+      continuity: 'monolith', lexemes: { motion: 'motion_anchor', sense: 'sense_touch', rhythm: 'rhythm_open', contact: 'contact_step' } };
+    const rect = { x: center.x - 64, y: center.y - 48, w: 128, h: 96 };
+    const frame = substrate === 'sound_echo' ? undefined : updateVolumePresenceFrame(createVolumePresenceFrame(), { substrate, coverage, elapsedMs: 2300, rect, active: true });
+    const frozen = JSON.stringify(frame);
+    Object.assign(f.scene, { hosts: { getVolumePresenceFrame: () => frame,
+      getVisualPin: () => ({ ...rect, width: rect.w, height: rect.h }), getSubjects: () => [] } });
+    const visual = schemeDMixed.attach({ scene: f.scene, form, seed: 37, depth: 20, subjectId: 'volume-v3',
+      pin: { kind: 'cluster', x: rect.x, y: rect.y, width: rect.w, height: rect.h }, stainWorldPoint: { x: -1000, y: -1000 },
+      ...resolveRuntimeEnemyWorldAppearance(resolveEnemyWorldAdaptation(worldId), substrate, lighting, 3) });
+    const pose = { ...basePose, volumeTimeMs: 2300 };
+    visual.update(pose); const texture = [...f.textures.values()][0]!, before = texture.pixels.slice();
+    assert(before.some((v, i) => i % 4 === 3 && v > 0));
+    lights = []; visual.update(pose);
+    assert.notEqual(digest(texture.pixels), digest(before), `${substrate}: stationary field receives changed lights`);
+    assert.deepEqual(alpha(texture.pixels), alpha(before)); lights = [light];
+    assert.equal(JSON.stringify(frame), frozen, 'attachment does not mutate authoritative Host density');
+    const uploads = texture.uploads;
+    visual.update({ ...pose, visibility: 0, deltaMs: 16 }); assert.equal(texture.uploads, uploads);
+    visual.destroy(); assert.equal(f.textures.size, 0); assert.equal(f.objects.length, 0); nativeVolumeCases++;
+  }
+}
+console.log(JSON.stringify({ humanCases, paintCases, nativeBodyCases, nativeVolumeCases, supportedSubstrates: 13,
   liveSceneLight: true, committedAttack: true, frozenContactCells: true, localSightAlpha: true,
   localLightVoidBlocked: true, lightNoCornerCut: true, shoulderSlotException: true,
   legacyBytes: true, inactiveHostParity: true, hiddenWorkSkipped: true, boundedTextureLifecycle: true }));
