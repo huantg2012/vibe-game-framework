@@ -14,6 +14,7 @@ import {createNativeAutoTraversalTemplate,createNativeAutoBodyField} from './nat
 import {createNativeBodyPrimitiveProbe} from './native-body-collision';
 import {createNativeAutoCoverage} from './native-auto-coverage';
 import {nativeAutoCoverageCells,nativeAutoSplitCoverageCell} from './native-auto-cells';
+import {assignNativeAutoCoverage} from './native-auto-assignment';
 type Row=NativeSpatialConstructionReference['rows'][number];
 interface Site {readonly x:number;readonly y:number;readonly rank:number;readonly sourceDistance:number}
 interface PlannedObject extends NativeAutoCoverageObject {readonly id:string;readonly row:Partial<Row>;readonly polygon?:readonly NativeAutoPoint[]}
@@ -31,8 +32,9 @@ export interface NativeAutoPlan {
   readonly shore:NativeConstructionShoreResult;
   readonly siteEvaluations:number;readonly feasibleSites:number;
   readonly placementStates:number;readonly backtracks:number;
-  readonly constructionCoverage:Readonly<{strategy:'triangular-coverage-cells-v1';units:number;before:NativeAutoCoverageScore;after:NativeAutoCoverageScore}>;
+  readonly constructionCoverage:Readonly<{strategy:'joint-coverage-assignment-v1';units:number;before:NativeAutoCoverageScore;after:NativeAutoCoverageScore}>;
   readonly requestedCounts:Readonly<{holes:number;solids:number}>;
+  readonly assignmentTrace:Readonly<{coveragePrunes:number;passagePrunes:number;completeChecks:number}>;
 }
 
 /** Sample an offset rectangle union before assigning its position. Thick
@@ -122,12 +124,12 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   }
   const domains=objects.map(object=>sites.map((site,index)=>({site,index,box:shifted(object.bounds,site)}))
     .filter(({box})=>compiled.ground.containsRect(box,p.objectClearancePx)&&sourceClear(box)&&!reserved.some(r=>overlaps(box,r,p.objectClearancePx))));
-  const chosen=new Map<number,number>(),occupied:Rect[]=[];
+  const chosen=new Map<number,number>();
   const available=new Uint8Array(bodyField.points.length).fill(1),links=bodyField.baseLinks.slice();
   const structure=Float32Array.from(bodyField.points.map(point=>point.source)),holeDistances=new Float32Array(available.length).fill(Infinity);
   const coverage=createNativeAutoCoverage(bodyField,spatial.policy);
   let measured=coverage.measure(available,links,structure,holeDistances);const before=measured.score;
-  let placementStates=0,backtracks=0;
+
   const holes=objects.map((object,index)=>({object,index})).filter(({object})=>object.kind==='hole').map(({index})=>index);
   const solids=objects.map((object,index)=>({object,index})).filter(({object})=>object.kind==='solid').map(({index})=>index);
   const baseCells=nativeAutoCoverageCells(bodyField.points,spatial.policy.spacingPx,spatial.policy.maxEmptyRadiusPx,spatial.policy.deepEmptyThresholdPx,
@@ -170,14 +172,13 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   const cellCoverage=(object:PlannedObject,site:Pick<Site,'x'|'y'>,cellIndex:number)=>{
     let maximum=0,deepExcess=0;
     for(const index of cells[cellIndex]!.points){const point=bodyField.points[index]!;
-      const distance=Math.min(point.source,nativeAutoObjectDistance(object,site,point))+Math.SQRT2*4;
-      maximum=Math.max(maximum,distance);deepExcess+=Math.max(0,distance-spatial.policy.deepEmptyThresholdPx);
+      const structureDistance=Math.min(point.source,nativeAutoObjectDistance(object,site,point))+Math.SQRT2*4;
+      maximum=Math.max(maximum,Math.min(structureDistance,point.margin+Math.SQRT2*4));deepExcess+=Math.max(0,structureDistance-spatial.policy.deepEmptyThresholdPx);
     }
     return{maximum,deepExcess};
   };
   const siteIndex=new Map(sites.map((site,index)=>[`${site.x}:${site.y}`,index]));
   const projectedDomains=new Map<number,{site:Site;index:number;box:Rect}[]>();
-  const projectedOrigins=new Map<number,Site>();
   for(const objectIndex of objectByCell){
     const object=objects[objectIndex]!,cell=cells[cellByObject.get(objectIndex)!]!;
     const domain=[...domains[objectIndex]!],nearest=domain.reduce<typeof domain[number]|undefined>((best,candidate)=>!best||
@@ -193,126 +194,79 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
       if(added.has(index))continue;const site=sites[index]!,box=shifted(object.bounds,site);
       if(compiled.ground.containsRect(box,p.objectClearancePx)&&sourceClear(box)&&!reserved.some(r=>overlaps(box,r,p.objectClearancePx))){domain.push({site,index,box});added.add(index);}
     }
-    projectedOrigins.set(objectIndex,nearest.site);
     projectedDomains.set(objectIndex,domain.filter(candidate=>Math.hypot(candidate.site.x-nearest.site.x,candidate.site.y-nearest.site.y)<=spatial.policy.spacingPx/2));
   }
+  // Compile each actual footprint's cover once in object-local coordinates.
+  // Every original body sample remains an obligation until fixed source/shore
+  // or a chosen H/S proves it covered; clipped cell averages cannot drop it.
+  const points=bodyField.points,words=Math.ceil(points.length/32),required=new Uint32Array(words);
+  let cols=0,gridRows=0;for(const point of points){cols=Math.max(cols,point.gx+1);gridRows=Math.max(gridRows,point.gy+1);}
+  const lookup=new Int32Array(cols*gridRows).fill(-1);
+  const coverLimit=spatial.policy.maxEmptyRadiusPx-Math.SQRT2*4;
+  points.forEach((point,index)=>{
+    lookup[point.gy*cols+point.gx]=index;
+    if(Math.min(point.source,point.margin)>coverLimit)required[index>>>5]=required[index>>>5]!|(1<<(index&31));
+  });
+  const assignmentDomains=objectByCell.map((objectIndex,variable)=>{
+    checkpoint();const object=objects[objectIndex]!,cellIndex=cellByObject.get(objectIndex)!,cell=cells[cellIndex]!;
+    const offsets:{x:number;y:number;wide:boolean}[]=[],box=object.bounds;
+    for(let gy=Math.floor((box[1]-coverLimit-4)/8);gy<=Math.ceil((box[1]+box[3]+coverLimit-4)/8);gy++){
+      for(let gx=Math.floor((box[0]-coverLimit-4)/8);gx<=Math.ceil((box[0]+box[2]+coverLimit-4)/8);gx++){
+        const distance=nativeAutoObjectDistance(object,{x:0,y:0},{x:gx*8+4,y:gy*8+4});
+        if(distance<=coverLimit)offsets.push({x:gx,y:gy,wide:distance<spatial.policy.wideRadiusPx});
+      }
+    }
+    return projectedDomains.get(objectIndex)!.map(candidate=>{
+      const covers=new Uint32Array(words),x=candidate.site.x/8,y=candidate.site.y/8;let wideLoss=0;
+      for(const offset of offsets){
+        const gx=offset.x+x,gy=offset.y+y;if(gx<0||gy<0||gx>=cols||gy>=gridRows)continue;
+        const index=lookup[gy*cols+gx]!;if(index<0)continue;
+        covers[index>>>5]=covers[index>>>5]!|(1<<(index&31));
+        if(offset.wide&&Math.min(points[index]!.source,points[index]!.margin)>=spatial.policy.wideRadiusPx)wideLoss++;
+      }
+      return {...candidate,variable,object:objectIndex,covers,wideLoss,...cellCoverage(object,candidate.site,cellIndex),
+        distance:Math.hypot(candidate.site.x-cell.x,candidate.site.y-cell.y)};
+    }).sort((a,b)=>Math.max(0,a.maximum-spatial.policy.maxEmptyRadiusPx)-Math.max(0,b.maximum-spatial.policy.maxEmptyRadiusPx)
+      ||a.deepExcess-b.deepExcess||a.wideLoss-b.wideLoss||a.distance-b.distance||a.site.rank-b.site.rank);
+  });
   const bodyStates=Array.from({length:objectCount+1},()=>new Uint8Array(available.length));
   const linkStates=Array.from({length:objectCount+1},()=>new Uint8Array(links.length));
   bodyStates[0]!.set(available);linkStates[0]!.set(links);
-  const place=(depth:number):boolean=>{
-    checkpoint();if(depth===objectCount){available.set(bodyStates[depth]!);links.set(linkStates[depth]!);return true;}
-    let objectIndex=-1,domain:{site:Site;index:number;box:Rect}[]=[];
-    for(const index of objectByCell)if(!chosen.has(index)){
-      const feasible=projectedDomains.get(index)!.filter(candidate=>!occupied.some(rect=>overlaps(candidate.box,rect,p.objectClearancePx)));
-      if(!feasible.length)return false;
-      if(objectIndex<0||feasible.length<domain.length||feasible.length===domain.length&&objects[index]!.kind==='hole'&&objects[objectIndex]!.kind==='solid'){
-        objectIndex=index;domain=feasible;
+  const assignment=assignNativeAutoCoverage({domains:assignmentDomains,required,maxStates:p.maxPlacementStates,branchLimit:p.placementBranchLimit,checkpoint,
+    compatible:(a,b)=>!overlaps(a.box,b.box,p.objectClearancePx),
+    connected:(candidate,depth)=>{
+      const trialBody=bodyStates[depth+1]!,trialLinks=linkStates[depth+1]!;
+      trialBody.set(bodyStates[depth]!);trialLinks.set(linkStates[depth]!);
+      const template=objects[candidate.object]!.traversal!,site=candidate.site;
+      for(let i=0;i<points.length;i++)if(trialBody[i]){
+        const point=points[i]!,x=point.x-site.x,y=point.y-site.y;
+        if(!template.supported(x,y))trialBody[i]=0;else trialLinks[i]=trialLinks[i]!&template.links(x,y);
       }
-    }
-    const object=objects[objectIndex]!,cellIndex=cellByObject.get(objectIndex)!,cell=cells[cellIndex]!;
-    const candidates=domain.map(candidate=>({...candidate,...cellCoverage(object,candidate.site,cellIndex),
-      distance:Math.hypot(candidate.site.x-cell.x,candidate.site.y-cell.y)}))
-      .sort((a,b)=>a.maximum-b.maximum||a.deepExcess-b.deepExcess||a.distance-b.distance||a.site.rank-b.site.rank);
-    const currentBody=bodyStates[depth]!,currentLinks=linkStates[depth]!,trialAvailable=bodyStates[depth+1]!,trialLinks=linkStates[depth+1]!;
-    for(const candidate of candidates.slice(0,p.placementBranchLimit)){
-      checkpoint();if(++placementStates>p.maxPlacementStates)throw new Error('Automatic constructive placement exhausted its frozen budget');
-      trialAvailable.set(currentBody);trialLinks.set(currentLinks);const template=object.traversal!,site=candidate.site;
-      for(let i=0;i<bodyField.points.length;i++)if(trialAvailable[i]){const point=bodyField.points[i]!,x=point.x-site.x,y=point.y-site.y;
-        if(!template.supported(x,y)){trialAvailable[i]=0;continue;}trialLinks[i]=trialLinks[i]!&template.links(x,y);
-      }
-      if(!bodyField.connected(trialAvailable,trialLinks)){backtracks++;continue;}
-      chosen.set(objectIndex,candidate.index);occupied.push(candidate.box);
-      if(place(depth+1))return true;
-      chosen.delete(objectIndex);occupied.pop();backtracks++;
-    }
-    return false;
-  };
-  if(!place(0))throw new Error('Automatic coverage cells have no connected assignment within the frozen branch bound');
-  interface CoverageState {body:Uint8Array;links:Uint8Array;structure:Float32Array;holes:Float32Array}
-  const distanceFields=new Map<number,Float32Array>();
-  const distances=(objectIndex:number,siteIndex:number)=>Float32Array.from(bodyField.points.map(point=>nativeAutoObjectDistance(objects[objectIndex]!,sites[siteIndex]!,point)));
-  for(const [index,site]of chosen)distanceFields.set(index,distances(index,site));
-  const emptyState=():CoverageState=>({body:new Uint8Array(available.length).fill(1),links:bodyField.baseLinks.slice(),
-    structure:Float32Array.from(bodyField.points.map(point=>point.source)),holes:new Float32Array(available.length).fill(Infinity)});
-  const applyObject=(state:CoverageState,index:number,siteIndex:number,values:Float32Array)=>{
-    const object=objects[index]!,site=sites[siteIndex]!,template=object.traversal!;
-    for(let i=0;i<bodyField.points.length;i++){
-      const point=bodyField.points[i]!,x=point.x-site.x,y=point.y-site.y;
-      if(state.body[i]){if(!template.supported(x,y))state.body[i]=0;else state.links[i]=state.links[i]!&template.links(x,y);}
-      state.structure[i]=Math.min(state.structure[i]!,values[i]!);
-      if(object.kind==='hole')state.holes[i]=Math.min(state.holes[i]!,values[i]!);
-    }
-  };
-  const fixedState=(moving=-1)=>{const state=emptyState();
-    for(const [index,site]of chosen)if(index!==moving)applyObject(state,index,site,distanceFields.get(index)!);
-    return state;
-  };
-  let state=fixedState();measured=coverage.measure(state.body,state.links,state.structure,state.holes);
-  const violation=(score:NativeAutoCoverageScore)=>
-    Math.max(0,score.maxEmptyPx/spatial.policy.maxEmptyRadiusPx-1)+Math.max(0,score.maxDeepSpanPx/spatial.policy.maxDeepEmptySpanPx-1)+
-    Math.max(0,score.maxApproachRoutePx/spatial.policy.maxCoverRoutePx-1)+Math.max(0,spatial.policy.minWideRatio-score.wideRatio)+
-    Math.max(0,spatial.policy.minLargestWideRatio-score.largestWideRatio);
-  // Correct only the failing certificate's local assignment, before emitting
-  // any map. This is not a full-field coordinate descent or another quota pass.
-  // All source-assisted responsibility points remain in every exact measure.
-  while(!measured.accepted&&placementStates<p.maxPlacementStates){
-    checkpoint();const score=measured.score;
-    const witnesses=[
-      {index:measured.wideTarget,openWide:true,distanceLimit:spatial.policy.wideRadiusPx,failed:score.wideRatio<spatial.policy.minWideRatio||score.largestWideRatio<spatial.policy.minLargestWideRatio},
-      {index:measured.emptyTarget,openWide:false,distanceLimit:spatial.policy.maxEmptyRadiusPx-Math.SQRT2*4,failed:score.maxEmptyPx>spatial.policy.maxEmptyRadiusPx},
-      {index:measured.deepTarget,openWide:false,distanceLimit:spatial.policy.deepEmptyThresholdPx-Math.SQRT2*4,failed:score.maxDeepSpanPx>spatial.policy.maxDeepEmptySpanPx},
-      {index:measured.holeTarget,openWide:false,distanceLimit:0,failed:score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx},
-    ].filter(witness=>witness.failed&&witness.index>=0);
-    if(!witnesses.length)break;
-    let best:undefined|{object:number;site:number;distances:Float32Array;state:CoverageState;measure:typeof measured;cost:number};
-    const cost=violation(score),fixedByObject=new Map<number,CoverageState>(),evaluated=new Set<string>();
-    for(const {index:targetIndex,openWide,distanceLimit}of witnesses){
-      const target=bodyField.points[targetIndex]!;
-      const local=[...chosen.keys()].sort((a,b)=>nativeAutoObjectDistance(objects[a]!,sites[chosen.get(a)!]!,target)-
-        nativeAutoObjectDistance(objects[b]!,sites[chosen.get(b)!]!,target)).slice(0,3);
-      for(const objectIndex of local){
-        let fixed=fixedByObject.get(objectIndex);if(!fixed){fixed=fixedState(objectIndex);fixedByObject.set(objectIndex,fixed);}
-        const object=objects[objectIndex]!,otherBounds=[...chosen].filter(([index])=>index!==objectIndex).map(([index,site])=>shifted(objects[index]!.bounds,sites[site]!));
-        const domain=projectedDomains.get(objectIndex)!,origin=projectedOrigins.get(objectIndex)!,current=sites[chosen.get(objectIndex)!]!;
-        // Keep one-cell moves available after a coarse move. They use the same
-        // bounded domain and site budget, with all support checks unchanged.
-        for(let dy=-8;dy<=8;dy+=8)for(let dx=-8;dx<=8;dx+=8){
-          if(!dx&&!dy)continue;const x=current.x+dx,y=current.y+dy;
-          if(Math.hypot(x-origin.x,y-origin.y)>spatial.policy.spacingPx/2)continue;
-          const key=`${x}:${y}`;let index=siteIndex.get(key);
-          if(index===undefined){if(siteEvaluations>=p.maxSiteEvaluations)continue;siteEvaluations++;
-            index=sites.length;sites.push({x,y,rank:mix32(seed,`auto-cell:${x}:${y}`),sourceDistance:nativePrimitiveDistance(sourceTree,x,y)});siteIndex.set(key,index);}
-          if(domain.some(candidate=>candidate.index===index))continue;
-          const site=sites[index]!,box=shifted(object.bounds,site);
-          if(compiled.ground.containsRect(box,p.objectClearancePx)&&sourceClear(box)&&!reserved.some(r=>overlaps(box,r,p.objectClearancePx)))domain.push({site,index,box});
-        }
-        const residual=(distance:number)=>Math.max(0,openWide?distanceLimit-distance:distance-distanceLimit);
-        const candidates=domain.filter(candidate=>candidate.index!==chosen.get(objectIndex)&&!otherBounds.some(box=>overlaps(candidate.box,box,p.objectClearancePx)))
-          .map(candidate=>({...candidate,distance:nativeAutoObjectDistance(object,candidate.site,target),
-            movement:Math.hypot(candidate.site.x-sites[chosen.get(objectIndex)!]!.x,candidate.site.y-sites[chosen.get(objectIndex)!]!.y)}))
-          .sort((a,b)=>residual(a.distance)-residual(b.distance)||a.movement-b.movement||a.site.rank-b.site.rank).slice(0,p.placementBranchLimit);
-        for(const candidate of candidates){
-          checkpoint();if(placementStates>=p.maxPlacementStates)break;
-          const trialKey=`${objectIndex}:${candidate.index}`;if(evaluated.has(trialKey))continue;evaluated.add(trialKey);placementStates++;
-          const values=distances(objectIndex,candidate.index),trial:CoverageState={body:fixed.body.slice(),links:fixed.links.slice(),structure:fixed.structure.slice(),holes:fixed.holes.slice()};
-          applyObject(trial,objectIndex,candidate.index,values);
-          if(!bodyField.connected(trial.body,trial.links)){backtracks++;continue;}
-          const result=coverage.measure(trial.body,trial.links,trial.structure,trial.holes),nextCost=violation(result.score);
-          // A solved wide-route/optical contract may not be sacrificed to G1.
-          if(score.wideRatio>=spatial.policy.minWideRatio&&result.score.wideRatio<spatial.policy.minWideRatio||
-            score.largestWideRatio>=spatial.policy.minLargestWideRatio&&result.score.largestWideRatio<spatial.policy.minLargestWideRatio||
-            score.maxApproachRoutePx<=spatial.policy.maxCoverRoutePx&&result.score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx)continue;
-          if(result.score.penalty<=score.penalty&&nextCost<cost-1e-9&&(!best||nextCost<best.cost))
-            best={object:objectIndex,site:candidate.index,distances:values,state:trial,measure:result,cost:nextCost};
+      return bodyField.connected(trialBody,trialLinks);
+    },
+    complete:selection=>{
+      structure.set(Float32Array.from(points,point=>point.source));holeDistances.fill(Infinity);
+      for(const candidate of selection){const object=objects[candidate.object]!;
+        for(let i=0;i<points.length;i++){
+          const distance=nativeAutoObjectDistance(object,candidate.site,points[i]!);
+          structure[i]=Math.min(structure[i]!,distance);
+          if(object.kind==='hole')holeDistances[i]=Math.min(holeDistances[i]!,distance);
         }
       }
-    }
-    if(!best)break;
-    chosen.set(best.object,best.site);distanceFields.set(best.object,best.distances);state=best.state;measured=best.measure;
+      measured=coverage.measure(bodyStates[objectCount]!,linkStates[objectCount]!,structure,holeDistances);
+      return measured.accepted;
+    },
+  });
+  if(!assignment.accepted){
+    const point=points[assignment.uncoveredBit];
+    throw new Error(`Automatic joint assignment rejected: ${JSON.stringify({states:assignment.states,coveragePrunes:assignment.coveragePrunes,
+      passagePrunes:assignment.passagePrunes,completeChecks:assignment.completeChecks,exhausted:assignment.exhausted,
+      uncovered:point?{x:point.x,y:point.y}:undefined,lastComplete:assignment.completeChecks?measured.score:undefined})}`);
   }
-  available.set(state.body);links.set(state.links);structure.set(state.structure);holeDistances.set(state.holes);
+  for(const candidate of assignment.assignment)chosen.set(candidate.object,candidate.index);
+  available.set(bodyStates[objectCount]!);links.set(linkStates[objectCount]!);
   const requestedCounts={holes:units*2,solids:units};
-  const constructionCoverage={strategy:'triangular-coverage-cells-v1' as const,units,before,after:measured.score};
+  const constructionCoverage={strategy:'joint-coverage-assignment-v1' as const,units,before,after:measured.score};
   // Compiler assigns IDs in row order, so preserve the same order used for
   // each generated solid's seeded projected footprint.
   objects.forEach((object,index)=>{
@@ -323,5 +277,6 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   });
   return{reference:{id:referenceId,worldId:input.worldId,grade:input.grade,seed,seedSalt:0,sourceHash:p.sourceHash,rows},
     terrainOutline:compiled.terrainOutline,erosion:objects.flatMap((object,index)=>object.polygon&&chosen.has(index)?[object.polygon.map(point=>({x:point.x+sites[chosen.get(index)!]!.x,y:point.y+sites[chosen.get(index)!]!.y}))]:[]),shore,
-    siteEvaluations,feasibleSites:sites.length,placementStates,backtracks,constructionCoverage,requestedCounts};
+    siteEvaluations,feasibleSites:sites.length,placementStates:assignment.states,backtracks:assignment.backtracks,constructionCoverage,requestedCounts,
+    assignmentTrace:{coveragePrunes:assignment.coveragePrunes,passagePrunes:assignment.passagePrunes,completeChecks:assignment.completeChecks}};
 }
