@@ -1,4 +1,6 @@
 ---
+
+**当前工作（2026-10-23，DEC-225）：** 怪物世界适配推广为六家族共享自动链；全108世界具备能力，当前三世界开放名单不变。类人／占漆表现与战斗合同分离，新增独立冻结外观协议；只做离线验证与图册，不实机试玩。见[任务](../tasks/enemy-world-automation-2026-10-23.md)。
 status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
