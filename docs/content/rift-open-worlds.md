@@ -37,7 +37,7 @@
 
 - 三档使用同一共享r14构造规则，按面积与实际覆盖配置完整2H/1S单元，保留本世界完整原形与附属浮雕。
 - 保留锈红颗粒／冷灰夹层的世界材料身份；翻找物采用压实颗粒形态 `packed-granules`。
-- 已接上述构型、翻找物和 A 角色；**尚未接入此次类人／菌毯怪物本土化**，怪物沿原分支。
+- 已接上述构型、翻找物和 A 角色；DEC-225 新出发已接颗粒家族类人／占漆材料。保持原 organic／oil 战斗form，仅表现适配；旧局按原冻结字段。
 
 ## 晶化林床 · `crystal-fibre`
 
@@ -112,10 +112,10 @@
 
 ### RIFT-OPT-07 · 世界本土化怪物
 
-- **当前范围／性质**：**仅晶化林床／破膜盆地**的类人 `human_remnant` 与地面 `fungal_mat`；余烬仍旧分支。共享材料／形体能力＋两个获批世界的模板与显式准入。
-- **入口**：[材料CSV](../../data/enemy-world-materials.csv)、[真实投放CSV](../../data/rift-native-enemy-deployment.csv)、[工厂](../../src/generation/world-study/r100-package.ts)、[投放与恢复校验](../../src/generation/world-study/native-enemy-deployment.ts)。
-- **推广不能漏**：当前工厂和恢复校验硬限两个world，单加CSV行不足。完整forms／材料须在AI巡逻、Host支撑／危险域／核计算之前冻结并进入身份；不能只给旧怪物染色。改用既有human类型会改变原organic的移动／攻击参数，不能声称战斗参数完全不变。
-- **现有证据／缺口**：[正式地图与怪物QA](../qa/world-runtime-integration-2026-10-16.md)。其余世界的正式准入与逐世界适配／验证未完成，完整战斗与长期性能待验。
+- **当前范围／性质**：DEC-225 已实现六家族、108世界共享自动适配；新出发冻结独立外观。三个开放世界均接通，其余105仍锁定。类人及地面占漆自动选材质和结构，不逐世界适配。
+- **入口**：[家族CSV](../../data/enemy-world-materials.csv)、[自动路由生成](../../tools/enemy-world-pilot/codegen.mjs)、[外观冻结/验证](../../src/generation/world-study/enemy-appearance-contract.ts)、[运行时路由](../../src/entities/form-renderers/d/world-runtime.ts)、[家族形体](../../src/entities/form-renderers/d/world-body-anatomy.ts)。
+- **推广不能漏**：新增已知家族世界只需正常世界数据并运行 `npm run generate:enemy-materials`；不用追加敌人世界行。构建检查完整覆盖和生成物一致性，未知家族拒绝。外观包含在完整出发身份中；旧局不重查新CSV。AI/form／核／危险域保持原合同，原两试点投放CSV仅保留历史机制。玩家同化四新家族形体是另一项工作。
+- **现有证据／缺口**：[限定QA与动态图册](../qa/enemy-world-automation-2026-10-23.md)：324配方、2592帧、54占漆、48挂载及两条完整生成路径通过；没有全库实战、人审或GPU性能通过结论。原两图历史认可仍限定原范围。
 
 ### RIFT-OPT-08 · 同源 A 玩家、侧身可读性及尺度
 

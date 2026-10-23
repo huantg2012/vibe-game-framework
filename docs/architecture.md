@@ -1674,3 +1674,11 @@ H单物件细化原位占既有12评分槽，只对严格更好的H站位按分�
 
 
 G4类型交换的候选枚举已用c17真实失败校正：全部surplus实际事件与全部missing对象产生完整交换，反向失败证据/完整support尺寸/距离只用于排序；按对象端点轮次均衡，entries跨route去重，与窄段候选交替进入原48共享域。唯一完整合法性入口仍先计费再检查，未扩大几何或full预算。保存c17替代域48次找到3个合法tuple，原域22次均非法；合法性与实际门改善分别记录。
+
+### 怪物世界材料自动适配（2026-10-23，DEC-225）
+
+`data/enemy-world-materials.csv` 六家族→codegen全目录路由→`world-adaptation.ts` 小型参数缓存。新正式配方附 `enemyAppearance@2`，其签名绑定原包/seed/污染档/完整材料；独立于地形版本。validator校验后剥离该字段交旧几何executor，完整Rift身份仍含原recipe，因此旧地图结果不改而新外观可冷恢复。
+
+`RiftScene.attachSchemeD` 优先读新冻结材料，旧局读原enemyMaterial；`world-runtime.ts` 按协议路由两个表现原型，`productionModelFor` 只在新外观时把organic的模型转为类人，不改form或战斗。占漆三基体共用权威密度/接触格，只替换表面材料。AI与世界开放池不由美术规则控制。新家族不扩玩家同化既有两形体；未知形体来源仍使用中性色桥。
+
+美术合同在 `docs/art/contamination-forms.md`；测试 `npm run check:enemy-world`，图册 `npm run atlas:enemy-world`，构建前检查CSV生成一致性。既有每体64帧LRU／单GPU纹理／隐藏跳过／销毁清理保持。性能及验收边界见 `docs/qa/enemy-world-automation-2026-10-23.md`。

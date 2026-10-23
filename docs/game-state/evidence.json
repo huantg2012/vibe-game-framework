@@ -11538,5 +11538,84 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E289",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-23",
+    "revision": "ba51a8b6",
+    "scope": "DEC-225：六材料家族共享规则已接正式新出发，108世界配方自动获得类人／地面占漆结构与材料；开放池仍3世界。独立enemyAppearance@2冻结外观，渲染不改form／AI／核／危险域，旧两试点战斗合同和旧局保持。324配方、2592帧、54占漆、48模拟挂载及r14/r11两条完整生成/hydrate通过，构建通过；六家族图册待人审。没有实机试玩、全库实战或GPU性能通过结论。",
+    "limitations": "只做离线检查/烘焙与模拟运行时。CPU烘焙P95约0.744ms不是GPU/FPS或50ms预算证明；全库真实地图生成、自然战斗、动态审美未验。四新家族的人物同化形体尚不支持，维持中性混合通道。",
+    "sources": [
+      {
+        "path": "data/enemy-world-materials.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/enemy-appearance-contract.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-body-anatomy.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-adaptation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-runtime.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/production-models.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/world-material.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-runtime.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/render-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/tasks/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-world-automation-2026-10-23/checks.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-world-automation-2026-10-23/map-parity.json",
+        "role": "doc"
+      }
+    ]
   }
 ]

@@ -3,13 +3,13 @@
     "id": "COH-F015",
     "title": "地面敌人感知与行为",
     "domain": "encounters",
-    "summary": "地面实体按污染句法组合感官、活动与攻击；AI 使用共同地形和控制状态，听觉与视觉存在不同应对条件。 晶化林床/破膜盆地r13已在真实投放前冻结human_remnant与fungal_mat完整forms和材料，原AI职责与数量保留，采用这两种现有类型规则。human替代organic带来既有移速/攻击参数差异；fungal采用原生cluster/colony及核规则，真实支撑和危险域先验算。六档真实投放与冷恢复机器检查通过；两图中档正式浏览器各观察到3类人/4菌毯、动态肩灯/FOV/VOID裁切与冷续一致。破膜仅边缘/部分可见，完整战斗体验和性能不据此通过。 COH-F054仅对未追击状态的视觉/听觉感知距离应用一次同化倍率；发现累积不变，CHASE、受击及显式噪声不降效，Host危险保持。",
+    "summary": "地面实体按污染句法组合感官、活动与攻击；AI 使用共同地形和控制状态，听觉与视觉存在不同应对条件。 DEC-225：六材料家族共享规则已接正式新出发，108世界配方自动获得类人／地面占漆结构与材料；开放池仍3世界。独立enemyAppearance@2冻结外观，渲染不改form／AI／核／危险域，旧两试点战斗合同和旧局保持。324配方、2592帧、54占漆、48模拟挂载及r14/r11两条完整生成/hydrate通过，构建通过；六家族图册待人审。没有实机试玩、全库实战或GPU性能通过结论。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "正式生成遭遇 → 进入感知范围、发声或交战",
       "DEV /enemy-world-pilot.html：晶化林床／破膜盆地各单类人＋单菌毯，去雾动态观察；无真实AI／Host战斗或存档。",
-      "DEC-216：正式RiftScene.attachSchemeD读取当前冻结recipe.enemyMaterial，经world-runtime适配器只作用于human_remnant/fungal_mat；无材料字段的旧局保持旧表现。"
+      "正式createR100ProductionRecipe→enemyAppearance@2→RiftScene.attachSchemeD→两个共享表现原型；未改变敌人form。"
     ],
     "sources": [
       {
@@ -244,6 +244,42 @@
         "path": "docs/content/rift-open-worlds.md",
         "role": "doc",
         "note": "三图优化唯一推广登记册：RIFT-OPT-01～11，覆盖条件、专用配置、接入依赖和验证边界；不是新规则正文。"
+      },
+      {
+        "path": "src/generation/world-study/enemy-appearance-contract.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-body-anatomy.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/world-material.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/render-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/tasks/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -261,27 +297,28 @@
       "COH-E255",
       "COH-E264",
       "COH-E265",
-      "COH-E284"
+      "COH-E284",
+      "COH-E289"
     ],
     "unknowns": [
       "具有听觉诱导行为不等于所有布置下都已验证稳定的诱离后搜取收益。",
       "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
-      "E249原DEV范围（2026-10-15，后续接入按E250/E253另验）：2026-10-15材料试点只覆盖两个世界、human_remnant与fungal_mat；同族可解析不等于启用。尚未获用户审美认可，本次仅同场受控固定灯采样，真实动态肩灯/完整LOS/迷雾、AI/Host战斗、正常投放、冷续与性能均不可由受控巡演推定；I14/P49与全库推广保持开放。",
-      "本轮真实类型切换已明确裁决：organic→human使用既有moveScale .7→1、前摇700→350ms、冷却1600→1200ms、范围36→38px、半角75→60°；oil monolith→fungal colony采用cluster节律与scatter_rejoin原生核。不称所有战斗数值完全未改。真实正式怪物/动态肩灯与冷续的限定browser功能通过；破膜仅边缘/部分可见，完整战斗体验未验；50ms性能预算实测未过。",
-      "COH-F054机器范围见E264，晶化林床低档受控浏览器8项见E265；自然搜撤、人审及长期经济未验。"
+      "历史DEC-216真实类型切换已明确裁决：organic→human使用既有moveScale .7→1、前摇700→350ms、冷却1600→1200ms、范围36→38px、半角75→60°；oil monolith→fungal colony采用cluster节律与scatter_rejoin原生核。不称所有战斗数值完全未改。真实正式怪物/动态肩灯与冷续的限定browser功能通过；破膜仅边缘/部分可见，完整战斗体验未验；50ms性能预算实测未过。",
+      "COH-F054机器范围见E264，晶化林床低档受控浏览器8项见E265；自然搜撤、人审及长期经济未验。",
+      "DEC-225新四家族用户审美、全库实战和GPU预算未验；玩家同化四新家族形体仍未扩展。E249旧试点范围已由后续生产与本轮证据分项推进，不以本轮自动检查覆盖历史体验缺口。"
     ]
   },
   {
     "id": "COH-F016",
     "title": "占漆与占空环境危险",
     "domain": "encounters",
-    "summary": "生产启用的占漆/占空 Host 在合法宿主区域执行活动与危险阶段，部分具有可攻击核心，并可按能力资格被压制或暂缓。 晶化林床/破膜盆地r13已在真实投放前冻结human_remnant与fungal_mat完整forms和材料，原AI职责与数量保留，采用这两种现有类型规则。human替代organic带来既有移速/攻击参数差异；fungal采用原生cluster/colony及核规则，真实支撑和危险域先验算。六档真实投放与冷恢复机器检查通过；两图中档正式浏览器各观察到3类人/4菌毯、动态肩灯/FOV/VOID裁切与冷续一致。破膜仅边缘/部分可见，完整战斗体验和性能不据此通过。",
+    "summary": "生产启用的占漆/占空 Host 在合法宿主区域执行活动与危险阶段，部分具有可攻击核心，并可按能力资格被压制或暂缓。 DEC-225：六材料家族共享规则已接正式新出发，108世界配方自动获得类人／地面占漆结构与材料；开放池仍3世界。独立enemyAppearance@2冻结外观，渲染不改form／AI／核／危险域，旧两试点战斗合同和旧局保持。324配方、2592帧、54占漆、48模拟挂载及r14/r11两条完整生成/hydrate通过，构建通过；六家族图册待人审。没有实机试玩、全库实战或GPU性能通过结论。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "正式生成的环境 Host 区域内靠近、穿越或攻击核心",
       "DEV /enemy-world-pilot.html：晶化林床／破膜盆地各单类人＋单菌毯，去雾动态观察；无真实AI／Host战斗或存档。",
-      "DEC-216：正式RiftScene.attachSchemeD读取当前冻结recipe.enemyMaterial，经world-runtime适配器只作用于human_remnant/fungal_mat；无材料字段的旧局保持旧表现。"
+      "正式createR100ProductionRecipe→enemyAppearance@2→RiftScene.attachSchemeD→两个共享表现原型；未改变敌人form。"
     ],
     "sources": [
       {
@@ -480,6 +517,42 @@
         "path": "docs/content/rift-open-worlds.md",
         "role": "doc",
         "note": "三图优化唯一推广登记册：RIFT-OPT-01～11，覆盖条件、专用配置、接入依赖和验证边界；不是新规则正文。"
+      },
+      {
+        "path": "src/generation/world-study/enemy-appearance-contract.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-body-anatomy.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/production-models.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/render-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/tasks/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -495,25 +568,26 @@
       "COH-E253",
       "COH-E256",
       "COH-E255",
-      "COH-E284"
+      "COH-E284",
+      "COH-E289"
     ],
     "unknowns": [
       "占墙门框/墙锈、占空散光/间距等当前 substrate 表仅 gym；不能因共用 Host 代码存在就称它们在正式新地图可遇。资格与部署以实际 CSV 和生成规则为准。",
-      "E249原DEV范围（2026-10-15，后续接入按E250/E253另验）：2026-10-15材料试点只覆盖两个世界、human_remnant与fungal_mat；同族可解析不等于启用。尚未获用户审美认可，本次仅同场受控固定灯采样，真实动态肩灯/完整LOS/迷雾、AI/Host战斗、正常投放、冷续与性能均不可由受控巡演推定；I14/P49与全库推广保持开放。",
-      "本轮真实类型切换已明确裁决：organic→human使用既有moveScale .7→1、前摇700→350ms、冷却1600→1200ms、范围36→38px、半角75→60°；oil monolith→fungal colony采用cluster节律与scatter_rejoin原生核。不称所有战斗数值完全未改。真实正式怪物/动态肩灯与冷续的限定browser功能通过；破膜仅边缘/部分可见，完整战斗体验未验；50ms性能预算实测未过。"
+      "历史DEC-216真实类型切换已明确裁决：organic→human使用既有moveScale .7→1、前摇700→350ms、冷却1600→1200ms、范围36→38px、半角75→60°；oil monolith→fungal colony采用cluster节律与scatter_rejoin原生核。不称所有战斗数值完全未改。真实正式怪物/动态肩灯与冷续的限定browser功能通过；破膜仅边缘/部分可见，完整战斗体验未验；50ms性能预算实测未过。",
+      "DEC-225新四家族用户审美、全库实战和GPU预算未验；玩家同化四新家族形体仍未扩展。E249旧试点范围已由后续生产与本轮证据分项推进，不以本轮自动检查覆盖历史体验缺口。"
     ]
   },
   {
     "id": "COH-F017",
     "title": "漆面群落完整形体与局部受光",
     "domain": "encounters",
-    "summary": "完整形体跨格展示并按真实地面支撑投放；旧局展示与原危险格/核心分离兼容，受光外围可独立显示。 晶化林床/破膜盆地r13已在真实投放前冻结human_remnant与fungal_mat完整forms和材料，原AI职责与数量保留，采用这两种现有类型规则。human替代organic带来既有移速/攻击参数差异；fungal采用原生cluster/colony及核规则，真实支撑和危险域先验算。六档真实投放与冷恢复机器检查通过；两图中档正式浏览器各观察到3类人/4菌毯、动态肩灯/FOV/VOID裁切与冷续一致。破膜仅边缘/部分可见，完整战斗体验和性能不据此通过。",
+    "summary": "完整形体跨格展示并按真实地面支撑投放；旧局展示与原危险格/核心分离兼容，受光外围可独立显示。 DEC-225：六材料家族共享规则已接正式新出发，108世界配方自动获得类人／地面占漆结构与材料；开放池仍3世界。独立enemyAppearance@2冻结外观，渲染不改form／AI／核／危险域，旧两试点战斗合同和旧局保持。324配方、2592帧、54占漆、48模拟挂载及r14/r11两条完整生成/hydrate通过，构建通过；六家族图册待人审。没有实机试玩、全库实战或GPU性能通过结论。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "正式 Rift 中占漆群落；包括新出击及旧在途恢复",
       "DEV /enemy-world-pilot.html：晶化林床／破膜盆地各单类人＋单菌毯，去雾动态观察；无真实AI／Host战斗或存档。",
-      "DEC-216：正式RiftScene.attachSchemeD读取当前冻结recipe.enemyMaterial，经world-runtime适配器只作用于human_remnant/fungal_mat；无材料字段的旧局保持旧表现。"
+      "正式createR100ProductionRecipe→enemyAppearance@2→RiftScene.attachSchemeD→两个共享表现原型；未改变敌人form。"
     ],
     "sources": [
       {
@@ -699,6 +773,42 @@
       {
         "path": "tools/enemy-world-pilot/check-deployment.mjs",
         "role": "test"
+      },
+      {
+        "path": "src/generation/world-study/enemy-appearance-contract.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/world-body-anatomy.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/production-models.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/render-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/tasks/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -713,12 +823,13 @@
       "COH-E250",
       "COH-E253",
       "COH-E256",
-      "COH-E255"
+      "COH-E255",
+      "COH-E289"
     ],
     "unknowns": [
       "极窄旧图若在限定距离内找不到完整支撑，保留旧档与真实 VOID 遮罩并报告适配失败；没有证明任意旧图都能完整安放。",
-      "E249原DEV范围（2026-10-15，后续接入按E250/E253另验）：2026-10-15材料试点只覆盖两个世界、human_remnant与fungal_mat；同族可解析不等于启用。尚未获用户审美认可，本次仅同场受控固定灯采样，真实动态肩灯/完整LOS/迷雾、AI/Host战斗、正常投放、冷续与性能均不可由受控巡演推定；I14/P49与全库推广保持开放。",
-      "本轮真实类型切换已明确裁决：organic→human使用既有moveScale .7→1、前摇700→350ms、冷却1600→1200ms、范围36→38px、半角75→60°；oil monolith→fungal colony采用cluster节律与scatter_rejoin原生核。不称所有战斗数值完全未改。真实正式怪物/动态肩灯与冷续的限定browser功能通过；破膜仅边缘/部分可见，完整战斗体验未验；50ms性能预算实测未过。"
+      "历史DEC-216真实类型切换已明确裁决：organic→human使用既有moveScale .7→1、前摇700→350ms、冷却1600→1200ms、范围36→38px、半角75→60°；oil monolith→fungal colony采用cluster节律与scatter_rejoin原生核。不称所有战斗数值完全未改。真实正式怪物/动态肩灯与冷续的限定browser功能通过；破膜仅边缘/部分可见，完整战斗体验未验；50ms性能预算实测未过。",
+      "DEC-225新四家族用户审美、全库实战和GPU预算未验；玩家同化四新家族形体仍未扩展。E249旧试点范围已由后续生产与本轮证据分项推进，不以本轮自动检查覆盖历史体验缺口。"
     ]
   },
   {
