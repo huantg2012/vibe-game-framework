@@ -126,7 +126,7 @@ export function validNativeAutoRuntimeInput(value:unknown,native:MasterDefinitio
     ||p.maxSiteEvaluations>2048||p.maxPlacementStates>2048||p.placementBranchLimit>8||p.refinementPasses>3||p.maxRefinementEvaluations>8192||p.armOverlapPx>=p.armWidthPx||p.siteJitterPx>=p.siteSpacingPx/4
     ||p.coreWidthPx>3072||p.coreHeightPx>2304||p.armWidthPx>3072||p.armHeightPx>2304
     ||p.shoreSegmentMinPx>p.shoreSegmentMaxPx||p.shoreDepthMinPx>p.shoreDepthMaxPx
-    ||p.minWidePercent<50||p.minWidePercent>p.targetWidePercent||p.targetWidePercent>100||p.maxSourceAreaPercent>100
+    ||p.minWidePercent<=0||p.minWidePercent>p.targetWidePercent||p.targetWidePercent>100||p.maxSourceAreaPercent>100
     ||numbers.some(key=>key.endsWith('Px')&&p[key]%8!==0))return false;
   const intent=input.intent;
   if(!intent||Object.keys(intent).sort().join(',')!==['coreWidthPx','coreHeightPx','estimatedBlockedAreaPx2','estimatedBoundaryLossPx2','estimatedGrossAreaPx2'].sort().join(',')

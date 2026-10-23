@@ -20,8 +20,8 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "placementBranchLimit": 8,
     "refinementPasses": 3,
     "maxRefinementEvaluations": 8192,
-    "minWidePercent": 50,
-    "targetWidePercent": 55,
+    "minWidePercent": 48,
+    "targetWidePercent": 50,
     "maxSourceAreaPercent": 20,
     "shoreSegmentMinPx": 80,
     "shoreSegmentMaxPx": 160,
@@ -29,7 +29,7 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "shoreDepthMaxPx": 64,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "435d581b9320d24d53433f48ae6e18fabb7f20ee4d5c28232d9cc9682a72f924"
+    "sourceHash": "ad9c641ae975b70a72c4fceee306ccfb08ba2367baef2e61e761885d585ebd1d"
   },
   {
     "grade": "medium",
@@ -50,8 +50,8 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "placementBranchLimit": 8,
     "refinementPasses": 3,
     "maxRefinementEvaluations": 8192,
-    "minWidePercent": 50,
-    "targetWidePercent": 55,
+    "minWidePercent": 48,
+    "targetWidePercent": 50,
     "maxSourceAreaPercent": 20,
     "shoreSegmentMinPx": 80,
     "shoreSegmentMaxPx": 160,
@@ -59,7 +59,7 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "shoreDepthMaxPx": 80,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "435d581b9320d24d53433f48ae6e18fabb7f20ee4d5c28232d9cc9682a72f924"
+    "sourceHash": "ad9c641ae975b70a72c4fceee306ccfb08ba2367baef2e61e761885d585ebd1d"
   },
   {
     "grade": "severe",
@@ -80,8 +80,8 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "placementBranchLimit": 8,
     "refinementPasses": 3,
     "maxRefinementEvaluations": 8192,
-    "minWidePercent": 50,
-    "targetWidePercent": 55,
+    "minWidePercent": 48,
+    "targetWidePercent": 50,
     "maxSourceAreaPercent": 20,
     "shoreSegmentMinPx": 80,
     "shoreSegmentMaxPx": 160,
@@ -89,6 +89,6 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "shoreDepthMaxPx": 96,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "435d581b9320d24d53433f48ae6e18fabb7f20ee4d5c28232d9cc9682a72f924"
+    "sourceHash": "ad9c641ae975b70a72c4fceee306ccfb08ba2367baef2e61e761885d585ebd1d"
   }
 ];

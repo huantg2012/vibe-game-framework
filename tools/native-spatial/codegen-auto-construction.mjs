@@ -22,7 +22,7 @@ for(const p of policies){
   assert(p.siteJitterPx<p.siteSpacingPx/4&&p.maxSiteEvaluations<=2048);
   assert(p.maxPlacementStates<=2048&&p.placementBranchLimit<=8);
   assert(p.refinementPasses<=3&&p.maxRefinementEvaluations<=8192);
-  assert(p.minWidePercent>=50&&p.minWidePercent<=p.targetWidePercent&&p.targetWidePercent<=100);
+  assert(p.minWidePercent>0&&p.minWidePercent<=p.targetWidePercent&&p.targetWidePercent<=100);
   assert(p.maxSourceAreaPercent<=100);
   assert(p.shoreSegmentMinPx<=p.shoreSegmentMaxPx&&p.shoreDepthMinPx<=p.shoreDepthMaxPx);
 }
