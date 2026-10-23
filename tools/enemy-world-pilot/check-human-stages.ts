@@ -23,7 +23,7 @@ for (const card of atlas.cards) {
   const worldAdaptation = resolveEnemyWorldAdaptation(card.worldId)!;
   const palette = new Set([worldAdaptation.dark, worldAdaptation.mid, worldAdaptation.light, worldAdaptation.secondary].map(c => c.join(',')));
   const family = createHash('sha256');
-  for (const seed of [37, 192]) for (const coverage of tiers) for (const facing4 of facings) for (const phase of phases) for (const phase01 of [0, .5, 1]) {
+  for (const seed of [37, 192]) for (const coverage of tiers) for (const facing4 of facings) for (const phase of phases) for (const phase01 of (phase === 'walk' ? [0, .25, .5, .75, 1] : [0, .5, 1])) {
     const req = { seed, coverage, facing4, phase, phase01, worldAdaptation, anatomyVersion: 2 as const };
     const t = performance.now(), body = bakeHumanModel(req); times.push(performance.now() - t);
     assert.equal(hash(body.buf.data), hash(bakeHumanModel(req).buf.data), 'deterministic pose');
@@ -59,6 +59,7 @@ for (const card of atlas.cards) {
   for (const coverage of tiers) for (const facing4 of facings) {
     const pose = (phase: HumanPhase, phase01: number) => bakeHumanModel({ seed: 37, coverage, facing4, phase, phase01, worldAdaptation, anatomyVersion: 2 });
     for (const phase of ['idle', 'walk'] as const) assert.equal(hash(pose(phase, 0).buf.data), hash(pose(phase, 1).buf.data));
+    assert.notEqual(hash(mask(pose('walk', .25).buf.data)), hash(mask(pose('idle', 0).buf.data)), 'stride must animate the silhouette');
     assert.equal(hash(pose('strike', 1).buf.data), hash(pose('recover', 0).buf.data));
     assert.equal(hash(pose('recover', 1).buf.data), hash(pose('idle', 0).buf.data));
     const body = pose('idle', 0), lit = body.buf.data.slice();
