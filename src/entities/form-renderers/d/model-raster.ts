@@ -23,6 +23,8 @@ export interface CreatureModelRequest {
   /** 0 = active, 1 = settled. The contact plane remains at the same height. */
   restAmount?: number;
   worldAdaptation?: EnemyWorldAdaptation;
+  /** Explicit native anatomy only. Historical requests leave this absent. */
+  nativeCoverage?: number;
 }
 export interface CreatureModelResult { buf: PaintBuf; canvas: GenomeCanvas }
 export const smoothModel = (p: number): number => p * p * (3 - 2 * p);
@@ -77,7 +79,13 @@ export function createModelRaster(req: CreatureModelRequest, label: string, arti
         for (let axis = 0; axis < 3; axis++) lightingSurface.positions[i * 3 + axis] = u * ra[axis]! + v * rb[axis]! + w * rc[axis]!;
       }
       const mark = surface?.([u * sourceA[0] + v * sourceB[0] + w * sourceC[0], u * sourceA[1] + v * sourceB[1] + w * sourceC[1], u * sourceA[2] + v * sourceB[2] + w * sourceC[2]]) ?? 0;
-      const rgb = bodyInk(color, illumination, mark, req.worldAdaptation);
+      const localX = u * sourceA[0] + v * sourceB[0] + w * sourceC[0];
+      const localY = u * sourceA[1] + v * sourceB[1] + w * sourceC[1];
+      const localZ = u * sourceA[2] + v * sourceB[2] + w * sourceC[2];
+      const invasion = req.nativeCoverage;
+      const native = invasion === undefined || (.5 + .25 * Math.sin(localX * .29 + localZ * .19 + (req.seed % 31))
+        + .25 * Math.sin(localY * .21 - localZ * .11)) < invasion;
+      const rgb = bodyInk(color, illumination, mark, native ? req.worldAdaptation : undefined);
       buf.data.set([rgb[0], rgb[1], rgb[2], 255], i * 4);
     }
   }
