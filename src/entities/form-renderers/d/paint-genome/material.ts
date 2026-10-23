@@ -11,7 +11,7 @@ export function paintSurfaceMaterial(
   substrate: string, coverage: CoverageId, seed: number, elapsedMs=0, pose?: FormVisualPose,
   worldAdaptation?: EnemyWorldAdaptation, growth?: PaintGrowthGuide,
 ): void {
-  if (worldAdaptation && substrate === 'fungal_mat') {
+  if (worldAdaptation && ['fungal_mat', 'oil_film', 'ash_veil'].includes(substrate)) {
     paintWorldSurfaceMaterial(out, field, w, h, coverage, seed, elapsedMs, pose, worldAdaptation, growth);
     return;
   }

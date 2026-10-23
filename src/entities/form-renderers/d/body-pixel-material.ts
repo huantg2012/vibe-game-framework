@@ -39,6 +39,10 @@ export function bodyFold(u: number, v: number, family: string): number {
     return axis > -.25 && axis < .85 ? 1 : axis < -1 && axis > -1.8 ? -1 : 0;
   }
   const positive = (n: number, span: number) => ((n % span) + span) % span;
+  if (family === 'world-slab') return positive(v + Math.floor(u / 4) * 1.2, 6) < 1 ? -1 : 0;
+  if (family === 'world-shell') { const seam=positive(u + v * .18, 9); return seam < .7 ? -1 : seam < 1.5 ? 1 : 0; }
+  if (family === 'world-granular') { const cell=positive(u + Math.floor(v / 3) * 1.8, 4.5); return cell < 1 && positive(v,3)<1 ? 1 : cell > 3.7 ? -1 : 0; }
+  if (family === 'world-gel') { const flow=positive(u + Math.sin(v*.17)*.7, 8); return flow < .8 ? 1 : flow > 6 ? -1 : 0; }
   if (family === 'growth') {
     const grain = positive(u + Math.floor(v / 5) * .45, 4.8);
     return grain < .75 && positive(v, 11) < 7 ? -1 : grain >= .75 && grain < 1.35 && positive(v, 11) < 4 ? 1 : 0;

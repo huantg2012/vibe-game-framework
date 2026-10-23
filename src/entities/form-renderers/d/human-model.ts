@@ -1,3 +1,4 @@
+import { drawWorldTorso, drawWorldArm } from './world-body-anatomy';
 /** Independent human-remnant model. Geometry lives in ground X/Y + height Z;
  * each facing is reprojected before rasterization, never a rotated bitmap. */
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
@@ -85,7 +86,7 @@ export function bakeHumanModel(req: HumanModelRequest): {buf: PaintBuf; canvas: 
       limb(middle,joint,1.9,2.1,level>0?REWRITE:CLOTH);
     }
     limb([chest[0]-5,chest[1],chest[2]],[chest[0]+5,chest[1],chest[2]-1],1.5,1.3,DARK);
-  }else{
+  }else if(!world || !drawWorldTorso(r,world,pelvis,chest,level,individual)){
     volume([{at:[rewritten?.6:-1-level*.6,1.5+thrust,17-sink],rx:level===2?7:rewritten?3:4,ry:3},{at:chest,rx:level===2?8.5:rewritten?7.3:6.2,ry:4.4+level*.4},{at:[chest[0]-(rewritten?1.7:.4),chest[1]-.5,chest[2]+(rewritten?3.8:2.3)],rx:level===2?4:rewritten?4.8:5.3+level,ry:level===2?4.2:3.6}],level>0?REWRITE:CLOTH);
   }
   if(rewritten){
@@ -122,7 +123,7 @@ export function bakeHumanModel(req: HumanModelRequest): {buf: PaintBuf; canvas: 
         // Broken ends are contiguous with the shoulder, never floating glitter.
         if(side===-1)limb(shoulder,[branch[0]-1,branch[1]+.4,branch[2]+1.5],1.3,.65,EDGE);
         if(level>0)limb([chest[0]+side*2,chest[1]+2,chest[2]-4],branch,.75,1.1,REWRITE);
-      }else{
+      }else if(world.kind==='membrane'){
         const root:V=[pelvis[0]+side*2.3,pelvis[1]+1.8,pelvis[2]+1];
         const upper:V=[shoulder[0],shoulder[1]+1.5,shoulder[2]-.7];
         const outer:V=[elbow[0]+side*.7,elbow[1]+1.2,elbow[2]+1];
@@ -134,7 +135,7 @@ export function bakeHumanModel(req: HumanModelRequest): {buf: PaintBuf; canvas: 
         r.face([outer,fold,root],REWRITE);
         limb(root,outer,.65,.8,REWRITE);
         limb(upper,fold,.75,.55,EDGE);
-      }
+      }else drawWorldArm(r,world,shoulder,elbow,side,gaitResponse);
     }
   }
   if(level<2){

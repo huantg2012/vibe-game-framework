@@ -94,7 +94,7 @@ export function createModelRaster(req: CreatureModelRequest, label: string, arti
       const local = sub(point, a);
       const along = (local[0] * axis[0] + local[1] * axis[1] + local[2] * axis[2]) / (length || 1);
       const across = local[0] * u[0] + local[1] * u[1] + local[2] * u[2];
-      return Math.max(r0, r1) < 1.8 ? 0 : bodyFold(across, along * length, req.worldAdaptation?.kind === 'fibre' ? 'world-fibre' : label);
+      return Math.max(r0, r1) < 1.8 ? 0 : bodyFold(across, along * length, req.worldAdaptation && req.worldAdaptation.kind !== 'membrane' ? `world-${req.worldAdaptation.kind}` : label);
     };
     const ring = (at: ModelPoint, radius: number): ModelPoint[] => Array.from({ length: cuts }, (_, i) => {
       const c = Math.cos(i * Math.PI * 2 / cuts) * radius, s = Math.sin(i * Math.PI * 2 / cuts) * radius;
@@ -113,7 +113,7 @@ export function createModelRaster(req: CreatureModelRequest, label: string, arti
       const along = height === 0 ? 0 : (point[2] - bottom.at[2]) / height;
       const centerX = bottom.at[0] + (top.at[0] - bottom.at[0]) * along;
       const centerY = bottom.at[1] + (top.at[1] - bottom.at[1]) * along;
-      return bodyFold(point[0] - centerX + (point[1] - centerY) * .4, along * Math.abs(height), req.worldAdaptation?.kind === 'fibre' ? 'world-fibre' : label);
+      return bodyFold(point[0] - centerX + (point[1] - centerY) * .4, along * Math.abs(height), req.worldAdaptation && req.worldAdaptation.kind !== 'membrane' ? `world-${req.worldAdaptation.kind}` : label);
     };
     const cuts = [[-.66, -1], [.66, -1], [1, -.58], [1, .58], [.66, 1], [-.66, 1], [-1, .58], [-1, -.58]] as const;
     const rows = rings.map(r => cuts.map(([x, y]): ModelPoint => [r.at[0] + x * r.rx, r.at[1] + y * r.ry, r.at[2]]));

@@ -16,8 +16,12 @@ export function resolveRuntimeEnemyWorldAppearance(
   material: EnemyWorldAdaptation | undefined,
   substrate: string,
   worldLighting?: WorldMaterialLighting,
+  appearanceVersion: 1 | 2 = 1,
 ): RuntimeEnemyWorldAppearance {
-  if (!material || (substrate !== 'human_remnant' && substrate !== 'fungal_mat'))
+  const supported = appearanceVersion === 2
+    ? ['human_remnant', 'organic_remnant', 'fungal_mat', 'oil_film', 'ash_veil'].includes(substrate)
+    : substrate === 'human_remnant' || substrate === 'fungal_mat';
+  if (!material || !supported)
     return LEGACY_APPEARANCE;
   // The admitted recipe has already validated and frozen this exact profile.
   // Do not resolve today's CSV here: cold recovery must use its saved values.

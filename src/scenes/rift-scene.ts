@@ -2226,7 +2226,8 @@ export class RiftScene extends Phaser.Scene {
     const fragmentTypeId = this.layoutDebug.fragmentTypeId;
     const seedRoot = this.layoutDebug.seed;
     const recipe = this.recovery?.identity.generation ?? this.devFixture?.productionRecipe;
-    const material = recipe?.version === 3 ? recipe.enemyMaterial : undefined;
+    const appearanceVersion = recipe?.version === 3 && recipe.enemyAppearance ? 2 : 1;
+    const material = recipe?.version === 3 ? recipe.enemyAppearance?.material ?? recipe.enemyMaterial : undefined;
     this.hasWorldMaterialActors = !!material;
     // Actors attach before the native runtime. Keep one lazy bridge rather than
     // capturing a missing renderer or a stale copy of the moving shoulder lamp.
@@ -2248,7 +2249,7 @@ export class RiftScene extends Phaser.Scene {
         seed: mix32(seedRoot, view.getId()),
         depth: DEPTH.enemy,
         fragmentTypeId,
-        ...resolveRuntimeEnemyWorldAppearance(material, view.getForm().substrate, worldLighting),
+        ...resolveRuntimeEnemyWorldAppearance(material, view.getForm().substrate, worldLighting, appearanceVersion),
       });
       this.formVisuals.set(view.getId(), visual);
       if (beforeVisual) this.devEnemyVisuals.push({ id: view.getId(),
@@ -2274,7 +2275,7 @@ export class RiftScene extends Phaser.Scene {
         depth: this.depthForHostPin(pin?.kind),
         fragmentTypeId,
         pin,
-        ...resolveRuntimeEnemyWorldAppearance(material, subject.form.substrate, worldLighting),
+        ...resolveRuntimeEnemyWorldAppearance(material, subject.form.substrate, worldLighting, appearanceVersion),
       });
       this.formVisuals.set(subject.id, visual);
       this.hosts.setStepFloors(subject.id, visual.stepFloors ?? []);

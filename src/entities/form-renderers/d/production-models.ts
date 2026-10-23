@@ -15,4 +15,7 @@ const models: Readonly<Record<string, AnimatedModel>> = {
   organic_remnant: { id: 'remnant18', walkCycleMs: REMNANT_WALK_CYCLE_MS, stridePixels: 20, bake: bakeRemnantModel },
   stalk_clump: { id: 'growth18', walkCycleMs: GROWTH_WALK_CYCLE_MS, stridePixels: 16, bake: bakeGrowthModel },
 };
-export function productionModelFor(substrate: string): AnimatedModel | undefined { return models[substrate]; }
+export function productionModelFor(substrate: string, worldAppearance = false): AnimatedModel | undefined {
+  // Presentation only: the caller retains the original substrate/AI and attack.
+  return models[worldAppearance && substrate === 'organic_remnant' ? 'human_remnant' : substrate];
+}

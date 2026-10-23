@@ -18,7 +18,7 @@ for (const coverage of tiers) for (const facing4 of facings) for (const phase of
 // Captured before the optional world branch was introduced (360 existing poses).
 assert.equal(createHash('sha256').update(JSON.stringify(legacy)).digest('hex'), '6c41dfe27fd4d60e7e9282620cc5a7bd69ed728457fce415faa84ac74e84976b');
 assert.equal(resolveEnemyWorldAdaptation('not-a-world'), undefined);
-assert.equal(resolveEnemyWorldAdaptation('ash-strata'), undefined);
+assert.equal(resolveEnemyWorldAdaptation('ash-strata')?.kind, 'slab');
 const profiles = ['crystal-fibre', 'ruptured-film'].map(id => resolveEnemyWorldAdaptation(id)!);
 assert(profiles.every(Boolean));
 assert.notEqual(profiles[0]!.key, profiles[1]!.key);

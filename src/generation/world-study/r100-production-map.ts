@@ -27,6 +27,13 @@ import {createNativeAutoCandidate} from './native-auto-generation';
 import {nativeAutoInputForGeometrySeed} from './native-auto-recipe';
 
 export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldProductionMap {
+  // Visual receipts are validated here, then withheld from immutable geometry
+  // executors. Their presence must never change map signatures or deployment.
+  if (Object.prototype.hasOwnProperty.call(recipe, 'enemyAppearance')) {
+    if (!validR100ProductionRecipe(recipe)) throw new Error('Invalid enemy appearance receipt');
+    const { enemyAppearance: _appearance, ...geometryRecipe } = recipe;
+    return createR100ProductionMap(geometryRecipe);
+  }
   if (recipe.package?.algorithmRevision === 1 || recipe.package?.algorithmRevision === 2) return createFrozenR100ProductionMap(recipe);
   if (recipe.package?.algorithmRevision === 3) return createRevision3Map(recipe);
   if (recipe.package?.algorithmRevision === 4) return createRevision4Map(recipe);
