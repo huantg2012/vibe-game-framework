@@ -27,4 +27,10 @@ const exhausted=assignNativeAutoCoverage({...input,maxStates:1});
 assert.equal(exhausted.accepted,false);
 assert.equal(exhausted.states,1);
 assert(exhausted.exhausted);
+let visits=0;
+const targeted=assignNativeAutoCoverage({...input,
+  complete:selection=>{visits++;return selection.find(c=>c.variable===0).name==='a1'?true:{conflicts:[0],reason:'passage-at-a'};}});
+assert(targeted.accepted);
+assert.equal(visits,2,'A failure at the first object skips unrelated choices of the last object');
+assert(targeted.backjumps>0);
 console.log('Joint initial assignment: coordinated choice, exact bit masks, forward coverage, passage veto, determinism and bounded work passed');

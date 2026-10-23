@@ -34,7 +34,7 @@ export interface NativeAutoPlan {
   readonly placementStates:number;readonly backtracks:number;
   readonly constructionCoverage:Readonly<{strategy:'joint-coverage-assignment-v1';units:number;before:NativeAutoCoverageScore;after:NativeAutoCoverageScore}>;
   readonly requestedCounts:Readonly<{holes:number;solids:number}>;
-  readonly assignmentTrace:Readonly<{coveragePrunes:number;passagePrunes:number;completeChecks:number}>;
+  readonly assignmentTrace:Readonly<{coveragePrunes:number;passagePrunes:number;completeChecks:number;backjumps:number}>;
 }
 
 /** Sample an offset rectangle union before assigning its position. Thick
@@ -232,6 +232,16 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   const bodyStates=Array.from({length:objectCount+1},()=>new Uint8Array(available.length));
   const linkStates=Array.from({length:objectCount+1},()=>new Uint8Array(links.length));
   bodyStates[0]!.set(available);linkStates[0]!.set(links);
+  type AssignmentCandidate=typeof assignmentDomains[number][number];
+  const distanceCache=new Map<AssignmentCandidate,Float32Array>();
+  const maxCachedFields=Math.max(1,Math.floor(16*1024*1024/(Float32Array.BYTES_PER_ELEMENT*points.length)));
+  const distanceField=(candidate:AssignmentCandidate)=>{
+    let field=distanceCache.get(candidate);if(!field){
+      field=Float32Array.from(points,point=>nativeAutoObjectDistance(objects[candidate.object]!,candidate.site,point));
+      if(distanceCache.size>=maxCachedFields)distanceCache.delete(distanceCache.keys().next().value!);
+      distanceCache.set(candidate,field);
+    }return field;
+  };
   const assignment=assignNativeAutoCoverage({domains:assignmentDomains,required,maxStates:p.maxPlacementStates,branchLimit:p.placementBranchLimit,checkpoint,
     compatible:(a,b)=>!overlaps(a.box,b.box,p.objectClearancePx),
     connected:(candidate,depth)=>{
@@ -246,21 +256,37 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
     },
     complete:selection=>{
       structure.set(Float32Array.from(points,point=>point.source));holeDistances.fill(Infinity);
-      for(const candidate of selection){const object=objects[candidate.object]!;
+      for(const candidate of selection){const object=objects[candidate.object]!,field=distanceField(candidate);
         for(let i=0;i<points.length;i++){
-          const distance=nativeAutoObjectDistance(object,candidate.site,points[i]!);
+          const distance=field[i]!;
           structure[i]=Math.min(structure[i]!,distance);
           if(object.kind==='hole')holeDistances[i]=Math.min(holeDistances[i]!,distance);
         }
       }
       measured=coverage.measure(bodyStates[objectCount]!,linkStates[objectCount]!,structure,holeDistances);
-      return measured.accepted;
+      if(measured.accepted)return true;
+      const conflicts=new Set<number>(),score=measured.score,reasons:string[]=[];
+      const near=(index:number,radius:number,opening=false,holesOnly=false)=>{
+        if(index<0)return;const point=points[index]!;
+        for(const candidate of selection){
+          const object=objects[candidate.object]!;if(holesOnly&&object.kind!=='hole')continue;
+          if(opening?distanceField(candidate)[index]!<radius:
+            assignmentDomains[candidate.variable]!.some(option=>nativeAutoObjectDistance(object,option.site,point)<=radius))conflicts.add(candidate.variable);
+        }
+      };
+      if(score.maxEmptyPx>spatial.policy.maxEmptyRadiusPx){reasons.push('empty');near(measured.emptyTarget,coverLimit);}
+      if(score.maxDeepSpanPx>spatial.policy.maxDeepEmptySpanPx){reasons.push('deep-span');near(measured.deepTarget,spatial.policy.deepEmptyThresholdPx);}
+      if(score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx){reasons.push('hole-approach');near(measured.holeTarget,spatial.policy.referenceSightPx/2,false,true);}
+      if(score.largestWideRatio<spatial.policy.minLargestWideRatio){reasons.push('wide-connection');near(measured.wideTarget,spatial.policy.wideRadiusPx,true);}
+      // Area is global; no local conflict set can soundly stand in for it.
+      if(score.wideRatio<spatial.policy.minWideRatio){reasons.push('wide-area');selection.forEach(candidate=>conflicts.add(candidate.variable));}
+      return {conflicts:[...conflicts],reason:reasons.join(';')};
     },
   });
   if(!assignment.accepted){
     const point=points[assignment.uncoveredBit];
     throw new Error(`Automatic joint assignment rejected: ${JSON.stringify({states:assignment.states,coveragePrunes:assignment.coveragePrunes,
-      passagePrunes:assignment.passagePrunes,completeChecks:assignment.completeChecks,exhausted:assignment.exhausted,
+      passagePrunes:assignment.passagePrunes,completeChecks:assignment.completeChecks,backjumps:assignment.backjumps,exhausted:assignment.exhausted,reason:assignment.lastRejection,
       uncovered:point?{x:point.x,y:point.y}:undefined,lastComplete:assignment.completeChecks?measured.score:undefined})}`);
   }
   for(const candidate of assignment.assignment)chosen.set(candidate.object,candidate.index);
@@ -278,5 +304,5 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   return{reference:{id:referenceId,worldId:input.worldId,grade:input.grade,seed,seedSalt:0,sourceHash:p.sourceHash,rows},
     terrainOutline:compiled.terrainOutline,erosion:objects.flatMap((object,index)=>object.polygon&&chosen.has(index)?[object.polygon.map(point=>({x:point.x+sites[chosen.get(index)!]!.x,y:point.y+sites[chosen.get(index)!]!.y}))]:[]),shore,
     siteEvaluations,feasibleSites:sites.length,placementStates:assignment.states,backtracks:assignment.backtracks,constructionCoverage,requestedCounts,
-    assignmentTrace:{coveragePrunes:assignment.coveragePrunes,passagePrunes:assignment.passagePrunes,completeChecks:assignment.completeChecks}};
+    assignmentTrace:{coveragePrunes:assignment.coveragePrunes,passagePrunes:assignment.passagePrunes,completeChecks:assignment.completeChecks,backjumps:assignment.backjumps}};
 }
