@@ -58,7 +58,7 @@ export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeS
       for(let i=0;i<count;i++)if(available[i]&&approach[i]!>maxApproachRoutePx){maxApproachRoutePx=approach[i]!;holeTarget=i;}
       if(!Number.isFinite(maxApproachRoutePx))holeTarget=structureTarget;
       const wideRatio=wideGroups.total/Math.max(1,bodyCount),largestWideRatio=wideGroups.largest/Math.max(1,wideGroups.total);
-      const emptyFail=maxEmptyPx>policy.maxEmptyRadiusPx,deepFail=!deepSpanDiagnosticOnly&&deepGroups.maxSpan>policy.maxDeepEmptySpanPx,coverFail=maxApproachRoutePx>policy.maxCoverRoutePx;
+      const emptyFail=maxEmptyPx>policy.maxEmptyRadiusPx,deepFail=!deepSpanDiagnosticOnly&&deepGroups.maxSpan>policy.maxDeepEmptySpanPx,coverFail=!Number.isFinite(maxApproachRoutePx)||!deepSpanDiagnosticOnly&&maxApproachRoutePx>policy.maxCoverRoutePx;
       // A wide-route failure needs an opening, not another object near it.
       // Follow the actual body graph between the two largest wide regions;
       // the least-clear point on that path identifies the constricting gap.

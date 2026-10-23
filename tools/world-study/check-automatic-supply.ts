@@ -78,6 +78,16 @@ for (let cell = 0; cell < origin.length; cell++) {
 const definition: R100ExpeditionDefinition = {grade_id:'low',version:2,status:'test',label:'test',public_risk:'test',public_preparation:'test',public_reward:'test',enemy_count:2,
   kindling_safe_count:1,kindling_contested_count:2,kindling_deep_count:1,kindling_safe_value:1,kindling_contested_value:2,kindling_deep_value:4,
   contaminant_safe_count:1,contaminant_contested_count:1,contaminant_deep_count:0};
+// One scarce deep seat is also contested. Reserving it after common contested
+// nodes would consume its only valid location and falsely reject the map.
+const rareCell=candidates.reduce((a,b)=>a.approachDistance<b.approachDistance?a:b).cell;
+const scarceCandidates=candidates.map(candidate=>({...candidate,tiers:(candidate.cell===rareCell?['contested','deep']:['contested']) as ('contested'|'deep')[]}));
+const scarcePolicy={...createAutomaticSupplyPolicy('medium'),earlyFuelNodes:0};
+const scarceDefinition={...definition,grade_id:'medium' as const,kindling_safe_count:0,kindling_contested_count:1,kindling_deep_count:1,contaminant_safe_count:0,contaminant_contested_count:0,contaminant_deep_count:0};
+const scarcePlan=planAutomaticSupply(open,origin,scarceCandidates,scarceDefinition,scarcePolicy,77,52);
+assert.equal(scarcePlan.selected[0]!.tier,'deep');
+assert.equal(scarcePlan.selected[0]!.seat.cell,rareCell);
+assert(scarcePlan.selected.some(item=>item.tier==='contested'));
 const plan = planAutomaticSupply(open,origin,candidates,definition,policy,77,52);
 const repeat = planAutomaticSupply(open,origin,candidates,definition,JSON.parse(JSON.stringify(policy)),77,52);
 assert.deepEqual(plan.selected,repeat.selected,'Frozen JSON and seed reproduce all placements');

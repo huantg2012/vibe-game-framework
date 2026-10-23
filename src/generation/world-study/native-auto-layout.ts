@@ -283,7 +283,7 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
         for(const candidate of selection)if(measured.deepBounds&&assignmentDomains[candidate.variable]!.some(option=>
           overlaps(option.box,measured.deepBounds!,spatial.policy.deepEmptyThresholdPx)))conflicts.add(candidate.variable);
       }
-      if(score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx){reasons.push('hole-approach');near(measured.holeTarget,spatial.policy.referenceSightPx/2,false,true);}
+      if(!deepSpanDiagnosticOnly&&score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx){reasons.push('hole-approach');near(measured.holeTarget,spatial.policy.referenceSightPx/2,false,true);}
       if(score.largestWideRatio<spatial.policy.minLargestWideRatio){
         reasons.push('wide-connection');selection.forEach(candidate=>conflicts.add(candidate.variable));
       }

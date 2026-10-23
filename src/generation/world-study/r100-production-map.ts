@@ -209,7 +209,7 @@ export function completeNativeSpatialCandidate(recipe:WorldProductionRecipeV3,ca
     checkpoint();
     stageDiagnostics.deployment=deployed.diagnostics;stage='routes';
     const routes=evaluateNativeSpatialRoutes(candidate.geometry,candidate.groups.structures,input.policy,layout,
-      recipe.package.algorithmRevision===14?{transverseMode:'per-leg'}:undefined);
+      recipe.package.algorithmRevision===14?{transverseMode:'per-leg',encounterShareQualityOnly:recipe.nativeAuto?.policy.emptyRegionMetric==='radius-and-cover-route-v1'}:undefined);
     if(!routes.accepted){
       trace.deploymentRejections.push({candidate:selected,stage,reason:routes.reasons.join('; '),gate:routes,diagnostics:stageDiagnostics});rejected.push({seed,reason:`candidate ${selected}: ${routes.reasons.join('; ')}`});
       // Per-route quality diagnostics do not launch the old tuple/probe loop.

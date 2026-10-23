@@ -18,6 +18,8 @@ export interface NativeSpatialRouteLayout {
 export interface NativeSpatialRouteOptions {
   /** Revision 14 opts in. Omission preserves revision 12/13 measurements exactly. */
   readonly transverseMode?:'legacy-complete'|'per-leg';
+  /** Global object ratio and actual shelter coverage remain separate hard gates. */
+  readonly encounterShareQualityOnly?:boolean;
 }
 export interface NativeRouteHoleShareClassification {
   readonly accepted:boolean;
@@ -173,6 +175,8 @@ export function evaluateNativeSpatialRoutes(geometry:NativeSpatialGeometry,struc
   // complete route family's exposure, not unique map-object population.
   const holeEncounters=firstEvents.filter(event=>event.kind==='hole').length,solidEncounters=firstEvents.length-holeEncounters;
   const overallHoleShare=firstEvents.length?holeEncounters/firstEvents.length:null;
-  if(overallHoleShare===null||overallHoleShare<policy.minRouteHoleShare||overallHoleShare>policy.maxRouteHoleShare)reasons.push('overall-route-hole-share');
+  if(overallHoleShare===null)reasons.push('overall-route-hole-share');
+  else if(overallHoleShare<policy.minRouteHoleShare||overallHoleShare>policy.maxRouteHoleShare)
+    (options?.encounterShareQualityOnly?qualityDiagnostics:reasons).push('overall-route-hole-share');
   return{accepted:reasons.length===0,reasons,qualityDiagnostics,metrics:{algorithm:'native-spatial-v1',pathOrder:'direct exit; node ID; 4x3 region row/column',pathTie:'integer 8-neighbour cost then y,x; equal parent y,x',interactionChoice:'minimum complete spawn-seat-exit graph distance among every legal 48px LOS seat; y,x ties',smoothing:'per leg, greedy farthest feasible 20px swept-body segment',routes:results,qualifyingCompleteRoutes:sufficient,overallEncounters:{holes:holeEncounters,solids:solidEncounters,total:firstEvents.length,holeShare:overallHoleShare,minHoleShare:policy.minRouteHoleShare,maxHoleShare:policy.maxRouteHoleShare,basis:'All complete routes, including short samples; each structure once per route. Repeated structures and shared trunks across routes count again.'},uniqueUndirectedEdges:uniqueEdges.size,regionalEventBasis:'first encounters on the same smoothed complete routes; shared body-edge + identity, then original event region + identity',regionalEvents,repeatedTrunkEvents,repeatedRegionEvents,regions:regionReports,excludedRegions:12-eligibleRegions.length,regionalMeanHoleShare:eligibleRegions.length?eligibleRegions.reduce((sum,row)=>sum+row.holeShare!,0)/eligibleRegions.length:null,regionalCalibrationOnly:true,shoreBays:'Excluded from H/S; no bays promoted to internal holes',transverseScope:perLeg?'Per actual leg: 8px samples; +/-32px local axis clamped to that leg; first actual VOID or solid boundary each side within224px; clipped widths are lower bounds; uncertain turns cannot reset a run within a leg; runs never cross a stop; route narrowRatio uses summed travelled narrowPx / summed leg lengthPx':'8px samples; +/-32px local axis; first actual VOID or solid boundary each side within224px; clipped widths are lower bounds; uncertain turns cannot reset a narrow run',transverseAdmission:perLeg?'Each actual leg maxNarrowOrUncertainRunPx is hard; route maximum is the maximum of its legs. Aggregate mileage-weighted narrowRatio is quality-only; transverse.accepted retains the combined diagnostic.':'Only maxNarrowOrUncertainRunPx is hard; narrowRatio is quality-only. Per-route transverse.accepted retains the original combined diagnostic.'}};
 }

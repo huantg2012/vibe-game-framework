@@ -68,12 +68,18 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
   for (let slot = 0; slot < policy.maxNodes; slot++) {
     const coverage = navigation.coverage(coverageDistance), earlyFuel = slot < policy.earlyFuelNodes;
     if (slot >= budget && quotas.every(quota => quota.remaining === 0) && passes(coverage)) break;
+    // Allocate scarce risk tiers before coverage-driven fillers can occupy
+    // their only spaced locations. Counts and tier eligibility never change.
+    const spaced = admissible.filter(candidate => !selected.some(other =>
+      Math.hypot(other.seat.position.x-candidate.position.x,other.seat.position.y-candidate.position.y)<nodeSpacingPx));
     const required = quotas.filter(quota => quota.remaining > 0);
+    const availability = new Map(required.map(quota => [quota,spaced.filter(candidate=>candidate.tiers.includes(quota.tier)).length]));
+    required.sort((a,b)=>availability.get(a)!/a.remaining-availability.get(b)!/b.remaining);
+    const priority = earlyFuel ? required.find(quota=>quota.kind==='kindling'&&quota.tier==='safe') : required[0];
     const targetDistance = !earlyFuel && selected.length ? navigation.distancesFrom([coverage.worstCell]) : undefined;
     let best: AutomaticSupplyCandidate | undefined, bestQuota: Quota | undefined, bestScore = Infinity;
-    for (const candidate of admissible) {
-      if (selected.some(other => Math.hypot(other.seat.position.x - candidate.position.x, other.seat.position.y - candidate.position.y) < nodeSpacingPx)) continue;
-      const quota = required.find(item => candidate.tiers.includes(item.tier) && (!earlyFuel || item.kind === 'kindling' && item.tier === 'safe'));
+    for (const candidate of spaced) {
+      const quota = priority && candidate.tiers.includes(priority.tier) ? priority : undefined;
       if (required.length && !quota) continue;
       const route = earlyFuel || selected.length === 0 ? candidate.approachDistance : Math.min(...candidate.interactionCells.map(cell => targetDistance![cell]!));
       // Geodesic proximity has priority; source-material preference and seeded
@@ -82,7 +88,7 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
         + mix32(seed, `automatic-supply-${slot}-${candidate.cell}`) / 0x100000000 * .0000001;
       if (score < bestScore || score === bestScore && candidate.cell < (best?.cell ?? Infinity)) { best = candidate; bestQuota = quota; bestScore = score; }
     }
-    if (!best) return fail(earlyFuel ? 'early-fuel-infeasible' : 'legal-coverage-infeasible', coverage);
+    if (!best) return fail(earlyFuel ? 'early-fuel-infeasible' : required.length ? 'risk-tier-spacing-infeasible' : 'legal-coverage-infeasible', coverage);
     if (bestQuota) bestQuota.remaining--;
     const kind = bestQuota?.kind ?? (selected.filter(item => item.kind === 'kindling').length < (slot + 1) * kindlingShare ? 'kindling' : 'contaminant');
     const tier = bestQuota?.tier ?? best.tiers[0]!;
