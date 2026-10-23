@@ -11711,5 +11711,44 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E292",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-23",
+    "revision": "a1982549",
+    "scope": "2026-10-23占空回修：用户否决雾团/尘絮弱显现和余响矩形底；共享v3绘制器已改为卷叠雾层、独立絮束尾丝、无矩形底的错位压力褶线。六家族×三侵蚀阶段图册更新，保留被否v3对照；432状态、合成可见性及模拟挂载离线通过。原危险域/通路/核/AI/部署保持。无实机试玩，GPU、自然发现性与最终美术待验。",
+    "limitations": "图册使用真实地面色与统一灯，属于离线美术样片。可读性数值仅为回归下限；未实机试玩、未测真实光线追踪和GPU帧率，最终审美待用户。v1/v2、AI、投放与宿主危险不改。",
+    "sources": [
+      {
+        "path": "src/entities/form-renderers/d/native-vapour.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/native-echo.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/volume-light.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-air-readability.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-native-catalog-2026-10-23/air-readability-checks.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-native-catalog-2026-10-23/air-readability-overview.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
+      }
+    ]
   }
 ]
