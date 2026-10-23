@@ -9,6 +9,7 @@ export interface NativeAutoCoverageMeasure {
   readonly score:NativeAutoCoverageScore;
   readonly accepted:boolean;
   readonly holeTarget:number;readonly solidTarget:number;readonly emptyTarget:number;readonly deepTarget:number;readonly wideTarget:number;
+  readonly deepBounds:readonly[number,number,number,number]|undefined;
 }
 export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeSpatialPolicy){
   const points=body.points,count=points.length,cols=Math.max(...points.map(p=>p.gx))+1,rows=Math.max(...points.map(p=>p.gy))+1;
@@ -21,7 +22,8 @@ export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeS
   const wideLabels=new Int32Array(count),previous=new Int32Array(count);
   const route=createNativeAutoRouteField(points,8),targetSources=new Float32Array(count).fill(Infinity);
   const components=(mask:Uint8Array,links:Uint8Array,labels?:Int32Array)=>{
-    seen.fill(0);labels?.fill(-1);let maxSpan=0,largest=0,target=-1,total=0,largestLabel=-1;const sizes:number[]=[];
+    seen.fill(0);labels?.fill(-1);let maxSpan=0,largest=0,target=-1,total=0,largestLabel=-1;
+    let bounds:readonly[number,number,number,number]|undefined;const sizes:number[]=[];
     for(let start=0;start<count;start++)if(mask[start]&&!seen[start]){
       let head=0,tail=1,minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;queue[0]=start;seen[start]=1;
       while(head<tail){const index=queue[head++]!,point=points[index]!;
@@ -30,11 +32,11 @@ export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeS
         for(let d=0;d<8;d++)if(links[index]!&(1<<d)){const next=neighbors[index*8+d]!;if(next>=0&&mask[next]&&!seen[next]){seen[next]=1;queue[tail++]=next;}}
       }
       total+=tail;if(tail>largest){largest=tail;largestLabel=sizes.length;}sizes.push(tail);const span=Math.max(maxX-minX+8,maxY-minY+8);
-      if(span>maxSpan){maxSpan=span;let closest=Infinity;
+      if(span>maxSpan){maxSpan=span;bounds=[minX,minY,maxX-minX+8,maxY-minY+8];let closest=Infinity;
         for(let i=0;i<tail;i++){const index=queue[i]!,point=points[index]!,distance=(point.x-(minX+maxX)/2)**2+(point.y-(minY+maxY)/2)**2;
           if(distance<closest){closest=distance;target=index;}}
       }
-    }return{maxSpan,largest,target,total,largestLabel,sizes};
+    }return{maxSpan,largest,target,total,largestLabel,sizes,bounds};
   };
   return{
     measure(available:Uint8Array,links:Uint8Array,structure:Float32Array,holes:Float32Array):NativeAutoCoverageMeasure {
@@ -92,7 +94,7 @@ export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeS
       const solidTarget=emptyFail?emptyTarget:deepGroups.target>=0?deepGroups.target:structureTarget;
       if(!coverFail)holeTarget=solidTarget;
       return{accepted:!emptyFail&&!deepFail&&!coverFail&&wideRatio>=policy.minWideRatio&&largestWideRatio>=policy.minLargestWideRatio,
-        holeTarget,solidTarget,emptyTarget,deepTarget:deepGroups.target,wideTarget,score:{penalty:Number(emptyFail)+Number(deepFail)+Number(coverFail)+Number(wideRatio<policy.minWideRatio)+Number(largestWideRatio<policy.minLargestWideRatio),
+        holeTarget,solidTarget,emptyTarget,deepTarget:deepGroups.target,deepBounds:deepGroups.bounds,wideTarget,score:{penalty:Number(emptyFail)+Number(deepFail)+Number(coverFail)+Number(wideRatio<policy.minWideRatio)+Number(largestWideRatio<policy.minLargestWideRatio),
           qualityPenalty:0,maxEmptyPx,maxDeepSpanPx:deepGroups.maxSpan,maxVoidDistancePx,maxApproachRoutePx,wideRatio,largestWideRatio}};
     },
     distanceFrom(target:number,available:Uint8Array,links:Uint8Array):Float64Array{

@@ -30,6 +30,7 @@ assert.ok([74,75].includes(strip.points[band.solidTarget].gx));
 assert.equal(strip.points[band.solidTarget].gy,2);
 assert.equal(band.holeTarget,band.solidTarget);
 assert.equal(band.deepTarget,band.solidTarget);
+assert.deepEqual(band.deepBounds,[12,12,1184,24],'Span failure retains its whole region, not just its midpoint');
 // A certificate follows the actual long component. One local separator is
 // insufficient; two separators produce three bounded components.
 for(let y=0;y<5;y++)stripStructure[y*150+50]=0;

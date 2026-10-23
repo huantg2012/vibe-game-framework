@@ -275,9 +275,17 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
         }
       };
       if(score.maxEmptyPx>spatial.policy.maxEmptyRadiusPx){reasons.push('empty');near(measured.emptyTarget,coverLimit);}
-      if(score.maxDeepSpanPx>spatial.policy.maxDeepEmptySpanPx){reasons.push('deep-span');near(measured.deepTarget,spatial.policy.deepEmptyThresholdPx);}
+      if(score.maxDeepSpanPx>spatial.policy.maxDeepEmptySpanPx){
+        reasons.push('deep-span');
+        // Shortening either end or cutting anywhere along the component can
+        // resolve its span. Its midpoint alone is not the failed constraint.
+        for(const candidate of selection)if(measured.deepBounds&&assignmentDomains[candidate.variable]!.some(option=>
+          overlaps(option.box,measured.deepBounds!,spatial.policy.deepEmptyThresholdPx)))conflicts.add(candidate.variable);
+      }
       if(score.maxApproachRoutePx>spatial.policy.maxCoverRoutePx){reasons.push('hole-approach');near(measured.holeTarget,spatial.policy.referenceSightPx/2,false,true);}
-      if(score.largestWideRatio<spatial.policy.minLargestWideRatio){reasons.push('wide-connection');near(measured.wideTarget,spatial.policy.wideRadiusPx,true);}
+      if(score.largestWideRatio<spatial.policy.minLargestWideRatio){
+        reasons.push('wide-connection');selection.forEach(candidate=>conflicts.add(candidate.variable));
+      }
       // Area is global; no local conflict set can soundly stand in for it.
       if(score.wideRatio<spatial.policy.minWideRatio){reasons.push('wide-area');selection.forEach(candidate=>conflicts.add(candidate.variable));}
       return {conflicts:[...conflicts],reason:reasons.join(';')};
