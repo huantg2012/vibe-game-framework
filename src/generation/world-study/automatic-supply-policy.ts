@@ -19,13 +19,16 @@ export interface R100AutomaticSupplyPolicy {
   readonly maxWorkEdges: number;
   /** Actual 20px-body shortest approach, independent of today's spatial CSV. */
   readonly contestedApproachMinPx: number;
+  /** Long outbound travel plus actual threat can price deep rewards on a trunk. */
+  readonly deepApproachMinPx?: number;
 }
 const numericKeys = ['bodyAreaPerNodePx2', 'routePerNodePx', 'maxCoveragePx', 'p95CoveragePx', 'maxNodes', 'earlyFuelNodes', 'maxBodyCells', 'maxWorkEdges', 'contestedApproachMinPx'] as const;
 const keys = ['version', 'algorithm', 'grade', 'sourceHash', ...numericKeys].sort().join(',');
 export function validAutomaticSupplyPolicy(value: unknown): value is R100AutomaticSupplyPolicy {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const p = value as R100AutomaticSupplyPolicy;
-  return Object.keys(value).sort().join(',') === keys && p.version === 1 && p.algorithm === 'body-geodesic-cover-v1'
+  return Object.keys(value).filter(key=>key!=='deepApproachMinPx').sort().join(',') === keys
+    && (p.deepApproachMinPx===undefined||Number.isSafeInteger(p.deepApproachMinPx)&&p.deepApproachMinPx>p.contestedApproachMinPx&&p.deepApproachMinPx<=2600) && p.version === 1 && p.algorithm === 'body-geodesic-cover-v1'
     && isPollutionGrade(p.grade) && typeof p.sourceHash === 'string' && /^[a-f0-9]{64}$/.test(p.sourceHash)
     && numericKeys.every(key => Number.isSafeInteger(p[key]) && p[key] >= (key === 'earlyFuelNodes' ? 0 : 1))
     && (p.grade !== 'low' || p.earlyFuelNodes >= 2)
@@ -36,4 +39,12 @@ export function createAutomaticSupplyPolicy(grade: PollutionGrade): R100Automati
   const policy = AUTOMATIC_SUPPLY_POLICIES.find(row => row.grade === grade);
   if (!validAutomaticSupplyPolicy(policy)) throw new Error('Invalid automatic supply policy');
   return { ...policy };
+}
+
+export function automaticSupplyTravelEligible(tier:'safe'|'contested'|'deep',extraTravelPx:number,approachPx:number,
+  minimumExtraPx:number,maximumExtraPx:number,policy:R100AutomaticSupplyPolicy):boolean {
+  if(!Number.isFinite(extraTravelPx)||!Number.isFinite(approachPx))return false;
+  return extraTravelPx>=minimumExtraPx&&extraTravelPx<=maximumExtraPx
+    ||tier==='contested'&&approachPx>=policy.contestedApproachMinPx
+    ||tier==='deep'&&policy.deepApproachMinPx!==undefined&&approachPx>=policy.deepApproachMinPx;
 }

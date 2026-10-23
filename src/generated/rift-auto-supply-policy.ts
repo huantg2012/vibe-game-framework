@@ -3,7 +3,7 @@ export const AUTOMATIC_SUPPLY_POLICIES = [
   {
     "version": 1,
     "algorithm": "body-geodesic-cover-v1",
-    "sourceHash": "fdaf4d162ea19893436c7ac5d1fa48861b89e5ef3feafe22e62216cb48e4ceae",
+    "sourceHash": "a56cd7155359ea04f084744973bf7178dce317238fb62bf01ceac7a2e6eba659",
     "grade": "low",
     "bodyAreaPerNodePx2": 100000,
     "routePerNodePx": 320,
@@ -13,12 +13,13 @@ export const AUTOMATIC_SUPPLY_POLICIES = [
     "earlyFuelNodes": 2,
     "maxBodyCells": 131072,
     "maxWorkEdges": 64000000,
-    "contestedApproachMinPx": 480
+    "contestedApproachMinPx": 480,
+    "deepApproachMinPx": 960
   },
   {
     "version": 1,
     "algorithm": "body-geodesic-cover-v1",
-    "sourceHash": "fdaf4d162ea19893436c7ac5d1fa48861b89e5ef3feafe22e62216cb48e4ceae",
+    "sourceHash": "a56cd7155359ea04f084744973bf7178dce317238fb62bf01ceac7a2e6eba659",
     "grade": "medium",
     "bodyAreaPerNodePx2": 140000,
     "routePerNodePx": 400,
@@ -28,12 +29,13 @@ export const AUTOMATIC_SUPPLY_POLICIES = [
     "earlyFuelNodes": 1,
     "maxBodyCells": 131072,
     "maxWorkEdges": 64000000,
-    "contestedApproachMinPx": 480
+    "contestedApproachMinPx": 480,
+    "deepApproachMinPx": 960
   },
   {
     "version": 1,
     "algorithm": "body-geodesic-cover-v1",
-    "sourceHash": "fdaf4d162ea19893436c7ac5d1fa48861b89e5ef3feafe22e62216cb48e4ceae",
+    "sourceHash": "a56cd7155359ea04f084744973bf7178dce317238fb62bf01ceac7a2e6eba659",
     "grade": "severe",
     "bodyAreaPerNodePx2": 180000,
     "routePerNodePx": 480,
@@ -43,6 +45,7 @@ export const AUTOMATIC_SUPPLY_POLICIES = [
     "earlyFuelNodes": 1,
     "maxBodyCells": 131072,
     "maxWorkEdges": 64000000,
-    "contestedApproachMinPx": 480
+    "contestedApproachMinPx": 480,
+    "deepApproachMinPx": 960
   }
 ] as const;

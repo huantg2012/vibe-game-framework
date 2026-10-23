@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url';
 
 const source = 'data/rift-auto-supply-policy.csv';
 const target = 'src/generated/rift-auto-supply-policy.ts';
-const fields = ['grade', 'bodyAreaPerNodePx2', 'routePerNodePx', 'maxCoveragePx', 'p95CoveragePx', 'maxNodes', 'earlyFuelNodes', 'maxBodyCells', 'maxWorkEdges', 'contestedApproachMinPx'];
+const fields = ['grade', 'bodyAreaPerNodePx2', 'routePerNodePx', 'maxCoveragePx', 'p95CoveragePx', 'maxNodes', 'earlyFuelNodes', 'maxBodyCells', 'maxWorkEdges', 'contestedApproachMinPx', 'deepApproachMinPx'];
 export function compileAutomaticSupplyCSV(raw) {
   const lines = raw.trim().split(/\r?\n/);
   if (lines.shift() !== fields.join(',')) throw new Error('Invalid automatic supply header');
@@ -14,6 +14,7 @@ export function compileAutomaticSupplyCSV(raw) {
     const row = Object.fromEntries(fields.map((field, i) => [field, i ? Number(values[i]) : values[i]]));
     if (fields.slice(1).some(field => !Number.isSafeInteger(row[field]) || row[field] < (field === 'earlyFuelNodes' ? 0 : 1))
       || row.grade === 'low' && row.earlyFuelNodes < 2
+      || row.deepApproachMinPx <= row.contestedApproachMinPx
       || row.p95CoveragePx > row.maxCoveragePx || row.maxNodes > 32 || row.earlyFuelNodes > row.maxNodes
       || row.maxBodyCells > 131072 || row.maxWorkEdges > 64000000) throw new Error('Invalid automatic supply bounds');
     return row;

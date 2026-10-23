@@ -57,7 +57,7 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
   const fail = (reason: string, coverage = navigation.coverage(coverageDistance)): never => {
     throw Object.assign(new Error(`Automatic supply rejected: ${reason}`), { diagnostics: { automaticSupply: {
       stage: 'supply-placement', reason, ...navigation.space, budget, actualCount: selected.length, minimumNodes,
-      legalCandidateCount: admissible.length, legalCoverage, quotas: quotas.map(quota => ({ ...quota })), coverage, work: { ...navigation.work },
+      legalCandidateCount: admissible.length, legalTierCounts:Object.fromEntries((['safe','contested','deep'] as const).map(tier=>[tier,admissible.filter(candidate=>candidate.tiers.includes(tier)).length])), legalCoverage, quotas: quotas.map(quota => ({ ...quota })), coverage, work: { ...navigation.work },
     } } });
   };
   if (budget > policy.maxNodes) fail('node-budget');
@@ -67,6 +67,7 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
   const legalSources = new Set<number>();
   for (const candidate of admissible) for (const cell of candidate.interactionCells) legalSources.add(cell);
   legalCoverage = navigation.coverage(navigation.distancesFrom([...legalSources]));
+  if(quotas.some(quota=>quota.remaining>0&&!admissible.some(candidate=>candidate.tiers.includes(quota.tier))))fail('risk-tier-infeasible',legalCoverage);
   if (!passes(legalCoverage)) fail('legal-tier-coverage-infeasible', legalCoverage);
   for (let slot = 0; slot < policy.maxNodes; slot++) {
     const coverage = navigation.coverage(coverageDistance), earlyFuel = slot < policy.earlyFuelNodes;

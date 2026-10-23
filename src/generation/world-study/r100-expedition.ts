@@ -1,5 +1,5 @@
 import { planAutomaticSupply, type AutomaticSupplyPlan, type AutomaticSupplyAdmittedSeats } from './automatic-supply';
-import type { R100AutomaticSupplyPolicy } from './automatic-supply-policy';
+import { automaticSupplyTravelEligible, type R100AutomaticSupplyPolicy } from './automatic-supply-policy';
 import { findR100PatrolWindows } from './r100-patrol-windows';
 import { hasLineOfSight } from '@/utils/grid-raycast';
 /** Complete v3 route/content deployment on the approved native geometry. */
@@ -163,8 +163,7 @@ export function deployR100Expedition(world: MasterWorld, definition: R100Expedit
         const maximum = spatial ? spatial[`${tier}_max_extra_travel_px`] : maxDistance * (tier === 'safe' ? .4 : tier === 'contested' ? .8 : 1);
         // Long exposure on the main route also carries travel cost. Its entry
         // threshold belongs to the frozen automatic policy, never today's CSV.
-        const travelEligible = seat.distance >= minimum && seat.distance <= maximum
-          || tier === 'contested' && seat.approachDistance >= frozenSupplyPolicy.contestedApproachMinPx;
+        const travelEligible = automaticSupplyTravelEligible(tier,seat.distance,seat.approachDistance,minimum,maximum,frozenSupplyPolicy);
         return travelEligible
           && (!spatial || seat.approachDistance <= (tier === 'safe' ? spatial.safe_max_approach_px : spatial.max_search_approach_px))
           && seat.pollutionDistance >= (tier === 'safe' ? 34 : 16)

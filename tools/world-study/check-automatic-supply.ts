@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { TileGrid } from '../../src/systems/tile-grid';
 import { TileType } from '../../src/types/game-types';
 import { bodyHasSupport, bodyDisplacementFraction } from '../../src/systems/ai/physical-grid';
-import { createAutomaticSupplyPolicy, validAutomaticSupplyPolicy } from '../../src/generation/world-study/automatic-supply-policy';
+import { createAutomaticSupplyPolicy, validAutomaticSupplyPolicy, automaticSupplyTravelEligible } from '../../src/generation/world-study/automatic-supply-policy';
 import { AutomaticSupplyNavigation, automaticSupplyBudget } from '../../src/generation/world-study/automatic-supply-navigation';
 import { planAutomaticSupply, type AutomaticSupplyCandidate } from '../../src/generation/world-study/automatic-supply';
 import type { R100ExpeditionDefinition } from '../../src/generation/world-study/r100-expedition';
@@ -11,6 +11,14 @@ import type { MasterWorld } from '../../src/generation/world-study/r100-master-w
 import { hasLineOfSight } from '../../src/utils/grid-raycast';
 
 const policy = createAutomaticSupplyPolicy('low');
+assert(!automaticSupplyTravelEligible('deep',0,959,600,1400,policy));
+assert(automaticSupplyTravelEligible('deep',0,960,600,1400,policy));
+assert(!automaticSupplyTravelEligible('safe',200,960,0,180,policy));
+const {deepApproachMinPx:_deep,...historicalPolicy}=policy;
+assert(validAutomaticSupplyPolicy(historicalPolicy));
+assert(!automaticSupplyTravelEligible('deep',0,960,600,1400,historicalPolicy));
+assert(!automaticSupplyTravelEligible('deep',Infinity,1000,600,1400,policy));
+
 const point = (grid: TileGrid, cell: number) => ({ x: (cell % grid.cols + .5) * grid.tileSize, y: (Math.floor(cell / grid.cols) + .5) * grid.tileSize });
 function gridOf(cols: number, rows: number, blocked: (x: number, y: number) => boolean = () => false): TileGrid {
   const tiles = Array.from({length:rows}, (_, y) => Array.from({length:cols}, (_, x) => x < 2 || y < 2 || x >= cols - 2 || y >= rows - 2 || blocked(x,y) ? TileType.VOID : TileType.FLOOR));
