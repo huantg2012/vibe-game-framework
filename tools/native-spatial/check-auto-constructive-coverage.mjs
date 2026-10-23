@@ -100,3 +100,17 @@ for(const shared of NATIVE_AUTO_CONSTRUCTION_POLICIES){
   nearHalfStructure.fill(80,47,49);
 }
 console.log('Constructive coverage: H-only shelter, longest-band midpoint, exact-edge routing, wide-gap and immutable-source witnesses passed');
+
+// New receipts distinguish a long connected fringe from an unavoidably broad
+// exposure. Span is diagnostic; physical empty radius and shelter route remain hard.
+const fringe=fixture(150,5,200),fringeStructure=new Float32Array(750).fill(120);
+const physical=createNativeAutoCoverage({points:fringe.points,baseLinks:fringe.links},policy,true);
+const usable=physical.measure(fringe.available,fringe.links,fringeStructure,new Float32Array(750));
+assert.equal(usable.accepted,true);
+assert.equal(usable.score.maxDeepSpanPx,1184);
+assert.equal(usable.score.maxDeepAreaPx2,148*3*64);
+assert(usable.score.qualityPenalty>0);
+assert.equal(fringe.measure.measure(fringe.available,fringe.links,fringeStructure,new Float32Array(750)).accepted,false,'Historical span contract is unchanged');
+assert.equal(physical.measure(fringe.available,fringe.links,new Float32Array(750).fill(180),new Float32Array(750)).accepted,false,'A broad empty area is still rejected');
+assert.equal(physical.measure(fringe.available,fringe.links,fringeStructure,new Float32Array(750).fill(Infinity)).accepted,false,'A shore or visible solid cannot replace reachable optical shelter');
+console.log('Physical exposure: long thin fringe accepted, broad voidless field and missing shelter rejected; legacy span preserved');

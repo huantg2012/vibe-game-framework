@@ -11,7 +11,7 @@ export interface NativeAutoCoverageMeasure {
   readonly holeTarget:number;readonly solidTarget:number;readonly emptyTarget:number;readonly deepTarget:number;readonly wideTarget:number;
   readonly deepBounds:readonly[number,number,number,number]|undefined;
 }
-export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeSpatialPolicy){
+export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeSpatialPolicy,deepSpanDiagnosticOnly=false){
   const points=body.points,count=points.length,cols=Math.max(...points.map(p=>p.gx))+1,rows=Math.max(...points.map(p=>p.gy))+1;
   const lookup=new Int32Array(cols*rows).fill(-1);points.forEach((point,index)=>lookup[point.gy*cols+point.gx]=index);
   const neighbors=new Int32Array(count*8).fill(-1);
@@ -58,7 +58,7 @@ export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeS
       for(let i=0;i<count;i++)if(available[i]&&approach[i]!>maxApproachRoutePx){maxApproachRoutePx=approach[i]!;holeTarget=i;}
       if(!Number.isFinite(maxApproachRoutePx))holeTarget=structureTarget;
       const wideRatio=wideGroups.total/Math.max(1,bodyCount),largestWideRatio=wideGroups.largest/Math.max(1,wideGroups.total);
-      const emptyFail=maxEmptyPx>policy.maxEmptyRadiusPx,deepFail=deepGroups.maxSpan>policy.maxDeepEmptySpanPx,coverFail=maxApproachRoutePx>policy.maxCoverRoutePx;
+      const emptyFail=maxEmptyPx>policy.maxEmptyRadiusPx,deepFail=!deepSpanDiagnosticOnly&&deepGroups.maxSpan>policy.maxDeepEmptySpanPx,coverFail=maxApproachRoutePx>policy.maxCoverRoutePx;
       // A wide-route failure needs an opening, not another object near it.
       // Follow the actual body graph between the two largest wide regions;
       // the least-clear point on that path identifies the constricting gap.
@@ -95,7 +95,8 @@ export function createNativeAutoCoverage(body:NativeAutoBodyField,policy:NativeS
       if(!coverFail)holeTarget=solidTarget;
       return{accepted:!emptyFail&&!deepFail&&!coverFail&&wideRatio>=policy.minWideRatio&&largestWideRatio>=policy.minLargestWideRatio,
         holeTarget,solidTarget,emptyTarget,deepTarget:deepGroups.target,deepBounds:deepGroups.bounds,wideTarget,score:{penalty:Number(emptyFail)+Number(deepFail)+Number(coverFail)+Number(wideRatio<policy.minWideRatio)+Number(largestWideRatio<policy.minLargestWideRatio),
-          qualityPenalty:0,maxEmptyPx,maxDeepSpanPx:deepGroups.maxSpan,maxVoidDistancePx,maxApproachRoutePx,wideRatio,largestWideRatio}};
+          qualityPenalty:deepSpanDiagnosticOnly?Math.max(0,deepGroups.maxSpan/policy.maxDeepEmptySpanPx-1):0,
+          ...(deepSpanDiagnosticOnly?{maxDeepAreaPx2:deepGroups.largest*64,deepAreaRatio:deepGroups.total/Math.max(1,bodyCount)}:{}),maxEmptyPx,maxDeepSpanPx:deepGroups.maxSpan,maxVoidDistancePx,maxApproachRoutePx,wideRatio,largestWideRatio}};
     },
     distanceFrom(target:number,available:Uint8Array,links:Uint8Array):Float64Array{
       targetSources.fill(Infinity);targetSources[target]=0;return route(available,targetSources,0,links);

@@ -32,7 +32,7 @@ export function createNativeAutoCandidate(recipe:WorldProductionRecipeV3,input:N
   const {groups}=areaQualification;
   const measuredGround=evaluateNativeSpatialGeometry(geometry,groups,spatial.policy,spatial.world,
     {placements:layout.holes,profiles:spatial.holeProfiles},
-    {landRects:layout.plan.land,placements:layout.bays,landJoins:layout.landJoins,profiles:spatial.bayProfiles,allowedCounts:spatial.world.bayCountOptions,minWideJoinPx:spatial.world.landRectMinOverlapPx});
+    {landRects:layout.plan.land,placements:layout.bays,landJoins:layout.landJoins,profiles:spatial.bayProfiles,allowedCounts:spatial.world.bayCountOptions,minWideJoinPx:spatial.world.landRectMinOverlapPx},undefined,p.emptyRegionMetric==='radius-and-cover-route-v1');
   const emptyRadius=measuredGround.reasons.includes('G1-largest-empty-radius')?
     certifyNativeAutoEmptyRadius(geometry,spatial.policy.maxEmptyRadiusPx,checkpoint):undefined;
   const groundReasons=emptyRadius?.accepted?measuredGround.reasons.filter(reason=>reason!=='G1-largest-empty-radius'):measuredGround.reasons;

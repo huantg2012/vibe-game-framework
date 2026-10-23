@@ -6,6 +6,8 @@ import type {MasterDefinition} from './r100-master-world';
 export interface NativeAutoConstructionPolicy {
   readonly grade:PollutionGrade;
   readonly sourceHash:string;
+  /** Missing on historical offline receipts: preserve their strict span gate. */
+  readonly emptyRegionMetric?:'radius-and-cover-route-v1';
   readonly targetWalkAreaPx2:number;
   readonly coreWidthPx:number;readonly coreHeightPx:number;
   readonly armWidthPx:number;readonly armHeightPx:number;

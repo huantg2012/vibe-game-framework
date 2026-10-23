@@ -5,12 +5,13 @@ import {createHash} from 'node:crypto';
 const source='data/rift-auto-construction-policy.csv',output='src/generated/r100-native-auto-construction.ts';
 const csv=fs.readFileSync(source,'utf8'),sourceHash=createHash('sha256').update(csv).digest('hex');
 const [header,...lines]=csv.trim().split(/\r?\n/),keys=header.split(',');
-assert.equal(keys[0],'grade');assert.equal(keys.length,27);
+assert.equal(keys[0],'grade');assert.equal(keys.length,28);
 assert(keys.every(key=>/^[a-z][a-z_0-9]*$/.test(key)));
 const policies=lines.map(line=>{
   const cells=line.split(',');assert.equal(cells.length,keys.length);
   return Object.fromEntries([...keys.map((key,i)=>{
     if(i===0){assert(['low','medium','severe'].includes(cells[i]));return[key,cells[i]];}
+    if(key==='empty_region_metric'){assert.equal(cells[i],'radius-and-cover-route-v1');return['emptyRegionMetric',cells[i]];}
     const n=Number(cells[i]);assert(Number.isSafeInteger(n)&&n>0,`${key} must be a positive integer`);
     if(key.endsWith('_px'))assert.equal(n%8,0,`${key} must align with 8px support cells`);
     return[key.replace(/_([a-z])/g,(_,c)=>c.toUpperCase()),n];

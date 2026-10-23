@@ -115,7 +115,7 @@ export interface NativeSpatialGeometryDiagnostic {
 }
 export type NativeSpatialGeometryDiagnosticObserver=(diagnostic:NativeSpatialGeometryDiagnostic)=>void;
 export function evaluateNativeSpatialGeometry(geometry:NativeSpatialGeometry,groups:NativeSpatialGroupResult,policy:NativeSpatialPolicy,world:NativeSpatialWorldIntent,
-  holeAuthoring?:Readonly<{placements:readonly NativeSpatialHolePlacement[];profiles:readonly NativeSpatialHoleProfile[]}>,bayAuthoring?:NativeSpatialBayAuthoring,observe?:NativeSpatialGeometryDiagnosticObserver):NativeSpatialGateResult {
+  holeAuthoring?:Readonly<{placements:readonly NativeSpatialHolePlacement[];profiles:readonly NativeSpatialHoleProfile[]}>,bayAuthoring?:NativeSpatialBayAuthoring,observe?:NativeSpatialGeometryDiagnosticObserver,deepSpanDiagnosticOnly=false):NativeSpatialGateResult {
   const {cols,rows}=geometry.terrain,structuralTree=nativePrimitiveTree(groups.structures.flatMap(s=>s.boundary)),count=cols*rows;
   const wide=new Uint8Array(count),deep=new Uint8Array(count),distances=new Float32Array(count);let maxEmptyUpperPx=0,internalMaxEmptyUpperPx=0,wideCount=0;let worstCell=-1,internalWorstCell=-1;
   for(let cell=0;cell<count;cell++)if(geometry.supported[cell]){
@@ -162,7 +162,7 @@ export function evaluateNativeSpatialGeometry(geometry:NativeSpatialGeometry,gro
   if(Math.abs(walkAreaPx2-world.targetWalkAreaPx2)>world.targetWalkAreaPx2*policy.areaToleranceRatio)reasons.push('walk-area-outside-intent');
   if(solids<policy.minSolidCount||policy.requireMoreHoles&&holes<=solids||Math.abs(holes-policy.holeToSolidRatio*solids)>Math.max(policy.holeCountAbsTolerance,policy.holeCountRelTolerance*solids))reasons.push('whole-world-hole-solid-ratio');
   if(maxEmptyUpperPx>policy.maxEmptyRadiusPx)reasons.push('G1-largest-empty-radius');
-  if(maxDeepSpanPx>policy.maxDeepEmptySpanPx)reasons.push('G1-long-deep-empty-region');
+  if(!deepSpanDiagnosticOnly&&maxDeepSpanPx>policy.maxDeepEmptySpanPx)reasons.push('G1-long-deep-empty-region');
   if(wideRatio<policy.minWideRatio)reasons.push('G3-wide-domain-area');
   if(largestWideRatio<policy.minLargestWideRatio)reasons.push('G3-wide-domain-connectivity');
   const holeContract=holeAuthoring?evaluateNativeSpatialHoleProfiles(geometry,groups,holeAuthoring.placements,holeAuthoring.profiles):undefined;
@@ -171,6 +171,8 @@ export function evaluateNativeSpatialGeometry(geometry:NativeSpatialGeometry,gro
   if(bayContract)reasons.push(...bayContract.reasons);
   const sourceSupport=evaluateNativeSpatialFinalSupport(geometry);reasons.push(...sourceSupport.reasons);
   return{accepted:!reasons.length,reasons,metrics:{holes,solids,targetCount,minCount,maxCount,walkAreaPx2,targetWalkAreaPx2:world.targetWalkAreaPx2,maxEmptyUpperPx,maxDeepSpanPx,
+    ...(deepSpanDiagnosticOnly?{emptyRegionMetric:'radius-and-cover-route-v1',maxDeepAreaPx2:Math.max(0,...deepGroups.map(cells=>cells.length*64)),deepAreaRatio:deepGroups.reduce((sum,cells)=>sum+cells.length,0)/geometry.supportedCount,
+      qualityWarnings:maxDeepSpanPx>policy.maxDeepEmptySpanPx?['long-deep-empty-region']:[]}:{}),
     worstEmptyPoint:worstCell<0?null:nativeCellPoint(worstCell,cols),internalMaxEmptyUpperPx,internalWorstEmptyPoint:internalWorstCell<0?null:nativeCellPoint(internalWorstCell,cols),worstDeepPoint:worstDeepCell<0?null:nativeCellPoint(worstDeepCell,cols),worstDeepBounds,wideRatio,largestWideRatio,reachableBodySeats:geometry.reachableCount,supportedBodySeats:geometry.supportedCount,
     effectiveStructures:groups.structures.map(({distance:_distance,boundary:_boundary,cells:_cells,...structure})=>structure),rejectedObjects:groups.rejected,
     ...(holeContract?.metrics??{}),...(bayContract?.metrics??{}),...sourceSupport.metrics,cellSizePx:8,distanceCellUpperErrorPx:CORNER_ERROR}};

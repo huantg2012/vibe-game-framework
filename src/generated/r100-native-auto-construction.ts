@@ -29,7 +29,8 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "shoreDepthMaxPx": 64,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "ad9c641ae975b70a72c4fceee306ccfb08ba2367baef2e61e761885d585ebd1d"
+    "emptyRegionMetric": "radius-and-cover-route-v1",
+    "sourceHash": "ff1e6634027be6764b6e6def1348b4967955f00ffea3741ca9740021295e69fd"
   },
   {
     "grade": "medium",
@@ -59,7 +60,8 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "shoreDepthMaxPx": 80,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "ad9c641ae975b70a72c4fceee306ccfb08ba2367baef2e61e761885d585ebd1d"
+    "emptyRegionMetric": "radius-and-cover-route-v1",
+    "sourceHash": "ff1e6634027be6764b6e6def1348b4967955f00ffea3741ca9740021295e69fd"
   },
   {
     "grade": "severe",
@@ -89,6 +91,7 @@ export const NATIVE_AUTO_CONSTRUCTION_POLICIES:readonly NativeAutoConstructionPo
     "shoreDepthMaxPx": 96,
     "shoreProtectedGapPx": 48,
     "maxCleanRunPx": 384,
-    "sourceHash": "ad9c641ae975b70a72c4fceee306ccfb08ba2367baef2e61e761885d585ebd1d"
+    "emptyRegionMetric": "radius-and-cover-route-v1",
+    "sourceHash": "ff1e6634027be6764b6e6def1348b4967955f00ffea3741ca9740021295e69fd"
   }
 ];

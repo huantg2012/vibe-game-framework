@@ -17,6 +17,7 @@ export interface NativeAutoCoverageScore {
   readonly penalty:number;readonly qualityPenalty:number;readonly maxEmptyPx:number;readonly maxDeepSpanPx:number;
   readonly maxVoidDistancePx:number;readonly wideRatio:number;readonly largestWideRatio:number;
   readonly maxApproachRoutePx:number;
+  readonly maxDeepAreaPx2?:number;readonly deepAreaRatio?:number;
 }
 export interface NativeAutoRefinementTrace {
   readonly evaluations:number;readonly acceptedMoves:number;readonly acceptedSwaps:number;readonly acceptedJointMoves:number;readonly completedPasses:number;

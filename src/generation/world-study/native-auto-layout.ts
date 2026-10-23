@@ -127,7 +127,8 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
   const chosen=new Map<number,number>();
   const available=new Uint8Array(bodyField.points.length).fill(1),links=bodyField.baseLinks.slice();
   const structure=Float32Array.from(bodyField.points.map(point=>point.source)),holeDistances=new Float32Array(available.length).fill(Infinity);
-  const coverage=createNativeAutoCoverage(bodyField,spatial.policy);
+  const deepSpanDiagnosticOnly=p.emptyRegionMetric==='radius-and-cover-route-v1';
+  const coverage=createNativeAutoCoverage(bodyField,spatial.policy,deepSpanDiagnosticOnly);
   let measured=coverage.measure(available,links,structure,holeDistances);const before=measured.score;
 
   const holes=objects.map((object,index)=>({object,index})).filter(({object})=>object.kind==='hole').map(({index})=>index);
@@ -275,7 +276,7 @@ export function createNativeAutoPlan(native:MasterDefinition,input:NativeAutoRun
         }
       };
       if(score.maxEmptyPx>spatial.policy.maxEmptyRadiusPx){reasons.push('empty');near(measured.emptyTarget,coverLimit);}
-      if(score.maxDeepSpanPx>spatial.policy.maxDeepEmptySpanPx){
+      if(!deepSpanDiagnosticOnly&&score.maxDeepSpanPx>spatial.policy.maxDeepEmptySpanPx){
         reasons.push('deep-span');
         // Shortening either end or cutting anywhere along the component can
         // resolve its span. Its midpoint alone is not the failed constraint.
