@@ -76,7 +76,7 @@ function dependencyHash(recipe: Omit<WorldProductionRecipeV3, 'package'>, materi
     ...(revision === 13 ? {nativeConstruction:recipe.nativeConstruction,surfacePixelBudget:recipe.surfacePixelBudget,enemyMaterialVersion:recipe.enemyMaterialVersion,enemyMaterial:recipe.enemyMaterial,enemyDeployment:recipe.enemyDeployment} : {}),
     ...(revision === 14 ? {nativeAuto:recipe.nativeAuto,automaticSupplyPolicy:recipe.automaticSupplyPolicy,surfacePixelBudget:recipe.surfacePixelBudget,enemyMaterialVersion:recipe.enemyMaterialVersion,enemyMaterial:recipe.enemyMaterial,enemyDeployment:recipe.enemyDeployment} : {}) });
 }
-/** Shared automatic route. Explicit until its bounded offline admission completes.
+/** Shared automatic route used by enabled worlds.
  * This factory does not read authored layouts, low-world overrides or seed banks. */
 export function createR100AutomaticRecipe(worldId:string,seed:number,grade:PollutionGrade):WorldProductionRecipeV3 {
   if(!Number.isSafeInteger(seed)||seed<0||seed>0xffffffff||!isPollutionGrade(grade))throw new Error('Invalid automatic departure seed/grade');
@@ -107,7 +107,9 @@ export function createR100AutomaticRecipe(worldId:string,seed:number,grade:Pollu
 /** Normal departures use the validated production revision, including worlds
  * that also have an experimental native-spatial authoring definition. */
 export function createR100ProductionRecipe(worldId: string, seed: number, grade: PollutionGrade): WorldProductionRecipeV3 {
-  return createR100Recipe(worldId, seed, grade, false);
+  return R100_NATIVE_WORLDS.some(world=>world.id===worldId&&world.enabled)
+    ?createR100AutomaticRecipe(worldId,seed,grade)
+    :createR100Recipe(worldId,seed,grade,false);
 }
 /** Explicit DEV opt-in. Unavailable native intent rejects instead of silently
  * substituting a production recipe. Frozen r12 validation/replay is unchanged. */

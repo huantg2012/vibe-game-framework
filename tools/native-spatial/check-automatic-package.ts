@@ -4,13 +4,14 @@ import { writeFileSync, existsSync } from 'node:fs';
 import { basename } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { R100_NATIVE_WORLDS } from '../../src/generated/r100-native-worlds';
-import { createR100AutomaticRecipe, validR100ProductionRecipe } from '../../src/generation/world-study/r100-package';
+import { createR100AutomaticRecipe, createR100ProductionRecipe, validR100ProductionRecipe } from '../../src/generation/world-study/r100-package';
 import { createR100ProductionMap } from '../../src/generation/world-study/r100-production-map';
 import { hydrateR100MasterWorld } from '../../src/generation/world-study/r100-native-data';
 import type { PollutionGrade } from '../../src/generation/world-study/pollution-grade';
 
 const [worldId, gradeArg, seedArg, output] = process.argv.slice(2);
-const single = process.argv[6] === '--single';
+const single = process.argv.includes('--single');
+const production=process.argv.includes('--production');
 if (!worldId) {
   let count = 0;
   const failures: { worldId: string; grade: string; error: string }[] = [];
@@ -37,7 +38,9 @@ if (!worldId) {
   const report: Record<string, unknown> = { worldId, grade: gradeArg, seed,
     scope: single?'offline complete map admission; no replay or gameplay':'offline complete map and JSON recipe replay; no gameplay' };
   try {
-    const recipe = createR100AutomaticRecipe(worldId, seed, gradeArg as PollutionGrade);
+    const recipe = (production?createR100ProductionRecipe:createR100AutomaticRecipe)(worldId, seed, gradeArg as PollutionGrade);
+    assert.equal(recipe.package.algorithmRevision,14);
+    report.entry=production?'normal-production-factory':'explicit-automatic-factory';
     assert(validR100ProductionRecipe(recipe));
     // Preserve the exact frozen input even when map admission rejects it.
     // A failure must be replayable without consulting newer policy tables.
