@@ -11617,5 +11617,40 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E290",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-23",
+    "revision": "2e2088e6",
+    "scope": "六家族人形识别候选与完整三阶段离线图册；头颈与分腿像素、双足、硬alpha、法线、世界色域、确定性与动作接缝检查通过，旧360帧逐字节保留、两试点2160帧回归及构建通过。",
+    "limitations": "仅显式候选，正式调用/存档/投放/AI未切换。静态图由agent复看；完整图册浏览器交互、游戏实战、GPU性能、人审未验。地图等级不等于个体覆盖。",
+    "sources": [
+      {
+        "path": "src/entities/form-renderers/d/human-model.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/human-retained-model.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/render-human-stages.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-human-readability-2026-10-23/checks.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/enemy-human-readability-2026-10-23/atlas.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/enemy-world-automation-2026-10-23.md",
+        "role": "doc"
+      }
+    ]
   }
 ]

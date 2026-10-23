@@ -38,3 +38,23 @@
 证据：[checks.json](artifacts/enemy-world-automation-2026-10-23/checks.json)、[完整生成](artifacts/enemy-world-automation-2026-10-23/cinder-production.json)、[地形/内容不变](artifacts/enemy-world-automation-2026-10-23/map-parity.json)、[旧生成器路径](artifacts/enemy-world-automation-2026-10-23/legacy-map-path.json)。
 
 索引收尾：F015/F016/F017、F012及全局入口已更新，新增E289；INDEX派生成功，结构检查无错误。既有来源漂移／旧证据版本提醒保留，未盲目刷新基线或清空历史缺口。
+
+
+## 人形识别回修与完整阶段图册（2026-10-23）
+
+用户反馈已核实：原图册只展示中间的 `rewrite`；高阶段模型另会吞掉一条腿与一只自由手臂，中阶段的头肩/腰部错位也弱化人体识别。修正作为显式 `anatomyVersion=2` 候选，尚未切换正式请求；默认版本仍逐字节保留。实现 `9cf73ff9`，补充步态峰值检查 `2e2088e6`。
+
+[新动态图册](artifacts/enemy-human-readability-2026-10-23/index.html)同屏列渗透/改写/覆盖，每列正/左/背/右；六家族、行走/静息/攻击，旧版/候选切换，1×/2×/3×整数放大。总计6336帧（含旧版对照），18个场景底画面。背景使用原图册的真实世界材质及相同灯位，未跑新地图生成、Phaser、AI或存档。图册的地图档位按钮只核对真实投放标签，不伪造低/中/重各有一种类人的关系：三档常规类人均使用渗透和改写，覆盖列属于结构展示。
+
+候选的美术自查：站立人物沿原XY+Z相机，头颈独立、肩腰收束、肘膝与分腿保持；高侵蚀偏肩俯身，材料侵入前后胸/一侧肩臂及腿，而非省略整肢。外沿沿栅格面色、仅使用冻结世界四种颜色、没有透明毛边或发光眼；明暗由现有逐像素法线受光。两轮静态总览复看已完成：第一轮侵蚀差异偏弱，第二轮增加偏肩/俯身与附着组织体量，保留人的支撑。不代替人的审美判断。抽卡、多轴新方案、in-game UI不属于本轮。
+
+实际验证：
+
+- `node --import tsx tools/enemy-world-pilot/check-human-stages.ts`：2880帧（步态含1/4与3/4极值）、36组像素颈段与36组分腿、双足承重、硬alpha、世界色域、单位法线、确定性、完整动作接缝均通过；画布最小余量4px，六家族剪影指纹不同。
+- `check-human.ts`：旧无适配360帧字节基线不变、旧试点2160帧通过。
+- `npx tsc --noEmit`、`npm run build`通过；已有bundle尺寸提示保持。最终HTML内脚本可解析、图集尺寸/阶段数量通过，URL返回200。
+- CPU烘焙本次中位0.340ms、P95 0.819ms，单次最大5.431ms；仅供离线开销定位，不代表实时全场、GPU或低端设备性能。
+
+边界：没有实机试玩或完整浏览器交互验收；没有人审通过；正式外观、地图/投放/AI/战斗/存档均未切换。旧高覆盖体退去人体的规则仍为正式定义，本次保留更多人体的高阶段是待确认候选。图册使用统一灯光，不冒称真实高污染视野。
+
+复现：`npm run atlas:human-stages` → `npm run check:human-stages`。机器结果见[checks.json](artifacts/enemy-human-readability-2026-10-23/checks.json)，全阶段与投放口径见[atlas.json](artifacts/enemy-human-readability-2026-10-23/atlas.json)。

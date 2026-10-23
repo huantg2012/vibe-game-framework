@@ -3,13 +3,14 @@
     "id": "COH-F015",
     "title": "地面敌人感知与行为",
     "domain": "encounters",
-    "summary": "地面实体按污染句法组合感官、活动与攻击；AI 使用共同地形和控制状态，听觉与视觉存在不同应对条件。 DEC-225：六材料家族共享规则已接正式新出发，108世界配方自动获得类人／地面占漆结构与材料；开放池仍3世界。独立enemyAppearance@2冻结外观，渲染不改form／AI／核／危险域，旧两试点战斗合同和旧局保持。324配方、2592帧、54占漆、48模拟挂载及r14/r11两条完整生成/hydrate通过，构建通过；六家族图册待人审。没有实机试玩、全库实战或GPU性能通过结论。",
+    "summary": "地面实体按污染句法组合感官、活动与攻击；AI 使用共同地形和控制状态，听觉与视觉存在不同应对条件。 DEC-225：六材料家族共享规则已接正式新出发，108世界配方自动获得类人／地面占漆结构与材料；开放池仍3世界。独立enemyAppearance@2冻结外观，渲染不改form／AI／核／危险域，旧两试点战斗合同和旧局保持。324配方、2592帧、54占漆、48模拟挂载及r14/r11两条完整生成/hydrate通过，构建通过；六家族图册待人审。没有实机试玩、全库实战或GPU性能通过结论。 2026-10-23用户指出人形识别不足；显式anatomyVersion=2候选恢复头颈/肩腰/四肢，六材料×三侵蚀阶段×四向动作图册已交并可切旧版。当前仅离线候选；正式及冻结局保持原版。地图风险档与个体侵蚀分开标注，当前三个地图档的常规类人均渗透/改写。限定离线检查与构建通过，未实机试玩，人审待用户。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "正式生成遭遇 → 进入感知范围、发声或交战",
       "DEV /enemy-world-pilot.html：晶化林床／破膜盆地各单类人＋单菌毯，去雾动态观察；无真实AI／Host战斗或存档。",
-      "正式createR100ProductionRecipe→enemyAppearance@2→RiftScene.attachSchemeD→两个共享表现原型；未改变敌人form。"
+      "正式createR100ProductionRecipe→enemyAppearance@2→RiftScene.attachSchemeD→两个共享表现原型；未改变敌人form。",
+      "离线美术候选 /docs/qa/artifacts/enemy-human-readability-2026-10-23/index.html；HumanModelRequest.anatomyVersion=2，正式未传入。"
     ],
     "sources": [
       {
@@ -280,6 +281,18 @@
       {
         "path": "docs/qa/enemy-world-automation-2026-10-23.md",
         "role": "doc"
+      },
+      {
+        "path": "src/entities/form-renderers/d/human-retained-model.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/render-human-stages.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/enemy-world-pilot/check-human-stages.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -298,14 +311,16 @@
       "COH-E264",
       "COH-E265",
       "COH-E284",
-      "COH-E289"
+      "COH-E289",
+      "COH-E290"
     ],
     "unknowns": [
       "具有听觉诱导行为不等于所有布置下都已验证稳定的诱离后搜取收益。",
       "E239仅覆盖三代表新增实体，原岸孔与LOS保持；新增solid不挡视线。18生成、9旧配方与三图局部正常镜头不证明全库密度、自然搜撤、敌人潜行或重档运行预算。4单件未获双侧见证；8关系组均有见证。",
       "历史DEC-216真实类型切换已明确裁决：organic→human使用既有moveScale .7→1、前摇700→350ms、冷却1600→1200ms、范围36→38px、半角75→60°；oil monolith→fungal colony采用cluster节律与scatter_rejoin原生核。不称所有战斗数值完全未改。真实正式怪物/动态肩灯与冷续的限定browser功能通过；破膜仅边缘/部分可见，完整战斗体验未验；50ms性能预算实测未过。",
       "COH-F054机器范围见E264，晶化林床低档受控浏览器8项见E265；自然搜撤、人审及长期经济未验。",
-      "DEC-225新四家族用户审美、全库实战和GPU预算未验；玩家同化四新家族形体仍未扩展。E249旧试点范围已由后续生产与本轮证据分项推进，不以本轮自动检查覆盖历史体验缺口。"
+      "DEC-225新四家族用户审美、全库实战和GPU预算未验；玩家同化四新家族形体仍未扩展。E249旧试点范围已由后续生产与本轮证据分项推进，不以本轮自动检查覆盖历史体验缺口。",
+      "人形候选对高侵蚀的保留程度与实际动态可读性待人审；目前仅离线素材与构建，未变更正式外观或高覆盖投放规则。"
     ]
   },
   {
