@@ -48,6 +48,13 @@ try{
   assert(actual.metrics.routes.every(r=>r.transverse.maxNarrowOrUncertainRunPx<=policy.maxNarrowRunPx));
   for(const r of actual.metrics.routes)if(!r.eligible)assert.equal(r.holeShareAdmission,null,'Noneligible sample cannot be promoted');
   report.tests.push({id:'saved-c17-exact-measurements-quality-separated-from-hard-admission',passed:true,routeCount:actual.metrics.routes.length,previousReasons:previous.reasons,currentReasons:actual.reasons,qualityDiagnostics:actual.qualityDiagnostics,overallEncounters:actual.metrics.overallEncounters,maxNarrowRunPx:Math.max(...actual.metrics.routes.map(r=>r.transverse.maxNarrowOrUncertainRunPx))});
+  const stricterShare={...policy,maxRouteHoleShare:.65};
+  const legacyShare=evaluateNativeSpatialRoutes(geometry,structures,stricterShare,captured.deployed.layout);
+  const qualityShare=evaluateNativeSpatialRoutes(geometry,structures,stricterShare,captured.deployed.layout,{encounterShareQualityOnly:true});
+  assert(legacyShare.reasons.includes('overall-route-hole-share'));
+  assert(qualityShare.accepted);assert(qualityShare.qualityDiagnostics.includes('overall-route-hole-share'));
+  assert.deepEqual(qualityShare.metrics,legacyShare.metrics,'Quality classification cannot change measured encounters or paths');
+  report.tests.push({id:'r14-share-quality-only-with-exact-measurements-and-legacy-rejection',passed:true});
   report.updatedGate=actual;report.status='passed';
 }catch(error){report.status='failed';report.error=String(error.stack??error);}
 report.sourceHashesAfter=hashes();report.sourcesStable=JSON.stringify(before)===JSON.stringify(report.sourceHashesAfter);if(!report.sourcesStable)report.status='invalid-source-changed';save();

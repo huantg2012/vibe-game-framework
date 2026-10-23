@@ -48,6 +48,9 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
   const budget = automaticSupplyBudget(navigation.space, minimumNodes, policy);
   const selected: AutomaticSupplySelection[] = [];
   const admissible = candidates.filter(candidate => candidate.tiers.length > 0 && candidate.interactionCells.length > 0);
+  const buckets=new Map<string,AutomaticSupplyCandidate[]>();
+  const bucketKey=(x:number,y:number)=>`${Math.floor(x/nodeSpacingPx)}:${Math.floor(y/nodeSpacingPx)}`;
+  for(const candidate of admissible){const key=bucketKey(candidate.position.x,candidate.position.y);const bucket=buckets.get(key)??[];bucket.push(candidate);buckets.set(key,bucket);}
   const kindlingShare = quotas.filter(quota => quota.kind === 'kindling').reduce((sum, quota) => sum + quota.remaining, 0) / minimumNodes;
   let legalCoverage: AutomaticSupplyCoverage | undefined;
   const passes = (coverage: AutomaticSupplyCoverage): boolean => coverage.maxPx <= policy.maxCoveragePx && coverage.p95Px <= policy.p95CoveragePx;
@@ -72,6 +75,9 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
     // their only spaced locations. Counts and tier eligibility never change.
     const spaced = admissible.filter(candidate => !selected.some(other =>
       Math.hypot(other.seat.position.x-candidate.position.x,other.seat.position.y-candidate.position.y)<nodeSpacingPx));
+    const spacedCells=new Set(spaced.map(candidate=>candidate.cell));
+    const tierRemaining=new Map((['safe','contested','deep'] as const).map(tier=>[tier,quotas.filter(quota=>quota.tier===tier).reduce((sum,quota)=>sum+quota.remaining,0)]));
+    const tierAvailable=new Map((['safe','contested','deep'] as const).map(tier=>[tier,spaced.filter(candidate=>candidate.tiers.includes(tier)).length]));
     const required = quotas.filter(quota => quota.remaining > 0);
     const availability = new Map(required.map(quota => [quota,spaced.filter(candidate=>candidate.tiers.includes(quota.tier)).length]));
     required.sort((a,b)=>availability.get(a)!/a.remaining-availability.get(b)!/b.remaining);
@@ -81,6 +87,15 @@ export function planAutomaticSupply(grid: TileGrid, originDistance: Float64Array
     for (const candidate of spaced) {
       const quota = priority && candidate.tiers.includes(priority.tier) ? priority : undefined;
       if (required.length && !quota) continue;
+      // One near-spawn choice must not consume every remaining safe seat.
+      // Local buckets count the candidates this footprint would exclude; no
+      // map-wide pair search or relaxed spacing is needed.
+      const blocked={safe:0,contested:0,deep:0},bx=Math.floor(candidate.position.x/nodeSpacingPx),by=Math.floor(candidate.position.y/nodeSpacingPx);
+      for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)for(const other of buckets.get(`${bx+dx}:${by+dy}`)??[]){
+        if(spacedCells.has(other.cell)&&Math.hypot(other.position.x-candidate.position.x,other.position.y-candidate.position.y)<nodeSpacingPx)
+          for(const tier of other.tiers)blocked[tier]++;
+      }
+      if((['safe','contested','deep'] as const).some(tier=>tierAvailable.get(tier)!-blocked[tier]<tierRemaining.get(tier)!-Number(quota?.tier===tier)))continue;
       const route = earlyFuel || selected.length === 0 ? candidate.approachDistance : Math.min(...candidate.interactionCells.map(cell => targetDistance![cell]!));
       // Geodesic proximity has priority; source-material preference and seeded
       // order only break subpixel ties, and never consume hidden reward fields.

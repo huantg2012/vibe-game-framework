@@ -88,6 +88,12 @@ const scarcePlan=planAutomaticSupply(open,origin,scarceCandidates,scarceDefiniti
 assert.equal(scarcePlan.selected[0]!.tier,'deep');
 assert.equal(scarcePlan.selected[0]!.seat.cell,rareCell);
 assert(scarcePlan.selected.some(item=>item.tier==='contested'));
+// The nearest safe centre blocks both edge seats. Choose an edge first so
+// both required fuel nodes fit; do not claim no safe space exists.
+const safeTriple=[180,204,228].map(x=>{const cell=22*open.cols+Math.floor(x/8);return{cell,position:point(open,cell),distance:0,approachDistance:x===204?0:10,interactionSeats:1,pollutionDistance:100,interactionCells:[cell],tiers:['safe'] as 'safe'[],environmentScore:0};});
+const pairDefinition={...definition,kindling_safe_count:2,kindling_contested_count:0,kindling_deep_count:0,contaminant_safe_count:0,contaminant_contested_count:0,contaminant_deep_count:0};
+const pair=planAutomaticSupply(open,origin,safeTriple,pairDefinition,{...policy,bodyAreaPerNodePx2:10000000,routePerNodePx:10000000},77,40);
+assert.equal(pair.selected.length,2);assert(pair.selected.every(item=>item.seat.position.x!==204));
 const plan = planAutomaticSupply(open,origin,candidates,definition,policy,77,52);
 const repeat = planAutomaticSupply(open,origin,candidates,definition,JSON.parse(JSON.stringify(policy)),77,52);
 assert.deepEqual(plan.selected,repeat.selected,'Frozen JSON and seed reproduce all placements');
