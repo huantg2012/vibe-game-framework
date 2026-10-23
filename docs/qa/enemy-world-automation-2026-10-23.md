@@ -92,3 +92,10 @@ CPU样本来自本机离线烘焙，毫秒的中位／P95／最大分别为：�
 CPU样本使用统一灯与定值shadow回调，含活动/休眠、六家族和三阶段；不能替代真实地图的遮挡采样或FPS。当前一次绘制中位数/P95/最大值见JSON，保留最大值，不截掉GC或调度波动。没有新增粒子物理、全屏特效或全库运行时贴图预烘。
 
 [动态图册](artifacts/enemy-native-catalog-2026-10-23/index.html?subject=mist_bank) · [六背景1×总览](artifacts/enemy-native-catalog-2026-10-23/air-readability-overview.png)。离线样片已查1×/2×、阶段及版本切换；美术终审待用户。
+
+
+### 占空美术通过与正式投放（2026-10-23）
+
+2026-10-23用户通过雾团、尘絮群、余响回修并授权关卡接入。共享v3外观沿用；新出发grade v2从CSV四类占空池按种子无放回抽取，低/中/重保持1/2/3个Host及原合法落点、安全通路。池为气团、雾团、尘絮群、余响，自动适用于全部世界生成规则；实际开放仍三图。冻结v1局保留气团，不换种。48个布局夹具与9份正式三图配方/JSON验证通过，模拟挂载、类型检查、构建通过。未实机试玩，完整遭遇平衡与GPU表现未验。
+
+数据源：`data/rift-pollution-grades.csv` 的 `volume_pool`；合同 `gradeDefinition.version=2` 随出发配方冻结。以独立种子排序池，同趟不重复，不扩大Host数量；各类型仍消费自己的密度/间隙/核规则。复核脚本：`tools/enemy-world-pilot/check-air-deployment.ts`。仅重编译档位用 `node --import tsx tools/world-study/codegen-world-packages.ts --grades-only`，不重签旧包清单。实现提交 `b557c4b6`。

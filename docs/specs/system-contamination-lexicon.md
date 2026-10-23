@@ -877,3 +877,10 @@ I3-E 已接：`RiftScene` attach 方案 D，消费上表字段；丁 depth 40 `<
 
 
 R3附墙可见投影补充：门框/墙锈主体沿真实面法线向地侧投影10px（渲染仍在迷雾之下），核保持原seam 0–2px、危险格不动。真实单帧strike触发140ms纯表现收势，后续windup即时显示，不延长伤害或延后预告；四向外伸限制在相邻32px格内。
+
+
+### 占空美术通过与正式投放（2026-10-23）
+
+2026-10-23用户通过雾团、尘絮群、余响回修并授权关卡接入。共享v3外观沿用；新出发grade v2从CSV四类占空池按种子无放回抽取，低/中/重保持1/2/3个Host及原合法落点、安全通路。池为气团、雾团、尘絮群、余响，自动适用于全部世界生成规则；实际开放仍三图。冻结v1局保留气团，不换种。48个布局夹具与9份正式三图配方/JSON验证通过，模拟挂载、类型检查、构建通过。未实机试玩，完整遭遇平衡与GPU表现未验。
+
+数据源：`data/rift-pollution-grades.csv` 的 `volume_pool`；合同 `gradeDefinition.version=2` 随出发配方冻结。以独立种子排序池，同趟不重复，不扩大Host数量；各类型仍消费自己的密度/间隙/核规则。复核脚本：`tools/enemy-world-pilot/check-air-deployment.ts`。仅重编译档位用 `node --import tsx tools/world-study/codegen-world-packages.ts --grades-only`，不重签旧包清单。实现提交 `b557c4b6`。
