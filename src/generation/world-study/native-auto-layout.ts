@@ -19,7 +19,7 @@ type Row=NativeSpatialConstructionReference['rows'][number];
 interface Site {readonly x:number;readonly y:number;readonly rank:number;readonly sourceDistance:number}
 interface PlannedObject extends NativeAutoCoverageObject {readonly id:string;readonly row:Partial<Row>;readonly polygon?:readonly NativeAutoPoint[]}
 const snap=(value:number)=>Math.round(value/8)*8;
-const overlaps=(a:Rect,b:Rect,gap=0)=>a[0]<b[0]+b[2]+gap&&a[0]+a[2]>b[0]-gap&&a[1]<b[1]+b[3]+gap&&a[1]+a[3]>b[1]-gap;
+const overlaps=(a:Readonly<Rect>,b:Readonly<Rect>,gap=0)=>a[0]<b[0]+b[2]+gap&&a[0]+a[2]>b[0]-gap&&a[1]<b[1]+b[3]+gap&&a[1]+a[3]>b[1]-gap;
 const shifted=(rect:Rect,site:Pick<Site,'x'|'y'>):Rect=>[rect[0]+site.x,rect[1]+site.y,rect[2],rect[3]];
 function bounds(rectangles:readonly Rect[]):Rect {
   const x=Math.min(...rectangles.map(r=>r[0])),y=Math.min(...rectangles.map(r=>r[1]));

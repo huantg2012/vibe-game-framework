@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {createNativeAutoCoverage} from '../../src/generation/world-study/native-auto-coverage.ts';
 import {NATIVE_SPATIAL_DIRECTIONS} from '../../src/generation/world-study/native-spatial-geometry.ts';
+import {NATIVE_AUTO_CONSTRUCTION_POLICIES} from '../../src/generated/r100-native-auto-construction.ts';
 
 const policy={deepEmptyThresholdPx:112,wideRadiusPx:48,referenceSightPx:224,maxEmptyRadiusPx:160,
   maxDeepEmptySpanPx:448,maxCoverRoutePx:320,minWideRatio:.5,minLargestWideRatio:.8};
@@ -87,4 +88,15 @@ for(let x=0;x<8;x++)narrow.points[9+x].source=40;
 const repairableArea=narrow.measure.measure(narrow.available,narrow.links,narrowStructure,new Float32Array(81));
 assert.equal(repairableArea.score.wideRatio,deficient.score.wideRatio);
 assert.equal(repairableArea.wideTarget,17);
+// About half is the accepted design intent: a one-point deficit is not a
+// rejection, while a materially narrower field still fails the shared floor.
+const nearHalf=fixture(10,10,200),nearHalfStructure=new Float32Array(100).fill(40);
+nearHalfStructure.fill(80,0,49);
+for(const shared of NATIVE_AUTO_CONSTRUCTION_POLICIES){
+  const measure=createNativeAutoCoverage({points:nearHalf.points,baseLinks:nearHalf.links},{...policy,minWideRatio:shared.minWidePercent/100});
+  assert(measure.measure(nearHalf.available,nearHalf.links,nearHalfStructure,new Float32Array(100)).accepted);
+  nearHalfStructure.fill(40,47,49);
+  assert(!measure.measure(nearHalf.available,nearHalf.links,nearHalfStructure,new Float32Array(100)).accepted);
+  nearHalfStructure.fill(80,47,49);
+}
 console.log('Constructive coverage: H-only shelter, longest-band midpoint, exact-edge routing, wide-gap and immutable-source witnesses passed');
