@@ -51,11 +51,12 @@ export function paintNativeVapour(out: Uint8ClampedArray, w: number, h: number,
     const grain = tuftNoise(u * .15 + time * .22, v * .18 - time * .35, seed + nearest * 19);
     const rolling = Math.sin(u * .14 + Math.sin(v * .18 - time) * 2 + time * .7 + phase)
       * Math.sin(v * .21 + Math.sin(u * .09 + time * .6) * 2.3 - time * .9);
-    const fold = dust ? grain * 2 - 1 : rolling * .77 + Math.sin((v + roll) * .31) * .23;
+    const fold = dust ? grain * 2 - 1 : rolling * .77 + Math.sin((v + roll) * .31) * .23
+      + level * .16 * Math.sin(u * .19 + v * .29 - time * .8);
     const fray = Math.sin(u * familyPitch + v * .21 + phase) * Math.sin(v * .52 - time * .7);
     // The wide dark fold and lit leading face survive noisy bright and dark
     // ground. Low-stage air has a full body too; stages add splitting/overlap.
-    let band = fold > .68 ? 2 : fold > (dust ? -.04 : -.36) ? 1 : 0;
+    let band = fold > (dust ? .68 : .15) ? 2 : fold > (dust ? -.04 : -.36) ? 1 : 0;
     if (m.kind === 'membrane' && fold > .88 || m.kind === 'gel' && fold > .94) band = 3;
     if (m.kind === 'granular' && fray > .5) band = 2;
     if (m.kind === 'shell' && Math.sin(u * .12 + v * .08 + phase) > .78) band = Math.max(0, band - 1);
@@ -64,7 +65,8 @@ export function paintNativeVapour(out: Uint8ClampedArray, w: number, h: number,
     if (!dust && d < .24 && band === 0) band = 1;
     const edge = clamp((d - .035 - (1 - grain) * (dust ? .15 : .24)) * (dust ? 5 : 3.4));
     let alpha = edge * (dust ? 110 + grain * 120 : 90 + d * 80 + Math.abs(fold) * 35);
-    if (!dust) alpha *= .63 + grain * .52;
+    if (!dust) alpha *= (.63 + grain * .52) * (1 + level * .09);
+    if (!dust && band === 2) alpha *= 1.15;
     if (dust && fray > .33) alpha *= .55;
     if (d >= f.dangerThreshold) alpha = Math.max(88, alpha);
     write(x, y, band, alpha, band === 0 ? .68 : 1);
