@@ -128,7 +128,9 @@
     "prebuild": "node tools/enemy-world-pilot/codegen.mjs --check",
     "generate:enemy-materials": "node tools/enemy-world-pilot/codegen.mjs",
     "check:enemy-world": "node tools/enemy-world-pilot/codegen.mjs --check && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/enemy-world-pilot/check-catalog.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/enemy-world-pilot/check-runtime.ts",
-    "atlas:enemy-world": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/enemy-world-pilot/render-catalog.ts"
+    "atlas:enemy-world": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/enemy-world-pilot/render-catalog.ts",
+    "atlas:human-stages": "node --import tsx tools/enemy-world-pilot/render-human-stages.ts",
+    "check:human-stages": "node --import tsx tools/enemy-world-pilot/check-human-stages.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1",

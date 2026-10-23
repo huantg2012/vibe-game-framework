@@ -1,4 +1,5 @@
 import { drawWorldTorso, drawWorldArm } from './world-body-anatomy';
+import { bakeRetainedHumanModel } from './human-retained-model';
 /** Independent human-remnant model. Geometry lives in ground X/Y + height Z;
  * each facing is reprojected before rasterization, never a rotated bitmap. */
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
@@ -16,6 +17,8 @@ export interface HumanModelRequest {
   phase01: number;
   restAmount?: number;
   worldAdaptation?: EnemyWorldAdaptation;
+  /** Explicit art-study opt-in. Existing production requests retain version 1. */
+  anatomyVersion?: 2;
 }
 export const HUMAN_WALK_CYCLE_MS = 960;
 type V = readonly [number, number, number];
@@ -30,6 +33,7 @@ const EDGE: RGB = [182, 164, 137];
 const smooth = (p: number): number => p*p*(3-2*p);
 
 export function bakeHumanModel(req: HumanModelRequest): {buf: PaintBuf; canvas: GenomeCanvas; lightingSurface?: ModelLightingSurface; contacts: readonly {x:number;y:number;weight:number}[]} {
+  if (req.anatomyVersion === 2) return bakeRetainedHumanModel(req);
   const r = createModelRaster(req, 'human');
   const { buf, canvas, volume, tube: limb } = r;
   const level=req.coverage==='infiltrate'?0:req.coverage==='rewrite'?1:2;

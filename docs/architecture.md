@@ -1677,6 +1677,8 @@ G4类型交换的候选枚举已用c17真实失败校正：全部surplus实际�
 
 ### 怪物世界材料自动适配（2026-10-23，DEC-225）
 
+人形识别回修的显式候选入口为 `HumanModelRequest.anatomyVersion=2` → `human-retained-model.ts`。共用 `createModelRaster`／逐像素法线与 `lightModelPixels`，不设另一套预览画法；正式调用方不传此字段，默认及冻结局仍沿原结构。`tools/enemy-world-pilot/render-human-stages.ts` 离线烘焙六家族×三覆盖×四向×44帧，使用上一图册已保存的正式地面材质作背景，带旧版同灯对照；不初始化 Phaser、AI 或存档。不改 in-game UI，图册属于独立美术审阅页。
+
 `data/enemy-world-materials.csv` 六家族→codegen全目录路由→`world-adaptation.ts` 小型参数缓存。新正式配方附 `enemyAppearance@2`，其签名绑定原包/seed/污染档/完整材料；独立于地形版本。validator校验后剥离该字段交旧几何executor，完整Rift身份仍含原recipe，因此旧地图结果不改而新外观可冷恢复。
 
 `RiftScene.attachSchemeD` 优先读新冻结材料，旧局读原enemyMaterial；`world-runtime.ts` 按协议路由两个表现原型，`productionModelFor` 只在新外观时把organic的模型转为类人，不改form或战斗。占漆三基体共用权威密度/接触格，只替换表面材料。AI与世界开放池不由美术规则控制。新家族不扩玩家同化既有两形体；未知形体来源仍使用中性色桥。
